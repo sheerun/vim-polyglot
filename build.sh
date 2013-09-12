@@ -64,6 +64,7 @@ syntax 'vim-scripts/Puppet-Syntax-Highlighting' &
 syntax 'beyondwords/vim-twig' &
 syntax 'sudar/vim-arduino-syntax' &
 syntax 'guns/vim-clojure-static' &
+syntax 'chrisbra/csv.vim' &
 
 wait
 
