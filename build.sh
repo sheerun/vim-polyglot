@@ -70,6 +70,7 @@ syntax 'elixir-lang/vim-elixir' &
 syntax 'jimenezrick/vimerl' &
 syntax 'tpope/vim-git' &
 syntax 'skwp/vim-rspec' &
+syntax 'cakebaker/scss-syntax.vim' &
 
 wait
 
