@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+set -E
 
 DIRS="
   syntax indent ftplugin ftdetect autoload compiler doc
@@ -8,24 +8,39 @@ DIRS="
 "
 
 copy_dir() {
-  if [ -d "tmp/$1" ]; then
-    mkdir -p "$1"
-    cp -r tmp/$1/* $1/
+  if [ -d "$1/$2" ]; then
+    mkdir -p "$2"
+    cp -r $1/$2/* $2/
   fi
 }
 
 # Fetches syntax files from given Github repo
 syntax() {
+  dir="tmp/$(echo "$1" | cut -d '/' -f 2)"
   echo "$1..."
-  rm -rf tmp
-  git clone -q --recursive "https://github.com/$1.git" tmp
-  which tree && tree tmp
+  rm -rf "$dir"
+  git clone -q --recursive "https://github.com/$1.git" "$dir"
+  which tree > /dev/null && tree tmp
 
-  for dir in $DIRS; do
-    copy_dir "$dir"
+  for subdir in $DIRS; do
+    copy_dir "$dir" "$subdir"
   done
 }
 
+rm -rf tmp
 rm -rf $DIRS
+mkdir -p tmp
 
-# syntax 'vim-ruby/vim-ruby'
+syntax 'vim-ruby/vim-ruby' &
+syntax 'kchmck/vim-coffee-script' &
+syntax 'tpope/vim-haml' &
+syntax 'tpope/vim-bundler' &
+syntax 'pangloss/vim-javascript' &
+syntax 'leshill/vim-json' &
+syntax 'mutewinter/tomdoc.vim' &
+syntax 'mutewinter/nginx.vim' &
+syntax 'timcharper/textile.vim' &
+syntax 'acustodioo/vim-tmux' &
+syntax 'groenewege/vim-less' &
+syntax 'wavded/vim-stylus' &
+syntax 'tpope/vim-cucumber' &
