@@ -47,6 +47,7 @@ syntax 'tpope/vim-cucumber' &
 syntax 'jrk/vim-ocaml' &
 syntax 'wlangstroth/vim-haskell' &
 syntax 'slim-template/vim-slim' &
+syntax 'vim-scripts/XSLT-syntax' &
 
 wait
 
