@@ -48,6 +48,7 @@ syntax 'jrk/vim-ocaml' &
 syntax 'wlangstroth/vim-haskell' &
 syntax 'slim-template/vim-slim' &
 syntax 'vim-scripts/XSLT-syntax' &
+syntax 'vim-scripts/python.vim--Vasiliev' &
 
 wait
 
