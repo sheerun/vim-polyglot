@@ -49,7 +49,6 @@ syntax 'groenewege/vim-less' &
 syntax 'wavded/vim-stylus' &
 syntax 'tpope/vim-cucumber' &
 syntax 'jrk/vim-ocaml' &
-syntax 'wlangstroth/vim-haskell' &
 syntax 'slim-template/vim-slim' &
 syntax 'vim-scripts/XSLT-syntax' &
 syntax 'vim-scripts/python.vim--Vasiliev' &
@@ -59,6 +58,7 @@ syntax 'spf13/PIV' &
 syntax 'briancollins/vim-jst' &
 syntax 'derekwyatt/vim-scala' &
 syntax 'derekwyatt/vim-sbt' &
+syntax 'travitch/hasksyn' &
 
 wait
 
