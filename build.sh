@@ -62,6 +62,7 @@ syntax 'derekwyatt/vim-sbt' &
 syntax 'travitch/hasksyn' &
 syntax 'vim-scripts/Puppet-Syntax-Highlighting' &
 syntax 'beyondwords/vim-twig' &
+syntax 'sudar/vim-arduino-syntax' &
 
 wait
 
