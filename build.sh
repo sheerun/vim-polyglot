@@ -53,7 +53,7 @@ syntax 'slim-template/vim-slim' &
 syntax 'vim-scripts/XSLT-syntax' &
 syntax 'vim-scripts/python.vim--Vasiliev' &
 syntax 'vim-scripts/octave.vim--' &
-syntax 'uggedal/go-vim' &
+syntax 'jnwhiteh/vim-golang' &
 syntax 'spf13/PIV' &
 syntax 'briancollins/vim-jst' &
 syntax 'derekwyatt/vim-scala' &
