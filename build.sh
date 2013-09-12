@@ -1,16 +1,20 @@
-#!/bin/sh
+#!/usr/bin/env zsh
 
 set -E
+setopt extended_glob
 
-DIRS="
+DIRS=(
   syntax indent ftplugin ftdetect autoload compiler
   after/syntax after/indent after/ftplugin after/ftdetect
-"
+)
 
 copy_dir() {
   if [ -d "$1/$2" ]; then
-    mkdir -p "$2"
-    cp -r $1/$2/* $2/
+    for file in $(find "$1/$2" -name '*.vim'); do
+      file_path="$(dirname "${file##$1/}")"
+      mkdir -p "$file_path"
+      cp $file $file_path/
+    done
   fi
 }
 
