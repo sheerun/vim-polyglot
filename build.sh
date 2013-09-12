@@ -57,6 +57,8 @@ syntax 'vim-scripts/octave.vim--' &
 syntax 'uggedal/go-vim' &
 syntax 'spf13/PIV' &
 syntax 'briancollins/vim-jst' &
+syntax 'derekwyatt/vim-scala' &
+syntax 'derekwyatt/vim-sbt' &
 
 wait
 
