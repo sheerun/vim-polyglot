@@ -4,7 +4,7 @@ set -E
 
 DIRS="
   syntax indent ftplugin ftdetect autoload compiler
-  after/syntax after/indent
+  after/syntax after/indent after/ftplugin after/ftdetect
 "
 
 copy_dir() {
