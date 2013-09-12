@@ -49,6 +49,7 @@ syntax 'wlangstroth/vim-haskell' &
 syntax 'slim-template/vim-slim' &
 syntax 'vim-scripts/XSLT-syntax' &
 syntax 'vim-scripts/python.vim--Vasiliev' &
+syntax 'vim-scripts/octave.vim--' &
 
 wait
 
