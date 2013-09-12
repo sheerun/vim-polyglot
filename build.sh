@@ -45,6 +45,7 @@ syntax 'mutewinter/tomdoc.vim' &
 syntax 'mutewinter/nginx.vim' &
 syntax 'timcharper/textile.vim' &
 syntax 'tpope/vim-markdown' &
+syntax 'nono/vim-handlebars' &
 syntax 'acustodioo/vim-tmux' &
 syntax 'groenewege/vim-less' &
 syntax 'wavded/vim-stylus' &
