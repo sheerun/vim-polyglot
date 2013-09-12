@@ -61,6 +61,7 @@ syntax 'derekwyatt/vim-scala' &
 syntax 'derekwyatt/vim-sbt' &
 syntax 'travitch/hasksyn' &
 syntax 'vim-scripts/Puppet-Syntax-Highlighting' &
+syntax 'beyondwords/vim-twig' &
 
 wait
 
