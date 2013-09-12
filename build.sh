@@ -61,7 +61,7 @@ syntax 'briancollins/vim-jst' &
 syntax 'derekwyatt/vim-scala' &
 syntax 'derekwyatt/vim-sbt' &
 syntax 'travitch/hasksyn' &
-syntax 'vim-scripts/Puppet-Syntax-Highlighting' &
+syntax 'ajf/puppet-vim' &
 syntax 'beyondwords/vim-twig' &
 syntax 'sudar/vim-arduino-syntax' &
 syntax 'guns/vim-clojure-static' &
