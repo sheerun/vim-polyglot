@@ -65,6 +65,7 @@ syntax 'beyondwords/vim-twig' &
 syntax 'sudar/vim-arduino-syntax' &
 syntax 'guns/vim-clojure-static' &
 syntax 'chrisbra/csv.vim' &
+syntax 'elixir-lang/vim-elixir' &
 
 wait
 
