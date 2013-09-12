@@ -44,6 +44,7 @@ syntax 'leshill/vim-json' &
 syntax 'mutewinter/tomdoc.vim' &
 syntax 'mutewinter/nginx.vim' &
 syntax 'timcharper/textile.vim' &
+syntax 'tpope/vim-markdown' &
 syntax 'acustodioo/vim-tmux' &
 syntax 'groenewege/vim-less' &
 syntax 'wavded/vim-stylus' &
