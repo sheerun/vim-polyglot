@@ -52,6 +52,7 @@ syntax 'vim-scripts/python.vim--Vasiliev' &
 syntax 'vim-scripts/octave.vim--' &
 syntax 'uggedal/go-vim' &
 syntax 'spf13/PIV' &
+syntax 'briancollins/vim-jst' &
 
 wait
 
