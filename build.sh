@@ -3,7 +3,7 @@
 set -E
 
 DIRS="
-  syntax indent ftplugin ftdetect autoload compiler doc
+  syntax indent ftplugin ftdetect autoload compiler
   after/syntax after/indent
 "
 
@@ -44,3 +44,10 @@ syntax 'acustodioo/vim-tmux' &
 syntax 'groenewege/vim-less' &
 syntax 'wavded/vim-stylus' &
 syntax 'tpope/vim-cucumber' &
+syntax 'jrk/vim-ocaml' &
+syntax 'wlangstroth/vim-haskell' &
+syntax 'slim-template/vim-slim' &
+
+wait
+
+rm -rf tmp
