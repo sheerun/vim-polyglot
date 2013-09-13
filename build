@@ -80,7 +80,6 @@ PACKS="
   jimenezrick/vimerl
   tpope/vim-git
   skwp/vim-rspec
-  cakebaker/scss-syntax.vim
 "
 
 download "$PACKS"
