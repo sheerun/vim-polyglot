@@ -82,6 +82,7 @@ PACKS="
   skwp/vim-rspec
   vim-scripts/vbnet.vim
   jcf/vim-latex
+  othree/html5.vim
 "
 
 download "$PACKS"
