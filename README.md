@@ -31,9 +31,10 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [elixir](https://github.com/elixir-lang/vim-elixir)
 - [erlang](https://github.com/jimenezrick/vimerl)
 - [git](https://github.com/tpope/vim-git)
+- [go](https://github.com/jnwhiteh/vim-golang)
 - [haml](https://github.com/tpope/vim-haml)
 - [handlebars](https://github.com/nono/vim-handlebars)
-- [hasksyn](https://github.com/travitch/hasksyn)
+- [haskell](https://github.com/travitch/hasksyn)
 - [html5](https://github.com/othree/html5.vim)
 - [javascript](https://github.com/pangloss/vim-javascript)
 - [json](https://github.com/leshill/vim-json)
@@ -51,7 +52,6 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [ruby](https://github.com/vim-ruby/vim-ruby)
 - [sbt](https://github.com/derekwyatt/vim-sbt)
 - [scala](https://github.com/derekwyatt/vim-scala)
-- [scss-syntax](https://github.com/cakebaker/scss-syntax.vim)
 - [slim](https://github.com/slim-template/vim-slim)
 - [stylus](https://github.com/wavded/vim-stylus)
 - [textile](https://github.com/timcharper/textile.vim)
@@ -59,7 +59,6 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [tomdoc](https://github.com/mutewinter/tomdoc.vim)
 - [twig](https://github.com/beyondwords/vim-twig)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim)
-- [vim-golang](https://github.com/jnwhiteh/vim-golang)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) 
 
 ## Contributing
