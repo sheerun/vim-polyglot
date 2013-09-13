@@ -5,9 +5,10 @@ A collection of language packs for Vim.
 One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as all files are loaded only on demand.
-- It installs **40x faster** (unparallelized), as language packs are not submoduled, but merged.
+- It **installs 40x faster** (unparallelized), as language packs are not submoduled, but merged.
 - It clones even faster as all unnecessary files are ignored (like enormous documentation from php support).
-- No support for esoteric languages (there is for modern ones like `slim` though).
+- Best syntax and indentation support. If someone releases better language pack, it will be replaced here.
+- No support for esoteric languages (vim-polyglot supports modern ones like `slim` though).
 
 ## Installation
 
