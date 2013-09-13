@@ -2,45 +2,51 @@
 
 set -E
 
-DIRS="
-  syntax indent ftplugin ftdetect autoload compiler
-  after/syntax after/indent after/ftplugin after/ftdetect
-"
-
-copy_dir() {
-  if [ -d "$1/$2" ]; then
-    for file in $(find "$1/$2" -name '*.vim'); do
-      file_path="$(dirname "${file##$1/}")"
-      mkdir -p "$file_path"
-      cp $file $file_path/
-    done
-  fi
-}
+DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
 
 # Fetches syntax files from given Github repo
 
 download() {
   for pack in $1; do
-    name="$(echo $pack | cut -d ':' -f 1)"
-    path="$(echo $pack | cut -d ':' -f 2)"
-    dir="tmp/$(echo "$path" | cut -d '/' -f 2)"
-    echo "- [$name](https://github.com/$path)"
+    path="$(printf "$pack" | cut -d ':' -f 2)"
+    dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
     rm -rf "$dir"
-    git clone -q --recursive "https://github.com/$path.git" "$dir" &
+    (git clone -q --recursive "https://github.com/$path.git" "$dir" && printf '.') &
   done
 
   wait
 }
 
 extract() {
+  printf "\n"
   for pack in $1; do
-    path="$(echo $pack | cut -d ':' -f 2)"
-    dir="tmp/$(echo "$path" | cut -d '/' -f 2)"
+    name="$(printf "$pack" | cut -d ':' -f 1)"
+    path="$(printf "$pack" | cut -d ':' -f 2)"
+    dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
+    printf -- "- [$name](https://github.com/$path) ("
 
     # which tree > /dev/null && tree tmp
+    subdirs=""
     for subdir in $DIRS; do
-      copy_dir "$dir" "$subdir"
+      if [ -d "$dir/$subdir" ]; then
+        base="$(basename "$subdir")"
+        if [[ "$subdirs" != *"$base"* ]]; then
+          subdirs="$subdirs, $base"
+        fi
+
+        copy_dir "$dir" "$subdir"
+      fi
     done
+
+    printf "${subdirs##, })\n"
+  done
+}
+
+copy_dir() {
+  for file in $(find "$1/$2" -name '*.vim'); do
+    file_path="$(dirname "${file##$1/}")"
+    mkdir -p "$file_path"
+    cp $file $file_path/
   done
 }
 
@@ -92,6 +98,7 @@ PACKS="
   xls:vim-scripts/XSLT-syntax
 "
 
+printf "Downloading packs..."
 download "$PACKS"
 extract "$PACKS"
 
