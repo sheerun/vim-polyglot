@@ -18,15 +18,25 @@ copy_dir() {
 }
 
 # Fetches syntax files from given Github repo
-syntax() {
-  dir="tmp/$(echo "$1" | cut -d '/' -f 2)"
-  echo "- [$1](https://github.com/$1)"
-  rm -rf "$dir"
-  git clone -q --recursive "https://github.com/$1.git" "$dir"
-  # which tree > /dev/null && tree tmp
 
-  for subdir in $DIRS; do
-    copy_dir "$dir" "$subdir"
+download() {
+  for pack in $1; do
+    dir="tmp/$(echo "$pack" | cut -d '/' -f 2)"
+    echo "- [$pack](https://github.com/$pack)"
+    rm -rf "$dir"
+    git clone -q --recursive "https://github.com/$pack.git" "$dir" &
+  done
+
+  wait
+}
+
+extract() {
+  for pack in $1; do
+    dir="tmp/$(echo "$pack" | cut -d '/' -f 2)"
+    # which tree > /dev/null && tree tmp
+    for subdir in $DIRS; do
+      copy_dir "$dir" "$subdir"
+    done
   done
 }
 
@@ -34,43 +44,46 @@ rm -rf tmp
 rm -rf $DIRS
 mkdir -p tmp
 
-syntax 'vim-ruby/vim-ruby' &
-syntax 'kchmck/vim-coffee-script' &
-syntax 'tpope/vim-haml' &
-syntax 'tpope/vim-bundler' &
-syntax 'pangloss/vim-javascript' &
-syntax 'leshill/vim-json' &
-syntax 'mutewinter/tomdoc.vim' &
-syntax 'mutewinter/nginx.vim' &
-syntax 'timcharper/textile.vim' &
-syntax 'tpope/vim-markdown' &
-syntax 'nono/vim-handlebars' &
-syntax 'acustodioo/vim-tmux' &
-syntax 'groenewege/vim-less' &
-syntax 'wavded/vim-stylus' &
-syntax 'tpope/vim-cucumber' &
-syntax 'jrk/vim-ocaml' &
-syntax 'slim-template/vim-slim' &
-syntax 'vim-scripts/XSLT-syntax' &
-syntax 'vim-scripts/python.vim--Vasiliev' &
-syntax 'vim-scripts/octave.vim--' &
-syntax 'jnwhiteh/vim-golang' &
-syntax 'spf13/PIV' &
-syntax 'briancollins/vim-jst' &
-syntax 'derekwyatt/vim-scala' &
-syntax 'derekwyatt/vim-sbt' &
-syntax 'travitch/hasksyn' &
-syntax 'ajf/puppet-vim' &
-syntax 'beyondwords/vim-twig' &
-syntax 'sudar/vim-arduino-syntax' &
-syntax 'guns/vim-clojure-static' &
-syntax 'chrisbra/csv.vim' &
-syntax 'elixir-lang/vim-elixir' &
-syntax 'jimenezrick/vimerl' &
-syntax 'tpope/vim-git' &
-syntax 'skwp/vim-rspec' &
-syntax 'cakebaker/scss-syntax.vim' &
+PACKS="
+  vim-ruby/vim-ruby
+  kchmck/vim-coffee-script
+  tpope/vim-haml
+  tpope/vim-bundler
+  pangloss/vim-javascript
+  leshill/vim-json
+  mutewinter/tomdoc.vim
+  mutewinter/nginx.vim
+  timcharper/textile.vim
+  tpope/vim-markdown
+  nono/vim-handlebars
+  acustodioo/vim-tmux
+  groenewege/vim-less
+  wavded/vim-stylus
+  tpope/vim-cucumber
+  jrk/vim-ocaml
+  slim-template/vim-slim
+  vim-scripts/XSLT-syntax
+  vim-scripts/python.vim--Vasiliev
+  vim-scripts/octave.vim--
+  jnwhiteh/vim-golang
+  spf13/PIV
+  briancollins/vim-jst
+  derekwyatt/vim-scala
+  derekwyatt/vim-sbt
+  travitch/hasksyn
+  ajf/puppet-vim
+  beyondwords/vim-twig
+  sudar/vim-arduino-syntax
+  guns/vim-clojure-static
+  chrisbra/csv.vim
+  elixir-lang/vim-elixir
+  jimenezrick/vimerl
+  tpope/vim-git
+  skwp/vim-rspec
+  cakebaker/scss-syntax.vim
+"
 
-wait
+download "$PACKS"
+extract "$PACKS"
 
 rm -rf tmp
