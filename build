@@ -84,6 +84,8 @@ PACKS="
   jcf/vim-latex
   othree/html5.vim
   ap/vim-css-color
+  vim-jp/cpp-vim
+  octol/vim-cpp-enhanced-highlight
 "
 
 download "$PACKS"
