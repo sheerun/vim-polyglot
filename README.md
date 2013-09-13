@@ -5,7 +5,8 @@ A collection of language packs for Vim.
 One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as all files are loaded only on demand.
-- Language packs are merged, not submoduled. It significantly speeds up installation time. 
+- It installs **40x faster** (unparallelized), as language packs are not submoduled, but merged.
+- It clones even faster as all unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages (there is for modern ones like `slim` though).
 
 ## Installation
