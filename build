@@ -83,6 +83,7 @@ PACKS="
   vim-scripts/vbnet.vim
   jcf/vim-latex
   othree/html5.vim
+  ap/vim-css-color
 "
 
 download "$PACKS"
