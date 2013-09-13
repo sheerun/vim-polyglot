@@ -1,12 +1,11 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
 set -E
-setopt extended_glob
 
-DIRS=(
+DIRS="
   syntax indent ftplugin ftdetect autoload compiler
   after/syntax after/indent after/ftplugin after/ftdetect
-)
+"
 
 copy_dir() {
   if [ -d "$1/$2" ]; then
