@@ -11,6 +11,8 @@ A collection of language packs for Vim.
 1. Install pathogen, Vundle or NeoBundle package manager.
 2. Use this repository as submodule or package.
 
+Optionally download one of the [releases](https://github.com/sheerun/vim-polyglot/releases) and unpack it directly under `~/.vim` directory.
+
 ## Language packs
 
 - [arduino](https://github.com/sudar/vim-arduino-syntax)
