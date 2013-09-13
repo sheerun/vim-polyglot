@@ -1,6 +1,6 @@
 # vim-polyglot
 
-Collection of language packs for Vim.
+A collection of language packs for Vim.
 
 - It **won't affect your startup time**, as all files are loaded only on demand.
 - Language packs are merged, not submoduled. It significantly speeds up installation time. 
