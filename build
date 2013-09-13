@@ -81,6 +81,7 @@ PACKS="
   tpope/vim-git
   skwp/vim-rspec
   vim-scripts/vbnet.vim
+  jcf/vim-latex
 "
 
 download "$PACKS"
