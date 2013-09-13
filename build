@@ -80,6 +80,7 @@ PACKS="
   jimenezrick/vimerl
   tpope/vim-git
   skwp/vim-rspec
+  vim-scripts/vbnet.vim
 "
 
 download "$PACKS"
