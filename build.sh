@@ -21,10 +21,10 @@ copy_dir() {
 # Fetches syntax files from given Github repo
 syntax() {
   dir="tmp/$(echo "$1" | cut -d '/' -f 2)"
-  echo "$1..."
+  echo "- [$1](https://github.com/$1)"
   rm -rf "$dir"
   git clone -q --recursive "https://github.com/$1.git" "$dir"
-  which tree > /dev/null && tree tmp
+  # which tree > /dev/null && tree tmp
 
   for subdir in $DIRS; do
     copy_dir "$dir" "$subdir"
