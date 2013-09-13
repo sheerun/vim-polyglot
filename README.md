@@ -21,12 +21,12 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 
 - [arduino](https://github.com/sudar/vim-arduino-syntax)
 - [bundler](https://github.com/tpope/vim-bundler)
-- [c/c++](https://github.com/vim-jp/cpp-vim)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight)
+- [c/c++](https://github.com/vim-jp/cpp-vim)
 - [clojure](https://github.com/guns/vim-clojure-static)
 - [coffee-script](https://github.com/kchmck/vim-coffee-script)
+- [css-color](https://github.com/ap/vim-css-color)
 - [csv](https://github.com/chrisbra/csv.vim)
-- [css colors](https://github.com/ap/vim-css-color)
 - [cucumber](https://github.com/tpope/vim-cucumber)
 - [elixir](https://github.com/elixir-lang/vim-elixir)
 - [erlang](https://github.com/jimenezrick/vimerl)
@@ -57,9 +57,9 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [textile](https://github.com/timcharper/textile.vim)
 - [tmux](https://github.com/acustodioo/vim-tmux)
 - [tomdoc](https://github.com/mutewinter/tomdoc.vim)
-- [twig](https://github.com/beyondwords/vim-twig)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim)
-- [xls](https://github.com/vim-scripts/XSLT-syntax) 
+- [twig](https://github.com/beyondwords/vim-twig)
+- [xls](https://github.com/vim-scripts/XSLT-syntax)
 
 ## Contributing
 

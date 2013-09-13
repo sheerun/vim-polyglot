@@ -21,10 +21,12 @@ copy_dir() {
 
 download() {
   for pack in $1; do
-    dir="tmp/$(echo "$pack" | cut -d '/' -f 2)"
-    echo "- [$pack](https://github.com/$pack)"
+    name="$(echo $pack | cut -d ':' -f 1)"
+    path="$(echo $pack | cut -d ':' -f 2)"
+    dir="tmp/$(echo "$path" | cut -d '/' -f 2)"
+    echo "- [$name](https://github.com/$path)"
     rm -rf "$dir"
-    git clone -q --recursive "https://github.com/$pack.git" "$dir" &
+    git clone -q --recursive "https://github.com/$path.git" "$dir" &
   done
 
   wait
@@ -32,7 +34,9 @@ download() {
 
 extract() {
   for pack in $1; do
-    dir="tmp/$(echo "$pack" | cut -d '/' -f 2)"
+    path="$(echo $pack | cut -d ':' -f 2)"
+    dir="tmp/$(echo "$path" | cut -d '/' -f 2)"
+
     # which tree > /dev/null && tree tmp
     for subdir in $DIRS; do
       copy_dir "$dir" "$subdir"
@@ -45,47 +49,47 @@ rm -rf $DIRS
 mkdir -p tmp
 
 PACKS="
-  vim-ruby/vim-ruby
-  kchmck/vim-coffee-script
-  tpope/vim-haml
-  tpope/vim-bundler
-  pangloss/vim-javascript
-  leshill/vim-json
-  mutewinter/tomdoc.vim
-  mutewinter/nginx.vim
-  timcharper/textile.vim
-  tpope/vim-markdown
-  nono/vim-handlebars
-  acustodioo/vim-tmux
-  groenewege/vim-less
-  wavded/vim-stylus
-  tpope/vim-cucumber
-  jrk/vim-ocaml
-  slim-template/vim-slim
-  vim-scripts/XSLT-syntax
-  vim-scripts/python.vim--Vasiliev
-  vim-scripts/octave.vim--
-  jnwhiteh/vim-golang
-  spf13/PIV
-  briancollins/vim-jst
-  derekwyatt/vim-scala
-  derekwyatt/vim-sbt
-  travitch/hasksyn
-  ajf/puppet-vim
-  beyondwords/vim-twig
-  sudar/vim-arduino-syntax
-  guns/vim-clojure-static
-  chrisbra/csv.vim
-  elixir-lang/vim-elixir
-  jimenezrick/vimerl
-  tpope/vim-git
-  skwp/vim-rspec
-  vim-scripts/vbnet.vim
-  jcf/vim-latex
-  othree/html5.vim
-  ap/vim-css-color
-  vim-jp/cpp-vim
-  octol/vim-cpp-enhanced-highlight
+  arduino:sudar/vim-arduino-syntax
+  bundler:tpope/vim-bundler
+  c++11:octol/vim-cpp-enhanced-highlight
+  c/c++:vim-jp/cpp-vim
+  clojure:guns/vim-clojure-static
+  coffee-script:kchmck/vim-coffee-script
+  css-color:ap/vim-css-color
+  csv:chrisbra/csv.vim
+  cucumber:tpope/vim-cucumber
+  elixir:elixir-lang/vim-elixir
+  erlang:jimenezrick/vimerl
+  git:tpope/vim-git
+  go:jnwhiteh/vim-golang
+  haml:tpope/vim-haml
+  handlebars:nono/vim-handlebars
+  haskell:travitch/hasksyn
+  html5:othree/html5.vim
+  javascript:pangloss/vim-javascript
+  json:leshill/vim-json
+  jst:briancollins/vim-jst
+  latex:jcf/vim-latex
+  less:groenewege/vim-less
+  markdown:tpope/vim-markdown
+  nginx:mutewinter/nginx.vim
+  ocaml:jrk/vim-ocaml
+  octave:vim-scripts/octave.vim--
+  php:spf13/PIV
+  puppet:ajf/puppet-vim
+  python:vim-scripts/python.vim--Vasiliev
+  rspec:skwp/vim-rspec
+  ruby:vim-ruby/vim-ruby
+  sbt:derekwyatt/vim-sbt
+  scala:derekwyatt/vim-scala
+  slim:slim-template/vim-slim
+  stylus:wavded/vim-stylus
+  textile:timcharper/textile.vim
+  tmux:acustodioo/vim-tmux
+  tomdoc:mutewinter/tomdoc.vim
+  vbnet:vim-scripts/vbnet.vim
+  twig:beyondwords/vim-twig
+  xls:vim-scripts/XSLT-syntax
 "
 
 download "$PACKS"
