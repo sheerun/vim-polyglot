@@ -1,8 +1,7 @@
 require 'vimrunner'
 require 'vimrunner/rspec'
 
-PLUGIN_PATH = File.expand_path('../..', __FILE__)
-puts PLUGIN_PATH
+$plugin_path = File.expand_path('../..', __FILE__)
 
 Vimrunner::RSpec.configure do |config|
   # Use a single Vim instance for the test suite. Set to false to use an
@@ -15,7 +14,7 @@ Vimrunner::RSpec.configure do |config|
     vim = Vimrunner.start
 
     # Setup your plugin in the Vim instance
-    vim.add_plugin(PLUGIN_PATH)
+    vim.add_plugin($plugin_path)
 
     # The returned value is the Client available in the tests.
     vim
