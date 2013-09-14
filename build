@@ -72,6 +72,7 @@ PACKS="
   handlebars:nono/vim-handlebars
   haskell:travitch/hasksyn
   html5:othree/html5.vim
+  jade:digitaltoad/vim-jade
   javascript:pangloss/vim-javascript
   json:leshill/vim-json
   jst:briancollins/vim-jst
