@@ -57,7 +57,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin, ftdetect)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)
 - [tmux](https://github.com/acustodioo/vim-tmux) (syntax, ftdetect)
-- [tomdoc](https://github.com/mutewinter/tomdoc.vim) (syntax)
+- [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [twig](https://github.com/beyondwords/vim-twig) (syntax, ftplugin, ftdetect)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
