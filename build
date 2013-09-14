@@ -94,7 +94,7 @@ PACKS="
   stylus:wavded/vim-stylus
   textile:timcharper/textile.vim
   tmux:acustodioo/vim-tmux
-  tomdoc:mutewinter/tomdoc.vim
+  tomdoc:duwanis/tomdoc.vim
   vbnet:vim-scripts/vbnet.vim
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
