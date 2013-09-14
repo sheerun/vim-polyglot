@@ -1,7 +1,7 @@
 require 'vimrunner'
 require 'vimrunner/rspec'
 
-PLUGIN_PATH = File.expand_path('../../..', __FILE__)
+PLUGIN_PATH = File.expand_path('../..', __FILE__)
 puts PLUGIN_PATH
 
 Vimrunner::RSpec.configure do |config|
