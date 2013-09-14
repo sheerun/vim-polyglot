@@ -50,10 +50,6 @@ copy_dir() {
   done
 }
 
-rm -rf tmp
-rm -rf $DIRS
-mkdir -p tmp
-
 PACKS="
   arduino:sudar/vim-arduino-syntax
   bundler:tpope/vim-bundler
@@ -99,6 +95,10 @@ PACKS="
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
 "
+
+rm -rf tmp
+rm -rf $DIRS
+mkdir -p tmp
 
 printf "Downloading packs..."
 download "$PACKS"
