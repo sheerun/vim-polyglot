@@ -15,6 +15,6 @@ syn match tomdocDescriptions +\s*Public:+he=e-1 containedin=rubyComment containe
 syn match tomdocDescriptions +\s*Internal:+he=e-1 containedin=rubyComment contained
 syn match tomdocDescriptions +\s*Deprecated:+he=e-1 containedin=rubyComment contained
 
-hi default link tomdocDescriptions TODO
-hi default link tomdocKeywords TODO
+hi default link tomdocDescriptions String
+hi default link tomdocKeywords String
 hi default link tomdocArguments HELP
