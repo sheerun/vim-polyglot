@@ -82,7 +82,7 @@ PACKS="
   nginx:mutewinter/nginx.vim
   ocaml:jrk/vim-ocaml
   octave:vim-scripts/octave.vim--
-  php:spf13/PIV
+  php:StanAngeloff/php.vim
   puppet:ajf/puppet-vim
   protobuf:uarun/vim-protobuf
   python:vim-scripts/python.vim--Vasiliev
