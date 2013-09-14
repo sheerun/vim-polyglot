@@ -83,6 +83,7 @@ PACKS="
   octave:vim-scripts/octave.vim--
   php:spf13/PIV
   puppet:ajf/puppet-vim
+  protobuf:uarun/vim-protobuf
   python:vim-scripts/python.vim--Vasiliev
   rspec:skwp/vim-rspec
   ruby:vim-ruby/vim-ruby
