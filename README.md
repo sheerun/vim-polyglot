@@ -1,4 +1,7 @@
-# vim-polyglot
+# vim-polyglot [![Build Status][travis-img-url]][travis-url]
+
+[travis-img-url]: https://travis-ci.org/sheerun/vim-polyglot.png
+[travis-url]: https://travis-ci-org/sheerun/vim-polyglot
 
 A collection of language packs for Vim.
 
@@ -9,6 +12,7 @@ One to rule them all, one to find them, one to bring them all and in the darknes
 - It clones even faster as all unnecessary files are ignored (like enormous documentation from php support).
 - Best syntax and indentation support. If someone releases better language pack, it will be replaced here.
 - No support for esoteric languages (vim-polyglot supports modern ones like `slim` though).
+- Each build is tested by automated Travis CI setup using vimrunner gem. Spee `spec` directory.
 
 ## Installation
 
