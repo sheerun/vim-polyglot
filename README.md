@@ -36,6 +36,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [handlebars](https://github.com/nono/vim-handlebars) (syntax, ftplugin, ftdetect)
 - [haskell](https://github.com/travitch/hasksyn) (syntax, indent, ftplugin)
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload)
+- [jade](https://github.com/digitaltoad/vim-jade) (syntax, indent, ftplugin, ftdetect)
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftdetect)
 - [json](https://github.com/leshill/vim-json) (syntax, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
