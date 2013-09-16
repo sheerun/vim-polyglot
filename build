@@ -35,7 +35,18 @@ extract() {
       fi
     done
 
+
     printf "${subdirs##, })\n"
+  done
+
+  for pack in $1; do
+    name="$(printf "$pack" | cut -d ':' -f 1)"
+    path="$(printf "$pack" | cut -d ':' -f 2)"
+    dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
+
+    if [ -d "$dir/plugin" ]; then
+      printf "Possible error (plugin directory exists): $path\n"
+    fi
   done
 }
 
