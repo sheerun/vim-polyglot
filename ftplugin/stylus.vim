@@ -45,6 +45,8 @@ endif
 
 setlocal comments= commentstring=//\ %s
 
+setlocal suffixesadd=.styl
+
 " Add '-' and '#' to the what makes up a keyword.
 " This means that 'e' and 'w' work properly now, for properties
 " and valid variable names.
