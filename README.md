@@ -76,3 +76,7 @@ Feel free to add your language, and send pull-request.
 ## License
 
 See linked repositories for detailed license information.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sheerun/vim-polyglot/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
