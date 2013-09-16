@@ -7,7 +7,7 @@ A collection of language packs for Vim.
 
 One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
-- It **won't affect your startup time**, as all files are loaded only on demand.
+- It **won't affect your startup time**, as scripts are loaded on demand (except 3ms for `ftdetect`).
 - It **installs 40x faster** (unparallelized), as language packs are not submoduled, but merged.
 - It clones even faster as all unnecessary files are ignored (like enormous documentation from php support).
 - Best syntax and indentation support. If someone releases better language pack, it will be replaced here.

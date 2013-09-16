@@ -50,6 +50,12 @@ copy_dir() {
   done
 }
 
+concat_ftdetect() {
+  cat ftdetect/* | grep -E '^[^"]' > tmp/polyglot.vim
+  rm -f ftdetect/*
+  mv tmp/polyglot.vim ftdetect/
+}
+
 PACKS="
   arduino:sudar/vim-arduino-syntax
   bundler:tpope/vim-bundler
@@ -103,5 +109,6 @@ mkdir -p tmp
 printf "Downloading packs..."
 download "$PACKS"
 extract "$PACKS"
+concat_ftdetect
 
 rm -rf tmp
