@@ -46,7 +46,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftdetect)
 - [json](https://github.com/leshill/vim-json) (syntax, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
-- [latex](https://github.com/jcf/vim-latex) (indent, compiler, ftplugin)
+- [latex](https://github.com/LaTeX-Box-Team/LaTeX-Box) (syntax, indent, ftplugin)
 - [less](https://github.com/groenewege/vim-less) (syntax, indent, ftplugin, ftdetect)
 - [markdown](https://github.com/tpope/vim-markdown) (syntax, ftplugin, ftdetect)
 - [nginx](https://github.com/mutewinter/nginx.vim) (syntax, ftdetect)

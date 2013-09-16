@@ -75,7 +75,7 @@ PACKS="
   javascript:pangloss/vim-javascript
   json:leshill/vim-json
   jst:briancollins/vim-jst
-  latex:jcf/vim-latex
+  latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
   markdown:tpope/vim-markdown
   nginx:mutewinter/nginx.vim
