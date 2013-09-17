@@ -95,7 +95,7 @@ PACKS="
   puppet:ajf/puppet-vim
   protobuf:uarun/vim-protobuf
   python:vim-scripts/python.vim--Vasiliev
-  rspec:skwp/vim-rspec
+  rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
