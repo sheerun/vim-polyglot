@@ -75,7 +75,7 @@ PACKS="
   csv:chrisbra/csv.vim
   cucumber:tpope/vim-cucumber
   elixir:elixir-lang/vim-elixir
-  erlang:jimenezrick/vimerl
+  erlang:oscarh/vimerl
   git:tpope/vim-git
   go:jnwhiteh/vim-golang
   haml:tpope/vim-haml

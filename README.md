@@ -35,7 +35,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [csv](https://github.com/chrisbra/csv.vim) (syntax, ftplugin, ftdetect)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin, ftdetect)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, ftplugin, ftdetect)
-- [erlang](https://github.com/jimenezrick/vimerl) (syntax, indent, compiler, autoload, ftplugin)
+- [erlang](https://github.com/oscarh/vimerl) (syntax, indent, compiler, autoload, ftplugin)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin, ftdetect)
 - [go](https://github.com/jnwhiteh/vim-golang) (syntax, indent, autoload, ftplugin, ftdetect)
 - [haml](https://github.com/tpope/vim-haml) (syntax, indent, compiler, ftplugin, ftdetect)
