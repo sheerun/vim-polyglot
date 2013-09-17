@@ -51,6 +51,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [nginx](https://github.com/mutewinter/nginx.vim) (syntax, ftdetect)
 - [ocaml](https://github.com/jrk/vim-ocaml) (syntax, indent, ftplugin)
 - [octave](https://github.com/vim-scripts/octave.vim--) (syntax)
+- [perl](https://github.com/vim-perl/vim-perl) (syntax, indent, ftplugin, ftdetect)
 - [php](https://github.com/StanAngeloff/php.vim) (syntax)
 - [puppet](https://github.com/ajf/puppet-vim) (syntax, indent, ftplugin, ftdetect)
 - [protobuf](https://github.com/uarun/vim-protobuf) (syntax, ftdetect)
