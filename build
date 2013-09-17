@@ -66,7 +66,6 @@ concat_ftdetect() {
 
 PACKS="
   arduino:sudar/vim-arduino-syntax
-  bundler:tpope/vim-bundler
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/cpp-vim
   clojure:guns/vim-clojure-static

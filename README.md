@@ -26,7 +26,6 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 ## Language packs
 
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, ftdetect)
-- [bundler](https://github.com/tpope/vim-bundler) (compiler)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/cpp-vim) (syntax)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin, ftdetect)
