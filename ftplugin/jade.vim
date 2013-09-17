@@ -45,6 +45,8 @@ endif
 
 setlocal comments=://-,:// commentstring=//\ %s
 
+setlocal suffixesadd=.jade
+
 let b:undo_ftplugin = "setl cms< com< "
       \ " | unlet! b:browsefilter b:match_words | " . s:undo_ftplugin
 
