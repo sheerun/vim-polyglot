@@ -39,8 +39,15 @@ function! GetElixirIndent(...)
   endif
 
   if synIDattr(synID(v:lnum, 1, 1), "name") !~ '\(Comment\|String\)$'
+    let splited_line = split(getline(lnum), '\zs')
+    let opened_symbol  = 0
+    let opened_symbol += count(splited_line, '[') - count(splited_line, ']')
+    let opened_symbol += count(splited_line, '{') - count(splited_line, '}')
+
+    let ind += opened_symbol * &sw
+
     if getline(lnum) =~ s:indent_keywords .
-          \ '\|^\s*\%(^.*[\[{(].*[,:]\|.*->\)$'
+          \ '\|^\s*\%(.*->\)$'
       let ind += &sw
     endif
 

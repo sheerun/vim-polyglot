@@ -153,13 +153,15 @@ function! LatexBox_FoldLevel(lnum)
         endif
     endfor
 
+    " Never fold \end{document}
+    if line =~# '^\s*\\end{document}'
+        return 0
+    endif
+
     " Fold environments
     if g:LatexBox_fold_envs == 1
         if line =~# s:envbeginpattern
             return "a1"
-        elseif line =~# '^\s*\\end{document}'
-            " Never fold \end{document}
-            return 0
         elseif line =~# s:envendpattern
             return "s1"
         endif

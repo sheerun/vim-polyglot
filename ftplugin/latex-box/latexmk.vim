@@ -5,6 +5,9 @@
 if !exists('g:LatexBox_latexmk_options')
 	let g:LatexBox_latexmk_options = ''
 endif
+if !exists('g:LatexBox_latexmk_env')
+	let g:LatexBox_latexmk_env = ''
+endif
 if !exists('g:LatexBox_latexmk_async')
 	let g:LatexBox_latexmk_async = 0
 endif
@@ -155,6 +158,9 @@ function! LatexBox_Latexmk(force)
 	else
 		let env = 'max_print_line=' . max_print_line
 	endif
+
+	" Set environment options
+	let env .= ' ' . g:LatexBox_latexmk_env . ' '
 
 	" Set latexmk command with options
 	if has('win32')

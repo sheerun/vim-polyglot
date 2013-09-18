@@ -785,6 +785,41 @@ function! s:GetEnvironmentList(lead, cmdline, pos)
 	endfor
 	return suggestions
 endfunction
+
+function! s:LatexToggleStarEnv()
+	let [env, lnum, cnum, lnum2, cnum2] = LatexBox_GetCurrentEnvironment(1)
+
+	if env == '\('
+		return
+	elseif env == '\['
+		let begin = '\begin{equation}'
+		let end = '\end{equation}'
+	elseif env[-1:] == '*'
+		let begin = '\begin{' . env[:-2] . '}'
+		let end   = '\end{'   . env[:-2] . '}'
+	else
+		let begin = '\begin{' . env . '*}'
+		let end   = '\end{'   . env . '*}'
+	endif
+
+	if env == '\['
+		let line = getline(lnum2)
+		let line = strpart(line, 0, cnum2 - 1) . l:end . strpart(line, cnum2 + 1)
+		call setline(lnum2, line)
+
+		let line = getline(lnum)
+		let line = strpart(line, 0, cnum - 1) . l:begin . strpart(line, cnum + 1)
+		call setline(lnum, line)
+	else
+		let line = getline(lnum2)
+		let line = strpart(line, 0, cnum2 - 1) . l:end . strpart(line, cnum2 + len(env) + 5)
+		call setline(lnum2, line)
+
+		let line = getline(lnum)
+		let line = strpart(line, 0, cnum - 1) . l:begin . strpart(line, cnum + len(env) + 7)
+		call setline(lnum, line)
+	endif
+endfunction
 " }}}
 
 " Next Charaters Match {{{
@@ -800,6 +835,7 @@ vnoremap <silent> <Plug>LatexWrapSelection			:<c-u>call <SID>WrapSelection('')<C
 vnoremap <silent> <Plug>LatexEnvWrapSelection		:<c-u>call <SID>PromptEnvWrapSelection()<CR>
 vnoremap <silent> <Plug>LatexEnvWrapFmtSelection	:<c-u>call <SID>PromptEnvWrapSelection(1)<CR>
 nnoremap <silent> <Plug>LatexChangeEnv				:call <SID>ChangeEnvPrompt()<CR>
+nnoremap <silent> <Plug>LatexToggleStarEnv			:call <SID>LatexToggleStarEnv()<CR>
 " }}}
 
 " vim:fdm=marker:ff=unix:noet:ts=4:sw=4
