@@ -99,6 +99,16 @@ let s:SYNTAX_COMMENT = 'coffee\%(Comment\|BlockComment\|HeregexComment\)'
 " Syntax names for strings and comments
 let s:SYNTAX_STRING_COMMENT = s:SYNTAX_STRING . '\|' . s:SYNTAX_COMMENT
 
+" Compatibility code for shiftwidth() as recommended by the docs, but modified
+" so there isn't as much of a penalty if shiftwidth() exists.
+if exists('*shiftwidth')
+  let s:ShiftWidth = function('shiftwidth')
+else
+  function! s:ShiftWidth()
+    return &shiftwidth
+  endfunction
+endif
+
 " Get the linked syntax name of a character.
 function! s:SyntaxName(lnum, col)
   return synIDattr(synID(a:lnum, a:col, 1), 'name')
@@ -329,16 +339,16 @@ function! GetCoffeeIndent(curlnum)
 
   " Always indent after these operators.
   if prevline =~ s:BEGIN_BLOCK_OP
-    return indent(prevnlnum) + shiftwidth()
+    return indent(prevnlnum) + s:ShiftWidth()
   endif
 
   " Indent if the previous line starts a function block, but don't force
   " indenting if the line is non-blank (for empty function bodies.)
   if prevline =~ s:FUNCTION
     if strlen(getline(a:curlnum)) > indent(a:curlnum)
-      return min([indent(prevnlnum) + shiftwidth(), indent(a:curlnum)])
+      return min([indent(prevnlnum) + s:ShiftWidth(), indent(a:curlnum)])
     else
-      return indent(prevnlnum) + shiftwidth()
+      return indent(prevnlnum) + s:ShiftWidth()
     endif
   endif
 
@@ -365,7 +375,7 @@ function! GetCoffeeIndent(curlnum)
     endif
 
     " Otherwise indent a level.
-    return indent(prevnlnum) + shiftwidth()
+    return indent(prevnlnum) + s:ShiftWidth()
   endif
 
   " Check if the previous line starts with a keyword that begins a block.
@@ -374,7 +384,7 @@ function! GetCoffeeIndent(curlnum)
     " isn't a single-line statement.
     if curline !~ '\C^\<then\>' && !s:SearchCode(prevnlnum, '\C\<then\>') &&
     \  prevline !~ s:SINGLE_LINE_ELSE
-      return indent(prevnlnum) + shiftwidth()
+      return indent(prevnlnum) + s:ShiftWidth()
     else
       exec 'return' s:GetDefaultPolicy(a:curlnum)
     endif
@@ -383,7 +393,7 @@ function! GetCoffeeIndent(curlnum)
   " Indent a dot access if it's the first.
   if curline =~ s:DOT_ACCESS
     if prevline !~ s:DOT_ACCESS
-      return indent(prevnlnum) + shiftwidth()
+      return indent(prevnlnum) + s:ShiftWidth()
     else
       exec 'return' s:GetDefaultPolicy(a:curlnum)
     endif
@@ -396,7 +406,7 @@ function! GetCoffeeIndent(curlnum)
     \   s:SearchCode(prevnlnum, '\C\<then\>') &&
     \  !s:SearchCode(prevnlnum, s:CONTAINED_THEN)
       " Don't force indenting.
-      return min([indent(a:curlnum), indent(prevnlnum) - shiftwidth()])
+      return min([indent(a:curlnum), indent(prevnlnum) - s:ShiftWidth()])
     else
       exec 'return' s:GetDefaultPolicy(a:curlnum)
     endif
@@ -410,7 +420,7 @@ function! GetCoffeeIndent(curlnum)
   " If inside brackets, indent relative to the brackets, but don't outdent an
   " already indented line.
   if matchlnum
-    return max([indent(a:curlnum), indent(matchlnum) + shiftwidth()])
+    return max([indent(a:curlnum), indent(matchlnum) + s:ShiftWidth()])
   endif
 
   " No special rules applied, so use the default policy.

@@ -1,6 +1,9 @@
 " LaTeX indent file (part of LaTeX Box)
 " Maintainer: David Munger (mungerd@gmail.com)
 
+if exists("g:LatexBox_custom_indent") && ! g:LatexBox_custom_indent
+	finish
+endif
 if exists("b:did_indent")
 	finish
 endif
