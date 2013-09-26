@@ -73,6 +73,7 @@ PACKS="
   css-color:ap/vim-css-color
   csv:chrisbra/csv.vim
   cucumber:tpope/vim-cucumber
+  dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
   erlang:oscarh/vimerl
   git:tpope/vim-git
