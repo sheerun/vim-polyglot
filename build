@@ -98,6 +98,7 @@ PACKS="
   python:vim-scripts/python.vim--Vasiliev
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
+  rust:wting/rust.vim
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   slim:slim-template/vim-slim

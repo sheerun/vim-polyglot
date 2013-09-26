@@ -104,6 +104,7 @@ au BufNewFile,BufRead *.jbuilder		set filetype=ruby
 au BufNewFile,BufRead Puppetfile		set filetype=ruby
 au BufNewFile,BufRead [Bb]uildfile		set filetype=ruby
 au BufNewFile,BufRead Appraisals		set filetype=ruby
+au BufRead,BufNewFile *.rs,*.rc set filetype=rust
 au BufRead,BufNewFile *.sbt set filetype=sbt
 fun! s:DetectScala()
     if getline(1) == '#!/usr/bin/env scala'
