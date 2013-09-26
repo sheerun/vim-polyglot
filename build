@@ -105,6 +105,7 @@ PACKS="
   textile:timcharper/textile.vim
   tmux:acustodioo/vim-tmux
   tomdoc:duwanis/tomdoc.vim
+  typescript:leafgarland/typescript-vim
   vbnet:vim-scripts/vbnet.vim
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
