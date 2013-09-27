@@ -344,10 +344,11 @@ function! s:ReadTOC(auxfile, texfile, ...)
 			let page = ''
 		endif
 		" parse section number
+		let secnum = ''
 		if len(tree[1]) > 3 && empty(tree[1][1])
 			call remove(tree[1], 1)
 		endif
-		if len(tree[1]) > 1
+		if len(tree[1]) > 1 && tree[1][0] =~ '\(numberline\|tocsection\)'
 			if !empty(tree[1][1])
 				let secnum = LatexBox_TreeToTex(tree[1][1])
 				let secnum = substitute(secnum, '\\\S\+\s', '', 'g')
@@ -356,12 +357,12 @@ function! s:ReadTOC(auxfile, texfile, ...)
 			endif
 			let tree = tree[1][2:]
 		else
-			let secnum = ''
 			let tree = tree[1]
 		endif
 		" parse section title
 		let text = LatexBox_TreeToTex(tree)
 		let text = substitute(text, '^{\+\|}\+$', '', 'g')
+		let text = substitute(text, '\*',         '', 'g')
 
 		" add TOC entry
 		call add(fileindices[texfile], len(toc))
