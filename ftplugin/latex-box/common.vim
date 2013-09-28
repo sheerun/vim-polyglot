@@ -3,6 +3,7 @@
 " Error Format {{{
 " Note: The error formats assume we're using the -file-line-error with
 "       [pdf]latex.
+" Note: See |errorformat-LaTeX| for more info.
 
 " Check for options
 if !exists("g:LatexBox_show_warnings")
@@ -15,9 +16,14 @@ if !exists("g:LatexBox_ignore_warnings")
 				\ 'specifier changed to']
 endif
 
-" See |errorformat-LaTeX|
+" Standard error message formats
+" Note: We consider statements that starts with "!" as errors
 setlocal efm=%E!\ LaTeX\ %trror:\ %m
 setlocal efm+=%E%f:%l:\ %m
+setlocal efm+=%E!\ %m
+
+" More info for undefined control sequences
+setlocal efm+=%Z<argument>\ %m
 
 " Show or ignore warnings
 if g:LatexBox_show_warnings
@@ -28,22 +34,18 @@ if g:LatexBox_show_warnings
 	setlocal efm+=%+WLaTeX\ %.%#Warning:\ %.%#line\ %l%.%#
 	setlocal efm+=%+W%.%#\ at\ lines\ %l--%*\\d
 	setlocal efm+=%+WLaTeX\ %.%#Warning:\ %m
-	setlocal efm+=%+W%.%#%.%#Warning:\ %m
+	setlocal efm+=%+W%.%#Warning:\ %m
 else
 	setlocal efm+=%-WLaTeX\ %.%#Warning:\ %.%#line\ %l%.%#
 	setlocal efm+=%-W%.%#\ at\ lines\ %l--%*\\d
 	setlocal efm+=%-WLaTeX\ %.%#Warning:\ %m
-	setlocal efm+=%-W%.%#%.%#Warning:\ %m
+	setlocal efm+=%-W%.%#Warning:\ %m
 endif
-
-" Consider the remaining statements that starts with "!" as errors
-setlocal efm+=%E!\ %m
 
 " Push file to file stack
 setlocal efm+=%+P**%f
 
 " Ignore unmatched lines
-setlocal efm+=%-G\\s%#
 setlocal efm+=%-G%.%#
 " }}}
 
