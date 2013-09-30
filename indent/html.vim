@@ -331,6 +331,24 @@ fun! HtmlIndentGet(lnum)
         let ind = ind - 1
     endif
 
+    if getline(a:lnum) =~ '<p\>'
+      let block_start = search('^'.repeat(' ', ind * &sw).'\S'  , 'bnW')
+      let prev_tag = search('<p\>', 'bW', block_start)
+      let prev_closetag = search('</p\>', 'W', a:lnum)
+      if prev_tag && !prev_closetag
+        let ind = ind - 1
+      endif
+    endif
+
+    if getline(a:lnum) =~ '</\w\+>'
+      let block_start = search('^'.repeat(' ', ind * &sw).'\S'  , 'bnW')
+      let prev_tag = search('<p\>', 'bW', block_start)
+      let prev_closetag = search('</p\>', 'W', a:lnum)
+      if prev_tag && !prev_closetag
+        let ind = ind - 1
+      endif
+    endif
+
     if restore_ic == 0
         setlocal noic
     endif

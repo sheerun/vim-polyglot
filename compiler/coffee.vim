@@ -27,8 +27,8 @@ function! s:GetMakePrg()
   \      ' -c' .
   \      ' ' . b:coffee_litcoffee .
   \      ' ' . g:coffee_make_options .
-  \      ' ' . fnameescape(expand('%')) .
-  \      ' $*'
+  \      ' $*' .
+  \      ' ' . fnameescape(expand('%'))
 endfunction
 
 " Set `makeprg` and return 1 if coffee is still the compiler, else return 0.
