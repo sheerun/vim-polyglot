@@ -215,7 +215,7 @@ function! LatexBox_View()
 	if has('win32')
 		let cmd = '!start /b' . cmd . ' >nul'
 	else
-		let cmd = '!' . cmd . ' >/dev/null &'
+		let cmd = '!' . cmd . ' &>/dev/null &'
 	endif
 	silent execute cmd
 	if !has("gui_running")
