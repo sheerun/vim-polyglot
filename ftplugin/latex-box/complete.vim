@@ -196,37 +196,42 @@ function! s:FindBibData(...)
 	endif
 
 	if !filereadable(file)
-		return ''
+		return []
 	endif
+	let lines = readfile(file)
+	let bibdata_list = []
 
+	"
+	" Search for added bibliographies
+	"
 	let bibliography_cmds = [
 				\ '\\bibliography',
 				\ '\\addbibresource',
 				\ '\\addglobalbib',
 				\ '\\addsectionbib',
 				\ ]
-
-	let lines = readfile(file)
-
-	let bibdata_list = []
-
 	for cmd in bibliography_cmds
-		let bibdata_list += map(filter(copy(lines),
-					\ 'v:val =~ ''\C' . cmd . '\s*{[^}]\+}'''),
+		let filtered = filter(copy(lines),
+					\ 'v:val =~ ''\C' . cmd . '\s*{[^}]\+}''')
+		let files = map(filtered,
 					\ 'matchstr(v:val, ''\C' . cmd . '\s*{\zs[^}]\+\ze}'')')
+		for file in files
+			let bibdata_list += map(split(file, ','),
+						\ 'fnamemodify(v:val, '':r'')')
+		endfor
 	endfor
 
-	let bibdata_list += map(filter(copy(lines),
-				\ 'v:val =~ ''\C\\\%(input\|include\)\s*{[^}]\+}'''),
-				\ 's:FindBibData(LatexBox_kpsewhich(matchstr(v:val,'
-					\ . '''\C\\\%(input\|include\)\s*{\zs[^}]\+\ze}'')))')
+	"
+	" Also search included files
+	"
+	for input in filter(lines,
+				\ 'v:val =~ ''\C\\\%(input\|include\)\s*{[^}]\+}''')
+		let bibdata_list += s:FindBibData(LatexBox_kpsewhich(
+					\ matchstr(input,
+						\ '\C\\\%(input\|include\)\s*{\zs[^}]\+\ze}')))
+	endfor
 
-	let bibdata_list += map(filter(copy(lines),
-				\ 'v:val =~ ''\C\\\%(input\|include\)\s\+\S\+'''),
-				\ 's:FindBibData(LatexBox_kpsewhich(matchstr(v:val,'
-					\ . '''\C\\\%(input\|include\)\s\+\zs\S\+\ze'')))')
-
-	return join(bibdata_list, ',')
+	return bibdata_list
 endfunction
 
 let s:bstfile = expand('<sfile>:p:h') . '/vimcomplete'
@@ -235,7 +240,7 @@ function! LatexBox_BibSearch(regexp)
 	let res = []
 
 	" Find data from bib files
-	let bibdata = s:FindBibData()
+	let bibdata = join(s:FindBibData(), ',')
 	if bibdata != ''
 
 		" write temporary aux file
@@ -247,9 +252,15 @@ function! LatexBox_BibSearch(regexp)
 		call writefile(['\citation{*}', '\bibstyle{' . s:bstfile . '}',
 					\ '\bibdata{' . bibdata . '}'], auxfile)
 
-		silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
-					\ ' ; bibtex -terse '
-					\ . fnamemodify(auxfile, ':t') . ' >/dev/null'
+		if has('win32')
+			silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
+						\ ' & bibtex -terse '
+						\ . fnamemodify(auxfile, ':t') . ' >nul'
+		else
+			silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
+						\ ' ; bibtex -terse '
+						\ . fnamemodify(auxfile, ':t') . ' >/dev/null'
+		endif
 
 		let lines = split(substitute(join(readfile(bblfile), "\n"),
 					\ '\n\n\@!\(\s\=\)\s*\|{\|}', '\1', 'g'), "\n")
