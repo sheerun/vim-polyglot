@@ -19,29 +19,39 @@ ru! syntax/html.vim
 unlet b:current_syntax
 
 
-syn keyword hbsTodo             TODO FIXME XXX contained
+syn region  hbsInside          start=/{{/ end=/}}/ keepend
 
-syn match   hbsError            /}}}\?/
-syn match   hbsInsideError      /{{[{#<>=!\/]\?/   containedin=@hbsInside
+syn keyword hbsTodo            TODO FIXME XXX contained
 
-syn cluster htmlHbsContainer   add=htmlHead,htmlTitle,htmlString,htmlH1,htmlH2,htmlH3,htmlH4,htmlH5,htmlH6
-syn region  hbsInside          start=/{{/ end=/}}/  keepend transparent containedin=@htmlHbsContainer
+syn match   hbsError           /}}}\?/
+syn match   hbsInsideError     /{{[{#<>=!\/]\?/                         contained containedin=@hbsInside
 
-syn match   hbsHandlebars      "{{\|}}"                                 containedin=hbsInside
-syn match   hbsUnescape        "{{{\|}}}"                               containedin=hbsInside
-syn match   hbsOperators       "=\|\.\|/"                               containedin=hbsInside
+syn match   hbsHandlebars      "{{\|}}"                                 contained containedin=hbsInside
+syn match   hbsUnescape        "{{{\|}}}"                               contained containedin=hbsInside extend
+syn match   hbsOperators       "=\|\.\|/"                               contained containedin=hbsInside
 
-syn region  hbsSection         start="{{[#/]"lc=2 end=/}}/me=e-2        containedin=hbsInside
-syn region  hbsPartial         start=/{{[<>]/lc=2 end=/}}/me=e-2        containedin=hbsInside
-syn region  hbsMarkerSet       start=/{{=/lc=2    end=/=}}/me=e-2       containedin=hbsInside
+syn region  hbsSection         start="{{[#/]"lc=2 end=/}}/me=e-2        contained containedin=hbsInside
+syn region  hbsPartial         start=/{{[<>]/lc=2 end=/}}/me=e-2        contained containedin=hbsInside
+syn region  hbsMarkerSet       start=/{{=/lc=2    end=/=}}/me=e-2       contained containedin=hbsInside
 
-syn region  hbsComment         start=/{{!/rs=s+2    end=/}}/re=e-2      containedin=htmlHead contains=hbsTodo,Todo
-syn region  hbsBlockComment    start=/{{!--/rs=s+2  end=/--}}/re=e-2    containedin=htmlHead contains=hbsTodo,Todo
-syn region  hbsQString         start=/'/ skip=/\\'/ end=/'/             containedin=hbsInside
-syn region  hbsDQString        start=/"/ skip=/\\"/ end=/"/             containedin=hbsInside
+syn region  hbsComment         start=/{{!/rs=s+2    end=/}}/re=e-2      contained containedin=hbsInside contains=hbsTodo,Todo
+syn region  hbsBlockComment    start=/{{!--/rs=s+2  end=/--}}/re=e-2    contained containedin=hbsInside contains=hbsTodo,Todo extend
+syn region  hbsQString         start=/'/ skip=/\\'/ end=/'/             contained containedin=hbsInside
+syn region  hbsDQString        start=/"/ skip=/\\"/ end=/"/             contained containedin=hbsInside
 
-syn match   hbsConditionals    "\([/#]\(if\|unless\)\|else\)"           containedin=hbsInside
-syn match   hbsHelpers         "[/#]\(with\|each\)"                     containedin=hbsInside
+syn match   hbsConditionals    "\([/#]\(if\|unless\)\|else\)"           contained containedin=hbsInside
+syn match   hbsHelpers         "[/#]\(with\|each\)"                     contained containedin=hbsInside
+
+syn cluster allHbsItems        add=hbsTodo,hbsError,hbsInsideError,hbsInside,hbsHandlebars,
+\                                  hbsUnescape,hbsOperators,hbsSection,hbsPartial,hbsMarkerSet,
+\                                  hbsComment,hbsBlockComment,hbsQString,hbsDQString,hbsConditionals,
+\                                  hbsHelpers,hbsPartial,hbsMarkerSet,hbsComment,hbsBlockComment,
+\                                  hbsQString,hbsDQString,hbsConditionals,hbsHelpers
+
+syn cluster htmlAdditional     add=htmlTag,htmlEndTag,htmlTagName,htmlSpecialChar
+
+syn region  hbsScriptTemplate  start=+<script [^>]*type *=[^>]*text/x-handlebars-template[^>]*>+
+\                              end=+</script>+me=s-1 keepend contains=@htmlHbsContainer,@allHbsItems,@htmlAdditional
 
 
 " Define the default highlighting.

@@ -24,7 +24,7 @@ if !exists('g:LatexBox_cite_pattern')
 	let g:LatexBox_cite_pattern = '\C\\\a*cite\a*\*\?\(\[[^\]]*\]\)*\_\s*{'
 endif
 if !exists('g:LatexBox_ref_pattern')
-	let g:LatexBox_ref_pattern = '\C\\v\?\(eq\|page\|[cC]\)\?ref\*\?\_\s*{'
+	let g:LatexBox_ref_pattern = '\C\\v\?\(eq\|page\|[cC]\|labelc\)\?ref\*\?\_\s*{'
 endif
 
 if !exists('g:LatexBox_completion_environments')
@@ -253,9 +253,12 @@ function! LatexBox_BibSearch(regexp)
 					\ '\bibdata{' . bibdata . '}'], auxfile)
 
 		if has('win32')
+			let l:old_shellslash = &l:shellslash
+			setlocal noshellslash
 			silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
 						\ ' & bibtex -terse '
 						\ . fnamemodify(auxfile, ':t') . ' >nul'
+			let &l:shellslash = l:old_shellslash
 		else
 			silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
 						\ ' ; bibtex -terse '
@@ -269,6 +272,8 @@ function! LatexBox_BibSearch(regexp)
 			let matches = matchlist(line,
 						\ '^\(.*\)||\(.*\)||\(.*\)||\(.*\)||\(.*\)')
 			if !empty(matches) && !empty(matches[1])
+				let s:type_length = max([s:type_length,
+							\ len(matches[2]) + 3])
 				call add(res, {
 							\ 'key': matches[1],
 							\ 'type': matches[2],
@@ -305,6 +310,7 @@ endfunction
 " }}}
 
 " BibTeX completion {{{
+let s:type_length=0
 function! LatexBox_BibComplete(regexp)
 
 	" treat spaces as '.*' if needed
@@ -316,9 +322,12 @@ function! LatexBox_BibComplete(regexp)
 	endif
 
 	let res = []
+	let s:type_length = 4
 	for m in LatexBox_BibSearch(regexp)
 		let type = m['type']   == '' ? '[-]' : '[' . m['type']   . '] '
+		let type = printf('%-' . s:type_length . 's', type)
 		let auth = m['author'] == '' ? ''    :       m['author'][:20] . ' '
+		let auth = substitute(auth, '\~', ' ', 'g')
 		let year = m['year']   == '' ? ''    : '(' . m['year']   . ')'
 		let w = { 'word': m['key'],
 				\ 'abbr': type . auth . year,
