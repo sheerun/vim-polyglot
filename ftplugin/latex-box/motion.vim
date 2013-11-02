@@ -437,7 +437,7 @@ endfunction
 function! s:FindClosestSection(toc, fileindices)
 	let file = expand('%:p')
 	if !has_key(a:fileindices, file)
-		echoe 'Current file is not included in main tex file ' . LatexBox_GetMainTexFile() . '.'
+		return 0
 	endif
 
 	let imax = len(a:fileindices[file])

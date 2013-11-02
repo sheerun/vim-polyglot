@@ -371,13 +371,6 @@ syn match perlSubName +\%(\h\|::\|'\w\)\%(\w\|::\|'\w\)*\_s*\|+ contained nextgr
 
 syn match perlFunction +\<sub\>\_s*+ nextgroup=perlSubName
 
-if !exists("perl_no_scope_in_variables")
-   syn match  perlFunctionPRef	"\h\w*::" contained
-   syn match  perlFunctionName	"\h\w*[^:]" contained
-else
-   syn match  perlFunctionName	"\h[[:alnum:]_:]*" contained
-endif
-
 " The => operator forces a bareword to the left of it to be interpreted as
 " a string
 syn match  perlString "\I\@<!-\?\I\i*\%(\s*=>\)\@="

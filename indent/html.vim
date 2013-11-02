@@ -343,27 +343,27 @@ fun! HtmlIndentGet(lnum)
 
     let lind = indent(lnum)
 
-    for tags in s:omittable
-      let tags_exp = '<\(' . join(tags, '\|') . '\)>'
-      let close_tags_exp = '</\(' . join(tags, '\|') . '\)>'
-      if getline(a:lnum) =~ tags_exp
-        let block_start = search('^'.repeat(' ', lind + (&sw * ind - 1)).'\S'  , 'bnW')
-        let prev_tag = search(tags_exp, 'bW', block_start)
-        let prev_closetag = search(close_tags_exp, 'W', a:lnum)
-        if prev_tag && !prev_closetag
-          let ind = ind - 1
-        endif
-      endif
+    " for tags in s:omittable
+      " let tags_exp = '<\(' . join(tags, '\|') . '\)>'
+      " let close_tags_exp = '</\(' . join(tags, '\|') . '\)>'
+      " if getline(a:lnum) =~ tags_exp
+        " let block_start = search('^'.repeat(' ', lind + (&sw * ind - 1)).'\S'  , 'bnW')
+        " let prev_tag = search(tags_exp, 'bW', block_start)
+        " let prev_closetag = search(close_tags_exp, 'W', a:lnum)
+        " if prev_tag && !prev_closetag
+          " let ind = ind - 1
+        " endif
+      " endif
 
-      if getline(a:lnum) =~ '</\w\+>'
-        let block_start = search('^'.repeat(' ', lind + (&sw * ind - 1)).'\S'  , 'bnW')
-        let prev_tag = search(tags_exp, 'bW', block_start)
-        let prev_closetag = search(close_tags_exp, 'W', a:lnum)
-        if prev_tag && !prev_closetag
-          let ind = ind - 1
-        endif
-      endif
-    endfor
+      " if getline(a:lnum) =~ '</\w\+>'
+        " let block_start = search('^'.repeat(' ', lind + (&sw * ind - 1)).'\S'  , 'bnW')
+        " let prev_tag = search(tags_exp, 'bW', block_start)
+        " let prev_closetag = search(close_tags_exp, 'W', a:lnum)
+        " if prev_tag && !prev_closetag
+          " let ind = ind - 1
+        " endif
+      " endif
+    " endfor
 
     if restore_ic == 0
         setlocal noic

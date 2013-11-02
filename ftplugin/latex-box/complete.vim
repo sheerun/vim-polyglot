@@ -457,7 +457,7 @@ function! s:GetLabelCache(file)
 
 	if !has_key(s:LabelCache , a:file) || s:LabelCache[a:file][0] != getftime(a:file)
 		" Open file in temporary split window for label extraction.
-		silent execute '1sp +let\ labels=s:ExtractLabels()|let\ inputs=s:ExtractInputs()|quit! ' . a:file
+		silent execute '1sp +let\ labels=s:ExtractLabels()|let\ inputs=s:ExtractInputs()|quit! ' . fnameescape(a:file)
 		let s:LabelCache[a:file] = [ getftime(a:file), labels, inputs ]
 	endif
 

@@ -25,6 +25,7 @@ let s:block_skip   = "synIDattr(synID(line('.'),col('.'),1),'name') =~? '" . s:s
 let s:block_start  = 'do\|fn'
 let s:block_middle = 'else\|match\|elsif\|catch\|after\|rescue'
 let s:block_end    = 'end'
+let s:pipeline     = '^\s*|>.*$'
 
 let s:indent_keywords   = '\<\%(' . s:block_start . '\|' . s:block_middle . '\)$'
 let s:deindent_keywords = '^\s*\<\%(' . s:block_end . '\|' . s:block_middle . '\)\>'
@@ -38,7 +39,7 @@ function! GetElixirIndent(...)
     return 0
   endif
 
-  if synIDattr(synID(v:lnum, 1, 1), "name") !~ '\(Comment\|String\)$'
+  if synIDattr(synID(v:lnum, 1, 1), "name") !~ s:skip_syntax
     let splited_line = split(getline(lnum), '\zs')
     let opened_symbol  = 0
     let opened_symbol += count(splited_line, '[') - count(splited_line, ']')
@@ -48,6 +49,29 @@ function! GetElixirIndent(...)
 
     if getline(lnum) =~ s:indent_keywords .
           \ '\|^\s*\%(.*->\)$'
+      let ind += &sw
+    endif
+
+    " if line starts with pipeline
+    " and last line doesn't start with pipeline
+    if getline(v:lnum) =~ s:pipeline &&
+          \ getline(lnum) !~ s:pipeline
+      let ind += &sw
+    endif
+
+    " if last line starts with pipeline
+    " and currentline doesn't start with pipeline
+    if getline(lnum) =~ s:pipeline &&
+          \ getline(v:lnum) !~ s:pipeline
+      let ind -= &sw
+    endif
+
+    " if last line starts with pipeline
+    " and current line doesn't start with pipeline
+    " but last line started a block
+    if getline(lnum) =~ s:pipeline &&
+          \ getline(v:lnum) !~ s:pipeline &&
+          \ getline(lnum) =~ s:block_start
       let ind += &sw
     endif
 

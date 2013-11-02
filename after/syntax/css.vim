@@ -97,6 +97,7 @@ if has("gui_running") || &t_Co==256
       if out !~ '^cssDefinition ' | continue | endif
       let out = substitute( out, ' \+xxx \+', ' ', '' )
       let out = substitute( out, ' contains=\zs', '@cssColors,', '' )
+      syn clear cssDefinition
       exe 'syn region' out
     endfor
   endif

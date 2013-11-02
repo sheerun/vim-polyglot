@@ -80,24 +80,14 @@ function! s:TOCActivate(close)
 
     execute b:calling_win . 'wincmd w'
 
-    let bnr = bufnr(entry['file'])
-    if bnr == -1
-        execute 'badd ' . entry['file']
-        let bnr = bufnr(entry['file'])
-    endif
+    let files = [entry['file']]
+    for line in filter(readfile(entry['file']), 'v:val =~ ''\\input{''')
+        call add(files, matchstr(line, '{\zs.*\ze\(\.tex\)\?}') . '.tex')
+    endfor
 
-    execute 'buffer! ' . bnr
-
-    " skip duplicates
-    while duplicates > 0
-        if search('\\' . entry['level'] . '\_\s*{' . titlestr . '}', 'ws')
-            let duplicates -= 1
-        endif
-    endwhile
-
-    if search('\\' . entry['level'] . '\_\s*{' . titlestr . '}', 'ws')
-        normal zv
-    endif
+    " Find section in buffer (or inputted files)
+    call s:TOCFindMatch('\\' . entry['level'] . '\_\s*{' . titlestr . '}',
+                \ duplicates, files)
 
     if a:close
         if g:LatexBox_split_resize
@@ -107,6 +97,30 @@ function! s:TOCActivate(close)
     else
         execute toc_wnr . 'wincmd w'
     endif
+endfunction
+
+" {{{2 TOCFindMatch
+function! s:TOCFindMatch(strsearch,duplicates,files)
+
+    call s:TOCOpenBuf(a:files[0])
+    let dups = a:duplicates
+
+    " Skip duplicates
+    while dups > 0
+        if search(a:strsearch, 'w')
+            let dups -= 1
+        else
+            break
+        endif
+    endwhile
+
+    if search(a:strsearch, 'w')
+        normal! zv
+        return
+    endif
+
+    call s:TOCFindMatch(a:strsearch,dups,a:files[1:])
+
 endfunction
 
 " {{{2 TOCFoldLevel
@@ -140,10 +154,23 @@ function! TOCFoldLevel(lnum)
     " Return previous fold level
     return "="
 endfunction
+
 " {{{2 TOCFoldText
 function! TOCFoldText()
     let parts = matchlist(getline(v:foldstart), '^\(.*\)\t\(.*\)$')
     return printf('%-8s%-72s', parts[1], parts[2])
+endfunction
+
+" {{{2 TOCOpenBuf
+function! s:TOCOpenBuf(file)
+
+    let bnr = bufnr(a:file)
+    if bnr == -1
+        execute 'badd ' . a:file
+        let bnr = bufnr(a:file)
+    endif
+    execute 'buffer! ' . bnr
+
 endfunction
 
 " }}}1

@@ -38,7 +38,7 @@ syntax match clojureKeyword "\v<:{1,2}%([^ \n\r\t()\[\]{}";@^`~\\%/]+/)*[^ \n\r\
 
 syntax match clojureStringEscape "\v\\%([\\btnfr"]|u\x{4}|[0-3]\o{2}|\o{1,2})" contained
 
-syntax region clojureString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=clojureStringEscape
+syntax region clojureString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=clojureStringEscape,@Spell
 
 syntax match clojureCharacter "\\."
 syntax match clojureCharacter "\\o\%([0-3]\o\{2\}\|\o\{1,2\}\)"

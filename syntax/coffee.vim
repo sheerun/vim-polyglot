@@ -15,9 +15,6 @@ silent! unlet b:current_syntax
 " Highlight long strings.
 syntax sync fromstart
 
-" CoffeeScript identifiers can have dollar signs.
-setlocal isident+=$
-
 " These are `matches` instead of `keywords` because vim's highlighting
 " priority for keywords is higher than matches. This causes keywords to be
 " highlighted inside matches, even if a match says it shouldn't contain them --
@@ -67,7 +64,7 @@ syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/ display
 hi def link coffeeSpecialVar Special
 
 " An @-variable
-syn match coffeeSpecialIdent /@\%(\I\i*\)\?/ display
+syn match coffeeSpecialIdent /@\%(\%(\I\|\$\)\%(\i\|\$\)*\)\?/ display
 hi def link coffeeSpecialIdent Identifier
 
 " A class-like name that starts with a capital letter
@@ -95,15 +92,16 @@ syn region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/
 hi def link coffeeString String
 
 " A integer, including a leading plus or minus
-syn match coffeeNumber /\i\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/ display
+syn match coffeeNumber /\%(\i\|\$\)\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/ display
 " A hex, binary, or octal number
 syn match coffeeNumber /\<0[xX]\x\+\>/ display
 syn match coffeeNumber /\<0[bB][01]\+\>/ display
 syn match coffeeNumber /\<0[oO][0-7]\+\>/ display
+syn match coffeeNumber /\<\%(Infinity\|NaN\)\>/ display
 hi def link coffeeNumber Number
 
 " A floating-point number, including a leading plus or minus
-syn match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
+syn match coffeeFloat /\%(\i\|\$\)\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
 \                     display
 hi def link coffeeFloat Float
 
@@ -114,7 +112,7 @@ syn match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|co
 hi def link coffeeReservedError Error
 
 " A normal object assignment
-syn match coffeeObjAssign /@\?\I\i*\s*\ze::\@!/ contains=@coffeeIdentifier display
+syn match coffeeObjAssign /@\?\%(\I\|\$\)\%(\i\|\$\)*\s*\ze::\@!/ contains=@coffeeIdentifier display
 hi def link coffeeObjAssign Identifier
 
 syn keyword coffeeTodo TODO FIXME XXX contained
@@ -148,7 +146,7 @@ hi def link coffeeEscape SpecialChar
 
 " A regex -- must not follow a parenthesis, number, or identifier, and must not
 " be followed by a number
-syn region coffeeRegex start=#\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!/=\@!\s\@!#
+syn region coffeeRegex start=#\%(\%()\|\%(\i\|\$\)\@<!\d\)\s*\|\i\)\@<!/=\@!\s\@!#
 \                      end=#/[gimy]\{,4}\d\@!#
 \                      oneline contains=@coffeeBasicString,coffeeRegexCharSet
 syn region coffeeRegexCharSet start=/\[/ end=/]/ contained
@@ -182,11 +180,11 @@ syn match coffeeSemicolonError /;$/ display
 hi def link coffeeSemicolonError Error
 
 " Ignore reserved words in dot accesses.
-syn match coffeeDotAccess /\.\@<!\.\s*\I\i*/he=s+1 contains=@coffeeIdentifier
+syn match coffeeDotAccess /\.\@<!\.\s*\%(\I\|\$\)\%(\i\|\$\)*/he=s+1 contains=@coffeeIdentifier
 hi def link coffeeDotAccess coffeeExtendedOp
 
 " Ignore reserved words in prototype accesses.
-syn match coffeeProtoAccess /::\s*\I\i*/he=s+2 contains=@coffeeIdentifier
+syn match coffeeProtoAccess /::\s*\%(\I\|\$\)\%(\i\|\$\)*/he=s+2 contains=@coffeeIdentifier
 hi def link coffeeProtoAccess coffeeExtendedOp
 
 " This is required for interpolations to work.
