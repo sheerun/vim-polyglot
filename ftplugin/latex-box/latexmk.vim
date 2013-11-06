@@ -143,6 +143,13 @@ function! LatexBox_Latexmk(force)
 	let texroot = shellescape(LatexBox_GetTexRoot())
 	let mainfile = fnameescape(fnamemodify(LatexBox_GetMainTexFile(), ':t'))
 
+	" Check if latexmk is installed
+	if !executable('latexmk')
+		echomsg "Error: LaTeX-Box relies on latexmk for compilation, but it" .
+					\ " is not installed!"
+		return
+	endif
+
 	" Check if already running
 	if has_key(g:latexmk_running_pids, basepath)
 		echomsg "latexmk is already running for `" . basename . "'"
@@ -301,7 +308,15 @@ endfunction
 
 " LatexmkClean {{{
 function! LatexBox_LatexmkClean(cleanall)
+	" Check if latexmk is installed
+	if !executable('latexmk')
+		echomsg "Error: LaTeX-Box relies on latexmk for compilation, but it" .
+					\ " is not installed!"
+		return
+	endif
+
 	let basename = LatexBox_GetTexBasename(1)
+
 	if has_key(g:latexmk_running_pids, basename)
 		echomsg "don't clean when latexmk is running"
 		return
