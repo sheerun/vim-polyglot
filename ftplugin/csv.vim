@@ -1766,8 +1766,7 @@ fu! <sid>MoveOver(outer) "{{{3
             let mode = 1
         endif
     endif
-    " Use the mapped key
-    exe ":sil! norm E"
+    call <sid>MoveCol(-1, line("."))
     let _s = @/
     if last
         exe "sil! norm! /" . b:col . "\<cr>v$h" . (mode ? "" : "\<Left>")
@@ -1779,10 +1778,18 @@ endfu
 
 fu! <sid>CSVMappings() "{{{3
     call <sid>Map('noremap', 'W', ':<C-U>call <SID>MoveCol(1, line("."))<CR>')
+    call <sid>Map('noremap', '<C-Right>', ':<C-U>call <SID>MoveCol(1, line("."))<CR>')
+    call <sid>Map('noremap', 'L', ':<C-U>call <SID>MoveCol(1, line("."))<CR>')
     call <sid>Map('noremap', 'E', ':<C-U>call <SID>MoveCol(-1, line("."))<CR>')
+    call <sid>Map('noremap', '<C-Left>', ':<C-U>call <SID>MoveCol(-1, line("."))<CR>')
+    call <sid>Map('noremap', 'H', ':<C-U>call <SID>MoveCol(-1, line("."))<CR>')
     call <sid>Map('noremap', 'K', ':<C-U>call <SID>MoveCol(0,
         \ line(".")-v:count1)<CR>')
+    call <sid>Map('noremap', '<Up>', ':<C-U>call <SID>MoveCol(0,
+        \ line(".")-v:count1)<CR>')
     call <sid>Map('noremap', 'J', ':<C-U>call <SID>MoveCol(0,
+        \ line(".")+v:count1)<CR>')
+    call <sid>Map('noremap', '<Down>', ':<C-U>call <SID>MoveCol(0,
         \ line(".")+v:count1)<CR>')
     call <sid>Map('nnoremap', '<CR>', ':<C-U>call <SID>PrepareFolding(1,
         \ 1)<CR>')
@@ -1806,12 +1813,6 @@ fu! <sid>CSVMappings() "{{{3
     call <sid>Map('nnoremap', '<LocalLeader><CR>', '<CR>')
     call <sid>Map('nnoremap', '<LocalLeader><Space>', '<Space>')
     call <sid>Map('nnoremap', '<LocalLeader><BS>', '<BS>')
-    call <sid>Map('map', '<C-Right>', 'W')
-    call <sid>Map('map', '<C-Left>', 'E')
-    call <sid>Map('map', 'H', 'E')
-    call <sid>Map('map', 'L', 'W')
-    call <sid>Map('map', '<Up>', 'K')
-    call <sid>Map('map', '<Down>', 'J')
 endfu
 
 fu! <sid>CommandDefinitions() "{{{3
