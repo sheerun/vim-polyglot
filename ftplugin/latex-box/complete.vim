@@ -291,7 +291,7 @@ function! LatexBox_BibSearch(regexp)
 
 	" Find data from 'thebibliography' environments
 	let lines = readfile(LatexBox_GetMainTexFile())
-	if match(lines, '\C\\begin{thebibliography}')
+	if match(lines, '\C\\begin{thebibliography}') >= 0
 		for line in filter(filter(lines, 'v:val =~ ''\C\\bibitem'''),
 					\ 'v:val =~ a:regexp')
 			let match = matchlist(line, '\\bibitem{\([^}]*\)')[1]

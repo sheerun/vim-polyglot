@@ -21,7 +21,8 @@
 syn keyword htmlTagName contained article aside audio canvas command
 syn keyword htmlTagName contained datalist details dialog embed figcaption figure footer
 syn keyword htmlTagName contained header hgroup keygen main mark meter menu nav output
-syn keyword htmlTagName contained progress ruby rt rp section source summary template time track video data
+syn keyword htmlTagName contained progress ruby rt rp section source summary time track video data
+syn keyword htmlTagName contained template content shadow
 syn keyword htmlTagName contained wbr bdi
 
 " SVG tags
@@ -40,10 +41,12 @@ syn keyword htmlTagName contained linearGradient marker mask pattern radialGradi
 syn keyword htmlTagName contained missing-glyph mpath 
 syn keyword htmlTagName contained text textPath tref tspan vkern
 
+syn match htmlTagName contained "\<[a-z_]\+\(\-[a-z_]\+\)\+\>"
+
 " HTML 5 arguments
 " Core Attributes
 syn keyword htmlArg contained accesskey class contenteditable contextmenu dir 
-syn keyword htmlArg contained draggable hidden id lang spellcheck style tabindex title translate
+syn keyword htmlArg contained draggable hidden id is lang spellcheck style tabindex title translate
 " Event-handler Attributes
 syn keyword htmlArg contained onabort onblur oncanplay oncanplaythrough onchange
 syn keyword htmlArg contained onclick oncontextmenu ondblclick ondrag ondragend ondragenter ondragleave ondragover 
@@ -69,6 +72,8 @@ syn keyword htmlArg contained required placeholder
 syn keyword htmlArg contained label icon open datetime pubdate
 " <script>
 syn keyword htmlArg contained async
+" <content>
+syn keyword htmlArg contained select
 
 " Custom Data Attributes
 " http://dev.w3.org/html5/spec/elements.html#embedding-custom-non-visible-data

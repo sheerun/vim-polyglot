@@ -56,7 +56,6 @@ endif
 autocmd BufNewFile,BufReadPost *.jade set filetype=jade
 au BufNewFile,BufRead *.js setf javascript
 au BufNewFile,BufRead *.jsm setf javascript
-au BufNewFile,BufRead *.json setf javascript
 au BufNewFile,BufRead Jakefile setf javascript
 fun! s:SelectJavascript()
   if getline(1) =~# '^#!.*/bin/env\s\+node\>'

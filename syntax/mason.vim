@@ -54,12 +54,13 @@ endif
 " them. If you have any suggestions, please let me know.
 "
 syn region masonPod start="^=[a-z]" end="^=cut" keepend contained contains=@podTop
-syn region masonPerlBraces start="{" end="}" contained
-syn region masonLine matchgroup=Delimiter start="^%" end="$" keepend contains=@perlTop,masonPerlBraces
-syn region masonExpr matchgroup=Delimiter start="<%" end="%>" contains=@perlTop
+syn cluster perlTop remove=perlBraces
+syn region masonLine matchgroup=Delimiter start="^%" end="$" keepend contains=@perlTop
+syn region masonPerlComment start="#" end="\%(%>\)\@=\|$" contained contains=perlTodo,@Spell
+syn region masonExpr matchgroup=Delimiter start="<%" end="%>" contains=@perlTop,masonPerlComment
 syn region masonPerl matchgroup=Delimiter start="<%perl>" end="</%perl>" contains=masonPod,@perlTop
-syn region masonComp keepend matchgroup=Delimiter start="<&\s*\%(\a\+:\)\?[._/[:alnum:]]*" end="&>" contains=@perlTop
-syn region masonComp keepend matchgroup=Delimiter skipnl start="<&|\s*\%(\a\+:\)\?[._/[:alnum:]]*" end="&>" contains=@perlTop nextgroup=masonCompContent
+syn region masonComp keepend matchgroup=Delimiter start="<&\s*\%([-._/[:alnum:]]\+:\)\?[-._/[:alnum:]]*" end="&>" contains=@perlTop
+syn region masonComp keepend matchgroup=Delimiter skipnl start="<&|\s*\%([-._/[:alnum:]]\+:\)\?[-._/[:alnum:]]*" end="&>" contains=@perlTop nextgroup=masonCompContent
 syn region masonCompContent matchgroup=Delimiter start="" end="</&>" contained contains=@masonTop
 
 syn region masonArgs matchgroup=Delimiter start="<%args>" end="</%args>" contains=masonPod,@perlTop
@@ -70,8 +71,8 @@ syn region masonOnce matchgroup=Delimiter start="<%once>" end="</%once>" contain
 syn region masonClass matchgroup=Delimiter start="<%class>" end="</%class>" contains=masonPod,@perlTop
 syn region masonShared matchgroup=Delimiter start="<%shared>" end="</%shared>" contains=masonPod,@perlTop
 
-syn region masonDef matchgroup=Delimiter start="<%def\s*[._/[:alnum:]]\+\s*>" end="</%def>" contains=@htmlTop
-syn region masonMethod matchgroup=Delimiter start="<%method\s*[._/[:alnum:]]\+\s*>" end="</%method>" contains=@htmlTop
+syn region masonDef matchgroup=Delimiter start="<%def\s*[-._/[:alnum:]]\+\s*>" end="</%def>" contains=@htmlTop
+syn region masonMethod matchgroup=Delimiter start="<%method\s*[-._/[:alnum:]]\+\s*>" end="</%method>" contains=@htmlTop
 
 syn region masonFlags matchgroup=Delimiter start="<%flags>" end="</%flags>" contains=masonPod,@perlTop
 syn region masonAttr matchgroup=Delimiter start="<%attr>" end="</%attr>" contains=masonPod,@perlTop
@@ -96,6 +97,7 @@ if version >= 508 || !exists("did_mason_syn_inits")
 
 	HiLink masonDoc Comment
 	HiLink masonPod Comment
+	HiLink masonPerlComment perlComment
 
 	delc HiLink
 endif

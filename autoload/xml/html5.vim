@@ -61,7 +61,7 @@ let charset = [
 " }}}
 
 " Attributes_and_Settings: {{{
-let core_attributes = {'accesskey': [], 'class': [], 'contenteditable': ['true', 'false', ''], 'contextmenu': [], 'dir': ['ltr', 'rtl'], 'draggable': ['true', 'false'], 'hidden': ['hidden', ''], 'id': [], 'lang': lang_tag, 'spellcheck': ['true', 'false', ''], 'style': [], 'tabindex': [], 'title': []}
+let core_attributes = {'accesskey': [], 'class': [], 'contenteditable': ['true', 'false', ''], 'contextmenu': [], 'dir': ['ltr', 'rtl'], 'draggable': ['true', 'false'], 'hidden': ['hidden', ''], 'id': [], 'is': [], 'lang': lang_tag, 'spellcheck': ['true', 'false', ''], 'style': [], 'tabindex': [], 'title': []}
 let xml_attributes = {'xml:lang': lang_tag, 'xml:space': ['preserve'], 'xml:base': [], 'xmlns': ['http://www.w3.org/1999/xhtml', 'http://www.w3.org/1998/Math/MathML', 'http://www.w3.org/2000/svg', 'http://www.w3.org/1999/xlink']}
 
 let body_attributes = {}
@@ -101,6 +101,7 @@ let attributes_value = {
     \ 'disabled': ['Bool', ''],
     \ 'draggable': ['true/false', ''],
     \ 'enctype': ['Token', ''],
+    \ 'extends': ['Text', ''],
     \ 'for': ['ID', ''],
     \ 'form': ['ID', ''],
     \ 'formaction': ['URL', ''],
@@ -152,6 +153,7 @@ let attributes_value = {
     \ 'scope': ['Token', ''],
     \ 'scoped': ['Bool', ''],
     \ 'seamless': ['Bool', ''],
+    \ 'select': ['Text', ''],
     \ 'selected': ['Bool', ''],
     \ 'shape': ['Token', ''],
     \ 'size': ['Int', ''],
@@ -322,16 +324,16 @@ endif
 
 " Ref: http://dev.w3.org/html5/markup/
 " Version: Draft 05 April 2011
-let phrasing_elements = ['a', 'em', 'strong', 'small', 'mark', 'abbr', 'dfn', 'i', 'b', 'u', 'code', 'var', 'samp', 'kbd', 'sup', 'sub', 'q', 'cite', 'span', 'bdo', 'bdi', 'br', 'wbr', 'ins', 'del', 'img', 'embed', 'object', 'iframe', 'map', 'area', 'script', 'noscript', 'ruby', 'video', 'audio', 'input', 'textarea', 'select', 'button', 'label', 'output', 'datalist', 'keygen', 'progress', 'command', 'canvas', 'time', 'meter', 'data']
+let phrasing_elements = ['a', 'em', 'strong', 'small', 'mark', 'abbr', 'dfn', 'i', 'b', 'u', 'code', 'var', 'samp', 'kbd', 'sup', 'sub', 'q', 'cite', 'span', 'bdo', 'bdi', 'br', 'wbr', 'ins', 'del', 'img', 'embed', 'object', 'iframe', 'map', 'area', 'script', 'noscript', 'ruby', 'video', 'audio', 'input', 'textarea', 'select', 'button', 'label', 'output', 'datalist', 'keygen', 'progress', 'command', 'canvas', 'time', 'meter', 'data', 'content', 'shadow']
 
 let metadata_elements = ['link', 'style', 'meta', 'script', 'noscript', 'command']
 
-let flow_elements = phrasing_elements + ['p', 'hr', 'pre', 'ul', 'ol', 'dl', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'address', 'blockquote', 'ins', 'del', 'object', 'main', 'map', 'noscript', 'section', 'nav', 'article', 'aside', 'header', 'footer', 'video', 'audio', 'figure', 'table', 'template', 'form', 'fieldset', 'menu', 'canvas', 'details']
+let flow_elements = phrasing_elements + ['p', 'hr', 'pre', 'ul', 'ol', 'dl', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'address', 'blockquote', 'ins', 'del', 'element', 'object', 'main', 'map', 'noscript', 'section', 'nav', 'article', 'aside', 'header', 'footer', 'video', 'audio', 'figure', 'table', 'template', 'form', 'fieldset', 'menu', 'canvas', 'details']
 
 " http://dev.w3.org/html5/spec/Overview.html#linkTypes
 let linktypes = ['alternate', 'author', 'bookmark', 'external', 'help', 'icon', 'license', 'next', 'nofollow', 'noreferrer', 'pingback', 'prefetch', 'prev', 'search', 'stylesheet', 'sidebar', 'tag']
 " http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html
-let linkreltypes = linktypes + ['canonical']
+let linkreltypes = linktypes + ['canonical', 'import']
 
 " a and button are special elements for interactive, some element can't be its descendent
 let abutton_dec = 'details\\|embed\\|iframe\\|keygen\\|label\\|menu\\|select\\|textarea'
@@ -424,6 +426,10 @@ let g:xmldata_html5 = {
 \ 'colgroup': [
     \ [],
     \ extend(copy(global_attributes), {'span': []})
+\ ],
+\ 'content': [
+    \ [],
+    \ extend(copy(global_attributes), {'select': []})
 \ ],
 \ 'command': [
     \ ['col'],
@@ -676,6 +682,10 @@ let g:xmldata_html5 = {
 \ 'select': [
     \ ['optgroup', 'option'],
     \ extend(copy(global_attributes), {'name': [], 'disabled': ['disabled', ''], 'form': [], 'size': [], 'multiple': ['multiple', '']})
+\ ],
+\ 'shadow': [
+    \ [],
+    \ global_attributes
 \ ],
 \ 'small': [
     \ phrasing_elements,

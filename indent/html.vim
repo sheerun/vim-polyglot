@@ -130,11 +130,13 @@ call add(s:tags, 'rt')
 call add(s:tags, 'ruby')
 call add(s:tags, 'section')
 call add(s:tags, 'summary')
-call add(s:tags, 'template')
 call add(s:tags, 'time')
 call add(s:tags, 'video')
 call add(s:tags, 'bdi')
 call add(s:tags, 'data')
+
+" Web Component
+call add(s:tags, 'template')
 
 " Common inline used SVG elements
 call add(s:tags, 'clipPath')
