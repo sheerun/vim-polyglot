@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'tempfile'
+require 'timeout'
 
 describe "My Vim plugin" do
 
@@ -10,8 +10,8 @@ describe "My Vim plugin" do
   extensions = extensions.split(/[\n,]/)
 
   extensions.each do |ext|
-    unless ext.match(/styl(us)?$/)
-      it "should parse #{ext} file" do
+    it "should parse #{ext} file" do
+      Timeout::timeout(5) do
         write_file "#{ext}", ""
         vim.edit "#{ext}"
         vim.insert "sample"
