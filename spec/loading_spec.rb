@@ -1,12 +1,18 @@
 require 'spec_helper'
+require 'tempfile'
 
 describe "My Vim plugin" do
-  languages = Dir["#{$plugin_path}/syntax/*.vim"].map { |f| f.split('/').last.gsub('.vim', '') }
 
-  languages.each do |lang|
-    it "should parse .#{lang} file" do
-      write_file "test.#{lang}", ""
-      vim.edit "test.#{lang}"
+  extensions = `cat ftdetect/polyglot.vim | grep '^au' | tr "\t" ' ' | cut -d ' ' -f 3 | grep -v / | grep -v '^\*$' | grep -v '^$'`.strip
+
+  extensions.gsub!(/\[(.).+\]/) { $1 }.gsub!('*', 'test')
+
+  extensions = extensions.split(/[\n,]/)
+
+  extensions.each do |ext|
+    it "should parse #{ext} file" do
+      write_file "#{ext}", ""
+      vim.edit "#{ext}"
       vim.insert "sample"
       vim.write
     end
