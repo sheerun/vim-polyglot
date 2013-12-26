@@ -10,11 +10,13 @@ describe "My Vim plugin" do
   extensions = extensions.split(/[\n,]/)
 
   extensions.each do |ext|
-    it "should parse #{ext} file" do
-      write_file "#{ext}", ""
-      vim.edit "#{ext}"
-      vim.insert "sample"
-      vim.write
+    unless ext.match(/stylus$/)
+      it "should parse #{ext} file" do
+        write_file "#{ext}", ""
+        vim.edit "#{ext}"
+        vim.insert "sample"
+        vim.write
+      end
     end
   end
 end
