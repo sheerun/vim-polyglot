@@ -53,6 +53,10 @@ if exists("*searchpairpos")
 		let g:clojure_align_multiline_strings = 0
 	endif
 
+	if !exists('g:clojure_align_subforms')
+		let g:clojure_align_subforms = 0
+	endif
+
 	function! s:SynIdName()
 		return synIDattr(synID(line("."), col("."), 0), "name")
 	endfunction
@@ -284,7 +288,7 @@ if exists("*searchpairpos")
 		call search('\v\_s', 'cW')
 		call search('\v\S', 'W')
 		if paren[0] < line(".")
-			return paren[1] + &shiftwidth - 1
+			return paren[1] + (g:clojure_align_subforms ? 0 : &shiftwidth - 1)
 		endif
 
 		call search('\v\S', 'bW')

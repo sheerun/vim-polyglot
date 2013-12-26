@@ -23,9 +23,8 @@ setlocal iskeyword+=?,-,*,!,+,/,=,<,>,.,:,$
 " of user-defined def* definitions.
 setlocal define=\\v[(/]def(ault)@!\\S*
 
-" Remove 't' from 'formatoptions' to avoid auto-wrapping code. The '+=croql'
-" is standard ftplugin boilerplate, although it is arguably intrusive.
-setlocal formatoptions-=t formatoptions+=croql
+" Remove 't' from 'formatoptions' to avoid auto-wrapping code.
+setlocal formatoptions-=t
 
 " Lisp comments are routinely nested (e.g. ;;; SECTION HEADING)
 setlocal comments=n:;

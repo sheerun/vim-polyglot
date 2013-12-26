@@ -4,6 +4,10 @@ setlocal softtabstop=2
 setlocal expandtab
 setlocal formatoptions=tcqr
 setlocal commentstring=//%s
+let &l:include = '^\s*import'
+let &l:includeexpr = 'substitute(v:fname,"\\.","/","g")'
+setlocal path+=src/main/scala,src/test/scala
+setlocal suffixesadd=.scala
 
 set makeprg=sbt\ -Dsbt.log.noformat=true\ compile
 set efm=%E\ %#[error]\ %f:%l:\ %m,%C\ %#[error]\ %p^,%-C%.%#,%Z,

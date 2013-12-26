@@ -1606,6 +1606,9 @@ fu! <sid>AnalyzeColumn(...) "{{{3
     let qty = len(data)
     let res = {}
     for item in data
+        if empty(item)
+            let item = 'NULL'
+        endif
         if !get(res, item)
             let res[item] = 0
         endif
@@ -1613,6 +1616,7 @@ fu! <sid>AnalyzeColumn(...) "{{{3
     endfor
 
     let max_items = reverse(sort(values(res)))
+    let count_items = keys(res)
     if len(max_items) > 5
         call remove(max_items, 5, -1)
         call filter(res, 'v:val =~ ''^''.join(max_items, ''\|'').''$''')
@@ -1623,9 +1627,9 @@ fu! <sid>AnalyzeColumn(...) "{{{3
     else
         let  title="Nr\tCount\tValue"
     endif
-    echohl "Title"
+    echohl Title
     echo printf("%s", title)
-    echohl "Normal"
+    echohl Normal
     echo printf("%s", repeat('=', strdisplaywidth(title)))
 
     let i=1
@@ -1650,6 +1654,8 @@ fu! <sid>AnalyzeColumn(...) "{{{3
             endif
         endfor
     endfor
+    echo printf("%s", repeat('=', strdisplaywidth(title)))
+    echo printf("different values: %d", len(count_items))
     unlet max_items
 endfunc
 
