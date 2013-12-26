@@ -1,1 +1,1 @@
-syn cluster stylusCssAttributes add=@cssColors
+syn include syntax/css/vim-coloresque.vim

@@ -54,7 +54,7 @@ copy_dir() {
   for file in $(find "$1/$2" -name '*.vim'); do
     file_path="$(dirname "${file##$1/}")"
     mkdir -p "$file_path"
-    touch $file_path/$file
+    touch "$file_path/$(basename "$file")"
     cat $file >> $file_path/$(basename "$file")
   done
 }
@@ -71,7 +71,6 @@ PACKS="
   c/c++:vim-jp/cpp-vim
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
-  css-color:ap/vim-css-color
   csv:chrisbra/csv.vim
   cucumber:tpope/vim-cucumber
   dockerfile:honza/dockerfile.vim
@@ -113,6 +112,7 @@ PACKS="
   vbnet:vim-scripts/vbnet.vim
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
+  css-color:gorodinskiy/vim-coloresque
 "
 
 rm -rf tmp

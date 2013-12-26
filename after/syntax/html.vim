@@ -9,3 +9,4 @@ syn region coffeeScript start=#<script [^>]*type="text/coffeescript"[^>]*>#
 \                       end=#</script>#me=s-1 keepend
 \                       contains=@htmlCoffeeScript,htmlScriptTag,@htmlPreproc
 \                       containedin=htmlHead
+syn include syntax/css/vim-coloresque.vim
