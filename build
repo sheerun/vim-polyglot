@@ -54,7 +54,8 @@ copy_dir() {
   for file in $(find "$1/$2" -name '*.vim'); do
     file_path="$(dirname "${file##$1/}")"
     mkdir -p "$file_path"
-    cp $file $file_path/
+    touch $file_path/$file
+    cat $file >> $file_path/$(basename "$file")
   done
 }
 
