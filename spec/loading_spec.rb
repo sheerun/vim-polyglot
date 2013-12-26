@@ -10,7 +10,7 @@ describe "My Vim plugin" do
   extensions = extensions.split(/[\n,]/)
 
   extensions.each do |ext|
-    unless ext.match(/stylus$/)
+    unless ext.match(/styl(us)?$/)
       it "should parse #{ext} file" do
         write_file "#{ext}", ""
         vim.edit "#{ext}"
