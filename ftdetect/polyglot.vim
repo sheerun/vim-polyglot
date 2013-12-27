@@ -87,6 +87,7 @@ autocmd BufRead *.html
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au BufRead,BufNewFile *.pp              set filetype=puppet
+au BufRead,BufNewFile *.rabl setf ruby
 au BufNewFile,BufRead *.rb,*.rbw,*.gemspec	set filetype=ruby
 au BufNewFile,BufRead *.builder,*.rxml,*.rjs	set filetype=ruby
 au BufNewFile,BufRead [rR]akefile,*.rake	set filetype=ruby

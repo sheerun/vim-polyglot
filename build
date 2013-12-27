@@ -98,6 +98,7 @@ PACKS="
   protobuf:uarun/vim-protobuf
   python:vim-scripts/python.vim--Vasiliev
   r-lang:vim-scripts/R.vim
+  rabl:yaymukund/vim-rabl
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
   rust:wting/rust.vim
