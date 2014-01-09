@@ -148,6 +148,10 @@ if exists("*searchpairpos")
 		return val
 	endfunction
 
+	function! s:StripNamespaceAndMacroChars(word)
+		return substitute(a:word, "\\v%(.*/|[#'`~@^,]*)(.*)", '\1', '')
+	endfunction
+
 	function! s:ClojureIsMethodSpecialCaseWorker(position)
 		" Find the next enclosing form.
 		call search('\S', 'Wb')
@@ -167,7 +171,8 @@ if exists("*searchpairpos")
 		call cursor(nextParen)
 
 		call search('\S', 'W')
-		if g:clojure_special_indent_words =~ '\<' . s:CurrentWord() . '\>'
+		let w = s:StripNamespaceAndMacroChars(s:CurrentWord())
+		if g:clojure_special_indent_words =~ '\<' . w . '\>'
 			return 1
 		endif
 
@@ -273,7 +278,7 @@ if exists("*searchpairpos")
 		" metacharacters.
 		"
 		" e.g. clojure.core/defn and #'defn should both indent like defn.
-		let ww = substitute(w, "\\v%(.*/|[#'`~@^,]*)(.*)", '\1', '')
+		let ww = s:StripNamespaceAndMacroChars(w)
 
 		if &lispwords =~ '\V\<' . ww . '\>'
 			return paren[1] + &shiftwidth - 1

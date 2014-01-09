@@ -25,10 +25,11 @@ let s:block_skip   = "synIDattr(synID(line('.'),col('.'),1),'name') =~? '" . s:s
 let s:block_start  = 'do\|fn'
 let s:block_middle = 'else\|match\|elsif\|catch\|after\|rescue'
 let s:block_end    = 'end'
+let s:arrow        = '^.*->$'
 let s:pipeline     = '^\s*|>.*$'
 
-let s:indent_keywords   = '\<\%(' . s:block_start . '\|' . s:block_middle . '\)$'
-let s:deindent_keywords = '^\s*\<\%(' . s:block_end . '\|' . s:block_middle . '\)\>'
+let s:indent_keywords   = '\<\%(' . s:block_start . '\|' . s:block_middle . '\)$' . '\|' . s:arrow
+let s:deindent_keywords = '^\s*\<\%(' . s:block_end . '\|' . s:block_middle . '\)\>' . '\|' . s:arrow
 
 function! GetElixirIndent(...)
   let lnum = prevnonblank(v:lnum - 1)
@@ -40,48 +41,49 @@ function! GetElixirIndent(...)
   endif
 
   if synIDattr(synID(v:lnum, 1, 1), "name") !~ s:skip_syntax
-    let splited_line = split(getline(lnum), '\zs')
-    let opened_symbol  = 0
+    let current_line = getline(v:lnum)
+    let last_line = getline(lnum)
+
+    let splited_line = split(last_line, '\zs')
+    let opened_symbol = 0
     let opened_symbol += count(splited_line, '[') - count(splited_line, ']')
     let opened_symbol += count(splited_line, '{') - count(splited_line, '}')
 
     let ind += opened_symbol * &sw
 
-    if getline(lnum) =~ s:indent_keywords .
-          \ '\|^\s*\%(.*->\)$'
+    if last_line =~ s:indent_keywords
       let ind += &sw
     endif
 
     " if line starts with pipeline
-    " and last line doesn't start with pipeline
-    if getline(v:lnum) =~ s:pipeline &&
-          \ getline(lnum) !~ s:pipeline
-      let ind += &sw
-    endif
-
-    " if last line starts with pipeline
-    " and currentline doesn't start with pipeline
-    if getline(lnum) =~ s:pipeline &&
-          \ getline(v:lnum) !~ s:pipeline
-      let ind -= &sw
+    " and last line is an attribution
+    " indents pipeline in same level as attribution
+    if current_line =~ s:pipeline &&
+          \ last_line =~ '^[^=]\+=.\+$'
+      let b:old_ind = ind
+      let ind += round(match(last_line, '=') / &sw) * &sw
     endif
 
     " if last line starts with pipeline
     " and current line doesn't start with pipeline
-    " but last line started a block
-    if getline(lnum) =~ s:pipeline &&
-          \ getline(v:lnum) !~ s:pipeline &&
-          \ getline(lnum) =~ s:block_start
-      let ind += &sw
+    " returns the indentation before the pipeline
+    if last_line =~ s:pipeline &&
+          \ current_line !~ s:pipeline
+      let ind = b:old_ind
     endif
 
-    if getline(v:lnum) =~ s:deindent_keywords
+    if current_line =~ s:deindent_keywords
       let bslnum = searchpair( '\<\%(' . s:block_start . '\):\@!\>',
             \ '\<\%(' . s:block_middle . '\):\@!\>\zs',
             \ '\<:\@<!' . s:block_end . '\>\zs',
             \ 'nbW',
             \ s:block_skip )
       let ind = indent(bslnum)
+    endif
+
+    " indent case statements '->'
+    if current_line =~ s:arrow
+      let ind += &sw
     endif
   endif
 

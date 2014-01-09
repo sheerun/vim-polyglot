@@ -1,8 +1,3 @@
-setlocal textwidth=140
-setlocal shiftwidth=2
-setlocal softtabstop=2
-setlocal expandtab
-setlocal formatoptions=tcqr
 setlocal commentstring=//%s
 let &l:include = '^\s*import'
 let &l:includeexpr = 'substitute(v:fname,"\\.","/","g")'

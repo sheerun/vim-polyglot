@@ -117,7 +117,7 @@ fun! s:DetectScala()
 endfun
 au BufRead,BufNewFile *.scala,*.sbt set filetype=scala
 au BufRead,BufNewFile * call s:DetectScala()
-autocmd BufNewFile,BufRead *.slim setf slim
+autocmd BufNewFile,BufRead *.slim set filetype=slim
 autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
 au BufRead,BufNewFile *.textile set filetype=textile
