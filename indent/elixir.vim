@@ -10,7 +10,7 @@ let b:did_indent = 1
 
 setlocal nosmartindent
 
-setlocal indentexpr=GetElixirIndent(v:lnum)
+setlocal indentexpr=GetElixirIndent()
 setlocal indentkeys+==end,=else:,=match:,=elsif:,=catch:,=after:,=rescue:
 
 if exists("*GetElixirIndent")
@@ -31,7 +31,7 @@ let s:pipeline     = '^\s*|>.*$'
 let s:indent_keywords   = '\<\%(' . s:block_start . '\|' . s:block_middle . '\)$' . '\|' . s:arrow
 let s:deindent_keywords = '^\s*\<\%(' . s:block_end . '\|' . s:block_middle . '\)\>' . '\|' . s:arrow
 
-function! GetElixirIndent(...)
+function! GetElixirIndent()
   let lnum = prevnonblank(v:lnum - 1)
   let ind  = indent(lnum)
 
@@ -39,6 +39,14 @@ function! GetElixirIndent(...)
   if lnum == 0
     return 0
   endif
+
+  " TODO: Remove these 2 lines
+  " I don't know why, but for the test on spec/indent/lists_spec.rb:24.
+  " Vim is making some mess on parsing the syntax of 'end', it is being
+  " recognized as 'elixirString' when should be recognized as 'elixirBlock'.
+  " This forces vim to sync the syntax.
+  call synID(v:lnum, 1, 1)
+  syntax sync fromstart
 
   if synIDattr(synID(v:lnum, 1, 1), "name") !~ s:skip_syntax
     let current_line = getline(v:lnum)
@@ -61,7 +69,7 @@ function! GetElixirIndent(...)
     if current_line =~ s:pipeline &&
           \ last_line =~ '^[^=]\+=.\+$'
       let b:old_ind = ind
-      let ind += round(match(last_line, '=') / &sw) * &sw
+      let ind = float2nr(matchend(last_line, '=\s*[^ ]') / &sw) * &sw
     endif
 
     " if last line starts with pipeline
@@ -78,6 +86,7 @@ function! GetElixirIndent(...)
             \ '\<:\@<!' . s:block_end . '\>\zs',
             \ 'nbW',
             \ s:block_skip )
+
       let ind = indent(bslnum)
     endif
 

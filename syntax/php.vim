@@ -400,7 +400,9 @@ if exists("php_parent_error_close")
 endif
 
 " Todo
-syn keyword phpTodo todo fixme xxx note contained
+syn case match
+syn keyword phpTodo TODO FIXME XXX NOTE contained
+syn case ignore
 
 " Comment
 if exists("php_parent_error_open")
@@ -415,14 +417,13 @@ syn match phpCommentStar contained "^\s*\*$"
 if !exists("php_ignore_phpdoc")
   syn case ignore
 
-  syn region phpDocComment   start="/\*\*" end="\*/" keepend contains=phpCommentTitle,phpDocTags,phpTodo
-  syn region phpCommentTitle contained matchgroup=phpDocComment start="/\*\*" matchgroup=phpCommmentTitle keepend end="\.$" end="\.[ \t\r<&]"me=e-1 end="[^{]@"me=s-2,he=s-1 end="\*/"me=s-1,he=s-1 contains=phpCommentStar,phpTodo,phpDocTags containedin=phpComment
+  syn region phpDocComment   start="/\*\*" end="\*/" keepend contains=phpCommentTitle,phpDocTags,phpTodo,@Spell
+  syn region phpCommentTitle contained matchgroup=phpDocComment start="/\*\*" matchgroup=phpCommmentTitle keepend end="\.$" end="\.[ \t\r<&]"me=e-1 end="[^{]@"me=s-2,he=s-1 end="\*/"me=s-1,he=s-1 contains=phpCommentStar,phpTodo,phpDocTags,@Spell containedin=phpComment
 
   syn region phpDocTags  start="{@\(example\|id\|internal\|inheritdoc\|link\|source\|toc\|tutorial\)" end="}" containedin=phpComment
-  syn match  phpDocTags  "@\(abstract\|access\|author\|category\|copyright\|deprecated\|example\|final\|global\|ignore\|internal\|license\|link\|method\|name\|package\|param\|property\|return\|see\|since\|static\|staticvar\|subpackage\|todo\|tutorial\|uses\|var\|version\)\s\+\S\+.*" contains=phpDocParam containedin=phpComment
+  syn match  phpDocTags  "@\(abstract\|access\|author\|category\|copyright\|deprecated\|example\|exception\|filesource\|final\|global\|id\|ignore\|inheritdoc\|internal\|license\|link\|magic\|method\|name\|package\|param\|property\|return\|see\|since\|source\|static\|staticvar\|subpackage\|throws\|toc\|todo\|tutorial\|uses\|var\|version\)\s\+\S\+.*" contains=phpDocParam containedin=phpComment
   syn match  phpDocParam "\s\S\+" contained contains=phpDocIdentifier
   syn match  phpDocIdentifier contained "$\h\w*"
-  syn match  phpDocTags  "@filesource" containedin=phpComment
 
   syn case match
 endif
@@ -527,10 +528,7 @@ endif
 " For version 5.8 and later: only when an item doesn't have highlighting yet
 if !exists("did_php_syn_inits")
 
-  hi def link phpCommentTitle     SpecialComment
   hi def link phpComment          Comment
-  hi def link phpDocComment       Comment
-  hi def link phpCommentStar      Comment
   hi def link phpMagicConstants   Constant
   hi def link phpServerVars       Constant
   hi def link phpConstants        Constant
@@ -548,27 +546,33 @@ if !exists("did_php_syn_inits")
   hi def link phpException        StorageClass
   hi def link phpIdentifier       Identifier
   hi def link phpIdentifierSimply Identifier
-  hi def link phpDocIdentifier    Identifier
   hi def link phpStatement        Statement
   hi def link phpStructure        Statement
   hi def link phpOperator         Operator
-  hi def link phpVarSelector      Operator
+  hi def link phpMemberSelector   Operator
   hi def link phpInclude          PreProc
   hi def link phpDefine           PreProc
   hi def link phpKeyword          Keyword
-  hi def link phpFCKeyword        Keyword
-  hi def link phpSCKeyword        Keyword
   hi def link phpSuperglobals     Type
   hi def link phpType             Type
-  hi def link phpDocParam         Type
-  hi def link phpMemberSelector   Operator
-  hi def link phpDocTags          Special
   hi def link phpParent           Special
   hi def link phpSpecialChar      SpecialChar
   hi def link phpStrEsc           SpecialChar
   hi def link phpParentError      Error
   hi def link phpOctalError       Error
   hi def link phpTodo             Todo
+
+  hi def link phpCommentStar      phpComment
+  hi def link phpDocComment       phpComment
+  hi def link phpCommentTitle     phpComment
+  hi def link phpDocTags          phpComment
+  hi def link phpDocParam         phpComment
+  hi def link phpDocIdentifier    phpComment
+
+  hi def link phpFCKeyword        phpKeyword
+  hi def link phpSCKeyword        phpKeyword
+
+  hi def link phpVarSelector      phpIdentifier
 
 endif
 

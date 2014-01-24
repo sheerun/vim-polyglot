@@ -35,6 +35,7 @@ syn keyword slimDocType        contained html 5 1.1 strict frameset mobile basic
 syn match   slimDocTypeKeyword "^\s*\(doctype\)\s\+" nextgroup=slimDocType
 
 syn keyword slimTodo        FIXME TODO NOTE OPTIMIZE XXX contained
+syn keyword htmlTagName     contained script
 
 syn match slimTag           "\w\+"         contained contains=htmlTagName nextgroup=@slimComponent
 syn match slimIdChar        "#{\@!"        contained nextgroup=slimId

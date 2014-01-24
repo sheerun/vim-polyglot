@@ -325,7 +325,7 @@ function! LatexBox_Latexmk(force)
 				let g:latexmk_running_pids[basepath] = pid
 			else
 				let pid = substitute(system('pgrep -f "perl.*'
-							\ . mainfile . '"'),'\D','','')
+							\ . mainfile . '" | head -n 1'),'\D','','')
 				let g:latexmk_running_pids[basepath] = pid
 			endif
 		else

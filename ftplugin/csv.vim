@@ -137,6 +137,7 @@ fu! <sid>Init(startline, endline) "{{{3
         \ . "| unlet! b:csv_SplitWindow b:csv_headerline"
         \ . "| unlet! b:csv_thousands_sep b:csv_decimal_sep"
         \. " | unlet! b:browsefilter b:csv_cmt"
+        \. " | unlet! b:csv_arrange_leftalign"
 
  " Delete all functions
  " disabled currently, because otherwise when switching ft
@@ -696,7 +697,11 @@ endfu
 
 fu! <sid>UnArrangeCol(match) "{{{3
     " Strip leading white space, also trims empty records:
-    return substitute(a:match, '^\s\+', '', '')
+    if get(b:, 'csv_arrange_leftalign',0)
+        return substitute(a:match, '\s\+\ze'. b:delimiter. '\?$', '', '')
+    else
+        return substitute(a:match, '^\s\+', '', '')
+    endif
     " only strip leading white space, if a non-white space follows:
     "return substitute(a:match, '^\s\+\ze\S', '', '')
 endfu
@@ -744,9 +749,18 @@ fu! <sid>Columnize(field) "{{{3
     let width=get(b:col_width, (s:columnize_count % s:max_cols), 20)
 
     let s:columnize_count += 1
+    let has_delimiter = (a:field =~# b:delimiter.'$')
     if v:version > 703 || v:version == 703 && has("patch713")
         " printf knows about %S (e.g. can handle char length
-        return printf("%*S", width+1 ,  a:field)
+        if get(b:, 'csv_arrange_leftalign',0)
+            " left-align content
+            return printf("%-*S%s", width+1 , 
+                \ (has_delimiter ?
+                \ matchstr(a:field, '.*\%('.b:delimiter.'\)\@=') : a:field),
+                \ (has_delimiter ? b:delimiter : ''))
+        else
+            return printf("%*S", width+1 ,  a:field)
+        endif
     else
         " printf only handles bytes
         if !exists("g:csv_no_multibyte") &&
@@ -768,7 +782,14 @@ fu! <sid>Columnize(field) "{{{3
             " Column has correct length, don't use printf()
             return a:field
         else
-            return printf("%*s", width ,  a:field)
+            if get(b:, 'csv_arrange_leftalign',0)
+                " left-align content
+                return printf("%-*s%s", width,  
+                \ (has_delimiter ?  matchstr(a:field, '.*\%('.b:delimiter.'\)\@=') : a:field),
+                \ (has_delimiter ? b:delimiter : ''))
+            else
+                return printf("%*s", width ,  a:field)
+            endif
         endif
     endif
 endfun
@@ -1250,8 +1271,8 @@ fu! <sid>SumColumn(list) "{{{3
             if empty(item)
                 continue
             endif
-            let nr = matchstr(item, '\d\(.*\d\)\?$')
-            let format1 = '^\d\+\zs\V' . s:nr_format[0] . '\m\ze\d'
+            let nr = matchstr(item, '-\?\d\(.*\d\)\?$')
+            let format1 = '^-\?\d\+\zs\V' . s:nr_format[0] . '\m\ze\d'
             let format2 = '\d\+\zs\V' . s:nr_format[1] . '\m\ze\d'
             try
                 let nr = substitute(nr, format1, '', '')
@@ -2379,7 +2400,7 @@ fu! csv#EvalColumn(nr, func, first, last) range "{{{3
     endif
     let save = winsaveview()
     call <sid>CheckHeaderLine()
-    let nr = matchstr(a:nr, '^\d\+')
+    let nr = matchstr(a:nr, '^\-\?\d\+')
     let col = (empty(nr) ? <sid>WColumn() : nr)
     " don't take the header line into consideration
     let start = a:first - 1 + s:csv_fold_headerline
