@@ -39,7 +39,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin, ftdetect)
 - [go](https://github.com/jnwhiteh/vim-golang) (syntax, indent, autoload, ftplugin, ftdetect)
 - [haml](https://github.com/tpope/vim-haml) (syntax, indent, compiler, ftplugin, ftdetect)
-- [handlebars](https://github.com/nono/vim-handlebars) (syntax, ftplugin, ftdetect)
+- [handlebars](https://github.com/mustache/vim-mustache-handlebars) (syntax, ftplugin, ftdetect)
 - [haskell](https://github.com/travitch/hasksyn) (syntax, indent, ftplugin)
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload)
 - [jade](https://github.com/digitaltoad/vim-jade) (syntax, indent, ftplugin, ftdetect)
