@@ -79,7 +79,7 @@ PACKS="
   git:tpope/vim-git
   go:jnwhiteh/vim-golang
   haml:tpope/vim-haml
-  handlebars:nono/vim-handlebars
+  handlebars:mustache/vim-mustache-handlebars
   haskell:travitch/hasksyn
   html5:othree/html5.vim
   jade:digitaltoad/vim-jade

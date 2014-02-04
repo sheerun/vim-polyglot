@@ -50,9 +50,6 @@ au BufReadPost *.go call s:gofiletype_post()
 autocmd BufNewFile,BufRead *.haml,*.hamlbars setf haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
-if has("autocmd")
-  au BufNewFile,BufRead *.{handlebars,hb,hbs,hbt}{,.erb} set ft=handlebars.html syntax=handlebars | runtime! ftplugin/handlebars.vim ftplugin/handlebars*.vim ftplugin/handlebars/*.vim
-endif
 autocmd BufNewFile,BufReadPost *.jade set filetype=jade
 au BufNewFile,BufRead *.js setf javascript
 au BufNewFile,BufRead *.jsm setf javascript
@@ -84,6 +81,9 @@ autocmd BufRead *.html
     \ if getline(1) =~ '^\(%\|<[%&].*>\)' |
     \     set filetype=mason |
     \ endif
+if has("autocmd")
+  au  BufNewFile,BufRead *.mustache,*.handlebars,*.hbs,*.hogan,*.hulk,*.hjs set filetype=html syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
+endif
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au BufRead,BufNewFile *.pp              set filetype=puppet
