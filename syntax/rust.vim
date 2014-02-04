@@ -46,8 +46,6 @@ syn keyword   rustType        f64 i8 i16 i32 i64 str Self
 " to make it easy to update.
 
 " Core operators {{{3
-syn keyword   rustEnum        Either
-syn keyword   rustEnumVariant Left Right
 syn keyword   rustTrait       Sized
 syn keyword   rustTrait       Freeze Send
 syn keyword   rustTrait       Add Sub Mul Div Rem Neg Not
@@ -80,7 +78,6 @@ syn keyword rustTrait FromStr
 syn keyword rustTrait FromIterator Extendable
 syn keyword rustTrait Iterator DoubleEndedIterator RandomAccessIterator CloneableIterator
 syn keyword rustTrait OrdIterator MutableDoubleEndedIterator ExactSize
-syn keyword rustTrait Times
 
 syn keyword rustTrait Algebraic Trigonometric Exponential Hyperbolic
 syn keyword rustTrait Bitwise Bounded Integer Fractional Real RealExt
@@ -94,16 +91,16 @@ syn keyword rustTrait SendStr SendStrOwned SendStrStatic IntoSendStr
 syn keyword rustTrait Str StrVector StrSlice OwnedStr
 syn keyword rustTrait IterBytes
 syn keyword rustTrait ToStr IntoStr
-syn keyword rustTrait CopyableTuple ImmutableTuple
+syn keyword rustTrait CloneableTuple ImmutableTuple
 syn keyword rustTrait Tuple1 Tuple2 Tuple3 Tuple4
 syn keyword rustTrait Tuple5 Tuple6 Tuple7 Tuple8
 syn keyword rustTrait Tuple9 Tuple10 Tuple11 Tuple12
 syn keyword rustTrait ImmutableTuple1 ImmutableTuple2 ImmutableTuple3 ImmutableTuple4
 syn keyword rustTrait ImmutableTuple5 ImmutableTuple6 ImmutableTuple7 ImmutableTuple8
 syn keyword rustTrait ImmutableTuple9 ImmutableTuple10 ImmutableTuple11 ImmutableTuple12
-syn keyword rustTrait ImmutableEqVector ImmutableTotalOrdVector ImmutableCopyableVector
-syn keyword rustTrait OwnedVector OwnedCopyableVector OwnedEqVector MutableVector
-syn keyword rustTrait Vector VectorVector CopyableVector ImmutableVector
+syn keyword rustTrait ImmutableEqVector ImmutableTotalOrdVector ImmutableCloneableVector
+syn keyword rustTrait OwnedVector OwnedCloneableVector OwnedEqVector MutableVector
+syn keyword rustTrait Vector VectorVector CloneableVector ImmutableVector
 
 "syn keyword rustFunction stream
 syn keyword rustTrait Port Chan GenericChan GenericSmartChan GenericPort Peekable
@@ -113,7 +110,6 @@ syn keyword   rustSelf        self
 syn keyword   rustBoolean     true false
 
 syn keyword   rustConstant    Some None       " option
-syn keyword   rustConstant    Left Right      " either
 syn keyword   rustConstant    Ok Err          " result
 syn keyword   rustConstant    Less Equal Greater " Ordering
 

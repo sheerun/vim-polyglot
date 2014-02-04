@@ -106,13 +106,20 @@ function! LatexBox_GetMainTexFile()
 		return expand('%:p')
 	endif
 
-	" 4 borrow the Vim-Latex-Suite method of finding it
+	" 4. use 'main.tex' if it exists in the same directory (and is readable)
+	let s:main_dot_tex_file=expand('%:p:h') . '/main.tex'
+	if filereadable(s:main_dot_tex_file)
+		let b:main_tex_file=s:main_dot_tex_file
+		return b:main_tex_file
+	endif
+
+	" 5. borrow the Vim-Latex-Suite method of finding it
 	if Tex_GetMainFileName() != expand('%:p')
 		let b:main_tex_file = Tex_GetMainFileName()
 		return b:main_tex_file
 	endif
 
-	" 5. prompt for file with completion
+	" 6. prompt for file with completion
 	let b:main_tex_file = s:PromptForMainFile()
 	return b:main_tex_file
 endfunction
