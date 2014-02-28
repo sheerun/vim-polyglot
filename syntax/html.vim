@@ -41,6 +41,7 @@ syn keyword htmlTagName contained linearGradient marker mask pattern radialGradi
 syn keyword htmlTagName contained missing-glyph mpath 
 syn keyword htmlTagName contained text textPath tref tspan vkern
 
+" Custom Element
 syn match htmlTagName contained "\<[a-z_]\+\(\-[a-z_]\+\)\+\>"
 
 " HTML 5 arguments

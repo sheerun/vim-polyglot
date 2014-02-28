@@ -11,10 +11,10 @@
 " though, implementation differs.
 
 " Plugin folklore "{{{2
-if v:version < 700 || exists('b:did_csv_ftplugin')
+if v:version < 700 || exists('b:did_ftplugin')
   finish
 endif
-let b:did_csv_ftplugin = 1
+let b:did_ftplugin = 1
 
 let s:cpo_save = &cpo
 set cpo&vim

@@ -106,13 +106,13 @@ function! LatexBox_Complete(findstart, base)
 		endwhile
 
 		let line_start = line[:pos-1]
-		if line_start =~ '\C\\begin\_\s*{$'
+		if line_start =~ '\m\C\\begin\_\s*{$'
 			let s:completion_type = 'begin'
-		elseif line_start =~ '\C\\end\_\s*{$'
+		elseif line_start =~ '\m\C\\end\_\s*{$'
 			let s:completion_type = 'end'
-		elseif line_start =~ g:LatexBox_ref_pattern . '$'
+		elseif line_start =~ '\m' . g:LatexBox_ref_pattern . '$'
 			let s:completion_type = 'ref'
-		elseif line_start =~ g:LatexBox_cite_pattern . '$'
+		elseif line_start =~ '\m' . g:LatexBox_cite_pattern . '$'
 			let s:completion_type = 'bib'
 			" check for multiple citations
 			let pos = col('.') - 1
@@ -369,7 +369,7 @@ function! s:ExtractLabels()
 			continue
 		endif
 
-		if 0 == search( '{\w*{', 'ce', lblline )
+		if 0 == search( '\m{\w*{', 'ce', lblline )
 		    let [lblline, lblbegin] = searchpos( '\\newlabel{', 'ecW' )
 		    continue
 		endif
@@ -382,7 +382,7 @@ function! s:ExtractLabels()
 		endif
 		let curnumber = strpart( getline( lblline ), numberbegin, numberend - numberbegin - 1 )
 
-		if 0 == search( '\w*{', 'ce', lblline )
+		if 0 == search( '\m\w*{', 'ce', lblline )
 		    let [lblline, lblbegin] = searchpos( '\\newlabel{', 'ecW' )
 		    continue
 		endif
@@ -755,6 +755,70 @@ function! s:PromptEnvWrapSelection(...)
 endfunction
 " }}}
 
+" List Labels with Prompt {{{
+function! s:PromptLabelList(...)
+	" Check if window already exists
+	let winnr = bufwinnr(bufnr('LaTeX Labels'))
+	if winnr >= 0
+		if a:0 == 0
+			silent execute winnr . 'wincmd w'
+		else
+			" Supplying an argument to this function causes toggling instead
+			" of jumping to the labels window
+			if g:LatexBox_split_resize
+				silent exe "set columns-=" . g:LatexBox_split_width
+			endif
+			silent execute 'bwipeout' . bufnr('LaTeX Labels')
+		endif
+		return
+	endif
+
+	" Get label suggestions
+	let regexp = input('filter labels with regexp: ', '')
+	let labels = s:CompleteLabels(regexp)
+
+	let calling_buf = bufnr('%')
+
+	" Create labels window and set local settings
+	if g:LatexBox_split_resize
+		silent exe "set columns+=" . g:LatexBox_split_width
+	endif
+	silent exe g:LatexBox_split_side g:LatexBox_split_width . 'vnew LaTeX\ Labels'
+	let b:toc = []
+	let b:toc_numbers = 1
+	let b:calling_win = bufwinnr(calling_buf)
+	setlocal filetype=latextoc
+
+	" Add label entries and jump to the closest section
+	for entry in labels
+		let number = matchstr(entry['menu'], '^\s*(\zs[^)]\+\ze)')
+		let page = matchstr(entry['menu'], '^[^)]*)\s*\[\zs[^]]\+\ze\]')
+		let e = {'file': bufname(calling_buf),
+					\ 'level': 'label',
+					\ 'number': number,
+					\ 'text': entry['abbr'],
+					\ 'page': page}
+		call add(b:toc, e)
+		if b:toc_numbers
+			call append('$', e['number'] . "\t" . e['text'])
+		else
+			call append('$', e['text'])
+		endif
+	endfor
+	if !g:LatexBox_toc_hidehelp
+		call append('$', "")
+		call append('$', "<Esc>/q: close")
+		call append('$', "<Space>: jump")
+		call append('$', "<Enter>: jump and close")
+		call append('$', "s:       hide numbering")
+	endif
+	0delete _
+
+	" Lock buffer
+	setlocal nomodifiable
+endfunction
+" }}}
+
 " Change Environment {{{
 function! s:ChangeEnvPrompt()
 
@@ -856,6 +920,10 @@ vnoremap <silent> <Plug>LatexEnvWrapSelection		:<c-u>call <SID>PromptEnvWrapSele
 vnoremap <silent> <Plug>LatexEnvWrapFmtSelection	:<c-u>call <SID>PromptEnvWrapSelection(1)<CR>
 nnoremap <silent> <Plug>LatexChangeEnv				:call <SID>ChangeEnvPrompt()<CR>
 nnoremap <silent> <Plug>LatexToggleStarEnv			:call <SID>LatexToggleStarEnv()<CR>
+" }}}
+
+" Commands {{{
+command! LatexLabels call <SID>PromptLabelList()
 " }}}
 
 " vim:fdm=marker:ff=unix:noet:ts=4:sw=4

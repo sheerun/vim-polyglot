@@ -515,7 +515,7 @@ function! GetScalaIndent()
   endif
 
   let prevCurlyCount = scala#CountCurlies(prevline)
-  if prevCurlyCount == 0 && prevline =~ '^.*=>\s*$' && prevline !~ '^\s*this\s*:.*=>\s*$' && curline !~ '^\s*\<case\>'
+  if prevCurlyCount == 0 && prevline =~ '^.*\%(=>\|⇒\)\s*$' && prevline !~ '^\s*this\s*:.*\%(=>\|⇒\)\s*$' && curline !~ '^\s*\<case\>'
     call scala#ConditionalConfirm("16")
     let ind = ind + &shiftwidth
   endif

@@ -10,7 +10,7 @@ syn case match
 syn sync minlines=200 maxlines=1000
 
 syn keyword scalaKeyword catch do else final finally for forSome if
-syn keyword scalaKeyword match return throw try while yield
+syn keyword scalaKeyword match return throw try while yield macro
 syn keyword scalaKeyword class trait object extends with nextgroup=scalaInstanceDeclaration skipwhite
 syn keyword scalaKeyword case nextgroup=scalaKeyword,scalaCaseFollowing skipwhite
 syn keyword scalaKeyword val nextgroup=scalaNameDefinition,scalaQuasiQuotes skipwhite

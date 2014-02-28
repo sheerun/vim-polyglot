@@ -121,9 +121,12 @@ syntax keyword clojureCommentTodo contained FIXME XXX TODO FIXME: XXX: TODO:
 syntax match clojureComment ";.*$" contains=clojureCommentTodo,@Spell
 syntax match clojureComment "#!.*$"
 
-syntax region clojureSexp   matchgroup=clojureParen start="("  matchgroup=clojureParen end=")" contains=TOP,@Spell fold
-syntax region clojureVector matchgroup=clojureParen start="\[" matchgroup=clojureParen end="]" contains=TOP,@Spell fold
-syntax region clojureMap    matchgroup=clojureParen start="{"  matchgroup=clojureParen end="}" contains=TOP,@Spell fold
+" Generated from https://github.com/guns/vim-clojure-static/blob/%%RELEASE_TAG%%/clj/src/vim_clojure_static/generate.clj
+syntax cluster clojureTop contains=@Spell,clojureAnonArg,clojureBoolean,clojureCharacter,clojureComment,clojureCond,clojureConstant,clojureDefine,clojureDeref,clojureDispatch,clojureError,clojureException,clojureFunc,clojureKeyword,clojureMacro,clojureMap,clojureMeta,clojureNumber,clojureQuote,clojureRegexp,clojureRepeat,clojureSexp,clojureSpecial,clojureString,clojureSymbol,clojureUnquote,clojureVarArg,clojureVariable,clojureVector
+
+syntax region clojureSexp   matchgroup=clojureParen start="("  matchgroup=clojureParen end=")" contains=@clojureTop fold
+syntax region clojureVector matchgroup=clojureParen start="\[" matchgroup=clojureParen end="]" contains=@clojureTop fold
+syntax region clojureMap    matchgroup=clojureParen start="{"  matchgroup=clojureParen end="}" contains=@clojureTop fold
 
 " Highlight superfluous closing parens, brackets and braces.
 syntax match clojureError "]\|}\|)"

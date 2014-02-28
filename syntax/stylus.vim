@@ -317,7 +317,6 @@ endif
 " Based On: Tim Pope (sass.vim)
 
 syn case ignore
-syn region cssInclude start="@import" end="\n" contains=cssComment,cssFuncVal,cssRuleProp
 
 syn cluster stylusCssSelectors contains=cssTagName,cssSelector,cssPseudo
 syn cluster stylusCssValues contains=cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency,cssColorVal,cssCommonVal,cssFontVal,cssListVal,cssTextVal,cssVisualVal,cssBorderVal,cssBackgroundVal,cssFuncVal,cssAdvancedVal
@@ -344,6 +343,9 @@ syn match stylusFunction "\<\%(opposite-position\|image-size\|add-property\)\>(\
 
 syn keyword stylusVariable null true false arguments
 syn keyword stylusControl  if else unless for in return
+
+syn match stylusImport "@\%(import\|require\)" nextgroup=stylusImportList
+syn match stylusImportList "[^;]\+" contained contains=cssString.*,cssMediaType,cssURL
 
 syn match stylusAmpersand  "&"
 syn match stylusClass      "[[:alnum:]_-]\+" contained

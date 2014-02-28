@@ -102,7 +102,7 @@ function! LatexBox_GetMainTexFile()
 	endfor
 
 	" 3. scan current file for "\begin{document}"
-	if &filetype == 'tex' && search('\C\\begin\_\s*{document}', 'nw') != 0
+	if &filetype == 'tex' && search('\m\C\\begin\_\s*{document}', 'nw') != 0
 		return expand('%:p')
 	endif
 

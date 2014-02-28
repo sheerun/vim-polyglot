@@ -15,7 +15,7 @@ function! clojurecomplete#Complete(findstart, base)
 	if a:findstart
 		return searchpos('\<', 'bnW', line('.'))[1] - 1
 	else
-		return { 'words': filter(copy(s:words), 'v:val =~ "\\V\\^' . a:base . '"') }
+		return { 'words': filter(copy(s:words), 'v:val =~# "\\V\\^' . a:base . '"') }
 	endif
 endfunction
 

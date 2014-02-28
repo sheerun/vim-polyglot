@@ -88,7 +88,7 @@ au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.c
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au BufRead,BufNewFile *.pp              set filetype=puppet
 au BufNewFile,BufRead *.rb,*.rbw,*.gemspec	set filetype=ruby
-au BufNewFile,BufRead *.builder,*.rxml,*.rjs	set filetype=ruby
+au BufNewFile,BufRead *.builder,*.rxml,*.rjs,*.ruby	set filetype=ruby
 au BufNewFile,BufRead [rR]akefile,*.rake	set filetype=ruby
 au BufNewFile,BufRead [rR]antfile,*.rant	set filetype=ruby
 au BufNewFile,BufRead .irbrc,irbrc		set filetype=ruby
@@ -108,6 +108,7 @@ au BufNewFile,BufRead *.jbuilder		set filetype=ruby
 au BufNewFile,BufRead Puppetfile		set filetype=ruby
 au BufNewFile,BufRead [Bb]uildfile		set filetype=ruby
 au BufNewFile,BufRead Appraisals		set filetype=ruby
+au BufNewFile,BufRead Podfile,*.podspec		set filetype=ruby
 au BufRead,BufNewFile *.rs set filetype=rust
 au BufRead,BufNewFile *.sbt set filetype=sbt
 fun! s:DetectScala()

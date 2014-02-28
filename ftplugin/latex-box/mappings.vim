@@ -23,6 +23,10 @@ map <buffer> <LocalLeader>lv :LatexView<CR>
 map <silent> <buffer> <LocalLeader>lt :LatexTOC<CR>
 " }}}
 
+" List of labels {{{
+map <silent> <buffer> <LocalLeader>lj :LatexLabels<CR>
+" }}}
+
 " Jump to match {{{
 if !exists('g:LatexBox_loaded_matchparen')
 	nmap <buffer> % <Plug>LatexBox_JumpToMatch

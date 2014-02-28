@@ -37,7 +37,7 @@ syn match   slimDocTypeKeyword "^\s*\(doctype\)\s\+" nextgroup=slimDocType
 syn keyword slimTodo        FIXME TODO NOTE OPTIMIZE XXX contained
 syn keyword htmlTagName     contained script
 
-syn match slimTag           "\w\+"         contained contains=htmlTagName nextgroup=@slimComponent
+syn match slimTag           "\w\+[><]*"         contained contains=htmlTagName nextgroup=@slimComponent
 syn match slimIdChar        "#{\@!"        contained nextgroup=slimId
 syn match slimId            "\%(\w\|-\)\+" contained nextgroup=@slimComponent
 syn match slimClassChar     "\."           contained nextgroup=slimClass
@@ -79,6 +79,7 @@ syn match slimIEConditional "\%(^\s*/\)\@<=\[\s*if\>[^]]*]" contained containedi
 hi def link slimAttrString                String
 hi def link slimBegin                     String
 hi def link slimClass                     Type
+hi def link slimAttr                      Type
 hi def link slimClassChar                 Type
 hi def link slimComment                   Comment
 hi def link slimDocType                   Identifier

@@ -21,7 +21,7 @@ let b:did_indent = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let b:undo_indent = 'setlocal autoindent< smartindent< lispwords< expandtab< softtabstop< shiftwidth< indentexpr< indentkeys<'
+let b:undo_indent = 'setlocal autoindent< smartindent< expandtab< softtabstop< shiftwidth< indentexpr< indentkeys<'
 
 setlocal noautoindent nosmartindent
 setlocal softtabstop=2 shiftwidth=2 expandtab
@@ -70,7 +70,7 @@ if exists("*searchpairpos")
 	endfunction
 
 	function! s:IsParen()
-		return s:CurrentChar() =~ '\v[\(\)\[\]\{\}]' &&
+		return s:CurrentChar() =~# '\v[\(\)\[\]\{\}]' &&
 		     \ s:SynIdName() !~? '\vstring|regex|comment|character'
 	endfunction
 
@@ -82,7 +82,7 @@ if exists("*searchpairpos")
 			   \ ? a:patterns
 			   \ : map(split(a:patterns, ','), '"^" . v:val . "$"')
 		for pat in list
-			if a:string =~ pat | return 1 | endif
+			if a:string =~# pat | return 1 | endif
 		endfor
 	endfunction
 
@@ -172,7 +172,7 @@ if exists("*searchpairpos")
 
 		call search('\S', 'W')
 		let w = s:StripNamespaceAndMacroChars(s:CurrentWord())
-		if g:clojure_special_indent_words =~ '\<' . w . '\>'
+		if g:clojure_special_indent_words =~# '\V\<' . w . '\>'
 			return 1
 		endif
 
@@ -280,7 +280,7 @@ if exists("*searchpairpos")
 		" e.g. clojure.core/defn and #'defn should both indent like defn.
 		let ww = s:StripNamespaceAndMacroChars(w)
 
-		if &lispwords =~ '\V\<' . ww . '\>'
+		if &lispwords =~# '\V\<' . ww . '\>'
 			return paren[1] + &shiftwidth - 1
 		endif
 
@@ -311,85 +311,6 @@ else
 	let b:undo_indent .= '| setlocal lisp<'
 
 endif
-
-" Specially indented symbols from clojure.core and clojure.test.
-"
-" Clojure symbols are indented in the defn style when they:
-"
-"   * Define vars and anonymous functions
-"   * Create new lexical scopes or scopes with altered environments
-"   * Create conditional branches from a predicate function or value
-"
-" The arglists for these functions are generally in the form of [x & body];
-" Functions that accept a flat list of forms do not treat the first argument
-" specially and hence are not indented specially.
-
-" Definitions
-setlocal lispwords=
-setlocal lispwords+=bound-fn
-setlocal lispwords+=def
-setlocal lispwords+=definline
-setlocal lispwords+=definterface
-setlocal lispwords+=defmacro
-setlocal lispwords+=defmethod
-setlocal lispwords+=defmulti
-setlocal lispwords+=defn
-setlocal lispwords+=defn-
-setlocal lispwords+=defonce
-setlocal lispwords+=defprotocol
-setlocal lispwords+=defrecord
-setlocal lispwords+=defstruct
-setlocal lispwords+=deftest " clojure.test
-setlocal lispwords+=deftest- " clojure.test
-setlocal lispwords+=deftype
-setlocal lispwords+=extend
-setlocal lispwords+=extend-protocol
-setlocal lispwords+=extend-type
-setlocal lispwords+=fn
-setlocal lispwords+=ns
-setlocal lispwords+=proxy
-setlocal lispwords+=reify
-setlocal lispwords+=set-test " clojure.test
-
-" Binding forms
-setlocal lispwords+=as->
-setlocal lispwords+=binding
-setlocal lispwords+=doall
-setlocal lispwords+=dorun
-setlocal lispwords+=doseq
-setlocal lispwords+=dotimes
-setlocal lispwords+=doto
-setlocal lispwords+=for
-setlocal lispwords+=if-let
-setlocal lispwords+=let
-setlocal lispwords+=letfn
-setlocal lispwords+=locking
-setlocal lispwords+=loop
-setlocal lispwords+=testing " clojure.test
-setlocal lispwords+=when-first
-setlocal lispwords+=when-let
-setlocal lispwords+=with-bindings
-setlocal lispwords+=with-in-str
-setlocal lispwords+=with-local-vars
-setlocal lispwords+=with-open
-setlocal lispwords+=with-precision
-setlocal lispwords+=with-redefs
-setlocal lispwords+=with-redefs-fn
-setlocal lispwords+=with-test " clojure.test
-
-" Conditional branching
-setlocal lispwords+=case
-setlocal lispwords+=cond->
-setlocal lispwords+=cond->>
-setlocal lispwords+=condp
-setlocal lispwords+=if
-setlocal lispwords+=if-not
-setlocal lispwords+=when
-setlocal lispwords+=when-not
-setlocal lispwords+=while
-
-" Exception handling
-setlocal lispwords+=catch
 
 let &cpo = s:save_cpo
 unlet! s:save_cpo
