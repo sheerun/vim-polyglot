@@ -2381,11 +2381,12 @@ fu! <sid>SubstituteInColumn(command, line1, line2) range "{{{3
 endfu
 
 fu! <sid>ColumnMode() "{{{3
-    if mode() =~# 'R'
+    let mode = mode()
+    if mode =~# 'R'
         " (virtual) Replace mode
         let new_line = (line('.') == line('$') ||
-        \ (synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name") !~# "comment"))
-        return "\<ESC>". (new_line ? "o" : "JE".mode())
+        \ (synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name") =~? "comment"))
+        return "\<ESC>g`[". (new_line ? "o" : "J".mode)
     else
         return "\<CR>"
     endif

@@ -20,10 +20,7 @@ autocmd BufNewFile,BufRead *.git/config,.gitconfig,.gitmodules set ft=gitconfig
 autocmd BufNewFile,BufRead */.config/git/config                set ft=gitconfig
 autocmd BufNewFile,BufRead *.git/modules/**/config             set ft=gitconfig
 autocmd BufNewFile,BufRead git-rebase-todo                     set ft=gitrebase
-autocmd BufNewFile,BufRead .msg.[0-9]*
-      \ if getline(1) =~ '^From.*# This line is ignored.$' |
-      \   set ft=gitsendemail |
-      \ endif
+autocmd BufNewFile,BufRead .gitsendemail.*                     set ft=gitsendemail
 autocmd BufNewFile,BufRead *.git/**
       \ if getline(1) =~ '^\x\{40\}\>\|^ref: ' |
       \   set ft=git |
