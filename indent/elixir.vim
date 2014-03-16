@@ -59,6 +59,10 @@ function! GetElixirIndent()
 
     let ind += opened_symbol * &sw
 
+    if current_line =~ '^\s*\(\]\|}\)'
+      let ind -= &sw
+    endif
+
     if last_line =~ s:indent_keywords
       let ind += &sw
     endif
