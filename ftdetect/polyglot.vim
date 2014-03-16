@@ -82,6 +82,7 @@ if has("autocmd")
   au  BufNewFile,BufRead *.mustache,*.handlebars,*.hbs,*.hogan,*.hulk,*.hjs set filetype=html syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
 endif
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
+au BufRead,BufNewFile *.cl set filetype=opencl
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au BufRead,BufNewFile *.pp              set filetype=puppet
 au BufNewFile,BufRead *.rb,*.rbw,*.gemspec	set filetype=ruby
