@@ -113,7 +113,7 @@ PACKS="
   vbnet:vim-scripts/vbnet.vim
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
-  yard:noprompt/vim-yardoc
+  yard:sheerun/vim-yardoc
   css-color:gorodinskiy/vim-coloresque
 "
 

@@ -99,7 +99,7 @@ syn cluster rubyNotTop add=@yardTags,@yardDirectives,@yardTypes,@yardLists,@yard
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 hi def link yardComment rubyComment
 " Tags
-hi def link yardGenericTag rubyTodo
+hi def link yardGenericTag rubyKeyword
 hi def link yardAbstract yardGenericTag
 hi def link yardApi yardGenericTag
 hi def link yardAttr yardGenericTag
@@ -123,7 +123,7 @@ hi def link yield yardGenericTag
 hi def link yieldparam yardGenericTag
 hi def link yieldreturn yardGenericTag
 " Directives
-hi def link yardGenericDirective rubyTodo
+hi def link yardGenericDirective rubyKeyword
 hi def link yardAttribute yardGenericDirective
 hi def link yardEndGroup yardGenericDirective
 hi def link yardGroup yardGenericDirective
