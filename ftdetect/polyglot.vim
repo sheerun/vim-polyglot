@@ -87,7 +87,7 @@ endif
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
 au BufRead,BufNewFile *.cl set filetype=opencl
 autocmd BufNewFile,BufRead *.proto setfiletype proto
-au BufRead,BufNewFile *.pp              set filetype=puppet
+au! BufRead,BufNewFile *.pp setfiletype puppet
 function! s:setf(filetype) abort
   if &filetype !=# a:filetype
     let &filetype = a:filetype
