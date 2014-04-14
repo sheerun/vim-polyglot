@@ -113,6 +113,7 @@ PACKS="
   tomdoc:duwanis/tomdoc.vim
   typescript:leafgarland/typescript-vim
   vbnet:vim-scripts/vbnet.vim
+  toml:cespare/vim-toml
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
   yard:sheerun/vim-yardoc

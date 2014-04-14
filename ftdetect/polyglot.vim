@@ -129,6 +129,7 @@ autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
 au BufRead,BufNewFile *.textile set filetype=textile
 autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
+autocmd BufNewFile,BufRead *.toml set filetype=toml
 autocmd BufNewFile,BufRead *.twig set filetype=twig
 autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
