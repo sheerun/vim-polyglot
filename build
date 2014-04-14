@@ -99,7 +99,7 @@ PACKS="
   php:StanAngeloff/php.vim
   puppet:ajf/puppet-vim
   protobuf:uarun/vim-protobuf
-  python:vim-scripts/python.vim--Vasiliev
+  python:mitsuhiko/vim-python-combined
   r-lang:vim-scripts/R.vim
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
