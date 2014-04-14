@@ -15,7 +15,7 @@ endif
 let s:cpo_save = &cpo
 set cpo-=C
 
-CompilerSet makeprg=haml\ -c
+CompilerSet makeprg=haml
 
 CompilerSet errorformat=
       \Haml\ %trror\ on\ line\ %l:\ %m,

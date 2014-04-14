@@ -42,8 +42,9 @@ setlocal commentstring=;\ %s
 " Functions that accept a flat list of forms do not treat the first argument
 " specially and hence are not indented specially.
 "
+" -*- LISPWORDS -*-
 " Generated from https://github.com/guns/vim-clojure-static/blob/%%RELEASE_TAG%%/clj/src/vim_clojure_static/generate.clj
-setlocal lispwords=as->,binding,bound-fn,case,catch,cond->,cond->>,condp,def,definline,definterface,defmacro,defmethod,defmulti,defn,defn-,defonce,defprotocol,defrecord,defstruct,deftest,deftest-,deftype,doall,dorun,doseq,dotimes,doto,extend,extend-protocol,extend-type,fn,for,if,if-let,if-not,let,letfn,locking,loop,ns,proxy,reify,set-test,testing,when,when-first,when-let,when-not,while,with-bindings,with-in-str,with-local-vars,with-open,with-precision,with-redefs,with-redefs-fn,with-test
+setlocal lispwords=as->,binding,bound-fn,case,catch,cond->,cond->>,condp,def,definline,definterface,defmacro,defmethod,defmulti,defn,defn-,defonce,defprotocol,defrecord,defstruct,deftest,deftest-,deftype,doseq,dotimes,doto,extend,extend-protocol,extend-type,fn,for,if,if-let,if-not,if-some,let,letfn,locking,loop,ns,proxy,reify,set-test,testing,when,when-first,when-let,when-not,when-some,while,with-bindings,with-in-str,with-local-vars,with-open,with-precision,with-redefs,with-redefs-fn,with-test
 
 " Provide insert mode completions for special forms and clojure.core. As
 " 'omnifunc' is set by popular Clojure REPL client plugins, we also set

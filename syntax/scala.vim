@@ -17,6 +17,8 @@ syn keyword scalaKeyword val nextgroup=scalaNameDefinition,scalaQuasiQuotes skip
 syn keyword scalaKeyword def var nextgroup=scalaNameDefinition skipwhite
 hi link scalaKeyword Keyword
 
+syn region scalaBlock start=/{/ end=/}/ contains=TOP fold
+
 syn keyword scalaAkkaSpecialWord when goto using startWith initialize onTransition stay become unbecome
 hi link scalaAkkaSpecialWord PreProc
 
@@ -95,31 +97,26 @@ syn region scalaString start=/"/ end=/"/ contains=scalaStringEmbeddedQuote,scala
 hi link scalaString String
 hi link scalaStringEmbeddedQuote String
 
-syn region scalaSString matchgroup=Special start=/s"/ skip=/\\"/ end=/"/ contains=scalaInterpolation,scalaEscapedChar,scalaUnicodeChar
-syn match scalaInterpolation /\$[a-zA-Z0-9_$]\+/ contained
-syn match scalaInterpolation /\${[^}]\+}/ contained
-hi link scalaSString String
-hi link scalaInterpolation Function
+syn region scalaIString matchgroup=Special start=/\<[a-zA-Z][a-zA-Z0-9_]*"/ skip=/\\"/ end=/"/ contains=scalaInterpolation,scalaInterpolationB,scalaEscapedChar,scalaUnicodeChar
+syn region scalaTripleIString matchgroup=Special start=/\<[a-zA-Z][a-zA-Z0-9_]*"""/ end=/"""\%([^"]\|$\)/ contains=scalaInterpolation,scalaInterpolationB,scalaEscapedChar,scalaUnicodeChar
+hi link scalaIString String
+hi link scalaTripleIString String
 
-syn region scalaFString matchgroup=Special start=/f"/ skip=/\\"/ end=/"/ contains=scalaInterpolation,scalaFInterpolation,scalaEscapedChar,scalaUnicodeChar
-syn match scalaFInterpolation /\$[a-zA-Z0-9_$]\+%[-A-Za-z0-9\.]\+/ contained
-syn match scalaFInterpolation /\${[^}]\+}%[-A-Za-z0-9\.]\+/ contained
+syn match scalaInterpolation /\$[a-zA-Z0-9_$]\+/ contained
+syn region scalaInterpolationB matchgroup=scalaInterpolation start=/\${/ end=/}/ contained contains=TOP
+hi link scalaInterpolation Function
+hi link scalaInterpolationB Normal
+
+syn region scalaFString matchgroup=Special start=/f"/ skip=/\\"/ end=/"/ contains=scalaFInterpolation,scalaFInterpolationB,scalaEscapedChar,scalaUnicodeChar
+syn match scalaFInterpolation /\$[a-zA-Z0-9_$]\+\(%[-A-Za-z0-9\.]\+\)\?/ contained
+syn region scalaFInterpolationB matchgroup=scalaFInterpolation start=/${/ end=/}\(%[-A-Za-z0-9\.]\+\)\?/ contained contains=TOP
 hi link scalaFString String
 hi link scalaFInterpolation Function
-
-syn region scalaQuasiQuotes matchgroup=Type start=/\<q"/ skip=/\\"/ end=/"/ contains=scalaInterpolation
-syn region scalaQuasiQuotes matchgroup=Type start=/\<[tcp]q"/ skip=/\\"/ end=/"/ contains=scalaInterpolation
-hi link scalaQuasiQuotes String
-
-syn region scalaTripleQuasiQuotes matchgroup=Type start=/\<q"""/ end=/"""\%([^"]\|$\)/ contains=scalaInterpolation
-syn region scalaTripleQuasiQuotes matchgroup=Type start=/\<[tcp]q"""/ end=/"""\%([^"]\|$\)/ contains=scalaInterpolation
-hi link scalaTripleQuasiQuotes String
+hi link scalaFInterpolationB Normal
 
 syn region scalaTripleString start=/"""/ end=/"""\%([^"]\|$\)/ contains=scalaEscapedChar,scalaUnicodeChar
-syn region scalaTripleSString matchgroup=Special start=/s"""/ end=/"""\%([^"]\|$\)/ contains=scalaInterpolation,scalaEscapedChar,scalaUnicodeChar
-syn region scalaTripleFString matchgroup=Special start=/f"""/ end=/"""\%([^"]\|$\)/ contains=scalaInterpolation,scalaFInterpolation,scalaEscapedChar,scalaUnicodeChar
+syn region scalaTripleFString matchgroup=Special start=/f"""/ end=/"""\%([^"]\|$\)/ contains=scalaFInterpolation,scalaFInterpolationB,scalaEscapedChar,scalaUnicodeChar
 hi link scalaTripleString String
-hi link scalaTripleSString String
 hi link scalaTripleFString String
 
 syn match scalaNumber /\<0[dDfFlL]\?\>/ " Just a bare 0

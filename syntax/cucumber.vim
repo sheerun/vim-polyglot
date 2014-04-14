@@ -2,11 +2,14 @@
 " Language:     Cucumber
 " Maintainer:   Tim Pope <vimNOSPAM@tpope.org>
 " Filenames:    *.feature
-" Last Change:	2010 May 21
+" Last Change:	2013 May 30
 
 if exists("b:current_syntax")
     finish
 endif
+let s:keepcpo= &cpo
+set cpo&vim
+
 syn case match
 syn sync minlines=20
 
@@ -132,5 +135,8 @@ hi def link cucumberWhen              Function
 hi def link cucumberThen              Type
 
 let b:current_syntax = "cucumber"
+
+let &cpo = s:keepcpo
+unlet s:keepcpo
 
 " vim:set sts=2 sw=2:

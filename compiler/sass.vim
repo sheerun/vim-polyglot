@@ -15,7 +15,7 @@ endif
 let s:cpo_save = &cpo
 set cpo-=C
 
-CompilerSet makeprg=sass\ -c
+CompilerSet makeprg=sass
 
 CompilerSet errorformat=
       \%f:%l:%m\ (Sass::Syntax%trror),

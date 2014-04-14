@@ -40,13 +40,9 @@ endfunction
 
 " {{{2 EscapeTitle
 function! s:EscapeTitle(titlestr)
-    " Credit goes to Marcin Szamotulski for the following fix.  It allows to
-    " match through commands added by TeX.
-    let titlestr = substitute(a:titlestr, '\\\w*\>\s*\%({[^}]*}\)\?', '.*', 'g')
-
-    let titlestr = escape(titlestr, '\')
-    let titlestr = substitute(titlestr, ' ', '\\_\\s\\+', 'g')
-
+    let titlestr = substitute(a:titlestr, '\\[a-zA-Z@]*\>\s*{\?', '.*', 'g')
+    let titlestr = substitute(titlestr, '}', '', 'g')
+    let titlestr = substitute(titlestr, '\%(\.\*\s*\)\{2,}', '.*', 'g')
     return titlestr
 endfunction
 
@@ -170,6 +166,7 @@ function! s:TOCOpenBuf(file)
         let bnr = bufnr(a:file)
     endif
     execute 'buffer! ' . bnr
+    normal! gg
 
 endfunction
 

@@ -36,7 +36,7 @@ let b:did_indent = 1
 
 " [-- local settings (must come before aborting the script) --]
 setlocal indentexpr=HtmlIndentGet(v:lnum)
-setlocal indentkeys=o,O,*<Return>,<>>,{,}
+setlocal indentkeys=o,O,*<Return>,<>>,{,},!^F
 
 
 let s:tags = []
