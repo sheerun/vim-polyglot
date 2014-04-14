@@ -83,6 +83,7 @@ PACKS="
   haskell:travitch/hasksyn
   html5:othree/html5.vim
   jade:digitaltoad/vim-jade
+  jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript
   json:leshill/vim-json
   jst:briancollins/vim-jst
