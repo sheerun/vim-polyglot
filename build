@@ -75,6 +75,7 @@ PACKS="
   cucumber:tpope/vim-cucumber
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
+  emberscript:heartsentwined/vim-ember-script
   erlang:oscarh/vimerl
   git:tpope/vim-git
   go:jnwhiteh/vim-golang
