@@ -8,11 +8,11 @@ A collection of language packs for Vim.
 One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*. 
-- It **installs 40x faster** (unparallelized), as language packs are not submoduled, but merged.
-- It clones even faster as all unnecessary files are ignored (like enormous documentation from php support).
-- Best syntax and indentation support. If someone releases better language pack, it will be replaced here.
-- No support for esoteric languages (vim-polyglot supports modern ones like `slim` though).
-- Each build is tested by automated Travis CI setup using vimrunner gem. Spee `spec` directory.
+- It **installs 50+ times faster** than 50+ packages it consist of.
+- Solid syntax and indentation support. Only the best language packs.
+- All unnecessary files are ignored (like enormous documentation from php support).
+- No support for esoteric languages, only most popular ones (modern too, like `slim`).
+- Each build is tested by automated vimrunner script on CI. Spee `spec` directory.
 
 \*To be completely honest, concatenated `ftdetect` script takes around `3ms` to load.
 
@@ -34,6 +34,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin, ftdetect)
 - [dockerfile](https://github.com/honza/dockerfile.vim) (syntax, ftdetect)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, ftplugin, ftdetect)
+- [emberscript](https://github.com/heartsentwined/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
 - [erlang](https://github.com/oscarh/vimerl) (syntax, indent, compiler, autoload, ftplugin)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin, ftdetect)
 - [go](https://github.com/jnwhiteh/vim-golang) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
@@ -42,6 +43,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [haskell](https://github.com/travitch/hasksyn) (syntax, indent, ftplugin)
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload)
 - [jade](https://github.com/digitaltoad/vim-jade) (syntax, indent, ftplugin, ftdetect)
+- [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftdetect)
 - [json](https://github.com/leshill/vim-json) (syntax, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
@@ -54,9 +56,9 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [opencl](https://github.com/petRUShka/vim-opencl) (syntax, indent, ftplugin, ftdetect)
 - [perl](https://github.com/vim-perl/vim-perl) (syntax, indent, ftplugin, ftdetect)
 - [php](https://github.com/StanAngeloff/php.vim) (syntax)
-- [puppet](https://github.com/ajf/puppet-vim) (syntax, indent, ftplugin, ftdetect)
+- [puppet](https://github.com/rodjek/vim-puppet) (syntax, indent, ftplugin, ftdetect)
 - [protobuf](https://github.com/uarun/vim-protobuf) (syntax, ftdetect)
-- [python](https://github.com/vim-scripts/python.vim--Vasiliev) (syntax)
+- [python](https://github.com/mitsuhiko/vim-python-combined) (syntax, indent)
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
 - [rspec](https://github.com/sheerun/rspec.vim) (syntax, ftdetect)
 - [ruby](https://github.com/vim-ruby/vim-ruby) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
@@ -70,9 +72,11 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
 - [typescript](https://github.com/leafgarland/typescript-vim) (syntax, compiler, ftplugin, ftdetect)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
+- [toml](https://github.com/cespare/vim-toml) (syntax, ftdetect)
 - [twig](https://github.com/beyondwords/vim-twig) (syntax, ftplugin, ftdetect)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
-- [css-color](https://github.com/gorodinskiy/vim-coloresque) (syntax)
+- [yard](https://github.com/sheerun/vim-yardoc) (syntax)
+- [css-color](https://github.com/ap/vim-css-color) (autoload, syntax)
 
 ## Contributing
 
