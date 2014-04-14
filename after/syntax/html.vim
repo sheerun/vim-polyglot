@@ -9,4 +9,10 @@ syn region coffeeScript start=#<script [^>]*type="text/coffeescript"[^>]*>#
 \                       end=#</script>#me=s-1 keepend
 \                       contains=@htmlCoffeeScript,htmlScriptTag,@htmlPreproc
 \                       containedin=htmlHead
-syn include syntax/css/vim-coloresque.vim
+" Language:     Colorful CSS Color Preview
+" Author:       Aristotle Pagaltzis <pagaltzis@gmx.de>
+
+if !( has('gui_running') || &t_Co==256 ) | finish | endif
+
+" default html syntax should already be including the css syntax
+syn cluster colorableGroup add=htmlString,htmlCommentPart
