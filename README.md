@@ -12,7 +12,7 @@ One to rule them all, one to find them, one to bring them all and in the darknes
 - Solid syntax and indentation support. Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
-- Each build is tested by automated vimrunner script on CI. Spee `spec` directory.
+- Each build is tested by automated vimrunner script on CI. See `spec` directory.
 
 \*To be completely honest, concatenated `ftdetect` script takes around `3ms` to load.
 
