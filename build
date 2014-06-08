@@ -69,6 +69,7 @@ PACKS="
   arduino:sudar/vim-arduino-syntax
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/cpp-vim
+  c-extensions:kergoth/aftersyntaxc.vim
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
   csv:chrisbra/csv.vim

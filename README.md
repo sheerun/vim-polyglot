@@ -28,6 +28,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent, ftdetect)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/cpp-vim) (syntax)
+- [c-extensions](https://github.com/kergoth/aftersyntaxc.vim) (syntax)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin, ftdetect)
 - [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [csv](https://github.com/chrisbra/csv.vim) (syntax, ftplugin, ftdetect)
