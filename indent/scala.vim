@@ -4,18 +4,21 @@
 " Modifications by : Derek Wyatt
 " Last Change: 2011 Mar 19 (Derek Wyatt)
 
-"if exists("b:did_indent")
-"  finish
-"endif
-"let b:did_indent = 1
+if exists("b:did_indent")
+  finish
+endif
+let b:did_indent = 1
 
 setlocal indentexpr=GetScalaIndent()
 setlocal indentkeys=0{,0},0),!^F,<>>,o,O,e,=case,<CR>
 setlocal autoindent
+setlocal softtabstop=2
+setlocal tabstop=2
+setlocal shiftwidth=2
 
-"if exists("*GetScalaIndent")
-"    finish
-"endif
+if exists("*GetScalaIndent")
+  finish
+endif
 
 let s:defMatcher = '\%(\%(private\|protected\)\%(\[[^\]]*\]\)\?\s\+\|abstract\s\+\|override\s\+\)*\<def\>'
 let s:funcNameMatcher = '\w\+'

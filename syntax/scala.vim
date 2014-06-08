@@ -4,7 +4,18 @@ elseif exists("b:current_syntax")
   finish
 endif
 
+scriptencoding utf-8
+
 let b:current_syntax = "scala"
+
+function! s:ContainedGroup()
+  try
+    silent syn list @scala
+    return '@scala'
+  catch /E392/
+    return 'TOP'
+  endtry
+endfunction
 
 syn case match
 syn sync minlines=200 maxlines=1000
@@ -17,7 +28,7 @@ syn keyword scalaKeyword val nextgroup=scalaNameDefinition,scalaQuasiQuotes skip
 syn keyword scalaKeyword def var nextgroup=scalaNameDefinition skipwhite
 hi link scalaKeyword Keyword
 
-syn region scalaBlock start=/{/ end=/}/ contains=TOP fold
+exe 'syn region scalaBlock start=/{/ end=/}/ contains=' . s:ContainedGroup() . ' fold'
 
 syn keyword scalaAkkaSpecialWord when goto using startWith initialize onTransition stay become unbecome
 hi link scalaAkkaSpecialWord PreProc
@@ -103,13 +114,13 @@ hi link scalaIString String
 hi link scalaTripleIString String
 
 syn match scalaInterpolation /\$[a-zA-Z0-9_$]\+/ contained
-syn region scalaInterpolationB matchgroup=scalaInterpolation start=/\${/ end=/}/ contained contains=TOP
+exe 'syn region scalaInterpolationB matchgroup=scalaInterpolation start=/\${/ end=/}/ contained contains=' . s:ContainedGroup()
 hi link scalaInterpolation Function
 hi link scalaInterpolationB Normal
 
 syn region scalaFString matchgroup=Special start=/f"/ skip=/\\"/ end=/"/ contains=scalaFInterpolation,scalaFInterpolationB,scalaEscapedChar,scalaUnicodeChar
 syn match scalaFInterpolation /\$[a-zA-Z0-9_$]\+\(%[-A-Za-z0-9\.]\+\)\?/ contained
-syn region scalaFInterpolationB matchgroup=scalaFInterpolation start=/${/ end=/}\(%[-A-Za-z0-9\.]\+\)\?/ contained contains=TOP
+exe 'syn region scalaFInterpolationB matchgroup=scalaFInterpolation start=/${/ end=/}\(%[-A-Za-z0-9\.]\+\)\?/ contained contains=' . s:ContainedGroup()
 hi link scalaFString String
 hi link scalaFInterpolation Function
 hi link scalaFInterpolationB Normal
