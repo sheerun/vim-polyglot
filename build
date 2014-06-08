@@ -110,6 +110,7 @@ PACKS="
   scala:derekwyatt/vim-scala
   slim:slim-template/vim-slim
   stylus:wavded/vim-stylus
+  systemd:kurayama/systemd-vim-syntax
   textile:timcharper/textile.vim
   tmux:acustodioo/vim-tmux
   tomdoc:duwanis/tomdoc.vim

@@ -128,6 +128,14 @@ au BufRead,BufNewFile * call s:DetectScala()
 autocmd BufNewFile,BufRead *.slim set filetype=slim
 autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
+au BufNewFile,BufRead *.automount set filetype=systemd
+au BufNewFile,BufRead *.mount     set filetype=systemd
+au BufNewFile,BufRead *.path      set filetype=systemd
+au BufNewFile,BufRead *.service   set filetype=systemd
+au BufNewFile,BufRead *.socket    set filetype=systemd
+au BufNewFile,BufRead *.swap      set filetype=systemd
+au BufNewFile,BufRead *.target    set filetype=systemd
+au BufNewFile,BufRead *.timer     set filetype=systemd
 au BufRead,BufNewFile *.textile set filetype=textile
 autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
 autocmd BufNewFile,BufRead *.toml set filetype=toml

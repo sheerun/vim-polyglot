@@ -69,6 +69,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, ftplugin, ftdetect)
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftdetect)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin, ftdetect)
+- [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax, ftdetect)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)
 - [tmux](https://github.com/acustodioo/vim-tmux) (syntax, ftdetect)
 - [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
