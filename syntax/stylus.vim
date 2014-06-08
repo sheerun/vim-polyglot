@@ -38,7 +38,7 @@ syn match cssTagName /\<center\>/
 " HTML5 tags
 syn keyword cssTagName article aside audio bb canvas command datagrid
 syn keyword cssTagName datalist details dialog embed figure footer figcaption
-syn keyword cssTagName header hgroup keygen mark meter nav output 
+syn keyword cssTagName header hgroup keygen mark meter nav output
 syn keyword cssTagName progress time rt rp section time video
 syn match cssTagName /\<ruby\>/
 " class select
@@ -47,7 +47,7 @@ syn match cssSelector /\.[A-Za-z][A-Za-z0-9_-]\+/
 syn match cssSelector /#[A-Za-z][A-Za-z0-9_-]\+/
 syn region cssSelector start='\[' end='\]' contains=cssString
 
-syn region cssDefineBlock start="{" end="}" transparent contains=ALL
+syn region cssDefineBlock start="{" end="}" transparent contains=TOP
 
 syn keyword cssCommonVal inherit initial auto both normal hidden none medium contained
 
@@ -103,7 +103,7 @@ syn match cssColorVal /transparent/ contained
 syn match cssColorVal "#[0-9A-Fa-f]\{3\}\>" contained
 syn match cssColorVal "#[0-9A-Fa-f]\{6\}\>" contained
 syn match cssFuncVal /rgb(\(\d\{1,3\}\s*,\s*\)\{2\}\d\{1,3\})/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
-syn match cssFuncVal /rgba(\(\d\{1,3\}\s*,\s*\)\{3\}\(1\|0\(\.\d\+\)\?\))/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency 
+syn match cssFuncVal /rgba(\(\d\{1,3\}\s*,\s*\)\{3\}\(1\|0\(\.\d\+\)\?\))/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
 syn match cssFuncVal /hsl(\d\{1,3\}\s*,\s*\(100\|\d\{1,2\}\(\.\d\+\)\?\)%\s*,\s*\(100\|\d\{1,2\}\(\.\d\+\)\?\)%)/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
 syn match cssFuncVal /hsla(\d\{1,3\}\s*,\s*\(\(100\|\d\{1,2\}\(\.\d\+\)\?\)%\s*,\s*\)\{2\}\(1\|0\(\.\d\+\)\?\))/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
 syn keyword cssColorVal aliceblue antiquewhite aqua aquamarine azure contained
@@ -149,6 +149,7 @@ syn match cssTextProp /text-\(align-last\|align\|decoration\|emphasis\|height\|i
 syn match cssTextProp /\(line-stacking-\(ruby\|shift\|strategy\)\|line-stacking\|line-height\)/ contained
 syn match cssTextProp /vertical-align/ contained
 syn match cssTextProp /letter-spacing/ contained
+syn match cssTextProp /user-select/ contained
 syn match cssTextProp /white-\(space-collapse\|space\)/ contained
 syn match cssTextProp /word-\(break\|spacing\|wrap\)/ contained
 syn match cssTextProp "\<word-wrap\>" contained
@@ -235,6 +236,7 @@ syn match cssAdvancedProp /\(pitch-range\|pitch\)/
 syn match cssAdvancedProp /presentation-level/
 syn match cssAdvancedProp /punctuation-trim/
 syn match cssAdvancedProp /rendering-intent/
+syn match cssAdvancedProp /pointer-events/
 syn match cssAdvancedProp /\(rest-\(after\|before\)\|rest\)/
 syn match cssAdvancedProp /\(rotation-point\|rotation\)/
 syn match cssAdvancedProp /ruby-\(align\|overhang\|position\|span\)/
@@ -245,8 +247,8 @@ syn match cssAdvancedProp /voice-\(balance\|duration\|family\|pitch-range\|pitch
 
 syn match cssAdvancedVal /\(ease-\(in\|out\|in-out\)\|ease\)/ contained
 
-" CSS3 Advanced value 
-"syn match cssAdvancedVal 
+" CSS3 Advanced value
+"syn match cssAdvancedVal
 
 
 if main_syntax == "css"
@@ -279,7 +281,7 @@ if version >= 508 || !exists("did_css_syn_inits")
   HiLink cssVisualProp StorageClass
   HiLink cssAdvancedProp StorageClass
   HiLink cssCommonProp StorageClass
-  HiLink cssSpecialProp Special 
+  HiLink cssSpecialProp Special
   HiLink cssImportant Special
   HiLink cssRuleProp PreProc
   HiLink cssPseudo PreProc
@@ -305,7 +307,7 @@ if version >= 508 || !exists("did_css_syn_inits")
 endif
 
 " let b:current_syntax = "css"
-" 
+"
 if main_syntax == 'css'
   unlet main_syntax
 endif

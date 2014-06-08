@@ -12,8 +12,6 @@ if !exists("main_syntax")
   let main_syntax = 'jade'
 endif
 
-runtime! syntax/html.vim
-runtime! syntax/html/html5.vim
 silent! syntax include @htmlCoffeescript syntax/coffee.vim
 unlet! b:current_syntax
 silent! syntax include @htmlStylus syntax/stylus.vim
@@ -56,8 +54,10 @@ syn region  jadeMarkdownFilter matchgroup=jadeFilter start=/^\z(\s*\):markdown\s
 syn region  jadeStylusFilter matchgroup=jadeFilter start="^\z(\s*\):stylus\s*$" end="^\%(\z1\s\|\s*$\)\@!" contains=@htmlStylus
 syn region  jadePlainFilter matchgroup=jadeFilter start="^\z(\s*\):\%(sass\|less\|cdata\)\s*$" end="^\%(\z1\s\|\s*$\)\@!"
 
-syn match  jadeScriptConditional "\<\%(if\|else\|unless\|while\|for\|until\|case\|when\|default\)\>[?!]\@!"
-syn match  jadeScriptStatement "\<\%(each\|block\|prepend\|append\|mixin\|extends\|include\)\>[?!]\@!"
+syn match  jadeScriptConditional "^\s*\<\%(if\|else\|unless\|while\|until\|case\|when\|default\)\>[?!]\@!"
+syn region  jadeScriptLoopRegion start="^\s*\(for\)" end="$" contains=jadeScriptLoopKeywords
+syn keyword  jadeScriptLoopKeywords for in contained
+syn match  jadeScriptStatement "^\s*\<\%(each\|block\|prepend\|append\|mixin\|extends\|include\)\>[?!]\@!"
 
 syn region  jadeJavascript start="^\z(\s*\)script\%(:\w\+\)\=" end="^\%(\z1\s\|\s*$\)\@!" contains=@htmlJavascript,jadeJavascriptTag keepend 
 syn region  jadeJavascriptTag contained start="^\z(\s*\)script\%(:\w\+\)\=" end="$" contains=jadeBegin,jadeTag
@@ -67,6 +67,7 @@ syn match  jadeError "\$" contained
 
 hi def link jadePlainChar              Special
 hi def link jadeScriptConditional      PreProc
+hi def link jadeScriptLoopKeywords     PreProc
 hi def link jadeScriptStatement        PreProc
 hi def link jadeHtmlArg                htmlArg
 hi def link jadeAttributeString        String

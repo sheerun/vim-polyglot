@@ -8,11 +8,6 @@
 " License:	Same as Vim
 " Last Change:	%%RELEASE_DATE%%
 
-" TODO: Indenting after multibyte characters is broken:
-"       (let [Δ (if foo
-"                bar    ; Indent error
-"                baz)])
-
 if exists("b:did_indent")
 	finish
 endif
@@ -99,7 +94,7 @@ if exists("*searchpairpos")
 		endif
 
 		let pos = searchpairpos(a:open, '', a:close, 'bWn', "!s:is_paren()", stopat)
-		return [pos[0], virtcol(pos)]
+		return [pos[0], col(pos)]
 	endfunction
 
 	function! s:clojure_check_for_string_worker()
@@ -306,15 +301,23 @@ if exists("*searchpairpos")
 		endif
 
 		call search('\v\S', 'bW')
-		return [line('.'), virtcol('.') + 1]
+		return [line('.'), col('.') + 1]
 	endfunction
 
 	function! GetClojureIndent()
 		let lnum = line('.')
+		let orig_lnum = lnum
+		let orig_col = col('.')
 		let [opening_lnum, indent] = s:clojure_indent_pos()
+
+		" Account for multibyte characters
+		if opening_lnum > 0
+			let indent -= indent - virtcol([opening_lnum, indent])
+		endif
 
 		" Return if there are no previous lines to inherit from
 		if opening_lnum < 1 || opening_lnum >= lnum - 1
+			call cursor(orig_lnum, orig_col)
 			return indent
 		endif
 
@@ -349,11 +352,13 @@ if exists("*searchpairpos")
 				" Check if this is part of a multiline string
 				call cursor(lnum, 1)
 				if s:syn_id_name() !~? '\vstring|regex'
+					call cursor(orig_lnum, orig_col)
 					return indent(lnum)
 				endif
 			endif
 		endwhile
 
+		call cursor(orig_lnum, orig_col)
 		return indent
 	endfunction
 

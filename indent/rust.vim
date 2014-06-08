@@ -13,7 +13,7 @@ setlocal cindent
 setlocal cinoptions=L0,(0,Ws,JN,j1
 setlocal cinkeys=0{,0},!^F,o,O,0[,0]
 " Don't think cinwords will actually do anything at all... never mind
-setlocal cinwords=do,for,if,else,while,loop,impl,mod,unsafe,trait,struct,enum,fn,extern
+setlocal cinwords=for,if,else,while,loop,impl,mod,unsafe,trait,struct,enum,fn,extern
 
 " Some preliminary settings
 setlocal nolisp		" Make sure lisp indenting doesn't supersede us
@@ -30,7 +30,7 @@ endif
 
 " Come here when loading the script the first time.
 
-function s:get_line_trimmed(lnum)
+function! s:get_line_trimmed(lnum)
 	" Get the line and remove a trailing comment.
 	" Use syntax highlighting attributes when possible.
 	" NOTE: this is not accurate; /* */ or a line continuation could trick it
@@ -40,12 +40,12 @@ function s:get_line_trimmed(lnum)
 		" If the last character in the line is a comment, do a binary search for
 		" the start of the comment.  synID() is slow, a linear search would take
 		" too long on a long line.
-		if synIDattr(synID(a:lnum, line_len, 1), "name") =~ "Comment\|Todo"
+		if synIDattr(synID(a:lnum, line_len, 1), "name") =~ 'Comment\|Todo'
 			let min = 1
 			let max = line_len
 			while min < max
 				let col = (min + max) / 2
-				if synIDattr(synID(a:lnum, col, 1), "name") =~ "Comment\|Todo"
+				if synIDattr(synID(a:lnum, col, 1), "name") =~ 'Comment\|Todo'
 					let max = col
 				else
 					let min = col + 1
@@ -61,6 +61,20 @@ function s:get_line_trimmed(lnum)
 	endif
 endfunction
 
+function! s:is_string_comment(lnum, col)
+	if has('syntax_items')
+		for id in synstack(a:lnum, a:col)
+			let synname = synIDattr(id, "name")
+			if synname == "rustString" || synname =~ "^rustComment"
+				return 1
+			endif
+		endfor
+	else
+		" without syntax, let's not even try
+		return 0
+	endif
+endfunction
+
 function GetRustIndent(lnum)
 
 	" Starting assumption: cindent (called at the end) will do it right
@@ -73,10 +87,10 @@ function GetRustIndent(lnum)
 		if synname == "rustString"
 			" If the start of the line is in a string, don't change the indent
 			return -1
-		elseif synname =~ "\\(Comment\\|Todo\\)"
-					\ && line !~ "^\\s*/\\*"  " not /* opening line
+		elseif synname =~ '\(Comment\|Todo\)'
+					\ && line !~ '^\s*/\*'  " not /* opening line
 			if synname =~ "CommentML" " multi-line
-				if line !~ "^\\s*\\*" && getline(a:lnum - 1) =~ "^\\s*/\\*"
+				if line !~ '^\s*\*' && getline(a:lnum - 1) =~ '^\s*/\*'
 					" This is (hopefully) the line after a /*, and it has no
 					" leader, so the correct indentation is that of the
 					" previous line.
@@ -101,10 +115,16 @@ function GetRustIndent(lnum)
 	" };
 
 	" Search backwards for the previous non-empty line.
-	let prevline = s:get_line_trimmed(prevnonblank(a:lnum - 1))
+	let prevlinenum = prevnonblank(a:lnum - 1)
+	let prevline = s:get_line_trimmed(prevlinenum)
+	while prevlinenum > 1 && prevline !~ '[^[:blank:]]'
+		let prevlinenum = prevnonblank(prevlinenum - 1)
+		let prevline = s:get_line_trimmed(prevlinenum)
+	endwhile
 	if prevline[len(prevline) - 1] == ","
-				\ && s:get_line_trimmed(a:lnum) !~ "^\\s*[\\[\\]{}]"
-				\ && prevline !~ "^\\s*fn\\s"
+				\ && s:get_line_trimmed(a:lnum) !~ '^\s*[\[\]{}]'
+				\ && prevline !~ '^\s*fn\s'
+				\ && prevline !~ '([^()]\+,$'
 		" Oh ho! The previous line ended in a comma! I bet cindent will try to
 		" take this too far... For now, let's normally use the previous line's
 		" indent.
@@ -118,6 +138,16 @@ function GetRustIndent(lnum)
 		"
 		" fn foo(baz: Baz,
 		"        baz: Baz) // <-- cindent gets this right by itself
+		"
+		" Another case is similar to the previous, except calling a function
+		" instead of defining it, or any conditional expression that leaves
+		" an open paren:
+		"
+		" foo(baz,
+		"     baz);
+		"
+		" if baz && (foo ||
+		"            bar) {
 		"
 		" There are probably other cases where we don't want to do this as
 		" well. Add them as needed.
@@ -141,8 +171,10 @@ function GetRustIndent(lnum)
 	" column zero)
 
 	call cursor(a:lnum, 1)
-	if searchpair('{\|(', '', '}\|)', 'nbW') == 0
-		if searchpair('\[', '', '\]', 'nbW') == 0
+	if searchpair('{\|(', '', '}\|)', 'nbW',
+				\ 's:is_string_comment(line("."), col("."))') == 0
+		if searchpair('\[', '', '\]', 'nbW',
+					\ 's:is_string_comment(line("."), col("."))') == 0
 			" Global scope, should be zero
 			return 0
 		else

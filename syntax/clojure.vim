@@ -105,7 +105,7 @@ syntax match clojureMeta "\^"
 syntax match clojureDeref "@"
 syntax match clojureDispatch "\v#[\^'=<_]?"
 
-" Clojure permits no more than 20 params.
+" Clojure permits no more than 20 anonymous params.
 syntax match clojureAnonArg "%\(20\|1\d\|[1-9]\|&\)\?"
 
 syntax match  clojureRegexpEscape "\v\\%([\\tnrfae.()\[\]{}^$*?+]|c\u|0[0-3]?\o{1,2}|x%(\x{2}|\{\x{1,6}\})|u\x{4})" contained display

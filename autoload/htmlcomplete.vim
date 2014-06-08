@@ -7,8 +7,10 @@
 " Last Change:	2010 Sep 25
 
 if !exists('g:aria_attributes_complete')
-    let g:aria_attributes_complete = 1
+  let g:aria_attributes_complete = 1
 endif
+
+let b:html_omni_flavor = 'html5'
 
 function! htmlcomplete#CompleteTags(findstart, base)
   if a:findstart
@@ -167,11 +169,11 @@ function! htmlcomplete#CompleteTags(findstart, base)
 			"runtime! autoload/xml/xhtml10s.vim
 			call htmlcomplete#LoadData()
 		endif
-        if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
-            call htmlcomplete#LoadAria()
-        endif
+    if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
+      call htmlcomplete#LoadAria()
+    endif
 
-	    let entities =  b:html_omni['vimxmlentities']
+    let entities =  b:html_omni['vimxmlentities']
 
 		if len(a:base) == 1
 			for m in entities
@@ -469,9 +471,9 @@ function! htmlcomplete#CompleteTags(findstart, base)
 				"runtime! autoload/xml/xhtml10s.vim
 				call htmlcomplete#LoadData()
 			endif
-            if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
-                call htmlcomplete#LoadAria()
-            endif
+      if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
+        call htmlcomplete#LoadAria()
+      endif
 			" }}}
 			if attrname == 'href'
 				" Now we are looking for local anchors defined by name or id
@@ -551,9 +553,9 @@ function! htmlcomplete#CompleteTags(findstart, base)
 		if !exists("b:html_omni")
 			call htmlcomplete#LoadData()
 		endif
-        if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
-            call htmlcomplete#LoadAria()
-        endif
+    if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
+      call htmlcomplete#LoadAria()
+    endif
 		" }}}
 
 		if has_key(b:html_omni, tag)
@@ -658,9 +660,9 @@ function! htmlcomplete#CompleteTags(findstart, base)
 		"runtime! autoload/xml/xhtml10s.vim
 		call htmlcomplete#LoadData()
 	endif
-    if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
-        call htmlcomplete#LoadAria()
-    endif
+  if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
+    call htmlcomplete#LoadAria()
+  endif
 	" }}}
 	" Tag completion {{{
 	" Deal with tag completion.
@@ -763,9 +765,9 @@ endfunction
 function! htmlcomplete#LoadData() " {{{
 	if !exists("b:html_omni_flavor")
 		if &filetype == 'html'
-			let b:html_omni_flavor = 'html401t'
+			let b:html_omni_flavor = 'html5'
 		else
-			let b:html_omni_flavor = 'xhtml10s'
+			let b:html_omni_flavor = 'html5'
 		endif
 	endif
 	" With that if we still have bloated memory but create new buffer

@@ -97,6 +97,10 @@ endfunction
 
 " {{{2 TOCFindMatch
 function! s:TOCFindMatch(strsearch,duplicates,files)
+    if len(a:files) == 0
+        echoerr "Could not find: " . a:strsearch
+        return
+    endif
 
     call s:TOCOpenBuf(a:files[0])
     let dups = a:duplicates
@@ -116,7 +120,6 @@ function! s:TOCFindMatch(strsearch,duplicates,files)
     endif
 
     call s:TOCFindMatch(a:strsearch,dups,a:files[1:])
-
 endfunction
 
 " {{{2 TOCFoldLevel

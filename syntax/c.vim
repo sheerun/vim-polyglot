@@ -379,8 +379,13 @@ endif
 syn cluster	cLabelGroup	contains=cUserLabel
 syn match	cUserCont	display "^\s*\I\i*\s*:$" contains=@cLabelGroup
 syn match	cUserCont	display ";\s*\I\i*\s*:$" contains=@cLabelGroup
-syn match	cUserCont	display "^\s*\I\i*\s*:[^:]"me=e-1 contains=@cLabelGroup
-syn match	cUserCont	display ";\s*\I\i*\s*:[^:]"me=e-1 contains=@cLabelGroup
+if s:ft ==# 'cpp'
+  syn match	cUserCont	display "^\s*\%(class\|struct\|enum\)\@!\I\i*\s*:[^:]"me=e-1 contains=@cLabelGroup
+  syn match	cUserCont	display ";\s*\%(class\|struct\|enum\)\@!\I\i*\s*:[^:]"me=e-1 contains=@cLabelGroup
+else
+  syn match	cUserCont	display "^\s*\I\i*\s*:[^:]"me=e-1 contains=@cLabelGroup
+  syn match	cUserCont	display ";\s*\I\i*\s*:[^:]"me=e-1 contains=@cLabelGroup
+endif
 
 syn match	cUserLabel	display "\I\i*" contained
 

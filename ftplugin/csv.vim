@@ -483,7 +483,7 @@ fu! <sid>GetDelimiter(first, last) "{{{3
     if !exists("b:csv_fixed_width_cols")
         let _cur = getpos('.')
         let _s   = @/
-        let Delim= {0: ';', 1:  ',', 2: '|', 3: '	'}
+        let Delim= {0: ';', 1:  ',', 2: '|', 3: '	', 4: '\^'}
         let temp = {}
         " :silent :s does not work with lazyredraw
         let _lz  = &lz
@@ -525,12 +525,16 @@ fu! <sid>WColumn(...) "{{{3
         let fields=(split(line[0:end],b:col.'\zs'))
         let ret=len(fields)
         if exists("a:1") && a:1 > 0
-            " bang attribute
+            " bang attribute: Try to get the column name
             let head  = split(getline(1),b:col.'\zs')
             " remove preceeding whitespace
-            let ret   = substitute(head[ret-1], '^\s\+', '', '')
-            " remove delimiter
-            let ret   = substitute(ret, b:delimiter. '$', '', '')
+            if len(head) < ret
+                call <sid>Warn("Header has no field ". ret)
+            else
+                let ret   = substitute(head[ret-1], '^\s\+', '', '')
+                " remove delimiter
+                let ret   = substitute(ret, b:delimiter. '$', '', '')
+            endif
         endif
     else
         let temp=getpos('.')[2]
@@ -1002,7 +1006,8 @@ fu! <sid>MoveCol(forward, line, ...) "{{{3
     elseif a:forward < 0
         if colnr > 0 || cpos == spos
             call search('.\ze'.pat, 'bWe')
-            while getpos('.')[2] == cpos
+            let stime=localtime()
+            while getpos('.')[2] == cpos && <sid>Timeout(stime) " make sure loop terminates
                 " cursor didn't move, move cursor one cell to the left
                 norm! h
                 if colnr > 0
@@ -1208,8 +1213,10 @@ fu! <sid>AddColumn(start, stop, ...) range "{{{3
     if exists("a:1")
         if a:1 == '$' || a:1 >= max
             let pos = max
-        elseif a:1 <= 0
+        elseif a:1 < 0
             let pos = col
+        else
+            let pos = a:1
         endif
     else
         let pos = col
@@ -1217,7 +1224,7 @@ fu! <sid>AddColumn(start, stop, ...) range "{{{3
     let cnt=(exists("a:2") && a:2 > 0 ? a:2 : 1)
 
     " translate 1 based columns into zero based list index
-    let pos -= 1
+    "let pos -= 1
     let col -= 1
 
     if pos == 0
@@ -1772,7 +1779,7 @@ endfu
 
 fu! <sid>NewRecord(line1, line2, count) "{{{3
     if a:count =~ "\D"
-        call <sid>WarningMsg("Invalid count specified")
+        call <sid>Warn("Invalid count specified")
         return
     endif
 
@@ -1848,20 +1855,13 @@ fu! <sid>CSVMappings() "{{{3
     call <sid>Map('noremap', 'E', ':<C-U>call <SID>MoveCol(-1, line("."))<CR>')
     call <sid>Map('noremap', '<C-Left>', ':<C-U>call <SID>MoveCol(-1, line("."))<CR>')
     call <sid>Map('noremap', 'H', ':<C-U>call <SID>MoveCol(-1, line("."), 1)<CR>')
-    call <sid>Map('noremap', 'K', ':<C-U>call <SID>MoveCol(0,
-        \ line(".")-v:count1)<CR>')
-    call <sid>Map('noremap', '<Up>', ':<C-U>call <SID>MoveCol(0,
-        \ line(".")-v:count1)<CR>')
-    call <sid>Map('noremap', 'J', ':<C-U>call <SID>MoveCol(0,
-        \ line(".")+v:count1)<CR>')
-    call <sid>Map('noremap', '<Down>', ':<C-U>call <SID>MoveCol(0,
-        \ line(".")+v:count1)<CR>')
-    call <sid>Map('nnoremap', '<CR>', ':<C-U>call <SID>PrepareFolding(1,
-        \ 1)<CR>')
-    call <sid>Map('nnoremap', '<Space>', ':<C-U>call <SID>PrepareFolding(1,
-        \ 0)<CR>')
-    call <sid>Map('nnoremap', '<BS>', ':<C-U>call <SID>PrepareFolding(0,
-        \ 1)<CR>')
+    call <sid>Map('noremap', 'K', ':<C-U>call <SID>MoveCol(0, line(".")-v:count1)<CR>')
+    call <sid>Map('noremap', '<Up>', ':<C-U>call <SID>MoveCol(0, line(".")-v:count1)<CR>')
+    call <sid>Map('noremap', 'J', ':<C-U>call <SID>MoveCol(0, line(".")+v:count1)<CR>')
+    call <sid>Map('noremap', '<Down>', ':<C-U>call <SID>MoveCol(0, line(".")+v:count1)<CR>')
+    call <sid>Map('nnoremap', '<CR>', ':<C-U>call <SID>PrepareFolding(1, 1)<CR>')
+    call <sid>Map('nnoremap', '<Space>', ':<C-U>call <SID>PrepareFolding(1, 0)<CR>')
+    call <sid>Map('nnoremap', '<BS>', ':<C-U>call <SID>PrepareFolding(0, 1)<CR>')
     call <sid>Map('imap', '<CR>', '<sid>ColumnMode()', 'expr')
     " Text object: Field
     call <sid>Map('vnoremap', 'if', ':<C-U>call <sid>MoveOver(0)<CR>')
@@ -1937,9 +1937,6 @@ fu! <sid>CommandDefinitions() "{{{3
         \ '-nargs=1 -complete=custom,<sid>CompleteColumnNr')
     call <sid>LocalCmd('Transpose', ':call <sid>Transpose(<line1>, <line2>)',
         \ '-range=%')
-    call <sid>LocalCmd('Tabularize', ':call <sid>Tabularize(<bang>0,<line1>,<line2>)',
-        \ '-bang -range=%')
-    " Alias for :Tabularize, might be taken by Tabular plugin
     call <sid>LocalCmd('CSVTabularize', ':call <sid>Tabularize(<bang>0,<line1>,<line2>)',
         \ '-bang -range=%')
     call <sid>LocalCmd("AddColumn",
@@ -2390,6 +2387,9 @@ fu! <sid>ColumnMode() "{{{3
     else
         return "\<CR>"
     endif
+endfu
+fu! <sid>Timeout(start) "{{{3
+    return localtime()-a:start < 2
 endfu
 
 " Global functions "{{{2
