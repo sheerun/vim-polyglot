@@ -92,6 +92,7 @@ PACKS="
   jst:briancollins/vim-jst
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
+  liquid:tpope/vim-liquid
   markdown:tpope/vim-markdown
   nginx:mutewinter/nginx.vim
   ocaml:jrk/vim-ocaml
