@@ -3,12 +3,23 @@
 " Maintainer:   Patrick Walton <pcwalton@mozilla.com>
 " Maintainer:   Ben Blum <bblum@cs.cmu.edu>
 " Maintainer:   Chris Morgan <me@chrismorgan.info>
-" Last Change:  2014 Feb 27
+" Last Change:  July 18, 2014
 
 if version < 600
   syntax clear
 elseif exists("b:current_syntax")
   finish
+endif
+
+" Fold settings {{{1
+
+if has("folding") && exists('g:rust_fold') && g:rust_fold != 0
+  setlocal foldmethod=syntax
+  if g:rust_fold == 2
+    setlocal foldlevel<
+  else
+    setlocal foldlevel=99
+  endif
 endif
 
 " Syntax definitions {{{1
@@ -27,11 +38,10 @@ syn keyword   rustKeyword     for in if impl let
 syn keyword   rustKeyword     loop once proc pub
 syn keyword   rustKeyword     return super
 syn keyword   rustKeyword     unsafe virtual while
-syn keyword   rustKeyword     use nextgroup=rustModPath skipwhite skipempty
+syn keyword   rustKeyword     use nextgroup=rustModPath,rustModPathInUse skipwhite skipempty
 " FIXME: Scoped impl's name is also fallen in this category
 syn keyword   rustKeyword     mod trait struct enum type nextgroup=rustIdentifier skipwhite skipempty
-syn keyword   rustStorage     mut ref static
-syn keyword   rustObsoleteStorage const
+syn keyword   rustStorage     mut ref static const
 
 syn keyword   rustInvalidBareKeyword crate
 
@@ -50,6 +60,10 @@ syn region    rustBoxPlacementBalance start="(" end=")" containedin=rustBoxPlace
 syn region    rustBoxPlacementBalance start="\[" end="\]" containedin=rustBoxPlacement transparent
 " {} are handled by rustFoldBraces
 
+syn region rustMacroRepeat matchgroup=rustMacroRepeatDelimiters start="$(" end=")" contains=TOP nextgroup=rustMacroRepeatCount
+syn match rustMacroRepeatCount ".\?[*+]" contained
+syn match rustMacroVariable "$\w\+"
+
 " Reserved (but not yet used) keywords {{{2
 syn keyword   rustReservedKeyword alignof be do offsetof priv pure sizeof typeof unsized yield
 
@@ -66,7 +80,7 @@ syn keyword   rustTrait       Copy Send Sized Share
 syn keyword   rustTrait       Add Sub Mul Div Rem Neg Not
 syn keyword   rustTrait       BitAnd BitOr BitXor
 syn keyword   rustTrait       Drop Deref DerefMut
-syn keyword   rustTrait       Shl Shr Index
+syn keyword   rustTrait       Shl Shr Index IndexMut
 syn keyword   rustEnum        Option
 syn keyword   rustEnumVariant Some None
 syn keyword   rustEnum        Result
@@ -78,34 +92,39 @@ syn keyword   rustEnumVariant Ok Err
 "syn keyword rustFunction drop
 
 " Types and traits {{{3
-syn keyword rustTrait Ascii AsciiCast OwnedAsciiCast AsciiStr IntoBytes
+syn keyword rustTrait Ascii AsciiCast OwnedAsciiCast AsciiStr
+syn keyword rustTrait IntoBytes
 syn keyword rustTrait ToCStr
 syn keyword rustTrait Char
 syn keyword rustTrait Clone
-syn keyword rustTrait Eq Ord TotalEq TotalOrd Ordering Equiv
+syn keyword rustTrait PartialEq PartialOrd Eq Ord Equiv
+syn keyword rustEnum Ordering
 syn keyword rustEnumVariant Less Equal Greater
-syn keyword rustTrait Container Mutable Map MutableMap Set MutableSet
-syn keyword rustTrait FromIterator Extendable
-syn keyword rustTrait Iterator DoubleEndedIterator RandomAccessIterator CloneableIterator
-syn keyword rustTrait OrdIterator MutableDoubleEndedIterator ExactSize
-syn keyword rustTrait Num NumCast CheckedAdd CheckedSub CheckedMul
-syn keyword rustTrait Signed Unsigned
-syn keyword rustTrait Primitive Int Float FloatMath ToPrimitive FromPrimitive
-"syn keyword rustTrait Expect
+syn keyword rustTrait Collection Mutable Map MutableMap MutableSeq
+syn keyword rustTrait Set MutableSet
+syn keyword rustTrait FromIterator Extendable ExactSize
+syn keyword rustTrait Iterator DoubleEndedIterator
+syn keyword rustTrait RandomAccessIterator CloneableIterator
+syn keyword rustTrait OrdIterator MutableDoubleEndedIterator
+syn keyword rustTrait Num NumCast CheckedAdd CheckedSub CheckedMul CheckedDiv
+syn keyword rustTrait Signed Unsigned Primitive Int Float
+syn keyword rustTrait FloatMath ToPrimitive FromPrimitive
 syn keyword rustTrait Box
 syn keyword rustTrait GenericPath Path PosixPath WindowsPath
 syn keyword rustTrait RawPtr
 syn keyword rustTrait Buffer Writer Reader Seek
-syn keyword rustTrait Str StrVector StrSlice OwnedStr IntoMaybeOwned
-syn keyword rustTrait StrAllocating
-syn keyword rustTrait ToStr IntoStr
+syn keyword rustTrait Str StrVector StrSlice OwnedStr
+syn keyword rustTrait IntoMaybeOwned StrAllocating
+syn keyword rustTrait ToString IntoStr
 syn keyword rustTrait Tuple1 Tuple2 Tuple3 Tuple4
 syn keyword rustTrait Tuple5 Tuple6 Tuple7 Tuple8
 syn keyword rustTrait Tuple9 Tuple10 Tuple11 Tuple12
-syn keyword rustTrait CloneableVector ImmutableCloneableVector MutableCloneableVector
+syn keyword rustTrait CloneableVector ImmutableCloneableVector
+syn keyword rustTrait MutableCloneableVector MutableOrdVector
 syn keyword rustTrait ImmutableVector MutableVector
-syn keyword rustTrait ImmutableEqVector ImmutableTotalOrdVector MutableTotalOrdVector
-syn keyword rustTrait Vector VectorVector OwnedVector MutableVectorAllocating
+syn keyword rustTrait ImmutableEqVector ImmutableOrdVector
+syn keyword rustTrait Vector VectorVector
+syn keyword rustTrait MutableVectorAllocating
 syn keyword rustTrait String
 syn keyword rustTrait Vec
 
@@ -123,8 +142,9 @@ syn keyword   rustBoolean     true false
 " If foo::bar changes to foo.bar, change this ("::" to "\.").
 " If foo::bar changes to Foo::bar, change this (first "\w" to "\u").
 syn match     rustModPath     "\w\(\w\)*::[^<]"he=e-3,me=e-3
-syn match     rustModPath     "\w\(\w\)*" contained " only for 'use path;'
+syn match     rustModPathInUse "\w\(\w\)*" contained " only for 'use path;'
 syn match     rustModPathSep  "::"
+" rustModPathInUse is split out from rustModPath so that :syn-include can get the group list right.
 
 syn match     rustFuncCall    "\w\(\w\)*("he=e-1,me=e-1
 syn match     rustFuncCall    "\w\(\w\)*::<"he=e-3,me=e-3 " foo::<T>();
@@ -145,11 +165,13 @@ syn match     rustOperator     display "&&\|||"
 syn match     rustMacro       '\w\(\w\)*!' contains=rustAssert,rustFail
 syn match     rustMacro       '#\w\(\w\)*' contains=rustAssert,rustFail
 
-syn match     rustSpecialError display contained /\\./
-syn match     rustSpecial     display contained /\\\([nrt0\\'"]\|x\x\{2}\|u\x\{4}\|U\x\{8}\)/
+syn match     rustEscapeError   display contained /\\./
+syn match     rustEscape        display contained /\\\([nrt0\\'"]\|x\x\{2}\)/
+syn match     rustEscapeUnicode display contained /\\\(u\x\{4}\|U\x\{8}\)/
 syn match     rustStringContinuation display contained /\\\n\s*/
-syn region    rustString      start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=rustSpecial,rustSpecialError,rustStringContinuation,@Spell
-syn region    rustString      start='r\z(#*\)"' end='"\z1' contains=@Spell
+syn region    rustString      start=+b"+ skip=+\\\\\|\\"+ end=+"+ contains=rustEscape,rustEscapeError,rustStringContinuation
+syn region    rustString      start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=rustEscape,rustEscapeUnicode,rustEscapeError,rustStringContinuation,@Spell
+syn region    rustString      start='b\?r\z(#*\)"' end='"\z1' contains=@Spell
 
 syn region    rustAttribute   start="#!\?\[" end="\]" contains=rustString,rustDeriving
 syn region    rustDeriving    start="deriving(" end=")" contained contains=rustTrait
@@ -177,7 +199,11 @@ syn region rustGenericLifetimeCandidate display start=/\%(<\|,\s*\)\@<='/ end=/[
 
 "rustLifetime must appear before rustCharacter, or chars will get the lifetime highlighting
 syn match     rustLifetime    display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*"
-syn match   rustCharacter   /'\([^'\\]\|\\\(.\|x\x\{2}\|u\x\{4}\|U\x\{8}\)\)'/ contains=rustSpecial,rustSpecialError
+syn match   rustCharacterInvalid   display contained /b\?'\zs[\n\r\t']\ze'/
+" The groups negated here add up to 0-255 but nothing else (they do not seem to go beyond ASCII).
+syn match   rustCharacterInvalidUnicode   display contained /b'\zs[^[:cntrl:][:graph:][:alnum:][:space:]]\ze'/
+syn match   rustCharacter   /b'\([^\\]\|\\\(.\|x\x\{2}\)\)'/ contains=rustEscape,rustEscapeError,rustCharacterInvalid,rustCharacterInvalidUnicode
+syn match   rustCharacter   /'\([^\\]\|\\\(.\|x\x\{2}\|u\x\{4}\|U\x\{8}\)\)'/ contains=rustEscape,rustEscapeUnicode,rustEscapeError,rustCharacterInvalid
 
 syn region rustCommentLine                                        start="//"                      end="$"   contains=rustTodo,@Spell
 syn region rustCommentLineDoc                                     start="//\%(//\@!\|!\)"         end="$"   contains=rustTodo,@Spell
@@ -203,8 +229,6 @@ syn keyword rustTodo contained TODO FIXME XXX NB NOTE
 " Trivial folding rules to begin with.
 " TODO: use the AST to make really good folding
 syn region rustFoldBraces start="{" end="}" transparent fold
-" If you wish to enable this, setlocal foldmethod=syntax
-" It's not enabled by default as it would drive some people mad.
 
 " Default highlighting {{{1
 hi def link rustDecNumber       rustNumber
@@ -214,11 +238,17 @@ hi def link rustBinNumber       rustNumber
 hi def link rustIdentifierPrime rustIdentifier
 hi def link rustTrait           rustType
 
+hi def link rustMacroRepeatCount   rustMacroRepeatDelimiters
+hi def link rustMacroRepeatDelimiters   Macro
+hi def link rustMacroVariable Define
 hi def link rustSigil         StorageClass
-hi def link rustSpecial       Special
-hi def link rustSpecialError  Error
+hi def link rustEscape        Special
+hi def link rustEscapeUnicode rustEscape
+hi def link rustEscapeError   Error
 hi def link rustStringContinuation Special
 hi def link rustString        String
+hi def link rustCharacterInvalid Error
+hi def link rustCharacterInvalidUnicode rustCharacterInvalid
 hi def link rustCharacter     Character
 hi def link rustNumber        Number
 hi def link rustBoolean       Boolean
@@ -233,6 +263,7 @@ hi def link rustReservedKeyword Error
 hi def link rustConditional   Conditional
 hi def link rustIdentifier    Identifier
 hi def link rustCapsIdent     rustIdentifier
+hi def link rustModPathInUse  rustModPath
 hi def link rustModPath       Include
 hi def link rustModPathSep    Delimiter
 hi def link rustFunction      Function

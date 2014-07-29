@@ -345,24 +345,22 @@ function! s:ReadTOC(auxfile, texfile, ...)
 		endif
 		" parse section number
 		let secnum = ''
-		if len(tree[1]) > 3 && empty(tree[1][1])
-			call remove(tree[1], 1)
+		let tree = tree[1]
+		if len(tree) > 3 && empty(tree[1])
+			call remove(tree, 1)
 		endif
-		if len(tree[1]) > 1 && tree[1][0] =~ '\(numberline\|tocsection\)'
-			if !empty(tree[1][1])
-				let secnum = LatexBox_TreeToTex(tree[1][1])
-				let secnum = substitute(secnum, '\\\S\+\s', '', 'g')
-				let secnum = substitute(secnum, '\\\S\+{\(.\{-}\)}', '\1', 'g')
-				let secnum = substitute(secnum, '^{\+\|}\+$', '', 'g')
-			endif
-			let tree = tree[1][2:]
-		else
-			let tree = tree[1]
+		if len(tree) > 1 && tree[0] =~ '^\\\(numberline\|tocsection\)'
+			let secnum = LatexBox_TreeToTex(tree[1])
+			let secnum = substitute(secnum, '\\\S\+\s', '', 'g')
+			let secnum = substitute(secnum, '\\\S\+{\(.\{-}\)}', '\1', 'g')
+			let secnum = substitute(secnum, '^{\+\|}\+$', '', 'g')
+			call remove(tree, 1)
 		endif
 		" parse section title
 		let text = LatexBox_TreeToTex(tree)
-		let text = substitute(text, '^{\+\|}\+$', '', 'g')
-		let text = substitute(text, '\*',         '', 'g')
+		let text = substitute(text, '^{\+\|}\+$',                 '', 'g')
+		let text = substitute(text, '\m^\\\(no\)\?numberline\s*', '', '')
+		let text = substitute(text, '\*',                         '', 'g')
 
 		" add TOC entry
 		call add(fileindices[texfile], len(toc))

@@ -413,22 +413,37 @@ function! LatexBox_LatexErrors(status, ...)
 	if a:status < 0
 		botright copen
 	else
-		" Write status message to screen
-		redraw
-		if a:status > 0 || len(getqflist())>1
-			echomsg 'Compiling to ' . g:LatexBox_output_type . ' ... failed!'
-		else
-			echomsg 'Compiling to ' . g:LatexBox_output_type . ' ... success!'
-		endif
-
 		" Only open window when an error/warning is detected
-		if g:LatexBox_quickfix
+		if g:LatexBox_quickfix >= 3
+					\ ? s:log_contains_error(log)
+					\ : g:LatexBox_quickfix > 0
 			belowright cw
-			if g:LatexBox_quickfix==2
+			if g:LatexBox_quickfix == 2 || g:LatexBox_quickfix == 4
 				wincmd p
 			endif
 		endif
+		redraw
+
+		" Write status message to screen
+		if a:status > 0 || len(getqflist())>1
+			if s:log_contains_error(log)
+				let l:status_msg = ' ... failed!'
+			else
+				let l:status_msg = ' ... there were warnings!'
+			endif
+		else
+			let l:status_msg = ' ... success!'
+		endif
+		echomsg 'Compiling to ' . g:LatexBox_output_type . l:status_msg
 	endif
+endfunction
+
+function! s:log_contains_error(file)
+	let lines = readfile(a:file)
+	let lines = filter(lines, 'v:val =~ ''^.*:\d\+: ''')
+	let lines = uniq(map(lines, 'matchstr(v:val, ''^.*\ze:\d\+:'')'))
+	let lines = filter(lines, 'filereadable(fnameescape(v:val))')
+	return len(lines) > 0
 endfunction
 " }}}
 

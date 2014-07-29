@@ -1,29 +1,22 @@
 " Folding support for LaTeX
+
 "
 " Options
-" g:LatexBox_Folding       - Turn on/off folding
-" g:LatexBox_fold_preamble - Turn on/off folding of preamble
-" g:LatexBox_fold_parts    - Define parts (eq. appendix, frontmatter) to fold
-" g:LatexBox_fold_sections - Define section levels to fold
-" g:LatexBox_fold_envs     - Turn on/off folding of environments
+" g:LatexBox_Folding         - Turn on/off folding
+" g:LatexBox_fold_text       - Turn on/off LatexBox fold text function
+" g:LatexBox_fold_preamble   - Turn on/off folding of preamble
+" g:LatexBox_fold_parts      - Define parts (eq. appendix, frontmatter) to fold
+" g:LatexBox_fold_sections   - Define section levels to fold
+" g:LatexBox_fold_envs       - Turn on/off folding of environments
+" g:LatexBox_fold_toc        - Turn on/off folding of TOC
+" g:LatexBox_fold_toc_levels - Set max TOC fold level
 "
-
-" {{{1 Set options
-if exists('g:LatexBox_Folding') && g:LatexBox_Folding == 1
-    setl foldmethod=expr
-    setl foldexpr=LatexBox_FoldLevel(v:lnum)
-    setl foldtext=LatexBox_FoldText()
-    "
-    " The foldexpr function returns "=" for most lines, which means it can become
-    " slow for large files.  The following is a hack that is based on this reply to
-    " a discussion on the Vim Developer list:
-    " http://permalink.gmane.org/gmane.editors.vim.devel/14100
-    "
-    augroup FastFold
-        autocmd!
-        autocmd InsertEnter *.tex setlocal foldmethod=manual
-        autocmd InsertLeave *.tex setlocal foldmethod=expr
-    augroup end
+" {{{1 Initialize options to default values.
+if !exists('g:LatexBox_Folding')
+	let g:LatexBox_Folding=0
+endif
+if !exists('g:LatexBox_fold_text')
+    let g:LatexBox_fold_text=1
 endif
 if !exists('g:LatexBox_fold_preamble')
     let g:LatexBox_fold_preamble=1
@@ -57,7 +50,45 @@ endif
 if !exists('g:LatexBox_fold_toc_levels')
     let g:LatexBox_fold_toc_levels=1
 endif
+if !exists('g:LatexBox_fold_automatic')
+	let g:LatexBox_fold_automatic=1
+endif
+" }}}1
 
+if g:LatexBox_Folding == 0
+    finish
+endif
+
+" {{{1 Set folding options for vim
+setl foldexpr=LatexBox_FoldLevel(v:lnum)
+if g:LatexBox_fold_text == 1
+    setl foldtext=LatexBox_FoldText()
+endif
+if g:LatexBox_fold_automatic == 1
+    setl foldmethod=expr
+
+	"
+	" The foldexpr function returns "=" for most lines, which means it can become
+	" slow for large files.  The following is a hack that is based on this reply to
+	" a discussion on the Vim Developer list:
+	" http://permalink.gmane.org/gmane.editors.vim.devel/14100
+	"
+	augroup FastFold
+		autocmd!
+		autocmd InsertEnter *.tex setlocal foldmethod=manual
+		autocmd InsertLeave *.tex setlocal foldmethod=expr
+	augroup end
+else
+	setl foldmethod=manual
+endif
+
+function! LatexBox_FoldOnDemand()
+	setl foldmethod=expr
+	normal! zx
+	setl foldmethod=manual
+endfunction
+
+command! LatexFold  call LatexBox_FoldOnDemand()
 
 " {{{1 LatexBox_FoldLevel help functions
 
@@ -137,9 +168,9 @@ function! LatexBox_FoldLevel(lnum)
 
     " Fold preamble
     if g:LatexBox_fold_preamble == 1
-        if line =~# '\s*\\documentclass'
+        if line =~# s:notcomment . s:notbslash . '\s*\\documentclass'
             return ">1"
-        elseif line =~# '^\s*\\begin\s*{\s*document\s*}'
+        elseif line =~# s:notcomment . s:notbslash . '\s*\\begin\s*{\s*document\s*}'
             return "0"
         endif
     endif
@@ -247,24 +278,13 @@ function! s:CaptionFrame(line)
     endif
 endfunction
 
-" {{{1 LatexBox_FoldText
-function! LatexBox_FoldText()
-    " Initialize
+function! LatexBox_FoldText_title()
     let line = getline(v:foldstart)
-    let nlines = v:foldend - v:foldstart + 1
-    let level = ''
     let title = 'Not defined'
-
-    " Fold level
-    let level = strpart(repeat('-', v:foldlevel-1) . '*',0,3)
-    if v:foldlevel > 3
-        let level = strpart(level, 1) . v:foldlevel
-    endif
-    let level = printf('%-3s', level)
 
     " Preamble
     if line =~ '\s*\\documentclass'
-        let title = "Preamble"
+        return "Preamble"
     endif
 
     " Parts, sections and fakesections
@@ -280,11 +300,11 @@ function! LatexBox_FoldText()
     elseif line =~ '\\appendix'
         let title = "Appendix"
     elseif line =~ secpat1 . '.*}'
-        let title =  matchstr(line, secpat1 . '\zs.*\ze}')
+        let title =  matchstr(line, secpat1 . '\zs.\{-}\ze}')
     elseif line =~ secpat1
         let title =  matchstr(line, secpat1 . '\zs.*')
     elseif line =~ secpat2 . '.*\]'
-        let title =  matchstr(line, secpat2 . '\zs.*\ze\]')
+        let title =  matchstr(line, secpat2 . '\zs.\{-}\ze\]')
     elseif line =~ secpat2
         let title =  matchstr(line, secpat2 . '\zs.*')
     elseif line =~ 'Fake' . sections . ':'
@@ -330,7 +350,22 @@ function! LatexBox_FoldText()
         endif
     endif
 
-    let title = strpart(title, 0, 68)
+    return title
+endfunction
+
+" {{{1 LatexBox_FoldText
+function! LatexBox_FoldText()
+    let nlines = v:foldend - v:foldstart + 1
+    let title = strpart(LatexBox_FoldText_title(), 0, 68)
+    let level = ''
+
+    " Fold level
+    let level = strpart(repeat('-', v:foldlevel-1) . '*',0,3)
+    if v:foldlevel > 3
+        let level = strpart(level, 1) . v:foldlevel
+    endif
+    let level = printf('%-3s', level)
+
     return printf('%-3s %-68s #%5d', level, title, nlines)
 endfunction
 

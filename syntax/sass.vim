@@ -58,7 +58,7 @@ syn match sassAmpersand  "&"
 " TODO: Attribute namespaces
 " TODO: Arithmetic (including strings and concatenation)
 
-syn region sassMediaQuery matchgroup=sassMedia start="@media" end="$" contains=sassMediaOperators
+syn region sassMediaQuery matchgroup=sassMedia start="@media" end="[{};]\@=\|$" contains=sassMediaOperators
 syn keyword sassMediaOperators and not only contained
 syn region sassCharset start="@charset" end=";\|$" contains=scssComment,cssStringQ,cssStringQQ,cssURL,cssUnicodeEscape,cssMediaType
 syn region sassInclude start="@import" end=";\|$" contains=scssComment,cssStringQ,cssStringQQ,cssURL,cssUnicodeEscape,cssMediaType

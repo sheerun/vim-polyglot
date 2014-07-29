@@ -3,4 +3,4 @@
 
 if !( has('gui_running') || &t_Co==256 ) | finish | endif
 
-call css_color#init('css', 'lessVariableValue')
+call css_color#init('css', 'lessVariableValue,lessDefinition,lessComment')

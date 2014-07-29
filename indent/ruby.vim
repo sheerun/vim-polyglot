@@ -90,12 +90,19 @@ let s:end_skip_expr = s:skip_expr .
 let s:non_bracket_continuation_regex = '\%([\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)\s*\%(#.*\)\=$'
 
 " Regex that defines continuation lines.
-" TODO: this needs to deal with if ...: and so on
 let s:continuation_regex =
       \ '\%(%\@<![({[\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)\s*\%(#.*\)\=$'
 
+" Regex that defines continuable keywords
+let s:continuable_regex =
+      \ '\C\%(^\s*\|[=,*/%+\-|;{]\|<<\|>>\|:\s\)\s*\zs' .
+      \ '\<\%(if\|for\|while\|until\|unless\):\@!\>'
+
 " Regex that defines bracket continuations
 let s:bracket_continuation_regex = '%\@<!\%([({[]\)\s*\%(#.*\)\=$'
+
+" Regex that defines end of bracket continuation followed by another continuation
+let s:bracket_switch_continuation_regex = '^\([^(]\+\zs).\+\)\+'.s:continuation_regex
 
 " Regex that defines the first part of a splat pattern
 let s:splat_regex = '[[,(]\s*\*\s*\%(#.*\)\=$'
@@ -488,6 +495,10 @@ function GetRubyIndent(...)
     endif
   endif
 
+  if s:Match(lnum, s:continuable_regex) && s:Match(lnum, s:continuation_regex)
+    return indent(s:GetMSL(lnum)) + &sw + &sw
+  endif
+
   " If the previous line ended with a block opening, add a level of indent.
   if s:Match(lnum, s:block_regex)
     return indent(s:GetMSL(lnum)) + &sw
@@ -575,10 +586,14 @@ function GetRubyIndent(...)
   let p_lnum = lnum
   let lnum = s:GetMSL(lnum)
 
-  " If the previous line wasn't a MSL and is continuation return its indent.
-  " TODO: the || s:IsInString() thing worries me a bit.
+  " If the previous line wasn't a MSL.
   if p_lnum != lnum
-    if s:Match(p_lnum, s:non_bracket_continuation_regex) || s:IsInString(p_lnum,strlen(line))
+    " If previous line ends bracket and begins non-bracket continuation decrease indent by 1.
+    if s:Match(p_lnum, s:bracket_switch_continuation_regex)
+      return ind - 1
+    " If previous line is a continuation return its indent.
+    " TODO: the || s:IsInString() thing worries me a bit.
+    elseif s:Match(p_lnum, s:non_bracket_continuation_regex) || s:IsInString(p_lnum,strlen(line))
       return ind
     endif
   endif

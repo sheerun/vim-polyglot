@@ -60,7 +60,7 @@ function! GetJadeIndent()
     return increase
   elseif line =~? '^\v%('.g:jade_self_closing_tags.')>'
     return indent
-  elseif group =~? '\v^%(jadeAttributesDelimiter|jadeClass|jadeId|htmlTagName|htmlSpecialTagName|jadeFilter)$'
+  elseif group =~? '\v^%(jadeAttributesDelimiter|jadeClass|jadeId|htmlTagName|htmlSpecialTagName|jadeFilter|jadeTagBlockChar)$'
     return increase
   else
     return indent

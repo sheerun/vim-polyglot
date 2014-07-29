@@ -328,6 +328,7 @@ function! LatexBox_BibComplete(regexp)
 		let type = printf('%-' . s:type_length . 's', type)
 		let auth = m['author'] == '' ? ''    :       m['author'][:20] . ' '
 		let auth = substitute(auth, '\~', ' ', 'g')
+		let auth = substitute(auth, ',.*\ze', ' et al. ', '')
 		let year = m['year']   == '' ? ''    : '(' . m['year']   . ')'
 		let w = { 'word': m['key'],
 				\ 'abbr': type . auth . year,
@@ -365,7 +366,7 @@ function! s:ExtractLabels()
 		let curname = strpart( getline( lblline ), lblbegin, nameend - lblbegin - 1 )
 
 		" Ignore cref entries (because they are duplicates)
-		if curname =~ "\@cref\|cref\@"
+		if curname =~# "@cref$"
 			continue
 		endif
 

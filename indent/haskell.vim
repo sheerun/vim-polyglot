@@ -68,7 +68,7 @@ function! HIndent(lnum)
     endif
   endif
 
-  if prevl =~ '\Wof\s*$' || prevl =~ '\Wdo\s*$'
+  if prevl =~ '\Wof\s*$' || prevl =~ '\Wm\=do\s*$'
     return previ + &sw
   endif
 

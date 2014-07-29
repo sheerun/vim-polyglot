@@ -3,7 +3,7 @@
 "
 " {{{ BLOCK: Last-modified
 
-" Mon, 02 Jun 2014 07:13:11 +0000, PHP 5.6.0beta3
+" Thu, 10 Jul 2014 06:50:23 +0000, PHP 5.6.0RC2
 
 " }}}
 "
@@ -33,11 +33,19 @@
 "       (Statements) in your code.
 "
 " Options:  php_sql_query = 1  for SQL syntax highlighting inside strings (default: 0)
+"           php_sql_heredoc = 1 for SQL syntax highlighting inside heredocs (default: 1)
+"           b:sql_type_override = 'postgresql' for PostgreSQL syntax highlighting in current buffer (default: 'mysql')
+"           g:sql_type_default = 'postgresql' to set global SQL syntax highlighting language default (default: 'mysql')"
 "           php_html_in_strings = 1  for HTML syntax highlighting inside strings (default: 0)
+"           php_html_in_heredoc = 1 for HTML syntax highlighting inside heredocs (default: 1)
+"           php_html_load = 1 for loading the HTML syntax at all.  Overwrites php_html_in_strings and php_html_in_heredoc (default: 1)
+"           php_ignore_phpdoc = 0 for not highlighting parts of phpDocs
 "           php_parent_error_close = 1  for highlighting parent error ] or ) (default: 0)
 "           php_parent_error_open = 1  for skipping an php end tag,
 "                                      if there exists an open ( or [ without a closing one (default: 0)
-"           php_folding = 1  for folding classes and functions
+"           php_folding = 1  for folding loops, if/elseif/else, switch, try/catch, classes, and functions based on
+"                            indent, finds a } with an indent matching the structure.
+"                         2  for folding all { }, ( ), and [ ] pairs. (see known bugs ii)
 "           php_sync_method = x
 "                             x=-1 to sync by search ( default )
 "                             x>0 to sync at least x lines backwards
@@ -51,12 +59,6 @@
 "           g:php_syntax_extensions_enabled
 "           g:php_syntax_extensions_disabled  A list of extension names (lowercase) for which built-in functions,
 "                                             constants, classes and interfaces is enabled / disabled.
-"
-" Note:
-" Setting php_folding=1 will match a closing } by comparing the indent
-" before the class or function keyword with the indent of a matching }.
-" Setting php_folding=2 will match all of pairs of {,} ( see known
-" bugs ii )
 "
 " Known Bugs:
 "  - setting  php_parent_error_close  on  and  php_parent_error_open  off
@@ -83,10 +85,31 @@ if !exists("main_syntax")
   let main_syntax = 'php'
 endif
 
-runtime! syntax/html.vim
-unlet! b:current_syntax
-" HTML syntax file turns on spelling for all top level words, we attempt to turn off
-syntax spell default
+if !exists("php_html_load")
+  let php_html_load=1
+endif
+
+if (exists("php_html_load") && php_html_load)
+  if !exists("php_html_in_heredoc")
+    let php_html_in_heredoc=1
+  endif
+
+  runtime! syntax/html.vim
+  unlet! b:current_syntax
+  " HTML syntax file turns on spelling for all top level words, we attempt to turn off
+  syntax spell default
+
+  syn cluster htmlPreproc add=phpRegion
+else
+  " If it is desired that the HTML syntax file not be loaded at all, set the options for highlighting it in string
+  " and heredocs to false.
+  let php_html_in_strings=0
+  let php_html_in_heredoc=0
+endif
+
+if (exists("php_html_in_strings") && php_html_in_strings)
+  syn cluster phpAddStrings add=@htmlTop
+endif
 
 " Set sync method if none declared
 if ( ! exists("php_sync_method") || php_sync_method == 1)
@@ -97,26 +120,41 @@ if ( ! exists("php_sync_method") || php_sync_method == 1)
   endif
 endif
 
-syn cluster htmlPreproc add=phpRegion
-
-" Use MySQL as the default SQL syntax file.
-" See https://github.com/StanAngeloff/php.vim/pull/1
-if !exists('b:sql_type_override') && !exists('g:sql_type_default')
-  let b:sql_type_override='mysql'
-endif
-syn include @sqlTop syntax/sql.vim
-
-syn sync clear
-unlet! b:current_syntax
-syn cluster sqlTop remove=sqlString,sqlComment
-
-if (exists("php_sql_query") && php_sql_query)
-  syn cluster phpAddStrings contains=@sqlTop
+if !exists("php_sql_heredoc")
+  let php_sql_heredoc=1
 endif
 
-if (exists("php_html_in_strings") && php_html_in_strings)
-  syn cluster phpAddStrings add=@htmlTop
+if ((exists("php_sql_query") && php_sql_query) || (exists("php_sql_heredoc") && php_sql_heredoc))
+  " Use MySQL as the default SQL syntax file.
+  " See https://github.com/StanAngeloff/php.vim/pull/1
+  if !exists('b:sql_type_override') && !exists('g:sql_type_default')
+    let b:sql_type_override='mysql'
+  endif
+  syn include @sqlTop syntax/sql.vim
+
+  syn sync clear
+  unlet! b:current_syntax
+  syn cluster sqlTop remove=sqlString,sqlComment
+
+  if (exists("php_sql_query") && php_sql_query)
+    syn cluster phpAddStrings contains=@sqlTop
+  endif
 endif
+
+" set default for php_folding so we don't have to keep checking its existence.
+if !exists("php_folding")
+  let php_folding = 0
+endif
+
+" Folding Support {{{
+"
+if php_folding==1 && has("folding")
+  command! -nargs=+ SynFold <args> fold
+else
+  command! -nargs=+ SynFold <args>
+endif
+
+" }}}
 
 syn case match
 
@@ -240,7 +278,7 @@ syn keyword phpConstants ABDAY_1 ABDAY_2 ABDAY_3 ABDAY_4 ABDAY_5 ABDAY_6 ABDAY_7
 endif
 if index(g:php_syntax_extensions_enabled, "tokenizer") >= 0 && index(g:php_syntax_extensions_disabled, "tokenizer") < 0 && ( ! exists("b:php_syntax_extensions_enabled") || index(b:php_syntax_extensions_enabled, "tokenizer") >= 0) && ( ! exists("b:php_syntax_extensions_disabled") || index(b:php_syntax_extensions_disabled, "tokenizer") < 0)
 " tokenizer constants
-syn keyword phpConstants T_ABSTRACT T_AND_EQUAL T_ARRAY T_ARRAY_CAST T_AS T_BAD_CHARACTER T_BOOLEAN_AND T_BOOLEAN_OR T_BOOL_CAST T_BREAK T_CALLABLE T_CASE T_CATCH T_CHARACTER T_CLASS T_CLASS_C T_CLONE T_CLOSE_TAG T_COMMENT T_CONCAT_EQUAL T_CONST T_CONSTANT_ENCAPSED_STRING T_CONTINUE T_CURLY_OPEN T_DEC T_DECLARE T_DEFAULT T_DIR T_DIV_EQUAL T_DNUMBER T_DO T_DOC_COMMENT T_DOLLAR_OPEN_CURLY_BRACES T_DOUBLE_ARROW T_DOUBLE_CAST T_DOUBLE_COLON T_ECHO T_ELLIPSIS T_ELSE T_ELSEIF T_EMPTY T_ENCAPSED_AND_WHITESPACE T_ENDDECLARE T_ENDFOR T_ENDFOREACH T_ENDIF T_ENDSWITCH T_ENDWHILE T_END_HEREDOC T_EVAL T_EXIT T_EXTENDS T_FILE T_FINAL T_FINALLY T_FOR T_FOREACH T_FUNCTION T_FUNC_C T_GLOBAL T_GOTO T_HALT_COMPILER T_IF T_IMPLEMENTS T_INC T_INCLUDE T_INCLUDE_ONCE T_INLINE_HTML T_INSTANCEOF T_INSTEADOF T_INTERFACE T_INT_CAST T_ISSET T_IS_EQUAL T_IS_GREATER_OR_EQUAL T_IS_IDENTICAL T_IS_NOT_EQUAL T_IS_NOT_IDENTICAL T_IS_SMALLER_OR_EQUAL T_LINE T_LIST T_LNUMBER T_LOGICAL_AND T_LOGICAL_OR T_LOGICAL_XOR T_METHOD_C T_MINUS_EQUAL T_MOD_EQUAL T_MUL_EQUAL T_NAMESPACE T_NEW T_NS_C T_NS_SEPARATOR T_NUM_STRING T_OBJECT_CAST T_OBJECT_OPERATOR T_OPEN_TAG T_OPEN_TAG_WITH_ECHO T_OR_EQUAL T_PAAMAYIM_NEKUDOTAYIM T_PLUS_EQUAL T_PRINT T_PRIVATE T_PROTECTED T_PUBLIC T_REQUIRE T_REQUIRE_ONCE T_RETURN T_SL T_SL_EQUAL T_SR T_SR_EQUAL T_START_HEREDOC T_STATIC T_STRING T_STRING_CAST T_STRING_VARNAME T_SWITCH T_THROW T_TRAIT T_TRAIT_C T_TRY T_UNSET T_UNSET_CAST T_USE T_VAR T_VARIABLE T_WHILE T_WHITESPACE T_XOR_EQUAL T_YIELD contained
+syn keyword phpConstants T_ABSTRACT T_AND_EQUAL T_ARRAY T_ARRAY_CAST T_AS T_BAD_CHARACTER T_BOOLEAN_AND T_BOOLEAN_OR T_BOOL_CAST T_BREAK T_CALLABLE T_CASE T_CATCH T_CHARACTER T_CLASS T_CLASS_C T_CLONE T_CLOSE_TAG T_COMMENT T_CONCAT_EQUAL T_CONST T_CONSTANT_ENCAPSED_STRING T_CONTINUE T_CURLY_OPEN T_DEC T_DECLARE T_DEFAULT T_DIR T_DIV_EQUAL T_DNUMBER T_DO T_DOC_COMMENT T_DOLLAR_OPEN_CURLY_BRACES T_DOUBLE_ARROW T_DOUBLE_CAST T_DOUBLE_COLON T_ECHO T_ELLIPSIS T_ELSE T_ELSEIF T_EMPTY T_ENCAPSED_AND_WHITESPACE T_ENDDECLARE T_ENDFOR T_ENDFOREACH T_ENDIF T_ENDSWITCH T_ENDWHILE T_END_HEREDOC T_EVAL T_EXIT T_EXTENDS T_FILE T_FINAL T_FINALLY T_FOR T_FOREACH T_FUNCTION T_FUNC_C T_GLOBAL T_GOTO T_HALT_COMPILER T_IF T_IMPLEMENTS T_INC T_INCLUDE T_INCLUDE_ONCE T_INLINE_HTML T_INSTANCEOF T_INSTEADOF T_INTERFACE T_INT_CAST T_ISSET T_IS_EQUAL T_IS_GREATER_OR_EQUAL T_IS_IDENTICAL T_IS_NOT_EQUAL T_IS_NOT_IDENTICAL T_IS_SMALLER_OR_EQUAL T_LINE T_LIST T_LNUMBER T_LOGICAL_AND T_LOGICAL_OR T_LOGICAL_XOR T_METHOD_C T_MINUS_EQUAL T_MOD_EQUAL T_MUL_EQUAL T_NAMESPACE T_NEW T_NS_C T_NS_SEPARATOR T_NUM_STRING T_OBJECT_CAST T_OBJECT_OPERATOR T_OPEN_TAG T_OPEN_TAG_WITH_ECHO T_OR_EQUAL T_PAAMAYIM_NEKUDOTAYIM T_PLUS_EQUAL T_POW T_POW_EQUAL T_PRINT T_PRIVATE T_PROTECTED T_PUBLIC T_REQUIRE T_REQUIRE_ONCE T_RETURN T_SL T_SL_EQUAL T_SR T_SR_EQUAL T_START_HEREDOC T_STATIC T_STRING T_STRING_CAST T_STRING_VARNAME T_SWITCH T_THROW T_TRAIT T_TRAIT_C T_TRY T_UNSET T_UNSET_CAST T_USE T_VAR T_VARIABLE T_WHILE T_WHITESPACE T_XOR_EQUAL T_YIELD contained
 endif
 if index(g:php_syntax_extensions_enabled, "xml") >= 0 && index(g:php_syntax_extensions_disabled, "xml") < 0 && ( ! exists("b:php_syntax_extensions_enabled") || index(b:php_syntax_extensions_enabled, "xml") >= 0) && ( ! exists("b:php_syntax_extensions_disabled") || index(b:php_syntax_extensions_disabled, "xml") < 0)
 " xml constants
@@ -444,10 +482,15 @@ endif
 syntax keyword phpClasses containedin=ALLBUT,phpComment,phpDocComment,phpStringDouble,phpStringSingle,phpIdentifier,phpMethodsVar
 
 " Control Structures
-syn keyword phpKeyword if echo else elseif while do for foreach function break switch case default continue return goto as endif endwhile endfor endforeach endswitch declare endeclare print new clone yield contained
+syn keyword phpKeyword echo continue case default break return goto as endif endwhile endfor endforeach endswitch declare endeclare print new clone yield contained
+" Only create keyword groupings for these if not doing folding, otherwise they take precedence over the regions
+" used for folding.
+if php_folding != 1
+  syn keyword phpKeyword if else elseif while do for foreach function switch contained
 
-" Exception Keywords
-syn keyword phpKeyword try catch finally throw contained
+  " Exception Keywords
+  syn keyword phpKeyword try catch finally throw contained
+endif
 
 " Class Keywords
 syn keyword phpType class abstract extends interface implements static final var public private protected const trait contained
@@ -532,16 +575,16 @@ endif
 syn match phpCommentStar contained "^\s*\*[^/]"me=e-1
 syn match phpCommentStar contained "^\s*\*$"
 
-if !exists("php_ignore_phpdoc")
+if !exists("php_ignore_phpdoc") || !php_ignore_phpdoc
   syn case ignore
 
   syn region phpDocComment   start="/\*\*" end="\*/" keepend contains=phpCommentTitle,phpDocTags,phpTodo,@Spell
   syn region phpCommentTitle contained matchgroup=phpDocComment start="/\*\*" matchgroup=phpCommmentTitle keepend end="\.$" end="\.[ \t\r<&]"me=e-1 end="[^{]@"me=s-2,he=s-1 end="\*/"me=s-1,he=s-1 contains=phpCommentStar,phpTodo,phpDocTags,@Spell containedin=phpDocComment
 
   syn region phpDocTags  start="{@\(example\|id\|internal\|inheritdoc\|link\|source\|toc\|tutorial\)" end="}" containedin=phpDocComment
-  syn match  phpDocTags  "@\(abstract\|access\|author\|category\|copyright\|deprecated\|example\|exception\|filesource\|final\|global\|id\|ignore\|inheritdoc\|internal\|license\|link\|magic\|method\|name\|package\|param\|property\|return\|see\|since\|source\|static\|staticvar\|subpackage\|throws\|toc\|todo\|tutorial\|uses\|var\|version\)\s\+\S\+.*" contains=phpDocParam containedin=phpDocComment
-  syn match  phpDocParam "\s\S\+" contained contains=phpDocIdentifier
-  syn match  phpDocIdentifier contained "$\h\w*"
+  syn match phpDocTags "@\%(abstract\|access\|author\|category\|copyright\|deprecated\|example\|exception\|filesource\|final\|global\|id\|ignore\|inheritdoc\|internal\|license\|link\|magic\|method\|name\|package\|param\|property\|return\|see\|since\|source\|static\|staticvar\|subpackage\|throws\|toc\|todo\|tutorial\|uses\|var\|version\)" containedin=phpDocComment nextgroup=phpDocParam,phpDocIdentifier skipwhite
+  syn match phpDocParam "\s\+\zs\%(\h\w*|\?\)\+" nextgroup=phpDocIdentifier skipwhite
+  syn match phpDocIdentifier "\s\+\zs$\h\w*"
 
   syn case match
 endif
@@ -568,23 +611,29 @@ else
 endif
 
 " HereDoc
-  syn case match
-  syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\I\i*\)$" end="^\z1\(;\=$\)\@=" contained contains=@Spell,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
-  syn region phpHereDoc matchgroup=Delimiter start=+\(<<<\)\@<="\z(\I\i*\)"$+ end="^\z1\(;\=$\)\@=" contained contains=@Spell,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
-" including HTML,JavaScript,SQL even if not enabled via options
-  syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(html\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@="  contained contains=@htmlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
-  syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(sql\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@sqlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
-  syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(javascript\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@="  contained contains=@htmlJavascript,phpIdentifierSimply,phpIdentifier,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
-  syn case ignore
+syn case match
+
+SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\I\i*\)$" end="^\z1\(;\=$\)\@=" contained contains=@Spell,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+SynFold syn region phpHereDoc matchgroup=Delimiter start=+\(<<<\)\@<="\z(\I\i*\)"$+ end="^\z1\(;\=$\)\@=" contained contains=@Spell,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+" including HTML,JavaScript,SQL if enabled via options
+if (exists("php_html_in_heredoc") && php_html_in_heredoc)
+  SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(html\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@="  contained contains=@htmlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+  SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(javascript\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@="  contained contains=@htmlJavascript,phpIdentifierSimply,phpIdentifier,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+endif
+if (exists("php_sql_heredoc") && php_sql_heredoc)
+  SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(sql\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@sqlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+endif
 
 " NowDoc
-  syn region phpNowDoc matchgroup=Delimiter start=+\(<<<\)\@<='\z(\I\i*\)'$+ end="^\z1\(;\=$\)\@=" contained keepend extend
+SynFold syn region phpNowDoc matchgroup=Delimiter start=+\(<<<\)\@<='\z(\I\i*\)'$+ end="^\z1\(;\=$\)\@=" contained keepend extend
+
+syn case ignore
 
 " Parent
 if (exists("php_parent_error_close") && php_parent_error_close) || (exists("php_parent_error_open") && php_parent_error_open)
   syn match  phpParent "[{}]"  contained
-  syn region phpParent matchgroup=Delimiter start="(" end=")"  contained contains=@phpClFunction transparent
-  syn region phpParent matchgroup=Delimiter start="\[" end="\]"  contained contains=@phpClInside transparent
+  syn region phpParent matchgroup=Delimiter start="(" end=")"  contained contains=@phpClFunction,@phpClControl transparent
+  syn region phpParent matchgroup=Delimiter start="\[" end="\]"  contained contains=@phpClFunction,@phpClControl transparent
   if ! (exists("php_parent_error_close") && php_parent_error_close)
     syn match phpParent "[\])]" contained
   endif
@@ -622,7 +671,8 @@ syn match phpFunction /\h\w*/
 syn cluster phpClConst contains=phpFunctions,phpClasses,phpStaticClasses,phpIdentifier,phpStatement,phpKeyword,phpOperator,phpSplatOperator,phpStringSingle,phpStringDouble,phpBacktick,phpNumber,phpType,phpBoolean,phpStructure,phpMethodsVar,phpConstants,phpException,phpSuperglobals,phpMagicConstants,phpServerVars
 syn cluster phpClInside contains=@phpClConst,phpComment,phpDocComment,phpParent,phpParentError,phpInclude,phpHereDoc,phpNowDoc
 syn cluster phpClFunction contains=@phpClInside,phpDefine,phpParentError,phpStorageClass,phpKeyword
-syn cluster phpClTop contains=@phpClFunction,phpFoldFunction,phpFoldClass,phpFoldInterface,phpFoldTry,phpFoldCatch
+syn cluster phpClControl contains=phpFoldIfContainer,phpFoldWhile,phpFoldDoWhile,phpFoldFor,phpFoldForeach,phpFoldTryContainer,phpFoldSwitch
+syn cluster phpClTop contains=@phpClFunction,@phpClControl,phpFoldFunction,phpFoldClass,phpFoldInterface,phpFoldHtmlInside
 
 " Php Region
 if (exists("php_parent_error_open") && php_parent_error_open)
@@ -632,8 +682,8 @@ else
 endif
 
 " Fold
-if exists("php_folding") && php_folding==1
-" match one line constructs here and skip them at folding
+if php_folding==1
+  " match one line constructs here and skip them at folding
   syn keyword phpSCKeyword  abstract final private protected public static  contained
   syn keyword phpFCKeyword  function  contained
   syn match phpDefine "\(\s\|^\)\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function\(\s\+.*[;}]\)\@="  contained contains=phpSCKeyword
@@ -641,19 +691,46 @@ if exists("php_folding") && php_folding==1
   syn match phpStructure "\(\s\|^\)interface\(\s\+.*}\)\@="  contained
   syn match phpException "\(\s\|^\)try\(\s\+.*}\)\@="  contained
   syn match phpException "\(\s\|^\)catch\(\s\+.*}\)\@="  contained
+  syn match phpKeyword "^\s*\(if\|else\%[if]\)\s*\(.*{.*}$\|[^{}]*$\)\@=" contained
+  syn match phpKeyword "^\s*while\s*\([^{}]*$\|.*{.*}$\)\@=" contained
+  syn match phpKeyword "^\s*do\s*\([^{}]*$\|{.*}\s*while\s*.*;$\)\@=" contained
+  syn match phpKeyword "while\s*\((.*);$\)\@=" contained
+  syn match phpKeyword "^\s*for\s*\((.*)\s*{.*}$\|[^{}]*$\)\@=" contained
+  syn match phpKeyword "^\s*foreach\s*\((.*)\s*{.*}$\|[^{}]*$\)\@=" contained
 
   set foldmethod=syntax
   syn region phpFoldHtmlInside matchgroup=Delimiter start="?>" end="<?\(php\)\=" contained transparent contains=@htmlTop
-  syn region phpFoldFunction matchgroup=Storageclass start="^\z(\s*\)\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function\s\([^};]*$\)\@="rs=e-9 matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldHtmlInside,phpFCKeyword contained transparent fold extend
-  syn region phpFoldFunction matchgroup=Define start="^function\s\([^};]*$\)\@=" matchgroup=Delimiter end="^}" contains=@phpClFunction,phpFoldHtmlInside contained transparent fold extend
+  syn region phpFoldFunction matchgroup=Storageclass start="^\z(\s*\)\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function\s\([^};]*$\)\@="rs=e-9 matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,@phpClControl,phpFoldHtmlInside,phpFCKeyword contained transparent fold extend
+  syn region phpFoldFunction matchgroup=Define start="^function\s\([^};]*$\)\@=" matchgroup=Delimiter end="^}" contains=@phpClFunction,@phpClControl,phpFoldHtmlInside contained transparent fold extend
   syn region phpFoldClass matchgroup=Structure start="^\z(\s*\)\(abstract\s\+\|final\s\+\)*class\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldFunction,phpSCKeyword contained transparent fold extend
   syn region phpFoldInterface matchgroup=Structure start="^\z(\s*\)interface\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldFunction contained transparent fold extend
-  syn region phpFoldCatch matchgroup=Exception start="^\z(\s*\)catch\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldFunction contained transparent fold extend
-  syn region phpFoldTry matchgroup=Exception start="^\z(\s*\)try\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldFunction contained transparent fold extend
-elseif exists("php_folding") && php_folding==2
+
+  syn region phpFoldTryContainer start="^\z(\s*\)try\s\+\(.*{$\)\@=" skip="^\z1}\_s*\(catch\|finally\)" end="^\z1}$" keepend extend contained contains=@phpClFunction,@phpClControl,phpFoldFunction,phpFoldHtmlInside transparent
+  syn region phpFoldTry matchgroup=phpException start="^\z(\s*\)try\s\+\(.*{$\)\@=" matchgroup=Delimiter end="^\z1}$" end="^\z1}\(\s\+\(catch\|finally\)\)\@="me=s-1 containedin=phpFoldTryContainer contained transparent keepend fold extend nextgroup=phpFoldCatch
+  syn region phpFoldCatch matchgroup=phpException start="^\z(\s*\)\(}\s\+\)\=catch\s\+\(.*{$\)\@=" matchgroup=Delimiter end="^\z1}$" end="^\z1}\(\s\+\(catch\|finally\)\)\@="me=s-1 containedin=phpFoldTryContainer keepend contained transparent fold extend nextgroup=phpFoldCatch,phpFoldFinally
+  syn region phpFoldFinally matchgroup=phpException start="^\z(\s*\)\(}\s\+\)\=finally\s\+\(.*{$\)\@=" matchgroup=Delimiter end="^\z1}$" contained containedin=phpFoldTryContainer transparent fold keepend
+
+  syn region phpFoldIfContainer start="^\z(\s*\)if\s\+\(.*{$\)\@=" skip="^\z1}\_s*else\%[if]" end="^\z1}$" keepend extend contained contains=@phpClFunction,@phpClControl,phpFCKeyword,phpFoldHtmlInside
+  syn region phpFoldIf matchgroup=phpKeyword start="^\z(\s*\)if\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="\(^\z1\)\@=}\(\_s\+\%[elseif]\s\+[^}]*$\)\@="me=s-1 contained containedin=phpFoldIfContainer keepend nextgroup=phpFoldElseIf,phpFoldElse fold transparent
+  syn region phpFoldElseIf matchgroup=phpKeyword start="^\z(\s*\)\(}\s\+\)\=elseif\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="\(^\z1\)\@=}\(\s*\%[elseif]\s*[^}]*$\)\@="me=s-1 contained containedin=phpFoldIfContainer keepend nextgroup=phpFoldElseIf,phpFoldElse fold transparent 
+  syn region phpFoldElse matchgroup=phpKeyword start="^\z(\s*\)\(}\s\+\)\=else\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="\(^\z1\)\@=}\(\s\+\%[elseif]\s\+[^}]*$\)\@="me=s-1 contained containedin=phpFoldIfContainer keepend fold transparent
+
+  syn region phpFoldSwitch matchgroup=phpKeyword start="^\z(\s*\)switch\s*\(.*{$\)\@=" matchgroup=Delimiter end="^\z1}$" keepend extend contained contains=@phpClFunction,@phpClControl,phpFCKeyword,phpFoldHtmlInside fold transparent
+  syn region phpFoldCase matchgroup=phpKeyword start="^\z(\s*\)case\s*\(.*:$\)\@=" end="^\z1\(case\|default\)"me=s-1 contained containedin=phpFoldSwitch keepend contains=@phpClFunction,@phpClControl,phpFCKeyword,phpFoldHtmlInside nextgroup=phpFoldCase,phpFoldDefault fold transparent
+  syn region phpFoldDefault matchgroup=phpKeyword start="^\z(\s*\)default\(:$\)\@=" matchgroup=Delimiter end="\s*}$" contained contains=@phpClFunction,@phpClControl,phpFCKeyword,phpFoldHtmlInside containedin=phpFoldSwitch keepend fold transparent
+
+  syn region phpFoldWhile matchgroup=phpKeyword start="^\z(\s*\)while\s\+\(.*{$\)\@=" matchgroup=Delimiter end="^\z1}$" contains=@phpClFunction,@phpClControl,phpFoldHtmlInside contained fold extend
+  syn region phpFoldDoWhile matchgroup=phpkeyword start="^\z(\s*\)do\s\+\({$\)\@=" matchgroup=Delimiter end="\z1}\s\+\(while\s\+.*;$\)\@=" contains=@phpClFunction,@phpClControl,phpFoldHtmlInside contained fold extend keepend
+
+  syn region phpFoldFor matchgroup=phpKeyword start="^\z(\s*\)for\s\(.*{$\)\@=" matchgroup=Delimiter end="\z1}$" contains=@phpClFunction,@phpClControl,phpFCKeyword,phpFoldHtmlInside contained transparent fold extend
+  syn region phpFoldForeach matchgroup=phpKeyword start="^\z(\s*\)foreach\s\(.*{$\)\@=" matchgroup=Delimiter end="\z1}$" contains=@phpClFunction,@phpClControl,phpFCKeyword,phpFoldHtmlInside contained transparent fold extend
+
+elseif php_folding==2
   set foldmethod=syntax
   syn region phpFoldHtmlInside matchgroup=Delimiter start="?>" end="<?\(php\)\=" contained transparent contains=@htmlTop
   syn region phpParent matchgroup=Delimiter start="{" end="}"  contained contains=@phpClFunction,phpFoldHtmlInside transparent fold
+  syn region phpParent matchgroup=Delimiter start="(" end=")"  contained contains=@phpClFunction,phpFoldHtmlInside transparent fold
+  syn region phpParent matchgroup=Delimiter start="\[" end="]"  contained contains=@phpClFunction,phpFoldHtmlInside transparent fold
 endif
 
 " Sync
@@ -687,7 +764,7 @@ if !exists("did_php_syn_inits")
   hi def link phpFunctions        Function
   hi def link phpMethods          Function
   hi def link phpClasses          StorageClass
-  hi def link phpException        StorageClass
+  hi def link phpException        Exception
   hi def link phpIdentifier       Identifier
   hi def link phpIdentifierSimply Identifier
   hi def link phpStatement        Statement
@@ -734,10 +811,15 @@ if !exists("did_php_syn_inits")
 
 endif
 
+" Cleanup: {{{
+
+delcommand SynFold
 let b:current_syntax = "php"
 
 if main_syntax == 'php'
   unlet main_syntax
 endif
 
-" vim: ts=8 sts=2 sw=2 expandtab
+" }}}
+
+" vim: ts=8 sts=2 sw=2 fdm=marker expandtab

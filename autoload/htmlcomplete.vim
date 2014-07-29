@@ -10,7 +10,47 @@ if !exists('g:aria_attributes_complete')
   let g:aria_attributes_complete = 1
 endif
 
-let b:html_omni_flavor = 'html5'
+" Distinguish between HTML versions.
+" To use with other HTML versions add another "elseif" condition to match
+" proper DOCTYPE.
+function! htmlcomplete#DetectOmniFlavor()
+    if &filetype == 'xhtml'
+        let b:html_omni_flavor = 'xhtml10s'
+    else
+        let b:html_omni_flavor = 'html5'
+    endif
+    let i = 1
+    let line = ""
+    while i < 10 && i < line("$")
+        let line = getline(i)
+        if line =~ '<!DOCTYPE.*\<DTD '
+            break
+        endif
+        let i += 1
+    endwhile
+    if line =~ '<!DOCTYPE.*\<DTD '  " doctype line found above
+        if line =~ ' HTML 3\.2'
+            let b:html_omni_flavor = 'html32'
+        elseif line =~ ' XHTML 1\.1'
+            let b:html_omni_flavor = 'xhtml11'
+        else    " two-step detection with strict/frameset/transitional
+            if line =~ ' XHTML 1\.0'
+                let b:html_omni_flavor = 'xhtml10'
+            elseif line =~ ' HTML 4\.01'
+                let b:html_omni_flavor = 'html401'
+            elseif line =~ ' HTML 4.0\>'
+                let b:html_omni_flavor = 'html40'
+            endif
+            if line =~ '\<Transitional\>'
+                let b:html_omni_flavor .= 't'
+            elseif line =~ '\<Frameset\>'
+                let b:html_omni_flavor .= 'f'
+            else
+                let b:html_omni_flavor .= 's'
+            endif
+        endif
+    endif
+endfunction
 
 function! htmlcomplete#CompleteTags(findstart, base)
   if a:findstart
@@ -162,11 +202,8 @@ function! htmlcomplete#CompleteTags(findstart, base)
 	if exists("b:entitiescompl")
 		unlet! b:entitiescompl
 
-		if !exists("b:html_doctype")
-			call htmlcomplete#CheckDoctype()
-		endif
 		if !exists("b:html_omni")
-			"runtime! autoload/xml/xhtml10s.vim
+			call htmlcomplete#CheckDoctype()
 			call htmlcomplete#LoadData()
 		endif
     if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
@@ -464,11 +501,8 @@ function! htmlcomplete#CompleteTags(findstart, base)
 			let entered_value = matchstr(attr, ".*=\\s*[\"']\\?\\zs.*")
 			let values = []
 			" Load data {{{
-			if !exists("b:html_doctype")
-				call htmlcomplete#CheckDoctype()
-			endif
 			if !exists("b:html_omni")
-				"runtime! autoload/xml/xhtml10s.vim
+				call htmlcomplete#CheckDoctype()
 				call htmlcomplete#LoadData()
 			endif
       if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
@@ -547,10 +581,8 @@ function! htmlcomplete#CompleteTags(findstart, base)
 		let sbase = matchstr(context, '.*\ze\s.*')
 
 		" Load data {{{
-		if !exists("b:html_doctype")
-			call htmlcomplete#CheckDoctype()
-		endif
 		if !exists("b:html_omni")
+			call htmlcomplete#CheckDoctype()
 			call htmlcomplete#LoadData()
 		endif
     if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
@@ -653,11 +685,8 @@ function! htmlcomplete#CompleteTags(findstart, base)
 	endif
 	" }}}
 	" Load data {{{
-	if !exists("b:html_doctype")
-		call htmlcomplete#CheckDoctype()
-	endif
 	if !exists("b:html_omni")
-		"runtime! autoload/xml/xhtml10s.vim
+		call htmlcomplete#CheckDoctype()
 		call htmlcomplete#LoadData()
 	endif
   if g:aria_attributes_complete == 1 && !exists("b:aria_omni")
@@ -787,61 +816,8 @@ function! htmlcomplete#CheckDoctype() " {{{
 	else
 		let old_flavor = ''
 	endif
-	let i = 1
-	while i < 10 && i < line("$")
-		let line = getline(i)
-		if line =~ '<!DOCTYPE.*\<DTD HTML 3\.2'
-			let b:html_omni_flavor = 'html32'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD HTML 4\.0 Transitional'
-			let b:html_omni_flavor = 'html40t'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD HTML 4\.0 Frameset'
-			let b:html_omni_flavor = 'html40f'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD HTML 4\.0'
-			let b:html_omni_flavor = 'html40s'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD HTML 4\.01 Transitional'
-			let b:html_omni_flavor = 'html401t'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD HTML 4\.01 Frameset'
-			let b:html_omni_flavor = 'html401f'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD HTML 4\.01'
-			let b:html_omni_flavor = 'html401s'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD XHTML 1\.0 Transitional'
-			let b:html_omni_flavor = 'xhtml10t'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD XHTML 1\.0 Frameset'
-			let b:html_omni_flavor = 'xhtml10f'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD XHTML 1\.0 Strict'
-			let b:html_omni_flavor = 'xhtml10s'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE.*\<DTD XHTML 1\.1'
-			let b:html_omni_flavor = 'xhtml11'
-			let b:html_doctype = 1
-			break
-		elseif line =~ '<!DOCTYPE html'
-			let b:html_omni_flavor = 'html5'
-			let b:html_doctype = 1
-			break
-		endif
-		let i += 1
-	endwhile
-	if !exists("b:html_doctype")
+	call htmlcomplete#DetectOmniFlavor()
+	if !exists('b:html_omni_flavor')
 		return
 	else
 		" Tie g:xmldata with b:html_omni this way we need to sourca data file only

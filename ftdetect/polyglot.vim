@@ -31,6 +31,10 @@ autocmd BufNewFile,BufRead,StdinReadPost *
       \ if getline(1) =~ '^\(commit\|tree\|object\) \x\{40\}\>\|^tag \S\+$' |
       \   set ft=git |
       \ endif
+autocmd BufNewFile,BufRead *
+      \ if getline(1) =~ '^From \x\{40\} Mon Sep 17 00:00:00 2001$' |
+      \   set filetype=gitsendemail |
+      \ endif
 let s:current_fileformats = ''
 let s:current_fileencodings = ''
 function! s:gofiletype_pre()
@@ -99,6 +103,34 @@ if has("autocmd")
 endif
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
 au BufRead,BufNewFile *.cl set filetype=opencl
+function! s:DetectPerl6()
+  let line_no = 1
+  let eof     = line('$')
+  let in_pod  = 0
+  while line_no <= eof
+    let line    = getline(line_no)
+    let line_no = line_no + 1
+    if line =~ '^=\w'
+      let in_pod = 1
+    elseif line =~ '^=\%(end\|cut\)'
+      let in_pod = 0
+    elseif !in_pod
+      let line = substitute(line, '#.*', '', '')
+      if line =~ '^\s*$'
+        continue
+      endif
+      if line =~ '^\s*\%(use\s\+\)\=v6\%(\.\d\%(\.\d\)\=\)\=;'
+        set filetype=perl6 " we matched a 'use v6' declaration
+      elseif line =~ '^\s*\%(\%(my\|our\)\s\+\)\=\(module\|class\|role\|enum\|grammar\)'
+        set filetype=perl6 " we found a class, role, module, enum, or grammar declaration
+      endif
+      break " we either found what we needed, or we found a non-POD, non-comment,
+            " non-Perl 6 indicating line, so bail out
+    endif
+  endwhile
+endfunction
+autocmd BufReadPost *.pl,*.pm,*.t call s:DetectPerl6()
+autocmd BufNew,BufRead *.nqp setf perl6
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au! BufRead,BufNewFile *.pp setfiletype puppet
 function! s:setf(filetype) abort
@@ -113,7 +145,7 @@ au BufNewFile,BufRead [rR]antfile,*.rant	call s:setf('ruby')
 au BufNewFile,BufRead .irbrc,irbrc		call s:setf('ruby')
 au BufNewFile,BufRead .pryrc			call s:setf('ruby')
 au BufNewFile,BufRead *.ru			call s:setf('ruby')
-au BufNewFile,BufRead Capfile			call s:setf('ruby')
+au BufNewFile,BufRead Capfile,*.cap 		call s:setf('ruby')
 au BufNewFile,BufRead Gemfile			call s:setf('ruby')
 au BufNewFile,BufRead Guardfile,.Guardfile	call s:setf('ruby')
 au BufNewFile,BufRead Cheffile			call s:setf('ruby')

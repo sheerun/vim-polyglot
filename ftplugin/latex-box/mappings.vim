@@ -27,6 +27,12 @@ map <silent> <buffer> <LocalLeader>lt :LatexTOC<CR>
 map <silent> <buffer> <LocalLeader>lj :LatexLabels<CR>
 " }}}
 
+" Folding {{{
+if g:LatexBox_Folding == 1
+	map <buffer> <LocalLeader>lf :LatexFold<CR>
+endif
+" }}}
+
 " Jump to match {{{
 if !exists('g:LatexBox_loaded_matchparen')
 	nmap <buffer> % <Plug>LatexBox_JumpToMatch

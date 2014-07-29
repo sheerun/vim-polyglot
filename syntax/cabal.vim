@@ -116,7 +116,7 @@ syn match cabalOperator '\W\@<=impl\((.\+)\)\@='
 syn match cabalOperator '\W\@<=flag\((.\+)\)\@='
 syn match cabalOperator '\(^\s*--.*\)\@<!\(<\|>\|=\|||\|&&\)'
 
-syn match cabalComment '\s\@<=--.*$'
+syn match cabalComment '--.*$' contains=@Spell
 
 if version >= 508 || !exists('did_cabal_syntax_inits')
   if version < 508

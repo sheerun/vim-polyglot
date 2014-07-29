@@ -26,8 +26,8 @@ syn match  hsFloat            "\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
 " This case matches the names of types and constructors: names beginning with
 " a capital letter.  Note that this also handles the case of @M.lookup@ where
 " M is a qualified import.  There is a big negative lookbehind assertion here
-" so that we don't highlight import and module statements oddly. 
-syn match hsTypeName "\(^import\s.*\|^module\s.*\)\@<!\([^a-zA-Z0-9]\)\@<=[A-Z][a-zA-Z0-9_]*"
+" so that we don't highlight import and module statements oddly.
+syn match hsTypeName "\(^import\s.*\|^module\s.*\)\@<!\(^\|[^a-zA-Z0-9]\)\@<=[A-Z][a-zA-Z0-9_]*"
 " Also make unit and the empty list easy to spot - they are constructors too.
 syn match hsTypeName "()"
 syn match hsTypeName "\[\]"
@@ -37,24 +37,26 @@ syn keyword hsFIXME contained FIXME TODO XXX BUG NOTE
 
 " Comment stuff
 syn region hsPragma start='{-#' end='#-}'
-syn region hsBlockComment start='{-' end='-}' fold contains=hsFIXME,hsBlockComment
+syn region hsBlockComment start='{-' end='-}' fold contains=hsFIXME,hsBlockComment,@Spell
 " FIXME: haddock block comments should be able to contain hsBlockComments, but
 " it doesn't seem to work at the moment.
-syn region hsHaddockComment start='{-|' end='-}' contains=hsFIXME
-syn match hsLineComment "--.*$" contains=hsFIXME
+syn region hsHaddockComment start='{-|' end='-}' contains=hsFIXME,@Spell
+syn match hsLineComment "--.*$" contains=hsFIXME,@Spell
 " Line-based haddock comments are trickier - they continue until
 " the next line that isn't part of the same block of comments.
-syn region hsHaddockComment start='-- |' end='^\(\s*--\)\@!' contains=hsFIXME
-syn region hsHaddockComment start='-- \$\w\+' end='^\(\s*--\)\@!' contains=hsFIXME
-syn region hsHaddockComment start='-- ^' end='^\(\s*--\)\@!' contains=hsFIXME
+syn region hsHaddockComment start='-- |' end='^\(\s*--\)\@!' contains=hsFIXME,@Spell
+syn region hsHaddockComment start='-- \$\w\+' end='^\(\s*--\)\@!' contains=hsFIXME,@Spell
+syn region hsHaddockComment start='-- ^' end='^\(\s*--\)\@!' contains=hsFIXME,@Spell
 " Haddock sections for import lists
 syn match hsHaddockSection '-- \*.*$'
 " Named documentation chunks (also for import lists)
 syn match hsHaddockSection '-- \$.*$'
+" Treat a shebang line at the start of the file as a comment
+syn match hsLineComment "\%^\#\!.*$"
 
 
 " Keywords appearing in expressions, plus a few top-level keywords
-syn keyword hsKeyword do let in _ where
+syn keyword hsKeyword do mdo let in _ where
 syn keyword hsKeyword infix infixl infixr
 syn keyword hsKeyword forall foreign
 syn match hsKeyword '\(^\(data\|type\)\s\+\)\@<=family\(\W\)\@='
@@ -68,21 +70,19 @@ syn keyword hsConditional case of if then else
 " headers (-- *) can be highlighted specially only within this context.
 syn region hsModuleHeader start="^module\s" end="where" contains=hsHaddockSection keepend fold transparent
 " Treat Module imports as the #include category; it maps reasonably well
-syn keyword hsImport import qualified as hiding module
+syn keyword hsImport import module
+" Treat 'qualified', 'as', and 'hiding' as keywords when following 'import'
+syn match hsImport '\(\<import\>.*\)\@<=\<\(qualified\|as\|hiding\)\>'
 
 syn keyword hsTypeDecls class instance data newtype type deriving default
 " FIXME: Maybe we can do something fancy for data/type families?  'family' is
 " only a keyword if it follows data/type...
 
-" This is uglier than I'd like.  We want to let '-' participate in operators,
-" but we can't let it match '--' because that interferes with comments.  Hacks
-" for now - just include some common operators with '-'.
-syn match hsOperator "<-\|->\|-->\|-\(-\)\@!\|[%\~\&\*/\$\^|@:+<!>=#!\?]\+"
-" A bare . is an operator (but not surrounded by alnum chars)
-syn match hsOperator "\s\@<=\.\s\@="
-" . is also an operator if adjacent to some other operator char
-syn match hsOperator "[%\~\&\*\$\^|@:+<!>=#!\?]\+\.[%\~\&\*\$\^|@:+<\.!>=#!\?]*"
-syn match hsOperator "[%\~\&\*\$\^|@:+<!>=#!\?]*\.[%\~\&\*\$\^|@:+\.<!>=#!\?]\+"
+" We want to let '-' participate in operators, but we can't let it match
+" '--', '---', etc. because it interferes with comments. The same goes for
+" '#!' at the start of a file. Also, the dot (.) is an operator character,
+" but not when it comes immediately after a module name.
+syn match hsOperator "\(\%^\#\!\)\@!\(\(\<[A-Z]\w*\)\@64<=\.\)\@!\(--\+\([^.%\~\&\*/\$\^|@:+<!>=#!\?]\|$\)\)\@![-.%\~\&\*/\$\^|@:+<!>=#!\?]\+"
 " Include support for infix functions as operators
 syn match hsOperator "`[a-zA-Z0-9\.]\+`"
 
@@ -90,11 +90,11 @@ syn match hsOperator "`[a-zA-Z0-9\.]\+`"
 " after a name.  This allows whitespace before the name so that it can match
 " in a 'where,' but it won't match local type annotations on random little
 " things.
-syn match hsFunctionList "^\s*\([a-z][a-zA-Z0-9']*[[:space:]\n,]\+\)*[a-z][a-zA-Z0-9']*[[:space:]\n]*::" contains=hsFunction
-syn match hsFunction "\s*[a-z][a-zA-Z0-9']*[[:space:]\n]*\(::\|,\)\@=" contained
+syn match hsFunctionList "^\s*\(\<\(where\>\|let\>\)\@![a-z][a-zA-Z0-9']*[[:space:]\n,]\+\)*[a-z][a-zA-Z0-9']*[[:space:]\n]*::" contains=hsFunction
+syn match hsFunction "\s*[a-z][a-zA-Z0-9']*\([[:space:]\n]*\(::\|,\)\)\@=" contained
 " Also support the style where the first where binding is on the same line as
 " the where keyword.
-syn match hsFunction "\(^\s\+where\s\+\)\@<=[a-z][a-zA-Z0-9']*\(\s*::\)\@="
+syn match hsFunction "\(\<\(where\|let\)\s\+\([a-z][a-zA-Z0-9']*\s*,\s*\)*\)\@<=[a-z][a-zA-Z0-9']*\(\s*\(,\s*[a-z][a-zA-Z0-9']*\s*\)*::\)\@="
 
 " FIXME Ignoring proc for now, also mdo and rec
 

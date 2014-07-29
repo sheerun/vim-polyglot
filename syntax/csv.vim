@@ -113,9 +113,9 @@ fu! <sid>DoHighlight() "{{{3
 		    \. s:col . '/ contains=CSVDelimiter'
     else
 	for i in range(len(b:csv_fixed_width_cols))
-	    let pat = '/\%' . b:csv_fixed_width_cols[i] . 'c.*' .
+	    let pat = '/\%' . b:csv_fixed_width_cols[i] . 'v.*' .
 			\ ((i == len(b:csv_fixed_width_cols)-1) ? '/' : 
-			\ '\%' . b:csv_fixed_width_cols[i+1] . 'c/')
+			\ '\%' . b:csv_fixed_width_cols[i+1] . 'v/')
 
 	    let group  = "CSVColumn" . (i%2 ? "Odd"  : "Even" )
 	    let ngroup = "CSVColumn" . (i%2 ? "Even" : "Odd"  )
