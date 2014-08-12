@@ -67,6 +67,7 @@ concat_ftdetect() {
 
 PACKS="
   arduino:sudar/vim-arduino-syntax
+  blade:xsbeats/vim-blade
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/cpp-vim
   c-extensions:kergoth/aftersyntaxc.vim

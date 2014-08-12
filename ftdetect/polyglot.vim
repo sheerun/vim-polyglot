@@ -1,4 +1,5 @@
 au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
+autocmd BufRead,BufNewFile *.blade.php set filetype=blade
 autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn setlocal filetype=clojure
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufNewFile,BufRead *Cakefile set filetype=coffee
