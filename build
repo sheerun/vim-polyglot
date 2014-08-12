@@ -73,6 +73,7 @@ PACKS="
   c-extensions:kergoth/aftersyntaxc.vim
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
+  css:JulesWang/css.vim
   csv:chrisbra/csv.vim
   cucumber:tpope/vim-cucumber
   dockerfile:honza/dockerfile.vim
