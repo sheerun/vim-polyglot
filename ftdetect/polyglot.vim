@@ -161,6 +161,7 @@ au BufRead,BufNewFile * call s:DetectScala()
 autocmd BufNewFile,BufRead *.slim set filetype=slim
 autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
+autocmd BufNewFile,BufRead *.swift set filetype=swift
 au BufNewFile,BufRead *.automount set filetype=systemd
 au BufNewFile,BufRead *.mount     set filetype=systemd
 au BufNewFile,BufRead *.path      set filetype=systemd
