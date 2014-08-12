@@ -3,6 +3,7 @@
 set -E
 
 DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
+DIRS_BASIC="syntax indent ftdetect after/syntax after/indent after/ftdetect"
 
 download() {
   for pack in $1; do
@@ -21,10 +22,11 @@ extract() {
     name="$(printf "$pack" | cut -d ':' -f 1)"
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
+    directories="DIRS$(printf "$pack" | cut -d ':' -f 3)"
     printf -- "- [$name](https://github.com/$path) ("
 
     subdirs=""
-    for subdir in $DIRS; do
+    for subdir in ${!directories}; do
       if [ -d "$dir/$subdir" ]; then
         base="$(basename "$subdir")"
         if [[ "$subdirs" != *"$base"* ]]; then
@@ -82,7 +84,7 @@ PACKS="
   emblem:heartsentwined/vim-emblem
   erlang:oscarh/vimerl
   git:tpope/vim-git
-  go:jnwhiteh/vim-golang
+  go:fatih/vim-go:_BASIC
   haml:tpope/vim-haml
   handlebars:mustache/vim-mustache-handlebars
   haskell:travitch/hasksyn
