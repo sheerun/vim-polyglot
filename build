@@ -77,6 +77,7 @@ PACKS="
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
   emberscript:heartsentwined/vim-ember-script
+  emblem:heartsentwined/vim-emblem
   erlang:oscarh/vimerl
   git:tpope/vim-git
   go:jnwhiteh/vim-golang
