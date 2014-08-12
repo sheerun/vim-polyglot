@@ -85,6 +85,10 @@ if !exists("main_syntax")
   let main_syntax = 'php'
 endif
 
+" Save the 'iskeyword' setting before including the HTML syntax.
+" See https://github.com/pangloss/vim-javascript/issues/153
+let s:iskeyword_save = &iskeyword
+
 if !exists("php_html_load")
   let php_html_load=1
 endif
@@ -815,6 +819,9 @@ endif
 
 delcommand SynFold
 let b:current_syntax = "php"
+
+let &iskeyword = s:iskeyword_save
+unlet s:iskeyword_save
 
 if main_syntax == 'php'
   unlet main_syntax

@@ -8,5 +8,6 @@ if exists("b:did_ftplugin")
 endif
 
 runtime! ftplugin/sass.vim
+setlocal comments=s1:/*,mb:*,ex:*/,://
 
 " vim:set sw=2:

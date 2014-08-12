@@ -35,21 +35,6 @@ autocmd BufNewFile,BufRead *
       \ if getline(1) =~ '^From \x\{40\} Mon Sep 17 00:00:00 2001$' |
       \   set filetype=gitsendemail |
       \ endif
-let s:current_fileformats = ''
-let s:current_fileencodings = ''
-function! s:gofiletype_pre()
-  let s:current_fileformats = &g:fileformats
-  let s:current_fileencodings = &g:fileencodings
-  set fileencodings=utf-8 fileformats=unix
-  setlocal filetype=go
-endfunction
-function! s:gofiletype_post()
-  let &g:fileformats = s:current_fileformats
-  let &g:fileencodings = s:current_fileencodings
-endfunction
-au BufNewFile *.go setlocal filetype=go fileencoding=utf-8 fileformat=unix
-au BufRead *.go call s:gofiletype_pre()
-au BufReadPost *.go call s:gofiletype_post()
 autocmd BufNewFile,BufRead *.haml,*.hamlbars,*.hamlc setf haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
@@ -133,6 +118,7 @@ autocmd BufReadPost *.pl,*.pm,*.t call s:DetectPerl6()
 autocmd BufNew,BufRead *.nqp setf perl6
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au! BufRead,BufNewFile *.pp setfiletype puppet
+au! BufRead,BufNewFile Puppetfile setfiletype ruby
 function! s:setf(filetype) abort
   if &filetype !=# a:filetype
     let &filetype = a:filetype
