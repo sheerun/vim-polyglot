@@ -56,7 +56,7 @@ syn match hsLineComment "\%^\#\!.*$"
 
 
 " Keywords appearing in expressions, plus a few top-level keywords
-syn keyword hsKeyword do mdo let in _ where
+syn keyword hsKeyword do mdo let in _ where proc
 syn keyword hsKeyword infix infixl infixr
 syn keyword hsKeyword forall foreign
 syn match hsKeyword '\(^\(data\|type\)\s\+\)\@<=family\(\W\)\@='
