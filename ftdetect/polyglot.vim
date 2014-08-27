@@ -14,6 +14,8 @@ autocmd BufNewFile,BufRead * call s:DetectCoffee()
 au BufRead,BufNewFile *.csv,*.dat,*.tsv,*.tab set filetype=csv
 autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber
 au BufNewFile,BufRead Dockerfile set filetype=dockerfile
+au BufRead,BufNewFile *.eex set filetype=eelixir
+au FileType eelixir setl sw=2 sts=2 et iskeyword+=!,?
 au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
 au FileType elixir setl sw=2 sts=2 et iskeyword+=!,?
 autocmd BufNewFile,BufRead *.em set filetype=ember-script

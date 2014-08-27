@@ -3,7 +3,7 @@
 "
 " {{{ BLOCK: Last-modified
 
-" Thu, 10 Jul 2014 06:50:23 +0000, PHP 5.6.0RC2
+" Thu, 14 Aug 2014 09:05:56 +0000, PHP 5.6.0RC2
 
 " }}}
 "
@@ -182,7 +182,7 @@ endif
 syn case match
 if index(g:php_syntax_extensions_enabled, "core") >= 0 && index(g:php_syntax_extensions_disabled, "core") < 0 && ( ! exists("b:php_syntax_extensions_enabled") || index(b:php_syntax_extensions_enabled, "core") >= 0) && ( ! exists("b:php_syntax_extensions_disabled") || index(b:php_syntax_extensions_disabled, "core") < 0)
 " Core constants
-syn keyword phpConstants DEBUG_BACKTRACE_IGNORE_ARGS DEBUG_BACKTRACE_PROVIDE_OBJECT DEFAULT_INCLUDE_PATH E_ALL E_COMPILE_ERROR E_COMPILE_WARNING E_CORE_ERROR E_CORE_WARNING E_DEPRECATED E_ERROR E_NOTICE E_PARSE E_RECOVERABLE_ERROR E_STRICT E_USER_DEPRECATED E_USER_ERROR E_USER_NOTICE E_USER_WARNING E_WARNING FALSE NULL PEAR_EXTENSION_DIR PEAR_INSTALL_DIR PHP_BINARY PHP_BINDIR PHP_CONFIG_FILE_PATH PHP_CONFIG_FILE_SCAN_DIR PHP_DATADIR PHP_DEBUG PHP_EOL PHP_EXTENSION_DIR PHP_EXTRA_VERSION PHP_INT_MAX PHP_INT_SIZE PHP_LIBDIR PHP_LOCALSTATEDIR PHP_MAJOR_VERSION PHP_MANDIR PHP_MAXPATHLEN PHP_MINOR_VERSION PHP_OS PHP_OUTPUT_HANDLER_CLEAN PHP_OUTPUT_HANDLER_CLEANABLE PHP_OUTPUT_HANDLER_CONT PHP_OUTPUT_HANDLER_DISABLED PHP_OUTPUT_HANDLER_END PHP_OUTPUT_HANDLER_FINAL PHP_OUTPUT_HANDLER_FLUSH PHP_OUTPUT_HANDLER_FLUSHABLE PHP_OUTPUT_HANDLER_REMOVABLE PHP_OUTPUT_HANDLER_START PHP_OUTPUT_HANDLER_STARTED PHP_OUTPUT_HANDLER_STDFLAGS PHP_OUTPUT_HANDLER_WRITE PHP_PREFIX PHP_RELEASE_VERSION PHP_SAPI PHP_SHLIB_SUFFIX PHP_SYSCONFDIR PHP_VERSION PHP_VERSION_ID PHP_ZTS STDERR STDIN STDOUT TRUE UPLOAD_ERR_CANT_WRITE UPLOAD_ERR_EXTENSION UPLOAD_ERR_FORM_SIZE UPLOAD_ERR_INI_SIZE UPLOAD_ERR_NO_FILE UPLOAD_ERR_NO_TMP_DIR UPLOAD_ERR_OK UPLOAD_ERR_PARTIAL ZEND_DEBUG_BUILD ZEND_THREAD_SAFE contained
+syn keyword phpConstants DEBUG_BACKTRACE_IGNORE_ARGS DEBUG_BACKTRACE_PROVIDE_OBJECT DEFAULT_INCLUDE_PATH E_ALL E_COMPILE_ERROR E_COMPILE_WARNING E_CORE_ERROR E_CORE_WARNING E_DEPRECATED E_ERROR E_NOTICE E_PARSE E_RECOVERABLE_ERROR E_STRICT E_USER_DEPRECATED E_USER_ERROR E_USER_NOTICE E_USER_WARNING E_WARNING PEAR_EXTENSION_DIR PEAR_INSTALL_DIR PHP_BINARY PHP_BINDIR PHP_CONFIG_FILE_PATH PHP_CONFIG_FILE_SCAN_DIR PHP_DATADIR PHP_DEBUG PHP_EOL PHP_EXTENSION_DIR PHP_EXTRA_VERSION PHP_INT_MAX PHP_INT_SIZE PHP_LIBDIR PHP_LOCALSTATEDIR PHP_MAJOR_VERSION PHP_MANDIR PHP_MAXPATHLEN PHP_MINOR_VERSION PHP_OS PHP_OUTPUT_HANDLER_CLEAN PHP_OUTPUT_HANDLER_CLEANABLE PHP_OUTPUT_HANDLER_CONT PHP_OUTPUT_HANDLER_DISABLED PHP_OUTPUT_HANDLER_END PHP_OUTPUT_HANDLER_FINAL PHP_OUTPUT_HANDLER_FLUSH PHP_OUTPUT_HANDLER_FLUSHABLE PHP_OUTPUT_HANDLER_REMOVABLE PHP_OUTPUT_HANDLER_START PHP_OUTPUT_HANDLER_STARTED PHP_OUTPUT_HANDLER_STDFLAGS PHP_OUTPUT_HANDLER_WRITE PHP_PREFIX PHP_RELEASE_VERSION PHP_SAPI PHP_SHLIB_SUFFIX PHP_SYSCONFDIR PHP_VERSION PHP_VERSION_ID PHP_ZTS STDERR STDIN STDOUT UPLOAD_ERR_CANT_WRITE UPLOAD_ERR_EXTENSION UPLOAD_ERR_FORM_SIZE UPLOAD_ERR_INI_SIZE UPLOAD_ERR_NO_FILE UPLOAD_ERR_NO_TMP_DIR UPLOAD_ERR_OK UPLOAD_ERR_PARTIAL ZEND_DEBUG_BUILD ZEND_THREAD_SAFE contained
 endif
 if index(g:php_syntax_extensions_enabled, "curl") >= 0 && index(g:php_syntax_extensions_disabled, "curl") < 0 && ( ! exists("b:php_syntax_extensions_enabled") || index(b:php_syntax_extensions_enabled, "curl") >= 0) && ( ! exists("b:php_syntax_extensions_disabled") || index(b:php_syntax_extensions_disabled, "curl") < 0)
 " curl constants
@@ -586,7 +586,7 @@ if !exists("php_ignore_phpdoc") || !php_ignore_phpdoc
   syn region phpCommentTitle contained matchgroup=phpDocComment start="/\*\*" matchgroup=phpCommmentTitle keepend end="\.$" end="\.[ \t\r<&]"me=e-1 end="[^{]@"me=s-2,he=s-1 end="\*/"me=s-1,he=s-1 contains=phpCommentStar,phpTodo,phpDocTags,@Spell containedin=phpDocComment
 
   syn region phpDocTags  start="{@\(example\|id\|internal\|inheritdoc\|link\|source\|toc\|tutorial\)" end="}" containedin=phpDocComment
-  syn match phpDocTags "@\%(abstract\|access\|author\|category\|copyright\|deprecated\|example\|exception\|filesource\|final\|global\|id\|ignore\|inheritdoc\|internal\|license\|link\|magic\|method\|name\|package\|param\|property\|return\|see\|since\|source\|static\|staticvar\|subpackage\|throws\|toc\|todo\|tutorial\|uses\|var\|version\)" containedin=phpDocComment nextgroup=phpDocParam,phpDocIdentifier skipwhite
+  syn match phpDocTags "@\%(abstract\|access\|api\|author\|brief\|bug\|category\|class\|copyright\|created\|date\|deprecated\|details\|example\|exception\|file\|filesource\|final\|global\|id\|ignore\|inheritdoc\|internal\|license\|link\|magic\|method\|name\|package\|param\|property\|return\|see\|since\|source\|static\|staticvar\|struct\|subpackage\|throws\|toc\|todo\|tutorial\|type\|uses\|var\|version\|warning\)" containedin=phpDocComment nextgroup=phpDocParam,phpDocIdentifier skipwhite
   syn match phpDocParam "\s\+\zs\%(\h\w*|\?\)\+" nextgroup=phpDocIdentifier skipwhite
   syn match phpDocIdentifier "\s\+\zs$\h\w*"
 

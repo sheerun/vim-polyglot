@@ -1,3 +1,4 @@
+setlocal formatoptions+=ro
 setlocal commentstring=//%s
 let &l:include = '^\s*import'
 let &l:includeexpr = 'substitute(v:fname,"\\.","/","g")'
