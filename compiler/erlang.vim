@@ -1,80 +1,114 @@
-" Erlang compiler file
-" Language:   Erlang
-" Maintainer: Pawel 'kTT' Salata <rockplayer.pl@gmail.com>
-" URL:        http://ktototaki.info
+" Vim compiler file
+" Language:     Erlang
+" Author:       Pawel 'kTT' Salata <rockplayer.pl@gmail.com>
+" Contributors: Ricardo Catalinas Jiménez <jimenezrick@gmail.com>
+" License:      Vim license
+" Version:      2013/03/06
 
-if exists("current_compiler")
-    finish
+if exists("current_compiler") || v:version < 703
+	finish
+else
+	let current_compiler = "erlang"
 endif
-let current_compiler = "erlang"
+
+let b:error_list     = {}
+let b:is_showing_msg = 0
+let b:next_sign_id   = 1
 
 if exists(":CompilerSet") != 2
-    command -nargs=* CompilerSet setlocal <args>
+	command -nargs=* CompilerSet setlocal <args>
 endif
 
-if !exists('g:erlangCheckFile')
-    let g:erlangCheckFile = "~/.vim/compiler/erlang_check_file.erl"
+CompilerSet makeprg=make
+CompilerSet errorformat=%f:%l:\ %tarning:\ %m,%f:%l:\ %m
+
+" Only define functions and script scope variables once
+if exists("*s:ShowErrors")
+	finish
 endif
 
-if !exists('g:erlangHighlightErrors')
-    let g:erlangHighlightErrors = 0
+if !exists("g:erlang_show_errors")
+	let g:erlang_show_errors = 1
 endif
 
-let b:error_list = {}
-let b:is_showing_msg = 0
+let s:erlang_check_file = expand("<sfile>:p:h") . "/erlang_check.erl"
+let s:autocmds_defined  = 0
 
-function! HighlightErlangErrors()
-    if match(getline(1), "#!.*escript") != -1
-        setlocal makeprg=escript\ -s\ %
-    else
-        execute "setlocal makeprg=" . g:erlangCheckFile . "\\ \%"
-    endif
-    silent make!
-    call s:clear_matches()
-    for error in getqflist()
-        let item = {}
-        let item['lnum'] = error.lnum
-        let item['msg'] = error.text
-        let b:error_list[error.lnum] = item
-        call matchadd('SpellBad', "\\%" . error.lnum . "l")
-    endfor
-    if len(getqflist())
-        redraw!
-    endif
-    call s:show_msg()
-    setlocal makeprg=erlc\ %
+sign define ErlangError   text=>> texthl=Error
+sign define ErlangWarning text=>> texthl=Todo
+
+command ErlangDisableShowErrors silent call s:DisableShowErrors()
+command ErlangEnableShowErrors  silent call s:EnableShowErrors()
+
+function s:ShowErrors()
+	setlocal shellpipe=>
+	if match(getline(1), "#!.*escript") != -1
+		setlocal makeprg=escript\ -s\ %
+	else
+		execute "setlocal makeprg=" . s:erlang_check_file . "\\ \%"
+	endif
+	silent make!
+	for error in getqflist()
+		if error.lnum == 0
+			continue
+		endif
+		let item         = {}
+		let item["lnum"] = error.lnum
+		let item["text"] = error.text
+		let b:error_list[error.lnum] = item
+		let type = error.type == "W" ? "ErlangWarning" : "ErlangError"
+		execute "sign place" b:next_sign_id "line=" . item.lnum "name=" . type "file=" . expand("%:p")
+		let b:next_sign_id += 1
+	endfor
+	setlocal shellpipe&
+	setlocal makeprg=make
 endfunction
 
-function! s:show_msg()
-    let pos = getpos(".")
-    if has_key(b:error_list, pos[1])
-        let item = get(b:error_list, pos[1])
-        echo item.msg
-        let b:is_showing_msg = 1
-    else
-        if exists("b:is_showing_msg") && b:is_showing_msg == 1
-            echo
-            let b:is_showing_msg = 0
-        endif
-    endif
+function s:ShowErrorMsg()
+	let pos = getpos(".")
+	if has_key(b:error_list, pos[1])
+		let item = get(b:error_list, pos[1])
+		echo item.text
+		let b:is_showing_msg = 1
+	else
+		if b:is_showing_msg
+			echo
+			let b:is_showing_msg = 0
+		endif
+	endif
 endf
 
-function! s:clear_matches()
-    call clearmatches()
-    let b:error_list = {}
-    if exists("b:is_showing_msg") && b:is_showing_msg == 1
-        echo
-        let b:is_showing_msg = 0
-    endif
+function s:ClearErrors()
+	sign unplace *
+	let b:error_list   = {}
+	let b:next_sign_id = 1
+	if b:is_showing_msg
+		echo
+		let b:is_showing_msg = 0
+	endif
 endfunction
 
-CompilerSet makeprg=erlc\ %
-CompilerSet errorformat=%f:%l:\ %tarning:\ %m,%E%f:%l:\ %m
+function s:EnableShowErrors()
+	if !s:autocmds_defined
+		augroup vimerl
+			autocmd!
+			autocmd BufWritePre  *.erl call s:ClearErrors()
+			autocmd BufWritePost *.erl call s:ShowErrors()
+			autocmd CursorHold   *.erl call s:ShowErrorMsg()
+			autocmd CursorMoved  *.erl call s:ShowErrorMsg()
+		augroup END
+		let s:autocmds_defined = 1
+	endif
+endfunction
 
-if g:erlangHighlightErrors
-    autocmd BufLeave *.erl call s:clear_matches()
-    autocmd BufEnter *.erl call s:clear_matches()
-    autocmd BufWritePost *.erl call HighlightErlangErrors()
-    autocmd CursorHold *.erl call s:show_msg()
-    autocmd CursorMoved *.erl call s:show_msg()
+function s:DisableShowErrors()
+	sign unplace *
+	augroup vimerl
+		autocmd!
+	augroup END
+	let s:autocmds_defined = 0
+endfunction
+
+if g:erlang_show_errors
+	call s:EnableShowErrors()
 endif
