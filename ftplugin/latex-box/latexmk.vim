@@ -23,6 +23,9 @@ endif
 if ! exists('g:LatexBox_quickfix')
 	let g:LatexBox_quickfix = 1
 endif
+if ! exists('g:LatexBox_personal_latexmkrc')
+	let g:LatexBox_personal_latexmkrc = 0
+endif
 
 " }}}
 
@@ -177,7 +180,9 @@ function! LatexBox_Latexmk(force)
 		let cmd = 'cd ' . texroot . ' && '
 	endif
 	let cmd .= env . ' latexmk'
-	let cmd .= ' -' . g:LatexBox_output_type
+	if ! g:LatexBox_personal_latexmkrc
+		let cmd .= ' -' . g:LatexBox_output_type
+	endif
 	let cmd .= ' -quiet '
 	let cmd .= g:LatexBox_latexmk_options
 	if a:force

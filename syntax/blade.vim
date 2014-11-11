@@ -1,35 +1,41 @@
-" Language:	    Blade (Laravel)
-" Maintainer:	xsbeats <jwalton512@gmail.com>
-" URL:	        http://github.com/xsbeats/vim-blade
-" License:      WTFPL
+" Language:     Blade
+" Maintainer:   Jason Walton <jwalton512@gmail.com>
+" URL:          https://github.com/xsbeats/vim-blade
+" License:      DBAD
 
-if exists("b:current_syntax")
+" Check if our syntax is already loaded
+if exists('b:current_syntax') && b:current_syntax == 'blade'
     finish
 endif
 
-runtime! syntax/html.vim
-unlet b:current_syntax
-
+" Include PHP
 runtime! syntax/php.vim
-unlet b:current_syntax
+silent! unlet b:current_syntax
 
-syn match bladeConditional /@\(choice\|each\|elseif\|extends\|for\|foreach\|if\|include\|lang\|section\|unless\|while\|yield\)\>\s*/ nextgroup=bladeParenBlock containedin=ALLBUT,bladeComment
+" Echos
+syn region bladeUnescapedEcho matchgroup=bladeEchoDelim start=/@\@<!\s*{!!/ end=/!!}\s*/ oneline contains=@phpClTop containedin=ALLBUT,bladeComment
+syn region bladeEscapedEcho matchgroup=bladeEchoDelim start=/@\@<!\s*{{{\@!/ end=/}}\s*/ oneline contains=@phpClTop containedin=ALLBUT,bladeComment
+syn region bladeEscapedEcho matchgroup=bladeEchoDelim start=/@\@<!\s*{{{{\@!/ end=/}}}/ oneline contains=@phpClTop containedin=ALLBUT,bladeComment
 
-syn match bladeKeyword /@\(else\|endfor\|endforeach\|endif\|endsection\|endunless\|endwhile\|overwrite\|parent\|show\|stop\)\>/ containedin=ALL,bladeComment
+" Structures
+syn match bladeStructure /\s*@\(else\|empty\|endfor\|endforeach\|endforelse\|endif\|endpush\|endsection\|endunless\|endwhile\|overwrite\|show\|stop\)\>/
+syn match bladeStructure /\s*@\(append\|choice\|each\|elseif\|extends\|for\|foreach\|forelse\|if\|include\|lang\|push\|section\|stack\|unless\|while\|yield\|\)\>\s*/ nextgroup=bladeParens
+syn region bladeParens matchgroup=bladeParen start=/(/ end=/)/ contained contains=@bladeAll,@phpClTop
 
-syn region bladeCommentBlock start="{{--" end="--}}" contains=bladeComment keepend containedin=TOP
-syn match bladeComment /.*/ contained containedin=bladeCommentBlock
+" Comments
+syn region bladeComments start=/\s*{{--/ end=/--}}/ contains=bladeComment keepend
+syn match bladeComment /.*/ contained containedin=bladeComments
 
-syn region bladeEchoUnescaped matchgroup=bladeEchoDelim start="\([@|{]\)\@<!{{\(--\)\@!" end="}}" contains=@phpClInside containedin=ALLBUT,bladeComment
-syn region bladeEchoEscaped matchgroup=bladeEchoDelim start="\(@\)\@<!{{{" end="}}}" contains=@phpClInside containedin=ALLBUT,bladeComment
+" Clusters
+syn cluster bladeAll contains=bladeStructure,bladeParens
 
-syn cluster bladeStatement contains=bladeConditional,bladeKeyword
+" Highlighting
+hi def link bladeComment        Comment
+hi def link bladeEchoDelim      Delimiter
+hi def link bladeParen          Delimiter
+hi def link bladeStructure      Keyword
 
-syn region bladeParenBlock start="(" end=")" contained oneline contains=bladeParenBlock,@phpClInside,@bladeStatement extend keepend
 
-hi def link bladeComment Comment
-hi def link bladeConditional Conditional
-hi def link bladeKeyword Keyword
-hi def link bladeEchoDelim Delimiter
-
-let b:current_syntax = 'blade'
+if !exists('b:current_syntax')
+    let b:current_syntax = 'blade'
+endif

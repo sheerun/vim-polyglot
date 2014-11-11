@@ -367,6 +367,7 @@ function! s:ExtractLabels()
 
 		" Ignore cref entries (because they are duplicates)
 		if curname =~# "@cref$"
+		    let [lblline, lblbegin] = searchpos( '\\newlabel{', 'ecW' )
 			continue
 		endif
 

@@ -11,7 +11,8 @@ let b:did_indent = 1
 setlocal nosmartindent
 
 setlocal indentexpr=GetElixirIndent()
-setlocal indentkeys+==end,=else:,=match:,=elsif:,=catch:,=after:,=rescue:
+setlocal indentkeys+=0=end,0=else,0=match,0=elsif,0=catch,0=after,0=rescue
+setlocal indentkeys+==->
 
 if exists("*GetElixirIndent")
   finish

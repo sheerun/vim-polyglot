@@ -30,7 +30,7 @@ hi link shebang Comment
 "" typeScript comments"{{{
 syn keyword typeScriptCommentTodo TODO FIXME XXX TBD contained
 syn match typeScriptLineComment "\/\/.*" contains=@Spell,typeScriptCommentTodo,typeScriptRef
-syn match typeScriptRef /\/\/\/\s*<reference\s\+.*\/>$/ contains=typeScriptRefD,typeScriptRefS
+syn match typeScriptRef /\/\/\/<reference\s\+.*\/>$/ contains=typeScriptRefD,typeScriptRefS
 syn region typeScriptRefD start=+"+ skip=+\\\\\|\\"+ end=+"\|$+
 syn region typeScriptRefS start=+'+ skip=+\\\\\|\\'+ end=+'\|$+
 
@@ -116,7 +116,7 @@ syntax keyword typeScriptGlobalObjects Array Boolean Date Function Infinity Math
 
 syntax keyword typeScriptExceptions try catch throw finally Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 
-syntax keyword typeScriptReserved constructor declare as interface module abstract enum int short boolean export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public
+syntax keyword typeScriptReserved constructor declare as interface module abstract enum int short export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public
 "}}}
 "" TypeScript/DOM/HTML/CSS specified things"{{{
 
@@ -126,7 +126,7 @@ syntax keyword typeScriptReserved constructor declare as interface module abstra
   syn match typeScriptParameters "([a-zA-Z0-9_?.$][\w?.$]*)\s*:\s*([a-zA-Z0-9_?.$][\w?.$]*)" contained skipwhite
 "}}}
 " DOM2 Objects"{{{
-  syntax keyword typeScriptType DOMImplementation DocumentFragment Node NodeList NamedNodeMap CharacterData Attr Element Text Comment CDATASection DocumentType Notation Entity EntityReference ProcessingInstruction void any string bool number
+  syntax keyword typeScriptType DOMImplementation DocumentFragment Node NodeList NamedNodeMap CharacterData Attr Element Text Comment CDATASection DocumentType Notation Entity EntityReference ProcessingInstruction void any string boolean number
   syntax keyword typeScriptExceptions DOMException
 "}}}
 " DOM2 CONSTANT"{{{

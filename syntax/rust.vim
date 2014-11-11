@@ -27,14 +27,16 @@ syn keyword   rustKeyword     for in if impl let
 syn keyword   rustKeyword     loop once proc pub
 syn keyword   rustKeyword     return super
 syn keyword   rustKeyword     unsafe virtual where while
-syn keyword   rustKeyword     use nextgroup=rustModPath,rustModPathInUse skipwhite skipempty
+syn keyword   rustKeyword     use nextgroup=rustModPath skipwhite skipempty
 " FIXME: Scoped impl's name is also fallen in this category
 syn keyword   rustKeyword     mod trait struct enum type nextgroup=rustIdentifier skipwhite skipempty
 syn keyword   rustStorage     mut ref static const
 
 syn keyword   rustInvalidBareKeyword crate
 
-syn keyword   rustExternCrate crate contained nextgroup=rustIdentifier skipwhite skipempty
+syn keyword   rustExternCrate crate contained nextgroup=rustIdentifier,rustExternCrateString skipwhite skipempty
+" This is to get the `bar` part of `extern crate "foo" as bar;` highlighting.
+syn match   rustExternCrateString /".*"\_s*as/ contained nextgroup=rustIdentifier skipwhite transparent skipempty contains=rustString,rustOperator
 syn keyword   rustObsoleteExternMod mod contained nextgroup=rustIdentifier skipwhite skipempty
 
 syn match     rustIdentifier  contains=rustIdentifierPrime "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
@@ -54,7 +56,7 @@ syn match rustMacroRepeatCount ".\?[*+]" contained
 syn match rustMacroVariable "$\w\+"
 
 " Reserved (but not yet used) keywords {{{2
-syn keyword   rustReservedKeyword alignof be do offsetof priv pure sizeof typeof unsized yield
+syn keyword   rustReservedKeyword alignof be do offsetof priv pure sizeof typeof unsized yield abstract final override
 
 " Built-in types {{{2
 syn keyword   rustType        int uint float char bool u8 u16 u32 u64 f32
@@ -91,7 +93,7 @@ syn keyword rustEnum Ordering
 syn keyword rustEnumVariant Less Equal Greater
 syn keyword rustTrait Collection Mutable Map MutableMap MutableSeq
 syn keyword rustTrait Set MutableSet
-syn keyword rustTrait FromIterator Extendable ExactSize
+syn keyword rustTrait FromIterator IntoIterator Extend ExactSize
 syn keyword rustTrait Iterator DoubleEndedIterator
 syn keyword rustTrait RandomAccessIterator CloneableIterator
 syn keyword rustTrait OrdIterator MutableDoubleEndedIterator
@@ -131,9 +133,7 @@ syn keyword   rustBoolean     true false
 " If foo::bar changes to foo.bar, change this ("::" to "\.").
 " If foo::bar changes to Foo::bar, change this (first "\w" to "\u").
 syn match     rustModPath     "\w\(\w\)*::[^<]"he=e-3,me=e-3
-syn match     rustModPathInUse "\w\(\w\)*" contained " only for 'use path;'
 syn match     rustModPathSep  "::"
-" rustModPathInUse is split out from rustModPath so that :syn-include can get the group list right.
 
 syn match     rustFuncCall    "\w\(\w\)*("he=e-1,me=e-1
 syn match     rustFuncCall    "\w\(\w\)*::<"he=e-3,me=e-3 " foo::<T>();
@@ -172,9 +172,10 @@ syn match     rustOctNumber   display "\<0o[0-7_]\+\%([iu]\%(8\|16\|32\|64\)\=\)
 syn match     rustBinNumber   display "\<0b[01_]\+\%([iu]\%(8\|16\|32\|64\)\=\)\="
 
 " Special case for numbers of the form "1." which are float literals, unless followed by
-" an identifier, which makes them integer literals with a method call or field access.
+" an identifier, which makes them integer literals with a method call or field access,
+" or by another ".", which makes them integer literals followed by the ".." token.
 " (This must go first so the others take precedence.)
-syn match     rustFloat       display "\<[0-9][0-9_]*\.\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\@!"
+syn match     rustFloat       display "\<[0-9][0-9_]*\.\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\|\.\)\@!"
 " To mark a number as a normal float, it must have at least one of the three things integral values don't have:
 " a decimal point and more numbers; an exponent; and a type suffix.
 syn match     rustFloat       display "\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\%([eE][+-]\=[0-9_]\+\)\=\(f32\|f64\)\="
@@ -216,7 +217,7 @@ syn keyword rustTodo contained TODO FIXME XXX NB NOTE
 
 " Folding rules {{{2
 " Trivial folding rules to begin with.
-" TODO: use the AST to make really good folding
+" FIXME: use the AST to make really good folding
 syn region rustFoldBraces start="{" end="}" transparent fold
 
 " Default highlighting {{{1
@@ -252,7 +253,6 @@ hi def link rustReservedKeyword Error
 hi def link rustConditional   Conditional
 hi def link rustIdentifier    Identifier
 hi def link rustCapsIdent     rustIdentifier
-hi def link rustModPathInUse  rustModPath
 hi def link rustModPath       Include
 hi def link rustModPathSep    Delimiter
 hi def link rustFunction      Function

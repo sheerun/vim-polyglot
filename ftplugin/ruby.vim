@@ -277,12 +277,12 @@ function! RubyBalloonexpr()
 endfunction
 
 function! s:searchsyn(pattern,syn,flags,mode)
+  let cnt = v:count1
   norm! m'
   if a:mode ==# 'v'
     norm! gv
   endif
   let i = 0
-  let cnt = v:count ? v:count : 1
   while i < cnt
     let i = i + 1
     let line = line('.')

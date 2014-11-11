@@ -7,8 +7,6 @@ if exists("b:current_syntax")
     finish
 endif
 
-let b:current_syntax = "dockerfile"
-
 syntax case ignore
 
 syntax match dockerfileKeyword /\v^\s*(FROM|MAINTAINER|RUN|CMD|EXPOSE|ENV|ADD)\s/
@@ -20,3 +18,14 @@ highlight link dockerfileString String
 
 syntax match dockerfileComment "\v^\s*#.*$"
 highlight link dockerfileComment Comment
+
+syntax include @DockerSh syntax/sh.vim
+try
+  syntax include @DockerSh after/syntax/sh.vim
+catch
+endtry
+
+syntax region dockerShSnip matchgroup=DockerShGroup start="^\s*\%(RUN\|CMD\)\s\+" end="$" contains=@DockerSh
+highlight link DockerShGroup dockerfileKeyword
+
+let b:current_syntax = "dockerfile"

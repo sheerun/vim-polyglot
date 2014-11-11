@@ -56,28 +56,28 @@ syn keyword clType              cl_image_format
 
 syn keyword clCast              vec_type_hint work_group_size_hint aligned packed endian
 
-syn match clCast                "as_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\)("
+syn match clCast                "as_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\)"
 
-syn match clCast                "as_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\)\(2\|3\|4\|8\|16\)("
+syn match clCast                "as_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\)\(2\|3\|4\|8\|16\)"
 
-syn match clCast                "convert_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\))\(2\|3\|4\|8\|16\)("
+syn match clCast                "convert_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\))\(2\|3\|4\|8\|16\)"
 
-syn match clCast                "convert_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\))\(2\|3\|4\|8\|16\)_sat("
+syn match clCast                "convert_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\))\(2\|3\|4\|8\|16\)_sat"
 
-syn match clCast                "convert_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\))\(2\|3\|4\|8\|16\)_sat_\(rte\|rtz\|rtp\|rtn\)("
+syn match clCast                "convert_\(uchar\|char\|ushort\|short\|uint\|int\|ulong\|long\|float\|double\))\(2\|3\|4\|8\|16\)_sat_\(rte\|rtz\|rtp\|rtn\)"
 
 " work item functions
 syn keyword clFunction          get_work_dim get_global_size get_global_id get_local_size get_local_id get_num_groups get_group_id get_global_offset
 
 " math functions
 syn keyword clFunction          cos cosh cospi acos acosh acospi
-syn keyword clFunction          sin sincos sinh sinpi asin asinh asinpi 
-syn keyword clFunction          tan tanh tanpi atan atan2 atanh atanpi atan2pi 
+syn keyword clFunction          sin sincos sinh sinpi asin asinh asinpi
+syn keyword clFunction          tan tanh tanpi atan atan2 atanh atanpi atan2pi
 syn keyword clFunction          cbrt ceil copysign
-syn keyword clFunction          erfc erf 
-syn keyword clFunction          exp exp2 exp10 expm1 
-syn keyword clFunction          fabs fdim floor fma fmax fmin 
-syn keyword clFunction          fract frexp hypot ilogb 
+syn keyword clFunction          erfc erf
+syn keyword clFunction          exp exp2 exp10 expm1
+syn keyword clFunction          fabs fdim floor fma fmax fmin
+syn keyword clFunction          fract frexp hypot ilogb
 syn keyword clFunction          ldexp ldexp lgamma lgamma_r
 syn keyword clFunction          log log2 log10 log1p logb
 syn keyword clFunction          mad modf
@@ -105,21 +105,21 @@ syn keyword clFunction          isequal isnotequal isgreater isgreaterequal isle
 
 " vector data load and store functions
 syn keyword clFunction          vload_half vstore_half
-syn match clFunction            "vload\(2\|3\|4\|8\|16\)("
-syn match clFunction            "vload_half\(2\|3\|4\|8\|16\)("
-syn match clFunction            "vloada_half\(2\|3\|4\|8\|16\)("
-syn match clFunction            "vloada_half\(2\|3\|4\|8\|16\)_\(rte\|rtz\|rtp\)("
-syn match clFunction            "vstore\(2\|3\|4\|8\|16\)("
-syn match clFunction            "vstore\(rte\|rtz\|rtp\|rtn\)("
-syn match clFunction            "vstore_half\(2\|3\|4\|8\|16\)("
-syn match clFunction            "vstore_half_\(rte\|rtz\|rtp\|rtn\)("
-syn match clFunction            "vstore_half\(2\|3\|4\|8\|16\)_\(rte\|rtz\|rtp\|rtn\)("
-syn match clFunction            "vstorea_half\(2\|3\|4\|8\|16\)("
-syn match clFunction            "vstorea_half\(2\|3\|4\|8\|16\)_\(rte\|rtz\|rtp\|rtn\)("
+syn match clFunction            "vload\(2\|3\|4\|8\|16\)"
+syn match clFunction            "vload_half\(2\|3\|4\|8\|16\)"
+syn match clFunction            "vloada_half\(2\|3\|4\|8\|16\)"
+syn match clFunction            "vloada_half\(2\|3\|4\|8\|16\)_\(rte\|rtz\|rtp\)"
+syn match clFunction            "vstore\(2\|3\|4\|8\|16\)"
+syn match clFunction            "vstore\(rte\|rtz\|rtp\|rtn\)"
+syn match clFunction            "vstore_half\(2\|3\|4\|8\|16\)"
+syn match clFunction            "vstore_half_\(rte\|rtz\|rtp\|rtn\)"
+syn match clFunction            "vstore_half\(2\|3\|4\|8\|16\)_\(rte\|rtz\|rtp\|rtn\)"
+syn match clFunction            "vstorea_half\(2\|3\|4\|8\|16\)"
+syn match clFunction            "vstorea_half\(2\|3\|4\|8\|16\)_\(rte\|rtz\|rtp\|rtn\)"
 
 " image read and write functions
-syn match clFunction            "read_image\(f\|i\|ui\|h\)("
-syn match clFunction            "write_image\(f\|i\|ui\|h\)("
+syn match clFunction            "read_image\(f\|i\|ui\|h\)"
+syn match clFunction            "write_image\(f\|i\|ui\|h\)"
 syn keyword clFunction          get_image_width get_image_height get_image_depth get_image_channel_data_type get_image_channel_order get_image_dim
 
 " explicit memory fence functions
@@ -129,15 +129,15 @@ syn keyword clFunction          barrier mem_fence read_mem_fence write_mem_fence
 syn keyword clFunction          async_work_group_copy async_work_group__strided_copy wait_group_events prefetch
 
 " atomic functions
-syn match clFunction            "atom_\(add\|sub\|xchg\|inc\|dec\|cmpxchg\|min\|max\|and\|or\|xor\)("
+syn match clFunction            "atom_\(add\|sub\|xchg\|inc\|dec\|cmpxchg\|min\|max\|and\|or\|xor\)"
 
 syn keyword clConstant          MAXFLOAT HUGE_VALF INFINITY NAN
 syn keyword clConstant          FLT_DIG FLT_MANT_DIG FLT_MAX_10_EXP FLT_MAX_EXP FLT_MIN_10_EXP FLT_MIN_EXP FLT_RADIX FLT_MAX FLT_MIN FLT_EPSILON
 syn keyword clConstant          CHAR_BIT CHAR_MAX CHAR_MIN INT_MIN INT_MAX LONG_MAX LONG_MIN SCHAR_MAX SCHAR_MIN SHRT_MAX SHRT_MIN UCHAR_MAX UCHAR_MIN UINT_MAX ULONG_MAX
 syn keyword clConstant          DBL_DIG DBL_MANT_DIG DBL_MAX_10_EXP DBL_MIN_10_EXP DBL_MIN_EXP DBL_MAX DBL_MIN DBL_EPSILON
-syn keyword clConstant          M_E M_LOG2E M_LOG10E M_LN2 M_LN10 M_PI M_PI2 M_PI4 M_1_PI M_2_PI M_2_SQRTPI M_SQRT2 M_SQRT1_2 
-syn keyword clConstant          CLK_NORMALIZED_COORDS_TRUE CLK_NORMALIZED_COORDS_FALSE 
-syn keyword clConstant          CLK_ADDRESS_REPEAT CLK_ADDRESS_CLAMP_TO_EDGE CLK_ADDRESS_CLAMP 
+syn keyword clConstant          M_E M_LOG2E M_LOG10E M_LN2 M_LN10 M_PI M_PI2 M_PI4 M_1_PI M_2_PI M_2_SQRTPI M_SQRT2 M_SQRT1_2
+syn keyword clConstant          CLK_NORMALIZED_COORDS_TRUE CLK_NORMALIZED_COORDS_FALSE
+syn keyword clConstant          CLK_ADDRESS_REPEAT CLK_ADDRESS_CLAMP_TO_EDGE CLK_ADDRESS_CLAMP
 syn keyword clConstant          CL_INTENSITY CL_RA CL_ARGB CL_BGRA CL_RGBA CL_R CL_RG CL_RGB CL_RGx CL_RGBx CL_Rx CL_A CL_LUMINANCE
 syn keyword clConstant          CL_SNORM_INT8 CL_SNORM_INT16 CL_UNORM_INT8 CL_UNORM_INT16 CL_UNORM_SHORT_565 CL_UNORM_SHORT_555 CL_UNORM_INT_101010 CL_SIGNED_INT8 CL_SIGNED_INT16 CL_SIGNED_INT32 CL_UNSIGNED_INT8 CL_UNSIGNED_INT16 CL_UNSIGNED_INT32 CL_HALF_FLOAT CL_FLOAT
 syn keyword clConstant          CLK_ADDRESS_NONE CLK_FILTER_NEAREST CLK_FILTER_LINEAR

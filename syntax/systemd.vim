@@ -46,6 +46,7 @@ syn match sdUnitKey contained /^Documentation=/ nextgroup=sdDocURI
 syn match sdUnitKey contained /^SourcePath=/ nextgroup=sdFilename,sdErr
 syn match sdUnitKey contained /^\%(Requires\|RequiresOverridable\|Requisite\|RequisiteOverridable\|Wants\|BindsTo\|PartOf\|Conflicts\|Before\|After\|OnFailure\|Names|PropagatesReloadTo\|ReloadPropagatedFrom\)=/ nextgroup=sdUnitList
 syn match sdUnitKey contained /^\%(OnFailureIsolate\|IgnoreOnIsolate\|IgnoreOnSnapshot\|StopWhenUnneeded\|RefuseManualStart\|RefuseManualStop\|AllowIsolate\|DefaultDependencies\)=/ nextgroup=sdBool,sdErr
+syn match sdUnitKey contained /^OnFailureJobMode=/ nextgroup=sdFailJobMode,sdErr
 syn match sdUnitKey contained /^JobTimeoutSec=/ nextgroup=sdDuration,sdErr
 " ConditionXXX. Note that they all have an optional '|' after the '='
 syn match sdUnitKey contained /^Condition\(PathExists\|PathExistsGlob\|PathIsDirectory\|PathIsMountPoint\|PathIsReadWrite\|PathIsSymbolicLink\|DirectoryNotEmpty\|FileNotEmpty\|FileIsExecutable\)=|\=!\=/ contains=sdConditionFlag nextgroup=sdFilename,sdErr
@@ -59,6 +60,7 @@ syn match sdUnitList       contained /.*/ contains=sdUnitName,sdErr
 syn match sdConditionFlag  contained /[!|]/
 syn keyword sdVirtType     contained nextgroup=sdErr vm container qemu kvm vmware microsoft oracle xen bochs chroot openvz lxc lxc-libvirt systemd-nspawn
 syn keyword sdSecurityType contained nextgroup=sdErr selinux
+syn keyword sdFailJobMode  contained nextgroup=sderr fail replace replace-irreversibly
 syn match sdDocUri         contained /\%(https\=:\/\/\|file:\|info:\|man:\)\S\+\s*/ nextgroup=sdDocUri,sdErr
 
 " [Install] {{{1
@@ -94,6 +96,7 @@ syn match sdExecKey contained /^IOSchedulingClass=/ nextgroup=sdIOSchedClass,sdE
 syn match sdExecKey contained /^IOSchedulingPriority=/ nextgroup=sdIOSchedPrio,sdErr
 syn match sdExecKey contained /^CPUSchedulingPolicy=/ nextgroup=sdCPUSchedPol,sdErr
 syn match sdExecKey contained /^MountFlags=/ nextgroup=sdMountFlags,sdErr
+syn match sdExecKey contained /^IgnoreSIGPIPE=/ nextgroup=sdBool,sdErr
 syn match sdExecKey contained /^Environment=/ nextgroup=sdEnvDefs
 syn match sdExecKey contained /^EnvironmentFile=-\=/ contains=sdEnvDashFlag nextgroup=sdFilename,sdErr
 
@@ -248,6 +251,7 @@ hi def link sdSecurityType      sdValue
 hi def link sdSecureBits        sdValue
 hi def link sdMountFlags        sdValue
 hi def link sdKillMode          sdValue
+hi def link sdFailJobMode       sdValue
 hi def link sdRestartType       sdValue
 hi def link sdSignal            sdValue
 hi def link sdStdin             sdValue

@@ -1,3 +1,8 @@
+if exists('g:loaded_mustache_handlebars') && g:loaded_mustache_handlebars
+  finish
+endif
+let g:loaded_mustache_handlebars = 1
+
 let s:cpo_save = &cpo
 set cpo&vim
 

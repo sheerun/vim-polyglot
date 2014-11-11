@@ -4,4 +4,4 @@
 " License:      MIT
 " Changes:      Add - to keyword
 
-setlocal iskeyword+=-
+" setlocal iskeyword+=-

@@ -1,5 +1,5 @@
 " Language:    CoffeeScript
-" Maintainer:  Mick Koch <kchmck@gmail.com>
+" Maintainer:  Mick Koch <mick@kochm.co>
 " URL:         http://github.com/kchmck/vim-coffee-script
 " License:     WTFPL
 
@@ -18,8 +18,10 @@ if !g:less_html_style_tags
 endif
 
 " Unset (but preserve) so that less will run.
-let s:pre_less_cur_syn = b:current_syntax
-unlet b:current_syntax
+if exists("b:current_syntax")
+   let s:pre_less_cur_syn = b:current_syntax
+   unlet b:current_syntax
+endif
 
 " Inspired by code from github.com/kchmck/vim-coffee-script
 " and the html syntax file included with vim 7.4.
@@ -30,7 +32,9 @@ syn include @htmlLess syntax/less.vim
 syn region lessStyle start=+<style [^>]*type *=[^>]*text/less[^>]*>+ keepend end=+</style>+ contains=@htmlLess,htmlTag,htmlEndTag,htmlCssStyleComment,@htmlPreproc containedin=htmlHead
 
 " Reset since 'less' isn't really the current_syntax.
-let b:current_syntax = s:pre_less_cur_syn
+if exists("s:pre_less_cur_syn")
+   let b:current_syntax = s:pre_less_cur_syn
+endif
 " Language:     Colorful CSS Color Preview
 " Author:       Aristotle Pagaltzis <pagaltzis@gmx.de>
 

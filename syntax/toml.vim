@@ -7,10 +7,22 @@ if exists("b:current_syntax")
   finish
 endif
 
-syn match tomlEscape /\\[0tnr"\\]/ display
+syn match tomlEscape /\\[btnfr"/\\]/ display contained
+syn match tomlEscape /\\u\x\{4}/ contained
+syn match tomlEscape /\\U\x\{8}/ contained
 hi def link tomlEscape SpecialChar
 
-syn region tomlString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=tomlEscape
+syn match tomlLineEscape /\\$/ contained
+hi def link tomlLineEscape SpecialChar
+
+" Basic strings
+syn region tomlString oneline start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=tomlEscape
+" Multi-line basic strings
+syn region tomlString start=/"""/ end=/"""/ contains=tomlEscape,tomlLineEscape
+" Literal strings
+syn region tomlString oneline start=/'/ end=/'/
+" Multi-line literal strings
+syn region tomlString start=/'''/ end=/'''/
 hi def link tomlString String
 
 syn match tomlInteger /\<-\?\d\+\>/ display
@@ -25,8 +37,11 @@ hi def link tomlBoolean Boolean
 syn match tomlDate /\d\{4\}-\d\{2\}-\d\{2\}T\d\{2\}:\d\{2\}:\d\{2\}Z/ display
 hi def link tomlDate Constant
 
-syn match tomlKeyGroup /^\s*\[.\+\]\s*\(#.*\)\?$/ contains=tomlComment
-hi def link tomlKeyGroup Identifier
+syn match tomlTable /^\s*\[[^#\[\]]\+\]\s*\(#.*\)\?$/ contains=tomlComment
+hi def link tomlTable Identifier
+
+syn match tomlTableArray /^\s*\[\[[^#\[\]]\+\]\]\s*\(#.*\)\?$/ contains=tomlComment
+hi def link tomlTableArray Identifier
 
 syn keyword tomlTodo TODO FIXME XXX BUG contained
 hi def link tomlTodo Todo

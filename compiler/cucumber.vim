@@ -19,7 +19,7 @@ CompilerSet makeprg=cucumber
 
 CompilerSet errorformat=
       \%W%m\ (Cucumber::Undefined),
-      \%E%m\ (%.%#),
+      \%E%m\ (%\\S%#),
       \%Z%f:%l,
       \%Z%f:%l:%.%#
 

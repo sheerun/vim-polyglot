@@ -2,16 +2,18 @@
 " Language: C++ Additions
 " Maintainer: Jon Haggblad <jon@haeggblad.com>
 " URL: http://www.haeggblad.com
-" Last Change: 21 Apr 2014
-" Version: 0.3
+" Last Change: 21 Sep 2014
+" Version: 0.5
 " Changelog:
 "   0.1 - initial version.
 "   0.2 - C++14
 "   0.3 - Incorporate lastest changes from Mizuchi/STL-Syntax
+"   0.4 - Add template function highlight
+"   0.5 - Redo template function highlight to be more robust. Add options.
 "
-" Additional Vim syntax highlighting for C++ (including C++11)
+" Additional Vim syntax highlighting for C++ (including C++11/14)
 "
-" This file contains additional syntax highlighting that I use for my C++11/14
+" This file contains additional syntax highlighting that I use for C++11/14
 " development in Vim. Compared to the standard syntax highlighting for C++ it
 " adds highlighting of (user defined) functions and the containers and types
 " in the standard library / boost.
@@ -29,20 +31,34 @@
 " Based on the discussion in:
 "   http://stackoverflow.com/questions/736701/class-function-names-highlighting-in-vim
 " -----------------------------------------------------------------------------
-syn match    cCustomParen    "(" contains=cParen contains=cCppParen
-syn match    cCustomFunc     "\w\+\s*(\@=" contains=cCustomParen
-syn match    cCustomScope    "::"
-syn match    cCustomClass    "\w\+\s*::" contains=cCustomScope
 
+" Functions
+syn match   cCustomParen    "(" contains=cParen contains=cCppParen
+syn match   cCustomFunc     "\w\+\s*(\@=" contains=cCustomParen
 hi def link cCustomFunc  Function
 
-" Uncomment this to also highlight 'class::' and 'namespace::'
-"hi def link cCustomClass Function
+" Template functions
+if exists('g:cpp_experimental_template_highlight') && g:cpp_experimental_template_highlight
+    syn region  cCustomAngleBrackets matchgroup=AngleBracketContents start="\v%(<operator\_s*)@<!%(%(\_i|template\_s*)@<=\<[<=]@!|\<@<!\<[[:space:]<=]@!)" end='>' contains=@cppSTLgroup,cppStructure,cType,cCustomClass,cCustomAngleBrackets,cNumbers
+    syn match   cCustomBrack    "<\|>" contains=cCustomAngleBrackets
+    syn match   cCustomTemplateFunc "\w\+\s*<.*>(\@=" contains=cCustomBrack,cCustomAngleBrackets
+    hi def link cCustomTemplateFunc  Function
+endif
+
+" Class and namespace scope
+if exists('g:cpp_class_scope_highlight') && g:cpp_class_scope_highlight
+    syn match    cCustomScope    "::"
+    syn match    cCustomClass    "\w\+\s*::" contains=cCustomScope
+    hi def link cCustomClass Function  " disabled for now
+endif
 
 " Alternative syntax that is used in:
 "  http://www.vim.org/scripts/script.php?script_id=3064
 "syn match cUserFunction "\<\h\w*\>\(\s\|\n\)*("me=e-1 contains=cType,cDelimiter,cDefine
 "hi def link cCustomFunc  Function
+
+" Cluster for all the stdlib functions defined below
+syn cluster cppSTLgroup     contains=cppSTLfunction,cppSTLfunctional,cppSTLconstant,cppSTLnamespace,cppSTLtype,cppSTLexception,cppSTLiterator,cppSTLiterator_tagcppSTLenumcppSTLioscppSTLcast
 
 " -----------------------------------------------------------------------------
 "  Standard library types and functions.
@@ -1294,6 +1310,8 @@ if !exists("cpp_no_cpp11")
     syntax keyword cppSTLtype minutes
     syntax keyword cppSTLtype hours
 
+    "raw string literals
+    syntax region cppRawString matchgroup=cppRawDelimiter start=@\%(u8\|[uLU]\)\=R"\z([[:alnum:]_{}[\]#<>%:;.?*\+\-/\^&|~!=,"']\{,16}\)(@ end=/)\z1"/ contains=@Spell
 endif " C++11
 
 if !exists("cpp_no_cpp14")
@@ -1338,5 +1356,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppSTLenum         Typedef
   HiLink cppSTLios          Function
   HiLink cppSTLcast         Statement " be consistent with official syntax
+  HiLink cppRawString       String 
+  HiLink cppRawDelimiter    Delimiter
   delcommand HiLink
 endif

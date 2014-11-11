@@ -55,7 +55,7 @@ function! HIndent(lnum)
   " This is the wrong thing if you are deeply indented already and want to put
   " a where clause on the top-level construct, but there isn't much that can
   " be done about that case...
-  if thisl =~ '^\s*where\s*$'
+  if thisl =~ '^\s*where\s*'
     return previ + &sw
   endif
 
@@ -175,11 +175,11 @@ function! HIndent(lnum)
     return previ - &sw
   endif
 
-  " On the other hand, if the previous line is a where with some bindings
+  " On the other hand, if the previous line is a do or where with some bindings
   " following it on the same line, accommodate and align with the first non-ws
   " char after the where
-  if prevl =~ '\Wwhere\s\+\w'
-    let bindStart = match(prevl, '\(\Wwhere\s\+\)\@<=\w')
+  if prevl =~ '\W\(do\|where\)\s\+\w'
+    let bindStart = match(prevl, '\(\W\(do\|where\)\s\+\)\@<=\w')
     if bindStart != -1
       return bindStart
     endif
@@ -248,7 +248,7 @@ function! s:GetAndStripTrailingComments(lnum)
   let aline = getline(a:lnum)
   " We can't just remove the string literal since that leaves us with a
   " trailing operator (=), so replace it with a fake identifier
-  let noStrings = substitute(aline, '"\([^"]\|\\"\)*"', 's', '')
+  let noStrings = substitute(aline, '"\([^"]\|\\"\)*"', '\=repeat("s", len(submatch(0)))', '')
   let noLineCom = substitute(noStrings, '--.*$', '', '')
 
   " If there are no fancy block comments involved, skip some of this extra

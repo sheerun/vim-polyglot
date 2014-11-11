@@ -3,7 +3,7 @@
 "
 " {{{ BLOCK: Last-modified
 
-" Thu, 14 Aug 2014 09:05:56 +0000, PHP 5.6.0RC2
+" Thu, 18 Sep 2014 08:32:15 +0000, PHP 5.6.0-1+deb.sury.org~trusty+1
 
 " }}}
 "
@@ -46,6 +46,8 @@
 "           php_folding = 1  for folding loops, if/elseif/else, switch, try/catch, classes, and functions based on
 "                            indent, finds a } with an indent matching the structure.
 "                         2  for folding all { }, ( ), and [ ] pairs. (see known bugs ii)
+"           php_phpdoc_folding = 0 Don't fold phpDoc comments (default)
+"                                1 Fold phpDoc comments
 "           php_sync_method = x
 "                             x=-1 to sync by search ( default )
 "                             x>0 to sync at least x lines backwards
@@ -150,12 +152,23 @@ if !exists("php_folding")
   let php_folding = 0
 endif
 
+" set default for php_phpdoc_folding so we don't have to keep checking its existence.
+if !exists("php_phpdoc_folding")
+  let php_phpdoc_folding = 0
+endif
+
 " Folding Support {{{
 "
 if php_folding==1 && has("folding")
   command! -nargs=+ SynFold <args> fold
 else
   command! -nargs=+ SynFold <args>
+endif
+
+if php_phpdoc_folding==1 && has("folding")
+  command! -nargs=+ SynFoldDoc <args> fold
+else
+  command! -nargs=+ SynFoldDoc <args>
 endif
 
 " }}}
@@ -246,7 +259,7 @@ syn keyword phpConstants ATTR_AUTOCOMMIT ATTR_CASE ATTR_CLIENT_VERSION ATTR_CONN
 endif
 if index(g:php_syntax_extensions_enabled, "pgsql") >= 0 && index(g:php_syntax_extensions_disabled, "pgsql") < 0 && ( ! exists("b:php_syntax_extensions_enabled") || index(b:php_syntax_extensions_enabled, "pgsql") >= 0) && ( ! exists("b:php_syntax_extensions_disabled") || index(b:php_syntax_extensions_disabled, "pgsql") < 0)
 " pgsql constants
-syn keyword phpConstants PGSQL_ASSOC PGSQL_BAD_RESPONSE PGSQL_BOTH PGSQL_COMMAND_OK PGSQL_CONNECTION_AUTH_OK PGSQL_CONNECTION_AWAITING_RESPONSE PGSQL_CONNECTION_BAD PGSQL_CONNECTION_MADE PGSQL_CONNECTION_OK PGSQL_CONNECTION_SETENV PGSQL_CONNECTION_SSL_STARTUP PGSQL_CONNECTION_STARTED PGSQL_CONNECT_ASYNC PGSQL_CONNECT_FORCE_NEW PGSQL_CONV_FORCE_NULL PGSQL_CONV_IGNORE_DEFAULT PGSQL_CONV_IGNORE_NOT_NULL PGSQL_COPY_IN PGSQL_COPY_OUT PGSQL_DIAG_CONTEXT PGSQL_DIAG_INTERNAL_POSITION PGSQL_DIAG_INTERNAL_QUERY PGSQL_DIAG_MESSAGE_DETAIL PGSQL_DIAG_MESSAGE_HINT PGSQL_DIAG_MESSAGE_PRIMARY PGSQL_DIAG_SEVERITY PGSQL_DIAG_SOURCE_FILE PGSQL_DIAG_SOURCE_FUNCTION PGSQL_DIAG_SOURCE_LINE PGSQL_DIAG_SQLSTATE PGSQL_DIAG_STATEMENT_POSITION PGSQL_DML_ASYNC PGSQL_DML_ESCAPE PGSQL_DML_EXEC PGSQL_DML_NO_CONV PGSQL_DML_STRING PGSQL_EMPTY_QUERY PGSQL_ERRORS_DEFAULT PGSQL_ERRORS_TERSE PGSQL_ERRORS_VERBOSE PGSQL_FATAL_ERROR PGSQL_LIBPQ_VERSION PGSQL_LIBPQ_VERSION_STR PGSQL_NONFATAL_ERROR PGSQL_NUM PGSQL_POLLING_ACTIVE PGSQL_POLLING_FAILED PGSQL_POLLING_OK PGSQL_POLLING_READING PGSQL_POLLING_WRITING PGSQL_SEEK_CUR PGSQL_SEEK_END PGSQL_SEEK_SET PGSQL_STATUS_LONG PGSQL_STATUS_STRING PGSQL_TRANSACTION_ACTIVE PGSQL_TRANSACTION_IDLE PGSQL_TRANSACTION_INERROR PGSQL_TRANSACTION_INTRANS PGSQL_TRANSACTION_UNKNOWN PGSQL_TUPLES_OK contained
+syn keyword phpConstants PGSQL_ASSOC PGSQL_BAD_RESPONSE PGSQL_BOTH PGSQL_COMMAND_OK PGSQL_CONNECTION_AUTH_OK PGSQL_CONNECTION_AWAITING_RESPONSE PGSQL_CONNECTION_BAD PGSQL_CONNECTION_MADE PGSQL_CONNECTION_OK PGSQL_CONNECTION_SETENV PGSQL_CONNECTION_STARTED PGSQL_CONNECT_ASYNC PGSQL_CONNECT_FORCE_NEW PGSQL_CONV_FORCE_NULL PGSQL_CONV_IGNORE_DEFAULT PGSQL_CONV_IGNORE_NOT_NULL PGSQL_COPY_IN PGSQL_COPY_OUT PGSQL_DIAG_CONTEXT PGSQL_DIAG_INTERNAL_POSITION PGSQL_DIAG_INTERNAL_QUERY PGSQL_DIAG_MESSAGE_DETAIL PGSQL_DIAG_MESSAGE_HINT PGSQL_DIAG_MESSAGE_PRIMARY PGSQL_DIAG_SEVERITY PGSQL_DIAG_SOURCE_FILE PGSQL_DIAG_SOURCE_FUNCTION PGSQL_DIAG_SOURCE_LINE PGSQL_DIAG_SQLSTATE PGSQL_DIAG_STATEMENT_POSITION PGSQL_DML_ASYNC PGSQL_DML_ESCAPE PGSQL_DML_EXEC PGSQL_DML_NO_CONV PGSQL_DML_STRING PGSQL_EMPTY_QUERY PGSQL_ERRORS_DEFAULT PGSQL_ERRORS_TERSE PGSQL_ERRORS_VERBOSE PGSQL_FATAL_ERROR PGSQL_LIBPQ_VERSION PGSQL_LIBPQ_VERSION_STR PGSQL_NONFATAL_ERROR PGSQL_NUM PGSQL_POLLING_ACTIVE PGSQL_POLLING_FAILED PGSQL_POLLING_OK PGSQL_POLLING_READING PGSQL_POLLING_WRITING PGSQL_SEEK_CUR PGSQL_SEEK_END PGSQL_SEEK_SET PGSQL_STATUS_LONG PGSQL_STATUS_STRING PGSQL_TRANSACTION_ACTIVE PGSQL_TRANSACTION_IDLE PGSQL_TRANSACTION_INERROR PGSQL_TRANSACTION_INTRANS PGSQL_TRANSACTION_UNKNOWN PGSQL_TUPLES_OK contained
 endif
 if index(g:php_syntax_extensions_enabled, "phar") >= 0 && index(g:php_syntax_extensions_disabled, "phar") < 0 && ( ! exists("b:php_syntax_extensions_enabled") || index(b:php_syntax_extensions_enabled, "phar") >= 0) && ( ! exists("b:php_syntax_extensions_disabled") || index(b:php_syntax_extensions_disabled, "phar") < 0)
 " Phar constants
@@ -582,7 +595,7 @@ syn match phpCommentStar contained "^\s*\*$"
 if !exists("php_ignore_phpdoc") || !php_ignore_phpdoc
   syn case ignore
 
-  syn region phpDocComment   start="/\*\*" end="\*/" keepend contains=phpCommentTitle,phpDocTags,phpTodo,@Spell
+  SynFoldDoc syn region phpDocComment   start="/\*\*" end="\*/" keepend contains=phpCommentTitle,phpDocTags,phpTodo,@Spell
   syn region phpCommentTitle contained matchgroup=phpDocComment start="/\*\*" matchgroup=phpCommmentTitle keepend end="\.$" end="\.[ \t\r<&]"me=e-1 end="[^{]@"me=s-2,he=s-1 end="\*/"me=s-1,he=s-1 contains=phpCommentStar,phpTodo,phpDocTags,@Spell containedin=phpDocComment
 
   syn region phpDocTags  start="{@\(example\|id\|internal\|inheritdoc\|link\|source\|toc\|tutorial\)" end="}" containedin=phpDocComment
@@ -818,6 +831,7 @@ endif
 " Cleanup: {{{
 
 delcommand SynFold
+delcommand SynFoldDoc
 let b:current_syntax = "php"
 
 let &iskeyword = s:iskeyword_save

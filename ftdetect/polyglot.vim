@@ -1,5 +1,5 @@
 au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
-autocmd BufRead,BufNewFile *.blade.php set filetype=blade
+au BufNewFile,BufRead *.blade.php set filetype=blade
 autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn setlocal filetype=clojure
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufNewFile,BufRead *Cakefile set filetype=coffee
@@ -18,6 +18,12 @@ au BufRead,BufNewFile *.eex set filetype=eelixir
 au FileType eelixir setl sw=2 sts=2 et iskeyword+=!,?
 au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
 au FileType elixir setl sw=2 sts=2 et iskeyword+=!,?
+function! s:DetectElixir()
+    if getline(1) =~ '^#!.*\<elixir\>'
+        set filetype=elixir
+    endif
+endfunction
+autocmd BufNewFile,BufRead * call s:DetectElixir()
 autocmd BufNewFile,BufRead *.em set filetype=ember-script
 autocmd FileType ember-script set tabstop=2|set shiftwidth=2|set expandtab
 autocmd BufNewFile,BufRead *.emblem set filetype=emblem
@@ -104,7 +110,8 @@ autocmd BufRead *.html
     \     set filetype=mason |
     \ endif
 if has("autocmd")
-  au  BufNewFile,BufRead *.mustache,*.handlebars,*.hbs,*.hogan,*.hulk,*.hjs set filetype=html syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
+  au  BufNewFile,BufRead *.mustache,*.hogan,*.hulk,*.hjs set filetype=html.mustache syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
+  au  BufNewFile,BufRead *.handlebars,*.hbs set filetype=html.handlebars syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
 endif
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
 au BufRead,BufNewFile *.cl set filetype=opencl

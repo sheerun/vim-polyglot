@@ -87,8 +87,12 @@ function! s:TOCActivate(close)
     endfor
 
     " Find section in buffer (or inputted files)
-    call s:TOCFindMatch('\\' . entry['level'] . '\_\s*{' . titlestr . '}',
-                \ duplicates, files)
+    if entry['level'] == 'label'
+        let re = '\(\\label\_\s*{\|label\s*=\s*\)' . titlestr . '\>'
+    else
+        let re = '\\' . entry['level'] . '\_\s*{' . titlestr . '}'
+    endif
+    call s:TOCFindMatch(re, duplicates, files)
 
     if a:close
         if g:LatexBox_split_resize

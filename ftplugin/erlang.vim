@@ -39,6 +39,9 @@ function s:SetErlangOptions()
 		setlocal omnifunc=erlangcomplete#Complete
 	endif
 
+	setlocal comments=:%%%,:%%,:%
+	setlocal commentstring=%%s
+
 	setlocal foldmethod=expr
 	setlocal foldexpr=GetErlangFold(v:lnum)
 	setlocal foldtext=ErlangFoldText()

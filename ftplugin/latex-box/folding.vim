@@ -156,7 +156,7 @@ let s:notcomment = '\%(\%(\\\@<!\%(\\\\\)*\)\@<=%.*\)\@<!'
 let s:envbeginpattern = s:notcomment . s:notbslash . '\\begin\s*{.\{-}}'
 let s:envendpattern = s:notcomment . s:notbslash . '\\end\s*{.\{-}}'
 let s:foldparts = '^\s*\\\%(' . join(g:LatexBox_fold_parts, '\|') . '\)'
-let s:folded = '\(% Fake\|\\\(document\|begin\|end\|'
+let s:folded = '\(% Fake\|\\\(document\|begin\|end\|paragraph\|'
             \ . 'front\|main\|back\|app\|sub\|section\|chapter\|part\)\)'
 
 function! LatexBox_FoldLevel(lnum)
@@ -193,26 +193,31 @@ function! LatexBox_FoldLevel(lnum)
     endif
 
     " Fold environments
-    if line =~# s:envbeginpattern
-        if g:LatexBox_fold_envs == 1
-            return "a1"
-        else
-            let env = matchstr(line,'\\begin\*\?{\zs\w*\*\?\ze}')
-            if index(g:LatexBox_fold_envs_force, env) >= 0
+    if line =~# s:envbeginpattern && line =~# s:envendpattern
+        " If the begin and end pattern are on the same line , do not fold
+        return "="
+    else
+        if line =~# s:envbeginpattern
+            if g:LatexBox_fold_envs == 1
                 return "a1"
             else
-                return "="
+                let env = matchstr(line,'\\begin\*\?{\zs\w*\*\?\ze}')
+                if index(g:LatexBox_fold_envs_force, env) >= 0
+                    return "a1"
+                else
+                    return "="
+                endif
             endif
-        endif
-    elseif line =~# s:envendpattern
-        if g:LatexBox_fold_envs == 1
-            return "s1"
-        else
-            let env = matchstr(line,'\\end\*\?{\zs\w*\*\?\ze}')
-            if index(g:LatexBox_fold_envs_force, env) >= 0
+        elseif line =~# s:envendpattern
+            if g:LatexBox_fold_envs == 1
                 return "s1"
             else
-                return "="
+                let env = matchstr(line,'\\end\*\?{\zs\w*\*\?\ze}')
+                if index(g:LatexBox_fold_envs_force, env) >= 0
+                    return "s1"
+                else
+                    return "="
+                endif
             endif
         endif
     endif
@@ -288,7 +293,7 @@ function! LatexBox_FoldText_title()
     endif
 
     " Parts, sections and fakesections
-    let sections = '\(\(sub\)*section\|part\|chapter\)'
+    let sections = '\(\(sub\)*\(section\|paragraph\)\|part\|chapter\)'
     let secpat1 = '^\s*\\' . sections . '\*\?\s*{'
     let secpat2 = '^\s*\\' . sections . '\*\?\s*\['
     if line =~ '\\frontmatter'
