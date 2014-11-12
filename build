@@ -128,6 +128,7 @@ PACKS="
   xls:vim-scripts/XSLT-syntax
   yard:sheerun/vim-yardoc
   css-color:ap/vim-css-color
+  vm:lepture/vim-velocity
 "
 
 rm -rf tmp
