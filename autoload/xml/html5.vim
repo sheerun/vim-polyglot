@@ -324,7 +324,7 @@ endif
 
 " Ref: http://dev.w3.org/html5/markup/
 " Version: Draft 05 April 2011
-let phrasing_elements = ['a', 'em', 'strong', 'small', 'mark', 'abbr', 'dfn', 'i', 'b', 'u', 'code', 'var', 'samp', 'kbd', 'sup', 'sub', 'q', 'cite', 'span', 'bdo', 'bdi', 'br', 'wbr', 'ins', 'del', 'img', 'embed', 'object', 'iframe', 'map', 'area', 'script', 'noscript', 'ruby', 'video', 'audio', 'input', 'textarea', 'select', 'button', 'label', 'output', 'datalist', 'keygen', 'progress', 'command', 'canvas', 'time', 'meter', 'data', 'content', 'shadow']
+let phrasing_elements = ['a', 'em', 'strong', 'small', 'mark', 'abbr', 'dfn', 'i', 'b', 'u', 'code', 'var', 'samp', 'kbd', 'sup', 'sub', 'q', 'cite', 'span', 'bdo', 'bdi', 'br', 'wbr', 'ins', 'del', 'img', 'picture', 'embed', 'object', 'iframe', 'map', 'area', 'script', 'noscript', 'ruby', 'video', 'audio', 'input', 'textarea', 'select', 'button', 'label', 'output', 'datalist', 'keygen', 'progress', 'command', 'canvas', 'time', 'meter', 'data', 'content', 'shadow']
 
 let metadata_elements = ['link', 'style', 'meta', 'script', 'noscript', 'command']
 
@@ -643,6 +643,10 @@ let g:xmldata_html5 = {
     \ [],
     \ extend(copy(global_attributes), {'name': [], 'value': []})
 \ ],
+\ 'picture': [
+    \ flow_elements + ['source'],
+    \ global_attributes
+\ ],
 \ 'pre': [
     \ phrasing_elements,
     \ global_attributes
@@ -693,7 +697,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'source': [
     \ [],
-    \ extend(copy(global_attributes), {'src': [], 'type': [], 'media': []})
+    \ extend(copy(global_attributes), {'src': [], 'type': [], 'media': [], 'srcset': [], 'sizes': []})
 \ ],
 \ 'span': [
     \ phrasing_elements,

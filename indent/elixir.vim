@@ -12,7 +12,6 @@ setlocal nosmartindent
 
 setlocal indentexpr=GetElixirIndent()
 setlocal indentkeys+=0=end,0=else,0=match,0=elsif,0=catch,0=after,0=rescue
-setlocal indentkeys+==->
 
 if exists("*GetElixirIndent")
   finish
@@ -69,9 +68,16 @@ function! GetElixirIndent()
     endif
 
     " if line starts with pipeline
+    " and last line contains pipeline(s)
+    " align them
+    if last_line =~ '|>.*$' &&
+          \ current_line =~ s:pipeline
+      let ind = float2nr(match(last_line, '|>') / &sw) * &sw
+
+    " if line starts with pipeline
     " and last line is an attribution
     " indents pipeline in same level as attribution
-    if current_line =~ s:pipeline &&
+    elseif current_line =~ s:pipeline &&
           \ last_line =~ '^[^=]\+=.\+$'
       let b:old_ind = ind
       let ind = float2nr(matchend(last_line, '=\s*[^ ]') / &sw) * &sw

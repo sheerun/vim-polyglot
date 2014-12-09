@@ -17,7 +17,7 @@ syn keyword   rustConditional match if else
 syn keyword   rustOperator    as
 
 syn match     rustAssert      "\<assert\(\w\)*!" contained
-syn match     rustFail        "\<fail\(\w\)*!" contained
+syn match     rustPanic       "\<panic\(\w\)*!" contained
 syn keyword   rustKeyword     break
 syn keyword   rustKeyword     box nextgroup=rustBoxPlacement skipwhite skipempty
 syn keyword   rustKeyword     continue
@@ -30,7 +30,7 @@ syn keyword   rustKeyword     unsafe virtual where while
 syn keyword   rustKeyword     use nextgroup=rustModPath skipwhite skipempty
 " FIXME: Scoped impl's name is also fallen in this category
 syn keyword   rustKeyword     mod trait struct enum type nextgroup=rustIdentifier skipwhite skipempty
-syn keyword   rustStorage     mut ref static const
+syn keyword   rustStorage     move mut ref static const
 
 syn keyword   rustInvalidBareKeyword crate
 
@@ -66,69 +66,63 @@ syn keyword   rustType        f64 i8 i16 i32 i64 str Self
 " This section is just straight transformation of the contents of the prelude,
 " to make it easy to update.
 
-" Core operators {{{3
+" Reexported core operators {{{3
 syn keyword   rustTrait       Copy Send Sized Sync
 syn keyword   rustTrait       Add Sub Mul Div Rem Neg Not
 syn keyword   rustTrait       BitAnd BitOr BitXor
 syn keyword   rustTrait       Drop Deref DerefMut
-syn keyword   rustTrait       Shl Shr Index IndexMut
-syn keyword   rustEnum        Option
-syn keyword   rustEnumVariant Some None
-syn keyword   rustEnum        Result
-syn keyword   rustEnumVariant Ok Err
+syn keyword   rustTrait       Shl Shr
+syn keyword   rustTrait       Index IndexMut
+syn keyword   rustTrait       Slice SliceMut
+syn keyword   rustTrait       Fn FnMut FnOnce
 
-" Functions {{{3
-"syn keyword rustFunction from_str
-"syn keyword rustFunction range
+" Reexported functions {{{3
+"syn keyword rustFunction range repeat
 "syn keyword rustFunction drop
+"syn keyword rustFunction from_str
 
-" Types and traits {{{3
+" Reexported types and traits {{{3
 syn keyword rustTrait Ascii AsciiCast OwnedAsciiCast AsciiStr
 syn keyword rustTrait IntoBytes
 syn keyword rustTrait ToCStr
 syn keyword rustTrait Char UnicodeChar
 syn keyword rustTrait Clone
-syn keyword rustTrait PartialEq PartialOrd Eq Ord Equiv
-syn keyword rustEnum Ordering
+syn keyword rustTrait PartialEq PartialOrd Eq Ord
+syn keyword rustEnum Ordering Equiv
 syn keyword rustEnumVariant Less Equal Greater
-syn keyword rustTrait Collection Mutable Map MutableMap MutableSeq
-syn keyword rustTrait Set MutableSet
-syn keyword rustTrait FromIterator IntoIterator Extend ExactSize
+syn keyword rustTrait FromIterator Extend ExactSize
 syn keyword rustTrait Iterator DoubleEndedIterator
 syn keyword rustTrait RandomAccessIterator CloneableIterator
 syn keyword rustTrait OrdIterator MutableDoubleEndedIterator
-syn keyword rustTrait Num NumCast CheckedAdd CheckedSub CheckedMul CheckedDiv
-syn keyword rustTrait Signed Unsigned Primitive Int Float
-syn keyword rustTrait FloatMath ToPrimitive FromPrimitive
+syn keyword rustTrait ToPrimitive FromPrimitive
 syn keyword rustTrait Box
+syn keyword rustEnum Option
+syn keyword rustEnumVariant Some None
 syn keyword rustTrait GenericPath Path PosixPath WindowsPath
-syn keyword rustTrait RawPtr
-syn keyword rustTrait Buffer Writer Reader Seek
-syn keyword rustTrait Str StrVector StrSlice
-syn keyword rustTrait IntoMaybeOwned StrAllocating UnicodeStrSlice
-syn keyword rustTrait ToString IntoStr
+syn keyword rustTrait RawPtr RawMutPtr
+syn keyword rustEnum Result
+syn keyword rustEnumVariant Ok Err
+syn keyword rustTrait Buffer Writer Reader Seek BufferPrelude
+syn keyword rustTrait Str StrVector StrPrelude
+syn keyword rustTrait IntoMaybeOwned StrAllocating UnicodeStrPrelude
 syn keyword rustTrait Tuple1 Tuple2 Tuple3 Tuple4
 syn keyword rustTrait Tuple5 Tuple6 Tuple7 Tuple8
 syn keyword rustTrait Tuple9 Tuple10 Tuple11 Tuple12
-syn keyword rustTrait CloneableVector ImmutableCloneableVector
-syn keyword rustTrait MutableCloneableSlice MutableOrdSlice
-syn keyword rustTrait ImmutableSlice MutableSlice
-syn keyword rustTrait ImmutablePartialEqSlice ImmutableOrdSlice
-syn keyword rustTrait Slice VectorVector
-syn keyword rustTrait MutableSliceAllocating
-syn keyword rustTrait String
+syn keyword rustTrait SlicePrelude AsSlice CloneSlicePrelude
+syn keyword rustTrait VectorVector PartialEqSlicePrelude OrdSlicePrelude
+syn keyword rustTrait CloneSliceAllocPrelude OrdSliceAllocPrelude SliceAllocPrelude
+syn keyword rustTrait IntoString String ToString
 syn keyword rustTrait Vec
 
+" Reexported runtime types {{{3
 "syn keyword rustFunction sync_channel channel
 syn keyword rustTrait SyncSender Sender Receiver
 "syn keyword rustFunction spawn
 
-"syn keyword rustConstant GC
+" Other syntax {{{2
 
 syn keyword   rustSelf        self
 syn keyword   rustBoolean     true false
-
-" Other syntax {{{2
 
 " If foo::bar changes to foo.bar, change this ("::" to "\.").
 " If foo::bar changes to Foo::bar, change this (first "\w" to "\u").
@@ -151,8 +145,8 @@ syn match     rustSigil        display /[&~@*][^)= \t\r\n]/he=e-1,me=e-1
 " Last, because the & in && isn't a sigil
 syn match     rustOperator     display "&&\|||"
 
-syn match     rustMacro       '\w\(\w\)*!' contains=rustAssert,rustFail
-syn match     rustMacro       '#\w\(\w\)*' contains=rustAssert,rustFail
+syn match     rustMacro       '\w\(\w\)*!' contains=rustAssert,rustPanic
+syn match     rustMacro       '#\w\(\w\)*' contains=rustAssert,rustPanic
 
 syn match     rustEscapeError   display contained /\\./
 syn match     rustEscape        display contained /\\\([nrt0\\'"]\|x\x\{2}\)/
@@ -263,7 +257,7 @@ hi def link rustCommentLineDoc SpecialComment
 hi def link rustCommentBlock  rustCommentLine
 hi def link rustCommentBlockDoc rustCommentLineDoc
 hi def link rustAssert        PreCondit
-hi def link rustFail          PreCondit
+hi def link rustPanic         PreCondit
 hi def link rustMacro         Macro
 hi def link rustType          Type
 hi def link rustTodo          Todo
@@ -282,7 +276,7 @@ hi def link rustBoxPlacementExpr rustKeyword
 " hi rustAttribute ctermfg=cyan
 " hi rustDeriving ctermfg=cyan
 " hi rustAssert ctermfg=yellow
-" hi rustFail ctermfg=red
+" hi rustPanic ctermfg=red
 " hi rustMacro ctermfg=magenta
 
 syn sync minlines=200

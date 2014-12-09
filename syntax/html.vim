@@ -24,6 +24,7 @@ syn keyword htmlTagName contained header hgroup keygen main mark meter menu nav 
 syn keyword htmlTagName contained progress ruby rt rp section source summary time track video data
 syn keyword htmlTagName contained template content shadow
 syn keyword htmlTagName contained wbr bdi
+syn keyword htmlTagName contained picture
 
 " SVG tags
 " http://www.w3.org/TR/SVG/
@@ -75,6 +76,8 @@ syn keyword htmlArg contained label icon open datetime pubdate
 syn keyword htmlArg contained async
 " <content>
 syn keyword htmlArg contained select
+" <picture>
+syn keyword htmlArg contained srcset sizes
 
 " Custom Data Attributes
 " http://dev.w3.org/html5/spec/elements.html#embedding-custom-non-visible-data

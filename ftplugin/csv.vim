@@ -11,6 +11,20 @@
 " though, implementation differs.
 
 " Plugin folklore "{{{2
+fu! <sid>DetermineSID()
+    let s:SID = matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_DetermineSID$')
+endfu
+call s:DetermineSID()
+delf s:DetermineSID
+
+fu! CSVArrangeCol(first, last, bang, limit) range "{{{2
+    if &ft =~? 'csv'
+        call <sid>ArrangeCol(a:first, a:last, a:bang, a:limit)
+    else
+        finish
+    endif
+endfu
+
 if v:version < 700 || exists('b:did_ftplugin')
   finish
 endif
@@ -20,7 +34,6 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " Function definitions: "{{{2
-"
 " Script specific functions "{{{2
 fu! <sid>Warn(mess) "{{{3
     echohl WarningMsg
@@ -239,35 +252,6 @@ fu! <sid>DoAutoCommands() "{{{3
     let b:undo_ftplugin .= '| exe "sil! au! CSV_HI CursorMoved <buffer> "'
     let b:undo_ftplugin .= '| exe "sil! aug! CSV_HI" |exe "sil! HiColumn!"'
 
-    " Visually arrange columns when opening a csv file
-    if exists("g:csv_autocmd_arrange") &&
-        \ !exists("#CSV_Edit#BufReadPost")
-        aug CSV_Edit
-            au!
-            au BufReadPost,BufWritePost *.csv,*.dat :sil %ArrangeColumn
-            au BufWritePre *.csv,*.dat :sil %UnArrangeColumn
-        aug end
-    elseif exists("#CSV_Edit#BufReadPost")
-        aug CSV_Edit
-            au!
-        aug end
-        aug! CSV_Edit
-    endif
-    " undo autocommand:
-    let b:undo_ftplugin .= '| exe "sil! au! CSV_Edit "'
-    let b:undo_ftplugin .= '| exe "sil! aug! CSV_Edit"'
-
-"    if !exists("#CSV_ColorScheme#ColorScheme")
-"        " Make sure, syntax highlighting is applied
-"        " after changing the colorscheme
-"        augroup CSV_ColorScheme
-"            au!
-"            au ColorScheme *.csv,*.dat,*.tsv,*.tab do Syntax
-"        augroup end
-"    endif
-"    let b:undo_ftplugin .= '| exe "sil! au! CSV_ColorScheme "'
-"    let b:undo_ftplugin .= '| exe "sil! aug! CSV_ColorScheme"'
-
     if has("gui_running") && !exists("#CSV_Menu#FileType")
         augroup CSV_Menu
             au!
@@ -276,10 +260,6 @@ fu! <sid>DoAutoCommands() "{{{3
             au BufLeave <buffer> call <sid>Menu(0) " disable
             au BufNewFile,BufNew * call <sid>Menu(0)
         augroup END
-        "let b:undo_ftplugin .= '| sil! amenu disable CSV'
-        "
-        " b:undo_ftplugin does not support calling <sid> Functions
-        "let b:undo_ftplugin .= '| sil! call <sid>Menu(0)'
     endif
 endfu
 
@@ -348,11 +328,6 @@ fu! <sid>SearchColumn(arg) "{{{3
                     throw "E684"
                 endif
             endif
-"             let colnr=arglist[0]
-"             let pat=substitute(arglist[1], '^\(.\)\(.*\)\1$', '\2', '')
-"             if pat == arglist[1]
-"                 throw "E684"
-"             endif
         endif
     "catch /^Vim\%((\a\+)\)\=:E684/
     catch /E684/	" catch error index out of bounds
@@ -364,7 +339,7 @@ fu! <sid>SearchColumn(arg) "{{{3
         call <SID>Warn("There exists no column " . colnr)
         return 1
     endif
-    let @/ = <sid>GetPat(colnr, maxcolnr, pat)
+    let @/ = <sid>GetPat(colnr, maxcolnr, '\%('.pat. '\)')
     try
         norm! n
     catch /^Vim\%((\a\+)\)\=:E486/
@@ -643,7 +618,7 @@ fu! <sid>ColWidth(colnr) "{{{3
     endif
 endfu
 
-fu! <sid>ArrangeCol(first, last, bang) range "{{{3
+fu! <sid>ArrangeCol(first, last, bang, limit) range "{{{3
     "TODO: Why doesn't that work?
     " is this because of the range flag?
     " It's because of the way, Vim works with
@@ -655,11 +630,16 @@ fu! <sid>ArrangeCol(first, last, bang) range "{{{3
         return
     endif
     let cur=winsaveview()
-    if a:bang || !exists("b:col_width")
+    if a:bang
         if a:bang
             " Force recalculating the Column width
-            unlet! b:csv_list
+            unlet! b:csv_list b:col_width
         endif
+    elseif a:limit > -1 && a:limit < getfsize(fnamemodify(bufname(''), ':p'))
+        return
+    endif
+
+    if !exists("b:col_width")
         " Force recalculation of Column width
         call <sid>CalculateColumnWidth()
     endif
@@ -895,7 +875,7 @@ fu! <sid>SplitHeaderLine(lines, bang, hor) "{{{3
             syn clear
             noa 0
             let b:csv_SplitWindow = winnr()
-            sil :call <sid>ArrangeCol(1,line('$'), 1)
+            sil :call <sid>ArrangeCol(1,line('$'), 1, -1)
             exe "vert res" . len(split(getline(1), '\zs'))
             call matchadd("CSVHeaderLine", b:col)
             setl scrollopt=ver winfixwidth
@@ -1592,12 +1572,6 @@ fu! <sid>DisableFolding() "{{{3
     endif
 endfu
 
-fu! <sid>DetermineSID()
-    let s:SID = matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_DetermineSID$')
-endfu
-call s:DetermineSID()
-delf s:DetermineSID
-
 fu! <sid>NumberFormat() "{{{3
     let s:nr_format = [',', '.']
     if exists("b:csv_thousands_sep")
@@ -1892,7 +1866,7 @@ fu! <sid>CommandDefinitions() "{{{3
     call <sid>LocalCmd("DeleteColumn", ':call <sid>DeleteColumn(<q-args>)',
         \ '-nargs=? -complete=custom,<sid>SortComplete')
     call <sid>LocalCmd("ArrangeColumn",
-        \ ':call <sid>ArrangeCol(<line1>, <line2>, <bang>0)',
+        \ ':call <sid>ArrangeCol(<line1>, <line2>, <bang>0, -1)',
         \ '-range -bang')
     call <sid>LocalCmd("UnArrangeColumn",
         \':call <sid>PrepUnArrangeCol(<line1>, <line2>)',
@@ -2248,7 +2222,7 @@ fu! <sid>Tabularize(bang, first, last) "{{{3
     else
         " don't clear column width variable, might have been set in the
         " plugin!
-        sil call <sid>ArrangeCol(a:first, a:last, 0)
+        sil call <sid>ArrangeCol(a:first, a:last, 0, -1)
     endif
 
     if empty(b:col_width)

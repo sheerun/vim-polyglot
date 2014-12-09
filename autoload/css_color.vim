@@ -1,8 +1,7 @@
 " Language:     Colorful CSS Color Preview
 " Author:       Aristotle Pagaltzis <pagaltzis@gmx.de>
-" Last Change:  2014-01-14
-" Licence:      No Warranties. WTFPL. But please tell me!
-" Version:      1.0
+" Commit:       $Format:%H$
+" Licence:      The MIT License (MIT)
 
 if v:version < 700
 	echoerr printf('Vim 7 is required for css-color (this is only %d.%d)',v:version/100,v:version%100)
@@ -206,26 +205,32 @@ function! s:create_syn_match()
 	return ''
 endfunction
 
-function! s:update_matches()
-	call filter(b:color_match_id, 'matchdelete(v:val)')
-	if &l:cursorline
-		" adds matches based that duplicate the highlighted colors on the current line
-		let lnr = line('.')
-		let group = ''
-		let groupstart = 0
-		let endcol = col('$')
-		for col in range( 1, endcol )
-			let nextgroup = col < endcol ? synIDattr( synID( lnr, col, 1 ), 'name' ) : ''
-			if group == nextgroup | continue | endif
-			if group =~ '^BG\x\{6}$'
-				let regex = '\%'.lnr.'l\%'.groupstart.'c'.repeat( '.', col - groupstart )
-				let match = matchadd( group, regex, -1 )
-				let b:color_match_id += [ match ]
-			endif
-			let group = nextgroup
-			let groupstart = col
-		endfor
+function! s:clear_matches()
+	if exists('w:color_match_id')
+		call filter(w:color_match_id, 'matchdelete(v:val)')
+		unlet w:color_match_id
 	endif
+endfunction
+
+function! s:create_matches()
+	if ! &l:cursorline | return | endif
+	" adds matches based that duplicate the highlighted colors on the current line
+	let lnr = line('.')
+	let group = ''
+	let groupstart = 0
+	let endcol = col('$')
+	let w:color_match_id = []
+	for col in range( 1, endcol )
+		let nextgroup = col < endcol ? synIDattr( synID( lnr, col, 1 ), 'name' ) : ''
+		if group == nextgroup | continue | endif
+		if group =~ '^BG\x\{6}$'
+			let regex = '\%'.lnr.'l\%'.groupstart.'c'.repeat( '.', col - groupstart )
+			let match = matchadd( group, regex, -1 )
+			let w:color_match_id += [ match ]
+		endif
+		let group = nextgroup
+		let groupstart = col
+	endfor
 endfunction
 
 let s:_hexcolor   = '#\(\x\{3}\|\x\{6}\)\>' " submatch 1
@@ -242,11 +247,13 @@ let s:_csscolor   = s:_hexcolor . '\|' . s:_funcexpr
 "      scan without examining the start of the string over and over
 function! s:parse_css_screen()
 	call substitute( join( getline('w0','w$'), "\n" ), s:_csscolor, '\=s:create_syn_match()', 'g' )
-	call s:update_matches()
+	call s:clear_matches()
+	call s:create_matches()
 endfunction
 function! s:parse_any_screen()
 	call substitute( join( getline('w0','w$'), "\n" ), s:_hexcolor, '\=s:create_syn_match()', 'g' )
-	call s:update_matches()
+	call s:clear_matches()
+	call s:create_matches()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -256,14 +263,15 @@ function! css_color#init(type, groups)
 
 	let b:has_color_hi    = {}
 	let b:has_pattern_syn = {}
-	let b:color_match_id  = []
 
 	augroup CSSColor
 		autocmd! * <buffer>
 		exe 'autocmd CursorMoved,CursorMovedI <buffer> call s:parse_'.a:type.'_screen()'
+		autocmd BufWinEnter <buffer> call s:create_matches()
+		autocmd BufWinLeave <buffer> call s:clear_matches()
 	augroup END
 
-	do CSSColor CursorMoved <buffer>
+	exe 'call s:parse_'.a:type.'_screen()'
 
 	if a:type != 'css' | return | endif
 

@@ -3,6 +3,11 @@ if exists("current_compiler")
 endif
 let current_compiler = "typescript"
 
-CompilerSet makeprg=tsc\ $*\ %
+if !exists("g:typescript_compiler_options")
+  let g:typescript_compiler_options = ""
+endif
+
+
+let &l:makeprg='tsc' . g:typescript_compiler_options . ' $*  %'
 
 CompilerSet errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
