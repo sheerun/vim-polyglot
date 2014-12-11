@@ -80,6 +80,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
 - [typescript](https://github.com/leafgarland/typescript-vim) (syntax, compiler, ftplugin, ftdetect)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
+- [thrift](https://github.com/solarnz/thrift.vim) (syntax, ftdetect)
 - [toml](https://github.com/cespare/vim-toml) (syntax, ftdetect)
 - [twig](https://github.com/beyondwords/vim-twig) (syntax, ftplugin, ftdetect)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
