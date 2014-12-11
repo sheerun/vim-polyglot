@@ -106,6 +106,7 @@ PACKS="
   perl:vim-perl/vim-perl
   php:StanAngeloff/php.vim
   puppet:rodjek/vim-puppet
+  powershell:Persistent13/vim-ps1
   protobuf:uarun/vim-protobuf
   python:mitsuhiko/vim-python-combined
   r-lang:vim-scripts/R.vim

@@ -144,6 +144,10 @@ endfunction
 autocmd BufReadPost *.pl,*.pm,*.t call s:DetectPerl6()
 autocmd BufNew,BufRead *.nqp setf perl6
 autocmd BufNewFile,BufRead *.proto setfiletype proto
+au BufNewFile,BufRead   *.ps1   set ft=ps1
+au BufNewFile,BufRead   *.psd1  set ft=ps1
+au BufNewFile,BufRead   *.psm1  set ft=ps1
+au BufNewFile,BufRead   *.ps1xml   set ft=ps1xml
 au! BufRead,BufNewFile *.pp setfiletype puppet
 au! BufRead,BufNewFile Puppetfile setfiletype ruby
 function! s:setf(filetype) abort
