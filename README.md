@@ -84,6 +84,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [toml](https://github.com/cespare/vim-toml) (syntax, ftdetect)
 - [twig](https://github.com/beyondwords/vim-twig) (syntax, ftplugin, ftdetect)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
+- [vala](https://github.com/tkztmk/vim-vala) (syntax, indent, ftdetect)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
 - [css-color](https://github.com/ap/vim-css-color) (autoload, syntax)
 
