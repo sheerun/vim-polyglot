@@ -76,7 +76,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax, ftdetect)
 - [swift](https://github.com/toyamarinyon/vim-swift) (syntax, indent, ftdetect)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)
-- [tmux](https://github.com/acustodioo/vim-tmux) (syntax, ftdetect)
+- [tmux](https://github.com/tejr/vim-tmux) (syntax, ftdetect)
 - [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
 - [typescript](https://github.com/leafgarland/typescript-vim) (syntax, compiler, ftplugin, ftdetect)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
