@@ -23,17 +23,18 @@ extract() {
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
     directories="DIRS$(printf "$pack" | cut -d ':' -f 3)"
+    subtree="$(printf "$pack" | cut -d ':' -f 4)"
     printf -- "- [$name](https://github.com/$path) ("
 
     subdirs=""
     for subdir in ${!directories}; do
-      if [ -d "$dir/$subdir" ]; then
+      if [ -d "${dir}${subtree:-/}${subdir}" ]; then
         base="$(basename "$subdir")"
         if [[ "$subdirs" != *"$base"* ]]; then
           subdirs="$subdirs, $base"
         fi
 
-        copy_dir "$dir" "$subdir"
+        copy_dir "${dir}${subtree}" "$subdir"
       fi
     done
 
@@ -45,8 +46,9 @@ extract() {
     name="$(printf "$pack" | cut -d ':' -f 1)"
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
+    subtree="$(printf "$pack" | cut -d ':' -f 4)"
 
-    if [ -d "$dir/plugin" ]; then
+    if [ -d "$dir${subtree:-/}plugin" ]; then
       printf "Possible error (plugin directory exists): $path\n"
     fi
   done
