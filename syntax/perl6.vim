@@ -2245,8 +2245,6 @@ endif
 " know how to use them reliably)
 syn sync fromstart
 
-setlocal foldmethod=syntax
-
 let b:current_syntax = "perl6"
 
 let &cpo = s:keepcpo
