@@ -133,6 +133,7 @@ PACKS="
   yard:sheerun/vim-yardoc
   vala:tkztmk/vim-vala
   css-color:ap/vim-css-color
+  vm:lepture/vim-velocity
 "
 
 rm -rf tmp
