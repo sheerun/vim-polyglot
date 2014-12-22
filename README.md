@@ -26,7 +26,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 ## Language packs
 
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent, ftdetect)
-- [blade](https://github.com/xsbeats/vim-blade) (syntax, indent, ftdetect)
+- [blade](https://github.com/xsbeats/vim-blade) (syntax, ftdetect)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/cpp-vim) (syntax)
 - [c-extensions](https://github.com/kergoth/aftersyntaxc.vim) (syntax)
@@ -82,11 +82,12 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [typescript](https://github.com/leafgarland/typescript-vim) (syntax, compiler, ftplugin, ftdetect)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax, ftdetect)
-- [toml](https://github.com/cespare/vim-toml) (syntax, ftdetect)
+- [toml](https://github.com/cespare/vim-toml) (syntax, ftplugin, ftdetect)
 - [twig](https://github.com/beyondwords/vim-twig) (syntax, ftplugin, ftdetect)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
-- [vala](https://github.com/tkztmk/vim-vala) (syntax, indent, ftdetect)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
+- [vala](https://github.com/tkztmk/vim-vala) (syntax, indent, ftdetect)
+- [vm](https://github.com/lepture/vim-velocity) (syntax, indent, ftdetect)
 - [css-color](https://github.com/ap/vim-css-color) (autoload, syntax)
 
 ## Contributing
