@@ -443,8 +443,14 @@ function! Fixedgq(lnum, count)
     let l:tw = &tw ? &tw : 80;
 
     let l:count = a:count
+    let l:first_char = indent(a:lnum) + 1
 
     if mode() == 'i' " gq was not pressed, but tw was set
+        return 1
+    endif
+
+    " This gq is only meant to do code with strings, not comments
+    if s:IsLineComment(a:lnum, l:first_char) || s:IsInMultilineComment(a:lnum, l:first_char)
         return 1
     endif
 

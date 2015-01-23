@@ -106,10 +106,9 @@ fu! <sid>DoHighlight() "{{{3
 		    \ . s:col . '/ contains=CSVDelimiter'
 	exe 'syn match CSVColumnOdd nextgroup=CSVColumnEven /'
 		    \ . s:col . '/ contains=CSVDelimiter'
-
-	exe 'syn match CSVColumnHeaderEven nextgroup=CSVColumnHeaderOdd /\%1l'
+	exe 'syn match CSVColumnHeaderEven nextgroup=CSVColumnHeaderOdd /\%<'. (get(b:, 'csv_headerline', 1)+1).'l'
 		    \. s:col . '/ contains=CSVDelimiter'
-	exe 'syn match CSVColumnHeaderOdd nextgroup=CSVColumnHeaderEven /\%1l'
+	exe 'syn match CSVColumnHeaderOdd nextgroup=CSVColumnHeaderEven /\%<'. (get(b:, 'csv_headerline', 1)+1).'l'
 		    \. s:col . '/ contains=CSVDelimiter'
     else
 	for i in range(len(b:csv_fixed_width_cols))
@@ -137,8 +136,13 @@ fu! <sid>DoSyntaxDefinitions() "{{{3
 
     hi def link CSVColumnHeaderOdd  WarningMsg
     hi def link CSVColumnHeaderEven WarningMsg
-    hi def link CSVColumnOdd	    DiffAdd
-    hi def link CSVColumnEven	    DiffChange
+    if get(g:, 'csv_no_column_highlight', 0)
+	hi def link CSVColumnOdd	    Normal
+	hi def link CSVColumnEven	    Normal
+    else
+	hi def link CSVColumnOdd	    DiffAdd
+	hi def link CSVColumnEven	    DiffChange
+    endif
 endfun
 
 " Main: {{{2 

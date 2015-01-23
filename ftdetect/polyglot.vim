@@ -29,11 +29,11 @@ autocmd FileType ember-script set tabstop=2|set shiftwidth=2|set expandtab
 autocmd BufNewFile,BufRead *.emblem set filetype=emblem
 autocmd FileType emblem set tabstop=2|set shiftwidth=2|set expandtab
 autocmd BufNewFile,BufRead *.git/{,modules/**/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
-autocmd BufNewFile,BufRead *.git/config,.gitconfig,.gitmodules set ft=gitconfig
-autocmd BufNewFile,BufRead */.config/git/config                set ft=gitconfig
-autocmd BufNewFile,BufRead *.git/modules/**/config             set ft=gitconfig
-autocmd BufNewFile,BufRead git-rebase-todo                     set ft=gitrebase
-autocmd BufNewFile,BufRead .gitsendemail.*                     set ft=gitsendemail
+autocmd BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitconfig
+autocmd BufNewFile,BufRead */.config/git/config                          set ft=gitconfig
+autocmd BufNewFile,BufRead *.git/modules/**/config                       set ft=gitconfig
+autocmd BufNewFile,BufRead git-rebase-todo                               set ft=gitrebase
+autocmd BufNewFile,BufRead .gitsendemail.*                               set ft=gitsendemail
 autocmd BufNewFile,BufRead *.git/**
       \ if getline(1) =~ '^\x\{40\}\>\|^ref: ' |
       \   set ft=git |
@@ -202,6 +202,7 @@ au BufRead,BufNewFile *.textile set filetype=textile
 au BufNewFile,BufRead *.thrift setlocal filetype=thrift
 autocmd BufNewFile,BufRead {.,}tmux.conf{.*,} setlocal filetype=tmux
 autocmd BufNewFile,BufRead *.toml set filetype=toml
+autocmd BufNewFile,BufRead Cargo.lock set filetype=toml
 autocmd BufNewFile,BufRead *.twig set filetype=twig
 autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript

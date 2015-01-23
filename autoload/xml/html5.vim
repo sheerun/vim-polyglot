@@ -601,7 +601,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'meta': [
     \ [],
-    \ extend(copy(global_attributes), {'name': [], 'http-equiv': ['refresh', 'default-style', 'content-type'], 'content': [], 'charset': charset})
+    \ extend(copy(global_attributes), {'name': ['application-name', 'author', 'description', 'generator', 'referrer', 'creator', 'googlebot', 'publisher', 'robots', 'slurp', 'viewport', 'theme-color'], 'http-equiv': ['refresh', 'default-style', 'content-type'], 'content': [], 'charset': charset})
 \ ],
 \ 'meter': [
     \ phrasing_elements,

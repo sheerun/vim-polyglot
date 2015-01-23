@@ -443,10 +443,32 @@ function! LatexBox_LatexErrors(status, ...)
 	endif
 endfunction
 
+" Redefine uniq() for compatibility with older Vim versions (< 7.4.218)
+function! s:uniq(list)
+        if exists('*uniq')
+                return uniq(a:list)
+        elseif len(a:list) <= 1
+                return a:list
+        endif
+
+        let last_element = get(a:list,0)
+        let uniq_list = [last_element]
+
+        for i in range(1, len(a:list)-1)
+                let next_element = get(a:list, i)
+                if last_element == next_element
+                        continue
+                endif
+                let last_element = next_element
+                call add(uniq_list, next_element)
+        endfor
+        return uniq_list
+endfunction
+
 function! s:log_contains_error(file)
 	let lines = readfile(a:file)
 	let lines = filter(lines, 'v:val =~ ''^.*:\d\+: ''')
-	let lines = uniq(map(lines, 'matchstr(v:val, ''^.*\ze:\d\+:'')'))
+	let lines = s:uniq(map(lines, 'matchstr(v:val, ''^.*\ze:\d\+:'')'))
 	let lines = filter(lines, 'filereadable(fnameescape(v:val))')
 	return len(lines) > 0
 endfunction

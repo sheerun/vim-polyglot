@@ -235,9 +235,9 @@ endfunction
 
 let s:_hexcolor   = '#\(\x\{3}\|\x\{6}\)\>' " submatch 1
 let s:_funcname   = '\(rgb\|hsl\)a\?' " submatch 2
-let s:_numval     = '\(\d\{1,3}%\?\)' " submatch 3,4,5
 let s:_ws_        = '\s*'
-let s:_listsep    = s:_ws_ . ',' . s:_ws_
+let s:_numval     = s:_ws_ . '\(\d\{1,3}%\?\)' " submatch 3,4,5
+let s:_listsep    = s:_ws_ . ','
 let s:_otherargs_ = '\%(,[^)]*\)\?'
 let s:_funcexpr   = s:_funcname . '[(]' . s:_numval . s:_listsep . s:_numval . s:_listsep . s:_numval . s:_ws_ . s:_otherargs_ . '[)]'
 let s:_csscolor   = s:_hexcolor . '\|' . s:_funcexpr

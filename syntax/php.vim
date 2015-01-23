@@ -533,10 +533,10 @@ syn match phpOperator       "&&\|\<and\>" contained display
 syn match phpOperator       "||\|\<x\=or\>" contained display
 syn match phpOperator       "[!=<>]=" contained display
 syn match phpOperator       "[<>]"  contained display
-syn match phpMemberSelector "->"  contained display
+syn match phpMemberSelector "->\|::"  contained display
 syn match phpVarSelector    "\$"  contained display
-" highlight object variables inside strings
-syn match phpMethodsVar     "->\h\w*" contained contains=phpMethods,phpMemberSelector display containedin=phpStringDouble
+" highlight static and object variables inside strings
+syn match phpMethodsVar     "\%(->\|::$\?\)\h\w*" contained contains=phpMethods,phpMemberSelector,phpIdentifier display containedin=phpStringDouble
 syn match phpSplatOperator  "\.\.\." contained display
 
 " Identifier
