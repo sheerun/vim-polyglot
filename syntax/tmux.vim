@@ -3,6 +3,20 @@
 " Maintainer: Tiago Cunha <tcunha@users.sourceforge.net>
 " Last Change: $Date: 2010-07-27 18:29:07 $
 " License: This file is placed in the public domain.
+"
+" To install this file:
+"
+" - Drop the file in the syntax directory into runtimepath (such as
+"  ~/.vim/syntax/tmux.vim).
+" - Make the filetype recognisable by adding the following to filetype.vim
+"   (~/.vim/filetype.vim):
+"
+"	augroup filetypedetect
+"		au BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
+"	augroup END
+"
+" - Switch on syntax highlighting by adding "syntax enable" to .vimrc.
+"
 
 if version < 600
 	syntax clear
@@ -17,60 +31,237 @@ syn keyword tmuxAction	any current none
 syn keyword tmuxBoolean	off on
 
 syn keyword tmuxCmds
-	\ attach[-session] detach[-client] has[-session] kill-server
-	\ kill-session lsc list-clients lscm list-commands ls list-sessions
-	\ lockc lock-client locks lock-session new[-session] refresh[-client]
-	\ rename[-session] showmsgs show-messages source[-file] start[-server]
-	\ suspendc suspend-client switchc switch-client copy-mode
-	\ breakp break-pane capturep capture-pane choose-client choose-session
-	\ choose-tree choose-window displayp display-panes findw find-window
-	\ joinp join-pane killp kill-pane killw kill-window lastp last-pane
-	\ last[-window] linkw link-window lsp list-panes lsw list-windows movep
-	\ move-pane movew move-window neww new-window nextl next-layout
-	\ next[-window] pipep pipe-pane prevl previous-layout prev[ious-window]
-	\ renamew rename-window resizep resize-pane respawnp respawn-pane
-	\ respawnw respawn-window rotatew rotate-window selectl select-layout
-	\ selectp select-pane selectw select-window splitw split-window swapp
-	\ swap-pane swapw swap-window unlinkw unlink-window
-	\ bind[-key] lsk list-keys send[-keys] send-prefix unbind[-key]
-	\ set[-option] setw set-window-option show[-options] showw
-	\ show-window-options setenv set-environment showenv show-environment
-	\ command-prompt confirm[-before] display[-message]
-	\ choose-buffer clearhist clear-history deleteb delete-buffer lsb
-	\ list-buffers loadb load-buffer pasteb paste-buffer saveb save-buffer
-	\ setb set-buffer showb show-buffer
-	\ clock-mode if[-shell] lock[-server] run[-shell] [server-]info
+	\ attach[-session]
+	\ bind[-key]
+	\ break-pane
+	\ breakp
+	\ capture-pane
+	\ capturep
+	\ choose-buffer
+	\ choose-client
+	\ choose-list
+	\ choose-session
+	\ choose-tree
+	\ choose-window
+	\ clear-history
+	\ clearhist
+	\ clock-mode
+	\ command-prompt
+	\ confirm[-before]
+	\ copy-mode
+	\ delete-buffer
+	\ deleteb
+	\ detach[-client]
+	\ display[-message]
+	\ display-panes
+	\ displayp
+	\ find-window
+	\ findw
+	\ has[-session]
+	\ if[-shell]
+	\ join-pane
+	\ joinp
+	\ kill-pane
+	\ killp
+	\ kill-server
+	\ kill-session
+	\ kill-window
+	\ killw
+	\ last-pane
+	\ lastp
+	\ last[-window]
+	\ link-window
+	\ linkw
+	\ list-buffers
+	\ lsb
+	\ list-clients
+	\ lsc
+	\ list-commands
+	\ lscm
+	\ list-keys
+	\ lsk
+	\ list-panes
+	\ lsp
+	\ list-sessions
+	\ ls
+	\ list-windows
+	\ lsw
+	\ load-buffer
+	\ loadb
+	\ lock-client
+	\ lockc
+	\ lock[-server]
+	\ lock-session
+	\ locks
+	\ move-pane
+	\ movep
+	\ move-window
+	\ movew
+	\ new[-session]
+	\ next-layout
+	\ nextl
+	\ next[-window]
+	\ paste-buffer
+	\ pasteb
+	\ pipe-pane
+	\ pipep
+	\ previous-layout
+	\ prevl
+	\ prev[ious-window]
+	\ refresh[-client]
+	\ rename[-session]
+	\ rename-window
+	\ renamew
+	\ resize-pane
+	\ resizep
+	\ respawn-pane
+	\ respawnp
+	\ respawn-window
+	\ respawnw
+	\ rotate-window
+	\ rotatew
+	\ run[-shell]
+	\ save-buffer
+	\ saveb
+	\ select-layout
+	\ selectl
+	\ select-pane
+	\ selectp
+	\ select-window
+	\ selectw
+	\ send[-keys]
+	\ send-prefix
+	\ server-info
+	\ info
+	\ set-buffer
+	\ setb
+	\ set-environment
+	\ setenv
+	\ set[-option]
+	\ set-window-option
+	\ setw
+	\ show-buffer
+	\ showb
+	\ show-environment
+	\ showenv
+	\ show-messages
+	\ showmsgs
+	\ show[-options]
+	\ show-window-options
+	\ showw
+	\ source[-file]
+	\ split-window
+	\ splitw
+	\ start[-server]
+	\ suspend-client
+	\ suspendc
+	\ swap-pane
+	\ swapp
+	\ swap-window
+	\ swapw
+	\ switch-client
+	\ switchc
+	\ unbind[-key]
+	\ unlink-window
+	\ unlinkw
+	\ wait[-for]
 
 syn keyword tmuxOptsSet
-	\ buffer-limit escape-time exit-unattached exit-unattached quiet
+	\ assume-paste-time
+	\ base-index
+	\ bell-action
+	\ bell-on-alert
+	\ buffer-limit
+	\ default-command
+	\ default-shell
+	\ default-terminal
+	\ destroy-unattached
+	\ detach-on-destroy
+	\ display-panes-active-colour
+	\ display-panes-colour
+	\ display-panes-time
+	\ display-time
+	\ escape-time
+	\ exit-unattached
+	\ focus-events
+	\ history-limit
+	\ lock-after-time
+	\ lock-command
+	\ lock-server
+	\ message-command-style
+	\ message-limit
+	\ message-style
+	\ mouse-resize-pane
+	\ mouse-select-pane
+	\ mouse-select-window
+	\ mouse-utf8
+	\ pane-active-border-style
+	\ pane-border-style
+	\ prefix
+	\ prefix2
+	\ quiet
+	\ renumber-windows
+	\ repeat-time
 	\ set-clipboard
-	\ base-index bell-action bell-on-alert default-command default-path
-	\ default-shell default-terminal destroy-unattached detach-on-destroy
-	\ display-panes-[active-]colour display-[panes-]time history-limit
-	\ lock-after-time lock-command lock-server message-[command-]attr
-	\ message-[command-]bg message-[command-]fg message-limit
-	\ mouse-resize-pane mouse-select-pane mouse-select-window mouse-utf8
-	\ pane-[active-]border-style prefix prefix2
-	\ renumber-windows repeat-time set-remain-on-exit set-titles
-	\ set-titles-string status status-style
-	\ status-interval status-justify status-keys status-left
-	\ status-left-style status-left-length status-position status-right
-	\ status-right-style status-right-length status-utf8 terminal-overrides
-	\ update-environment visual-activity visual-bell visual-content
-	\ visual-silence word-separators
+	\ set-remain-on-exit
+	\ set-titles
+	\ set-titles-string
+	\ status
+	\ status-interval
+	\ status-justify
+	\ status-keys
+	\ status-left
+	\ status-left-length
+	\ status-left-style
+	\ status-position
+	\ status-right
+	\ status-right-length
+	\ status-utf8
+	\ staus-right-style
+	\ terminal-overrides
+	\ update-environment
+	\ visual-activity
+	\ visual-bell
+	\ visual-content
+	\ visual-silence
+	\ word-separators
 
 syn keyword tmuxOptsSetw
-	\ aggressive-resize alternate-screen automatic-rename
-	\ c0-change-interval c0-change-trigger clock-mode-colour
-	\ clock-mode-style force-height force-width layout-history-limit
-	\ main-pane-height main-pane-width mode-style move-keys
-	\ mode-mouse monitor-activity monitor-content monitor-silence
-	\ other-pane-height other-pane-width pane-base-index remain-on-exit
-	\ synchronize-panes utf8 window-status-bell-style
-	\ window-status-content-style window-status-activity-style
-	\ window-status-[current-]attr window-status-[current-]bg
-	\ window-status-[current-]fg window-status-[current-]format
-	\ window-status-separator xterm-keys wrap-search
+	\ aggressive-resize
+	\ allow-rename
+	\ alternate-screen
+	\ automatic-rename
+	\ c0-change-interval
+	\ c0-change-trigger
+	\ clock-mode-colour
+	\ clock-mode-style
+	\ force-height
+	\ force-width
+	\ main-pane-height
+	\ main-pane-width
+	\ mode-keys
+	\ mode-mouse
+	\ mode-style
+	\ monitor-activity
+	\ monitor-content
+	\ monitor-silence
+	\ other-pane-height
+	\ other-pane-width
+	\ pane-base-index
+	\ remain-on-exit
+	\ synchronize-panes
+	\ utf8
+	\ window-status-activity-style
+	\ window-status-bell-style
+	\ window-status-content-style
+	\ window-status-current-format
+	\ window-status-current-style
+	\ window-status-format
+	\ window-status-last-style
+	\ window-status-separator
+	\ window-status-style
+	\ wrap-search
+	\ xterm-keys
 
 syn keyword tmuxTodo FIXME NOTE TODO XXX contained
 

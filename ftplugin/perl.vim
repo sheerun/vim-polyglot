@@ -77,7 +77,7 @@ endif
 "---------------------------------------------
 
 " Undo the stuff we changed.
-let b:undo_ftplugin = "setlocal fo< com< cms< inc< inex< def< isf< kp< path<" .
+let b:undo_ftplugin = "setlocal fo< com< cms< inc< inex< def< isk< isf< kp< path<" .
 	    \	      " | unlet! b:browsefilter"
 
 " proper matching for matchit plugin

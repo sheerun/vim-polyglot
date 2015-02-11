@@ -9,13 +9,9 @@ if exists("b:did_indent")
 endif
 let b:did_indent = 1
 
+setlocal autoindent
 setlocal indentexpr=GetScalaIndent()
 setlocal indentkeys=0{,0},0),!^F,<>>,o,O,e,=case,<CR>
-setlocal autoindent
-setlocal softtabstop=2
-setlocal tabstop=2
-setlocal shiftwidth=2
-setlocal expandtab
 
 if exists("*GetScalaIndent")
   finish
@@ -543,7 +539,7 @@ function! GetScalaIndent()
     let ind = ind - 1
   endif
 
-  if scala#LineEndsInIncomplete(curline)
+  if scala#LineEndsInIncomplete(prevline)
     call scala#ConditionalConfirm("19")
     return ind
   endif
@@ -597,5 +593,6 @@ function! GetScalaIndent()
 
   return ind
 endfunction
-" vim:set ts=2 sts=2 sw=2:
+
+" vim:set sw=2 sts=2 ts=8 et:
 " vim600:fdm=marker fdl=1 fdc=0:

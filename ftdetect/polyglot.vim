@@ -86,6 +86,7 @@ augroup END
 au BufNewFile,BufRead *.ejs		set filetype=jst
 au BufNewFile,BufRead *.jst  		set filetype=jst
 au BufNewFile,BufRead *.hamljs set filetype=jst
+au BufNewFile,BufRead *.ect set filetype=jst
 autocmd BufNewFile,BufRead *.less setf less
 au BufNewFile,BufRead *.liquid					set ft=liquid
 au BufNewFile,BufRead */_layouts/*.html,*/_includes/*.html	set ft=liquid
@@ -178,14 +179,15 @@ au BufNewFile,BufRead [Bb]uildfile		call s:setf('ruby')
 au BufNewFile,BufRead Appraisals		call s:setf('ruby')
 au BufNewFile,BufRead Podfile,*.podspec		call s:setf('ruby')
 au BufRead,BufNewFile *.rs set filetype=rust
-au BufRead,BufNewFile *.sbt set filetype=sbt
+au BufRead,BufNewFile *.sbt set filetype=sbt.scala
 fun! s:DetectScala()
     if getline(1) == '#!/usr/bin/env scala'
         set filetype=scala
     endif
 endfun
-au BufRead,BufNewFile *.scala,*.sbt set filetype=scala
+au BufRead,BufNewFile *.scala set filetype=scala
 au BufRead,BufNewFile * call s:DetectScala()
+au BufRead,BufNewFile *.sbt setfiletype sbt.scala
 autocmd BufNewFile,BufRead *.slim set filetype=slim
 autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus

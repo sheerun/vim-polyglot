@@ -64,14 +64,24 @@ setlocal efm+=%-G%.%#
 
 " Vim Windows {{{
 
-" Width of vertical splits
+" Type of split, "new" for horiz. "vnew" for vert.
+if !exists('g:LatexBox_split_type')
+	let g:LatexBox_split_type = "vnew"
+endif
+
+" Length of vertical splits
+if !exists('g:LatexBox_split_length')
+	let g:LatexBox_split_length = 15
+endif
+
+" Width of horizontal splits
 if !exists('g:LatexBox_split_width')
 	let g:LatexBox_split_width = 30
 endif
 
-" Where vertical splits appear
+" Where splits appear
 if !exists('g:LatexBox_split_side')
-	let g:LatexBox_split_side = "leftabove"
+	let g:LatexBox_split_side = "aboveleft"
 endif
 
 " Resize when split?
@@ -229,12 +239,18 @@ endfunction
 
 " Default pdf viewer
 if !exists('g:LatexBox_viewer')
-	if has('win32')
-		" On windows, 'running' a file will open it with the default program
-		let g:LatexBox_viewer = ''
-	else
-		let g:LatexBox_viewer = 'xdg-open'
+	" On windows, 'running' a file will open it with the default program
+	let s:viewer = ''
+	if has('unix')
+	  " echo -n necessary as uname -s will append \n otherwise
+      let s:uname = system('echo -n $(uname -s)')
+	  if s:uname == "Darwin"
+		  let s:viewer = 'open'
+	  else
+		  let s:viewer = 'xdg-open'
+	  endif
 	endif
+	let g:LatexBox_viewer = s:viewer
 endif
 
 function! LatexBox_View(...)

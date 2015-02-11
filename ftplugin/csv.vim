@@ -41,7 +41,9 @@ fu! <sid>Warn(mess) "{{{3
     echohl Normal
 endfu
 
-fu! <sid>Init(startline, endline) "{{{3
+fu! <sid>Init(startline, endline, ...) "{{{3
+    " if a:1 is set, keep the b:delimiter
+    let keep = exists("a:1") && a:1
     " Hilight Group for Columns
     if exists("g:csv_hiGroup")
         let s:hiGroup = g:csv_hiGroup
@@ -56,10 +58,12 @@ fu! <sid>Init(startline, endline) "{{{3
     exe "hi link CSVHeaderLine" s:hiHeader
 
     " Determine default Delimiter
-    if !exists("g:csv_delim")
-        let b:delimiter=<SID>GetDelimiter(a:startline, a:endline)
-    else
-        let b:delimiter=g:csv_delim
+    if !keep
+        if !exists("g:csv_delim")
+            let b:delimiter=<SID>GetDelimiter(a:startline, a:endline)
+        else
+            let b:delimiter=g:csv_delim
+        endif
     endif
 
     " Define custom commentstring
@@ -579,7 +583,15 @@ fu! <sid>ColWidth(colnr) "{{{3
 
     if !exists("b:csv_fixed_width_cols")
         if !exists("b:csv_list")
-            let b:csv_list=getline(1,'$')
+            " only check first 10000 lines, to be faster
+            let last = line('$')
+            if !get(b:, 'csv_arrange_use_all_rows', 0)
+                if last > 10000
+                    let last = 10000
+                    call <sid>Warn('File too large, only checking the first 10000 rows for the width')
+                endif
+            endif
+            let b:csv_list=getline(1,last)
             let pat = '^\s*\V'. escape(b:csv_cmt[0], '\\')
             call filter(b:csv_list, 'v:val !~ pat')
             call filter(b:csv_list, '!empty(v:val)')
@@ -646,15 +658,40 @@ fu! <sid>ArrangeCol(first, last, bang, limit) range "{{{3
     else
        let ro = 0
     endif
-    exe "sil". a:first . ',' . a:last .'s/' . (b:col) .
-    \ '/\=<SID>Columnize(submatch(0))/' . (&gd ? '' : 'g')
-    " Clean up variables, that were only needed for <sid>Columnize() function
-    unlet! s:columnize_count s:max_cols s:prev_line
-    if ro
-        setl ro
-        unlet ro
+    let s:count = 0
+    let _stl  = &stl
+    let s:max   = (a:last - a:first + 1) * len(b:col_width)
+    let s:temp  = 0
+    try
+        exe "sil". a:first . ',' . a:last .'s/' . (b:col) .
+        \ '/\=<SID>Columnize(submatch(0))/' . (&gd ? '' : 'g')
+    finally
+        " Clean up variables, that were only needed for <sid>Columnize() function
+        unlet! s:columnize_count s:max_cols s:prev_line s:max s:count s:temp s:val
+        if ro
+            setl ro
+            unlet ro
+        endif
+        let &stl = _stl
+        call winrestview(cur)
+    endtry
+endfu
+
+fu! <sid>ProgressBar(cnt, max) "{{{3
+    if get(g:, 'csv_no_progress', 0)
+        return
     endif
-    call winrestview(cur)
+    let width = 40 " max width of progressbar
+    if width > &columns
+        let width = &columns
+    endif
+    let s:val = a:cnt * width / a:max
+    if (s:val > s:temp || a:cnt==1)
+        let &stl='%#DiffAdd#['.repeat('=', s:val).'>'. repeat(' ', width-s:val).']'.
+                \ (width < &columns  ? ' '.100*s:val/width. '%%' : '')
+        redrawstatus
+        let s:temp = s:val
+    endif
 endfu
 
 fu! <sid>PrepUnArrangeCol(first, last) "{{{3
@@ -706,9 +743,7 @@ fu! <sid>CalculateColumnWidth() "{{{3
     endtry
     " delete buffer content in variable b:csv_list,
     " this was only necessary for calculating the max width
-    unlet! b:csv_list
-    unlet! s:columnize_count
-    unlet! s:decimal_column
+    unlet! b:csv_list s:columnize_count s:decimal_column
 endfu
 
 fu! <sid>Columnize(field) "{{{3
@@ -725,6 +760,7 @@ fu! <sid>Columnize(field) "{{{3
     if exists("s:prev_line") && s:prev_line != line('.')
         let s:columnize_count = 0
     endif
+    let s:count+=1
 
     let s:prev_line = line('.')
     " convert zero based indexed list to 1 based indexed list,
@@ -733,8 +769,8 @@ fu! <sid>Columnize(field) "{{{3
     " let width=get(b:col_width,<SID>WColumn()-1,20)
     " is too slow, so we are using:
     let colnr = s:columnize_count % s:max_cols
-    let width=get(b:col_width, colnr, 20)
-    let align='r'
+    let width = get(b:col_width, colnr, 20)
+    let align = 'r'
     if exists('b:csv_arrange_align')
         let align_list=split(get(b:, 'csv_arrange_align', " "), '\zs')
         try
@@ -747,9 +783,10 @@ fu! <sid>Columnize(field) "{{{3
        \ align isnot? 'c' && align isnot? '.') || get(b:, 'csv_arrange_leftalign', 0))
        let align = 'r'
     endif
+    call <sid>ProgressBar(s:count,s:max)
 
     let s:columnize_count += 1
-    let has_delimiter = (a:field =~# b:delimiter.'$')
+    let has_delimiter = (a:field[-1:] is? b:delimiter)
     if align is? 'l'
         " left-align content
         return printf("%-*S%s", width+1 , 
@@ -1910,7 +1947,8 @@ fu! <sid>CommandDefinitions() "{{{3
     call <sid>LocalCmd("UnArrangeColumn",
         \':call <sid>PrepUnArrangeCol(<line1>, <line2>)',
         \ '-range')
-    call <sid>LocalCmd("InitCSV", ':call <sid>Init(<line1>,<line2>)', '-range=%')
+    call <sid>LocalCmd("InitCSV", ':call <sid>Init(<line1>,<line2>,<bang>0)',
+        \ '-bang -range=%')
     call <sid>LocalCmd('Header',
         \ ':call <sid>SplitHeaderLine(<q-args>,<bang>0,1)',
         \ '-nargs=? -bang')
@@ -2232,6 +2270,10 @@ fu! <sid>NrColumns(bang) "{{{3
 endfu
 
 fu! <sid>Tabularize(bang, first, last) "{{{3
+    if match(split(&ft, '\.'),'csv') == -1
+        call <sid>Warn("No CSV filetype, aborting!")
+        return
+    endif
     let _c = winsaveview()
     " Table delimiter definition "{{{4
     if !exists("s:td")
@@ -2307,10 +2349,7 @@ fu! <sid>Tabularize(bang, first, last) "{{{3
         call <sid>Warn('An error occured, aborting!')
         return
     endif
-    if get(b:, 'csv_arrange_leftalign', 0)
-        call map(b:col_width, 'v:val+1')
-    endif
-    if b:delimiter == "\t" && !get(b:, 'csv_arrange_leftalign',0)
+    if getline(a:first)[-1:] isnot? b:delimiter
         let b:col_width[-1] += 1
     endif
     let marginline = s:td.scol. join(map(copy(b:col_width), 'repeat(s:td.hbar, v:val)'), s:td.cros). s:td.ecol
@@ -2335,12 +2374,14 @@ fu! <sid>Tabularize(bang, first, last) "{{{3
         call append(a:first + s:csv_fold_headerline, marginline)
         let adjust_last += 1
     endif
+    " Syntax will be turned off, so disable this part
+    "
     " Adjust headerline to header of new table
-    let b:csv_headerline = (exists('b:csv_headerline')?b:csv_headerline+2:3)
-    call <sid>CheckHeaderLine()
+    "let b:csv_headerline = (exists('b:csv_headerline')?b:csv_headerline+2:3)
+    "call <sid>CheckHeaderLine()
     " Adjust syntax highlighting
-    unlet! b:current_syntax
-    ru syntax/csv.vim
+    "unlet! b:current_syntax
+    "ru syntax/csv.vim
 
     if a:bang
         exe printf('sil %d,%ds/^%s\zs\n/&%s&/e', a:first + s:csv_fold_headerline, a:last + adjust_last,

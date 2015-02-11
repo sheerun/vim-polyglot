@@ -11,6 +11,8 @@ let b:did_ftplugin = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
+setlocal commentstring=#\ %s
+
 " Add NERDCommenter delimiters
 
 let s:delims = { 'left': '#' }

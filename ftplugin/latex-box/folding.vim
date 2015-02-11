@@ -75,8 +75,8 @@ if g:LatexBox_fold_automatic == 1
 	"
 	augroup FastFold
 		autocmd!
-		autocmd InsertEnter *.tex setlocal foldmethod=manual
-		autocmd InsertLeave *.tex setlocal foldmethod=expr
+		autocmd InsertEnter *.tex if !&diff | setlocal foldmethod=manual | endif
+		autocmd InsertLeave *.tex if !&diff | setlocal foldmethod=expr | endif
 	augroup end
 else
 	setl foldmethod=manual

@@ -459,7 +459,8 @@ function! s:GetLabelCache(file)
 
 	if !has_key(s:LabelCache , a:file) || s:LabelCache[a:file][0] != getftime(a:file)
 		" Open file in temporary split window for label extraction.
-		silent execute '1sp +let\ labels=s:ExtractLabels()|let\ inputs=s:ExtractInputs()|quit! ' . fnameescape(a:file)
+		let main_tex_file = LatexBox_GetMainTexFile()
+		silent execute '1sp +let\ b:main_tex_file=main_tex_file|let\ labels=s:ExtractLabels()|let\ inputs=s:ExtractInputs()|quit! ' . fnameescape(a:file)
 		let s:LabelCache[a:file] = [ getftime(a:file), labels, inputs ]
 	endif
 
