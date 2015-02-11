@@ -11,7 +11,6 @@ function! s:DetectCoffee()
     endif
 endfunction
 autocmd BufNewFile,BufRead * call s:DetectCoffee()
-au BufRead,BufNewFile *.csv,*.dat,*.tsv,*.tab set filetype=csv
 autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber
 au BufNewFile,BufRead Dockerfile set filetype=dockerfile
 au BufRead,BufNewFile *.eex set filetype=eelixir

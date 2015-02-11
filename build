@@ -77,7 +77,6 @@ PACKS="
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
   css:JulesWang/css.vim
-  csv:chrisbra/csv.vim
   cucumber:tpope/vim-cucumber
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
