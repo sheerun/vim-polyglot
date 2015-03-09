@@ -68,7 +68,7 @@ syn keyword  jadeScriptLoopKeywords for in contained
 
 syn region  jadeJavascript start="^\z(\s*\)script\%(:\w\+\)\=" end="^\%(\z1\s\|\s*$\)\@!" contains=@htmlJavascript,jadeJavascriptTag keepend 
 syn region  jadeJavascriptTag contained start="^\z(\s*\)script\%(:\w\+\)\=" end="$" contains=jadeBegin,jadeTag
-syn region  jadeCssBlock        start="^\z(\s*\)style" nextgroup=@jadeComponent,jadeError  end="^\%(\z1\s\|\s*$\)\@!" contains=@jadeTop,@htmlCss keepend
+syn region  jadeCssBlock        start="^\z(\s*\)style" nextgroup=@jadeComponent,jadeError  end="^\%(\z1\s\|\s*$\)\@!" contains=@htmlCss keepend
 
 syn match  jadeError "\$" contained
 

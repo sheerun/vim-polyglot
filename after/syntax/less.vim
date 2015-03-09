@@ -10,4 +10,4 @@ if !( has('gui_running') || &t_Co==256 ) | finish | endif
 " lessVariableValue      | lessDefinition | cssComment     | lessComment | https://github.com/groenewege/vim-less
 " lessVariableDefinition | cssDefinition  | cssComment     | lessComment | https://github.com/lunaru/vim-less
 
-call css_color#init('css', 'lessVariableValue,lessVariableDefinition,lessDefinition,lessCssAttribute,lessAttribute,cssDefinition,cssComment,lessCssComment,lessComment')
+call css_color#init('css', 'extended', 'lessVariableValue,lessVariableDefinition,lessDefinition,lessCssAttribute,lessAttribute,cssDefinition,cssComment,lessCssComment,lessComment')

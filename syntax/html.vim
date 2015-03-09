@@ -21,7 +21,7 @@
 syn keyword htmlTagName contained article aside audio canvas command
 syn keyword htmlTagName contained datalist details dialog embed figcaption figure footer
 syn keyword htmlTagName contained header hgroup keygen main mark meter menu nav output
-syn keyword htmlTagName contained progress ruby rt rp section source summary time track video data
+syn keyword htmlTagName contained progress ruby rt rp rb rtc section source summary time track video data
 syn keyword htmlTagName contained template content shadow
 syn keyword htmlTagName contained wbr bdi
 syn keyword htmlTagName contained picture
@@ -76,12 +76,14 @@ syn keyword htmlArg contained label icon open datetime pubdate
 syn keyword htmlArg contained async
 " <content>
 syn keyword htmlArg contained select
+" <iframe>
+syn keyword htmlArg contained seamless srcdoc sandbox
 " <picture>
 syn keyword htmlArg contained srcset sizes
 
 " Custom Data Attributes
 " http://dev.w3.org/html5/spec/elements.html#embedding-custom-non-visible-data
-syn match   htmlArg "\<\(data\(\-[a-z]\+\)\+\)\=\>" contained
+syn match   htmlArg "\<\(data\-\([a-z_][a-z0-9_.\-]*\)\+\)\=\>" contained
 
 " Microdata
 " http://dev.w3.org/html5/md/

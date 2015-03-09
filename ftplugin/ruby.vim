@@ -28,7 +28,7 @@ if exists("loaded_matchit") && !exists("b:match_words")
 	\ ':' .
 	\ '\<\%(else\|elsif\|ensure\|when\|rescue\|break\|redo\|next\|retry\)\>' .
 	\ ':' .
-	\ '\<end\>' .
+        \ '\%(^\|[^.\:@$]\)\@<=\<end\:\@!\>' .
 	\ ',{:},\[:\],(:)'
 
   let b:match_skip =

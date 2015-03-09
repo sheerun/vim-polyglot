@@ -545,7 +545,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'iframe': [
     \ [],
-    \ extend(copy(global_attributes), {'src': [], 'name': [], 'width': [], 'height': [], 'sandbox': ['allow-same-origin', 'allow-forms', 'allow-scripts'], 'seamless': ['seamless', '']})
+    \ extend(copy(global_attributes), {'src': [], 'srcdoc': [], 'name': [], 'width': [], 'height': [], 'sandbox': ['allow-same-origin', 'allow-forms', 'allow-scripts'], 'seamless': ['seamless', '']})
 \ ],
 \ 'img': [
     \ [],
@@ -659,6 +659,10 @@ let g:xmldata_html5 = {
     \ phrasing_elements,
     \ extend(copy(global_attributes), {'cite': []})
 \ ],
+\ 'rb': [
+    \ phrasing_elements,
+    \ global_attributes
+\ ],
 \ 'rp': [
     \ phrasing_elements,
     \ global_attributes
@@ -667,8 +671,12 @@ let g:xmldata_html5 = {
     \ phrasing_elements,
     \ global_attributes
 \ ],
-\ 'ruby': [
+\ 'rtc': [
     \ phrasing_elements + ['rp', 'rt'],
+    \ global_attributes
+\ ],
+\ 'ruby': [
+    \ phrasing_elements + ['rb', 'rp', 'rt', 'rtc'],
     \ global_attributes
 \ ],
 \ 'samp': [

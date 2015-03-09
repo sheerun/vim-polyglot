@@ -142,7 +142,7 @@ function! s:DetectPerl6()
   endwhile
 endfunction
 autocmd BufReadPost *.pl,*.pm,*.t call s:DetectPerl6()
-autocmd BufNew,BufRead *.nqp setf perl6
+autocmd BufNew,BufNewFile,BufRead *.nqp setf perl6
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au BufNewFile,BufRead   *.ps1   set ft=ps1
 au BufNewFile,BufRead   *.psd1  set ft=ps1
@@ -180,7 +180,7 @@ au BufNewFile,BufRead Podfile,*.podspec		call s:setf('ruby')
 au BufRead,BufNewFile *.rs set filetype=rust
 au BufRead,BufNewFile *.sbt set filetype=sbt.scala
 fun! s:DetectScala()
-    if getline(1) == '#!/usr/bin/env scala'
+    if getline(1) =~# '^#!\(/usr\)\?/bin/env\s\+scalas\?'
         set filetype=scala
     endif
 endfun

@@ -3,4 +3,4 @@
 
 if !( has('gui_running') || &t_Co==256 ) | finish | endif
 
-call css_color#init('css', 'sassCssAttribute,sassComment,sassCssComment')
+call css_color#init('css', 'extended', 'sassCssAttribute,sassComment,sassCssComment')

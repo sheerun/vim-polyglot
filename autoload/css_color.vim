@@ -250,7 +250,7 @@ function! s:parse_css_screen()
 	call s:clear_matches()
 	call s:create_matches()
 endfunction
-function! s:parse_any_screen()
+function! s:parse_hex_screen()
 	call substitute( join( getline('w0','w$'), "\n" ), s:_hexcolor, '\=s:create_syn_match()', 'g' )
 	call s:clear_matches()
 	call s:create_matches()
@@ -258,7 +258,7 @@ endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! css_color#init(type, groups)
+function! css_color#init(type, keywords, groups)
 	exe 'syn cluster colorableGroup contains=' . a:groups
 
 	let b:has_color_hi    = {}
@@ -273,23 +273,58 @@ function! css_color#init(type, groups)
 
 	exe 'call s:parse_'.a:type.'_screen()'
 
-	if a:type != 'css' | return | endif
+	if a:keywords == 'none' | return | endif
+
+	syn case ignore
+
+	" W3C basic colors
 
 	hi BG000000 guibg=#000000 guifg=#FFFFFF ctermbg=16  ctermfg=231
+	hi BGc0c0c0 guibg=#C0C0C0 guifg=#000000 ctermbg=250 ctermfg=16
+	hi BG808080 guibg=#808080 guifg=#000000 ctermbg=244 ctermfg=16
+	hi BGffffff guibg=#FFFFFF guifg=#000000 ctermbg=231 ctermfg=16
+	hi BG800000 guibg=#800000 guifg=#FFFFFF ctermbg=88  ctermfg=231
+	hi BGff0000 guibg=#FF0000 guifg=#FFFFFF ctermbg=196 ctermfg=231
+	hi BG800080 guibg=#800080 guifg=#FFFFFF ctermbg=240 ctermfg=231
+	hi BGff00ff guibg=#FF00FF guifg=#FFFFFF ctermbg=13  ctermfg=231
+	hi BG008000 guibg=#008000 guifg=#FFFFFF ctermbg=2   ctermfg=231
+	hi BG00ff00 guibg=#00FF00 guifg=#000000 ctermbg=10  ctermfg=16
+	hi BG808000 guibg=#808000 guifg=#FFFFFF ctermbg=240 ctermfg=231
+	hi BGffff00 guibg=#FFFF00 guifg=#000000 ctermbg=11  ctermfg=16
 	hi BG000080 guibg=#000080 guifg=#FFFFFF ctermbg=235 ctermfg=231
+	hi BG0000ff guibg=#0000FF guifg=#FFFFFF ctermbg=4   ctermfg=231
+	hi BG008080 guibg=#008080 guifg=#FFFFFF ctermbg=30  ctermfg=231
+	hi BG00ffff guibg=#00FFFF guifg=#000000 ctermbg=51  ctermfg=16
+
+	syn keyword BG000000 black   contained containedin=@colorableGroup
+	syn keyword BGc0c0c0 silver  contained containedin=@colorableGroup
+	syn keyword BG808080 gray    contained containedin=@colorableGroup
+	syn match BGffffff "\c\<white\(-\)\@!\>" contained containedin=@colorableGroup
+	syn keyword BG800000 maroon  contained containedin=@colorableGroup
+	syn keyword BGff0000 red     contained containedin=@colorableGroup
+	syn keyword BG800080 purple  contained containedin=@colorableGroup
+	syn keyword BGff00ff fuchsia contained containedin=@colorableGroup
+	syn keyword BG008000 green   contained containedin=@colorableGroup
+	syn keyword BG00ff00 lime    contained containedin=@colorableGroup
+	syn keyword BG808000 olive   contained containedin=@colorableGroup
+	syn keyword BGffff00 yellow  contained containedin=@colorableGroup
+	syn keyword BG000080 navy    contained containedin=@colorableGroup
+	syn keyword BG0000ff blue    contained containedin=@colorableGroup
+	syn keyword BG008080 teal    contained containedin=@colorableGroup
+	syn keyword BG00ffff aqua    contained containedin=@colorableGroup
+
+	if a:keywords == 'basic' | return | endif
+
+	" W3C extended colors
+
 	hi BG00008b guibg=#00008B guifg=#FFFFFF ctermbg=4   ctermfg=231
 	hi BG0000cd guibg=#0000CD guifg=#FFFFFF ctermbg=4   ctermfg=231
-	hi BG0000ff guibg=#0000FF guifg=#FFFFFF ctermbg=4   ctermfg=231
 	hi BG006400 guibg=#006400 guifg=#FFFFFF ctermbg=235 ctermfg=231
-	hi BG008000 guibg=#008000 guifg=#FFFFFF ctermbg=2   ctermfg=231
-	hi BG008080 guibg=#008080 guifg=#FFFFFF ctermbg=30  ctermfg=231
 	hi BG008b8b guibg=#008B8B guifg=#FFFFFF ctermbg=30  ctermfg=231
 	hi BG00bfff guibg=#00BFFF guifg=#000000 ctermbg=6   ctermfg=16
 	hi BG00ced1 guibg=#00CED1 guifg=#000000 ctermbg=6   ctermfg=16
 	hi BG00fa9a guibg=#00FA9A guifg=#000000 ctermbg=6   ctermfg=16
-	hi BG00ff00 guibg=#00FF00 guifg=#000000 ctermbg=10  ctermfg=16
 	hi BG00ff7f guibg=#00FF7F guifg=#000000 ctermbg=6   ctermfg=16
-	hi BG00ffff guibg=#00FFFF guifg=#000000 ctermbg=51  ctermfg=16
 	hi BG191970 guibg=#191970 guifg=#FFFFFF ctermbg=237 ctermfg=231
 	hi BG1e90ff guibg=#1E90FF guifg=#000000 ctermbg=12  ctermfg=16
 	hi BG20b2aa guibg=#20B2AA guifg=#000000 ctermbg=37  ctermfg=16
@@ -317,10 +352,6 @@ function! css_color#init(type, groups)
 	hi BG7cfc00 guibg=#7CFC00 guifg=#000000 ctermbg=3   ctermfg=16
 	hi BG7fff00 guibg=#7FFF00 guifg=#000000 ctermbg=3   ctermfg=16
 	hi BG7fffd4 guibg=#7FFFD4 guifg=#000000 ctermbg=122 ctermfg=16
-	hi BG800000 guibg=#800000 guifg=#FFFFFF ctermbg=88  ctermfg=231
-	hi BG800080 guibg=#800080 guifg=#FFFFFF ctermbg=240 ctermfg=231
-	hi BG808000 guibg=#808000 guifg=#FFFFFF ctermbg=240 ctermfg=231
-	hi BG808080 guibg=#808080 guifg=#000000 ctermbg=244 ctermfg=16
 	hi BG87ceeb guibg=#87CEEB guifg=#000000 ctermbg=117 ctermfg=16
 	hi BG87cefa guibg=#87CEFA guifg=#000000 ctermbg=117 ctermfg=16
 	hi BG8a2be2 guibg=#8A2BE2 guifg=#FFFFFF ctermbg=12  ctermfg=231
@@ -347,7 +378,6 @@ function! css_color#init(type, groups)
 	hi BGba55d3 guibg=#BA55D3 guifg=#000000 ctermbg=5   ctermfg=16
 	hi BGbc8f8f guibg=#BC8F8F guifg=#000000 ctermbg=138 ctermfg=16
 	hi BGbdb76b guibg=#BDB76B guifg=#000000 ctermbg=247 ctermfg=16
-	hi BGc0c0c0 guibg=#C0C0C0 guifg=#000000 ctermbg=250 ctermfg=16
 	hi BGc71585 guibg=#C71585 guifg=#FFFFFF ctermbg=5   ctermfg=231
 	hi BGcd5c5c guibg=#CD5C5C guifg=#000000 ctermbg=167 ctermfg=16
 	hi BGcd853f guibg=#CD853F guifg=#000000 ctermbg=173 ctermfg=16
@@ -383,8 +413,6 @@ function! css_color#init(type, groups)
 	hi BGfaf0e6 guibg=#FAF0E6 guifg=#000000 ctermbg=255 ctermfg=16
 	hi BGfafad2 guibg=#FAFAD2 guifg=#000000 ctermbg=255 ctermfg=16
 	hi BGfdf5e6 guibg=#FDF5E6 guifg=#000000 ctermbg=255 ctermfg=16
-	hi BGff0000 guibg=#FF0000 guifg=#FFFFFF ctermbg=196 ctermfg=231
-	hi BGff00ff guibg=#FF00FF guifg=#FFFFFF ctermbg=13  ctermfg=231
 	hi BGff1493 guibg=#FF1493 guifg=#FFFFFF ctermbg=5   ctermfg=231
 	hi BGff4500 guibg=#FF4500 guifg=#FFFFFF ctermbg=9   ctermfg=231
 	hi BGff6347 guibg=#FF6347 guifg=#000000 ctermbg=203 ctermfg=16
@@ -409,30 +437,9 @@ function! css_color#init(type, groups)
 	hi BGfffacd guibg=#FFFACD guifg=#000000 ctermbg=255 ctermfg=16
 	hi BGfffaf0 guibg=#FFFAF0 guifg=#000000 ctermbg=15  ctermfg=16
 	hi BGfffafa guibg=#FFFAFA guifg=#000000 ctermbg=15  ctermfg=16
-	hi BGffff00 guibg=#FFFF00 guifg=#000000 ctermbg=11  ctermfg=16
 	hi BGffffe0 guibg=#FFFFE0 guifg=#000000 ctermbg=255 ctermfg=16
 	hi BGfffff0 guibg=#FFFFF0 guifg=#000000 ctermbg=15  ctermfg=16
-	hi BGffffff guibg=#FFFFFF guifg=#000000 ctermbg=231 ctermfg=16
 
-	" W3C Colors
-	syn keyword BG000000 black   contained containedin=@colorableGroup
-	syn keyword BGc0c0c0 silver  contained containedin=@colorableGroup
-	syn keyword BG808080 gray    contained containedin=@colorableGroup
-	syn match BGffffff "\<white\(-\)\@!\>" contained containedin=@colorableGroup
-	syn keyword BG800000 maroon  contained containedin=@colorableGroup
-	syn keyword BGff0000 red     contained containedin=@colorableGroup
-	syn keyword BG800080 purple  contained containedin=@colorableGroup
-	syn keyword BGff00ff fuchsia contained containedin=@colorableGroup
-	syn keyword BG008000 green   contained containedin=@colorableGroup
-	syn keyword BG00ff00 lime    contained containedin=@colorableGroup
-	syn keyword BG808000 olive   contained containedin=@colorableGroup
-	syn keyword BGffff00 yellow  contained containedin=@colorableGroup
-	syn keyword BG000080 navy    contained containedin=@colorableGroup
-	syn keyword BG0000ff blue    contained containedin=@colorableGroup
-	syn keyword BG008080 teal    contained containedin=@colorableGroup
-	syn keyword BG00ffff aqua    contained containedin=@colorableGroup
-
-	" extra colors
 	syn keyword BGf0f8ff AliceBlue            contained containedin=@colorableGroup
 	syn keyword BGfaebd7 AntiqueWhite         contained containedin=@colorableGroup
 	syn keyword BG7fffd4 Aquamarine           contained containedin=@colorableGroup
