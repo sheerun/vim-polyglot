@@ -76,12 +76,7 @@ fun! s:SelectJavascript()
 endfun
 au BufNewFile,BufRead * call s:SelectJavascript()
 autocmd BufNewFile,BufRead *.json set filetype=json
-augroup json_autocmd
-  autocmd!
-  autocmd FileType json setlocal autoindent
-  autocmd FileType json setlocal formatoptions=tcq2l
-  autocmd FileType json setlocal foldmethod=syntax
-augroup END
+autocmd BufNewFile,BufRead *.jsonp set filetype=json
 au BufNewFile,BufRead *.ejs		set filetype=jst
 au BufNewFile,BufRead *.jst  		set filetype=jst
 au BufNewFile,BufRead *.hamljs set filetype=jst
