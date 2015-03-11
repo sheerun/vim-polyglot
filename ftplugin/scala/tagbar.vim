@@ -10,35 +10,19 @@ endif
 
 let g:tagbar_type_scala = {
     \ 'ctagstype' : 'scala',
+    \ 'sro'        : '.',
     \ 'kinds'     : [
-      \ 'p:packages:1',
-      \ 'V:values',
-      \ 'v:variables',
-      \ 'T:types',
+      \ 'p:packages',
+      \ 'T:types:1',
       \ 't:traits',
       \ 'o:objects',
-      \ 'a:aclasses',
+      \ 'O:case objects',
       \ 'c:classes',
-      \ 'r:cclasses',
-      \ 'm:methods'
-    \ ],
-    \ 'sro'        : '.',
-    \ 'kind2scope' : {
-        \ 'T' : 'type',
-        \ 't' : 'trait',
-        \ 'o' : 'object',
-        \ 'a' : 'abstract class',
-        \ 'c' : 'class',
-        \ 'r' : 'case class'
-    \ },
-    \ 'scope2kind' : {
-      \ 'type' : 'T',
-      \ 'trait' : 't',
-      \ 'object' : 'o',
-      \ 'abstract class' : 'a',
-      \ 'class' : 'c',
-      \ 'case class' : 'r'
-    \ }
+      \ 'C:case classes',
+      \ 'm:methods',
+      \ 'V:values:1',
+      \ 'v:variables:1'
+    \ ]
 \ }
 
 " In case you've updated/customized your ~/.ctags and prefer to use it.

@@ -197,6 +197,7 @@ au BufNewFile,BufRead *.timer     set filetype=systemd
 au BufRead,BufNewFile *.textile set filetype=textile
 au BufNewFile,BufRead *.thrift setlocal filetype=thrift
 autocmd BufNewFile,BufRead {.,}tmux.conf{.*,} setlocal filetype=tmux
+autocmd BufNewFile,BufRead {.,}tmux.conf{.*,} setlocal commentstring=#\ %s
 autocmd BufNewFile,BufRead *.toml set filetype=toml
 autocmd BufNewFile,BufRead Cargo.lock set filetype=toml
 autocmd BufNewFile,BufRead *.twig set filetype=twig
