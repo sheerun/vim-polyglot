@@ -186,7 +186,7 @@ syn match p6ReduceOp display "\%(^\|\s\|(\)\@1<=!*\%([RSXZ\[]\)*[&RSXZ]\?\[\+(\?
 syn match p6SetOp    display "R\?(\%([-^.+|&]\|[<>][=+]\?\|cont\|elem\))"
 
 " Reverse, cross, and zip metaoperators
-exec "syn match p6RSXZOp display \"[RSXZ]:\\@!\\%(\\a\\@=\\%(". s:alpha_metaops_or . "\\)\\|[[:alnum:]]\\@!\\%([.,]\\|[^[,.[:space:]]\\)\\+\\|\\s\\@=\\|$\\)\""
+exec "syn match p6RSXZOp display \"[RSXZ]:\\@!\\%(\\a\\@=\\%(". s:alpha_metaops_or . "\\)\\>\\|[[:alnum:]]\\@!\\%([.,]\\|[^[,.[:space:]]\\)\\+\\|\\s\\@=\\|$\\)\""
 
 syn match p6BlockLabel display "^\s*\zs\h\w*\s*::\@!\_s\@="
 
@@ -392,7 +392,7 @@ syn region p6StringAngles
     \ start="<<=\@!"
     \ skip="\\\@1<!\\>"
     \ end=">>"
-    \ contains=p6InnerAnglesTwo,@p6Interp_qq,p6Comment,p6EscHash,p6EscCloseAngle,p6Adverb,p6StringSQ,p6StringDQ
+    \ contains=p6InnerAnglesTwo,@p6Interp_qq,p6Comment,p6BracketComment,p6EscHash,p6EscCloseAngle,p6Adverb,p6StringSQ,p6StringDQ
 
 syn region p6InnerAnglesTwo
     \ matchgroup=p6StringAngles
@@ -408,7 +408,7 @@ syn region p6StringFrench
     \ start="«"
     \ skip="\\\@1<!\\»"
     \ end="»"
-    \ contains=p6InnerFrench,@p6Interp_qq,p6Comment,p6EscHash,p6EscCloseFrench,p6Adverb,p6StringSQ,p6StringDQ
+    \ contains=p6InnerFrench,@p6Interp_qq,p6Comment,p6BracketComment,p6EscHash,p6EscCloseFrench,p6Adverb,p6StringSQ,p6StringDQ
 
 syn region p6InnerFrench
     \ matchgroup=p6StringFrench
@@ -551,6 +551,7 @@ syn cluster p6Regexen
     \ add=p6RxStringSQ
     \ add=p6RxStringDQ
     \ add=p6Comment
+    \ add=p6BracketComment
     \ add=p6MatchVarSigil
 
 syn match p6RxMeta        display contained ".\%([A-Za-z_\xC0-\xFF0-9]\|\s\)\@1<!"
@@ -1007,97 +1008,97 @@ syn match p6Comment display "#`\@!.*" contains=p6Attention
 
 " Multiline comments. Arbitrary numbers of opening brackets are allowed,
 " but we only define regions for 1 to 3
-syn region p6Comment
-    \ start="#`("
+syn region p6BracketComment
+    \ start="#[`|=]("
     \ skip="([^)]*)"
     \ end=")"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ start="#`\["
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ start="#[`|=]\["
     \ skip="\[[^\]]*]"
     \ end="]"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ start="#`{"
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ start="#[`|=]{"
     \ skip="{[^}]*}"
     \ end="}"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ start="#`<"
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ start="#[`|=]<"
     \ skip="<[^>]*>"
     \ end=">"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ start="#`«"
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ start="#[`|=]«"
     \ skip="«[^»]*»"
     \ end="»"
-    \ contains=p6Attention,p6Comment
+    \ contains=p6Attention,p6BracketComment
 
 " Comments with double and triple delimiters
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`(("
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=](("
     \ skip="((\%([^)\|))\@!]\)*))"
     \ end="))"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`((("
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]((("
     \ skip="(((\%([^)]\|)\%())\)\@!\)*)))"
     \ end=")))"
-    \ contains=p6Attention,p6Comment
+    \ contains=p6Attention,p6BracketComment
 
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`\[\["
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]\[\["
     \ skip="\[\[\%([^\]]\|]]\@!\)*]]"
     \ end="]]"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`\[\[\["
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]\[\[\["
     \ skip="\[\[\[\%([^\]]\|]\%(]]\)\@!\)*]]]"
     \ end="]]]"
-    \ contains=p6Attention,p6Comment
+    \ contains=p6Attention,p6BracketComment
 
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`{{"
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]{{"
     \ skip="{{\%([^}]\|}}\@!\)*}}"
     \ end="}}"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`{{{"
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]{{{"
     \ skip="{{{\%([^}]\|}\%(}}\)\@!\)*}}}"
     \ end="}}}"
-    \ contains=p6Attention,p6Comment
+    \ contains=p6Attention,p6BracketComment
 
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`<<"
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]<<"
     \ skip="<<\%([^>]\|>>\@!\)*>>"
     \ end=">>"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`<<<"
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]<<<"
     \ skip="<<<\%([^>]\|>\%(>>\)\@!\)*>>>"
     \ end=">>>"
-    \ contains=p6Attention,p6Comment
+    \ contains=p6Attention,p6BracketComment
 
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`««"
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]««"
     \ skip="««\%([^»]\|»»\@!\)*»»"
     \ end="»»"
-    \ contains=p6Attention,p6Comment
-syn region p6Comment
-    \ matchgroup=p6Comment
-    \ start="#`«««"
+    \ contains=p6Attention,p6BracketComment
+syn region p6BracketComment
+    \ matchgroup=p6BracketComment
+    \ start="#[`|=]«««"
     \ skip="«««\%([^»]\|»\%(»»\)\@!\)*»»»"
     \ end="»»»"
-    \ contains=p6Attention,p6Comment
+    \ contains=p6Attention,p6BracketComment
 
 syn match p6Shebang display "\%^#!.*"
 
@@ -1884,6 +1885,7 @@ if version >= 508 || !exists("did_perl6_syntax_inits")
     HiLink p6StringSpecial2 Special
     HiLink p6Version        Special
     HiLink p6Comment        Comment
+    HiLink p6BracketComment Comment
     HiLink p6Include        Include
     HiLink p6Shebang        PreProc
     HiLink p6ClosureTrait   PreProc
