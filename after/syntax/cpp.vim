@@ -170,7 +170,7 @@ syntax keyword cppSTLfunction back
 syntax keyword cppSTLfunction back_inserter
 syntax keyword cppSTLfunction bad
 syntax keyword cppSTLfunction beg
-syntax keyword cppSTLfunction begin
+"syntax keyword cppSTLfunction begin
 syntax keyword cppSTLfunction binary_compose
 syntax keyword cppSTLfunction binary_negate
 syntax keyword cppSTLfunction binary_search
@@ -204,7 +204,7 @@ syntax keyword cppSTLfunction difftime
 syntax keyword cppSTLfunction distance
 syntax keyword cppSTLfunction div
 syntax keyword cppSTLfunction empty
-syntax keyword cppSTLfunction end
+"syntax keyword cppSTLfunction end
 syntax keyword cppSTLfunction eof
 syntax keyword cppSTLfunction epsilon
 syntax keyword cppSTLfunction equal
@@ -417,7 +417,7 @@ syntax keyword cppSTLfunction signal
 syntax keyword cppSTLfunction signaling_NaN
 syntax keyword cppSTLfunction sin
 syntax keyword cppSTLfunction sinh
-syntax keyword cppSTLfunction size
+"syntax keyword cppSTLfunction size
 syntax keyword cppSTLfunction sort
 syntax keyword cppSTLfunction sort_heap
 syntax keyword cppSTLfunction splice
@@ -464,8 +464,8 @@ syntax keyword cppSTLfunction tan
 syntax keyword cppSTLfunction tanh
 syntax keyword cppSTLfunction tellg
 syntax keyword cppSTLfunction tellp
-syntax keyword cppSTLfunction test
-syntax keyword cppSTLfunction time
+"syntax keyword cppSTLfunction test
+"syntax keyword cppSTLfunction time
 syntax keyword cppSTLfunction tmpfile
 syntax keyword cppSTLfunction tmpnam
 syntax keyword cppSTLfunction tolower
