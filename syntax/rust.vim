@@ -43,7 +43,6 @@ syn match     rustIdentifier  contains=rustIdentifierPrime "\%([^[:cntrl:][:spac
 syn match     rustFuncName    "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
 
 syn region    rustBoxPlacement matchgroup=rustBoxPlacementParens start="(" end=")" contains=TOP contained
-syn keyword   rustBoxPlacementExpr GC containedin=rustBoxPlacement
 " Ideally we'd have syntax rules set up to match arbitrary expressions. Since
 " we don't, we'll just define temporary contained rules to handle balancing
 " delimiters.
@@ -252,7 +251,6 @@ hi def link rustInvalidBareKeyword Error
 hi def link rustExternCrate   rustKeyword
 hi def link rustObsoleteExternMod Error
 hi def link rustBoxPlacementParens Delimiter
-hi def link rustBoxPlacementExpr rustKeyword
 
 " Other Suggestions:
 " hi rustAttribute ctermfg=cyan
