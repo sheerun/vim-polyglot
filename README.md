@@ -1,7 +1,7 @@
 # vim-polyglot [![Build Status][travis-img-url]][travis-url]
 
-[travis-img-url]: https://travis-ci.org/sheerun/vim-polyglot.png
-[travis-url]: https://travis-ci.org/sheerun/vim-polyglot
+[travis-img-url]: https://travis-ci.org/zyphrus/vim-polyglot.png
+[travis-url]: https://travis-ci.org/zyphrus/vim-polyglot
 
 A collection of language packs for Vim.
 
@@ -99,6 +99,9 @@ Feel free to add your language, and send pull-request.
 
 See linked repositories for detailed license information.
 
+## Note
+
+This is a fork of [sheerun/vim-polyglot](https://github.com/sheerun/vim-polyglot) with
+an auto-update script to keep all the files up to date.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sheerun/vim-polyglot/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
