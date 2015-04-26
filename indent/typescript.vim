@@ -3,6 +3,10 @@
 " Maintainer:	None!  Wanna improve this?
 " Last Change:	2015 Mar 07
 
+if get(g:, 'typescript_indent_disable')
+  finish
+endif
+
 " Only load this indent file when no other was loaded.
 if exists("b:did_indent")
    finish
@@ -51,6 +55,12 @@ function GetTypescriptIndent()
     " Check if the previous line consists of a single `<variable> : <type>;`
     " declaration (e.g. in interface definitions)
     if getline(prev) =~ '^\s*\w\+\s*:[^{]\+;\s*$'
+        return indent(prev)
+    endif
+
+    " If a variable was declared and the semicolon omitted, do not indent
+    " the next line
+    if getline(prev) =~ '^\s*var\s\+\w\+'
         return indent(prev)
     endif
 

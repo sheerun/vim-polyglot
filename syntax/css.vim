@@ -6,7 +6,7 @@
 "               Nikolai Weibull (Add CSS2 support)
 " Maintainer:   Jules Wang      <w.jq0722@gmail.com>
 " URL:          https://github.com/JulesWang/css.vim
-" Last Change:  2014 Oct.28
+" Last Change:  2015 Apr.17
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
@@ -479,7 +479,7 @@ syn match cssPseudoClassId contained  "\<focus\(-inner\)\=\>"
 syn match cssPseudoClassId contained  "\<\(input-\)\=placeholder\>"
 
 " Misc highlight groups
-syntax match cssUnitDecorators /\(#\|-\|%\|mm\|cm\|in\|pt\|pc\|em\|ex\|px\|rem\|dpi\|dppx\|dpcm\|Hz\|kHz\|s\|ms\|deg\|grad\|rad\)/ contained
+syntax match cssUnitDecorators /\(#\|-\|%\|mm\|cm\|in\|pt\|pc\|em\|ex\|px\|ch\|rem\|vh\|vw\|vmin\|vmax\|dpi\|dppx\|dpcm\|Hz\|kHz\|s\|ms\|deg\|grad\|rad\)/ contained
 syntax match cssNoise contained /\(:\|;\|\/\)/
 
 " Comment

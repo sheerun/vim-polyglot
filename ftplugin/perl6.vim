@@ -20,7 +20,7 @@ setlocal formatoptions-=t
 setlocal formatoptions+=crqol
 setlocal keywordprg=p6doc
 
-setlocal comments=:#
+setlocal comments=:#\|,:#=,:#
 setlocal commentstring=#%s
 
 " Change the browse dialog on Win32 to show mainly Perl-related files

@@ -1,13 +1,13 @@
 # vim-polyglot [![Build Status][travis-img-url]][travis-url]
 
-[travis-img-url]: https://travis-ci.org/sheerun/vim-polyglot.png
-[travis-url]: https://travis-ci.org/sheerun/vim-polyglot
+[travis-img-url]: https://travis-ci.org/zyphrus/vim-polyglot.png
+[travis-url]: https://travis-ci.org/zyphrus/vim-polyglot
 
 A collection of language packs for Vim.
 
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
-- It **won't affect your startup time**, as scripts are loaded only on demand\*. 
+- It **won't affect your startup time**, as scripts are loaded only on demand\*.
 - It **installs 50+ times faster** than 50+ packages it consist of.
 - Solid syntax and indentation support. Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
@@ -68,7 +68,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
 - [rspec](https://github.com/sheerun/rspec.vim) (syntax, ftdetect)
 - [ruby](https://github.com/vim-ruby/vim-ruby) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
-- [rust](https://github.com/wting/rust.vim) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
+- [rust](https://github.com/rust-lang/rust.vim) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [sbt](https://github.com/derekwyatt/vim-sbt) (syntax, ftdetect)
 - [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, ftplugin, ftdetect)
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftdetect)
@@ -99,6 +99,9 @@ Feel free to add your language, and send pull-request.
 
 See linked repositories for detailed license information.
 
+## Note
+
+This is a fork of [sheerun/vim-polyglot](https://github.com/sheerun/vim-polyglot) with
+an auto-update script to keep all the files up to date.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sheerun/vim-polyglot/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

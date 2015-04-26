@@ -1,5 +1,5 @@
 " Vim syntax file
-" Language: TypeScript
+" Language: typescript
 " Author: MicroSoft Open Technologies Inc.
 " Version: 0.1
 " Credits: Zhao Yi, Claudio Fleiner, Scott Shattuck, Jose Elera Campana
@@ -14,8 +14,8 @@ if !exists("main_syntax")
 endif
 
 " Drop fold if it set but vim doesn't support it.
-if version < 600 && exists("typeScript_fold")
-  unlet typeScript_fold
+if version < 600 && exists("typescript_fold")
+  unlet typescript_fold
 endif
 
 "" dollar sign is permitted anywhere in an identifier
@@ -27,292 +27,297 @@ syntax sync fromstart
 syn match shebang "^#!.*/bin/env\s\+node\>"
 hi link shebang Comment
 
-"" typeScript comments"{{{
-syn keyword typeScriptCommentTodo TODO FIXME XXX TBD contained
-syn match typeScriptLineComment "\/\/.*" contains=@Spell,typeScriptCommentTodo,typeScriptRef
-syn match typeScriptRef /\/\/\/<reference\s\+.*\/>$/ contains=typeScriptRefD,typeScriptRefS
-syn region typeScriptRefD start=+"+ skip=+\\\\\|\\"+ end=+"\|$+
-syn region typeScriptRefS start=+'+ skip=+\\\\\|\\'+ end=+'\|$+
+"" typescript comments"{{{
+syn keyword typescriptCommentTodo TODO FIXME XXX TBD contained
+syn match typescriptLineComment "\/\/.*" contains=@Spell,typescriptCommentTodo,typescriptRef
+syn match typescriptRef /\/\/\/<reference\s\+.*\/>$/ contains=typescriptRefD,typescriptRefS
+syn region typescriptRefD start=+"+ skip=+\\\\\|\\"+ end=+"\|$+
+syn region typescriptRefS start=+'+ skip=+\\\\\|\\'+ end=+'\|$+
 
-syn match typeScriptCommentSkip "^[ \t]*\*\($\|[ \t]\+\)"
-syn region typeScriptComment start="/\*" end="\*/" contains=@Spell,typeScriptCommentTodo
+syn match typescriptCommentSkip "^[ \t]*\*\($\|[ \t]\+\)"
+syn region typescriptComment start="/\*" end="\*/" contains=@Spell,typescriptCommentTodo extend
 "}}}
 "" JSDoc support start"{{{
-if !exists("typeScript_ignore_typeScriptdoc")
+if !exists("typescript_ignore_typescriptdoc")
   syntax case ignore
 
 " syntax coloring for JSDoc comments (HTML)
 "unlet b:current_syntax
 
-  syntax region typeScriptDocComment matchgroup=typeScriptComment start="/\*\*\s*$" end="\*/" contains=typeScriptDocTags,typeScriptCommentTodo,typeScriptCvsTag,@typeScriptHtml,@Spell fold
-  syntax match typeScriptDocTags contained "@\(param\|argument\|requires\|exception\|throws\|type\|class\|extends\|see\|link\|member\|module\|method\|title\|namespace\|optional\|default\|base\|file\)\>" nextgroup=typeScriptDocParam,typeScriptDocSeeTag skipwhite
-  syntax match typeScriptDocTags contained "@\(beta\|deprecated\|description\|fileoverview\|author\|license\|version\|returns\=\|constructor\|private\|protected\|final\|ignore\|addon\|exec\)\>"
-  syntax match typeScriptDocParam contained "\%(#\|\w\|\.\|:\|\/\)\+"
-  syntax region typeScriptDocSeeTag contained matchgroup=typeScriptDocSeeTag start="{" end="}" contains=typeScriptDocTags
+  syntax region typescriptDocComment start="/\*\*\s*$" end="\*/" contains=typescriptDocTags,typescriptCommentTodo,typescriptCvsTag,@typescriptHtml,@Spell fold extend
+  syntax match typescriptDocTags contained "@\(param\|argument\|requires\|exception\|throws\|type\|class\|extends\|see\|link\|member\|module\|method\|title\|namespace\|optional\|default\|base\|file\)\>" nextgroup=typescriptDocParam,typescriptDocSeeTag skipwhite
+  syntax match typescriptDocTags contained "@\(beta\|deprecated\|description\|fileoverview\|author\|license\|version\|returns\=\|constructor\|private\|protected\|final\|ignore\|addon\|exec\)\>"
+  syntax match typescriptDocParam contained "\%(#\|\w\|\.\|:\|\/\)\+"
+  syntax region typescriptDocSeeTag contained matchgroup=typescriptDocSeeTag start="{" end="}" contains=typescriptDocTags
 
   syntax case match
 endif "" JSDoc end
 "}}}
 syntax case match
 
-"" Syntax in the typeScript code"{{{
-syn match typeScriptSpecial "\\\d\d\d\|\\."
-syn region typeScriptStringD start=+"+ skip=+\\\\\|\\"+ end=+"\|$+  contains=typeScriptSpecial,@htmlPreproc
-syn region typeScriptStringS start=+'+ skip=+\\\\\|\\'+ end=+'\|$+  contains=typeScriptSpecial,@htmlPreproc
+"" Syntax in the typescript code"{{{
+syn match typescriptSpecial "\\\d\d\d\|\\."
+syn region typescriptStringD start=+"+ skip=+\\\\\|\\"+ end=+"\|$+  contains=typescriptSpecial,@htmlPreproc extend
+syn region typescriptStringS start=+'+ skip=+\\\\\|\\'+ end=+'\|$+  contains=typescriptSpecial,@htmlPreproc extend
+syn region typescriptStringB start=+`+ skip=+\\\\\|\\`+ end=+`+  contains=typescriptSpecial,@htmlPreproc extend
 
-syn match typeScriptSpecialCharacter "'\\.'"
-syn match typeScriptNumber "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
-syn region typeScriptRegexpString start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gi]\{0,2\}\s*$+ end=+/[gi]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
-" syntax match typeScriptSpecial "\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\."
-" syntax region typeScriptStringD start=+"+ skip=+\\\\\|\\$"+ end=+"+ contains=typeScriptSpecial,@htmlPreproc
-" syntax region typeScriptStringS start=+'+ skip=+\\\\\|\\$'+ end=+'+ contains=typeScriptSpecial,@htmlPreproc
-" syntax region typeScriptRegexpString start=+/\(\*\|/\)\@!+ skip=+\\\\\|\\/+ end=+/[gim]\{,3}+ contains=typeScriptSpecial,@htmlPreproc oneline
-" syntax match typeScriptNumber /\<-\=\d\+L\=\>\|\<0[xX]\x\+\>/
-syntax match typeScriptFloat /\<-\=\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%([eE][+-]\=\d\+\)\=\>/
-" syntax match typeScriptLabel /\(?\s*\)\@<!\<\w\+\(\s*:\)\@=/
+syn match typescriptSpecialCharacter "'\\.'"
+syn match typescriptNumber "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
+syn region typescriptRegexpString start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gi]\{0,2\}\s*$+ end=+/[gi]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
+" syntax match typescriptSpecial "\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\."
+" syntax region typescriptStringD start=+"+ skip=+\\\\\|\\$"+ end=+"+ contains=typescriptSpecial,@htmlPreproc
+" syntax region typescriptStringS start=+'+ skip=+\\\\\|\\$'+ end=+'+ contains=typescriptSpecial,@htmlPreproc
+" syntax region typescriptRegexpString start=+/\(\*\|/\)\@!+ skip=+\\\\\|\\/+ end=+/[gim]\{,3}+ contains=typescriptSpecial,@htmlPreproc oneline
+" syntax match typescriptNumber /\<-\=\d\+L\=\>\|\<0[xX]\x\+\>/
+syntax match typescriptFloat /\<-\=\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%([eE][+-]\=\d\+\)\=\>/
+" syntax match typescriptLabel /\(?\s*\)\@<!\<\w\+\(\s*:\)\@=/
+
+syn match typescriptDecorators /@\([_$a-zA-Z][_$a-zA-Z0-9]*\.\)*[_$a-zA-Z][_$a-zA-Z0-9]*\>/
 "}}}
-"" typeScript Prototype"{{{
-syntax keyword typeScriptPrototype contained prototype
+"" typescript Prototype"{{{
+syntax keyword typescriptPrototype contained prototype
 "}}}
 " DOM, Browser and Ajax Support {{{
 """"""""""""""""""""""""
-syntax keyword typeScriptBrowserObjects window navigator screen history location
+syntax keyword typescriptBrowserObjects window navigator screen history location
 
-syntax keyword typeScriptDOMObjects document event HTMLElement Anchor Area Base Body Button Form Frame Frameset Image Link Meta Option Select Style Table TableCell TableRow Textarea
-syntax keyword typeScriptDOMMethods contained createTextNode createElement insertBefore replaceChild removeChild appendChild hasChildNodes cloneNode normalize isSupported hasAttributes getAttribute setAttribute removeAttribute getAttributeNode setAttributeNode removeAttributeNode getElementsByTagName hasAttribute getElementById adoptNode close compareDocumentPosition createAttribute createCDATASection createComment createDocumentFragment createElementNS createEvent createExpression createNSResolver createProcessingInstruction createRange createTreeWalker elementFromPoint evaluate getBoxObjectFor getElementsByClassName getSelection getUserData hasFocus importNode
-syntax keyword typeScriptDOMProperties contained nodeName nodeValue nodeType parentNode childNodes firstChild lastChild previousSibling nextSibling attributes ownerDocument namespaceURI prefix localName tagName
+syntax keyword typescriptDOMObjects document event HTMLElement Anchor Area Base Body Button Form Frame Frameset Image Link Meta Option Select Style Table TableCell TableRow Textarea
+syntax keyword typescriptDOMMethods contained createTextNode createElement insertBefore replaceChild removeChild appendChild hasChildNodes cloneNode normalize isSupported hasAttributes getAttribute setAttribute removeAttribute getAttributeNode setAttributeNode removeAttributeNode getElementsByTagName hasAttribute getElementById adoptNode close compareDocumentPosition createAttribute createCDATASection createComment createDocumentFragment createElementNS createEvent createExpression createNSResolver createProcessingInstruction createRange createTreeWalker elementFromPoint evaluate getBoxObjectFor getElementsByClassName getSelection getUserData hasFocus importNode
+syntax keyword typescriptDOMProperties contained nodeName nodeValue nodeType parentNode childNodes firstChild lastChild previousSibling nextSibling attributes ownerDocument namespaceURI prefix localName tagName
 
-syntax keyword typeScriptAjaxObjects XMLHttpRequest
-syntax keyword typeScriptAjaxProperties contained readyState responseText responseXML statusText
-syntax keyword typeScriptAjaxMethods contained onreadystatechange abort getAllResponseHeaders getResponseHeader open send setRequestHeader
+syntax keyword typescriptAjaxObjects XMLHttpRequest
+syntax keyword typescriptAjaxProperties contained readyState responseText responseXML statusText
+syntax keyword typescriptAjaxMethods contained onreadystatechange abort getAllResponseHeaders getResponseHeader open send setRequestHeader
 
-syntax keyword typeScriptPropietaryObjects ActiveXObject
-syntax keyword typeScriptPropietaryMethods contained attachEvent detachEvent cancelBubble returnValue
+syntax keyword typescriptPropietaryObjects ActiveXObject
+syntax keyword typescriptPropietaryMethods contained attachEvent detachEvent cancelBubble returnValue
 
-syntax keyword typeScriptHtmlElemProperties contained className clientHeight clientLeft clientTop clientWidth dir href id innerHTML lang length offsetHeight offsetLeft offsetParent offsetTop offsetWidth scrollHeight scrollLeft scrollTop scrollWidth style tabIndex target title
+syntax keyword typescriptHtmlElemProperties contained className clientHeight clientLeft clientTop clientWidth dir href id innerHTML lang length offsetHeight offsetLeft offsetParent offsetTop offsetWidth scrollHeight scrollLeft scrollTop scrollWidth style tabIndex target title
 
-syntax keyword typeScriptEventListenerKeywords contained blur click focus mouseover mouseout load item
+syntax keyword typescriptEventListenerKeywords contained blur click focus mouseover mouseout load item
 
-syntax keyword typeScriptEventListenerMethods contained scrollIntoView addEventListener dispatchEvent removeEventListener preventDefault stopPropagation
+syntax keyword typescriptEventListenerMethods contained scrollIntoView addEventListener dispatchEvent removeEventListener preventDefault stopPropagation
 " }}}
 "" Programm Keywords"{{{
-syntax keyword typeScriptSource import export
-syntax keyword typeScriptIdentifier arguments this let var void yield
-syntax keyword typeScriptOperator delete new instanceof typeof
-syntax keyword typeScriptBoolean true false
-syntax keyword typeScriptNull null undefined
-syntax keyword typeScriptMessage alert confirm prompt status
-syntax keyword typeScriptGlobal self top parent
-syntax keyword typeScriptDeprecated escape unescape all applets alinkColor bgColor fgColor linkColor vlinkColor xmlEncoding
+syntax keyword typescriptSource import export
+syntax keyword typescriptIdentifier arguments this let var void yield
+syntax keyword typescriptOperator delete new instanceof typeof
+syntax keyword typescriptBoolean true false
+syntax keyword typescriptNull null undefined
+syntax keyword typescriptMessage alert confirm prompt status
+syntax keyword typescriptGlobal self top parent
+syntax keyword typescriptDeprecated escape unescape all applets alinkColor bgColor fgColor linkColor vlinkColor xmlEncoding
 "}}}
 "" Statement Keywords"{{{
-syntax keyword typeScriptConditional if else switch
-syntax keyword typeScriptRepeat do while for in
-syntax keyword typeScriptBranch break continue
-syntax keyword typeScriptLabel case default
-syntax keyword typeScriptStatement return with
+syntax keyword typescriptConditional if else switch
+syntax keyword typescriptRepeat do while for in
+syntax keyword typescriptBranch break continue
+syntax keyword typescriptLabel case default
+syntax keyword typescriptStatement return with
 
-syntax keyword typeScriptGlobalObjects Array Boolean Date Function Infinity Math Number NaN Object Packages RegExp String netscape
+syntax keyword typescriptGlobalObjects Array Boolean Date Function Infinity Math Number NaN Object Packages RegExp String netscape
 
-syntax keyword typeScriptExceptions try catch throw finally Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
+syntax keyword typescriptExceptions try catch throw finally Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 
-syntax keyword typeScriptReserved constructor declare as interface module abstract enum int short export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public type
+syntax keyword typescriptReserved constructor declare as interface module abstract enum int short export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public type
 "}}}
-"" TypeScript/DOM/HTML/CSS specified things"{{{
+"" typescript/DOM/HTML/CSS specified things"{{{
 
-" TypeScript Objects"{{{
-  syn match typeScriptFunction "(super\s*|constructor\s*)" contained nextgroup=typeScriptVars
-  syn region typeScriptVars start="(" end=")" contained contains=typeScriptParameters transparent keepend
-  syn match typeScriptParameters "([a-zA-Z0-9_?.$][\w?.$]*)\s*:\s*([a-zA-Z0-9_?.$][\w?.$]*)" contained skipwhite
+" typescript Objects"{{{
+  syn match typescriptFunction "(super\s*|constructor\s*)" contained nextgroup=typescriptVars
+  syn region typescriptVars start="(" end=")" contained contains=typescriptParameters transparent keepend
+  syn match typescriptParameters "([a-zA-Z0-9_?.$][\w?.$]*)\s*:\s*([a-zA-Z0-9_?.$][\w?.$]*)" contained skipwhite
 "}}}
 " DOM2 Objects"{{{
-  syntax keyword typeScriptType DOMImplementation DocumentFragment Node NodeList NamedNodeMap CharacterData Attr Element Text Comment CDATASection DocumentType Notation Entity EntityReference ProcessingInstruction void any string boolean number
-  syntax keyword typeScriptExceptions DOMException
+  syntax keyword typescriptType DOMImplementation DocumentFragment Node NodeList NamedNodeMap CharacterData Attr Element Text Comment CDATASection DocumentType Notation Entity EntityReference ProcessingInstruction void any string boolean number
+  syntax keyword typescriptExceptions DOMException
 "}}}
 " DOM2 CONSTANT"{{{
-  syntax keyword typeScriptDomErrNo INDEX_SIZE_ERR DOMSTRING_SIZE_ERR HIERARCHY_REQUEST_ERR WRONG_DOCUMENT_ERR INVALID_CHARACTER_ERR NO_DATA_ALLOWED_ERR NO_MODIFICATION_ALLOWED_ERR NOT_FOUND_ERR NOT_SUPPORTED_ERR INUSE_ATTRIBUTE_ERR INVALID_STATE_ERR SYNTAX_ERR INVALID_MODIFICATION_ERR NAMESPACE_ERR INVALID_ACCESS_ERR
-  syntax keyword typeScriptDomNodeConsts ELEMENT_NODE ATTRIBUTE_NODE TEXT_NODE CDATA_SECTION_NODE ENTITY_REFERENCE_NODE ENTITY_NODE PROCESSING_INSTRUCTION_NODE COMMENT_NODE DOCUMENT_NODE DOCUMENT_TYPE_NODE DOCUMENT_FRAGMENT_NODE NOTATION_NODE
+  syntax keyword typescriptDomErrNo INDEX_SIZE_ERR DOMSTRING_SIZE_ERR HIERARCHY_REQUEST_ERR WRONG_DOCUMENT_ERR INVALID_CHARACTER_ERR NO_DATA_ALLOWED_ERR NO_MODIFICATION_ALLOWED_ERR NOT_FOUND_ERR NOT_SUPPORTED_ERR INUSE_ATTRIBUTE_ERR INVALID_STATE_ERR SYNTAX_ERR INVALID_MODIFICATION_ERR NAMESPACE_ERR INVALID_ACCESS_ERR
+  syntax keyword typescriptDomNodeConsts ELEMENT_NODE ATTRIBUTE_NODE TEXT_NODE CDATA_SECTION_NODE ENTITY_REFERENCE_NODE ENTITY_NODE PROCESSING_INSTRUCTION_NODE COMMENT_NODE DOCUMENT_NODE DOCUMENT_TYPE_NODE DOCUMENT_FRAGMENT_NODE NOTATION_NODE
 "}}}
 " HTML events and internal variables"{{{
   syntax case ignore
-  syntax keyword typeScriptHtmlEvents onblur onclick oncontextmenu ondblclick onfocus onkeydown onkeypress onkeyup onmousedown onmousemove onmouseout onmouseover onmouseup onresize onload onsubmit
+  syntax keyword typescriptHtmlEvents onblur onclick oncontextmenu ondblclick onfocus onkeydown onkeypress onkeyup onmousedown onmousemove onmouseout onmouseover onmouseup onresize onload onsubmit
   syntax case match
 "}}}
 
 " Follow stuff should be highligh within a special context
 " While it can't be handled with context depended with Regex based highlight
 " So, turn it off by default
-if exists("typeScript_enable_domhtmlcss")
+if exists("typescript_enable_domhtmlcss")
 
 " DOM2 things"{{{
-    syntax match typeScriptDomElemAttrs contained /\%(nodeName\|nodeValue\|nodeType\|parentNode\|childNodes\|firstChild\|lastChild\|previousSibling\|nextSibling\|attributes\|ownerDocument\|namespaceURI\|prefix\|localName\|tagName\)\>/
-    syntax match typeScriptDomElemFuncs contained /\%(insertBefore\|replaceChild\|removeChild\|appendChild\|hasChildNodes\|cloneNode\|normalize\|isSupported\|hasAttributes\|getAttribute\|setAttribute\|removeAttribute\|getAttributeNode\|setAttributeNode\|removeAttributeNode\|getElementsByTagName\|getAttributeNS\|setAttributeNS\|removeAttributeNS\|getAttributeNodeNS\|setAttributeNodeNS\|getElementsByTagNameNS\|hasAttribute\|hasAttributeNS\)\>/ nextgroup=typeScriptParen skipwhite
+    syntax match typescriptDomElemAttrs contained /\%(nodeName\|nodeValue\|nodeType\|parentNode\|childNodes\|firstChild\|lastChild\|previousSibling\|nextSibling\|attributes\|ownerDocument\|namespaceURI\|prefix\|localName\|tagName\)\>/
+    syntax match typescriptDomElemFuncs contained /\%(insertBefore\|replaceChild\|removeChild\|appendChild\|hasChildNodes\|cloneNode\|normalize\|isSupported\|hasAttributes\|getAttribute\|setAttribute\|removeAttribute\|getAttributeNode\|setAttributeNode\|removeAttributeNode\|getElementsByTagName\|getAttributeNS\|setAttributeNS\|removeAttributeNS\|getAttributeNodeNS\|setAttributeNodeNS\|getElementsByTagNameNS\|hasAttribute\|hasAttributeNS\)\>/ nextgroup=typescriptParen skipwhite
 "}}}
 " HTML things"{{{
-    syntax match typeScriptHtmlElemAttrs contained /\%(className\|clientHeight\|clientLeft\|clientTop\|clientWidth\|dir\|id\|innerHTML\|lang\|length\|offsetHeight\|offsetLeft\|offsetParent\|offsetTop\|offsetWidth\|scrollHeight\|scrollLeft\|scrollTop\|scrollWidth\|style\|tabIndex\|title\)\>/
-    syntax match typeScriptHtmlElemFuncs contained /\%(blur\|click\|focus\|scrollIntoView\|addEventListener\|dispatchEvent\|removeEventListener\|item\)\>/ nextgroup=typeScriptParen skipwhite
+    syntax match typescriptHtmlElemAttrs contained /\%(className\|clientHeight\|clientLeft\|clientTop\|clientWidth\|dir\|id\|innerHTML\|lang\|length\|offsetHeight\|offsetLeft\|offsetParent\|offsetTop\|offsetWidth\|scrollHeight\|scrollLeft\|scrollTop\|scrollWidth\|style\|tabIndex\|title\)\>/
+    syntax match typescriptHtmlElemFuncs contained /\%(blur\|click\|focus\|scrollIntoView\|addEventListener\|dispatchEvent\|removeEventListener\|item\)\>/ nextgroup=typescriptParen skipwhite
 "}}}
-" CSS Styles in typeScript"{{{
-    syntax keyword typeScriptCssStyles contained color font fontFamily fontSize fontSizeAdjust fontStretch fontStyle fontVariant fontWeight letterSpacing lineBreak lineHeight quotes rubyAlign rubyOverhang rubyPosition
-    syntax keyword typeScriptCssStyles contained textAlign textAlignLast textAutospace textDecoration textIndent textJustify textJustifyTrim textKashidaSpace textOverflowW6 textShadow textTransform textUnderlinePosition
-    syntax keyword typeScriptCssStyles contained unicodeBidi whiteSpace wordBreak wordSpacing wordWrap writingMode
-    syntax keyword typeScriptCssStyles contained bottom height left position right top width zIndex
-    syntax keyword typeScriptCssStyles contained border borderBottom borderLeft borderRight borderTop borderBottomColor borderLeftColor borderTopColor borderBottomStyle borderLeftStyle borderRightStyle borderTopStyle borderBottomWidth borderLeftWidth borderRightWidth borderTopWidth borderColor borderStyle borderWidth borderCollapse borderSpacing captionSide emptyCells tableLayout
-    syntax keyword typeScriptCssStyles contained margin marginBottom marginLeft marginRight marginTop outline outlineColor outlineStyle outlineWidth padding paddingBottom paddingLeft paddingRight paddingTop
-    syntax keyword typeScriptCssStyles contained listStyle listStyleImage listStylePosition listStyleType
-    syntax keyword typeScriptCssStyles contained background backgroundAttachment backgroundColor backgroundImage gackgroundPosition backgroundPositionX backgroundPositionY backgroundRepeat
-    syntax keyword typeScriptCssStyles contained clear clip clipBottom clipLeft clipRight clipTop content counterIncrement counterReset cssFloat cursor direction display filter layoutGrid layoutGridChar layoutGridLine layoutGridMode layoutGridType
-    syntax keyword typeScriptCssStyles contained marks maxHeight maxWidth minHeight minWidth opacity MozOpacity overflow overflowX overflowY verticalAlign visibility zoom cssText
-    syntax keyword typeScriptCssStyles contained scrollbar3dLightColor scrollbarArrowColor scrollbarBaseColor scrollbarDarkShadowColor scrollbarFaceColor scrollbarHighlightColor scrollbarShadowColor scrollbarTrackColor
+" CSS Styles in typescript"{{{
+    syntax keyword typescriptCssStyles contained color font fontFamily fontSize fontSizeAdjust fontStretch fontStyle fontVariant fontWeight letterSpacing lineBreak lineHeight quotes rubyAlign rubyOverhang rubyPosition
+    syntax keyword typescriptCssStyles contained textAlign textAlignLast textAutospace textDecoration textIndent textJustify textJustifyTrim textKashidaSpace textOverflowW6 textShadow textTransform textUnderlinePosition
+    syntax keyword typescriptCssStyles contained unicodeBidi whiteSpace wordBreak wordSpacing wordWrap writingMode
+    syntax keyword typescriptCssStyles contained bottom height left position right top width zIndex
+    syntax keyword typescriptCssStyles contained border borderBottom borderLeft borderRight borderTop borderBottomColor borderLeftColor borderTopColor borderBottomStyle borderLeftStyle borderRightStyle borderTopStyle borderBottomWidth borderLeftWidth borderRightWidth borderTopWidth borderColor borderStyle borderWidth borderCollapse borderSpacing captionSide emptyCells tableLayout
+    syntax keyword typescriptCssStyles contained margin marginBottom marginLeft marginRight marginTop outline outlineColor outlineStyle outlineWidth padding paddingBottom paddingLeft paddingRight paddingTop
+    syntax keyword typescriptCssStyles contained listStyle listStyleImage listStylePosition listStyleType
+    syntax keyword typescriptCssStyles contained background backgroundAttachment backgroundColor backgroundImage gackgroundPosition backgroundPositionX backgroundPositionY backgroundRepeat
+    syntax keyword typescriptCssStyles contained clear clip clipBottom clipLeft clipRight clipTop content counterIncrement counterReset cssFloat cursor direction display filter layoutGrid layoutGridChar layoutGridLine layoutGridMode layoutGridType
+    syntax keyword typescriptCssStyles contained marks maxHeight maxWidth minHeight minWidth opacity MozOpacity overflow overflowX overflowY verticalAlign visibility zoom cssText
+    syntax keyword typescriptCssStyles contained scrollbar3dLightColor scrollbarArrowColor scrollbarBaseColor scrollbarDarkShadowColor scrollbarFaceColor scrollbarHighlightColor scrollbarShadowColor scrollbarTrackColor
 "}}}
 endif "DOM/HTML/CSS
 
 " Highlight ways"{{{
-syntax match typeScriptDotNotation "\."        nextgroup=typeScriptPrototype,typeScriptDomElemAttrs,typeScriptDomElemFuncs,typeScriptDOMMethods,typeScriptDOMProperties,typeScriptHtmlElemAttrs,typeScriptHtmlElemFuncs,typeScriptHtmlElemProperties,typeScriptAjaxProperties,typeScriptAjaxMethods,typeScriptPropietaryMethods,typeScriptEventListenerMethods skipwhite skipnl
-syntax match typeScriptDotNotation "\.style\." nextgroup=typeScriptCssStyles
+syntax match typescriptDotNotation "\."        nextgroup=typescriptPrototype,typescriptDomElemAttrs,typescriptDomElemFuncs,typescriptDOMMethods,typescriptDOMProperties,typescriptHtmlElemAttrs,typescriptHtmlElemFuncs,typescriptHtmlElemProperties,typescriptAjaxProperties,typescriptAjaxMethods,typescriptPropietaryMethods,typescriptEventListenerMethods skipwhite skipnl
+syntax match typescriptDotNotation "\.style\." nextgroup=typescriptCssStyles
 "}}}
 
 "" end DOM/HTML/CSS specified things""}}}
 
 
 "" Code blocks
-syntax cluster typeScriptAll contains=typeScriptComment,typeScriptLineComment,typeScriptDocComment,typeScriptStringD,typeScriptStringS,typeScriptRegexpString,typeScriptNumber,typeScriptFloat,typeScriptLabel,typeScriptSource,typeScriptType,typeScriptOperator,typeScriptBoolean,typeScriptNull,typeScriptFuncKeyword,typeScriptConditional,typeScriptGlobal,typeScriptRepeat,typeScriptBranch,typeScriptStatement,typeScriptGlobalObjects,typeScriptMessage,typeScriptIdentifier,typeScriptExceptions,typeScriptReserved,typeScriptDeprecated,typeScriptDomErrNo,typeScriptDomNodeConsts,typeScriptHtmlEvents,typeScriptDotNotation,typeScriptBrowserObjects,typeScriptDOMObjects,typeScriptAjaxObjects,typeScriptPropietaryObjects,typeScriptDOMMethods,typeScriptHtmlElemProperties,typeScriptDOMProperties,typeScriptEventListenerKeywords,typeScriptEventListenerMethods,typeScriptAjaxProperties,typeScriptAjaxMethods,typeScriptFuncArg
+syntax cluster typescriptAll contains=typescriptComment,typescriptLineComment,typescriptDocComment,typescriptStringD,typescriptStringS,typescriptStringB,typescriptRegexpString,typescriptNumber,typescriptFloat,typescriptDecorators,typescriptLabel,typescriptSource,typescriptType,typescriptOperator,typescriptBoolean,typescriptNull,typescriptFuncKeyword,typescriptConditional,typescriptGlobal,typescriptRepeat,typescriptBranch,typescriptStatement,typescriptGlobalObjects,typescriptMessage,typescriptIdentifier,typescriptExceptions,typescriptReserved,typescriptDeprecated,typescriptDomErrNo,typescriptDomNodeConsts,typescriptHtmlEvents,typescriptDotNotation,typescriptBrowserObjects,typescriptDOMObjects,typescriptAjaxObjects,typescriptPropietaryObjects,typescriptDOMMethods,typescriptHtmlElemProperties,typescriptDOMProperties,typescriptEventListenerKeywords,typescriptEventListenerMethods,typescriptAjaxProperties,typescriptAjaxMethods,typescriptFuncArg
 
 if main_syntax == "typescript"
   syntax sync clear
-  syntax sync ccomment typeScriptComment minlines=200
-" syntax sync match typeScriptHighlight grouphere typeScriptBlock /{/
+  syntax sync ccomment typescriptComment minlines=200
+" syntax sync match typescriptHighlight grouphere typescriptBlock /{/
 endif
 
-syntax keyword typeScriptFuncKeyword function
-"syntax region typeScriptFuncDef start="function" end="\(.*\)" contains=typeScriptFuncKeyword,typeScriptFuncArg keepend
-"syntax match typeScriptFuncArg "\(([^()]*)\)" contains=typeScriptParens,typeScriptFuncComma contained
-"syntax match typeScriptFuncComma /,/ contained
-" syntax region typeScriptFuncBlock contained matchgroup=typeScriptFuncBlock start="{" end="}" contains=@typeScriptAll,typeScriptParensErrA,typeScriptParensErrB,typeScriptParen,typeScriptBracket,typeScriptBlock fold
+syntax keyword typescriptFuncKeyword function
+"syntax region typescriptFuncDef start="function" end="\(.*\)" contains=typescriptFuncKeyword,typescriptFuncArg keepend
+"syntax match typescriptFuncArg "\(([^()]*)\)" contains=typescriptParens,typescriptFuncComma contained
+"syntax match typescriptFuncComma /,/ contained
+" syntax region typescriptFuncBlock contained matchgroup=typescriptFuncBlock start="{" end="}" contains=@typescriptAll,typescriptParensErrA,typescriptParensErrB,typescriptParen,typescriptBracket,typescriptBlock fold
 
-syn match typeScriptBraces "[{}\[\]]"
-syn match typeScriptParens "[()]"
-syn match typeScriptOpSymbols "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-="
-syn match typeScriptEndColons "[;,]"
-syn match typeScriptLogicSymbols "\(&&\)\|\(||\)"
+syn match typescriptBraces "[{}\[\]]"
+syn match typescriptParens "[()]"
+syn match typescriptOpSymbols "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-="
+syn match typescriptEndColons "[;,]"
+syn match typescriptLogicSymbols "\(&&\)\|\(||\)"
 
-" typeScriptFold Function {{{
+" typescriptFold Function {{{
 
-function! TypeScriptFold()
+" function! typescriptFold()
 setl foldlevelstart=1
 syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
 
 setl foldtext=FoldText()
-endfunction
+" endfunction
 
-au FileType typescript call TypeScriptFold()
+" au FileType typescript call typescriptFold()
 
 " }}}
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
 " For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_typeScript_syn_inits")
+if version >= 508 || !exists("did_typescript_syn_inits")
   if version < 508
-    let did_typeScript_syn_inits = 1
+    let did_typescript_syn_inits = 1
     command -nargs=+ HiLink hi link <args>
   else
     command -nargs=+ HiLink hi def link <args>
   endif
 
-  "Typescript highlighting
-  HiLink typeScriptParameters Operator
+  "typescript highlighting
+  HiLink typescriptParameters Operator
   HiLink typescriptSuperBlock Operator
 
-  HiLink typeScriptEndColons Exception
-  HiLink typeScriptOpSymbols Operator
-  HiLink typeScriptLogicSymbols Boolean
-  HiLink typeScriptBraces Function
-  HiLink typeScriptParens Operator
-  HiLink typeScriptComment Comment
-  HiLink typeScriptLineComment Comment
-  HiLink typeScriptRef Include
-  HiLink typeScriptRefS String
-  HiLink typeScriptRefD String
-  HiLink typeScriptDocComment Comment
-  HiLink typeScriptCommentTodo Todo
-  HiLink typeScriptCvsTag Function
-  HiLink typeScriptDocTags Special
-  HiLink typeScriptDocSeeTag Function
-  HiLink typeScriptDocParam Function
-  HiLink typeScriptStringS String
-  HiLink typeScriptStringD String
-  HiLink typeScriptRegexpString String
-  HiLink typeScriptGlobal Constant
-  HiLink typeScriptCharacter Character
-  HiLink typeScriptPrototype Type
-  HiLink typeScriptConditional Conditional
-  HiLink typeScriptBranch Conditional
-  HiLink typeScriptIdentifier Identifier
-  HiLink typeScriptRepeat Repeat
-  HiLink typeScriptStatement Statement
-  HiLink typeScriptFuncKeyword Function
-  HiLink typeScriptMessage Keyword
-  HiLink typeScriptDeprecated Exception
-  HiLink typeScriptError Error
-  HiLink typeScriptParensError Error
-  HiLink typeScriptParensErrA Error
-  HiLink typeScriptParensErrB Error
-  HiLink typeScriptParensErrC Error
-  HiLink typeScriptReserved Keyword
-  HiLink typeScriptOperator Operator
-  HiLink typeScriptType Type
-  HiLink typeScriptNull Type
-  HiLink typeScriptNumber Number
-  HiLink typeScriptFloat Number
-  HiLink typeScriptBoolean Boolean
-  HiLink typeScriptLabel Label
-  HiLink typeScriptSpecial Special
-  HiLink typeScriptSource Special
-  HiLink typeScriptGlobalObjects Special
-  HiLink typeScriptExceptions Special
+  HiLink typescriptEndColons Exception
+  HiLink typescriptOpSymbols Operator
+  HiLink typescriptLogicSymbols Boolean
+  HiLink typescriptBraces Function
+  HiLink typescriptParens Operator
+  HiLink typescriptComment Comment
+  HiLink typescriptLineComment Comment
+  HiLink typescriptRef Include
+  HiLink typescriptRefS String
+  HiLink typescriptRefD String
+  HiLink typescriptDocComment Comment
+  HiLink typescriptCommentTodo Todo
+  HiLink typescriptCvsTag Function
+  HiLink typescriptDocTags Special
+  HiLink typescriptDocSeeTag Function
+  HiLink typescriptDocParam Function
+  HiLink typescriptStringS String
+  HiLink typescriptStringD String
+  HiLink typescriptStringB String
+  HiLink typescriptRegexpString String
+  HiLink typescriptGlobal Constant
+  HiLink typescriptCharacter Character
+  HiLink typescriptPrototype Type
+  HiLink typescriptConditional Conditional
+  HiLink typescriptBranch Conditional
+  HiLink typescriptIdentifier Identifier
+  HiLink typescriptRepeat Repeat
+  HiLink typescriptStatement Statement
+  HiLink typescriptFuncKeyword Function
+  HiLink typescriptMessage Keyword
+  HiLink typescriptDeprecated Exception
+  HiLink typescriptError Error
+  HiLink typescriptParensError Error
+  HiLink typescriptParensErrA Error
+  HiLink typescriptParensErrB Error
+  HiLink typescriptParensErrC Error
+  HiLink typescriptReserved Keyword
+  HiLink typescriptOperator Operator
+  HiLink typescriptType Type
+  HiLink typescriptNull Type
+  HiLink typescriptNumber Number
+  HiLink typescriptFloat Number
+  HiLink typescriptDecorators Special
+  HiLink typescriptBoolean Boolean
+  HiLink typescriptLabel Label
+  HiLink typescriptSpecial Special
+  HiLink typescriptSource Special
+  HiLink typescriptGlobalObjects Special
+  HiLink typescriptExceptions Special
 
-  HiLink typeScriptDomErrNo Constant
-  HiLink typeScriptDomNodeConsts Constant
-  HiLink typeScriptDomElemAttrs Label
-  HiLink typeScriptDomElemFuncs PreProc
+  HiLink typescriptDomErrNo Constant
+  HiLink typescriptDomNodeConsts Constant
+  HiLink typescriptDomElemAttrs Label
+  HiLink typescriptDomElemFuncs PreProc
 
-  HiLink typeScriptHtmlElemAttrs Label
-  HiLink typeScriptHtmlElemFuncs PreProc
+  HiLink typescriptHtmlElemAttrs Label
+  HiLink typescriptHtmlElemFuncs PreProc
 
-  HiLink typeScriptCssStyles Label
+  HiLink typescriptCssStyles Label
 
   " Ajax Highlighting
-  HiLink typeScriptBrowserObjects Constant
+  HiLink typescriptBrowserObjects Constant
 
-  HiLink typeScriptDOMObjects Constant
-  HiLink typeScriptDOMMethods Function
-  HiLink typeScriptDOMProperties Special
+  HiLink typescriptDOMObjects Constant
+  HiLink typescriptDOMMethods Function
+  HiLink typescriptDOMProperties Special
 
-  HiLink typeScriptAjaxObjects Constant
-  HiLink typeScriptAjaxMethods Function
-  HiLink typeScriptAjaxProperties Special
+  HiLink typescriptAjaxObjects Constant
+  HiLink typescriptAjaxMethods Function
+  HiLink typescriptAjaxProperties Special
 
-  HiLink typeScriptFuncDef Title
-  HiLink typeScriptFuncArg Special
-  HiLink typeScriptFuncComma Operator
+  HiLink typescriptFuncDef Title
+  HiLink typescriptFuncArg Special
+  HiLink typescriptFuncComma Operator
 
-  HiLink typeScriptHtmlEvents Special
-  HiLink typeScriptHtmlElemProperties Special
+  HiLink typescriptHtmlEvents Special
+  HiLink typescriptHtmlElemProperties Special
 
-  HiLink typeScriptEventListenerKeywords Keyword
+  HiLink typescriptEventListenerKeywords Keyword
 
-  HiLink typeScriptNumber Number
-  HiLink typeScriptPropietaryObjects Constant
+  HiLink typescriptNumber Number
+  HiLink typescriptPropietaryObjects Constant
 
   delcommand HiLink
 endif
 
-" Define the htmltypeScript for HTML syntax html.vim
-"syntax clear htmltypeScript
-"syntax clear typeScriptExpression
-syntax cluster htmltypeScript contains=@typeScriptAll,typeScriptBracket,typeScriptParen,typeScriptBlock,typeScriptParenError
-syntax cluster typeScriptExpression contains=@typeScriptAll,typeScriptBracket,typeScriptParen,typeScriptBlock,typeScriptParenError,@htmlPreproc
+" Define the htmltypescript for HTML syntax html.vim
+"syntax clear htmltypescript
+"syntax clear typescriptExpression
+syntax cluster htmltypescript contains=@typescriptAll,typescriptBracket,typescriptParen,typescriptBlock,typescriptParenError
+syntax cluster typescriptExpression contains=@typescriptAll,typescriptBracket,typescriptParen,typescriptBlock,typescriptParenError,@htmlPreproc
 
 let b:current_syntax = "typescript"
 if main_syntax == 'typescript'

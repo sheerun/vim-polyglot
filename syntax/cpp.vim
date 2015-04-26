@@ -46,7 +46,7 @@ if !exists("cpp_no_cpp11")
   syn keyword cppConstant	ATOMIC_WCHAR_T_LOCK_FREE ATOMIC_SHORT_LOCK_FREE
   syn keyword cppConstant	ATOMIC_INT_LOCK_FREE ATOMIC_LONG_LOCK_FREE
   syn keyword cppConstant	ATOMIC_LLONG_LOCK_FREE ATOMIC_POINTER_LOCK_FREE
-  syn region cppRawString	matchgroup=cppRawDelimiter start=+\%(u8\|[uLU]\)\=R"\z([[:alnum:]_{}[\]#<>%:;.?*\+\-/\^&|~!=,"']\{,16}\)(+ end=+)\z1"+ contains=@Spell
+  syn region cppRawString	matchgroup=cppRawStringDelimiter start=+\%(u8\|[uLU]\)\=R"\z([[:alnum:]_{}[\]#<>%:;.?*\+\-/\^&|~!=,"']\{,16}\)(+ end=+)\z1"+ contains=@Spell
 endif
 
 " The minimum and maximum operators in GNU C++
@@ -70,7 +70,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppStructure		Structure
   HiLink cppBoolean		Boolean
   HiLink cppConstant		Constant
-  HiLink cppRawDelimiter	Delimiter
+  HiLink cppRawStringDelimiter	Delimiter
   HiLink cppRawString		String
   delcommand HiLink
 endif

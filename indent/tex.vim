@@ -101,8 +101,20 @@ function! Latexbox_CallIndent()
   let window = getpos('.')
   call setpos('.', cursor)
 
+  " Get first non-whitespace character of current line.
+  let line_start_char = matchstr(getline('.'), '\S')
+
+  " Get initial tab position.
+  let initial_tab = stridx(getline('.'), line_start_char)
+
   " Execute the command.
   execute 'normal! =='
+
+  " Get tab position difference.
+  let difference = stridx(getline('.'), line_start_char) - initial_tab
+
+  " Set new cursor Y position based on calculated difference.
+  let cursor[2] = cursor[2] + difference
 
   " Restore the previous window position.
   call setpos('.', window)

@@ -25,6 +25,7 @@ let s:block_skip   = "synIDattr(synID(line('.'),col('.'),1),'name') =~? '" . s:s
 let s:block_start  = 'do\|fn'
 let s:block_middle = 'else\|match\|elsif\|catch\|after\|rescue'
 let s:block_end    = 'end'
+let s:symbols_end  = '\]\|}'
 let s:arrow        = '^.*->$'
 let s:pipeline     = '^\s*|>.*$'
 
@@ -59,7 +60,11 @@ function! GetElixirIndent()
 
     let ind += opened_symbol * &sw
 
-    if current_line =~ '^\s*\(\]\|}\)'
+    if last_line =~ '^\s*\(' . s:symbols_end . '\)'
+      let ind += &sw
+    endif
+
+    if current_line =~ '^\s*\(' . s:symbols_end . '\)'
       let ind -= &sw
     endif
 
