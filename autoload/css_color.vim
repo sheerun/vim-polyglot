@@ -173,6 +173,8 @@ function! s:create_syn_match()
 		let s:pattern_color[pattern] = rgb_color
 	endif
 
+	let group = 'BG' . rgb_color
+
 	if ! has_key( b:has_color_hi, rgb_color )
 		" check GUI flag early here to avoid pure-overhead caching
 		let syn_bg = s:is_gui ? rgb_color : get( s:color_bg, rgb_color, '' )
@@ -189,11 +191,7 @@ function! s:create_syn_match()
 			let syn_fg = r*30 + g*59 + b*11 > 12000 ? s:black : s:white
 			let s:color_fg[rgb_color] = syn_fg
 		endif
-	endif
 
-	let group = 'BG' . rgb_color
-
-	if ! has_key( b:has_color_hi, rgb_color )
 		exe printf( s:hi_cmd, group, syn_bg, syn_fg )
 		let b:has_color_hi[rgb_color] = 1
 	endif

@@ -48,11 +48,6 @@ function! GetPerlIndent()
         return 0
     endif
 
-    " Don't reindent comments on first column
-    if cline =~ '^#.'
-        return 0
-    endif
-
     " Get current syntax item at the line's first char
     let csynid = ''
     if b:indent_use_syntax

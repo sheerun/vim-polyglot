@@ -24,7 +24,7 @@ if !exists('g:LatexBox_cite_pattern')
 	let g:LatexBox_cite_pattern = '\C\\\a*cite\a*\*\?\(\[[^\]]*\]\)*\_\s*{'
 endif
 if !exists('g:LatexBox_ref_pattern')
-	let g:LatexBox_ref_pattern = '\C\\v\?\(eq\|page\|[cC]\|labelc\)\?ref\*\?\_\s*{'
+	let g:LatexBox_ref_pattern = '\C\\v\?\(eq\|page\|[cC]\|labelc\|name\)\?ref\*\?\_\s*{'
 endif
 
 if !exists('g:LatexBox_completion_environments')
@@ -255,14 +255,14 @@ function! LatexBox_BibSearch(regexp)
 		if has('win32')
 			let l:old_shellslash = &l:shellslash
 			setlocal noshellslash
-			silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
+			call system('cd ' . shellescape(LatexBox_GetTexRoot()) .
 						\ ' & bibtex -terse '
-						\ . fnamemodify(auxfile, ':t') . ' >nul'
+						\ . fnamemodify(auxfile, ':t') . ' >nul')
 			let &l:shellslash = l:old_shellslash
 		else
-			silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
+			call system('cd ' . shellescape(LatexBox_GetTexRoot()) .
 						\ ' ; bibtex -terse '
-						\ . fnamemodify(auxfile, ':t') . ' >/dev/null'
+						\ . fnamemodify(auxfile, ':t') . ' >/dev/null')
 		endif
 
 		let lines = split(substitute(join(readfile(bblfile), "\n"),

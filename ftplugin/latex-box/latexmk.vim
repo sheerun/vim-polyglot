@@ -166,7 +166,11 @@ function! LatexBox_Latexmk(force)
 	elseif match(&shell, '/tcsh$') >= 0
 		let env = 'setenv max_print_line ' . max_print_line . '; '
 	else
-		let env = 'max_print_line=' . max_print_line
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let env = 'set max_print_line ' . max_print_line . '; and '
+		else
+			let env = 'max_print_line=' . max_print_line
+		endif
 	endif
 
 	" Set environment options
@@ -177,7 +181,11 @@ function! LatexBox_Latexmk(force)
 		" Make sure to switch drive as well as directory
 		let cmd = 'cd /D ' . texroot . ' && '
 	else
-		let cmd = 'cd ' . texroot . ' && '
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let cmd = 'cd ' . texroot . '; and '
+		else
+			let cmd = 'cd ' . texroot . ' && '
+		endif
 	endif
 	let cmd .= env . ' latexmk'
 	if ! g:LatexBox_personal_latexmkrc
@@ -203,7 +211,11 @@ function! LatexBox_Latexmk(force)
 	if has('win32')
 		let cmd .= ' >nul'
 	else
-		let cmd .= ' &>/dev/null'
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let cmd .= ' >/dev/null ^/dev/null'
+		else
+			let cmd .= ' &>/dev/null'
+		endif
 	endif
 
 	if g:LatexBox_latexmk_async

@@ -5,8 +5,8 @@
 " Bugs/requests: http://github.com/vim-perl/vim-perl/issues
 " Last Change:   {{LAST_CHANGE}}
 "
-" Instration:
-"   put tt2.vim and tt2html.vim in to your syntax diretory.
+" Installation:
+"   put tt2.vim and tt2html.vim in to your syntax directory.
 "
 "   add below in your filetype.vim.
 "       au BufNewFile,BufRead *.tt2 setf tt2
