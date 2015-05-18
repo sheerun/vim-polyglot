@@ -93,7 +93,7 @@ PACKS="
   jade:digitaltoad/vim-jade
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript
-  json:sheerun/vim-json
+  json:elzr/vim-json
   jst:briancollins/vim-jst
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
