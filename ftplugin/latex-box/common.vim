@@ -179,7 +179,13 @@ function! LatexBox_GetTexRoot()
 	return fnamemodify(LatexBox_GetMainTexFile(), ':h')
 endfunction
 
-function! LatexBox_GetTexBasename(with_dir)
+function! LatexBox_GetBuildBasename(with_dir)
+	" 1. Check for g:LatexBox_jobname
+	if exists('g:LatexBox_jobname')
+		return g:LatexBox_jobname
+	endif
+
+	" 2. Get the basename from the main tex file
 	if a:with_dir
 		return fnamemodify(LatexBox_GetMainTexFile(), ':r')
 	else
@@ -190,48 +196,48 @@ endfunction
 function! LatexBox_GetAuxFile()
 	" 1. check for b:build_dir variable
 	if exists('b:build_dir') && isdirectory(b:build_dir)
-		return b:build_dir . '/' . LatexBox_GetTexBasename(0) . '.aux'
+		return b:build_dir . '/' . LatexBox_GetBuildBasename(0) . '.aux'
 	endif
 
 	" 2. check for g:LatexBox_build_dir variable
 	if exists('g:LatexBox_build_dir') && isdirectory(g:LatexBox_build_dir)
-		return g:LatexBox_build_dir . '/' . LatexBox_GetTexBasename(0) . '.aux'
+		return g:LatexBox_build_dir . '/' . LatexBox_GetBuildBasename(0) . '.aux'
 	endif
 
 	" 3. use the base name of main tex file
-	return LatexBox_GetTexBasename(1) . '.aux'
+	return LatexBox_GetBuildBasename(1) . '.aux'
 endfunction
 
 function! LatexBox_GetLogFile()
 	" 1. check for b:build_dir variable
 	if exists('b:build_dir') && isdirectory(b:build_dir)
-		return b:build_dir . '/' . LatexBox_GetTexBasename(0) . '.log'
+		return b:build_dir . '/' . LatexBox_GetBuildBasename(0) . '.log'
 	endif
 
 	" 2. check for g:LatexBox_build_dir variable
 	if exists('g:LatexBox_build_dir') && isdirectory(g:LatexBox_build_dir)
-		return g:LatexBox_build_dir . '/' . LatexBox_GetTexBasename(0) . '.log'
+		return g:LatexBox_build_dir . '/' . LatexBox_GetBuildBasename(0) . '.log'
 	endif
 
 	" 3. use the base name of main tex file
-	return LatexBox_GetTexBasename(1) . '.log'
+	return LatexBox_GetBuildBasename(1) . '.log'
 endfunction
 
 function! LatexBox_GetOutputFile()
 	" 1. check for b:build_dir variable
 	if exists('b:build_dir') && isdirectory(b:build_dir)
-		return b:build_dir . '/' . LatexBox_GetTexBasename(0)
+		return b:build_dir . '/' . LatexBox_GetBuildBasename(0)
 					\ . '.' . g:LatexBox_output_type
 	endif
 
 	" 2. check for g:LatexBox_build_dir variable
 	if exists('g:LatexBox_build_dir') && isdirectory(g:LatexBox_build_dir)
-		return g:LatexBox_build_dir . '/' . LatexBox_GetTexBasename(0)
+		return g:LatexBox_build_dir . '/' . LatexBox_GetBuildBasename(0)
 					\ . '.' . g:LatexBox_output_type
 	endif
 
 	" 3. use the base name of main tex file
-	return LatexBox_GetTexBasename(1) . '.' . g:LatexBox_output_type
+	return LatexBox_GetBuildBasename(1) . '.' . g:LatexBox_output_type
 endfunction
 " }}}
 

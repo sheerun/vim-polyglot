@@ -43,7 +43,7 @@ syn keyword htmlTagName contained missing-glyph mpath
 syn keyword htmlTagName contained text textPath tref tspan vkern
 
 " Custom Element
-syn match htmlTagName contained "\<[a-z_]\+\(\-[a-z_]\+\)\+\>"
+syn match htmlTagName contained "\<[a-z_]\([a-z0-9_.]\+\)\?\(\-[a-z0-9_.]\+\)\+\>"
 
 " HTML 5 arguments
 " Core Attributes

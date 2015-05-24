@@ -15,10 +15,19 @@ syn cluster elixirNotTop contains=@elixirRegexSpecial,@elixirStringContained,@el
 syn match elixirComment '#.*' contains=elixirTodo
 syn keyword elixirTodo FIXME NOTE TODO OPTIMIZE XXX HACK contained
 
-syn keyword elixirKeyword is_atom is_binary is_bitstring is_boolean is_float is_function is_integer is_list is_map is_number is_pid is_port is_record is_reference is_tuple is_exception
 syn keyword elixirKeyword case when cond for if unless try receive send
 syn keyword elixirKeyword exit raise throw after rescue catch else do end
 syn keyword elixirKeyword quote unquote super
+
+" Functions used on guards
+syn keyword elixirKeyword contained is_atom is_binary is_bitstring is_boolean
+syn keyword elixirKeyword contained is_float is_function is_integer is_list
+syn keyword elixirKeyword contained is_map is_number is_pid is_port is_record
+syn keyword elixirKeyword contained is_reference is_tuple is_exception abs
+syn keyword elixirKeyword contained bit_size byte_size div elem hd length
+syn keyword elixirKeyword contained map_size node rem round tl trunc tuple_size
+
+syn match elixirGuard '.*when.*' contains=ALLBUT,@elixirNotTop
 
 syn keyword elixirInclude import require alias use
 

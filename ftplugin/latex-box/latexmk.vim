@@ -141,7 +141,7 @@ endfunction
 
 function! LatexBox_Latexmk(force)
 	" Define often used names
-	let basepath = LatexBox_GetTexBasename(1)
+	let basepath = LatexBox_GetBuildBasename(1)
 	let basename = fnamemodify(basepath, ':t')
 	let texroot = shellescape(LatexBox_GetTexRoot())
 	let mainfile = fnameescape(fnamemodify(LatexBox_GetMainTexFile(), ':t'))
@@ -369,7 +369,7 @@ function! LatexBox_LatexmkClean(cleanall)
 		return
 	endif
 
-	let basename = LatexBox_GetTexBasename(1)
+	let basename = LatexBox_GetBuildBasename(1)
 
 	if has_key(g:latexmk_running_pids, basename)
 		echomsg "don't clean when latexmk is running"
@@ -502,7 +502,7 @@ function! LatexBox_LatexmkStatus(detailed)
 			echo "latexmk is running (" . plist . ")"
 		endif
 	else
-		let basename = LatexBox_GetTexBasename(1)
+		let basename = LatexBox_GetBuildBasename(1)
 		if has_key(g:latexmk_running_pids, basename)
 			echo "latexmk is running"
 		else
@@ -516,12 +516,12 @@ endfunction
 function! LatexBox_LatexmkStop(silent)
 	if empty(g:latexmk_running_pids)
 		if !a:silent
-			let basepath = LatexBox_GetTexBasename(1)
+			let basepath = LatexBox_GetBuildBasename(1)
 			let basename = fnamemodify(basepath, ':t')
 			echoerr "latexmk is not running for `" . basename . "'"
 		endif
 	else
-		let basepath = LatexBox_GetTexBasename(1)
+		let basepath = LatexBox_GetBuildBasename(1)
 		let basename = fnamemodify(basepath, ':t')
 		if has_key(g:latexmk_running_pids, basepath)
 			call s:kill_latexmk_process(g:latexmk_running_pids[basepath])

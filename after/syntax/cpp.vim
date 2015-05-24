@@ -760,6 +760,7 @@ syntax keyword cppSTLconstant WCHAR_MAX
 if !exists("cpp_no_cpp11")
     syntax keyword cppSTLtype nullptr_t max_align_t
     syntax keyword cppSTLtype type_index
+    syntax keyword cppSTLconstant nullptr
 
     " type_traits
     syntax keyword cppSTLtype is_void
