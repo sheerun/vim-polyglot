@@ -119,7 +119,7 @@ function! s:DetectPerl6()
   while line_no <= eof
     let line    = getline(line_no)
     let line_no = line_no + 1
-    if line =~ '^=\w'
+    rf line =~ '^=\w'
       let in_pod = 1
     elseif line =~ '^=\%(end\|cut\)'
       let in_pod = 0
@@ -208,3 +208,4 @@ autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
+au BufNewFile,BufRead *.nim set filetype=nim
