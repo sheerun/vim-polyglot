@@ -704,7 +704,9 @@ class VimRubyCompletion
         cv = eval("self.class.constants")
         vartype = get_var_type( receiver )
         dprint "vartype: %s" % vartype
-        if vartype != ''
+
+        invalid_vartype = ['', "gets"]
+        if !invalid_vartype.include?(vartype)
           load_buffer_class( vartype )
 
           begin
@@ -732,7 +734,7 @@ class VimRubyCompletion
             methods.concat m.instance_methods(false)
           }
         end
-        variables += add_rails_columns( "#{vartype}" ) if vartype && vartype.length > 0
+        variables += add_rails_columns( "#{vartype}" ) if vartype && !invalid_vartype.include?(vartype)
 
       when /^\(?\s*[A-Za-z0-9:^@.%\/+*\(\)]+\.\.\.?[A-Za-z0-9:^@.%\/+*\(\)]+\s*\)?\.([^.]*)/
         message = $1

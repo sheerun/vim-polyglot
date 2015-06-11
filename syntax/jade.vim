@@ -53,7 +53,7 @@ syn region  jadePipedText matchgroup=jadePipeChar start="|" end="$" contained co
 syn match   jadeTagBlockChar "\.$" contained nextgroup=jadeTagBlockText,jadeTagBlockEnd skipnl
 syn region  jadeTagBlockText start="\%(\s*\)\S" end="\ze\n" contained contains=jadeInterpolation,jadeTextInlineJade nextgroup=jadeTagBlockText,jadeTagBlockEnd skipnl
 syn region  jadeTagBlockEnd start="\s*\S" end="$" contained contains=jadeInterpolation,jadeTextInlineJade nextgroup=jadeBegin skipnl
-syn region  jadeTextInlineJade matchgroup=jadeInlineDelimiter start="#\[" end="]" contained contains=jadeTag keepend
+syn region  jadeTextInlineJade matchgroup=jadeInlineDelimiter start="#\[" end="]" contains=jadeTag keepend
 
 syn region  jadeJavascriptFilter matchgroup=jadeFilter start="^\z(\s*\):javascript\s*$" end="^\%(\z1\s\|\s*$\)\@!" contains=@htmlJavascript
 syn region  jadeCoffeescriptFilter matchgroup=jadeFilter start="^\z(\s*\):coffeescript\s*$" end="^\%(\z1\s\|\s*$\)\@!" contains=@htmlCoffeescript

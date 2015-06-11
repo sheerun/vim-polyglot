@@ -30,7 +30,7 @@ hi link shebang Comment
 "" typescript comments"{{{
 syn keyword typescriptCommentTodo TODO FIXME XXX TBD contained
 syn match typescriptLineComment "\/\/.*" contains=@Spell,typescriptCommentTodo,typescriptRef
-syn match typescriptRef /\/\/\/<reference\s\+.*\/>$/ contains=typescriptRefD,typescriptRefS
+syn match typescriptRefComment /\/\/\/<\(reference\|amd-\(dependency\|module\)\)\s\+.*\/>$/ contains=typescriptRefD,typescriptRefS
 syn region typescriptRefD start=+"+ skip=+\\\\\|\\"+ end=+"\|$+
 syn region typescriptRefS start=+'+ skip=+\\\\\|\\'+ end=+'\|$+
 
@@ -99,8 +99,8 @@ syntax keyword typescriptEventListenerKeywords contained blur click focus mouseo
 syntax keyword typescriptEventListenerMethods contained scrollIntoView addEventListener dispatchEvent removeEventListener preventDefault stopPropagation
 " }}}
 "" Programm Keywords"{{{
-syntax keyword typescriptSource import export
-syntax keyword typescriptIdentifier arguments this let var void yield
+syntax keyword typescriptSource import export from as
+syntax keyword typescriptIdentifier arguments this let var void yield const
 syntax keyword typescriptOperator delete new instanceof typeof
 syntax keyword typescriptBoolean true false
 syntax keyword typescriptNull null undefined
@@ -110,7 +110,7 @@ syntax keyword typescriptDeprecated escape unescape all applets alinkColor bgCol
 "}}}
 "" Statement Keywords"{{{
 syntax keyword typescriptConditional if else switch
-syntax keyword typescriptRepeat do while for in
+syntax keyword typescriptRepeat do while for in of
 syntax keyword typescriptBranch break continue
 syntax keyword typescriptLabel case default
 syntax keyword typescriptStatement return with
@@ -119,7 +119,7 @@ syntax keyword typescriptGlobalObjects Array Boolean Date Function Infinity Math
 
 syntax keyword typescriptExceptions try catch throw finally Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 
-syntax keyword typescriptReserved constructor declare as interface module abstract enum int short export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public type
+syntax keyword typescriptReserved constructor declare as interface module abstract enum int short export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public type namespace from
 "}}}
 "" typescript/DOM/HTML/CSS specified things"{{{
 
@@ -202,9 +202,11 @@ syn match typescriptLogicSymbols "\(&&\)\|\(||\)"
 " typescriptFold Function {{{
 
 " function! typescriptFold()
-syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
 
-setl foldtext=FoldText()
+" skip curly braces inside RegEx's and comments
+syn region foldBraces start=/{/ skip=/\(\/\/.*\)\|\(\/.*\/\)/ end=/}/ transparent fold keepend extend
+
+" setl foldtext=FoldText()
 " endfunction
 
 " au FileType typescript call typescriptFold()
@@ -233,7 +235,7 @@ if version >= 508 || !exists("did_typescript_syn_inits")
   HiLink typescriptParens Operator
   HiLink typescriptComment Comment
   HiLink typescriptLineComment Comment
-  HiLink typescriptRef Include
+  HiLink typescriptRefComment Include
   HiLink typescriptRefS String
   HiLink typescriptRefD String
   HiLink typescriptDocComment Comment
