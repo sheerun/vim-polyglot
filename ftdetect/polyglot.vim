@@ -83,6 +83,8 @@ au BufNewFile,BufRead *.jst set filetype=jst
 au BufNewFile,BufRead *.djs set filetype=jst
 au BufNewFile,BufRead *.hamljs set filetype=jst
 au BufNewFile,BufRead *.ect set filetype=jst
+au BufRead,BufNewFile *.jl		let b:undo_ftplugin = "setlocal comments< define< formatoptions< iskeyword< lisp<"
+au BufRead,BufNewFile *.jl		set filetype=julia
 autocmd BufNewFile,BufRead *.less setf less
 au BufNewFile,BufRead *.liquid					set ft=liquid
 au BufNewFile,BufRead */_layouts/*.html,*/_includes/*.html	set ft=liquid

@@ -93,6 +93,7 @@ PACKS="
   jade:digitaltoad/vim-jade
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript
+  julia:dcjones/julia-minimalist-vim
   json:sheerun/vim-json
   jst:briancollins/vim-jst
   latex:LaTeX-Box-Team/LaTeX-Box
@@ -110,6 +111,7 @@ PACKS="
   protobuf:uarun/vim-protobuf
   python:mitsuhiko/vim-python-combined
   r-lang:vim-scripts/R.vim
+  ragel:jneen/ragel.vim
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
   rust:wting/rust.vim

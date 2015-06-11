@@ -7,7 +7,7 @@ A collection of language packs for Vim.
 
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
-- It **won't affect your startup time**, as scripts are loaded only on demand\*. 
+- It **won't affect your startup time**, as scripts are loaded only on demand\*.
 - It **installs 50+ times faster** than 50+ packages it consist of.
 - Solid syntax and indentation support. Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
@@ -26,10 +26,9 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 ## Language packs
 
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent, ftdetect)
-- [blade](https://github.com/xsbeats/vim-blade) (syntax, ftdetect)
+- [blade](https://github.com/xsbeats/vim-blade) (syntax, indent, ftdetect)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/cpp-vim) (syntax)
-- [c-extensions](https://github.com/kergoth/aftersyntaxc.vim) (syntax)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin, ftdetect)
 - [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [css](https://github.com/JulesWang/css.vim) (syntax)
@@ -49,7 +48,8 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [jade](https://github.com/digitaltoad/vim-jade) (syntax, indent, ftplugin, ftdetect)
 - [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftdetect)
-- [json](https://github.com/leshill/vim-json) (syntax, ftdetect)
+- [julia](https://github.com/dcjones/julia-minimalist-vim) (syntax, indent, ftdetect)
+- [json](https://github.com/sheerun/vim-json) (syntax, indent, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
 - [latex](https://github.com/LaTeX-Box-Team/LaTeX-Box) (syntax, indent, ftplugin)
 - [less](https://github.com/groenewege/vim-less) (syntax, indent, ftplugin, ftdetect)
@@ -70,7 +70,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [ruby](https://github.com/vim-ruby/vim-ruby) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [rust](https://github.com/wting/rust.vim) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [sbt](https://github.com/derekwyatt/vim-sbt) (syntax, ftdetect)
-- [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, ftplugin, ftdetect)
+- [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, compiler, ftplugin, ftdetect)
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftdetect)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin, ftdetect)
 - [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax, ftdetect)
@@ -78,7 +78,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)
 - [tmux](https://github.com/tejr/vim-tmux) (syntax, ftdetect)
 - [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
-- [typescript](https://github.com/leafgarland/typescript-vim) (syntax, compiler, ftplugin, ftdetect)
+- [typescript](https://github.com/leafgarland/typescript-vim) (syntax, indent, compiler, ftplugin, ftdetect)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax, ftdetect)
 - [toml](https://github.com/cespare/vim-toml) (syntax, ftplugin, ftdetect)
