@@ -197,7 +197,7 @@ syntax keyword cppSTLfunction count
 syntax keyword cppSTLfunction count_if
 syntax keyword cppSTLfunction c_str
 syntax keyword cppSTLfunction ctime
-syntax keyword cppSTLfunction data
+"syntax keyword cppSTLfunction data
 syntax keyword cppSTLfunction denorm_min
 syntax keyword cppSTLfunction destroy
 syntax keyword cppSTLfunction difftime
@@ -459,7 +459,7 @@ syntax keyword cppSTLfunction swap_ranges
 syntax keyword cppSTLfunction swprintf
 syntax keyword cppSTLfunction swscanf
 syntax keyword cppSTLfunction sync_with_stdio
-syntax keyword cppSTLfunction system
+"syntax keyword cppSTLfunction system
 syntax keyword cppSTLfunction tan
 syntax keyword cppSTLfunction tanh
 syntax keyword cppSTLfunction tellg
@@ -1053,7 +1053,7 @@ if !exists("cpp_no_cpp11")
     syntax keyword cppSTLconstant FLT_EVAL_METHOD
 
     " complex
-    syntax keyword cppSTLfunction proj
+    "syntax keyword cppSTLfunction proj
 
     " random
     syntax keyword cppSTLtype linear_congruential_engine

@@ -72,6 +72,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [sbt](https://github.com/derekwyatt/vim-sbt) (syntax, ftdetect)
 - [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, compiler, ftplugin, ftdetect)
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftdetect)
+- [solidity](https://github.com/ethereum/vim-solidity) (syntax, indent, ftdetect)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin, ftdetect)
 - [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax, ftdetect)
 - [swift](https://github.com/toyamarinyon/vim-swift) (syntax, indent, ftdetect)
