@@ -118,6 +118,7 @@ PACKS="
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   slim:slim-template/vim-slim
+  solidity:ethereum/vim-solidity
   stylus:wavded/vim-stylus
   systemd:kurayama/systemd-vim-syntax
   swift:toyamarinyon/vim-swift
