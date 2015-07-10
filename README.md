@@ -93,6 +93,15 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent, ftdetect)
 - [css-color](https://github.com/ap/vim-css-color) (autoload, syntax)
 
+## Disabling a language pack
+
+Individual language packs can be disabled by setting `g:polyglot_disabled`.
+
+```viml
+" ~/.vimrc
+let g:polyglot_disabled = ['css-color']
+```
+
 ## Contributing
 
 Language packs are periodically updated using automated `build` script.
