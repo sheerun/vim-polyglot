@@ -34,7 +34,7 @@ extract() {
           subdirs="$subdirs, $base"
         fi
 
-        copy_dir "${dir}${subtree}" "$subdir"
+        copy_dir "${dir}${subtree}" "$subdir" "$name"
       fi
     done
 
@@ -59,7 +59,9 @@ copy_dir() {
     file_path="$(dirname "${file##$1/}")"
     mkdir -p "$file_path"
     touch "$file_path/$(basename "$file")"
-    cat $file >> $file_path/$(basename "$file")
+
+    # Use comma instead of / to handle cases like c/c++
+    sed -e "s,%%PACK%%,$3," -e "/%%CONTENT%%/{r $file" -e "d;}" plugin_guard.vim.template >> $file_path/$(basename "$file")
   done
 }
 
