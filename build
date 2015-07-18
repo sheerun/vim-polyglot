@@ -114,7 +114,7 @@ PACKS="
   go:fatih/vim-go:_BASIC
   haml:tpope/vim-haml
   handlebars:mustache/vim-mustache-handlebars
-  haskell:travitch/hasksyn
+  haskell:raichoo/haskell-vim
   haxe:yaymukund/vim-haxe
   html5:othree/html5.vim
   jade:digitaltoad/vim-jade

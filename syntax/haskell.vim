@@ -1,162 +1,258 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
   
-" Vim syntax file
-" Language: Haskell
-" Author: Tristan Ravitch
-" Maintainer: Tristan Ravitch
-" Version: 0.0.1
+" syntax highlighting for haskell
+"
+" Heavily modified version of the haskell syntax
+" highlighter to support haskell.
+"
+" author: raichoo (raichoo@googlemail.com)
 
 if version < 600
-  syntax clear
-elseif exists('b:current_syntax')
+  syn clear
+elseif exists("b:current_syntax")
   finish
 endif
 
-syn sync minlines=50 maxlines=200
+if exists('g:haskell_enable_quantification') && g:haskell_enable_quantification == 1
+  syn region haskellRecordBlock matchgroup=haskellDelimiter start="{" end="}"
+    \ contains=
+    \ haskellType,
+    \ haskellSeparator,
+    \ haskellParens,
+    \ haskellBrackets,
+    \ haskellRecordField,
+    \ haskellOperators,
+    \ haskellDot,
+    \ haskellLineComment,
+    \ haskellBlockComment,
+    \ haskellPragma,
+    \ haskellForall
+else
+  syn region haskellRecordBlock matchgroup=haskellDelimiter start="{" end="}"
+    \ contains=
+    \ haskellType,
+    \ haskellSeparator,
+    \ haskellParens,
+    \ haskellBrackets,
+    \ haskellRecordField,
+    \ haskellOperators,
+    \ haskellDot,
+    \ haskellLineComment,
+    \ haskellBlockComment,
+    \ haskellPragma
+endif
+if exists('g:haskell_enable_pattern_synonyms') && g:haskell_enable_pattern_synonyms == 1
+  syn region haskellImportList matchgroup=haskellDelimiter start="(" end=")"
+    \ contains=
+    \ haskellSeparator,
+    \ haskellType,
+    \ haskellLineComment,
+    \ haskellBlockComment,
+    \ haskellDot,
+    \ haskellParens,
+    \ haskellPatternKeyword
+else
+  syn region haskellImportList matchgroup=haskellDelimiter start="(" end=")"
+    \ contains=
+    \ haskellSeparator,
+    \ haskellType,
+    \ haskellLineComment,
+    \ haskellBlockComment,
+    \ haskellDot,
+    \ haskellParens
+end
+syn match haskellRecordField "[_a-z][a-zA-Z0-9_']*\s*::" contained
+  \ contains=
+  \ haskellIdentifier,
+  \ haskellOperators
+syn match haskellTopLevelDecl
+  \ "^\s*\(where\s\+\|let\s\+\|default\s\+\)\?[_a-z][a-zA-Z0-9_']*\(,\s*[_a-z][a-zA-Z0-9_']*\)*\(\s*::\|\n\s\+::\)"
+  \ contains=
+  \ haskellIdentifier,
+  \ haskellOperators,
+  \ haskellSeparator,
+  \ haskellParens,
+  \ haskellBrackets,
+  \ haskellWhere,
+  \ haskellLet,
+  \ haskellDefault
+syn region haskellModuleBlock matchgroup=haskellBlockKeywords start="\<module\>" end="\<where\>"
+  \ contains=haskellType,haskellDot,haskellImportList
+syn region haskellClassBlock
+  \ matchgroup=haskellBlockKeywords
+  \ start="^\<\(class\|instance\)\>"
+  \ end="\<where\>\|^\<"
+  \ contains=
+  \ haskellType,
+  \ haskellSeparator,
+  \ haskellParens,
+  \ haskellDot,
+  \ haskellOperators,
+  \ haskellLineComment,
+  \ haskellBlockComment,
+  \ haskellPragma
+syn keyword haskellDeclKeyword newtype data type family instance where contained
+syn region haskellDeclBlock keepend
+  \ start="^\<\(newtype\|data\|type\)\>\s\+\(\<\(family\|instance\)\>\)\?"
+  \ end="\<where\>\|=\|^\<"
+  \ contains=
+  \ haskellDeclKeyword,
+  \ haskellType,
+  \ haskellQuoted,
+  \ haskellParens,
+  \ haskellBrackets,
+  \ haskellDot,
+  \ haskellOperators,
+  \ haskellLineComment,
+  \ haskellBlockComment,
+  \ haskellPragma
+syn match haskellAssocType "\s\+\<\(data\|type\|newtype\)\>"
+syn match haskellDeriving "\(deriving\s\+instance\|deriving\)"
+syn keyword haskellDefault default
+syn keyword haskellImportKeywords import qualified safe as hiding contained
+syn keyword haskellForeignKeywords foreign export import ccall safe unsafe interruptible capi prim contained
+syn region haskellForeignImport start="\<foreign\>" end="::" keepend
+  \ contains=
+  \ haskellString,
+  \ haskellOperators,
+  \ haskellForeignKeywords,
+  \ haskellIdentifier
+syn region haskellImport
+  \ start="^import"
+  \ end="^\<"
+  \ contains=
+  \ haskellImportKeywords,
+  \ haskellImportList,
+  \ haskellType,
+  \ haskellLineComment,
+  \ haskellBlockComment,
+  \ haskellDot
+syn keyword haskellStatement do case of in
+syn keyword haskellWhere where
+syn keyword haskellLet let
+if exists('g:haskell_enable_static_pointers') && g:haskell_enable_static_pointers == 1
+  syn keyword haskellStatic static
+endif
+syn keyword haskellConditional if then else
+syn match haskellNumber "\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>\|\<0[bB][10]\+\>"
+syn match haskellFloat "\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
+syn match haskellSeparator  "[,;]"
+syn region haskellParens matchgroup=haskellDelimiter start="(" end=")" contains=TOP
+syn region haskellBrackets matchgroup=haskellDelimiter start="\[" end="]" contains=TOP
+syn region haskellBlock matchgroup=haskellDelimiter start="{" end="}" contains=TOP
+syn keyword haskellInfix infix infixl infixr
+syn keyword haskellBottom undefined error
+syn match haskellOperators "[-!#$%&\*\+/<=>\?@\\^|~:]\+\|\<_\>"
+syn match haskellQuote "\<'\+" contained
+syn match haskellQuotedType "[A-Z][a-zA-Z0-9_']*\>" contained
+syn region haskellQuoted start="\<'\+" end="\>"
+  \ contains=
+  \ haskellType,
+  \ haskellQuote,
+  \ haskellQuotedType,
+  \ haskellSeparator,
+  \ haskellParens,
+  \ haskellOperators,
+  \ haskellIdentifier
+syn match haskellDot "\."
+syn match haskellLineComment "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$"
+  \ contains=
+  \ haskellTodo,
+  \ @Spell
+syn match haskellBacktick "`[A-Za-z_][A-Za-z0-9_\.']*`"
+syn region haskellString start=+"+ skip=+\\\\\|\\"+ end=+"+
+  \ contains=@Spell
+syn match haskellIdentifier "[_a-z][a-zA-z0-9_']*" contained
+syn match haskellChar "\<'[^'\\]'\|'\\.'\|'\\u[0-9a-fA-F]\{4}'\>"
+syn match haskellType "\<[A-Z][a-zA-Z0-9_']*\>\n\?\s*"
+  \ nextgroup=haskellBlockComment,haskellRecordBlock
+syn region haskellBlockComment start="{-" end="-}"
+  \ contains=
+  \ haskellBlockComment,
+  \ haskellTodo,
+  \ @Spell
+syn region haskellPragma start="{-#" end="#-}"
+syn region haskellQuasiQuote matchgroup=haskellTH start="\[[_a-z][a-zA-z0-9_']*|" end="|\]"
+syn region haskellTHBlock matchgroup=haskellTH start="\[\(d\|t\|p\)\?|" end="|]" contains=TOP
+syn region haskellTHDoubleBlock matchgroup=haskellTH start="\[||" end="||]" contains=TOP
+syn match haskellPreProc "^#.*$"
+syn keyword haskellTodo TODO FIXME contained
+if exists('g:haskell_enable_typeroles') && g:haskell_enable_typeroles == 1
+  syn keyword haskellTypeRoles phantom representational nominal contained
+  syn region haskellTypeRoleBlock matchgroup=haskellTypeRoles start="type\s\+role" end="^\<" keepend
+    \ contains=
+    \ haskellType,
+    \ haskellTypeRoles
+endif
+if exists('g:haskell_enable_quantification') && g:haskell_enable_quantification == 1
+  syn keyword haskellForall forall
+endif
+if exists('g:haskell_enable_recursivedo') && g:haskell_enable_recursivedo == 1
+  syn keyword haskellRecursiveDo mdo rec
+endif
+if exists('g:haskell_enable_arrowsyntax') && g:haskell_enable_arrowsyntax == 1
+  syn keyword haskellArrowSyntax proc
+endif
+if exists('g:haskell_enable_pattern_synonyms') && g:haskell_enable_pattern_synonyms == 1
+  syn region haskellPatternSynonym start="^\<pattern\>" end="=\|<-" keepend
+    \ contains=
+    \ haskellPatternKeyword,
+    \ haskellType,
+    \ haskellOperators
+  syn keyword haskellPatternKeyword pattern contained
+endif
 
-" These basic lexical definitions are taken from the orignal haskell syntax
-" description from vim 7.3.
-syn match  hsSpecialChar      contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
-syn match  hsSpecialChar      contained "\\\(NUL\|SOH\|STX\|ETX\|EOT\|ENQ\|ACK\|BEL\|BS\|HT\|LF\|VT\|FF\|CR\|SO\|SI\|DLE\|DC1\|DC2\|DC3\|DC4\|NAK\|SYN\|ETB\|CAN\|EM\|SUB\|ESC\|FS\|GS\|RS\|US\|SP\|DEL\)"
-syn match  hsSpecialCharError contained "\\&\|'''\+"
-syn region hsString           start=+"+  skip=+\\\\\|\\"+  end=+"+  contains=hsSpecialChar
-syn match  hsCharacter        "[^a-zA-Z0-9_']'\([^\\]\|\\[^']\+\|\\'\)'"lc=1 contains=hsSpecialChar,hsSpecialCharError
-syn match  hsCharacter        "^'\([^\\]\|\\[^']\+\|\\'\)'" contains=hsSpecialChar,hsSpecialCharError
-syn match  hsNumber           "\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>"
-syn match  hsFloat            "\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
+highlight def link haskellBottom Macro
+highlight def link haskellTH Boolean
+highlight def link haskellBlockKeywords Structure
+highlight def link haskellIdentifier Identifier
+highlight def link haskellForeignKeywords Structure
+highlight def link haskellDeriving Structure
+highlight def link haskellStatement Statement
+highlight def link haskellWhere Statement
+highlight def link haskellLet Statement
+highlight def link haskellDefault Statement
+highlight def link haskellConditional Conditional
+highlight def link haskellNumber Number
+highlight def link haskellFloat Float
+highlight def link haskellSeparator Delimiter
+highlight def link haskellDelimiter Delimiter
+highlight def link haskellInfix PreProc
+highlight def link haskellOperators Operator
+highlight def link haskellQuote Operator
+highlight def link haskellQuotedType Include
+highlight def link haskellDot Operator
+highlight def link haskellType Include
+highlight def link haskellLineComment Comment
+highlight def link haskellBlockComment Comment
+highlight def link haskellPragma SpecialComment
+highlight def link haskellString String
+highlight def link haskellChar String
+highlight def link haskellBacktick Operator
+highlight def link haskellPreProc Macro
+highlight def link haskellTodo Todo
+highlight def link haskellAssocType Structure
+highlight def link haskellImportBlock Delimiter
+highlight def link haskellImportKeywords Structure
+highlight def link haskellDeclKeyword Structure
 
-" This case matches the names of types and constructors: names beginning with
-" a capital letter.  Note that this also handles the case of @M.lookup@ where
-" M is a qualified import.  There is a big negative lookbehind assertion here
-" so that we don't highlight import and module statements oddly.
-syn match hsTypeName "\(^import\s.*\|^module\s.*\)\@<!\(^\|[^a-zA-Z0-9]\)\@<=[A-Z][a-zA-Z0-9_]*"
-" Also make unit and the empty list easy to spot - they are constructors too.
-syn match hsTypeName "()"
-syn match hsTypeName "\[\]"
-
-" These are keywords that are only highlighted if they are in comments.
-syn keyword hsFIXME contained FIXME TODO XXX BUG NOTE
-
-" Comment stuff
-syn region hsPragma start='{-#' end='#-}'
-syn region hsBlockComment start='{-' end='-}' fold contains=hsFIXME,hsBlockComment,@Spell
-" FIXME: haddock block comments should be able to contain hsBlockComments, but
-" it doesn't seem to work at the moment.
-syn region hsHaddockComment start='{-|' end='-}' contains=hsFIXME,@Spell
-syn match hsLineComment "--.*$" contains=hsFIXME,@Spell
-" Line-based haddock comments are trickier - they continue until
-" the next line that isn't part of the same block of comments.
-syn region hsHaddockComment start='-- |' end='^\(\s*--\)\@!' contains=hsFIXME,@Spell
-syn region hsHaddockComment start='-- \$\w\+' end='^\(\s*--\)\@!' contains=hsFIXME,@Spell
-syn region hsHaddockComment start='-- ^' end='^\(\s*--\)\@!' contains=hsFIXME,@Spell
-" Haddock sections for import lists
-syn match hsHaddockSection '-- \*.*$'
-" Named documentation chunks (also for import lists)
-syn match hsHaddockSection '-- \$.*$'
-" Treat a shebang line at the start of the file as a comment
-syn match hsLineComment "\%^\#\!.*$"
-
-
-" Keywords appearing in expressions, plus a few top-level keywords
-syn keyword hsKeyword do mdo let in _ where
-syn keyword hsKeyword infix infixl infixr
-syn keyword hsKeyword forall foreign
-syn match hsKeyword '\(^\(data\|type\)\s\+\)\@<=family\(\W\)\@='
-
-" Vim has a special syntax category for conditionals, so here are all of the
-" haskell conditionals.  These are just keywords with a slightly more flexible
-" coloring.
-syn keyword hsConditional case of if then else
-
-" We define a region for module NNNN (...) where so that haddock section
-" headers (-- *) can be highlighted specially only within this context.
-syn region hsModuleHeader start="^module\s" end="where" contains=hsHaddockSection keepend fold transparent
-" Treat Module imports as the #include category; it maps reasonably well
-syn keyword hsImport import module
-" Treat 'qualified', 'as', and 'hiding' as keywords when following 'import'
-syn match hsImport '\(\<import\>.*\)\@<=\<\(qualified\|as\|hiding\)\>'
-
-syn keyword hsTypeDecls class instance data newtype type deriving default
-" FIXME: Maybe we can do something fancy for data/type families?  'family' is
-" only a keyword if it follows data/type...
-
-" We want to let '-' participate in operators, but we can't let it match
-" '--', '---', etc. because it interferes with comments. The same goes for
-" '#!' at the start of a file. Also, the dot (.) is an operator character,
-" but not when it comes immediately after a module name.
-syn match hsOperator "\(\%^\#\!\)\@!\(\(\<[A-Z]\w*\)\@64<=\.\)\@!\(--\+\([^.%\~\&\*/\$\^|@:+<!>=#!\?]\|$\)\)\@![-.%\~\&\*/\$\^|@:+<!>=#!\?]\+"
-" Include support for infix functions as operators
-syn match hsOperator "`[a-zA-Z0-9\.]\+`"
-
-" Highlight function/value names in type signatures.  Looks ahead to find a ::
-" after a name.  This allows whitespace before the name so that it can match
-" in a 'where,' but it won't match local type annotations on random little
-" things.
-syn match hsFunctionList "^\s*\(\<\(where\>\|let\>\)\@![a-z][a-zA-Z0-9']*[[:space:]\n,]\+\)*[a-z][a-zA-Z0-9']*[[:space:]\n]*::" contains=hsFunction
-syn match hsFunction "\s*[a-z][a-zA-Z0-9']*\([[:space:]\n]*\(::\|,\)\)\@=" contained
-" Also support the style where the first where binding is on the same line as
-" the where keyword.
-syn match hsFunction "\(\<\(where\|let\)\s\+\([a-z][a-zA-Z0-9']*\s*,\s*\)*\)\@<=[a-z][a-zA-Z0-9']*\(\s*\(,\s*[a-z][a-zA-Z0-9']*\s*\)*::\)\@="
-
-" FIXME Ignoring proc for now, also mdo and rec
-
-" Give undefined a bit of special treatment
-syn keyword hsScary undefined
-
-" C Preprocessor stuff
-syn match hsCPP '\(^\s*\)\@<=#\(warning\|pragma\|error\)\W\@='
-syn match hsCPPCond '\(^\s*\)\@<=#\(if\|ifdef\|elif\)\W\@='
-syn match hsCPPCond '\(^\s*\)\@<=#\(endif\|else\)\(\s*$\|\W\)\@='
-syn match hsCPPInclude '\(^\s*\)\@<=#include\W\@='
-syn match hsCPPDefine '\(^\s*\)\@<=#define\W\@='
-syn match hsCPPDefined '\(^\s*.*\W\)\@<=defined(\w\+)'
-
-if version >= 508 || !exists('did_hs_syntax_inits')
-  if version < 508
-    let did_hs_syntax_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
-
-  " CPP
-  HiLink hsCPP PreProc
-  HiLink hsCPPCond PreCondit
-  HiLink hsCPPInclude Include
-  HiLink hsCPPDefine Define
-  HiLink hsCPPDefined PreProc
-
-  " Comments
-  HiLink hsLineComment Comment
-  HiLink hsBlockComment Comment
-  HiLink hsPragma Comment
-  HiLink hsHaddockComment SpecialComment
-  HiLink hsHaddockSection SpecialComment
-
-  HiLink hsKeyword Keyword
-  HiLink hsConditional Conditional
-  HiLink hsImport Include
-  HiLink hsTypeDecls Keyword
-
-  HiLink hsFIXME Todo
-
-  HiLink hsOperator Operator
-
-  HiLink hsModuleQualifier StorageClass
-
-  HiLink hsFunction Function
-  HiLink hsTypeName Type
-
-  " Literals
-  HiLink hsSpecialChar SpecialChar
-  HiLink hsFloat Float
-  HiLink hsNumber Number
-  HiLink hsCharacter Character
-  HiLink hsString String
-
-  HiLink hsScary Todo
-
-  delcommand HiLink
+if exists('g:haskell_enable_quantification') && g:haskell_enable_quantification == 1
+  highlight def link haskellForall Operator
+endif
+if exists('g:haskell_enable_recursivedo') && g:haskell_enable_recursivedo == 1
+  highlight def link haskellRecursiveDo Operator
+endif
+if exists('g:haskell_enable_arrowsyntax') && g:haskell_enable_arrowsyntax == 1
+  highlight def link haskellArrowSyntax Operator
+endif
+if exists('g:haskell_enable_pattern_synonyms') && g:haskell_enable_pattern_synonyms == 1
+  highlight def link haskellPatternKeyword Structure
+endif
+if exists('g:haskell_enable_typeroles') && g:haskell_enable_typeroles == 1
+  highlight def link haskellTypeRoles Structure
+endif
+if exists('g:haskell_enable_static_pointers') && g:haskell_enable_static_pointers == 1
+  highlight def link haskellStatic Statement
 endif
 
 let b:current_syntax = "haskell"
