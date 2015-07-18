@@ -1,6 +1,5 @@
 .gitignore export-ignore
 .gitattributes export-ignore
-build export-ignore
 README.md export-ignore
 /spec export-ignore
 Gemfile export-ignore
