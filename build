@@ -4,6 +4,7 @@ set -E
 
 DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
 DIRS_BASIC="syntax indent ftdetect after/syntax after/indent after/ftdetect"
+DIRS_JSX="after"
 
 OUTPUT=""
 
@@ -119,6 +120,7 @@ PACKS="
   julia:dcjones/julia-minimalist-vim
   json:sheerun/vim-json
   jst:briancollins/vim-jst
+  jsx:mxw/vim-jsx:_JSX
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
   liquid:tpope/vim-liquid
