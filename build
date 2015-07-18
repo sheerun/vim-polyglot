@@ -18,7 +18,7 @@ download() {
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
     rm -rf "$dir"
-    (git clone -q --recursive "https://github.com/$path.git" "$dir" && printf '.') &
+    (mkdir -p "$dir" && curl --silent -L https://codeload.github.com/$path/tar.gz/master | tar -zx -C "$dir" --strip 1 && printf '.') &
   done
 
   wait
