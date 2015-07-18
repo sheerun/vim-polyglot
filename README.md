@@ -103,6 +103,10 @@ let g:polyglot_disabled = ['css']
 
 Note that disabiling languages won't make in general your vim startup any faster / slower (only for specific file type). Vim-polyglot is selection of language plugins that are loaded only on demand.
 
+## Updating
+
+You can either wait for new patch release with updates or run the `./build` script by yourself.
+
 ## Contributing
 
 Language packs are periodically updated using automated `build` script.
