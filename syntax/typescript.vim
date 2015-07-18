@@ -100,7 +100,7 @@ syntax keyword typescriptEventListenerMethods contained scrollIntoView addEventL
 " }}}
 "" Programm Keywords"{{{
 syntax keyword typescriptSource import export from as
-syntax keyword typescriptIdentifier arguments this let var void yield const
+syntax keyword typescriptIdentifier arguments this let var void const
 syntax keyword typescriptOperator delete new instanceof typeof
 syntax keyword typescriptBoolean true false
 syntax keyword typescriptNull null undefined
@@ -111,8 +111,8 @@ syntax keyword typescriptDeprecated escape unescape all applets alinkColor bgCol
 "" Statement Keywords"{{{
 syntax keyword typescriptConditional if else switch
 syntax keyword typescriptRepeat do while for in of
-syntax keyword typescriptBranch break continue
-syntax keyword typescriptLabel case default
+syntax keyword typescriptBranch break continue yield await
+syntax keyword typescriptLabel case default async
 syntax keyword typescriptStatement return with
 
 syntax keyword typescriptGlobalObjects Array Boolean Date Function Infinity Math Number NaN Object Packages RegExp String netscape

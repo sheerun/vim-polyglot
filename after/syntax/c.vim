@@ -72,7 +72,8 @@ syn keyword cAnsiFunction	wcstombs mbstowcs wctomb
 syn keyword cAnsiFunction	mbtowc mblen lldiv
 syn keyword cAnsiFunction	ldiv div llabs
 syn keyword cAnsiFunction	labs abs qsort
-syn keyword cAnsiFunction	bsearch system getenv
+"syn keyword cAnsiFunction	bsearch system getenv
+syn keyword cAnsiFunction	bsearch getenv
 syn keyword cAnsiFunction	exit atexit abort
 syn keyword cAnsiFunction	realloc malloc free
 syn keyword cAnsiFunction	calloc srand rand
