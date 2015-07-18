@@ -5,6 +5,13 @@ set -E
 DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
 DIRS_BASIC="syntax indent ftdetect after/syntax after/indent after/ftdetect"
 
+OUTPUT=""
+
+output() {
+  OUTPUT="$OUTPUT$1"
+  printf -- "$1"
+}
+
 download() {
   for pack in $1; do
     path="$(printf "$pack" | cut -d ':' -f 2)"
@@ -24,7 +31,7 @@ extract() {
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
     directories="DIRS$(printf "$pack" | cut -d ':' -f 3)"
     subtree="$(printf "$pack" | cut -d ':' -f 4)"
-    printf -- "- [$name](https://github.com/$path) ("
+    output "- [$name](https://github.com/$path) ("
 
     subdirs=""
     for subdir in ${!directories}; do
@@ -39,7 +46,7 @@ extract() {
     done
 
 
-    printf "${subdirs##, })\n"
+    output "${subdirs##, })\n"
   done
 
   for pack in $1; do
@@ -67,6 +74,22 @@ concat_ftdetect() {
   cat ftdetect/* | grep -E '^[^"]' > tmp/polyglot.vim
   rm -f ftdetect/*
   mv tmp/polyglot.vim ftdetect/
+}
+
+update_readme() {
+  OLD_README="$(cat README.md)"
+
+  ed README.md <<- EOF
+/Language packs
++2kb
+/##
+'b,-2c
+$(printf -- "$OUTPUT")
+.
+w
+q
+EOF
+
 }
 
 PACKS="
@@ -144,5 +167,6 @@ printf "Downloading packs..."
 download "$PACKS"
 extract "$PACKS"
 concat_ftdetect
+update_readme
 
 rm -rf tmp
