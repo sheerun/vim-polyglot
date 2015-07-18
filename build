@@ -4,7 +4,7 @@ set -E
 
 DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
 DIRS_BASIC="syntax indent ftdetect after/syntax after/indent after/ftdetect"
-DIRS_JSX="after"
+DIRS_ALL="syntax indent compiler autoload ftplugin ftdetect after"
 
 OUTPUT=""
 
@@ -121,7 +121,7 @@ PACKS="
   julia:dcjones/julia-minimalist-vim
   json:sheerun/vim-json
   jst:briancollins/vim-jst
-  jsx:mxw/vim-jsx:_JSX
+  jsx:mxw/vim-jsx:_ALL
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
   liquid:tpope/vim-liquid
@@ -144,6 +144,7 @@ PACKS="
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   slim:slim-template/vim-slim
+  solidity:ethereum/vim-solidity
   stylus:wavded/vim-stylus
   systemd:kurayama/systemd-vim-syntax
   swift:toyamarinyon/vim-swift
@@ -163,7 +164,7 @@ PACKS="
 "
 
 rm -rf tmp
-rm -rf $DIRS
+rm -rf $DIRS_ALL
 mkdir tmp
 
 printf "Downloading packs..."

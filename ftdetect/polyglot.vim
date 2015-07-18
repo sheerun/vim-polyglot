@@ -191,6 +191,7 @@ au BufRead,BufNewFile *.scala set filetype=scala
 au BufRead,BufNewFile * call s:DetectScala()
 au BufRead,BufNewFile *.sbt setfiletype sbt.scala
 autocmd BufNewFile,BufRead *.slim set filetype=slim
+au BufNewFile,BufRead *.sol setf solidity
 autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
 autocmd BufNewFile,BufRead *.swift set filetype=swift
