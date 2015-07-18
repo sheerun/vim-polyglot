@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'liquid') == -1
+  
 " Vim syntax file
 " Language:     Liquid
 " Maintainer:   Tim Pope <vimNOSPAM@tpope.org>
@@ -135,4 +137,6 @@ let b:current_syntax = 'liquid'
 
 if exists('main_syntax') && main_syntax == 'liquid'
   unlet main_syntax
+endif
+
 endif

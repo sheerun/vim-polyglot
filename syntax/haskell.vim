@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
+  
 " Vim syntax file
 " Language: Haskell
 " Author: Tristan Ravitch
@@ -158,3 +160,5 @@ if version >= 508 || !exists('did_hs_syntax_inits')
 endif
 
 let b:current_syntax = "haskell"
+
+endif

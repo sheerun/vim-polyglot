@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
+  
 " dockerfile.vim - Syntax highlighting for Dockerfiles
 " Maintainer:   Honza Pokorny <http://honza.ca>
 " Version:      0.5
@@ -29,3 +31,5 @@ syntax region dockerShSnip matchgroup=DockerShGroup start="^\s*\%(RUN\|CMD\)\s\+
 highlight link DockerShGroup dockerfileKeyword
 
 let b:current_syntax = "dockerfile"
+
+endif

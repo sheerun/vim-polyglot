@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+  
 if exists("current_compiler")
   finish
 endif
@@ -14,3 +16,5 @@ endif
 let &l:makeprg = g:typescript_compiler_binary . ' ' . g:typescript_compiler_options . ' $*  %'
 
 CompilerSet errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+
+endif

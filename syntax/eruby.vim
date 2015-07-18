@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
+  
 " Vim syntax file
 " Language:		eRuby
 " Maintainer:		Tim Pope <vimNOSPAM@tpope.org>
@@ -72,3 +74,5 @@ if main_syntax == 'eruby'
 endif
 
 " vim: nowrap sw=2 sts=2 ts=8:
+
+endif

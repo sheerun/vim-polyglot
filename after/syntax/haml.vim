@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
+  
 " Language:    CoffeeScript
 " Maintainer:  Sven Felix Oberquelle <Svelix.Github@gmail.com>
 " URL:         http://github.com/kchmck/vim-coffee-script
@@ -11,3 +13,5 @@ syn region  hamlCoffeescriptFilter matchgroup=hamlFilter
 \                                  end="^\%(\z1 \| *$\)\@!"
 \                                  contains=@hamlCoffeeScript,hamlInterpolation
 \                                  keepend
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
+  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim syntax file
 "
@@ -41,3 +43,5 @@ syn region xmlString contained start=+{+ end=++ contains=jsBlock,javascriptBlock
 
 " Add jsxRegion to the lowest-level JS syntax cluster.
 syn cluster jsExpression add=jsxRegion
+
+endif

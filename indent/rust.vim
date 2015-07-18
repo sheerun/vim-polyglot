@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
+  
 " Vim indent file
 " Language:         Rust
 " Author:           Chris Morgan <me@chrismorgan.info>
@@ -194,3 +196,5 @@ function GetRustIndent(lnum)
 	" Fall back on cindent, which does it mostly right
 	return cindent(a:lnum)
 endfunction
+
+endif

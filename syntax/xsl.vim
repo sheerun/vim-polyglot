@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'xls') == -1
+  
 " Vim syntax file
 " Language:	XSLT 1.0
 " with HTML, CSS, JavaScript, PerlScript, VBScript and MSXSL extention
@@ -535,3 +537,5 @@ let b:current_syntax = "xsl"
 "unlet s:xml_cpo_save
 
 " vim: ts=4:sw=4
+
+endif

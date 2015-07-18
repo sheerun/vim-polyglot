@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slim') == -1
+  
 " Vim syntax file
 " Language: Slim
 " Maintainer: Andrew Stone <andy@stonean.com>
@@ -100,3 +102,5 @@ hi def link slimWrappedAttrsDelimiter     Delimiter
 hi def link slimInlineTagChar             Delimiter
 
 let b:current_syntax = "slim"
+
+endif

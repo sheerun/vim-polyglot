@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jst') == -1
+  
 if exists("b:did_indent")
   finish
 endif
@@ -73,3 +75,5 @@ endfunction
 
 " vim:set sw=2 sts=2 ts=8 noet:
 
+
+endif

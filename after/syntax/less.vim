@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css-color') == -1
+  
 " Language:     Colorful CSS Color Preview
 " Author:       Aristotle Pagaltzis <pagaltzis@gmx.de>
 
@@ -11,3 +13,5 @@ if !( has('gui_running') || &t_Co==256 ) | finish | endif
 " lessVariableDefinition | cssDefinition  | cssComment     | lessComment | https://github.com/lunaru/vim-less
 
 call css_color#init('css', 'extended', 'lessVariableValue,lessVariableDefinition,lessDefinition,lessCssAttribute,lessAttribute,cssDefinition,cssComment,lessCssComment,lessComment')
+
+endif

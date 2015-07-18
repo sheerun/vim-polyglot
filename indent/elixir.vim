@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
+  
 " Vim indent file
 " Language: Elixir
 " Maintainer: Carlos Galdino <carloshsgaldino@gmail.com>
@@ -117,3 +119,5 @@ endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
+  
 " Vim syntax file
 " Language:	    WAI-ARIA
 " Maintainer:  	othree <othree@gmail.com>
@@ -60,3 +62,5 @@ syn match    htmlArg contained "\<aria-\%(\|dropeffect\|grabbed\)\>"
 syn match    htmlArg contained "\<aria-\%(\|activedescendant\|controls\|describedby\|flowto\)\>"
 syn match    htmlArg contained "\<aria-\%(\|labelledby\|owns\|posinset\|setsize\)\>"
 
+
+endif

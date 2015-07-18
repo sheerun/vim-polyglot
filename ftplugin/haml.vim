@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
+  
 " Vim filetype plugin
 " Language:	Haml
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -66,3 +68,5 @@ let b:undo_ftplugin = "setl cms< com< "
 let &cpo = s:save_cpo
 
 " vim:set sw=2:
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'markdown') == -1
+  
 " Vim syntax file
 " Language:     Markdown
 " Maintainer:   Tim Pope <vimNOSPAM@tpope.org>
@@ -143,3 +145,5 @@ if main_syntax ==# 'markdown'
 endif
 
 " vim:set sw=2:
+
+endif

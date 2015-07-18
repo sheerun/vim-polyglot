@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
+  
 " Copyright (c) 2012 Takezoe Tomoaki <tkztmk@outlook.com>
 "
 " Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,3 +32,5 @@ let b:did_indent = 1
 setl cin
 let b:undo_indent = "setl cin<"
 
+
+endif

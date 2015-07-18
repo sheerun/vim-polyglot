@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
+  
 " puppet syntax file
 " Filename:     puppet.vim
 " Language:     puppet configuration file
@@ -164,3 +166,5 @@ if version >= 508 || !exists("did_puppet_syn_inits")
 endif
 
 let b:current_syntax = "puppet"
+
+endif

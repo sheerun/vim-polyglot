@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
+  
 " Vim filetype plugin
 " Language: Embedded Elixir
 " URL:      https://github.com/elixir-lang/vim-elixir
@@ -89,3 +91,5 @@ let b:undo_ftplugin = "setl cms< "
       \ " | unlet! b:browsefilter b:match_words | " . s:undo_ftplugin
 
 let &cpo = s:save_cpo
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'twig') == -1
+  
 " Vim syntax file
 " Language:	    Twig template
 " Maintainer:   Gabriel Gosselin <gabrielNOSPAM@evidens.ca>
@@ -107,3 +109,5 @@ endif
 
 let b:current_syntax = "twig"
 
+
+endif

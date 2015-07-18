@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
+  
 " Vim syntax file
 " Language:		Ruby
 " Maintainer:		Doug Kearns <dougkearns@gmail.com>
@@ -390,3 +392,5 @@ hi def link rubySpaceError		rubyError
 let b:current_syntax = "ruby"
 
 " vim: nowrap sw=2 sts=2 ts=8 noet:
+
+endif

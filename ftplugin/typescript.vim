@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+  
 if exists("b:did_ftplugin")
   finish
 endif
@@ -17,3 +19,5 @@ let b:undo_ftplugin = "setl fo< ofu< com< cms<"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+endif

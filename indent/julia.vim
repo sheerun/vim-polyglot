@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
+  
 " Vim indent file
 " Language:	Julia
 " Maintainer:	Carlo Baldassi <carlobaldassi@gmail.com>
@@ -196,3 +198,5 @@ function GetJuliaIndent()
   unlet s:save_ignorecase
   return ind
 endfunction
+
+endif

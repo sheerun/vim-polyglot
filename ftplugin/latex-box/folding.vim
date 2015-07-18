@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'latex') == -1
+  
 " Folding support for LaTeX
 
 "
@@ -376,3 +378,5 @@ endfunction
 
 " {{{1 Footer
 " vim:fdm=marker:ff=unix:ts=4:sw=4
+
+endif

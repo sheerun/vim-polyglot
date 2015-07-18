@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python') == -1
+  
 " Vim syntax file
 "
 " Based on python.vim (from Vim 6.1 distribution)
@@ -319,3 +321,5 @@ if version >= 508 || !exists("did_python_syn_inits")
 endif
 
 let b:current_syntax = "python"
+
+endif

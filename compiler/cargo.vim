@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
+  
 " Vim compiler file
 " Compiler:         Cargo Compiler
 " Maintainer:       Damien Radtke <damienradtke@gmail.com>
@@ -62,4 +64,6 @@ if s:local_manifest != ''
         endfor
         call setqflist(qflist, 'r')
     endfunction
+endif
+
 endif

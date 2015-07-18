@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
+  
 
 if exists("b:current_syntax")
   finish
@@ -147,3 +149,5 @@ syn region ragelLine  start="%%" end="$" contains=@ragel
 let b:current_syntax = "julia"
 
 
+
+endif

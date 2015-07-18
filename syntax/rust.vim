@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
+  
 " Vim syntax file
 " Language:     Rust
 " Maintainer:   Patrick Walton <pcwalton@mozilla.com>
@@ -260,3 +262,5 @@ syn sync minlines=200
 syn sync maxlines=500
 
 let b:current_syntax = "rust"
+
+endif

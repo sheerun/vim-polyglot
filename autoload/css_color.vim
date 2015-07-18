@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css-color') == -1
+  
 " Language:     Colorful CSS Color Preview
 " Author:       Aristotle Pagaltzis <pagaltzis@gmx.de>
 " Commit:       $Format:%H$
@@ -570,3 +572,5 @@ function! css_color#init(type, keywords, groups)
 	syn keyword BGf5f5f5 WhiteSmoke           contained containedin=@colorableGroup
 	syn keyword BG9acd32 YellowGreen          contained containedin=@colorableGroup
 endfunction
+
+endif

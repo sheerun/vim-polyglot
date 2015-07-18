@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
+  
 " Language:    CoffeeScript
 " Maintainer:  Mick Koch <mick@kochm.co>
 " URL:         http://github.com/kchmck/vim-coffee-script
@@ -9,6 +11,10 @@ syn region coffeeScript start=#<script [^>]*type="text/coffeescript"[^>]*>#
 \                       end=#</script>#me=s-1 keepend
 \                       contains=@htmlCoffeeScript,htmlScriptTag,@htmlPreproc
 \                       containedin=htmlHead
+
+endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'less') == -1
+  
 if !exists("g:less_html_style_tags")
   let g:less_html_style_tags = 1
 endif
@@ -35,6 +41,10 @@ syn region lessStyle start=+<style [^>]*type *=[^>]*text/less[^>]*>+ keepend end
 if exists("s:pre_less_cur_syn")
    let b:current_syntax = s:pre_less_cur_syn
 endif
+
+endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css-color') == -1
+  
 " Language:     Colorful CSS Color Preview
 " Author:       Aristotle Pagaltzis <pagaltzis@gmx.de>
 
@@ -42,3 +52,5 @@ if !( has('gui_running') || &t_Co==256 ) | finish | endif
 
 " default html syntax should already be including the css syntax
 syn cluster colorableGroup add=htmlString,htmlCommentPart
+
+endif

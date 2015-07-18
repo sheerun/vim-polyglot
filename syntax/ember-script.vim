@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emberscript') == -1
+  
 " Language:    ember-script
 " Maintainer:  heartsentwined <heartsentwined@cogito-lab.com>
 " URL:         http://github.com/heartsentwined/vim-ember-script
@@ -29,3 +31,5 @@ syn match emEach /\v\@each/ display
 hi def link emEach Special
 
 let b:current_syntax = 'ember-script'
+
+endif

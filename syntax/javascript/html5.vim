@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
+  
 " Vim syntax file
 " Language:	    HTML5 New Stuff
 " Maintainer:	othree <othree@gmail.com>
@@ -41,3 +43,5 @@ syn keyword javascriptDomElemAttrs videoWidth videoHeight poster
 
 " drag and drop
 syn keyword javascriptDomElemAttrs onDragStart onDragEnd onDragEnter onDragLeave onDragOver onDrag onDrop draggable dropzone
+
+endif

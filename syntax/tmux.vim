@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
+  
 " Vim syntax file
 " Language: tmux(1) configuration file
 " Maintainer: Tiago Cunha <tcunha@users.sourceforge.net>
@@ -287,3 +289,5 @@ hi def link tmuxVariable		Constant
 hi def link tmuxVariableExpansion	Constant
 
 let b:current_syntax = "tmux"
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'thrift') == -1
+  
 " Vim syntax file
 " Language: Thrift
 " Maintainer: Martin Smith <martin@facebook.com>
@@ -96,3 +98,5 @@ endif
 
 let b:current_syntax = "thrift"
 
+
+endif

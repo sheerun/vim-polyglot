@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
+  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vimscript file
 "
@@ -31,3 +33,5 @@ if !g:jsx_pragma_required | finish | endif
 " anything else in the file (except whitespace).
 let s:jsx_pragma_pattern = '\%^\_s*\/\*\*\%(\_.\%(\*\/\)\@!\)*@jsx\_.\{-}\*\/'
 let b:jsx_pragma_found = search(s:jsx_pragma_pattern, 'npw')
+
+endif

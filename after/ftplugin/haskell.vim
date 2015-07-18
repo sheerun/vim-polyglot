@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
+  
 " Vim ftplugin file
 " Language: Haskell
 " Maintainer: Tristan Ravitch
@@ -7,3 +9,5 @@
 " hate the leading '-'s it puts in on each line).  Disable it here.
 setlocal comments&
 setlocal comments=:--
+
+endif

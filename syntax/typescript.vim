@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+  
 " Vim syntax file
 " Language: typescript
 " Author: MicroSoft Open Technologies Inc.
@@ -326,3 +328,5 @@ if main_syntax == 'typescript'
 endif
 
 " vim: ts=4
+
+endif

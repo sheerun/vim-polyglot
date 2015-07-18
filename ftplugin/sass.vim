@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
+  
 " Vim filetype plugin
 " Language:	Sass
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -21,3 +23,5 @@ setlocal suffixesadd=.sass,.scss,.css
 let &l:include = '^\s*@import\s\+\%(url(\)\=["'']\='
 
 " vim:set sw=2:
+
+endif

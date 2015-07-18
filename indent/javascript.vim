@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
+  
 " Vim indent file
 " Language: Javascript
 " Acknowledgement: Based off of vim-ruby maintained by Nikolai Weibull http://vim-ruby.rubyforge.org
@@ -499,3 +501,5 @@ function! Fixedgq(lnum, count)
 
     return 0
 endfunction
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
+  
 " Vim completion script
 " Language:             Ruby
 " Maintainer:           Mark Guzman <segfault@hasno.info>
@@ -831,3 +833,5 @@ call s:DefRuby()
 
 
 " vim:tw=78:sw=4:ts=8:et:fdm=marker:ft=vim:norl:
+
+endif

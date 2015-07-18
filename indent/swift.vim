@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'swift') == -1
+  
 " Language:    Swift<https://developer.apple.com/swift/>
 " Maintainer:  toyama satoshi <toyamarinyon@gmail.com>
 " URL:         http://github.com/toyamarinyon/vim-swift
@@ -13,3 +15,5 @@ let b:did_indent = 1
 setlocal cindent
 
 let b:undo_indent = "setl cin<"
+
+endif

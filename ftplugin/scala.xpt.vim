@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scala') == -1
+  
 
 XPTemplate priority=lang
 
@@ -27,3 +29,5 @@ trait `derived^`trait^Component extends `trait^Component {
 		`body2^
 	}
 }
+
+endif

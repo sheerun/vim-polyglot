@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
+  
 " Vim syntax file
 " Language:	SCSS
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -18,3 +20,5 @@ hi def link scssComment sassComment
 let b:current_syntax = "scss"
 
 " vim:set sw=2:
+
+endif

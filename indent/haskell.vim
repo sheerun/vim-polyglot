@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
+  
 " Vim indent file
 " Language: Haskell
 " Maintainer: Tristan Ravitch
@@ -294,3 +296,5 @@ function! s:BackwardPatternSearch(lnum, pat)
   endwhile
 endfunction
 
+
+endif

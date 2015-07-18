@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'blade') == -1
+  
 " Language:     Blade
 " Maintainer:   Jason Walton <jwalton512@gmail.com>
 " URL:          https://github.com/xsbeats/vim-blade
@@ -38,4 +40,6 @@ hi def link bladeStructure      Keyword
 
 if !exists('b:current_syntax')
     let b:current_syntax = 'blade'
+endif
+
 endif

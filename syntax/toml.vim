@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
+  
 " Language:   TOML
 " Maintainer: Caleb Spare <cespare@gmail.com>
 " URL:        http://github.com/cespare/vim-toml
@@ -51,3 +53,5 @@ syn match tomlComment /#.*/ contains=@Spell,tomlTodo
 hi def link tomlComment Comment
 
 let b:current_syntax = "toml"
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'clojure') == -1
+  
 " Vim syntax file
 " Language:	Clojure
 " Authors:	Toralf Wittner <toralf.wittner@gmail.com>
@@ -214,3 +216,5 @@ highlight default link clojureParen			Delimiter
 let b:current_syntax = "clojure"
 
 " vim:sts=8:sw=8:ts=8:noet
+
+endif
