@@ -91,7 +91,6 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
 - [vala](https://github.com/tkztmk/vim-vala) (syntax, indent, ftdetect)
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent, ftdetect)
-- [css-color](https://github.com/ap/vim-css-color) (autoload, syntax)
 
 ## Disabling a language pack
 
@@ -99,8 +98,10 @@ Individual language packs can be disabled by setting `g:polyglot_disabled`.
 
 ```viml
 " ~/.vimrc
-let g:polyglot_disabled = ['css-color']
+let g:polyglot_disabled = ['css']
 ```
+
+Note that disabiling languages won't make in general your vim startup any faster / slower (only for specific file type). Vim-polyglot is selection of language plugins that are loaded only on demand.
 
 ## Contributing
 
