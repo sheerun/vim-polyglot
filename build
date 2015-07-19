@@ -102,6 +102,7 @@ PACKS="
   c/c++:vim-jp/cpp-vim
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
+  conky:smancill/conky-syntax.vim
   cjsx:mtscout6/vim-cjsx
   css:JulesWang/css.vim
   cucumber:tpope/vim-cucumber
