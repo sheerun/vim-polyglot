@@ -48,7 +48,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)
 - [jade](https://github.com/digitaltoad/vim-jade) (syntax, indent, ftplugin, ftdetect)
 - [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
-- [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftdetect)
+- [javascript](https://github.com/sheerun/yajs.vim) (syntax, indent)
 - [julia](https://github.com/dcjones/julia-minimalist-vim) (syntax, indent, ftdetect)
 - [json](https://github.com/sheerun/vim-json) (syntax, indent, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)

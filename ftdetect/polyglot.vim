@@ -126,18 +126,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
   
 autocmd BufNewFile,BufRead *Spec.js,*_spec.js set filetype=jasmine.javascript syntax=jasmine
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
-  
-au BufNewFile,BufRead *.js setf javascript
-au BufNewFile,BufRead *.jsm setf javascript
-au BufNewFile,BufRead Jakefile setf javascript
-fun! s:SelectJavascript()
-  if getline(1) =~# '^#!.*/bin/env\s\+node\>'
-    set ft=javascript
-  endif
-endfun
-au BufNewFile,BufRead * call s:SelectJavascript()
-endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
   
 autocmd BufNewFile,BufRead *.json set filetype=json
