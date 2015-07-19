@@ -151,7 +151,7 @@ syntax match   javascriptNumber                /[+-]\=\%(\d\+\.\d\+\|\d\+\|\.\d\
 syntax cluster javascriptTypes                 contains=javascriptString,javascriptTemplate,javascriptRegexpString,javascriptNumber,javascriptBoolean,javascriptNull,javascriptArray
 syntax cluster javascriptValue                 contains=@javascriptTypes,@javascriptExpression,javascriptFuncKeyword,javascriptClassKeyword,javascriptObjectLiteral,javascriptIdentifier,javascriptIdentifierName,javascriptOperator,@javascriptSymbols
 
-syntax match   javascriptLabel                 /[a-zA-Z_$]\k*\_s*:/he=e-1 contains=javascriptReserved nextgroup=@javascriptValue,@javascriptStatement skipwhite skipempty
+syntax match   javascriptLabel                 /[a-zA-Z_$]\k*\_s*:/he=e-1 nextgroup=@javascriptValue,@javascriptStatement skipwhite skipempty
 syntax match   javascriptObjectLabel           contained /\k\+\_s*:/he=e-1 contains=javascriptObjectLabelColon nextgroup=@javascriptValue,@javascriptStatement skipwhite skipempty
 syntax match   javascriptObjectLabelColon      contained /:/ nextgroup=@javascriptValue,@javascriptStatement skipwhite skipempty
 " syntax match   javascriptPropertyName          contained /"[^"]\+"\s*:/he=e-1 nextgroup=@javascriptValue skipwhite skipempty
@@ -163,21 +163,6 @@ syntax region  javascriptComputedProperty      contained matchgroup=javascriptPr
 
 syntax cluster javascriptTemplates             contains=javascriptTemplate,javascriptTemplateSubstitution,javascriptTemplateSBlock,javascriptTemplateSString,javascriptTemplateSStringRB,javascriptTemplateSB
 syntax cluster javascriptStrings               contains=javascriptProp,javascriptString,@javascriptTemplates,@javascriptComments,javascriptDocComment,javascriptRegexpString,javascriptPropertyName
-syntax cluster javascriptNoReserved            contains=@javascriptStrings,@javascriptDocs,shellbang,javascriptObjectLiteral,javascriptObjectLabel,javascriptClassBlock,javascriptMethodDef,javascriptMethodName,javascriptMethod
-"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Keywords
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved break case catch class const continue
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved debugger default delete do else export
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved extends finally for function if 
-"import,javascriptRegexpString,javascriptPropertyName
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved in instanceof let new return super
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved switch throw try typeof var
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved void while with yield
-
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved enum implements package protected static
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved interface private public abstract boolean
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved byte char double final float goto int
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved long native short synchronized transient
-syntax keyword javascriptReserved              containedin=ALLBUT,@javascriptNoReserved volatile
 
 "this
 
@@ -315,8 +300,6 @@ syntax match   javascriptArrowFuncArg          contained /[a-zA-Z_$]\k*/
 runtime syntax/semhl.vim
 
 if exists("did_javascript_hilink")
-  HiLink javascriptReserved             Error
-
   HiLink javascriptEndColons            Exception
   HiLink javascriptOpSymbols            Normal
   HiLink javascriptLogicSymbols         Boolean
