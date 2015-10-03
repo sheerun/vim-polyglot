@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'latex') == -1
-  
 " LaTeX Box completion
 
 setlocal omnifunc=LatexBox_Complete
@@ -932,5 +930,3 @@ command! LatexLabels call <SID>PromptLabelList()
 " }}}
 
 " vim:fdm=marker:ff=unix:noet:ts=4:sw=4
-
-endif

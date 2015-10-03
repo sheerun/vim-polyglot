@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
-  
 if !exists('g:rust_conceal') || !has('conceal') || &enc != 'utf-8'
 	finish
 endif
@@ -30,6 +28,4 @@ hi link rustNiceOperator Operator
 
 if !exists('g:rust_conceal_mod_path')
     hi! link Conceal Operator
-endif
-
 endif

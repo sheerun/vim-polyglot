@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'stylus') == -1
-  
 " Vim filetype plugin
 " Language: Stylus
 " Maintainer: Marc Harter
@@ -63,5 +61,3 @@ let &cpo = s:save_cpo
 command! Stylus !clear; cat % | stylus
 
 " vim:set sw=2:
-
-endif

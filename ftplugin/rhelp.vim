@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'r-lang') == -1
-  
 " ftplugin for R help files
 "
 " Author: Johannes Ranke <jranke@uni-bremen.de>
@@ -48,5 +46,3 @@ vnoremap <buffer> r :w >> ~/.r-pipe<CR>
 
 " Write and process mode (somehow mapping <C-Enter> does not work)
 inoremap <M-Enter> <Esc>:execute line(".") 'w >> ~/.r-pipe'<CR>o
-
-endif

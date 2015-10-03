@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
-  
 " Vim indent file
 " Language: Embedded Elixir
 " URL:      https://github.com/elixir-lang/vim-elixir
@@ -72,5 +70,3 @@ function! GetEelixirIndent(...)
   endif
   return ind
 endfunction
-
-endif

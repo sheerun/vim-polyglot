@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
-  
 " Vim indent file
 " Language:		eRuby
 " Maintainer:		Tim Pope <vimNOSPAM@tpope.org>
@@ -102,5 +100,3 @@ function! GetErubyIndent(...)
 endfunction
 
 " vim:set sw=2 sts=2 ts=8 noet:
-
-endif

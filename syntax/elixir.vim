@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
-  
 " Vim syntax file
 " Language: Elixir
 " Maintainer: Carlos Galdino <carloshsgaldino@gmail.com>
@@ -190,5 +188,3 @@ hi def link elixirStringDelimiter        Delimiter
 hi def link elixirRegexDelimiter         Delimiter
 hi def link elixirInterpolationDelimiter Delimiter
 hi def link elixirSigilDelimiter         Delimiter
-
-endif

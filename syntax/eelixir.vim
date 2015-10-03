@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
-  
 " Vim syntax file
 " Language: Embedded Elixir
 " URL:      https://github.com/elixir-lang/vim-elixir
@@ -66,5 +64,3 @@ if main_syntax == 'eelixir'
   unlet main_syntax
 endif
 
-
-endif

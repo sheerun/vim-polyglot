@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
-  
 " Vim indent file
 " Language: Javascript
 " Acknowledgement: Based off of vim-ruby maintained by Nikolai Weibull http://vim-ruby.rubyforge.org
@@ -18,7 +16,7 @@ setlocal nosmartindent
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetJavascriptIndent()
 setlocal formatexpr=Fixedgq(v:lnum,v:count)
-setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
+setlocal indentkeys=0{,0},0),0],0\,:,!^F,o,O,e
 
 " Only define the function once.
 if exists("*GetJavascriptIndent")
@@ -31,8 +29,8 @@ set cpo&vim
 " 1. Variables {{{1
 " ============
 
-let s:js_keywords = '^\s*\(break\|case\|catch\|continue\|debugger\|default\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)'
-
+let s:js_keywords = '^\s*\(break\|catch\|const\|continue\|debugger\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|let\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)'
+let s:expr_case = '^\s*\(case\s\+[^\:]*\|default\)\s*:\s*'
 " Regex of syntax group names that are or delimit string or are comments.
 let s:syng_strcom = 'string\|regex\|comment\c'
 
@@ -55,14 +53,14 @@ let s:continuation_regex = '\%([\\*+/.:]\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\|[^=]
 
 " Regex that defines continuation lines.
 " TODO: this needs to deal with if ...: and so on
-let s:msl_regex = s:continuation_regex
+let s:msl_regex = s:continuation_regex.'|'.s:expr_case
 
 let s:one_line_scope_regex = '\<\%(if\|else\|for\|while\)\>[^{;]*' . s:line_term
 
 " Regex that defines blocks.
 let s:block_regex = '\%([{[]\)\s*\%(|\%([*@]\=\h\w*,\=\s*\)\%(,\s*[*@]\=\h\w*\)*|\)\=' . s:line_term
 
-let s:var_stmt = '^\s*var'
+let s:var_stmt = '^\s*(const\|let\|var)'
 
 let s:comma_first = '^\s*,'
 let s:comma_last = ',\s*$'
@@ -70,6 +68,16 @@ let s:comma_last = ',\s*$'
 let s:ternary = '^\s\+[?|:]'
 let s:ternary_q = '^\s\+?'
 
+let s:case_indent = &sw
+let s:case_indent_after = &sw
+let m = matchlist(&cinoptions, ':\(.\)')
+if (len(m) > 2)
+    let s:case_indent = m[1]
+endif
+let m = matchlist(&cinoptions, '=\(.\)')
+if (len(m) > 2)
+    let s:case_indent_after = m[1]
+endif
 " 2. Auxiliary Functions {{{1
 " ======================
 
@@ -302,6 +310,17 @@ function GetJavascriptIndent()
   " previous nonblank line number
   let prevline = prevnonblank(v:lnum - 1)
 
+  if (line =~ s:expr_case)
+    if (getline(prevline) =~ s:expr_case)
+      return indent(prevline)
+    else
+      if (getline(prevline) =~ s:block_regex)
+        return indent(prevline) + s:case_indent
+      else
+        return indent(prevline) - s:case_indent_after
+      endif
+    endif
+  endif
   " If we got a closing bracket on an empty line, find its match and indent
   " according to it.  For parentheses we indent to its column - 1, for the
   " others we indent to the containing line's MSL's level.  Return -1 if fail.
@@ -343,6 +362,9 @@ function GetJavascriptIndent()
   " If the line is comma first, dedent 1 level
   if (getline(prevline) =~ s:comma_first)
     return indent(prevline) - &sw
+  endif
+  if (getline(prevline) =~ s:expr_case)
+    return indent(prevline) + s:case_indent_after
   endif
 
   if (line =~ s:ternary)
@@ -387,15 +409,19 @@ function GetJavascriptIndent()
     return 0
   endif
 
-  " Set up variables for current line.
-  let line = getline(lnum)
-  let ind = indent(lnum)
 
   " If the previous line ended with a block opening, add a level of indent.
   if s:Match(lnum, s:block_regex)
-    return indent(s:GetMSL(lnum, 0)) + &sw
+    if (line =~ s:expr_case)
+      return indent(s:GetMSL(lnum, 0)) + &sw/2
+    else
+      return indent(s:GetMSL(lnum, 0)) + &sw
+    endif
   endif
 
+  " Set up variables for current line.
+  let line = getline(lnum)
+  let ind = indent(lnum)
   " If the previous line contained an opening bracket, and we are still in it,
   " add indent depending on the bracket type.
   if line =~ '[[({]'
@@ -501,5 +527,3 @@ function! Fixedgq(lnum, count)
 
     return 0
 endfunction
-
-endif

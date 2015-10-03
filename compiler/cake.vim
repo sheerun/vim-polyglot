@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
-  
 " Language:    CoffeeScript
 " Maintainer:  Mick Koch <mick@kochm.co>
 " URL:         http://github.com/kchmck/vim-coffee-script
@@ -15,5 +13,3 @@ call coffee#CoffeeSetUpVariables()
 exec 'CompilerSet makeprg=' . escape(g:coffee_cake . ' ' .
 \                                    g:coffee_cake_options . ' $*', ' ')
 call coffee#CoffeeSetUpErrorFormat()
-
-endif

@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
-  
 " Vim indent file
 " Language:	SCSS
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -12,5 +10,3 @@ endif
 runtime! indent/css.vim
 
 " vim:set sw=2:
-
-endif

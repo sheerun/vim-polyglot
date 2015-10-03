@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
 " Vim syntax file
 " Language:	HTML (version 5)
 " Maintainer:	Rodrigo Machado <rcmachado@gmail.com>
@@ -119,5 +117,3 @@ syn keyword htmlArg contained x x-height x1 x2 xChannelSelector xlink:actuate xl
 syn keyword htmlArg contained y y1 y2 yChannelSelector 
 syn keyword htmlArg contained z zoomAndPan 
 syn keyword htmlArg contained alignment-baseline baseline-shift clip-path clip-rule clip color-interpolation-filters color-interpolation color-profile color-rendering color cursor direction display dominant-baseline enable-background fill-opacity fill-rule fill filter flood-color flood-opacity font-family font-size-adjust font-size font-stretch font-style font-variant font-weight glyph-orientation-horizontal glyph-orientation-vertical image-rendering kerning letter-spacing lighting-color marker-end marker-mid marker-start mask opacity overflow pointer-events shape-rendering stop-color stop-opacity stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit stroke-opacity stroke-width stroke text-anchor text-decoration text-rendering unicode-bidi visibility word-spacing writing-mode
-
-endif

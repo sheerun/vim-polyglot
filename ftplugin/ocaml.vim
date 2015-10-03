@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
-  
 " Language:    OCaml
 " Maintainer:  David Baelde        <firstname.name@ens-lyon.org>
 "              Mike Leary          <leary@nwlink.com>
@@ -505,5 +503,3 @@ let &cpoptions=s:cposet
 unlet s:cposet
 
 " vim:sw=2
-
-endif

@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
 " Description:      HTML5 and inline SVG indenter
 " Changed By: HT de Beer <H.T.de.Beer@gmail.com>
 " Last Change: 20121013
@@ -387,5 +385,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " [-- EOF <runtime>/indent/html.vim --]
-
-endif

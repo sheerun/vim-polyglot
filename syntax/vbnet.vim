@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vbnet') == -1
-  
 " Vim syntax file
 " Language:     VB.NET
 " Maintainer:   Tim Pope <vim@rebelongto.us>
@@ -431,5 +429,3 @@ endif
 let b:current_syntax = "vbnet"
 
 " vim:set ft=vim sts=4 sw=4:
-
-endif

@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
-  
 " Language:     Rust
 " Description:  Vim syntax file for Rust
 " Maintainer:   Chris Morgan <me@chrismorgan.info>
@@ -150,5 +148,3 @@ let &cpo = s:save_cpo
 unlet s:save_cpo
 
 " vim: set noet sw=4 ts=4:
-
-endif

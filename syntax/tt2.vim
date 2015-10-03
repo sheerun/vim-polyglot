@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
-  
 " Language:      TT2 (Perl Template Toolkit)
 " Maintainer:    vim-perl <vim-perl@googlegroups.com>
 " Author:        Moriki, Atsushi <4woods+vim@gmail.com>
@@ -210,5 +208,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim:ts=4:sw=4
-
-endif

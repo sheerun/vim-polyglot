@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
-  
 " Vim syntax file
 " Language:	OpenCL (Open Computing Language)
 " Maintainer:	Terence Ou (rivan_@msn.com)
@@ -157,5 +155,3 @@ hi def link clStatement         Statement
 let b:current_syntax = "opencl"
 
 " vim: ts=8
-
-endif

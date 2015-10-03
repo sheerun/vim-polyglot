@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
-  
 " Vim indent file, taken from indent/java.vim
 " Language:	    Typescript
 " Maintainer:	None!  Wanna improve this?
@@ -60,9 +58,21 @@ function GetTypescriptIndent()
         return indent(prev)
     endif
 
-    " If a variable was declared and the semicolon omitted, do not indent
-    " the next line
-    if getline(prev) =~ '^\s*var\s\+\w\+'
+    " If the previous line starts with '@', we should have the same indent as
+    " the previous one
+    if getline(prev) =~ '^\s*@\S\+\s*$'
+      return indent(prev)
+    endif
+
+    " If a var, let, or const was declared and the semicolon omitted, do not
+    " indent the next line
+    if getline(prev) =~ '^\s*\(var\|let\|const\)\s\+\w\+'
+        return indent(prev)
+    endif
+
+    " If the line ended with a ',', we should have the same indent as
+    " the previous one
+    if getline(prev) =~ ',\s*$'
         return indent(prev)
     endif
 
@@ -89,5 +99,3 @@ let &cpo = s:keepcpo
 unlet s:keepcpo
 
 " vim: et
-
-endif

@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
-  
 " Vim filetype plugin
 " Language:		eRuby
 " Maintainer:		Tim Pope <vimNOSPAM@tpope.org>
@@ -102,5 +100,3 @@ let &cpo = s:save_cpo
 unlet s:save_cpo
 
 " vim: nowrap sw=2 sts=2 ts=8:
-
-endif

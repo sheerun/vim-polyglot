@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'clojure') == -1
-  
 " Vim indent file
 " Language:	Clojure
 " Author:	Meikel Brandmeyer <mb@kotka.de>
@@ -380,5 +378,3 @@ let &cpo = s:save_cpo
 unlet! s:save_cpo
 
 " vim:sts=8:sw=8:ts=8:noet
-
-endif
