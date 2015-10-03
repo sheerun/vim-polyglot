@@ -3,22 +3,13 @@
 set -E
 
 DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
-DIRS_BASIC="syntax indent ftdetect after/syntax after/indent after/ftdetect"
-DIRS_ALL="syntax indent compiler autoload ftplugin ftdetect after"
-
-OUTPUT=""
-
-output() {
-  OUTPUT="$OUTPUT$1"
-  printf -- "$1"
-}
 
 download() {
   for pack in $1; do
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
     rm -rf "$dir"
-    (mkdir -p "$dir" && curl --silent -L https://codeload.github.com/$path/tar.gz/master | tar -zx -C "$dir" --strip 1 && printf '.') &
+    (git clone -q --recursive "https://github.com/$path.git" "$dir" && printf '.') &
   done
 
   wait
@@ -30,33 +21,30 @@ extract() {
     name="$(printf "$pack" | cut -d ':' -f 1)"
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
-    directories="DIRS$(printf "$pack" | cut -d ':' -f 3)"
-    subtree="$(printf "$pack" | cut -d ':' -f 4)"
-    output "- [$name](https://github.com/$path) ("
+    printf -- "- [$name](https://github.com/$path) ("
 
     subdirs=""
-    for subdir in ${!directories}; do
-      if [ -d "${dir}${subtree:-/}${subdir}" ]; then
+    for subdir in $DIRS; do
+      if [ -d "$dir/$subdir" ]; then
         base="$(basename "$subdir")"
         if [[ "$subdirs" != *"$base"* ]]; then
           subdirs="$subdirs, $base"
         fi
 
-        copy_dir "${dir}${subtree}" "$subdir" "$name"
+        copy_dir "$dir" "$subdir"
       fi
     done
 
 
-    output "${subdirs##, })\n"
+    printf "${subdirs##, })\n"
   done
 
   for pack in $1; do
     name="$(printf "$pack" | cut -d ':' -f 1)"
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
-    subtree="$(printf "$pack" | cut -d ':' -f 4)"
 
-    if [ -d "$dir${subtree:-/}plugin" ]; then
+    if [ -d "$dir/plugin" ]; then
       printf "Possible error (plugin directory exists): $path\n"
     fi
   done
@@ -67,9 +55,7 @@ copy_dir() {
     file_path="$(dirname "${file##$1/}")"
     mkdir -p "$file_path"
     touch "$file_path/$(basename "$file")"
-
-    # Use comma instead of / to handle cases like c/c++
-    sed -e "s,%%PACK%%,$3," -e "/%%CONTENT%%/{r $file" -e "d;}" plugin_guard.vim.template >> $file_path/$(basename "$file")
+    cat $file >> $file_path/$(basename "$file")
   done
 }
 
@@ -79,54 +65,30 @@ concat_ftdetect() {
   mv tmp/polyglot.vim ftdetect/
 }
 
-update_readme() {
-  OLD_README="$(cat README.md)"
-
-  ed README.md <<- EOF
-/Language packs
-+2kb
-/##
-'b,-2c
-$(printf -- "$OUTPUT")
-.
-w
-q
-EOF
-
-}
-
 PACKS="
   arduino:sudar/vim-arduino-syntax
-  blade:xsbeats/vim-blade
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/cpp-vim
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
-  cjsx:mtscout6/vim-cjsx
-  css:JulesWang/css.vim
+  csv:chrisbra/csv.vim
   cucumber:tpope/vim-cucumber
+  django:vim-scripts/django.vim
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
-  emberscript:heartsentwined/vim-ember-script
-  emblem:heartsentwined/vim-emblem
-  erlang:hcs42/vim-erlang-runtime
+  erlang:oscarh/vimerl
   git:tpope/vim-git
-  go:fatih/vim-go:_BASIC
+  go:jnwhiteh/vim-golang
   haml:tpope/vim-haml
   handlebars:mustache/vim-mustache-handlebars
-  haskell:raichoo/haskell-vim
-  haxe:yaymukund/vim-haxe
+  haskell:travitch/hasksyn
   html5:othree/html5.vim
   jade:digitaltoad/vim-jade
-  jasmine:glanotte/vim-jasmine
-  javascript:sheerun/yajs.vim
-  julia:dcjones/julia-minimalist-vim
-  json:sheerun/vim-json
+  javascript:pangloss/vim-javascript
+  json:leshill/vim-json
   jst:briancollins/vim-jst
-  jsx:mxw/vim-jsx:_ALL
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
-  liquid:tpope/vim-liquid
   markdown:tpope/vim-markdown
   nginx:mutewinter/nginx.vim
   ocaml:jrk/vim-ocaml
@@ -134,44 +96,36 @@ PACKS="
   opencl:petRUShka/vim-opencl
   perl:vim-perl/vim-perl
   php:StanAngeloff/php.vim
-  puppet:rodjek/vim-puppet
-  powershell:Persistent13/vim-ps1
+  puppet:ajf/puppet-vim
   protobuf:uarun/vim-protobuf
-  python:mitsuhiko/vim-python-combined
+  python:vim-scripts/python.vim--Vasiliev
   r-lang:vim-scripts/R.vim
-  ragel:jneen/ragel.vim
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
   rust:wting/rust.vim
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   slim:slim-template/vim-slim
-  solidity:ethereum/vim-solidity
   stylus:wavded/vim-stylus
-  systemd:kurayama/systemd-vim-syntax
-  swift:toyamarinyon/vim-swift
   textile:timcharper/textile.vim
-  tmux:tejr/vim-tmux
+  thrift:solarnz/thrift.vim
+  tmux:acustodioo/vim-tmux
   tomdoc:duwanis/tomdoc.vim
   typescript:leafgarland/typescript-vim
   vbnet:vim-scripts/vbnet.vim
-  thrift:solarnz/thrift.vim
-  toml:cespare/vim-toml
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
   yard:sheerun/vim-yardoc
-  vala:tkztmk/vim-vala
-  vm:lepture/vim-velocity
+  css-color:gorodinskiy/vim-coloresque
 "
 
 rm -rf tmp
-rm -rf $DIRS_ALL
+rm -rf $DIRS
 mkdir tmp
 
 printf "Downloading packs..."
 download "$PACKS"
 extract "$PACKS"
 concat_ftdetect
-update_readme
 
 rm -rf tmp

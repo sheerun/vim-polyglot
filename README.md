@@ -5,14 +5,14 @@
 
 A collection of language packs for Vim.
 
-> One to rule them all, one to find them, one to bring them all and in the darkness bind them.
+One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
-- It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs 50+ times faster** than 50+ packages it consist of.
-- Solid syntax and indentation support. Only the best language packs.
-- All unnecessary files are ignored (like enormous documentation from php support).
-- No support for esoteric languages, only most popular ones (modern too, like `slim`).
-- Each build is tested by automated vimrunner script on CI. See `spec` directory.
+- It **won't affect your startup time**, as scripts are loaded only on demand\*. 
+- It **installs 40x faster** (unparallelized), as language packs are not submoduled, but merged.
+- It clones even faster as all unnecessary files are ignored (like enormous documentation from php support).
+- Best syntax and indentation support. If someone releases better language pack, it will be replaced here.
+- No support for esoteric languages (vim-polyglot supports modern ones like `slim` though).
+- Each build is tested by automated Travis CI setup using vimrunner gem. Spee `spec` directory.
 
 \*To be completely honest, concatenated `ftdetect` script takes around `3ms` to load.
 
@@ -26,36 +26,28 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 ## Language packs
 
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent, ftdetect)
-- [blade](https://github.com/xsbeats/vim-blade) (syntax, indent, ftdetect)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/cpp-vim) (syntax)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin, ftdetect)
 - [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
-- [cjsx](https://github.com/mtscout6/vim-cjsx) (ftdetect, syntax, ftplugin)
-- [css](https://github.com/JulesWang/css.vim) (syntax)
+- [csv](https://github.com/chrisbra/csv.vim) (syntax, ftplugin, ftdetect)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin, ftdetect)
+- [django](https://github.com/vim-scripts/django.vim) (syntax)
 - [dockerfile](https://github.com/honza/dockerfile.vim) (syntax, ftdetect)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, ftplugin, ftdetect)
-- [emberscript](https://github.com/heartsentwined/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
-- [emblem](https://github.com/heartsentwined/vim-emblem) (syntax, indent, ftplugin, ftdetect)
-- [erlang](https://github.com/hcs42/vim-erlang-runtime) (syntax, indent)
+- [erlang](https://github.com/oscarh/vimerl) (syntax, indent, compiler, autoload, ftplugin)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin, ftdetect)
-- [go](https://github.com/fatih/vim-go) (syntax, indent, ftdetect)
+- [go](https://github.com/jnwhiteh/vim-golang) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [haml](https://github.com/tpope/vim-haml) (syntax, indent, compiler, ftplugin, ftdetect)
 - [handlebars](https://github.com/mustache/vim-mustache-handlebars) (syntax, ftplugin, ftdetect)
-- [haskell](https://github.com/raichoo/haskell-vim) (syntax, indent, ftplugin, ftdetect)
-- [haxe](https://github.com/yaymukund/vim-haxe) (syntax, ftdetect)
-- [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)
+- [haskell](https://github.com/travitch/hasksyn) (syntax, indent, ftplugin)
+- [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload)
 - [jade](https://github.com/digitaltoad/vim-jade) (syntax, indent, ftplugin, ftdetect)
-- [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
-- [javascript](https://github.com/sheerun/yajs.vim) (syntax, indent)
-- [julia](https://github.com/dcjones/julia-minimalist-vim) (syntax, indent, ftdetect)
-- [json](https://github.com/sheerun/vim-json) (syntax, indent, ftdetect)
+- [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftdetect)
+- [json](https://github.com/leshill/vim-json) (syntax, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
-- [jsx](https://github.com/mxw/vim-jsx) (after)
 - [latex](https://github.com/LaTeX-Box-Team/LaTeX-Box) (syntax, indent, ftplugin)
 - [less](https://github.com/groenewege/vim-less) (syntax, indent, ftplugin, ftdetect)
-- [liquid](https://github.com/tpope/vim-liquid) (syntax, indent, ftplugin, ftdetect)
 - [markdown](https://github.com/tpope/vim-markdown) (syntax, ftplugin, ftdetect)
 - [nginx](https://github.com/mutewinter/nginx.vim) (syntax, ftdetect)
 - [ocaml](https://github.com/jrk/vim-ocaml) (syntax, indent, ftplugin)
@@ -63,49 +55,26 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [opencl](https://github.com/petRUShka/vim-opencl) (syntax, indent, ftplugin, ftdetect)
 - [perl](https://github.com/vim-perl/vim-perl) (syntax, indent, ftplugin, ftdetect)
 - [php](https://github.com/StanAngeloff/php.vim) (syntax)
-- [puppet](https://github.com/rodjek/vim-puppet) (syntax, indent, ftplugin, ftdetect)
-- [powershell](https://github.com/Persistent13/vim-ps1) (syntax, indent, ftplugin, ftdetect)
+- [puppet](https://github.com/ajf/puppet-vim) (syntax, indent, ftplugin, ftdetect)
 - [protobuf](https://github.com/uarun/vim-protobuf) (syntax, ftdetect)
-- [python](https://github.com/mitsuhiko/vim-python-combined) (syntax, indent)
+- [python](https://github.com/vim-scripts/python.vim--Vasiliev) (syntax)
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
-- [ragel](https://github.com/jneen/ragel.vim) (syntax)
 - [rspec](https://github.com/sheerun/rspec.vim) (syntax, ftdetect)
 - [ruby](https://github.com/vim-ruby/vim-ruby) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
-- [rust](https://github.com/wting/rust.vim) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
+- [rust](https://github.com/wting/rust.vim) (syntax, indent, compiler, ftplugin, ftdetect)
 - [sbt](https://github.com/derekwyatt/vim-sbt) (syntax, ftdetect)
-- [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, compiler, ftplugin, ftdetect)
+- [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, ftplugin, ftdetect)
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftdetect)
-- [solidity](https://github.com/ethereum/vim-solidity) (syntax, indent, ftdetect)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin, ftdetect)
-- [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax, ftdetect)
-- [swift](https://github.com/toyamarinyon/vim-swift) (syntax, indent, ftdetect)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)
-- [tmux](https://github.com/tejr/vim-tmux) (syntax, ftdetect)
-- [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
-- [typescript](https://github.com/leafgarland/typescript-vim) (syntax, indent, compiler, ftplugin, ftdetect)
-- [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax, ftdetect)
-- [toml](https://github.com/cespare/vim-toml) (syntax, ftplugin, ftdetect)
+- [tmux](https://github.com/acustodioo/vim-tmux) (syntax, ftdetect)
+- [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
+- [typescript](https://github.com/leafgarland/typescript-vim) (syntax, compiler, ftplugin, ftdetect)
+- [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [twig](https://github.com/beyondwords/vim-twig) (syntax, ftplugin, ftdetect)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
-- [yard](https://github.com/sheerun/vim-yardoc) (syntax)
-- [vala](https://github.com/tkztmk/vim-vala) (syntax, indent, ftdetect)
-- [vm](https://github.com/lepture/vim-velocity) (syntax, indent, ftdetect)
-
-## Disabling a language pack
-
-Individual language packs can be disabled by setting `g:polyglot_disabled`.
-
-```viml
-" ~/.vimrc
-let g:polyglot_disabled = ['css']
-```
-
-Note that disabiling languages won't make in general your vim startup any faster / slower (only for specific file type). Vim-polyglot is selection of language plugins that are loaded only on demand.
-
-## Updating
-
-You can either wait for new patch release with updates or run the `./build` script by yourself.
+- [css-color](https://github.com/gorodinskiy/vim-coloresque) (syntax)
 
 ## Contributing
 
@@ -116,3 +85,7 @@ Feel free to add your language, and send pull-request.
 ## License
 
 See linked repositories for detailed license information.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sheerun/vim-polyglot/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
