@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sbt') == -1
-  
 " Vim syntax file
 " Language:     sbt
 " Maintainer:   Derek Wyatt <derek@{myfirstname}{mylastname}.org>
@@ -33,5 +31,3 @@ hi link sbtSpecial Special
 hi link sbtComment Comment
 hi link sbtLineComment Comment
 hi link sbtDocComment Comment
-
-endif

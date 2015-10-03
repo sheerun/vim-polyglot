@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
 " Vim completion script
 " Language:	HTML and XHTML
 " Maintainer:	Mikolaj Machowski ( mikmach AT wp DOT pl )
@@ -839,5 +837,3 @@ function! htmlcomplete#CheckDoctype() " {{{
 endfunction
 " }}}
 " vim:set foldmethod=marker:
-
-endif

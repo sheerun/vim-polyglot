@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
-  
 " Vim filetype plugin
 " Language:    Elixir
 " Maintainer:  Carlos Galdino <carloshsgaldino@gmail.com>
@@ -25,5 +23,3 @@ endif
 
 setlocal comments=:#
 setlocal commentstring=#\ %s
-
-endif

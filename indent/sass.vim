@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
-  
 " Vim indent file
 " Language:	Sass
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -40,5 +38,3 @@ function! GetSassIndent()
 endfunction
 
 " vim:set sw=2:
-
-endif

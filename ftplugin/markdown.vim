@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'markdown') == -1
-  
 " Vim filetype plugin
 " Language:		Markdown
 " Maintainer:		Tim Pope <vimNOSPAM@tpope.org>
@@ -50,5 +48,3 @@ if has("folding") && exists("g:markdown_folding")
 endif
 
 " vim:set sw=2:
-
-endif

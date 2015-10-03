@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
-  
 if exists("b:did_ftplugin") | finish | endif
 
 if version > 600
@@ -15,5 +13,3 @@ setlocal smarttab
 setlocal smartindent
 
 let b:did_ftplugin = 1
-
-endif

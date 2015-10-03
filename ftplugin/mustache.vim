@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'handlebars') == -1
-  
 if exists('g:loaded_mustache_handlebars') && g:loaded_mustache_handlebars
   finish
 endif
@@ -120,5 +118,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim: nofoldenable
-
-endif

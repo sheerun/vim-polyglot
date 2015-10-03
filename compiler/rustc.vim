@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
-  
 " Vim compiler file
 " Compiler:         Rust Compiler
 " Maintainer:       Chris Morgan <me@chrismorgan.info>
@@ -33,5 +31,3 @@ CompilerSet errorformat=
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

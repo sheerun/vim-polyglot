@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
-  
 " Vim compiler file
 " Compiler:	Haml
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -28,5 +26,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim:set sw=2 sts=2:
-
-endif

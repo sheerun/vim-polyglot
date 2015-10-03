@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
-  
 " Vim syntax file
 " Language: Jade
 " Maintainer: Joshua Borton
@@ -101,6 +99,4 @@ let b:current_syntax = "jade"
 
 if main_syntax == "jade"
   unlet main_syntax
-endif
-
 endif

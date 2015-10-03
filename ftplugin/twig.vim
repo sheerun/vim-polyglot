@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'twig') == -1
-  
 " Vim filetype plugin
 " Language: Twig
 " Maintainer: F. Gabriel Gosselin <gabrielNOSPAM@evidens.ca>
@@ -18,5 +16,3 @@ setlocal formatoptions+=tcqln
 let b:undo_ftplugin .= "|setl cms< com< fo<"
 
 " vim:set sw=2:
-
-endif

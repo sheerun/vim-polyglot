@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
-  
 " Language:      TT2 embedded with HTML
 " Maintainer:    vim-perl <vim-perl@googlegroups.com>
 " Author:        Moriki, Atsushi <4woods+vim@gmail.com>
@@ -20,5 +18,3 @@ unlet b:current_syntax
 syn cluster htmlPreProc add=@tt2_top_cluster
 
 let b:current_syntax = "tt2html"
-
-endif

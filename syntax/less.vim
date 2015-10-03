@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'less') == -1
-  
 if exists("b:current_syntax")
   finish
 endif
@@ -64,5 +62,3 @@ hi def link lessNestedProperty Type
 hi def link lessClass PreProc
 
 let b:current_syntax = "less"
-
-endif

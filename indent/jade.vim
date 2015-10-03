@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
-  
 " Vim indent file
 " Language: Jade
 " Maintainer: Joshua Borton
@@ -70,5 +68,3 @@ function! GetJadeIndent()
 endfunction
 
 " vim:set sw=2:
-
-endif

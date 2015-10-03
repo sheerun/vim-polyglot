@@ -1,7 +1,9 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
-  
-setlocal comments=s1fl:{-,mb:-,ex:-},:--
-setlocal formatoptions-=cro formatoptions+=j
-setlocal iskeyword+='
+" Vim ftplugin file
+" Language: Haskell
+" Maintainer: Tristan Ravitch
 
-endif
+" I don't fully understand what the vim-default ftplugin does, but I do know
+" that the three-part comment entry really messes up this indenter (I also
+" hate the leading '-'s it puts in on each line).  Disable it here.
+setlocal comments&
+setlocal comments=:--

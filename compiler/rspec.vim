@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
-  
 " Vim compiler file
 " Language:		RSpec
 " Maintainer:		Tim Pope <vimNOSPAM@tpope.org>
@@ -33,5 +31,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim: nowrap sw=2 sts=2 ts=8:
-
-endif

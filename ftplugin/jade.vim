@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
-  
 " Vim filetype plugin
 " Language: Jade
 " Maintainer: Joshua Borton
@@ -57,5 +55,3 @@ let b:undo_ftplugin = "setl cms< com< "
 let &cpo = s:save_cpo
 
 " vim:set sw=2:
-
-endif
