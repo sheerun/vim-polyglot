@@ -111,6 +111,7 @@ PACKS="
   emblem:heartsentwined/vim-emblem
   erlang:hcs42/vim-erlang-runtime
   git:tpope/vim-git
+  glsl:tikhomirov/vim-glsl
   go:fatih/vim-go:_BASIC
   haml:tpope/vim-haml
   handlebars:mustache/vim-mustache-handlebars
@@ -124,6 +125,7 @@ PACKS="
   json:sheerun/vim-json
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL
+  kotlin:udalov/kotlin-vim
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
   liquid:tpope/vim-liquid

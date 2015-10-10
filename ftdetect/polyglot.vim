@@ -85,6 +85,10 @@ autocmd BufNewFile,BufRead *
       \   set filetype=gitsendemail |
       \ endif
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'glsl') == -1
+  
+autocmd! BufNewFile,BufRead *.glsl,*.geom,*.vert,*.frag,*.gsh,*.vsh,*.fsh,*.vs,*.fs,*.gs,*.tcs,*.tes set filetype=glsl
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
   
 let s:current_fileformats = ''
@@ -139,6 +143,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
   
 au BufRead,BufNewFile *.jl		let b:undo_ftplugin = "setlocal comments< define< formatoptions< iskeyword< lisp<"
 au BufRead,BufNewFile *.jl		set filetype=julia
+endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
+  
+autocmd BufNewFile,BufRead *.kt setfiletype kotlin
+autocmd BufNewFile,BufRead *.kts setfiletype kotlin
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'less') == -1
   
