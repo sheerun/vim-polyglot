@@ -73,7 +73,7 @@ syntax match clojureKeyword "\v<:{1,2}%([^ \n\r\t()\[\]{}";@^`~\\%/]+/)*[^ \n\r\
 
 syntax match clojureStringEscape "\v\\%([\\btnfr"]|u\x{4}|[0-3]\o{2}|\o{1,2})" contained
 
-syntax region clojureString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=clojureStringEscape,@Spell
+syntax region clojureString matchgroup=clojureStringDelimiter start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=clojureStringEscape,@Spell
 
 syntax match clojureCharacter "\\."
 syntax match clojureCharacter "\\o\%([0-3]\o\{2\}\|\o\{1,2\}\)"
@@ -156,9 +156,9 @@ syntax match clojureComment "#!.*$"
 " Generated from https://github.com/guns/vim-clojure-static/blob/%%RELEASE_TAG%%/clj/src/vim_clojure_static/generate.clj
 syntax cluster clojureTop contains=@Spell,clojureAnonArg,clojureBoolean,clojureCharacter,clojureComment,clojureCond,clojureConstant,clojureDefine,clojureDeref,clojureDispatch,clojureError,clojureException,clojureFunc,clojureKeyword,clojureMacro,clojureMap,clojureMeta,clojureNumber,clojureQuote,clojureRegexp,clojureRepeat,clojureSexp,clojureSpecial,clojureString,clojureSymbol,clojureUnquote,clojureVarArg,clojureVariable,clojureVector
 
-syntax region clojureSexp   matchgroup=clojureParen start="("  matchgroup=clojureParen end=")" contains=@clojureTop fold
-syntax region clojureVector matchgroup=clojureParen start="\[" matchgroup=clojureParen end="]" contains=@clojureTop fold
-syntax region clojureMap    matchgroup=clojureParen start="{"  matchgroup=clojureParen end="}" contains=@clojureTop fold
+syntax region clojureSexp   matchgroup=clojureParen start="("  end=")" contains=@clojureTop fold
+syntax region clojureVector matchgroup=clojureParen start="\[" end="]" contains=@clojureTop fold
+syntax region clojureMap    matchgroup=clojureParen start="{"  end="}" contains=@clojureTop fold
 
 " Highlight superfluous closing parens, brackets and braces.
 syntax match clojureError "]\|}\|)"
@@ -171,6 +171,7 @@ highlight default link clojureCharacter			Character
 highlight default link clojureKeyword			Keyword
 highlight default link clojureNumber			Number
 highlight default link clojureString			String
+highlight default link clojureStringDelimiter		String
 highlight default link clojureStringEscape		Character
 
 highlight default link clojureRegexp			Constant

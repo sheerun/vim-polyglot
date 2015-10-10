@@ -4,7 +4,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c/c++') == -1
 " Language:	C++
 " Current Maintainer:	vim-jp (https://github.com/vim-jp/vim-cpp)
 " Previous Maintainer:	Ken Shan <ccshan@post.harvard.edu>
-" Last Change:	2015 Mar 1
+" Last Change:	2015 Sep 23
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
@@ -51,6 +51,11 @@ if !exists("cpp_no_cpp11")
   syn region cppRawString	matchgroup=cppRawStringDelimiter start=+\%(u8\|[uLU]\)\=R"\z([[:alnum:]_{}[\]#<>%:;.?*\+\-/\^&|~!=,"']\{,16}\)(+ end=+)\z1"+ contains=@Spell
 endif
 
+" C++ 14 extensions
+if !exists("cpp_no_cpp14")
+  syn match cppNumber		display "\<0b[01]\+\(u\=l\{0,2}\|ll\=u\)\>"
+endif
+
 " The minimum and maximum operators in GNU C++
 syn match cppMinMax "[<>]?"
 
@@ -74,6 +79,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppConstant		Constant
   HiLink cppRawStringDelimiter	Delimiter
   HiLink cppRawString		String
+  HiLink cppNumber		Number
   delcommand HiLink
 endif
 

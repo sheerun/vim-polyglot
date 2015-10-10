@@ -27,10 +27,11 @@ syn region tomlString oneline start=/'/ end=/'/
 syn region tomlString start=/'''/ end=/'''/
 hi def link tomlString String
 
-syn match tomlInteger /\<-\?\d\+\>/ display
+syn match tomlInteger /\<[+-]\=[0-9]\(_\=\d\)*\>/ display
 hi def link tomlInteger Number
 
-syn match tomlFloat /\<-\?\d\+\.\d\+\>/ display
+syn match tomlFloat /\<[+-]\=[0-9]\(_\=\d\)*\.\d\+\>/ display
+syn match tomlFloat /\<[+-]\=[0-9]\(_\=\d\)*\(\.[0-9]\(_\=\d\)*\)\=[eE][+-]\=[0-9]\(_\=\d\)*\>/ display
 hi def link tomlFloat Float
 
 syn match tomlBoolean /\<\%(true\|false\)\>/ display

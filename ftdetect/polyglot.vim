@@ -66,7 +66,7 @@ autocmd FileType emblem set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
   
-autocmd BufNewFile,BufRead *.git/{,modules/**/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
+autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
 autocmd BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitconfig
 autocmd BufNewFile,BufRead */.config/git/config                          set ft=gitconfig
 autocmd BufNewFile,BufRead *.git/modules/**/config                       set ft=gitconfig
@@ -99,7 +99,7 @@ function! s:gofiletype_post()
     let &g:fileformats = s:current_fileformats
     let &g:fileencodings = s:current_fileencodings
 endfunction
-au BufNewFile *.go setlocal filetype=go fileencoding=utf-8 fileformat=unix
+au BufNewFile *.go setfiletype go | setlocal fileencoding=utf-8 fileformat=unix
 au BufRead *.go call s:gofiletype_pre()
 au BufReadPost *.go call s:gofiletype_post()
 au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
@@ -109,10 +109,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
 autocmd BufNewFile,BufRead *.haml,*.hamlbars,*.hamlc setf haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
-endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
-  
-au BufRead,BufNewFile *.hsc set filetype=haskell
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haxe') == -1
   
@@ -273,6 +269,8 @@ au BufNewFile,BufRead Puppetfile		call s:setf('ruby')
 au BufNewFile,BufRead [Bb]uildfile		call s:setf('ruby')
 au BufNewFile,BufRead Appraisals		call s:setf('ruby')
 au BufNewFile,BufRead Podfile,*.podspec		call s:setf('ruby')
+au BufNewFile,BufRead [rR]outefile		call s:setf('ruby')
+au BufNewFile,BufRead .simplecov		set filetype=ruby
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
   
@@ -346,7 +344,7 @@ autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
   
-autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+autocmd BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
   
