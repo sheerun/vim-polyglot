@@ -249,6 +249,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 au! BufRead,BufNewFile *.pp setfiletype puppet
 au! BufRead,BufNewFile Puppetfile setfiletype ruby
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
+  
+autocmd BufRead,BufNewFile *.qml setfiletype qml
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
   
 function! s:setf(filetype) abort
