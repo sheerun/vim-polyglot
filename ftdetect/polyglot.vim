@@ -114,6 +114,10 @@ autocmd BufNewFile,BufRead *.haml,*.hamlbars,*.hamlc setf haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
+  
+au BufRead,BufNewFile *.hsc set filetype=haskell
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haxe') == -1
   
 autocmd BufNewFile,BufRead *.hx setf haxe
