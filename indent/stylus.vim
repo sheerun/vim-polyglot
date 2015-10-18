@@ -119,7 +119,7 @@ function! GetStylusIndent()
 
   " if group !~? 'css.*' && line =~? ')\s*$' " match user functions
   "   return increase
-  if group =~? '\v^%(cssTagName|cssClassName|cssIdentifier|cssSelectorOp|cssSelectorOp2|cssBraces|cssAttributeSelector|cssPseudoClass|cssPseudoClassId|stylusId|stylusClass)$'
+  if group =~? '\v^%(cssTagName|cssClassName|cssIdentifier|cssSelectorOp|cssSelectorOp2|cssBraces|cssAttributeSelector|cssPseudo|stylusId|stylusClass)$'
     return increase
   elseif (group == 'stylusUserFunction') && (indent(lnum) == '0') " mixin definition
     return increase

@@ -44,4 +44,8 @@ syn region xmlString contained start=+{+ end=++ contains=jsBlock,javascriptBlock
 " Add jsxRegion to the lowest-level JS syntax cluster.
 syn cluster jsExpression add=jsxRegion
 
+" Allow jsxRegion to contain reserved words.
+" See: https://github.com/othree/yajs.vim
+syn cluster javascriptNoReserved add=jsxRegion
+
 endif
