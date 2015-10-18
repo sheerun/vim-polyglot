@@ -64,6 +64,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emblem') == -1
 autocmd BufNewFile,BufRead *.emblem set filetype=emblem
 autocmd FileType emblem set tabstop=2|set shiftwidth=2|set expandtab
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'erlang') == -1
+  
+au BufNewFile,BufRead *.erl,*.hrl,rebar.config,*.app,*.app.src,*.yaws,*.xrl set ft=erlang
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
   
 autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit

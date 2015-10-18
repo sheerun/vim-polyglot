@@ -109,7 +109,7 @@ PACKS="
   elixir:elixir-lang/vim-elixir
   emberscript:heartsentwined/vim-ember-script
   emblem:heartsentwined/vim-emblem
-  erlang:hcs42/vim-erlang-runtime
+  erlang:vim-erlang/vim-erlang-runtime
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl
   go:fatih/vim-go:_BASIC

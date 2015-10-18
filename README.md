@@ -38,7 +38,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, ftplugin, ftdetect)
 - [emberscript](https://github.com/heartsentwined/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
 - [emblem](https://github.com/heartsentwined/vim-emblem) (syntax, indent, ftplugin, ftdetect)
-- [erlang](https://github.com/hcs42/vim-erlang-runtime) (syntax, indent)
+- [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent, ftdetect)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin, ftdetect)
 - [glsl](https://github.com/tikhomirov/vim-glsl) (syntax, indent, ftdetect)
 - [go](https://github.com/fatih/vim-go) (syntax, indent, ftdetect)
