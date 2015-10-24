@@ -76,7 +76,6 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [rspec](https://github.com/sheerun/rspec.vim) (syntax, ftdetect)
 - [ruby](https://github.com/vim-ruby/vim-ruby) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [rust](https://github.com/wting/rust.vim) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
-- [sass/scss](https://github.com/tpope/vim-haml) (syntax, indent, compiler, ftplugin)
 - [sbt](https://github.com/derekwyatt/vim-sbt) (syntax, ftdetect)
 - [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, compiler, ftplugin, ftdetect)
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftdetect)

@@ -147,7 +147,6 @@ PACKS="
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
   rust:wting/rust.vim
-  sass/scss:tpope/vim-haml
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   slim:slim-template/vim-slim
