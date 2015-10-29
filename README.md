@@ -94,6 +94,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
 - [vala](https://github.com/tkztmk/vim-vala) (syntax, indent, ftdetect)
+- [vcl](https://github.com/pld-linux/vim-syntax-vcl) (syntax, ftdetect)
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent, ftdetect)
 
 ## Disabling a language pack
