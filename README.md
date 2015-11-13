@@ -26,9 +26,9 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 ## Language packs
 
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent, ftdetect)
-- [blade](https://github.com/xsbeats/vim-blade) (syntax, indent, ftdetect)
+- [blade](https://github.com/jwalton512/vim-blade) (syntax, indent, ftdetect)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
-- [c/c++](https://github.com/vim-jp/cpp-vim) (syntax)
+- [c/c++](https://github.com/vim-jp/vim-cpp) (syntax)
 - [cjsx](https://github.com/mtscout6/vim-cjsx) (ftdetect, syntax, ftplugin)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin, ftdetect)
 - [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
@@ -86,7 +86,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax, ftdetect)
 - [tmux](https://github.com/tejr/vim-tmux) (syntax, ftdetect)
-- [tomdoc](https://github.com/duwanis/tomdoc.vim) (syntax)
+- [tomdoc](https://github.com/wellbredgrapefruit/tomdoc.vim) (syntax)
 - [toml](https://github.com/cespare/vim-toml) (syntax, ftplugin, ftdetect)
 - [twig](https://github.com/beyondwords/vim-twig) (syntax, ftplugin, ftdetect)
 - [typescript](https://github.com/leafgarland/typescript-vim) (syntax, indent, compiler, ftplugin, ftdetect)
