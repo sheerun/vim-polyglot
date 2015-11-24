@@ -18,7 +18,7 @@ A collection of language packs for Vim.
 
 ## Installation
 
-1. Install Pathogen, Vundle, NeoBundle, or Plug package manager for Vim.
+1. Install [Pathogen](https://github.com/tpope/vim-pathogen), [Vundle](https://github.com/VundleVim/Vundle.vim), [NeoBundle](https://github.com/Shougo/neobundle.vim), or [Plug](https://github.com/junegunn/vim-plug) package manager for Vim.
 2. Use this repository as submodule or package.
 
 Optionally download one of the [releases](https://github.com/sheerun/vim-polyglot/releases) and unpack it directly under `~/.vim` directory.
