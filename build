@@ -133,7 +133,7 @@ PACKS="
   less:groenewege/vim-less
   liquid:tpope/vim-liquid
   markdown:tpope/vim-markdown
-  nginx:mutewinter/nginx.vim
+  nginx:nginx/nginx::/contrib/vim/
   ocaml:jrk/vim-ocaml
   octave:vim-scripts/octave.vim--
   opencl:petRUShka/vim-opencl

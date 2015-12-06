@@ -245,7 +245,10 @@ endif
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
   
-au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
+au BufRead,BufNewFile *.nginx set ft=nginx
+au BufRead,BufNewFile */etc/nginx/* set ft=nginx
+au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
+au BufRead,BufNewFile nginx.conf set ft=nginx
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
   
