@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs 50+ times faster** than 50+ packages it consist of.
+- It **installs 70+ times faster** than 70+ packages it consist of.
 - Solid syntax and indentation support. Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
