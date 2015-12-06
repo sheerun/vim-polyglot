@@ -152,7 +152,7 @@ PACKS="
   slim:slim-template/vim-slim
   solidity:ethereum/vim-solidity
   stylus:wavded/vim-stylus
-  swift:toyamarinyon/vim-swift
+  swift:keith/swift.vim
   systemd:kurayama/systemd-vim-syntax
   textile:timcharper/textile.vim
   thrift:solarnz/thrift.vim
