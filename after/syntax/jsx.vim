@@ -11,13 +11,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Do nothing if we don't find the @jsx pragma (and we care).
-exec 'source '.fnameescape(expand('<sfile>:p:h:h').'/jsx-config.vim')
-if g:jsx_pragma_required && !b:jsx_pragma_found | finish | endif
-
-" Do nothing if we don't have the .jsx extension (and we care).
-if g:jsx_ext_required && !exists('b:jsx_ext_found') | finish | endif
-
 " Prologue; load in XML syntax.
 if exists('b:current_syntax')
   let s:current_syntax=b:current_syntax
@@ -28,9 +21,24 @@ if exists('s:current_syntax')
   let b:current_syntax=s:current_syntax
 endif
 
+" Officially, vim-jsx depends on the pangloss/vim-javascript syntax package
+" (and is tested against it exclusively).  However, in practice, we make some
+" effort towards compatibility with other packages.
+"
+" These are the plugin-to-syntax-element correspondences:
+"
+"   - pangloss/vim-javascript:      jsBlock, jsExpression
+"   - jelera/vim-javascript-syntax: javascriptBlock
+"   - othree/yajs.vim:              javascriptNoReserved
+
+
 " Highlight JSX regions as XML; recursively match.
+"
+" Note that we prohibit JSX tags from having a < or word character immediately
+" preceding it, to avoid conflicts with, respectively, the left shift operator
+" and generic Flow type annotations (http://flowtype.org/).
 syn region jsxRegion contains=@XMLSyntax,jsxRegion,jsBlock,javascriptBlock
-  \ start=+<\@<!<\z([a-zA-Z][a-zA-Z0-9:\-.]*\)+
+  \ start=+\%(<\|\w\)\@<!<\z([a-zA-Z][a-zA-Z0-9:\-.]*\)+
   \ skip=+<!--\_.\{-}-->+
   \ end=+</\z1\_\s\{-}>+
   \ end=+/>+
@@ -45,7 +53,6 @@ syn region xmlString contained start=+{+ end=++ contains=jsBlock,javascriptBlock
 syn cluster jsExpression add=jsxRegion
 
 " Allow jsxRegion to contain reserved words.
-" See: https://github.com/othree/yajs.vim
 syn cluster javascriptNoReserved add=jsxRegion
 
 endif

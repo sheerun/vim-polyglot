@@ -25,7 +25,8 @@ endif
 " C++ extensions
 syn keyword cppStatement	new delete this friend using
 syn keyword cppAccess		public protected private
-syn keyword cppType		inline virtual explicit export bool wchar_t
+syn keyword cppModifier		inline virtual explicit export
+syn keyword cppType		bool wchar_t
 syn keyword cppExceptions	throw try catch
 syn keyword cppOperator		operator typeid
 syn keyword cppOperator		and bitor or xor compl bitand and_eq or_eq xor_eq not not_eq
@@ -38,7 +39,8 @@ syn keyword cppConstant		__cplusplus
 
 " C++ 11 extensions
 if !exists("cpp_no_cpp11")
-  syn keyword cppType		override final
+  syn keyword cppModifier	override final
+  syn keyword cppType		nullptr_t
   syn keyword cppExceptions	noexcept
   syn keyword cppStorageClass	constexpr decltype thread_local
   syn keyword cppConstant	nullptr
@@ -72,6 +74,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppExceptions		Exception
   HiLink cppOperator		Operator
   HiLink cppStatement		Statement
+  HiLink cppModifier		Type
   HiLink cppType		Type
   HiLink cppStorageClass	StorageClass
   HiLink cppStructure		Structure

@@ -17,7 +17,7 @@ syn cluster elixirNotTop contains=@elixirRegexSpecial,@elixirStringContained,@el
 syn match elixirComment '#.*' contains=elixirTodo
 syn keyword elixirTodo FIXME NOTE TODO OPTIMIZE XXX HACK contained
 
-syn keyword elixirKeyword case when cond for if unless try receive send
+syn keyword elixirKeyword case when cond for if unless try receive spawn send
 syn keyword elixirKeyword exit raise throw after rescue catch else do end
 syn keyword elixirKeyword quote unquote super
 

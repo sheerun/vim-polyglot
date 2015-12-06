@@ -4,7 +4,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Language:	git rebase --interactive
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
 " Filenames:	git-rebase-todo
-" Last Change:	2012 April 7
+" Last Change:	2015 November 21
 
 if exists("b:current_syntax")
   finish
@@ -20,6 +20,7 @@ syn match   gitrebaseEdit   "\v^e%(dit)=>"   nextgroup=gitrebaseCommit skipwhite
 syn match   gitrebaseSquash "\v^s%(quash)=>" nextgroup=gitrebaseCommit skipwhite
 syn match   gitrebaseFixup  "\v^f%(ixup)=>"  nextgroup=gitrebaseCommit skipwhite
 syn match   gitrebaseExec   "\v^%(x|exec)>" nextgroup=gitrebaseCommand skipwhite
+syn match   gitrebaseDrop   "\v^d%(rop)=>"   nextgroup=gitrebaseCommit skipwhite
 syn match   gitrebaseSummary ".*"               contains=gitrebaseHash contained
 syn match   gitrebaseCommand ".*"                                      contained
 syn match   gitrebaseComment "^#.*"             contains=gitrebaseHash

@@ -134,6 +134,30 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
   
 autocmd BufNewFile,BufRead *Spec.js,*_spec.js set filetype=jasmine.javascript syntax=jasmine
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
+  
+if !exists('g:jsx_ext_required')
+  let g:jsx_ext_required = 1
+endif
+if !exists('g:jsx_pragma_required')
+  let g:jsx_pragma_required = 0
+endif
+if g:jsx_pragma_required
+  " Look for the @jsx pragma.  It must be included in a docblock comment before
+  " anything else in the file (except whitespace).
+  let s:jsx_pragma_pattern = '\%^\_s*\/\*\*\%(\_.\%(\*\/\)\@!\)*@jsx\_.\{-}\*\/'
+  let b:jsx_pragma_found = search(s:jsx_pragma_pattern, 'npw')
+endif
+fu! <SID>EnableJSX()
+  if g:jsx_pragma_required && !b:jsx_pragma_found | return 0 | endif
+  if g:jsx_ext_required && !exists('b:jsx_ext_found') | return 0 | endif
+  return 1
+endfu
+autocmd BufNewFile,BufRead *.jsx let b:jsx_ext_found = 1
+autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+autocmd BufNewFile,BufRead *.js
+  \ if <SID>EnableJSX() | set filetype=javascript.jsx | endif
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
   
 autocmd BufNewFile,BufRead *.json set filetype=json
@@ -205,7 +229,7 @@ au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.c
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
   
-au BufRead,BufNewFile *.cl set filetype=opencl
+au! BufRead,BufNewFile *.cl set filetype=opencl
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
   
@@ -327,7 +351,17 @@ autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'swift') == -1
   
-autocmd BufNewFile,BufRead *.swift set filetype=swift
+autocmd BufNewFile,BufRead *.swift setfiletype swift
+autocmd BufRead * call s:Swift()
+function! s:Swift()
+  if !empty(&filetype)
+    return
+  endif
+  let line = getline(1)
+  if line =~ "^#!.*swift"
+    setfiletype swift
+  endif
+endfunction
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'systemd') == -1
   

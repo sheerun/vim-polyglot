@@ -521,7 +521,7 @@ syn keyword phpStatement __construct __destruct __call __callStatic __get __set 
 syn keyword phpKeyword die exit eval empty isset unset list instanceof insteadof contained
 
 " Include & friends
-syn keyword phpInclude include include_once require require_once namespace use contained
+syn keyword phpInclude include include_once require require_once namespace contained
 
 " Types
 syn keyword phpType bool[ean] int[eger] real double float string array object null self parent global this stdClass callable contained
@@ -680,6 +680,16 @@ syntax match phpClassImplements contained
       \ nextgroup=phpClassDelimiter skipwhite skipempty /\(\\\|\h\w*\)*\h\w*/
 syntax match phpClassDelimiter contained
       \ nextgroup=phpClassImplements skipwhite skipempty /,/
+
+" use statement
+syn keyword phpInclude use contained
+      \ nextgroup=phpUseFunction,phpUseClass skipwhite skipempty
+syn match phpUseFunction /function\_s\+\(\\\|\h\w*\)*\h\w*/ contained contains=phpUseKeyword
+      \ nextgroup=phpUseAlias skipwhite skipempty
+syn match phpUseClass /\(function\_s\+\)\@!\(\\\|\h\w*\)*\h\w*/ contained
+      \ nextgroup=phpUseAlias skipwhite skipempty
+syn match phpUseAlias /as\_s\+\h\w*/ contained contains=phpUseKeyword
+syn match phpUseKeyword /\(function\|as\)\_s\+/ contained contains=phpKeyword
 
 " Function name
 syn keyword phpKeyword function contained

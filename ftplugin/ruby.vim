@@ -46,7 +46,7 @@ endif
 setlocal formatoptions-=t formatoptions+=croql
 
 setlocal include=^\\s*\\<\\(load\\>\\\|require\\>\\\|autoload\\s*:\\=[\"']\\=\\h\\w*[\"']\\=,\\)
-setlocal includeexpr=substitute(substitute(v:fname,'::','/','g'),'$','.rb','')
+setlocal includeexpr=substitute(substitute(v:fname,'::','/','g'),'\%(\.rb\)\=$','.rb','')
 setlocal suffixesadd=.rb
 
 if exists("&ofu") && has("ruby")
@@ -361,7 +361,7 @@ function! RubyCursorFile() abort
   endtry
   let pre = matchstr(strpart(getline('.'), 0, col('.')-1), '.*\f\@<!')
   let post = matchstr(strpart(getline('.'), col('.')), '\f\@!.*')
-  let ext = getline('.') =~# '^\s*\%(require\|autoload\)\>' ? '.rb' : ''
+  let ext = getline('.') =~# '^\s*\%(require\%(_relative\)\=\|autoload\)\>' && cfile !~# '\.rb$' ? '.rb' : ''
   if s:synname() ==# 'rubyConstant'
     let cfile = substitute(cfile,'\.\w\+[?!=]\=$','','')
     let cfile = substitute(cfile,'::','/','g')
@@ -369,7 +369,7 @@ function! RubyCursorFile() abort
     let cfile = substitute(cfile,'\(\l\|\d\)\(\u\)','\1_\2', 'g')
     return tolower(cfile) . '.rb'
   elseif getline('.') =~# '^\s*require_relative\s*\(["'']\).*\1\s*$'
-    let cfile = expand('%:p:h') . '/' . matchstr(getline('.'),'\(["'']\)\zs.\{-\}\ze\1') . '.rb'
+    let cfile = expand('%:p:h') . '/' . matchstr(getline('.'),'\(["'']\)\zs.\{-\}\ze\1') . ext
   elseif getline('.') =~# '^\s*\%(require[( ]\|load[( ]\|autoload[( ]:\w\+,\)\s*\%(::\)\=File\.expand_path(\(["'']\)\.\./.*\1,\s*__FILE__)\s*$'
     let target = matchstr(getline('.'),'\(["'']\)\.\.\zs/.\{-\}\ze\1')
     let cfile = expand('%:p:h') . target . ext

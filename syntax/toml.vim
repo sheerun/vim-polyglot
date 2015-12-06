@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
   
 " Language:   TOML
 " Maintainer: Caleb Spare <cespare@gmail.com>
-" URL:        http://github.com/cespare/vim-toml
+" URL:        https://github.com/cespare/vim-toml
 " LICENSE:    MIT
 
 if exists("b:current_syntax")
@@ -37,7 +37,7 @@ hi def link tomlFloat Float
 syn match tomlBoolean /\<\%(true\|false\)\>/ display
 hi def link tomlBoolean Boolean
 
-" http://tools.ietf.org/html/rfc3339
+" https://tools.ietf.org/html/rfc3339
 syn match tomlDate /\d\{4\}-\d\{2\}-\d\{2\}T\d\{2\}:\d\{2\}:\d\{2\}\%(\.\d\+\)\?\%(Z\|[+-]\d\{2\}:\d\{2\}\)/ display
 hi def link tomlDate Constant
 
