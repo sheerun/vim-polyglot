@@ -162,6 +162,22 @@ autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd BufNewFile,BufRead *.js
   \ if <SID>EnableJSX() | set filetype=javascript.jsx | endif
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jinja') == -1
+  
+fun! s:SelectHTML()
+  let n = 1
+  while n < 50 && n <= line("$")
+    " check for jinja
+    if getline(n) =~ '{{.*}}\|{%-\?\s*\(end.*\|extends\|block\|macro\|set\|if\|for\|include\|trans\)\>'
+      set ft=jinja
+      return
+    endif
+    let n = n + 1
+  endwhile
+endfun
+autocmd BufNewFile,BufRead *.html,*.htm,*.nunjucks,*.nunjs  call s:SelectHTML()
+autocmd BufNewFile,BufRead *.jinja2,*.j2,*.jinja set ft=jinja
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
   
 autocmd BufNewFile,BufRead *.json set filetype=json
