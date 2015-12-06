@@ -92,6 +92,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [typescript](https://github.com/leafgarland/typescript-vim) (syntax, indent, compiler, ftplugin, ftdetect)
 - [vala](https://github.com/tkztmk/vim-vala) (syntax, indent, ftdetect)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
+- [vcl](https://github.com/smerrill/vcl-vim-plugin) (syntax, ftdetect)
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent, ftdetect)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)

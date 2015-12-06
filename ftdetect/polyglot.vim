@@ -406,6 +406,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
 autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vcl') == -1
+  
+au BufRead,BufNewFile *.vcl set filetype=vcl
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vm') == -1
   
 au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity

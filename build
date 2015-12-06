@@ -163,6 +163,7 @@ PACKS="
   typescript:leafgarland/typescript-vim
   vala:tkztmk/vim-vala
   vbnet:vim-scripts/vbnet.vim
+  vcl:smerrill/vcl-vim-plugin
   vm:lepture/vim-velocity
   xls:vim-scripts/XSLT-syntax
   yard:sheerun/vim-yardoc
