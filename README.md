@@ -81,7 +81,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftdetect)
 - [solidity](https://github.com/ethereum/vim-solidity) (syntax, indent, ftdetect)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin, ftdetect)
-- [swift](https://github.com/toyamarinyon/vim-swift) (syntax, indent, ftdetect)
+- [swift](https://github.com/keith/swift.vim) (syntax, indent, ftplugin, ftdetect)
 - [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax, ftdetect)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax, ftdetect)
