@@ -34,6 +34,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cucumber') == -
   
 autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
+  
+autocmd BufRead,BufNewFile *.dart set filetype=dart
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
   
 au BufNewFile,BufRead Dockerfile set filetype=dockerfile

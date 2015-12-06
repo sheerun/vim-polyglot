@@ -105,6 +105,7 @@ PACKS="
   coffee-script:kchmck/vim-coffee-script
   css:JulesWang/css.vim
   cucumber:tpope/vim-cucumber
+  dart:dart-lang/dart-vim-plugin
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
   emberscript:heartsentwined/vim-ember-script
