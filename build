@@ -107,6 +107,7 @@ PACKS="
   cucumber:tpope/vim-cucumber
   dart:dart-lang/dart-vim-plugin
   dockerfile:honza/dockerfile.vim
+  elm:lambdatoast/elm.vim
   elixir:elixir-lang/vim-elixir
   emberscript:heartsentwined/vim-ember-script
   emblem:heartsentwined/vim-emblem

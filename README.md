@@ -36,6 +36,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin, ftdetect)
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, ftplugin, ftdetect)
 - [dockerfile](https://github.com/honza/dockerfile.vim) (syntax, ftdetect)
+- [elm](https://github.com/lambdatoast/elm.vim) (syntax, indent, autoload, ftplugin, ftdetect)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, ftplugin, ftdetect)
 - [emberscript](https://github.com/heartsentwined/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
 - [emblem](https://github.com/heartsentwined/vim-emblem) (syntax, indent, ftplugin, ftdetect)

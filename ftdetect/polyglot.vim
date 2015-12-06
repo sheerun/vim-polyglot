@@ -58,6 +58,10 @@ function! s:DetectElixir()
 endfunction
 autocmd BufNewFile,BufRead * call s:DetectElixir()
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
+  
+au BufNewFile,BufRead *.elm		set filetype=elm
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emberscript') == -1
   
 autocmd BufNewFile,BufRead *.em set filetype=ember-script
