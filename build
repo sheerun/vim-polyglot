@@ -135,6 +135,7 @@ PACKS="
   liquid:tpope/vim-liquid
   markdown:tpope/vim-markdown
   nginx:nginx/nginx::/contrib/vim/
+  objc:b4winckler/vim-objc
   ocaml:jrk/vim-ocaml
   octave:vim-scripts/octave.vim--
   opencl:petRUShka/vim-opencl
