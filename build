@@ -3,7 +3,7 @@
 set -E
 
 DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
-DIRS_BASIC="syntax indent ftdetect after/syntax after/indent after/ftdetect"
+DIRS_BASIC="syntax compiler indent ftdetect after/syntax after/indent after/ftdetect"
 DIRS_ALL="syntax indent compiler autoload ftplugin ftdetect after"
 
 OUTPUT=""
