@@ -254,6 +254,10 @@ au BufRead,BufNewFile */etc/nginx/* set ft=nginx
 au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
 au BufRead,BufNewFile nginx.conf set ft=nginx
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nix') == -1
+  
+autocmd BufNewFile,BufRead *.nix setfiletype nix
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
   
 au! BufRead,BufNewFile *.cl set filetype=opencl
