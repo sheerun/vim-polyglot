@@ -25,6 +25,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 
 ## Language packs
 
+- [ansible](https://github.com/pearofducks/ansible-vim) (syntax, indent, ftplugin, ftdetect)
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent, ftdetect)
 - [blade](https://github.com/jwalton512/vim-blade) (syntax, indent, ftdetect)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
