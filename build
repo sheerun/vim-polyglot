@@ -96,6 +96,7 @@ EOF
 }
 
 PACKS="
+  ansible:pearofducks/ansible-vim
   arduino:sudar/vim-arduino-syntax
   blade:jwalton512/vim-blade
   c++11:octol/vim-cpp-enhanced-highlight
