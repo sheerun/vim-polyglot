@@ -34,7 +34,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [css](https://github.com/JulesWang/css.vim) (syntax)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin, ftdetect)
-- [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, ftplugin, ftdetect)
+- [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin, ftdetect)
 - [dockerfile](https://github.com/honza/dockerfile.vim) (syntax, ftdetect)
 - [elm](https://github.com/lambdatoast/elm.vim) (syntax, indent, autoload, ftplugin, ftdetect)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, ftplugin, ftdetect)

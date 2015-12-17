@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
 " Vim syntax file
 " Language: Kotlin
 " Maintainer: Alexander Udalov
-" Latest Revision: 1 October 2015
+" Latest Revision: 7 December 2015
 
 if exists("b:current_syntax")
     finish
@@ -15,7 +15,7 @@ syn keyword ktStatement break continue return
 syn keyword ktConditional if else when
 syn keyword ktRepeat do for while
 syn keyword ktOperator as in is by
-syn keyword ktKeyword get set out super this This where
+syn keyword ktKeyword get set out super this where
 syn keyword ktException try catch finally throw
 
 syn keyword ktInclude import package
