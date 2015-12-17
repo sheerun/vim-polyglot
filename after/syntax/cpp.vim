@@ -65,7 +65,7 @@ syn cluster cppSTLgroup     contains=cppSTLfunction,cppSTLfunctional,cppSTLconst
 " -----------------------------------------------------------------------------
 "  Standard library types and functions.
 "
-" Mainly based on the excellent STL Syntax vim script by 
+" Mainly based on the excellent STL Syntax vim script by
 " Mizuchi <ytj000@gmail.com>
 "   http://www.vim.org/scripts/script.php?script_id=4293
 " which in turn is based on the scripts
@@ -1324,6 +1324,31 @@ if !exists("cpp_no_cpp14")
     "dynarray
     syntax keyword cppSTLtype dynarray
 
+    "helper type traits types
+    syntax keyword cppSTLtype remove_cv_t
+    syntax keyword cppSTLtype remove_const_t
+    syntax keyword cppSTLtype remove_volatile_t
+    syntax keyword cppSTLtype add_cv_t
+    syntax keyword cppSTLtype add_const_t
+    syntax keyword cppSTLtype add_volatile_t
+    syntax keyword cppSTLtype remove_reference_t
+    syntax keyword cppSTLtype add_lvalue_reference_t
+    syntax keyword cppSTLtype add_rvalue_reference_t
+    syntax keyword cppSTLtype remove_pointer_t
+    syntax keyword cppSTLtype add_pointer_t
+    syntax keyword cppSTLtype remove_extent_t
+    syntax keyword cppSTLtype remove_all_extents_t
+    syntax keyword cppSTLtype make_signed_t
+    syntax keyword cppSTLtype make_unsigned_t
+    syntax keyword cppSTLtype aligned_storage_t
+    syntax keyword cppSTLtype aligned_union_t
+    syntax keyword cppSTLtype decay_t
+    syntax keyword cppSTLtype enable_if_t
+    syntax keyword cppSTLtype conditional_t
+    syntax keyword cppSTLtype common_type_t
+    syntax keyword cppSTLtype underlying_type_t
+    syntax keyword cppSTLtype result_of_t
+
     "thread
     syntax keyword cppSTLtype shared_mutex
     syntax keyword cppSTLtype shared_lock
@@ -1362,7 +1387,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppSTLenum         Typedef
   HiLink cppSTLios          Function
   HiLink cppSTLcast         Statement " be consistent with official syntax
-  HiLink cppRawString       String 
+  HiLink cppRawString       String
   HiLink cppRawDelimiter    Delimiter
   delcommand HiLink
 endif

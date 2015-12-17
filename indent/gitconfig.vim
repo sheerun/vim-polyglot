@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Vim indent file
 " Language:	git config file
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
-" Last Change:	2012 April 7
+" Last Change:	2013 May 30
 
 if exists("b:did_indent")
   finish

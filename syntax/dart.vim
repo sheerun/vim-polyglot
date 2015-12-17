@@ -46,7 +46,7 @@ syntax keyword dartTodo          contained TODO FIXME XXX
 syntax region  dartComment       start="/\*"  end="\*/" contains=dartTodo,dartDocLink,@Spell
 syntax match   dartLineComment   "//.*" contains=dartTodo,@Spell
 syntax match   dartLineDocComment "///.*" contains=dartTodo,dartDocLink,@Spell
-syntax region  dartDocLink       contained start=+\[+ end=+\]+
+syntax region  dartDocLink       oneline contained start=+\[+ end=+\]+
 
 " Strings
 syntax region  dartString        start=+\z(["']\)+ end=+\z1+ contains=@Spell,dartInterpolation,dartSpecialChar
