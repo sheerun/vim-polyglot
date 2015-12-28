@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
 " Vim syntax file
 " Language: Kotlin
 " Maintainer: Alexander Udalov
-" Latest Revision: 7 December 2015
+" Latest Revision: 23 December 2015
 
 if exists("b:current_syntax")
     finish
@@ -23,7 +23,8 @@ syn keyword ktInclude import package
 syn keyword ktType Any Boolean Byte Char Double Float Int Long Nothing Short Unit
 syn keyword ktModifier annotation companion enum inner internal private protected public abstract final open override sealed vararg dynamic
 syn keyword ktStructure class object interface fun val var constructor init
-syn keyword ktTypedef typealias
+
+syn keyword ktReservedKeyword async typealias typeof yield
 
 syn keyword ktBoolean true false
 syn keyword ktConstant null
@@ -67,6 +68,7 @@ hi link ktRepeat Repeat
 hi link ktOperator Operator
 hi link ktKeyword Keyword
 hi link ktException Exception
+hi link ktReservedKeyword Error
 
 hi link ktInclude Include
 
