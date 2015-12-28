@@ -104,6 +104,7 @@ PACKS="
   cjsx:mtscout6/vim-cjsx
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
+  cql:elubow/cql-vim
   css:JulesWang/css.vim
   cucumber:tpope/vim-cucumber
   dart:dart-lang/dart-vim-plugin

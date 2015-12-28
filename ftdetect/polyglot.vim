@@ -45,6 +45,12 @@ function! s:DetectCoffee()
 endfunction
 autocmd BufNewFile,BufRead * call s:DetectCoffee()
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cql') == -1
+  
+if has("autocmd")
+  au  BufNewFile,BufRead *.cql set filetype=cql
+endif
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cucumber') == -1
   
 autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber

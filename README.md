@@ -33,6 +33,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [cjsx](https://github.com/mtscout6/vim-cjsx) (ftdetect, syntax, ftplugin)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin, ftdetect)
 - [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
+- [cql](https://github.com/elubow/cql-vim) (syntax, ftdetect)
 - [css](https://github.com/JulesWang/css.vim) (syntax)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin, ftdetect)
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin, ftdetect)
