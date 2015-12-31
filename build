@@ -109,8 +109,8 @@ PACKS="
   cucumber:tpope/vim-cucumber
   dart:dart-lang/dart-vim-plugin
   dockerfile:honza/dockerfile.vim
-  elm:lambdatoast/elm.vim
   elixir:elixir-lang/vim-elixir
+  elm:lambdatoast/elm.vim
   emberscript:heartsentwined/vim-ember-script
   emblem:heartsentwined/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
@@ -149,8 +149,8 @@ PACKS="
   puppet:rodjek/vim-puppet
   python:mitsuhiko/vim-python-combined
   qml:peterhoeg/vim-qml
-  ragel:jneen/ragel.vim
   r-lang:vim-scripts/R.vim
+  ragel:jneen/ragel.vim
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
   rust:rust-lang/rust.vim
