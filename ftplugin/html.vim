@@ -8,4 +8,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
 
 " setlocal iskeyword+=-
 
+setlocal commentstring=<!--%s-->
+
 endif

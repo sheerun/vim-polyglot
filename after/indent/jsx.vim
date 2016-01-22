@@ -26,8 +26,8 @@ setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
 " XML indentkeys
 setlocal indentkeys+=*<Return>,<>>,<<>,/
 
-" Self-closing tag regex.
-let s:sctag = '^\s*\/>\s*;\='
+" Multiline end tag regex (line beginning with '>' or '/>')
+let s:endtag = '^\s*\/\?>\s*;\='
 
 " Get all syntax types at the beginning of a given line.
 fu! SynSOL(lnum)
@@ -76,13 +76,13 @@ fu! GetJsxIndent()
   if (SynXMLish(prevsyn) || SynJSXBlockEnd(prevsyn)) && SynXMLishAny(cursyn)
     let ind = XmlIndentGet(v:lnum, 0)
 
-    " Align '/>' with '<' for multiline self-closing tags.
-    if getline(v:lnum) =~? s:sctag
+    " Align '/>' and '>' with '<' for multiline tags.
+    if getline(v:lnum) =~? s:endtag
       let ind = ind - &sw
     endif
 
-    " Then correct the indentation of any JSX following '/>'.
-    if getline(v:lnum - 1) =~? s:sctag
+    " Then correct the indentation of any JSX following '/>' or '>'.
+    if getline(v:lnum - 1) =~? s:endtag
       let ind = ind + &sw
     endif
   else

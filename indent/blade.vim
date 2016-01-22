@@ -1,66 +1,50 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'blade') == -1
   
-" Language:     Blade
-" Author:       Barry Deeney <sitemaster16@gmail.com>
-" Version:      0.1
-" Description:  BLADE indent file based on HTML indentation...
+" Vim indent file
+" Language:     Blade (Laravel)
+" Maintainer:   Jason Walton <jwalton512@gmail.com>
 
-" Check if this file has already been loaded
 if exists("b:did_indent")
-	finish
+    finish
+endif
+runtime! indent/html.vim
+unlet! b:did_indent
+let b:did_indent = 1
+
+setlocal autoindent
+setlocal indentexpr=GetBladeIndent()
+setlocal indentkeys=o,O,*<Return>,<>>,!^F,=@else,=@end,=@empty
+
+" Only define the function once.
+if exists("*GetBladeIndent")
+    finish
 endif
 
-" Include HTML
-runtime! indent/html.vim
-runtime! indent/php.vim
-silent! unlet b:did_indent
+function! GetBladeIndent()
+    let lnum = prevnonblank(v:lnum-1)
+    if lnum == 0
+        return 0
+    endif
 
-" What function do we need to use to detect indentation?
-setlocal indentexpr=BladeIndent()
+    let line = substitute(substitute(getline(lnum), '\s\+$', '', ''), '^\s\+', '', '')
+    let cline = substitute(substitute(getline(v:lnum), '\s\+$', '', ''), '^\s\+', '', '')
+    let indent = indent(lnum)
+    let cindent = indent(v:lnum)
+    if cline =~# '@\%(else\|elseif\|empty\|end\)'
+        let indent = cindent < indent ? cindent : indent - &sw
+    elseif HtmlIndent() > -1
+        let indent = HtmlIndent()
+    endif
+    let increase = indent + &sw
+    if indent = indent(lnum)
+        let indent = cindent <= indent ? -1 : increase
+    endif
 
-" What keys would trigger indentation?
-setlocal indentkeys=o,O,<Return>,<>>,{,},!^F,0{,0},0),:,!^F,o,O,e,*<Return>,=?>,=<?,=*/
-
-" THE MAIN INDENT FUNCTION. Return the amount of indent for v:lnum.
-func! BladeIndent()
-	" What is the current line?
-	let current_line = v:lnum
-
-	" What is the current text?
-	let current_text = tolower(getline(current_line))
-
-	" What was the last non blank line?
-	let previous_line = prevnonblank(current_line)
-
-	" What was the last non blank text?
-	let previous_text = tolower(getline(previous_line))
-
-	" How large are indents??
-	let indent_size = &sw
-
-	" Check if we have a PHPIndent value...
-	let indent = GetPhpIndent()
-
-	" check if we have indent
-	if indent == -1
-		" Check if we have BLADE
-		if current_text =~ '^\s*@' || previous_text =~ '^\s*@'
-			" We need to add to the indent
-			return indent_size * indent(previous_text)
-		endif
-
-		" Check if we have HTML
-		if current_text =~ '^\s*<' || previous_text =~ '^\s*<'
-			" We now give the honors to HtmlIndent()
-			let indent = HtmlIndent()
-		endif
-	endif
-
-	" Give the indent back!
-	return indent
-endfunc
-
-" Make sure we store that flag!
-let b:did_indent = 1
+    if line =~# '@\%(if\|elseif\|else\|unless\|foreach\|forelse\|for\|while\)\%(.*\s*@end\)\@!'
+        return increase
+    else
+        return indent
+    endif
+endfunction
 
 endif

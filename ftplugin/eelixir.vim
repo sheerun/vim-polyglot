@@ -1,9 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
   
-" Vim filetype plugin
-" Language: Embedded Elixir
-" URL:      https://github.com/elixir-lang/vim-elixir
-
 if exists("b:did_ftplugin")
   finish
 endif

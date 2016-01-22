@@ -1,9 +1,9 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
   
 " Vim completion for HTML5 data file
-" Language:       HTML5
-" Maintainer:     othree <othree@gmail.com>
-" Last Change:    2011 Apr 9
+" Language:	    HTML (version 5.1 Draft 2016 Jan 13)
+" Maintainer:   Kao, Wei-Ko(othree) ( othree AT gmail DOT com )
+" Last Change:  2016 Jan 20
 
 
 " Lang Tag: {{{
@@ -598,8 +598,12 @@ let g:xmldata_html5 = {
     \ global_attributes
 \ ],
 \ 'menu': [
-    \ flow_elements + ['li'],
+    \ flow_elements + ['menuitem'],
     \ extend(copy(global_attributes), {'type': ['toolbar', 'context'], 'label': []})
+\ ],
+\ 'menuitem': [
+    \ flow_elements + ['li'],
+    \ extend(copy(global_attributes), {'type': ['toolbar', 'context'], 'label': [], 'icon': [], 'disabled': [], 'checked': [], 'radiogroup': [], 'default': [], 'command': []})
 \ ],
 \ 'meta': [
     \ [],

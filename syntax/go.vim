@@ -71,6 +71,10 @@ if !exists("g:go_highlight_structs")
   let g:go_highlight_structs = 0
 endif
 
+if !exists("g:go_highlight_interfaces")
+  let g:go_highlight_interfaces = 0
+endif
+
 if !exists("g:go_highlight_build_constraints")
   let g:go_highlight_build_constraints = 0
 endif
@@ -210,9 +214,17 @@ endif
 " Spacing errors around the 'chan' keyword
 if g:go_highlight_chan_whitespace_error != 0
   " receive-only annotation on chan type
-  syn match goSpaceError display "\(<-\)\@<=\s\+\(chan\>\)\@="
+  "
+  " \(\<chan\>\)\@<!<-  (only pick arrow when it doesn't come after a chan)
+  " this prevents picking up 'chan<- chan<-' but not '<- chan'
+  syn match goSpaceError display "\(\(\<chan\>\)\@<!<-\)\@<=\s\+\(\<chan\>\)\@="
+
   " send-only annotation on chan type
-  syn match goSpaceError display "\(\<chan\)\@<=\s\+\(<-\)\@="
+  "
+  " \(<-\)\@<!\<chan\>  (only pick chan when it doesn't come after an arrow)
+  " this prevents picking up '<-chan <-chan' but not 'chan <-'
+  syn match goSpaceError display "\(\(<-\)\@<!\<chan\>\)\@<=\s\+\(<-\)\@="
+
   " value-ignoring receives in a few contexts
   syn match goSpaceError display "\(\(^\|[={(,;]\)\s*<-\)\@<=\s\+"
 endif
@@ -284,6 +296,14 @@ if g:go_highlight_structs != 0
 endif
 hi def link     goStruct            Function
 hi def link     goStructDef         Function
+
+" Interfaces;
+if g:go_highlight_interfaces != 0
+  syn match goInterface             /\(.\)\@<=\w\+\({\)\@=/
+  syn match goInterfaceDef          /\(type\s\+\)\@<=\w\+\(\s\+interface\s\+{\)\@=/
+endif
+hi def link     goInterface         Function
+hi def link     goInterfaceDef      Function
 
 " Build Constraints
 if g:go_highlight_build_constraints != 0

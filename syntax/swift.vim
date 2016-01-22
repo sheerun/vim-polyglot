@@ -16,13 +16,47 @@ syntax match swiftShebang "\v#!.*$"
 " Comment contained keywords
 syntax keyword swiftTodos contained TODO XXX FIXME NOTE
 syntax keyword swiftMarker contained MARK
-syntax match swiftDocString "\v^\s*-\s*parameter"hs=s+1 contained
-syntax match swiftDocString "\v^\s*-\s*returns"hs=s+1 contained
+
+" In comment identifiers
+function! s:CommentKeywordMatch(keyword)
+  execute "syntax match swiftDocString \"\\v^\\s*-\\s*". a:keyword . "\\W\"hs=s+1,he=e-1 contained"
+endfunction
+
+syntax case ignore
+
+call s:CommentKeywordMatch("attention")
+call s:CommentKeywordMatch("author")
+call s:CommentKeywordMatch("authors")
+call s:CommentKeywordMatch("bug")
+call s:CommentKeywordMatch("complexity")
+call s:CommentKeywordMatch("copyright")
+call s:CommentKeywordMatch("date")
+call s:CommentKeywordMatch("experiment")
+call s:CommentKeywordMatch("important")
+call s:CommentKeywordMatch("invariant")
+call s:CommentKeywordMatch("note")
+call s:CommentKeywordMatch("parameter")
+call s:CommentKeywordMatch("postcondition")
+call s:CommentKeywordMatch("precondition")
+call s:CommentKeywordMatch("remark")
+call s:CommentKeywordMatch("remarks")
+call s:CommentKeywordMatch("requires")
+call s:CommentKeywordMatch("returns")
+call s:CommentKeywordMatch("see")
+call s:CommentKeywordMatch("since")
+call s:CommentKeywordMatch("throws")
+call s:CommentKeywordMatch("todo")
+call s:CommentKeywordMatch("version")
+call s:CommentKeywordMatch("warning")
+
+syntax case match
+delfunction s:CommentKeywordMatch
+
 
 " Literals
 " Strings
-syntax region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolatedWrapper
-syntax region swiftInterpolatedWrapper start="\v[^\\]\\\(\s*" end="\v\s*\)" contained containedin=swiftString contains=swiftInterpolatedString
+syntax region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolatedWrapper oneline
+syntax region swiftInterpolatedWrapper start="\v[^\\]\\\(\s*" end="\v\s*\)" contained containedin=swiftString contains=swiftInterpolatedString,swiftString
 syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftInterpolatedWrapper
 
 " Numbers
@@ -167,9 +201,9 @@ syntax keyword swiftStructure
       \ struct
       \ enum
 
-syntax region swiftTypeWrapper start="\v:\s*" skip="\s*,\s*$*\s*" end="$" contains=swiftString,swiftBoolean,swiftNumber,swiftType,swiftGenericsWrapper transparent
+syntax region swiftTypeWrapper start="\v:\s*" skip="\s*,\s*$*\s*" end="$\|/"me=e-1 contains=ALL transparent
 syntax region swiftGenericsWrapper start="\v\<" end="\v\>" contains=swiftType transparent oneline
-syntax region swiftLiteralWrapper start="\v\=\s*" skip="\v[^\[\]]\(\)" end="\v(\[\]|\(\))" contains=swiftType,swiftString transparent oneline
+syntax region swiftLiteralWrapper start="\v\=\s*" skip="\v[^\[\]]\(\)" end="\v(\[\]|\(\))" contains=ALL transparent oneline
 syntax region swiftReturnWrapper start="\v-\>\s*" end="\v(\{|$)" contains=swiftType transparent oneline
 syntax match swiftType "\v<\u\w*" contained containedin=swiftGenericsWrapper,swiftTypeWrapper,swiftLiteralWrapper,swiftGenericsWrapper
 

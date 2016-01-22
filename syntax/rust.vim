@@ -127,7 +127,6 @@ syn match     rustMacro       '#\w\(\w\)*' contains=rustAssert,rustPanic
 
 syn match     rustEscapeError   display contained /\\./
 syn match     rustEscape        display contained /\\\([nrt0\\'"]\|x\x\{2}\)/
-syn match     rustEscapeUnicode display contained /\\\(u\x\{4}\|U\x\{8}\)/
 syn match     rustEscapeUnicode display contained /\\u{\x\{1,6}}/
 syn match     rustStringContinuation display contained /\\\n\s*/
 syn region    rustString      start=+b"+ skip=+\\\\\|\\"+ end=+"+ contains=rustEscape,rustEscapeError,rustStringContinuation

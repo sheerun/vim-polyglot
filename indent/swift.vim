@@ -14,7 +14,6 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 setlocal nosmartindent
-setlocal indentkeys-=:
 setlocal indentkeys-=e
 setlocal indentkeys+=0]
 setlocal indentexpr=SwiftIndent()
@@ -95,11 +94,13 @@ function! SwiftIndent(...)
       return -1
     endif
 
-    return indent(openingSquare)
-  endif
+    " - Line starts with closing square, indent as opening square
+    if line =~ '\v^\s*]'
+      return indent(openingSquare)
+    endif
 
-  if s:IsExcludedFromIndent()
-    return previousIndent
+    " - Line contains closing square and more, indent a level above opening
+    return indent(openingSquare) + shiftwidth()
   endif
 
   if line =~ ":$"
@@ -153,7 +154,8 @@ function! SwiftIndent(...)
       endif
       return indent(openingBracket)
     else
-      return -1
+      " - Current line is blank, and the user presses 'o'
+      return previousIndent
     endif
   endif
 
@@ -195,7 +197,7 @@ function! SwiftIndent(...)
       endif
 
       let previousParen = match(previous, "(")
-      return previousParen + 1
+      return indent(previousParen) + shiftwidth()
     endif
 
     if numOpenBrackets > numCloseBrackets
@@ -207,6 +209,11 @@ function! SwiftIndent(...)
       return indent(openingParen) + shiftwidth()
     endif
 
+    " - Previous line has close then open braces, indent previous + 1 'sw'
+    if previous =~ "}.*{"
+      return previousIndent + shiftwidth()
+    endif
+
     let line = line(".")
     let column = col(".")
     call cursor(previousNum, column)
@@ -216,9 +223,14 @@ function! SwiftIndent(...)
     return indent(openingParen)
   endif
 
+  " - Line above has (unmatched) open paren, next line needs indent
   if numOpenParens > 0
-    let previousParen = match(previous, "(")
-    return previousParen + 1
+    let savePosition = getcurpos()
+    " Must be at EOL because open paren has to be above (left of) the cursor
+    call cursor(previousNum, col("$"))
+    let previousParen = searchpair("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
+    call setpos(".", savePosition)
+    return indent(previousParen) + shiftwidth()
   endif
 
   return cindent
