@@ -92,7 +92,7 @@ function! GetErubyIndent(...)
   if line =~# '^\s*<%[=#-]\=\s*$' && cline !~# '^\s*end\>'
     let ind = ind + sw
   endif
-  if line !~# '^\s*<%' && line =~# '%>\s*$'
+  if line !~# '^\s*<%' && line =~# '%>\s*$' && line !~# '^\s*end\>'
     let ind = ind - sw
   endif
   if cline =~# '^\s*[-=]\=%>\s*$'
