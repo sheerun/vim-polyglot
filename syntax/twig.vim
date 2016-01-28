@@ -1,13 +1,14 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'twig') == -1
   
 " Vim syntax file
-" Language:	    Twig template
-" Maintainer:   Gabriel Gosselin <gabrielNOSPAM@evidens.ca>
-" Last Change:	2011 July 27
-" Version:      1.0
+" Language:	Twig template
+" Maintainer:	Gabriel Gosselin <gabrielNOSPAM@evidens.ca>
+" Last Change:	2014 December 15
+" Version:	1.1
 "
 " Based Jinja syntax by:	Armin Ronacher <armin.ronacher@active-4.com>
-" 
+" With modifications by Benji Fisher, Ph.D.
+"
 " Known Bugs:
 "   because of odd limitations dicts and the modulo operator
 "   appear wrong in the template.
@@ -16,11 +17,21 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'twig') == -1
 "
 "     2008 May 9:     Added support for Jinja2 changes (new keyword rules)
 "     2011 July 27:   Changed all references of jinja tp twig
+"     2014 December 4:   Do not assume that the base filetype is HTML.
+
+if exists('b:main_syntax')
+  finish
+endif
+if exists('b:current_syntax')
+  let b:main_syntax = b:current_syntax
+else
+  let b:main_syntax = 'twig'
+endif
 
 syntax case match
 
-" Jinja template built-in tags and parameters (without filter, macro, is and raw, they
-" have special threatment)
+" Twig template built-in tags and parameters (without filter, macro, is and
+" raw, they have special treatment)
 syn keyword twigStatement containedin=twigVarBlock,twigTagBlock,twigNested contained and if else in not or recursive as import
 
 syn keyword twigStatement containedin=twigVarBlock,twigTagBlock,twigNested contained is filter skipwhite nextgroup=twigFilter
@@ -37,7 +48,7 @@ syn match twigFilter contained skipwhite /[a-zA-Z_][a-zA-Z0-9_]*/
 syn match twigFunction contained skipwhite /[a-zA-Z_][a-zA-Z0-9_]*/
 syn match twigBlockName contained skipwhite /[a-zA-Z_][a-zA-Z0-9_]*/
 
-" Jinja template constants
+" Twig template constants
 syn region twigString containedin=twigVarBlock,twigTagBlock,twigNested contained start=/"/ skip=/\\"/ end=/"/
 syn region twigString containedin=twigVarBlock,twigTagBlock,twigNested contained start=/'/ skip=/\\'/ end=/'/
 syn match twigNumber containedin=twigVarBlock,twigTagBlock,twigNested contained /[0-9]\+\(\.[0-9]\+\)\?/
@@ -48,7 +59,7 @@ syn match twigPunctuation containedin=twigVarBlock,twigTagBlock,twigNested conta
 syn match twigOperator containedin=twigVarBlock,twigTagBlock,twigNested contained /\./ nextgroup=twigAttribute
 syn match twigAttribute contained /[a-zA-Z_][a-zA-Z0-9_]*/
 
-" Jinja template tag and variable blocks
+" Twig template tag and variable blocks
 syn region twigNested matchgroup=twigOperator start="(" end=")" transparent display containedin=twigVarBlock,twigTagBlock,twigNested contained
 syn region twigNested matchgroup=twigOperator start="\[" end="\]" transparent display containedin=twigVarBlock,twigTagBlock,twigNested contained
 syn region twigNested matchgroup=twigOperator start="{" end="}" transparent display containedin=twigVarBlock,twigTagBlock,twigNested contained
@@ -56,10 +67,10 @@ syn region twigTagBlock matchgroup=twigTagDelim start=/{%-\?/ end=/-\?%}/ skipwh
 
 syn region twigVarBlock matchgroup=twigVarDelim start=/{{-\?/ end=/-\?}}/ containedin=ALLBUT,twigTagBlock,twigVarBlock,twigRaw,twigString,twigNested,twigComment
 
-" Jinja template 'raw' tag
+" Twig template 'raw' tag
 syn region twigRaw matchgroup=twigRawDelim start="{%\s*raw\s*%}" end="{%\s*endraw\s*%}" containedin=ALLBUT,twigTagBlock,twigVarBlock,twigString,twigComment
 
-" Jinja comments
+" Twig comments
 syn region twigComment matchgroup=twigCommentDelim start="{#" end="#}" containedin=ALLBUT,twigTagBlock,twigVarBlock,twigString
 
 " Block start keywords.  A bit tricker.  We only highlight at the start of a
@@ -106,8 +117,5 @@ if version >= 508 || !exists("did_twig_syn_inits")
 
   delcommand HiLink
 endif
-
-let b:current_syntax = "twig"
-
 
 endif

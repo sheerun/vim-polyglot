@@ -167,7 +167,7 @@ PACKS="
   tmux:tejr/vim-tmux
   tomdoc:wellbredgrapefruit/tomdoc.vim
   toml:cespare/vim-toml
-  twig:beyondwords/vim-twig
+  twig:evidens/vim-twig
   typescript:leafgarland/typescript-vim
   vala:tkztmk/vim-vala
   vbnet:vim-scripts/vbnet.vim

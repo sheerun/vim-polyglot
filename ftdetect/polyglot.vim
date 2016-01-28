@@ -450,11 +450,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
 autocmd BufNewFile,BufRead *.toml set filetype=toml
 autocmd BufNewFile,BufRead Cargo.lock set filetype=toml
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'twig') == -1
-  
-autocmd BufNewFile,BufRead *.twig set filetype=twig
-autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
   
 autocmd BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
