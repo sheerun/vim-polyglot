@@ -96,7 +96,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [tmux](https://github.com/tejr/vim-tmux) (syntax, ftdetect)
 - [tomdoc](https://github.com/wellbredgrapefruit/tomdoc.vim) (syntax)
 - [toml](https://github.com/cespare/vim-toml) (syntax, ftplugin, ftdetect)
-- [twig](https://github.com/beyondwords/vim-twig) (syntax, ftplugin, ftdetect)
+- [twig](https://github.com/evidens/vim-twig) (syntax, ftplugin, ftdetect)
 - [typescript](https://github.com/leafgarland/typescript-vim) (syntax, indent, compiler, ftplugin, ftdetect)
 - [vala](https://github.com/tkztmk/vim-vala) (syntax, indent, ftdetect)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
