@@ -148,7 +148,7 @@ syntax match   javascriptNumber                /\<0[oO][0-7]\+\>/ nextgroup=@jav
 syntax match   javascriptNumber                /\<0[xX][0-9a-fA-F]\+\>/ nextgroup=@javascriptSymbols skipwhite skipempty
 syntax match   javascriptNumber                /[+-]\=\%(\d\+\.\d\+\|\d\+\|\.\d\+\)\%([eE][+-]\=\d\+\)\=\>/ nextgroup=@javascriptSymbols skipwhite skipempty
 
-syntax cluster javascriptTypes                 contains=javascriptString,javascriptTemplate,javascriptRegexpString,javascriptNumber,javascriptBoolean,javascriptNull,javascriptArray
+syntax cluster javascriptTypes                 contains=javascriptString,javascriptTemplate,javascriptRegexpString,javascriptNumber,javascriptBoolean,javascriptNull,javascriptArray,@javascriptComments
 syntax cluster javascriptValue                 contains=@javascriptTypes,@javascriptExpression,javascriptFuncKeyword,javascriptClassKeyword,javascriptObjectLiteral,javascriptIdentifier,javascriptIdentifierName,javascriptOperator,@javascriptSymbols
 
 syntax match   javascriptLabel                 /[a-zA-Z_$]\k*\_s*:/he=e-1 nextgroup=@javascriptValue,@javascriptStatement skipwhite skipempty
