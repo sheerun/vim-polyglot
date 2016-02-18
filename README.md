@@ -43,6 +43,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [emberscript](https://github.com/heartsentwined/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
 - [emblem](https://github.com/heartsentwined/vim-emblem) (syntax, indent, ftplugin, ftdetect)
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent, ftdetect)
+- [fish](https://github.com/dag/vim-fish) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin, ftdetect)
 - [glsl](https://github.com/tikhomirov/vim-glsl) (syntax, indent, ftdetect)
 - [go](https://github.com/fatih/vim-go) (syntax, compiler, indent, ftdetect)

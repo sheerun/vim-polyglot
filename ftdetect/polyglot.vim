@@ -96,6 +96,22 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'erlang') == -1
   
 au BufNewFile,BufRead *.erl,*.hrl,rebar.config,*.app,*.app.src,*.yaws,*.xrl set ft=erlang
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fish') == -1
+  
+autocmd BufRead,BufNewFile *.fish setfiletype fish
+autocmd BufRead *
+            \ if getline(1) =~# '\v^#!%(\f*/|/usr/bin/env\s*<)fish>' |
+            \     setlocal filetype=fish |
+            \ endif
+autocmd BufRead fish_funced_*_*.fish call search('^$')
+autocmd BufRead,BufNewFile ~/.config/fish/fish_{read_,}history setfiletype yaml
+autocmd BufRead,BufNewFile ~/.config/fish/fishd.* setlocal readonly
+autocmd BufNewFile ~/.config/fish/functions/*.fish
+            \ call append(0, ['function '.expand('%:t:r'),
+                             \'',
+                             \'end']) |
+            \ 2
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
   
 autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit

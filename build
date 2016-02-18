@@ -114,6 +114,7 @@ PACKS="
   emberscript:heartsentwined/vim-ember-script
   emblem:heartsentwined/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
+  fish:dag/vim-fish
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl
   go:fatih/vim-go:_BASIC
