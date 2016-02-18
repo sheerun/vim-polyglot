@@ -51,6 +51,13 @@ if has("autocmd")
   au  BufNewFile,BufRead *.cql set filetype=cql
 endif
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cryptol') == -1
+  
+au! BufRead,BufNewFile *.cry set filetype=cryptol
+au! BufRead,BufNewFile *.cyl set filetype=cryptol
+au! BufRead,BufNewFile *.lcry set filetype=cryptol
+au! BufRead,BufNewFile *.lcyl set filetype=cryptol
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cucumber') == -1
   
 autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber
