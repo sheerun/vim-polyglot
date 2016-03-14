@@ -21,13 +21,14 @@ endif
 " match class/definition/node declarations
 syn region  puppetDefine        start="^\s*\(class\|define\|node\)\s" end="{" contains=puppetDefType,puppetDefName,puppetDefArguments,puppetNodeRe,@NoSpell
 syn keyword puppetDefType       class define node inherits contained
-syn region  puppetDefArguments  start="(" end=")" contained contains=puppetArgument,puppetString,puppetComment,puppetMultilineComment
+syn region  puppetDefArguments  start="(" end=")" contained contains=puppetArgument,puppetString,puppetComment,puppetMultilineComment,puppetDataTypes
 syn match   puppetArgument      "\w\+" contained
 syn match   puppetArgument      "\$\w\+" contained
 syn match   puppetArgument      "'[^']+'" contained
 syn match   puppetArgument      '"[^"]+"' contained
 syn match   puppetDefName       "\w\+" contained
 syn match   puppetNodeRe        "/.*/" contained
+syn keyword puppetDataTypes String Integer Float Numeric Boolean Array Hash Regexp Undef Default Resource Class Scalar Collection Variant Data Pattern Enum Tuple Struct Optional Catalogentry Type Any Callable
 
 " match 'foo' in 'class foo { ...'
 " match 'foo::bar' in 'class foo::bar { ...'
@@ -79,7 +80,7 @@ syn match   puppetNotVariable   "\\$\w\+" contained
 syn match   puppetNotVariable   "\\${\w\+}" contained
 
 syn keyword puppetKeyword       import inherits include require contains
-syn keyword puppetControl       case default if else elsif
+syn keyword puppetControl       case default if else elsif unless
 syn keyword puppetSpecial       true false undef
 
 syn match   puppetClass         "[A-Za-z0-9_-]\+\(::[A-Za-z0-9_-]\+\)\+" contains=@NoSpell
