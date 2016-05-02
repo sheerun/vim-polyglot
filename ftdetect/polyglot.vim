@@ -347,6 +347,10 @@ endfunction
 autocmd BufReadPost *.pl,*.pm,*.t call s:DetectPerl6()
 autocmd BufNew,BufNewFile,BufRead *.nqp setf perl6
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pgsql') == -1
+  
+au BufNewFile,BufRead *.pgsql           setf pgsql
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -1
   
 if did_filetype()

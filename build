@@ -147,6 +147,7 @@ PACKS="
   octave:vim-scripts/octave.vim--
   opencl:petRUShka/vim-opencl
   perl:vim-perl/vim-perl
+  pgsql:exu/pgsql.vim
   php:StanAngeloff/php.vim
   plantuml:aklt/plantuml-syntax
   powershell:Persistent13/vim-ps1
