@@ -18,16 +18,17 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-" match class/definition/node declarations
-syn region  puppetDefine        start="^\s*\(class\|define\|node\)\s" end="{" contains=puppetDefType,puppetDefName,puppetDefArguments,puppetNodeRe,@NoSpell
-syn keyword puppetDefType       class define node inherits contained
-syn region  puppetDefArguments  start="(" end=")" contained contains=puppetArgument,puppetString,puppetComment,puppetMultilineComment
+" match class/definition/node declarations/application
+syn region  puppetDefine        start="^\s*\(class\|define\|node\|application\)\s" end="{" contains=puppetDefType,puppetDefName,puppetDefArguments,puppetNodeRe,@NoSpell
+syn keyword puppetDefType       class define node inherits application contained
+syn region  puppetDefArguments  start="(" end=")" contained contains=puppetArgument,puppetString,puppetComment,puppetMultilineComment,puppetDataTypes
 syn match   puppetArgument      "\w\+" contained
 syn match   puppetArgument      "\$\w\+" contained
 syn match   puppetArgument      "'[^']+'" contained
 syn match   puppetArgument      '"[^"]+"' contained
 syn match   puppetDefName       "\w\+" contained
 syn match   puppetNodeRe        "/.*/" contained
+syn keyword puppetDataTypes     String Integer Float Numeric Boolean Array Hash Regexp Undef Default Resource Class Scalar Collection Variant Data Pattern Enum Tuple Struct Optional Catalogentry Type Any Callable
 
 " match 'foo' in 'class foo { ...'
 " match 'foo::bar' in 'class foo::bar { ...'
@@ -42,7 +43,7 @@ syn match   puppetTypeDefault   "[A-Z]\w*" contained
 syn match   puppetParam           "\w\+\s*\(=\|+\)>" contains=puppetTypeRArrow,puppetParamName
 syn match   puppetParamRArrow       "\(=\|+\)>" contained
 syn match   puppetParamName       "\w\+" contained contains=@NoSpell
-syn match   puppetVariable           "$\(\(\(::\)\?\w\+\)\+\|{\(\(::\)\?\w\+\)\+}\)"
+syn match   puppetVariable        "$\(\(::\)\?\w\+\|{\(::\)\?\w\+}\)" 
 syn match   puppetParen           "("
 syn match   puppetParen           ")"
 syn match   puppetBrace           "{"
@@ -57,7 +58,7 @@ syn match   puppetBrack           "|>"
 " don't match 'bar' in 'foo => bar'
 syn match   puppetParam         "\w\+\s*[=+]>\s*[a-z0-9]\+" contains=puppetParamString,puppetParamName
 syn match   puppetParamString   "[=+]>\s*\w\+" contains=puppetParamKeyword,puppetParamSpecial,puppetParamDigits contained
-syn keyword puppetParamKeyword  present absent purged latest installed running stopped mounted unmounted role configured file directory link contained
+syn keyword puppetParamKeyword  present absent purged latest installed running stopped mounted unmounted role configured file directory link on_failure contained
 syn keyword puppetParamSpecial  true false undef contained
 syn match   puppetParamDigits   "[0-9]\+"
 
@@ -78,8 +79,8 @@ syn region  puppetString        start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=pupp
 syn match   puppetNotVariable   "\\$\w\+" contained
 syn match   puppetNotVariable   "\\${\w\+}" contained
 
-syn keyword puppetKeyword       import inherits include require contains
-syn keyword puppetControl       case default if else elsif
+syn keyword puppetKeyword       import inherits include require contain produces
+syn keyword puppetControl       case default if else elsif unless
 syn keyword puppetSpecial       true false undef
 
 syn match   puppetClass         "[A-Za-z0-9_-]\+\(::[A-Za-z0-9_-]\+\)\+" contains=@NoSpell

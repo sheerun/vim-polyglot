@@ -149,7 +149,7 @@ PACKS="
   php:StanAngeloff/php.vim
   powershell:Persistent13/vim-ps1
   protobuf:uarun/vim-protobuf
-  puppet:rodjek/vim-puppet
+  puppet:voxpupuli/vim-puppet
   python:mitsuhiko/vim-python-combined
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim
