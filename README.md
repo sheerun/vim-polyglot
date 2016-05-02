@@ -77,6 +77,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [opencl](https://github.com/petRUShka/vim-opencl) (syntax, indent, ftplugin, ftdetect)
 - [perl](https://github.com/vim-perl/vim-perl) (syntax, indent, ftplugin, ftdetect)
 - [php](https://github.com/StanAngeloff/php.vim) (syntax)
+- [plantuml](https://github.com/aklt/plantuml-syntax) (syntax, ftplugin, ftdetect)
 - [powershell](https://github.com/Persistent13/vim-ps1) (syntax, indent, ftplugin, ftdetect)
 - [protobuf](https://github.com/uarun/vim-protobuf) (syntax, ftdetect)
 - [puppet](https://github.com/voxpupuli/vim-puppet) (syntax, indent, ftplugin, ftdetect)

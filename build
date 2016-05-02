@@ -148,6 +148,7 @@ PACKS="
   opencl:petRUShka/vim-opencl
   perl:vim-perl/vim-perl
   php:StanAngeloff/php.vim
+  plantuml:aklt/plantuml-syntax
   powershell:Persistent13/vim-ps1
   protobuf:uarun/vim-protobuf
   puppet:voxpupuli/vim-puppet

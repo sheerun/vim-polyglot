@@ -347,6 +347,14 @@ endfunction
 autocmd BufReadPost *.pl,*.pm,*.t call s:DetectPerl6()
 autocmd BufNew,BufNewFile,BufRead *.nqp setf perl6
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -1
+  
+if did_filetype()
+	  finish
+endif
+autocmd BufRead,BufNewFile * :if getline(1) =~ '^.*startuml.*$'|  setfiletype plantuml | endif
+autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml set filetype=plantuml
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'protobuf') == -1
   
 autocmd BufNewFile,BufRead *.proto setfiletype proto
