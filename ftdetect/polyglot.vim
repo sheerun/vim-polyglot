@@ -383,6 +383,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 au! BufRead,BufNewFile *.pp setfiletype puppet
 au! BufRead,BufNewFile Puppetfile setfiletype ruby
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'purescript') == -1
+  
+au BufNewFile,BufRead *.purs setf purescript
+au FileType purescript let &l:commentstring='{--%s--}'
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
   
 autocmd BufRead,BufNewFile *.qml setfiletype qml

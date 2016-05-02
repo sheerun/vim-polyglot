@@ -153,6 +153,7 @@ PACKS="
   powershell:Persistent13/vim-ps1
   protobuf:uarun/vim-protobuf
   puppet:voxpupuli/vim-puppet
+  purescript:raichoo/purescript-vim
   python:mitsuhiko/vim-python-combined
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim

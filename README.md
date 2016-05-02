@@ -82,6 +82,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [powershell](https://github.com/Persistent13/vim-ps1) (syntax, indent, ftplugin, ftdetect)
 - [protobuf](https://github.com/uarun/vim-protobuf) (syntax, ftdetect)
 - [puppet](https://github.com/voxpupuli/vim-puppet) (syntax, indent, ftplugin, ftdetect)
+- [purescript](https://github.com/raichoo/purescript-vim) (syntax, indent, ftdetect)
 - [python](https://github.com/mitsuhiko/vim-python-combined) (syntax, indent)
 - [qml](https://github.com/peterhoeg/vim-qml) (syntax, indent, ftplugin, ftdetect)
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
