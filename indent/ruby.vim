@@ -125,7 +125,7 @@ let s:indent_access_modifier_regex = '\C^\s*\%(protected\|private\)\s*\%(#.*\)\=
 " The reason is that the pipe matches a hanging "|" operator.
 "
 let s:block_regex =
-      \ '\%(\<do:\@!\>\|%\@<!{\)\s*\%(|\s*(*\s*\%([*@&]\=\h\w*,\=\s*\)\%(,\s*(*\s*[*@&]\=\h\w*\s*)*\s*\)*|\)\=\s*\%(#.*\)\=$'
+      \ '\%(\<do:\@!\>\|%\@<!{\)\s*\%(|[^|]*|\)\=\s*\%(#.*\)\=$'
 
 let s:block_continuation_regex = '^\s*[^])}\t ].*'.s:block_regex
 

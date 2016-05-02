@@ -13,7 +13,7 @@ let b:did_indent = 1
 
 setlocal autoindent
 setlocal indentexpr=GetBladeIndent()
-setlocal indentkeys=o,O,*<Return>,<>>,!^F,=@else,=@end,=@empty
+setlocal indentkeys=o,O,*<Return>,<>>,!^F,=@else,=@end,=@empty,=@show
 
 " Only define the function once.
 if exists("*GetBladeIndent")
@@ -30,17 +30,26 @@ function! GetBladeIndent()
     let cline = substitute(substitute(getline(v:lnum), '\s\+$', '', ''), '^\s\+', '', '')
     let indent = indent(lnum)
     let cindent = indent(v:lnum)
-    if cline =~# '@\%(else\|elseif\|empty\|end\)'
-        let indent = cindent < indent ? cindent : indent - &sw
-    elseif HtmlIndent() > -1
-        let indent = HtmlIndent()
+    if cline =~# '@\%(else\|elseif\|empty\|end\|show\)'
+        let indent = indent - &sw
+    else
+        if exists("*GetBladeIndentCustom")
+            let hindent = GetBladeIndentCustom()
+        else
+            let hindent = HtmlIndent()
+        endif
+        if hindent > -1
+            let indent = hindent
+        endif
     endif
     let increase = indent + &sw
     if indent = indent(lnum)
         let indent = cindent <= indent ? -1 : increase
     endif
 
-    if line =~# '@\%(if\|elseif\|else\|unless\|foreach\|forelse\|for\|while\)\%(.*\s*@end\)\@!'
+    if line =~# '@\%(section\)\%(.*\s*@end\)\@!' && line !~# '@\%(section\)\s*([^,]*)'
+        return indent
+    elseif line =~# '@\%(if\|elseif\|else\|unless\|foreach\|forelse\|for\|while\|empty\|push\|section\|can\)\%(.*\s*@end\)\@!'
         return increase
     else
         return indent

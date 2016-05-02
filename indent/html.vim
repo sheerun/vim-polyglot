@@ -177,7 +177,24 @@ call add(s:tags, 'tr')
 call add(s:tags, 'th')
 call add(s:tags, 'td')
 
+let s:no_tags = []
 
+call add(s:no_tags, 'base')
+call add(s:no_tags, 'link')
+call add(s:no_tags, 'meta')
+call add(s:no_tags, 'hr')
+call add(s:no_tags, 'br')
+call add(s:no_tags, 'wbr')
+call add(s:no_tags, 'img')
+call add(s:no_tags, 'embed')
+call add(s:no_tags, 'param')
+call add(s:no_tags, 'source')
+call add(s:no_tags, 'track')
+call add(s:no_tags, 'area')
+call add(s:no_tags, 'col')
+call add(s:no_tags, 'input')
+call add(s:no_tags, 'keygen')
+call add(s:no_tags, 'menuitem')
 
 let s:omittable = [ 
   \  ['address', 'article', 'aside', 'blockquote', 'dir', 'div', 'dl', 'fieldset', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hr', 'menu', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul'],
@@ -187,16 +204,21 @@ let s:omittable = [
   \  ['th', 'td'],
   \]
 
+
+let s:html_noindent_tags = join(s:no_tags, '\|')
+
 if exists('g:html_exclude_tags')
     for tag in g:html_exclude_tags
         call remove(s:tags, index(s:tags, tag))
     endfor
+    let s:html_noindent_tags = s:html_noindent_tags.'\|'.join(g:html_exclude_tags, '\|')
 endif
-let s:html_indent_tags = join(s:tags, '\|')
-let s:html_indent_tags = s:html_indent_tags.'\|\w\+\(-\w\+\)\+'
-if exists('g:html_indent_tags')
-    let s:html_indent_tags = s:html_indent_tags.'\|'.g:html_indent_tags
-endif
+
+" let s:html_indent_tags = join(s:tags, '\|')
+let s:html_indent_tags = '[a-z_][a-z0-9_.-]*'
+" if exists('g:html_indent_tags')
+    " let s:html_indent_tags = s:html_indent_tags.'\|'.g:html_indent_tags
+" endif
 
 let s:cpo_save = &cpo
 set cpo-=C
@@ -231,8 +253,8 @@ endfun
 fun! <SID>HtmlIndentSum(lnum, style)
     if a:style == match(getline(a:lnum), '^\s*</')
         if a:style == match(getline(a:lnum), '^\s*</\<\('.s:html_indent_tags.'\)\>')
-            let open = <SID>HtmlIndentOpen(a:lnum, s:html_indent_tags)
-            let close = <SID>HtmlIndentClose(a:lnum, s:html_indent_tags)
+            let open = <SID>HtmlIndentOpen(a:lnum, s:html_indent_tags) - <SID>HtmlIndentOpen(a:lnum, s:html_noindent_tags)
+            let close = <SID>HtmlIndentClose(a:lnum, s:html_indent_tags) - <SID>HtmlIndentClose(a:lnum, s:html_noindent_tags)
             if 0 != open || 0 != close
                 return open - close
             endif

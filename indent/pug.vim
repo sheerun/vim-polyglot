@@ -1,9 +1,9 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
   
 " Vim indent file
-" Language: Jade
+" Language: Pug
 " Maintainer: Joshua Borton
-" Credits: Tim Pope (vim-jade)
+" Credits: Tim Pope (vim-pug)
 " Last Change: 2010 Sep 22
 
 if exists("b:did_indent")
@@ -14,25 +14,25 @@ unlet! b:did_indent
 let b:did_indent = 1
 
 setlocal autoindent
-setlocal indentexpr=GetJadeIndent()
+setlocal indentexpr=GetPugIndent()
 setlocal indentkeys=o,O,*<Return>,},],0),!^F
 
 " Only define the function once.
-if exists("*GetJadeIndent")
+if exists("*GetPugIndent")
   finish
 endif
 
 let s:attributes = '\%((.\{-\})\)'
 let s:tag = '\([%.#][[:alnum:]_-]\+\|'.s:attributes.'\)*[<>]*'
 
-if !exists('g:jade_self_closing_tags')
-  let g:jade_self_closing_tags = 'meta|link|img|hr|br|input'
+if !exists('g:pug_self_closing_tags')
+  let g:pug_self_closing_tags = 'meta|link|img|hr|br|input'
 endif
 
 setlocal formatoptions+=r
 setlocal comments+=n:\|
 
-function! GetJadeIndent()
+function! GetPugIndent()
   let lnum = prevnonblank(v:lnum-1)
   if lnum == 0
     return 0
@@ -60,9 +60,9 @@ function! GetJadeIndent()
     return increase
   elseif line == '-#'
     return increase
-  elseif line =~? '^\v%('.g:jade_self_closing_tags.')>'
+  elseif line =~? '^\v%('.g:pug_self_closing_tags.')>'
     return indent
-  elseif group =~? '\v^%(jadeAttributesDelimiter|jadeClass|jadeId|htmlTagName|htmlSpecialTagName|jadeFilter|jadeTagBlockChar)$'
+  elseif group =~? '\v^%(pugAttributesDelimiter|pugClass|pugId|htmlTagName|htmlSpecialTagName|pugFilter|pugTagBlockChar)$'
     return increase
   else
     return indent

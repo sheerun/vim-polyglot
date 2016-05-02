@@ -39,10 +39,11 @@ function! GetHamlIndent()
   let line = substitute(line,'^\s\+','','')
   let indent = indent(lnum)
   let cindent = indent(v:lnum)
+  let sw = exists('*shiftwidth') ? shiftwidth() : &sw
   if cline =~# '\v^-\s*%(elsif|else|when)>'
-    let indent = cindent < indent ? cindent : indent - &sw
+    let indent = cindent < indent ? cindent : indent - sw
   endif
-  let increase = indent + &sw
+  let increase = indent + sw
   if indent == indent(lnum)
     let indent = cindent <= indent ? -1 : increase
   endif

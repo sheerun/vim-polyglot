@@ -1,7 +1,7 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
   
 " Vim filetype plugin
-" Language: Jade
+" Language: Pug
 " Maintainer: Joshua Borton
 " Credits: Tim Pope
 
@@ -39,7 +39,7 @@ endif
 
 " Change the browse dialog on Win32 to show mainly Haml-related files
 if has("gui_win32")
-  let b:browsefilter="Jade Files (*.jade)\t*.jade\n" . s:browsefilter
+  let b:browsefilter="Pug Files (*.pug)\t*.pug\n" . s:browsefilter
 endif
 
 " Load the combined list of match_words for matchit.vim
@@ -49,7 +49,7 @@ endif
 
 setlocal comments=://-,:// commentstring=//\ %s
 
-setlocal suffixesadd+=.jade
+setlocal suffixesadd+=.pug
 
 let b:undo_ftplugin = "setl cms< com< "
       \ " | unlet! b:browsefilter b:match_words | " . s:undo_ftplugin

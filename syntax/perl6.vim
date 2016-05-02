@@ -87,8 +87,8 @@ let s:keywords = {
  \   "for loop repeat while until gather given",
  \ ],
  \ "p6FlowControl": [
- \   "take do when next last redo return contend maybe defer start",
- \   "default exit make continue break goto leave async lift",
+ \   "take do when next last redo return return-rw contend maybe defer",
+ \   "start default exit make continue break goto leave async lift",
  \ ],
  \ "p6ClosureTrait": [
  \   "BEGIN CHECK INIT START FIRST ENTER LEAVE KEEP",
@@ -118,7 +118,7 @@ let s:types = [
  \ "Object Any Junction Whatever Capture Match",
  \ "Signature Proxy Matcher Package Module Class",
  \ "Grammar Scalar Array Hash KeyHash KeySet KeyBag",
- \ "Pair List Seq Range Set Bag Mapping Void Undef",
+ \ "Pair List Seq Range Set Bag Map Mapping Void Undef",
  \ "Failure Exception Code Block Routine Sub Macro",
  \ "Method Submethod Regex Str Blob Char Byte Parcel",
  \ "Codepoint Grapheme StrPos StrLen Version Num",

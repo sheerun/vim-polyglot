@@ -6,20 +6,15 @@ endif
 
 let g:loaded_haskellvim_haskell = 1
 
-function! haskell#makeModuleCommentBlock()
-  let l:commenttmpl = [ '{-|',
-                      \ 'Module      : ',
-                      \ 'Description : ',
-                      \ 'Copyright   : ',
-                      \ 'License     : ',
-                      \ 'Maintainer  : ',
-                      \ 'Stability   : ',
-                      \ 'Portability : ',
-                      \ '-}']
-
-  exe "normal ggO" . join(l:commenttmpl, "\n")
+function! haskell#sortImports(line1, line2)
+  exe a:line1 . "," . a:line2 . "sort /import\\s\\+\\(qualified\\s\\+\\)\\?/"
 endfunction
 
-command! -buffer -nargs=0 HaskellAddModuleComment call haskell#makeModuleCommentBlock()
+function! haskell#formatImport(line1, line2)
+  exec a:line1 . ",". a:line2 . "s/import\\s\\+\\([A-Z].*\\)/import           \\1"
+endfunction
+
+command! -buffer -range HaskellSortImports call haskell#sortImports(<line1>, <line2>)
+command! -buffer -range HaskellFormatImport call haskell#formatImport(<line1>, <line2>)
 
 endif

@@ -34,7 +34,6 @@ function! s:ContainedGroup()
   endtry
 endfunction
 
-syn include @scalaHtml syntax/html.vim  " Doc comment HTML
 unlet! b:current_syntax
 
 syn case match
@@ -53,6 +52,13 @@ exe 'syn region scalaBlock start=/{/ end=/}/ contains=' . s:ContainedGroup() . '
 syn keyword scalaAkkaSpecialWord when goto using startWith initialize onTransition stay become unbecome
 hi link scalaAkkaSpecialWord PreProc
 
+syn keyword scalatestSpecialWord shouldBe
+syn match scalatestShouldDSLA /^\s\+\zsit should/
+syn match scalatestShouldDSLB /\<should\>/
+hi link scalatestSpecialWord PreProc
+hi link scalatestShouldDSLA PreProc
+hi link scalatestShouldDSLB PreProc
+
 syn match scalaSymbol /'[_A-Za-z0-9$]\+/
 hi link scalaSymbol Number
 
@@ -69,8 +75,9 @@ syn match scalaOperator "||"
 syn match scalaOperator "&&"
 hi link scalaOperator Special
 
-syn match scalaNameDefinition /\<[_A-Za-z0-9$]\+\>/ contained nextgroup=scalaPostNameDefinition
+syn match scalaNameDefinition /\<[_A-Za-z0-9$]\+\>/ contained nextgroup=scalaPostNameDefinition,scalaVariableDeclarationList
 syn match scalaNameDefinition /`[^`]\+`/ contained nextgroup=scalaPostNameDefinition
+syn match scalaVariableDeclarationList /\s*,\s*/ contained nextgroup=scalaNameDefinition
 syn match scalaPostNameDefinition /\_s*:\_s*/ contained nextgroup=scalaTypeDeclaration
 hi link scalaNameDefinition Function
 
@@ -179,7 +186,7 @@ hi link scalaTypeOperator Keyword
 hi link scalaTypeAnnotationParameter Function
 
 syn match scalaShebang "\%^#!.*" display
-syn region scalaMultilineComment start="/\*" end="\*/" contains=scalaMultilineComment,scalaDocLinks,scalaParameterAnnotation,scalaCommentAnnotation,scalaTodo,scalaCommentCodeBlock,@scalaHtml,@Spell keepend fold
+syn region scalaMultilineComment start="/\*" end="\*/" contains=scalaMultilineComment,scalaDocLinks,scalaParameterAnnotation,scalaCommentAnnotation,scalaTodo,scalaCommentCodeBlock,@Spell keepend fold
 syn match scalaCommentAnnotation "@[_A-Za-z0-9$]\+" contained
 syn match scalaParameterAnnotation "@param" nextgroup=scalaParamAnnotationValue skipwhite contained
 syn match scalaParamAnnotationValue /[`_A-Za-z0-9$]\+/ contained

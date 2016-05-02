@@ -14,7 +14,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
 "     let OPTION_NAME = 1
 "   to enable particular options.
 "   At present, all options default to on, except highlight of:
-"   functions, methods and structs.
+"   functions, methods, structs, operators, build constraints and interfaces.
 "
 "   - go_highlight_array_whitespace_error
 "     Highlights white space after "[]".
@@ -29,6 +29,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
 "     Highlights trailing white space.
 "   - go_highlight_string_spellcheck
 "     Specifies that strings should be spell checked
+"   - go_highlight_format_strings
+"     Highlights printf-style operators inside string literals.
 
 " Quit when a (custom) syntax file was already loaded
 if exists("b:current_syntax")
@@ -83,6 +85,14 @@ if !exists("g:go_highlight_string_spellcheck")
   let g:go_highlight_string_spellcheck = 1
 endif
 
+if !exists("g:go_highlight_format_strings")
+  let g:go_highlight_format_strings = 1
+endif
+
+if !exists("g:go_highlight_generate_tags")
+  let g:go_highlight_generate_tags = 0
+endif
+
 syn case match
 
 syn keyword     goDirective         package import
@@ -134,10 +144,17 @@ hi def link     goBoolean           Boolean
 syn keyword     goTodo              contained TODO FIXME XXX BUG
 syn cluster     goCommentGroup      contains=goTodo
 syn region      goComment           start="/\*" end="\*/" contains=@goCommentGroup,@Spell
-syn region      goComment           start="//" end="$" contains=@goCommentGroup,@Spell
+syn region      goComment           start="//" end="$" contains=goGenerate,@goCommentGroup,@Spell
 
 hi def link     goComment           Comment
 hi def link     goTodo              Todo
+
+if g:go_highlight_generate_tags != 0
+  syn match       goGenerateVariables contained /\(\$GOARCH\|\$GOOS\|\$GOFILE\|\$GOLINE\|\$GOPACKAGE\|\$DOLLAR\)\>/
+  syn region      goGenerate          start="^\s*//go:generate" end="$" contains=goGenerateVariables
+  hi def link     goGenerate          PreProc
+  hi def link     goGenerateVariables Special
+endif
 
 " Go escapes
 syn match       goEscapeOctal       display contained "\\[0-7]\{3}"
@@ -164,11 +181,14 @@ else
   syn region      goString            start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=@goStringGroup
   syn region      goRawString         start=+`+ end=+`+
 endif
-syn match       goFormatSpecifier   /%[-#0 +]*\%(\*\|\d\+\)\=\%(\.\%(\*\|\d\+\)\)*[vTtbcdoqxXUeEfgGsp]/ contained containedin=goString
+
+if g:go_highlight_format_strings != 0
+  syn match       goFormatSpecifier   /%[-#0 +]*\%(\*\|\d\+\)\=\%(\.\%(\*\|\d\+\)\)*[vTtbcdoqxXUeEfgGsp]/ contained containedin=goString
+  hi def link     goFormatSpecifier   goSpecialString
+endif
 
 hi def link     goString            String
 hi def link     goRawString         String
-hi def link     goFormatSpecifier   goSpecialString
 
 " Characters; their contents
 syn cluster     goCharacterGroup    contains=goEscapeOctal,goEscapeC,goEscapeX,goEscapeU,goEscapeBigU
@@ -181,30 +201,31 @@ syn region      goBlock             start="{" end="}" transparent fold
 syn region      goParen             start='(' end=')' transparent
 
 " Integers
-syn match       goDecimalInt        "\<\d\+\([Ee]\d\+\)\?\>"
-syn match       goHexadecimalInt    "\<0x\x\+\>"
-syn match       goOctalInt          "\<0\o\+\>"
-syn match       goOctalError        "\<0\o*[89]\d*\>"
+syn match       goDecimalInt        "\<-\=\d\+\%([Ee][-+]\=\d\+\)\=\>"
+syn match       goHexadecimalInt    "\<-\=0[xX]\x\+\>"
+syn match       goOctalInt          "\<-\=0\o\+\>"
+syn match       goOctalError        "\<-\=0\o*[89]\d*\>"
 
 hi def link     goDecimalInt        Integer
 hi def link     goHexadecimalInt    Integer
 hi def link     goOctalInt          Integer
+hi def link     goOctalError        Error
 hi def link     Integer             Number
 
 " Floating point
-syn match       goFloat             "\<\d\+\.\d*\([Ee][-+]\d\+\)\?\>"
-syn match       goFloat             "\<\.\d\+\([Ee][-+]\d\+\)\?\>"
-syn match       goFloat             "\<\d\+[Ee][-+]\d\+\>"
+syn match       goFloat             "\<-\=\d\+\.\d*\%([Ee][-+]\=\d\+\)\=\>"
+syn match       goFloat             "\<-\=\.\d\+\%([Ee][-+]\=\d\+\)\=\>"
 
 hi def link     goFloat             Float
 
 " Imaginary literals
-syn match       goImaginary         "\<\d\+i\>"
-syn match       goImaginary         "\<\d\+\.\d*\([Ee][-+]\d\+\)\?i\>"
-syn match       goImaginary         "\<\.\d\+\([Ee][-+]\d\+\)\?i\>"
-syn match       goImaginary         "\<\d\+[Ee][-+]\d\+i\>"
+syn match       goImaginary         "\<-\=\d\+i\>"
+syn match       goImaginary         "\<-\=\d\+[Ee][-+]\=\d\+i\>"
+syn match       goImaginaryFloat    "\<-\=\d\+\.\d*\%([Ee][-+]\=\d\+\)\=i\>"
+syn match       goImaginaryFloat    "\<-\=\.\d\+\%([Ee][-+]\=\d\+\)\=i\>"
 
 hi def link     goImaginary         Number
+hi def link     goImaginaryFloat    Float
 
 " Spaces after "[]"
 if g:go_highlight_array_whitespace_error != 0

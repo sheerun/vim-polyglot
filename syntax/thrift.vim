@@ -54,7 +54,7 @@ syn keyword thriftStatement throws typedef
 syn keyword thriftBasicTypes void bool byte string binary
 syn keyword thriftBasicTypes i16 i32 i64 double
 syn keyword thriftType map list set
-syn keyword thriftClass struct exception enum
+syn keyword thriftClass union struct exception enum
 syn region  thriftString start=+"+ end=+"+
 
 " Special

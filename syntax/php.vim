@@ -539,6 +539,8 @@ syn match phpMemberSelector "->\|::"  contained display
 syn match phpVarSelector    "\$"  contained display
 " highlight static and object variables inside strings
 syn match phpMethodsVar     "\%(->\|::$\?\)\h\w*" contained contains=phpMethods,phpMemberSelector,phpIdentifier display containedin=phpStringDouble
+syn match phpMethodsVar     "\%(->\|::\%($\)\@!\)\s*\h\w*\s*("me=e-1 skipwhite skipempty contained contains=phpMemberSelector,phpMethod display containedin=phpStringDouble
+syn match phpMethod /\h\w*/
 syn match phpSplatOperator  "\.\.\." contained display
 
 " Identifier
@@ -597,7 +599,7 @@ syn match phpCommentStar contained "^\s*\*$"
 if !exists("php_ignore_phpdoc") || !php_ignore_phpdoc
   syn case ignore
 
-  SynFoldDoc syn region phpDocComment   start="/\*\*" end="\*/" keepend contains=phpCommentTitle,phpDocTags,phpTodo,@Spell
+  SynFoldDoc syn region phpDocComment   start="/\*\*" end="\*/" keepend contains=phpCommentTitle,phpDocTags,phpTodo,@Spell extend
   syn region phpCommentTitle contained matchgroup=phpDocComment start="/\*\*" matchgroup=phpCommentTitle keepend end="\.$" end="\.[ \t\r<&]"me=e-1 end="[^{]@"me=s-2,he=s-1 end="\*/"me=s-1,he=s-1 contains=phpCommentStar,phpTodo,phpDocTags,@Spell containedin=phpDocComment
 
   syn region phpDocTags  start="{@\(example\|id\|internal\|inheritdoc\|link\|source\|toc\|tutorial\)" end="}" containedin=phpDocComment
@@ -849,7 +851,7 @@ let b:current_syntax = "php"
 let &iskeyword = s:iskeyword_save
 unlet s:iskeyword_save
 
-if main_syntax == 'php'
+if (exists("main_syntax") && main_syntax == 'php')
   unlet main_syntax
 endif
 

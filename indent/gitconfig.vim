@@ -22,17 +22,18 @@ if exists("*GetGitconfigIndent")
 endif
 
 function! GetGitconfigIndent()
+  let sw    = exists('*shiftwidth') ? shiftwidth() : &sw
   let line  = getline(prevnonblank(v:lnum-1))
   let cline = getline(v:lnum)
   if line =~  '\\\@<!\%(\\\\\)*\\$'
     " odd number of slashes, in a line continuation
-    return 2 * &sw
+    return 2 * sw
   elseif cline =~ '^\s*\['
     return 0
   elseif cline =~ '^\s*\a'
-    return &sw
+    return sw
   elseif cline == ''       && line =~ '^\['
-    return &sw
+    return sw
   else
     return -1
   endif

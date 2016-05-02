@@ -80,10 +80,16 @@ endif
 syn keyword ansible_debug_keywords debug containedin=yamlBlockMappingKey contained
 highlight link ansible_debug_keywords Debug
 
-syn match ansible_with_keywords "\vwith_.+" containedin=yamlBlockMappingKey contained
+if exists("g:ansible_extra_keywords_highlight")
+  syn keyword ansible_extra_special_keywords register always_run changed_when failed_when no_log args vars delegate_to ignore_errors containedin=yamlBlockMappingKey contained
+  highlight link ansible_extra_special_keywords Statement
+endif
+
 syn keyword ansible_special_keywords include until retries delay when only_if become become_user block rescue always notify containedin=yamlBlockMappingKey contained
-highlight link ansible_with_keywords Statement
 highlight link ansible_special_keywords Statement
+
+syn match ansible_with_keywords "\vwith_.+" containedin=yamlBlockMappingKey contained
+highlight link ansible_with_keywords Statement
 
 let b:current_syntax = "ansible"
 

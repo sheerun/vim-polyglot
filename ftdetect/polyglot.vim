@@ -1,15 +1,17 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
   
-function! DetectAnsible()
+function! s:isAnsible()
   let filepath = expand("%:p")
   let filename = expand("%:t")
-  if filepath =~ '\v/(tasks|roles)/.*\.ya?ml$' || filepath =~ '\v/(group|host)_vars/' || filename =~ '\v(playbook|site)\.ya?ml$'
-    set ft=ansible
-  endif
-  unlet filepath
-  unlet filename
+  if filepath =~ '\v/(tasks|roles|handlers)/.*\.ya?ml$' | return 1 | en
+  if filepath =~ '\v/(group|host)_vars/' | return 1 | en
+  if filename =~ '\v(playbook|site|main|local)\.ya?ml$' | return 1 | en
+  let shebang = getline(1)
+  if shebang =~# '^#!.*/bin/env\s\+ansible-playbook\>' | return 1 | en
+  if shebang =~# '^#!.*/bin/ansible-playbook\>' | return 1 | en
+  return 0
 endfunction
-:au BufNewFile,BufRead *.yml,*yaml,*/{group,host}_vars/*  call DetectAnsible()
+:au BufNewFile,BufRead * if s:isAnsible() | set ft=ansible | en
 :au BufNewFile,BufRead *.j2 set ft=ansible_template
 :au BufNewFile,BufRead hosts set ft=ansible_hosts
 endif
@@ -67,8 +69,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
   
 au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
 au BufRead,BufNewFile *.eex call s:setf('eelixir')
+au BufRead,BufNewFile * call s:DetectElixir()
 au FileType elixir,eelixir setl sw=2 sts=2 et iskeyword+=!,?
-au BufNewFile,BufRead * call s:DetectElixir()
 function! s:setf(filetype) abort
   let &filetype = a:filetype
 endfunction
@@ -156,10 +158,6 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haxe') == -1
   
 autocmd BufNewFile,BufRead *.hx setf haxe
-endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
-  
-autocmd BufNewFile,BufReadPost *.jade set filetype=jade
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
   
@@ -334,6 +332,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') ==
   
 au BufNewFile,BufRead   *.ps1xml   set ft=ps1xml
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
+  
+autocmd BufNewFile,BufReadPost *.pug set filetype=pug
+autocmd BufNewFile,BufReadPost *.jade set filetype=pug
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
   
 au! BufRead,BufNewFile *.pp setfiletype puppet
@@ -409,7 +412,7 @@ autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'swift') == -1
   
-autocmd BufNewFile,BufRead *.swift setfiletype swift
+autocmd BufNewFile,BufRead *.swift set filetype=swift
 autocmd BufRead * call s:Swift()
 function! s:Swift()
   if !empty(&filetype)
