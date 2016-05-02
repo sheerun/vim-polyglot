@@ -34,6 +34,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin, ftdetect)
 - [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [cryptol](https://github.com/victoredwardocallaghan/cryptol.vim) (syntax, compiler, ftplugin, ftdetect)
+- [crystal](https://github.com/rhysd/vim-crystal) (syntax, indent, autoload, ftplugin, ftdetect)
 - [cql](https://github.com/elubow/cql-vim) (syntax, ftdetect)
 - [css](https://github.com/JulesWang/css.vim) (syntax)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin, ftdetect)

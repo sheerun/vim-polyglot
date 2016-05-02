@@ -60,6 +60,12 @@ au! BufRead,BufNewFile *.cyl set filetype=cryptol
 au! BufRead,BufNewFile *.lcry set filetype=cryptol
 au! BufRead,BufNewFile *.lcyl set filetype=cryptol
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
+  
+autocmd BufNewFile,BufReadPost *.cr setlocal filetype=crystal
+autocmd BufNewFile,BufReadPost Projectfile setlocal filetype=crystal
+autocmd BufNewFile,BufReadPost *.ecr setlocal filetype=eruby
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cucumber') == -1
   
 autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber
