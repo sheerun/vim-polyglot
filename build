@@ -129,7 +129,6 @@ PACKS="
   jade:digitaltoad/vim-jade
   jasmine:glanotte/vim-jasmine
   javascript:sheerun/yajs.vim
-  jinja:Glench/Vim-Jinja2-Syntax
   json:sheerun/vim-json
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL

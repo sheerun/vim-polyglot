@@ -58,7 +58,6 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [jade](https://github.com/digitaltoad/vim-jade) (syntax, indent, ftplugin, ftdetect)
 - [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
 - [javascript](https://github.com/sheerun/yajs.vim) (syntax, indent)
-- [jinja](https://github.com/Glench/Vim-Jinja2-Syntax) (syntax, indent, ftdetect)
 - [json](https://github.com/sheerun/vim-json) (syntax, indent, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
 - [jsx](https://github.com/mxw/vim-jsx) (ftdetect, after)
