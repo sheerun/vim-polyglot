@@ -126,7 +126,6 @@ PACKS="
   haskell:neovimhaskell/haskell-vim
   haxe:yaymukund/vim-haxe
   html5:othree/html5.vim
-  jade:digitaltoad/vim-jade
   jasmine:glanotte/vim-jasmine
   javascript:sheerun/yajs.vim
   json:sheerun/vim-json
@@ -151,6 +150,7 @@ PACKS="
   plantuml:aklt/plantuml-syntax
   powershell:Persistent13/vim-ps1
   protobuf:uarun/vim-protobuf
+  pug:digitaltoad/vim-pug
   puppet:voxpupuli/vim-puppet
   purescript:raichoo/purescript-vim
   python:mitsuhiko/vim-python-combined

@@ -357,7 +357,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') ==
   
 au BufNewFile,BufRead   *.ps1xml   set ft=ps1xml
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pug') == -1
   
 autocmd BufNewFile,BufReadPost *.pug set filetype=pug
 autocmd BufNewFile,BufReadPost *.jade set filetype=pug

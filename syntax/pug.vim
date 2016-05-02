@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jade') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pug') == -1
   
 " Vim syntax file
 " Language: Pug
