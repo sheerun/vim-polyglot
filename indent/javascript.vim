@@ -18,7 +18,7 @@ setlocal nosmartindent
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetJavascriptIndent()
 setlocal formatexpr=Fixedgq(v:lnum,v:count)
-setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
+setlocal indentkeys=0{,0},0),0],0\,:,!^F,o,O,e
 
 " Only define the function once.
 if exists("*GetJavascriptIndent")
@@ -28,13 +28,27 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
+" Get shiftwidth value
+if exists('*shiftwidth')
+  func s:sw()
+    return shiftwidth()
+  endfunc
+else
+  func s:sw()
+    return &sw
+  endfunc
+endif
+
 " 1. Variables {{{1
 " ============
 
-let s:js_keywords = '^\s*\(break\|case\|catch\|continue\|debugger\|default\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)'
-
+let s:js_keywords = '^\s*\(break\|catch\|const\|continue\|debugger\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|let\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)'
+let s:expr_case = '^\s*\(case\s\+[^\:]*\|default\)\s*:\s*'
 " Regex of syntax group names that are or delimit string or are comments.
-let s:syng_strcom = 'string\|regex\|comment\c'
+let s:syng_strcom = '\%(\%(template\)\@<!string\|regex\|comment\)\c'
+
+" Regex of syntax group names that are or delimit template strings
+let s:syng_template = 'template\c'
 
 " Regex of syntax group names that are strings.
 let s:syng_string = 'regex\c'
@@ -51,25 +65,34 @@ let s:skip_expr = "synIDattr(synID(line('.'),col('.'),1),'name') =~ '".s:syng_st
 let s:line_term = '\s*\%(\%(\/\/\).*\)\=$'
 
 " Regex that defines continuation lines, not including (, {, or [.
-let s:continuation_regex = '\%([\\*+/.:]\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\|[^=]=[^=].*,\)' . s:line_term
+let s:continuation_regex = '\%([\\*/.:]\|+\@<!+\|-\@<!-\|\%(<%\)\@<!=\|\W[|&?]\|||\|&&\|[^=]=[^=>].*,\)' . s:line_term
 
 " Regex that defines continuation lines.
 " TODO: this needs to deal with if ...: and so on
-let s:msl_regex = s:continuation_regex
+let s:msl_regex = s:continuation_regex.'\|'.s:expr_case
 
-let s:one_line_scope_regex = '\<\%(if\|else\|for\|while\)\>[^{;]*' . s:line_term
+let s:one_line_scope_regex = '\%(\%(\<else\>\|\<\%(if\|for\|while\)\>\s*(\%([^()]*\|[^()]*(\%([^()]*\|[^()]*(\%([^()]*\|[^()]*([^()]*)[^()]*\))[^()]*\))[^()]*\))\)\|=>\)' . s:line_term
 
 " Regex that defines blocks.
-let s:block_regex = '\%([{[]\)\s*\%(|\%([*@]\=\h\w*,\=\s*\)\%(,\s*[*@]\=\h\w*\)*|\)\=' . s:line_term
+let s:block_regex = '\%([{([]\)\s*\%(|\%([*@]\=\h\w*,\=\s*\)\%(,\s*[*@]\=\h\w*\)*|\)\=' . s:line_term
 
-let s:var_stmt = '^\s*var'
+let s:operator_first = '^\s*\%([*/.:?]\|\([-+]\)\1\@!\|||\|&&\)'
+
+let s:var_stmt = '^\s*\%(const\|let\|var\)'
 
 let s:comma_first = '^\s*,'
 let s:comma_last = ',\s*$'
 
-let s:ternary = '^\s\+[?|:]'
-let s:ternary_q = '^\s\+?'
-
+let s:case_indent = s:sw()
+let s:case_indent_after = s:sw()
+let s:m = matchlist(&cinoptions, ':\(.\)')
+if (len(s:m) > 2)
+    let s:case_indent = s:m[1]
+endif
+let s:m = matchlist(&cinoptions, '=\(.\)')
+if (len(s:m) > 2)
+    let s:case_indent_after = s:m[1]
+endif
 " 2. Auxiliary Functions {{{1
 " ======================
 
@@ -81,6 +104,11 @@ endfunction
 " Check if the character at lnum:col is inside a string.
 function s:IsInString(lnum, col)
   return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_string
+endfunction
+
+" Check if the character at lnum:col is inside a template string.
+function s:IsInTempl(lnum, col)
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_template
 endfunction
 
 " Check if the character at lnum:col is inside a multi-line comment.
@@ -101,13 +129,13 @@ function s:PrevNonBlankNonString(lnum)
     " Go in and out of blocks comments as necessary.
     " If the line isn't empty (with opt. comment) or in a string, end search.
     let line = getline(lnum)
-    if line =~ '/\*'
+    if s:IsInMultilineComment(lnum, matchend(line, '/\*') - 1)
       if in_block
         let in_block = 0
       else
         break
       endif
-    elseif !in_block && line =~ '\*/'
+    elseif !in_block && s:IsInMultilineComment(lnum, matchend(line, '\*/') - 1)
       let in_block = 1
     elseif !in_block && line !~ '^\s*\%(//\).*$' && !(s:IsInStringOrComment(lnum, 1) && s:IsInStringOrComment(lnum, strlen(line)))
       break
@@ -127,9 +155,21 @@ function s:GetMSL(lnum, in_one_line_scope)
     " Otherwise, terminate search as we have found our MSL already.
     let line = getline(lnum)
     let col = match(line, s:msl_regex) + 1
+    let line2 = getline(msl)
+    let col2 = matchend(line2, ')')
     if (col > 0 && !s:IsInStringOrComment(lnum, col)) || s:IsInString(lnum, strlen(line))
       let msl = lnum
+
+    " if there are more closing brackets, continue from the line which has the matching opening bracket
+    elseif col2 > 0 && !s:IsInStringOrComment(msl, col2) && s:LineHasOpeningBrackets(msl)[0] == '2' && !a:in_one_line_scope
+      call cursor(msl, 1)
+      if searchpair('(', '', ')', 'bW', s:skip_expr) > 0
+        let lnum = line('.')
+        let msl = lnum
+      endif
+
     else
+
       " Don't use lines that are part of a one line scope as msl unless the
       " flag in_one_line_scope is set to 1
       "
@@ -140,7 +180,7 @@ function s:GetMSL(lnum, in_one_line_scope)
       if msl_one_line == 0
         break
       endif
-    endif
+    end
     let lnum = s:PrevNonBlankNonString(lnum - 1)
   endwhile
   return msl
@@ -193,9 +233,9 @@ function s:GetVarIndent(lnum)
 
     " if the previous line doesn't end in a comma, return to regular indent
     if (line !~ s:comma_last)
-      return indent(prev_lnum) - &sw
+      return indent(prev_lnum) - s:sw()
     else
-      return indent(lvar) + &sw
+      return indent(lvar) + s:sw()
     endif
   endif
 
@@ -221,7 +261,7 @@ function s:LineHasOpeningBrackets(lnum)
     endif
     let pos = match(line, '[][(){}]', pos + 1)
   endwhile
-  return (open_0 > 0) . (open_2 > 0) . (open_4 > 0)
+  return (open_0 > 0 ? 1 : (open_0 == 0 ? 0 : 2)) . (open_2 > 0) . (open_4 > 0)
 endfunction
 
 function s:Match(lnum, regex)
@@ -302,6 +342,17 @@ function GetJavascriptIndent()
   " previous nonblank line number
   let prevline = prevnonblank(v:lnum - 1)
 
+  if (line =~ s:expr_case)
+    if (getline(prevline) =~ s:expr_case)
+      return indent(prevline)
+    else
+      if (getline(prevline) =~ s:block_regex)
+        return indent(prevline) + s:case_indent
+      else
+        return indent(prevline) - s:case_indent_after
+      endif
+    endif
+  endif
   " If we got a closing bracket on an empty line, find its match and indent
   " according to it.  For parentheses we indent to its column - 1, for the
   " others we indent to the containing line's MSL's level.  Return -1 if fail.
@@ -323,7 +374,7 @@ function GetJavascriptIndent()
           return indent(prevline)
         " otherwise we indent 1 level
         else
-          return indent(lvar) + &sw
+          return indent(lvar) + s:sw()
         endif
       endif
     endif
@@ -342,15 +393,51 @@ function GetJavascriptIndent()
 
   " If the line is comma first, dedent 1 level
   if (getline(prevline) =~ s:comma_first)
-    return indent(prevline) - &sw
+    return indent(prevline) - s:sw()
+  endif
+  if (getline(prevline) =~ s:expr_case)
+    return indent(prevline) + s:case_indent_after
   endif
 
-  if (line =~ s:ternary)
-    if (getline(prevline) =~ s:ternary_q)
+  " If line starts with an operator...
+  if (s:Match(v:lnum, s:operator_first))
+    if (s:Match(prevline, s:operator_first))
+      " and so does previous line, don't indent
       return indent(prevline)
-    else
-      return indent(prevline) + &sw
+    end
+    let counts = s:LineHasOpeningBrackets(prevline)
+    if counts[0] == '2'
+      call cursor(prevline, 1)
+      " Search for the opening tag
+      let mnum = searchpair('(', '', ')', 'bW', s:skip_expr)
+      if mnum > 0 && s:Match(mnum, s:operator_first)
+        return indent(mnum)
+      end
+    elseif counts[0] != '1' && counts[1] != '1' && counts[2] != '1'
+      " otherwise, indent 1 level
+      return indent(prevline) + s:sw()
+    end
+    " If previous line starts with an operator...
+  elseif s:Match(prevline, s:operator_first) && !s:Match(prevline, s:comma_last) && !s:Match(prevline, '};\=' . s:line_term)
+    let counts = s:LineHasOpeningBrackets(prevline)
+    if counts[0] == '2' && counts[1] == '1'
+      call cursor(prevline, 1)
+      " Search for the opening tag
+      let mnum = searchpair('(', '', ')', 'bW', s:skip_expr)
+      if mnum > 0 && !s:Match(mnum, s:operator_first)
+        return indent(mnum) + s:sw()
+      end
+    elseif counts[0] != '1' && counts[1] != '1' && counts[2] != '1'
+      return indent(prevline) - s:sw()
+    end
+  end
+
+  if getline(prevline) =~ '^\s*`$' && s:IsInTempl(v:lnum, 1)
+    if line !~ '^\s*`$'
+      return indent(prevline) + s:sw()
     endif
+  elseif line =~ '^\s*`$' && s:IsInTempl(prevline, 1)
+    return indent(prevline) - s:sw()
   endif
 
   " If we are in a multi-line comment, cindent does the right thing.
@@ -387,48 +474,71 @@ function GetJavascriptIndent()
     return 0
   endif
 
-  " Set up variables for current line.
-  let line = getline(lnum)
-  let ind = indent(lnum)
 
   " If the previous line ended with a block opening, add a level of indent.
   if s:Match(lnum, s:block_regex)
-    return indent(s:GetMSL(lnum, 0)) + &sw
+    if (line =~ s:expr_case)
+      return indent(s:GetMSL(lnum, 0)) + s:sw()/2
+    else
+      return indent(s:GetMSL(lnum, 0)) + s:sw()
+    endif
   endif
 
+  " Set up variables for current line.
+  let line = getline(lnum)
+  let ind = indent(lnum)
   " If the previous line contained an opening bracket, and we are still in it,
   " add indent depending on the bracket type.
   if line =~ '[[({]'
     let counts = s:LineHasOpeningBrackets(lnum)
     if counts[0] == '1' && searchpair('(', '', ')', 'bW', s:skip_expr) > 0
-      if col('.') + 1 == col('$')
-        return ind + &sw
+      if col('.') + 1 == col('$') || line =~ s:one_line_scope_regex
+        return ind + s:sw()
       else
         return virtcol('.')
       endif
-    elseif counts[1] == '1' || counts[2] == '1'
-      return ind + &sw
+    elseif counts[1] == '1' || counts[2] == '1' && counts[0] != '2'
+      return ind + s:sw()
     else
       call cursor(v:lnum, vcol)
     end
-  endif
+  elseif line =~ '.\+};\=' . s:line_term
+    call cursor(lnum, 1)
+    " Search for the opening tag
+    let mnum = searchpair('{', '', '}', 'bW', s:skip_expr)
+    if mnum > 0
+      return indent(s:GetMSL(mnum, 0)) 
+    end
+  elseif line =~ '.\+);\=' || line =~ s:comma_last
+    let counts = s:LineHasOpeningBrackets(lnum)
+    if counts[0] == '2'
+      call cursor(lnum, 1)
+      " Search for the opening tag
+      let mnum = searchpair('(', '', ')', 'bW', s:skip_expr)
+      if mnum > 0
+        return indent(s:GetMSL(mnum, 0)) 
+      end
+    elseif line !~ s:var_stmt
+      return indent(prevline)
+    end
+  end
 
   " 3.4. Work on the MSL line. {{{2
   " --------------------------
 
   let ind_con = ind
-  let ind = s:IndentWithContinuation(lnum, ind_con, &sw)
+  let ind = s:IndentWithContinuation(lnum, ind_con, s:sw())
 
   " }}}2
   "
   "
   let ols = s:InOneLineScope(lnum)
   if ols > 0
-    let ind = ind + &sw
+    let ind = ind + s:sw()
   else
     let ols = s:ExitingOneLineScope(lnum)
     while ols > 0 && ind > 0
-      let ind = ind - &sw
+      let ind = ind - s:sw()
       let ols = s:InOneLineScope(ols - 1)
     endwhile
   endif
