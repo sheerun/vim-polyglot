@@ -14,12 +14,17 @@ if !exists("main_syntax")
   let main_syntax = 'json'
 endif
 
+let s:concealends = ''
+if has('conceal') && get(g:, 'vim_json_syntax_conceal', 1) == 1
+  let s:concealends = ' concealends'
+endif
+
 syntax match   jsonNoise           /\%(:\|,\)/
 
 " Syntax: Strings
 " Separated into a match and region because a region by itself is always greedy
 syn match  jsonStringMatch /"\([^"]\|\\\"\)\+"\ze[[:blank:]\r\n]*[,}\]]/ contains=jsonString
-syn region  jsonString oneline matchgroup=jsonQuote start=/"/  skip=/\\\\\|\\"/  end=/"/ concealends contains=jsonEscape contained
+exe 'syn region  jsonString oneline matchgroup=jsonQuote start=/"/  skip=/\\\\\|\\"/  end=/"/ ' . s:concealends . ' contains=jsonEscape contained'
 
 " Syntax: JSON does not allow strings with single quotes, unlike JavaScript.
 syn region  jsonStringSQError oneline  start=+'+  skip=+\\\\\|\\"+  end=+'+
