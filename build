@@ -137,6 +137,7 @@ PACKS="
   less:groenewege/vim-less
   liquid:tpope/vim-liquid
   markdown:tpope/vim-markdown
+  mako:sophacles/vim-bundle-mako
   nginx:nginx/nginx::/contrib/vim/
   nim:zah/nim.vim:_BASIC
   nix:spwhitt/vim-nix
