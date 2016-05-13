@@ -270,6 +270,10 @@ au BufNewFile,BufRead */templates/**.liquid,*/layout/**.liquid,*/snippets/**.liq
       \ let b:liquid_subtype = 'html' |
       \ set ft=liquid |
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mako') == -1
+  
+au BufRead,BufNewFile *.mako     set filetype=mako
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'markdown') == -1
   
 autocmd BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mkd,*.mkdn
