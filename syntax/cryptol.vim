@@ -42,7 +42,7 @@ syn region  cryString		start=+"+  skip=+\\\\\|\\"+  end=+"+  contains=crySpecial
 syn region  cryString		start=+``+  skip=+\\\\\|\\"+  end=+``+  contains=hsSpecialChar
 syn match   cryCharacter		"[^a-zA-Z0-9_']'\([^\\]\|\\[^']\+\|\\'\)'"lc=1 contains=crySpecialChar,crySpecialCharError
 syn match   cryCharacter		"^'\([^\\]\|\\[^']\+\|\\'\)'" contains=crySpecialChar,crySpecialCharError
-syn match   cryNumber		"\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>"
+syn match   cryNumber		"\<[0-9]\+\>\|\<0[b][01]\+\>\|\<0[x][0-9a-fA-F]\+\>\|\<0[o][0-7]\+\>"
 
 " Keyword definitions.
 
@@ -61,10 +61,12 @@ syn keyword cryPrimitive        error parity lg2 pmod pdiv pmult format
 syn keyword cryPrimitive        join split groupBy take drop min max negate reverse
 syn keyword cryPrimitive        project tail width
 syn keyword cryPrimitive        ASSERT
+syn keyword cryPrimitive        module import private
 
 " Comments
-syn match   cryLineComment      "//.*"
-syn region  cryBlockComment     start="/\*"  end="\*/" contains=cryBlockComment
+syn keyword cryTodo             contained TODO FIXME XXX
+syn match   cryLineComment      "//.*" contains=cryTodo
+syn region  cryBlockComment     start="/\*"  end="\*/" contains=cryBlockComment,cryTodo
 
 if !exists("cry_minlines")
   let cry_minlines = 50
@@ -103,6 +105,7 @@ if version >= 508 || !exists("did_cry_syntax_inits")
   hi link cryBoolean			  Boolean
   hi link cryType			  Type
   hi link cryProp			  Keyword
+  hi link cryTodo			  Todo
 
   delcommand HiLink
 endif

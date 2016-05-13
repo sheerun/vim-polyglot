@@ -319,7 +319,10 @@ function! GetHaskellIndent()
   " foo
   " >>{
   if l:line =~ '^\s*{' && l:prevline !~ '^{'
-    return match(l:prevline, '\S') + &shiftwidth
+    let l:s = match(l:prevline, '\S')
+    if l:s >= 0
+      return l:s + &shiftwidth
+    endif
   endif
 
   "  in foo

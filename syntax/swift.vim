@@ -64,9 +64,9 @@ syntax match swiftNumber "\v<\d+>"
 syntax match swiftNumber "\v<(\d+_+)+\d+(\.\d+(_+\d+)*)?>"
 syntax match swiftNumber "\v<\d+\.\d+>"
 syntax match swiftNumber "\v<\d*\.?\d+([Ee]-?)?\d+>"
-syntax match swiftNumber "\v<0x\x+([Pp]-?)?\x+>"
-syntax match swiftNumber "\v<0b[01]+>"
-syntax match swiftNumber "\v<0o\o+>"
+syntax match swiftNumber "\v<0x[[:xdigit:]_]+([Pp]-?)?\x+>"
+syntax match swiftNumber "\v<0b[01_]+>"
+syntax match swiftNumber "\v<0o[0-7_]+>"
 
 " BOOLs
 syntax keyword swiftBoolean
