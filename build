@@ -136,6 +136,7 @@ PACKS="
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
   liquid:tpope/vim-liquid
+  lua:tbastos/vim-lua
   mako:sophacles/vim-bundle-mako
   markdown:tpope/vim-markdown
   nginx:othree/nginx-contrib-vim
