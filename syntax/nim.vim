@@ -21,25 +21,29 @@ endif
 if !exists("nim_highlight_space_errors")
   let nim_highlight_space_errors = 1
 endif
+if !exists("nim_highlight_special_vars")
+  let nim_highlight_special_vars = 1
+endif
 
 if exists("nim_highlight_all")
   let nim_highlight_numbers      = 1
   let nim_highlight_builtins     = 1
   let nim_highlight_exceptions   = 1
   let nim_highlight_space_errors = 1
+  let nim_highlight_special_vars = 1
 endif
 
 syn region nimBrackets       contained extend keepend matchgroup=Bold start=+\(\\\)\@<!\[+ end=+]\|$+ skip=+\\\s*$\|\(\\\)\@<!\\]+ contains=@tclCommandCluster
 
 syn keyword nimKeyword       addr and as asm atomic
 syn keyword nimKeyword       bind block break
-syn keyword nimKeyword       case cast const continue converter
-syn keyword nimKeyword       discard distinct div do
+syn keyword nimKeyword       case cast concept const continue converter
+syn keyword nimKeyword       defer discard distinct div do
 syn keyword nimKeyword       elif else end enum except export
-syn keyword nimKeyword       finally for from
+syn keyword nimKeyword       finally for from func
 syn keyword nimKeyword       generic
 syn keyword nimKeyword       if import in include interface is isnot iterator
-syn keyword nimKeyword       lambda let
+syn keyword nimKeyword       let
 syn keyword nimKeyword       mixin using mod
 syn keyword nimKeyword       nil not notin
 syn keyword nimKeyword       object of or out
@@ -59,6 +63,7 @@ syn keyword nimRepeat        for while
 syn keyword nimConditional   if elif else case of
 syn keyword nimOperator      and in is not or xor shl shr div
 syn match   nimComment       "#.*$" contains=nimTodo,@Spell
+syn region  nimComment       start="#\[" end="\]#" contains=nimTodo,@Spell
 syn keyword nimTodo          TODO FIXME XXX contained
 syn keyword nimBoolean       true false
 
@@ -89,11 +94,9 @@ if nim_highlight_builtins == 1
   " builtin functions, types and objects, not really part of the syntax
   syn keyword nimBuiltin int int8 int16 int32 int64 uint uint8 uint16 uint32 uint64 float float32 float64 bool
   syn keyword nimBuiltin char string cstring pointer range array openarray seq
-  syn keyword nimBuiltin set Byte Natural Positive TObject PObject Conversion TResult TAddress
+  syn keyword nimBuiltin set Byte Natural Positive Conversion
   syn keyword nimBuiltin BiggestInt BiggestFloat cchar cschar cshort cint csize cuchar cushort
   syn keyword nimBuiltin clong clonglong cfloat cdouble clongdouble cuint culong culonglong cchar
-  syn keyword nimBuiltin cstringArray TEndian PFloat32 PFloat64 PInt64 PInt32
-  syn keyword nimBuiltin TGC_Strategy TFile TFileMode TFileHandle isMainModule
   syn keyword nimBuiltin CompileDate CompileTime nimVersion nimMajor
   syn keyword nimBuiltin nimMinor nimPatch cpuEndian hostOS hostCPU inf
   syn keyword nimBuiltin neginf nan QuitSuccess QuitFailure dbgLineHook stdin
@@ -107,7 +110,7 @@ if nim_highlight_builtins == 1
   syn keyword nimBuiltin swap getRefcount getCurrentException Msg
   syn keyword nimBuiltin getOccupiedMem getFreeMem getTotalMem isNil seqToPtr
   syn keyword nimBuiltin find pop GC_disable GC_enable GC_fullCollect
-  syn keyword nimBuiltin GC_setStrategy GC_enableMarkAnd Sweep
+  syn keyword nimBuiltin GC_setStrategy GC_enableMarkAndSweep GC_Strategy
   syn keyword nimBuiltin GC_disableMarkAnd Sweep GC_getStatistics GC_ref
   syn keyword nimBuiltin GC_ref GC_ref GC_unref GC_unref GC_unref quit
   syn keyword nimBuiltin OpenFile OpenFile CloseFile EndOfFile readChar
@@ -115,6 +118,7 @@ if nim_highlight_builtins == 1
   syn keyword nimBuiltin getFileSize ReadBytes ReadChars readBuffer writeBytes
   syn keyword nimBuiltin writeChars writeBuffer setFilePos getFilePos
   syn keyword nimBuiltin fileHandle countdown countup items lines
+  syn keyword nimBuiltin FileMode File RootObj FileHandle ByteAddress Endianness
 endif
 
 if nim_highlight_exceptions == 1
@@ -137,6 +141,10 @@ if nim_highlight_space_errors == 1
   syn match   nimSpaceError   display excludenl "\S\s\+$"ms=s+1
   " any tabs are illegal in nim
   syn match   nimSpaceError   display "\t"
+endif
+
+if nim_highlight_special_vars
+  syn keyword nimSpecialVar result
 endif
 
 syn sync match nimSync grouphere NONE "):$"
@@ -166,6 +174,7 @@ if version >= 508 || !exists("did_nim_syn_inits")
   HiLink nimComment		    Comment
   HiLink nimTodo		        Todo
   HiLink nimDecorator	    Define
+  HiLink nimSpecialVar	    Identifier
   
   if nim_highlight_numbers == 1
     HiLink nimNumber	Number

@@ -20,6 +20,11 @@ if !exists('g:ruby_indent_access_modifier_style')
   let g:ruby_indent_access_modifier_style = 'normal'
 endif
 
+if !exists('g:ruby_indent_block_style')
+  " Possible values: "expression", "do"
+  let g:ruby_indent_block_style = 'expression'
+endif
+
 setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.
@@ -219,15 +224,15 @@ function s:GetMSL(lnum)
     elseif s:Match(lnum, s:non_bracket_continuation_regex) &&
           \ (s:Match(msl, s:bracket_continuation_regex) || s:Match(msl, s:block_continuation_regex))
       " If the current line is a bracket continuation or a block-starter, but
-      " the previous is a non-bracket one, respect the previous' indentation,
-      " and stop here.
+      " the previous is a non-bracket one, keep going to see if the previous
+      " line is a part of another continuation.
       "
       " Example:
       "   method_call one,
       "     two {
       "     three
       "
-      return lnum
+      let msl = lnum
     elseif s:Match(lnum, s:bracket_continuation_regex) &&
           \ (s:Match(msl, s:bracket_continuation_regex) || s:Match(msl, s:block_continuation_regex))
       " If both lines are bracket continuations (the current may also be a
@@ -419,7 +424,9 @@ function GetRubyIndent(...)
     if searchpair(escape(bs[0], '\['), '', bs[1], 'bW', s:skip_expr) > 0
       if line[col-1]==')' && col('.') != col('$') - 1
         let ind = virtcol('.') - 1
-      else
+      elseif g:ruby_indent_block_style == 'do'
+        let ind = indent(line('.'))
+      else " g:ruby_indent_block_style == 'expression'
         let ind = indent(s:GetMSL(line('.')))
       endif
     endif
@@ -444,12 +451,15 @@ function GetRubyIndent(...)
             \ strpart(line, col('.') - 1, 2) !~ 'do'
         " assignment to case/begin/etc, on the same line, hanging indent
         let ind = virtcol('.') - 1
+      elseif g:ruby_indent_block_style == 'do'
+        " align to line of the "do", not to the MSL
+        let ind = indent(line('.'))
       elseif getline(msl) =~ '=\s*\(#.*\)\=$'
-        " in the case of assignment to the msl, align to the starting line,
-        " not to the msl
+        " in the case of assignment to the MSL, align to the starting line,
+        " not to the MSL
         let ind = indent(line('.'))
       else
-        " align to the msl
+        " align to the MSL
         let ind = indent(msl)
       endif
     endif
@@ -516,7 +526,10 @@ function GetRubyIndent(...)
   if s:Match(lnum, s:block_regex)
     let msl = s:GetMSL(lnum)
 
-    if getline(msl) =~ '=\s*\(#.*\)\=$'
+    if g:ruby_indent_block_style == 'do'
+      " don't align to the msl, align to the "do"
+      let ind = indent(lnum) + sw
+    elseif getline(msl) =~ '=\s*\(#.*\)\=$'
       " in the case of assignment to the msl, align to the starting line,
       " not to the msl
       let ind = indent(lnum) + sw
@@ -564,7 +577,7 @@ function GetRubyIndent(...)
       if s:Match(line('.'), s:ruby_indent_keywords)
         return indent('.') + sw
       else
-        return indent('.')
+        return indent(s:GetMSL(line('.')))
       endif
     else
       call cursor(clnum, vcol)

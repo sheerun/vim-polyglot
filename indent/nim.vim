@@ -121,7 +121,7 @@ function! GetNimIndent(lnum)
   endif
 
   if pline =~ '\(type\|import\|const\|var\)\s*$'
-    \ || pline =~ '=\s*\(object\|enum\|tuple\|generic\)'
+    \ || pline =~ '=\s*\(object\|enum\|tuple\|concept\)'
     return plindent + &sw
   endif
 
