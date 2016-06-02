@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c/c++') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'openscad') == -1
 
 " Vim syntax file
 " Language:     OpenSCAD
