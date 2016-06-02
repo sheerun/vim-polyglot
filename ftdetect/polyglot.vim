@@ -316,6 +316,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
   
 au! BufRead,BufNewFile *.cl set filetype=opencl
 endif
+
+au! BufRead,BufNewFile *.scad set filetype=openscad
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
   
 function! s:DetectPerl6()

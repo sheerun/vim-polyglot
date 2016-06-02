@@ -74,6 +74,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [ocaml](https://github.com/jrk/vim-ocaml) (syntax, indent, ftplugin)
 - [octave](https://github.com/vim-scripts/octave.vim--) (syntax)
 - [opencl](https://github.com/petRUShka/vim-opencl) (syntax, indent, ftplugin, ftdetect)
+- [openscad](https://github.com/sirtaj/vim-openscad) (syntax, ftplugin, ftdetect)
 - [perl](https://github.com/vim-perl/vim-perl) (syntax, indent, ftplugin, ftdetect)
 - [pgsql](https://github.com/exu/pgsql.vim) (syntax, ftdetect)
 - [php](https://github.com/StanAngeloff/php.vim) (syntax)
