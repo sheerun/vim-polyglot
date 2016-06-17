@@ -348,7 +348,7 @@ function! s:RmDir(path)
 		echoerr 'Attempted to delete protected path: ' . a:path
 		return 0
 	endif
-	silent exe "!rm -rf " . shellescape(a:path)
+	return system("rm -rf " . shellescape(a:path))
 endfunction
 
 " Executes {cmd} with the cwd set to {pwd}, without changing Vim's cwd.

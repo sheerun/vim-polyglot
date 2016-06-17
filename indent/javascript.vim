@@ -18,7 +18,7 @@ setlocal nosmartindent
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetJavascriptIndent()
 setlocal formatexpr=Fixedgq(v:lnum,v:count)
-setlocal indentkeys=0{,0},0),0],0\,:,!^F,o,O,e
+setlocal indentkeys=0{,0},0),0],0\,*<Return>,:,!^F,o,O,e
 setlocal cinoptions+=j1,J1
 
 " Only define the function once.
@@ -44,22 +44,27 @@ endif
 " ============
 
 let s:line_pre = '^\s*\%(\/\*.*\*\/\s*\)*'
-let s:js_keywords = s:line_pre . '\%(break\|catch\|const\|continue\|debugger\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|let\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)\>\C'
+let s:js_keywords = s:line_pre . '\%(break\|import\|export\|catch\|const\|continue\|debugger\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|let\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)\>\C'
 let s:expr_case = s:line_pre . '\%(case\s\+[^\:]*\|default\)\s*:\s*\C'
 " Regex of syntax group names that are or delimit string or are comments.
-let s:syng_strcom = '\%(string\|regex\|comment\|template\)\c'
+let s:syng_strcom = '\%(string\|regex\|special\|doc\|comment\|template\)\c'
 
 " Regex of syntax group names that are strings.
 let s:syng_string = 'regex\c'
 
 " Regex of syntax group names that are strings or documentation.
-let s:syng_multiline = '\%(comment\|doc\)\c'
-
-" Regex of syntax group names that are line comment.
-let s:syng_linecom = 'linecomment\c'
+let s:syng_comment = '\%(comment\|doc\)\c'
 
 " Expression used to check whether we should skip a match with searchpair().
 let s:skip_expr = "synIDattr(synID(line('.'),col('.'),1),'name') =~ '".s:syng_strcom."'"
+
+func s:lookForParens(start,end,flags,stop)
+  try 
+    return searchpair(a:start,'',a:end,a:flags,s:skip_expr,a:stop,300)
+  catch /E118/
+    return searchpair(a:start,'',a:end,a:flags,0,a:stop)
+  endtry
+endfunc
 
 let s:line_term = '\s*\%(\%(\/\/.*\)\=\|\%(\/\*.*\*\/\s*\)*\)$'
 
@@ -75,7 +80,7 @@ function s:Onescope(lnum)
   let mypos = col('.')
   call cursor(a:lnum, 1)
   if search('\<\%(while\|for\|if\)\>\s*(\C', 'ce', a:lnum) > 0 &&
-        \ searchpair('(', '', ')', 'W', s:skip_expr, a:lnum) > 0 &&
+        \ s:lookForParens('(', ')', 'W', a:lnum) > 0 &&
         \ col('.') == strlen(s:RemoveTrailingComments(getline(a:lnum)))
     call cursor(a:lnum, mypos)
     return 1
@@ -88,7 +93,7 @@ endfunction
 " Regex that defines blocks.
 let s:block_regex = '[{([]' . s:line_term
 
-let s:operator_first = s:line_pre . '\%([.,:?]\|\([-/+*]\)\%(\1\|\*\|\/\)\@!\|||\|&&\)'
+let s:operator_first = s:line_pre . '\%([,:?]\|\([-/.+*]\)\%(\1\|\*\|\/\)\@!\|||\|&&\)'
 
 let s:var_stmt = s:line_pre . '\%(const\|let\|var\)\s\+\C'
 
@@ -108,32 +113,23 @@ function s:IsInString(lnum, col)
 endfunction
 
 " Check if the character at lnum:col is inside a multi-line comment.
-function s:IsInMultilineComment(lnum, col)
-  return !s:IsLineComment(a:lnum, a:col) && synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_multiline
-endfunction
-
-" Check if the character at lnum:col is a line comment.
-function s:IsLineComment(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_linecom
+function s:IsInComment(lnum, col)
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_comment
 endfunction
 
 " Find line above 'lnum' that isn't empty, in a comment, or in a string.
 function s:PrevNonBlankNonString(lnum)
-  let in_block = 0
   let lnum = prevnonblank(a:lnum)
   while lnum > 0
-    " Go in and out of blocks comments as necessary.
-    " If the line isn't empty (with opt. comment) or in a string, end search.
     let line = getline(lnum)
-    if s:IsInMultilineComment(lnum, matchend(line, '^\s*/\*') - 1) && line !~ s:line_pre . '$'
-      if in_block
-        let in_block = 0
-      else
-        break
-      endif
-    elseif !in_block && s:IsInMultilineComment(lnum, match(line, '\*/\s*$') + 1) && line !~ s:line_pre . '$'
-      let in_block = 1
-    elseif !in_block && line !~ s:line_pre . '\%(//\).*$' && !(s:IsInStringOrComment(lnum, 1) && s:IsInStringOrComment(lnum, strlen(line)))
+    let com = match(line, '\%(\/\*.*\)\@<!\*\/') + 1
+    if s:IsInComment(lnum, com)
+      call cursor(lnum, com)
+      let parlnum = search('\%(\/\/.*\)\@<!\/\*', 'nbW')
+      if parlnum > 0
+        let lnum = parlnum
+      end
+    elseif line !~ '^' . s:line_term && !s:IsInStringOrComment(lnum,1)
       break
     endif
     let lnum = prevnonblank(lnum - 1)
@@ -150,21 +146,18 @@ function s:GetMSL(lnum, in_one_line_scope)
     " If we have a continuation line, or we're in a string, use line as MSL.
     " Otherwise, terminate search as we have found our MSL already.
     let line = getline(lnum)
-    let col = match(line, s:continuation_regex) + 1
-    let coal = match(line, s:comma_last) + 1
     let line2 = getline(msl)
-    let col2 = matchend(line2, ')')
-    if ((col > 0 && !s:IsInStringOrComment(lnum, col) || coal > 0 && !s:IsInStringOrComment(lnum,coal)) &&
+    if ((s:Match(lnum,s:continuation_regex) || s:Match(lnum, s:comma_last)) &&
           \ !s:Match(lnum, s:expr_case)) || s:IsInString(lnum, strlen(line))
       let msl = lnum
-
-    " if there are more closing brackets, continue from the line which has the matching opening bracket
-    elseif col2 > 0 && !s:IsInStringOrComment(msl, col2) && s:LineHasOpeningBrackets(msl)[0] == '2' && !a:in_one_line_scope
-      call cursor(msl, 1)
-      if searchpair('(', '', ')', 'bW', s:skip_expr) > 0
-        let lnum = line('.')
-        let msl = lnum
-      endif
+      if s:Match(lnum, s:line_pre . '[]})]') && !a:in_one_line_scope
+        call cursor(lnum,1)
+        let parlnum = s:lookForParens('(\|{\|\[', ')\|}\|\]', 'nbW', 0)
+        if parlnum > 0
+          let lnum = parlnum
+          continue
+        end
+      end
 
     else
 
@@ -193,18 +186,22 @@ endfunction
 " Find if the string is inside var statement (but not the first string)
 function s:InMultiVarStatement(lnum, cont, prev)
   let lnum = s:PrevNonBlankNonString(a:lnum - 1)
+  let cont = a:cont
+  let prev = a:prev
 
   "  let type = synIDattr(synID(lnum, indent(lnum) + 1, 0), 'name')
 
   " loop through previous expressions to find a var statement
-  while lnum > 0 && (s:Match(lnum, s:comma_last) ||(a:cont && getline(lnum) =~ s:line_pre . '}') ||
-        \ s:Match(lnum,s:continuation_regex)) || (a:prev && (s:Match(a:prev, s:comma_last) ||
-        \ s:Match(a:prev,s:continuation_regex)))
+  while lnum > 0 && (s:Match(lnum, s:comma_last) ||(cont && getline(lnum) =~ s:line_pre . '[]})]') ||
+        \ s:Match(lnum,s:continuation_regex)) || (prev && (s:Match(prev, s:comma_last) ||
+        \ s:Match(prev,s:continuation_regex)))
     " if the line is a js keyword
-    if a:cont
+    if cont
+      let cont = 0
       call cursor(lnum,1)
-      if searchpair('{', '', '}', 'bW', s:skip_expr) > 0
-        let lnum = line('.')
+      let parlnum = s:lookForParens('(\|{\|\[', ')\|}\|\]', 'nbW', 0)
+      if parlnum > 0
+        let lnum = parlnum
       end
     end
     if s:Match(lnum, s:js_keywords)
@@ -221,32 +218,12 @@ function s:InMultiVarStatement(lnum, cont, prev)
       end
     endif
     let lnum = s:PrevNonBlankNonString(lnum - 1)
+    let prev = prev && lnum > 0 ? prev : 0
   endwhile
 
   " beginning of program, not a var
   return 0
 endfunction
-
-" Find line above with beginning of the var statement or returns 0 if it's not"{{{2
-" this statement
-" function s:GetVarIndent(lnum)
-"   let lvar = s:InMultiVarStatement(a:lnum, 0,0)
-"   let prev_lnum = s:PrevNonBlankNonString(a:lnum - 1)
-
-"   if lvar
-"     let line = s:RemoveTrailingComments(getline(prev_lnum))
-
-"     " if the previous line doesn't end in a comma, return to regular indent
-"     if (line !~ s:comma_last)
-"       return indent(prev_lnum) - s:sw()
-"     else
-"       return indent(lvar) + s:sw()
-"     endif
-"   endif
-
-"   return -1
-" endfunction"}}}
-
 
 " Check if line 'lnum' has more opening brackets than closing ones.
 function s:LineHasOpeningBrackets(lnum)
@@ -347,20 +324,22 @@ function GetJavascriptIndent()
   let line = getline(v:lnum)
   " previous nonblank line number
   let prevline = prevnonblank(v:lnum - 1)
-  
+  " previous line of code
+  let lnum = s:PrevNonBlankNonString(v:lnum - 1)
+
   " to not change multiline string values 
-  if synIDattr(synID(v:lnum, 1, 1), 'name') =~? 'string\|template' && line !~ s:line_pre . '[''"`]'
-    return indent(v:lnum)
+  if line !~ '^[''"`]' && synIDattr(synID(v:lnum, 1, 1), 'name') =~? 'string\|template'
+    return -1
   endif
 
   " If we are in a multi-line comment, cindent does the right thing.
-  if s:IsInMultilineComment(v:lnum, 1) && !s:IsLineComment(v:lnum, 1) &&
-        \ s:IsInMultilineComment(v:lnum, match(line, '\s*$')) && line !~ '^\/\*'
+  if line !~ '^\%(\/\*\|\s*\/\/\)' && s:IsInComment(v:lnum, 1)
     return cindent(v:lnum)
   endif
   
   " single opening bracket will assume you want a c style of indenting
-  if s:Match(v:lnum, s:line_pre . '{' . s:line_term)
+  if s:Match(v:lnum, s:line_pre . '{' . s:line_term) && !s:Match(lnum,s:block_regex) &&
+        \ !s:Match(lnum,s:comma_last)
     return cindent(v:lnum)
   endif
 
@@ -370,52 +349,60 @@ function GetJavascriptIndent()
   endif
 
   " If we got a closing bracket on an empty line, find its match and indent
-  " according to it.  For parentheses we indent to its column - 1, for the
-  " others we indent to the containing line's MSL's level.  Return -1 if fail.
-  let col = matchend(line, s:line_pre . '[]})]')
-  if col > 0 && !s:IsInStringOrComment(v:lnum, col)
-    call cursor(v:lnum, col)
-
-
-    let bs = strpart('(){}[]', stridx(')}]', line[col - 1]) * 2, 2)
-    if searchpair(escape(bs[0], '\['), '', bs[1], 'bW', s:skip_expr) > 0
-      let ind = s:InMultiVarStatement(line('.'), 0, 0) ? indent(line('.')) : indent(s:GetMSL(line('.'), 0))
-    endif
+  " according to it.
+  let col = s:Match(v:lnum,  s:line_pre . '[]})]')
+  if col > 0
+    let parlnum = v:lnum
+    while col
+      call cursor(parlnum, 1)
+      let parlnum = s:lookForParens('(\|{\|\[', ')\|}\|\]', 'nbW', 0)
+      let col = s:Match(parlnum,  s:line_pre . '[]})]')
+      if col
+        continue
+      end
+      if parlnum > 0
+        let ind = s:InMultiVarStatement(parlnum, 0, 0)|| s:LineHasOpeningBrackets(parlnum) !~ '2'
+              \ ? indent(parlnum) : indent(s:GetMSL(parlnum, 0))
+      endif
+    endwhile
     return ind
   endif
 
+
   " If line starts with an operator...
   if (line =~ s:operator_first)
-    if (s:Match(prevline, s:operator_first))
+    if (s:Match(lnum, s:operator_first) || s:Match(lnum, s:line_pre . '[])}]'))
       " and so does previous line, don't indent
-      return indent(prevline)
+      return indent(lnum)
     end
-    let counts = s:LineHasOpeningBrackets(prevline)
-    if counts[0] == '2' || counts[1] == '2' || counts[2] == '2'
-      call cursor(prevline, 1)
+    let counts = s:LineHasOpeningBrackets(lnum)
+    if counts =~ '2'
+      call cursor(lnum, 1)
       " Search for the opening tag
-      let bs = strpart('(){}[]', stridx(')}]', line[col - 1]) * 2, 2)
-      if searchpair(escape(bs[0], '\['), '', bs[1], 'bW', s:skip_expr) > 0 && s:Match(line('.'), s:operator_first)
-        return indent(line('.'))
+      let parlnum = s:lookForParens('(\|{\|\[', ')\|}\|\]', 'nbW', 0)
+      if parlnum > 0
+        return !s:Match(parlnum, s:operator_first) &&
+              \ synIDattr(synID(v:lnum, 1, 1), 'name') !~? 'jsbracket\|jsparen\|jsobject' ?
+              \ indent(lnum) + s:sw() : indent(parlnum)
       end
-    elseif counts[0] != '1' && counts[1] != '1' && counts[2] != '1'
-      " otherwise, indent 1 level
-      return indent(prevline) + s:sw()
+    elseif synIDattr(synID(v:lnum, 1, 1), 'name') !~? 'jsbracket\|jsparen\|jsobject'
+      " otherwise, if not in an key/val;array item;param, indent 1 level
+      return indent(lnum) + s:sw()
     end
 
     " If previous line starts with an operator...
-  elseif (s:Match(prevline, s:operator_first) && !s:Match(prevline,s:continuation_regex))||getline(prevline) =~ ');\=' . s:line_term
-    let counts = s:LineHasOpeningBrackets(prevline)
-    if counts[0] == '2' && !s:Match(prevline, s:operator_first)
-      call cursor(prevline, 1)
+  elseif (s:Match(lnum, s:operator_first) && !s:Match(lnum,s:continuation_regex))||getline(lnum) =~ ');\=' . s:line_term
+    let counts = s:LineHasOpeningBrackets(lnum)
+    if counts[0] == '2' && !s:Match(lnum, s:operator_first)
+      call cursor(lnum, 1)
       " Search for the opening tag
-      let mnum = searchpair('(', '', ')', 'bW', s:skip_expr)
+      let mnum = s:lookForParens('(', ')', 'nbW', 0)
       if mnum > 0 && s:Match(mnum, s:operator_first)
         return indent(mnum) - s:sw()
       end
-    elseif s:Match(prevline, s:operator_first)
-      if counts[0] != '1' && counts[1] != '1' && counts[2] != '1'
-        return indent(prevline) - s:sw()
+    elseif s:Match(lnum, s:operator_first)
+      if counts !~ '1'
+        return indent(lnum) - s:sw()
       end
     end
   end
@@ -426,12 +413,12 @@ function GetJavascriptIndent()
   " If the line is empty and the previous nonblank line was a multi-line
   " comment, use that comment's indent. Deduct one char to account for the
   " space in ' */'.
-  if line =~ '^\s*$' && s:IsInMultilineComment(prevline, 1)
+  if line =~ '^\s*$' && getline(prevline) !~ '\%(\%(^\s*\/\/\|\/\*\).*\)\@<!\*\/' &&
+        \ s:IsInComment(prevline, 1)
     return indent(prevline) - 1
   endif
 
   " Find a non-blank, non-multi-line string line above the current line.
-  let lnum = s:PrevNonBlankNonString(v:lnum - 1)
 
   " If the line is empty and inside a string, use the previous line.
   if line =~ '^\s*$' && lnum != prevline
@@ -443,10 +430,20 @@ function GetJavascriptIndent()
     return 0
   endif
 
+" foo('foo',
+"   bar('bar', function() {
+"     hi();
+"   })
+" );
 
+" function (a, b, c, d,
+"     e, f, g) {
+"       console.log('inner');
+" }
   " If the previous line ended with a block opening, add a level of indent.
   if s:Match(lnum, s:block_regex)
-    return s:InMultiVarStatement(lnum, 0, 0) ? indent(lnum) + s:sw() : indent(s:GetMSL(lnum, 0)) + s:sw()
+    return s:InMultiVarStatement(lnum, 0, 0) || s:LineHasOpeningBrackets(lnum) !~ '2' ?
+          \ indent(lnum) + s:sw() : indent(s:GetMSL(lnum, 0)) + s:sw()
   endif
 
   " Set up variables for current line.
@@ -454,30 +451,18 @@ function GetJavascriptIndent()
   let ind = indent(lnum)
   " If the previous line contained an opening bracket, and we are still in it,
   " add indent depending on the bracket type.
-  if s:Match(lnum, '[[({})\]]')
+  if s:Match(lnum, '\%([[({]\)\|\%([^\t \])}][})\]]\)')
     let counts = s:LineHasOpeningBrackets(lnum)
-    if counts[0] == '2'
-      call cursor(lnum, 1)
-      " Search for the opening tag
-      if searchpair('(', '', ')', 'bW', s:skip_expr) > 0
-        return indent(s:GetMSL(line('.'), 0)) 
+    if counts =~ '2'
+      call cursor(lnum,matchend(s:RemoveTrailingComments(line), '.\+\zs[])}]'))
+      while s:lookForParens('(\|{\|\[', ')\|}\|\]', 'bW', 0) == lnum
+        call cursor(lnum, matchend(s:RemoveTrailingComments(strpart(line,0,col('.'))), '.*\zs[])}]'))
+      endwhile
+      if line('.') < lnum && !s:InMultiVarStatement(line('.'),0,0)
+        return indent(s:GetMSL(line('.'), 0))
       end
-    elseif counts[1] == '2' && !s:Match(lnum, s:line_pre . '}')
-      call cursor(lnum, 1)
-      " Search for the opening tag
-      if searchpair('{', '', '}', 'bW', s:skip_expr) > 0
-        return indent(s:GetMSL(line('.'), 0)) 
-      end
-    elseif counts[2] == '2' && !s:Match(lnum, s:line_pre . ']')
-      call cursor(lnum, 1)
-      " Search for the opening tag
-      if searchpair('\[', '', '\]', 'bW', s:skip_expr) > 0
-        return indent(s:GetMSL(line('.'), 0)) 
-      end
-    elseif counts[1] == '1' || counts[2] == '1' || counts[0] == '1' || s:Onescope(lnum)
+    elseif counts =~ '1' || s:Onescope(lnum)
       return ind + s:sw()
-    else
-      call cursor(v:lnum, vcol)
     end
   end
 
@@ -527,7 +512,7 @@ function! Fixedgq(lnum, count)
     endif
 
     " This gq is only meant to do code with strings, not comments
-    if s:IsLineComment(a:lnum, l:first_char) || s:IsInMultilineComment(a:lnum, l:first_char)
+    if s:IsInComment(a:lnum, l:first_char)
         return 1
     endif
 
