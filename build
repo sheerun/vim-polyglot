@@ -150,7 +150,7 @@ PACKS="
   php:StanAngeloff/php.vim
   plantuml:aklt/plantuml-syntax
   powershell:Persistent13/vim-ps1
-  protobuf:uarun/vim-protobuf
+  protobuf:timfeirg/vim-protobuf
   pug:digitaltoad/vim-pug
   puppet:voxpupuli/vim-puppet
   purescript:raichoo/purescript-vim
