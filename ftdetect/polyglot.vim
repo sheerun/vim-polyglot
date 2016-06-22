@@ -1,5 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
-  
+
 function! s:isAnsible()
   let filepath = expand("%:p")
   let filename = expand("%:t")
@@ -16,26 +16,26 @@ endfunction
 :au BufNewFile,BufRead hosts set ft=ansible_hosts
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'arduino') == -1
-  
+
 au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'blade') == -1
-  
+
 autocmd BufNewFile,BufRead *.blade.php set filetype=blade
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cjsx') == -1
-  
+
 augroup CJSX
   au!
   autocmd BufNewFile,BufRead *.csx,*.cjsx set filetype=coffee
 augroup END
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'clojure') == -1
-  
+
 autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn,*.cljx,*.cljc setlocal filetype=clojure
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
-  
+
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufNewFile,BufRead *Cakefile set filetype=coffee
 autocmd BufNewFile,BufRead *.coffeekup,*.ck set filetype=coffee
@@ -48,38 +48,38 @@ endfunction
 autocmd BufNewFile,BufRead * call s:DetectCoffee()
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cql') == -1
-  
+
 if has("autocmd")
   au  BufNewFile,BufRead *.cql set filetype=cql
 endif
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cryptol') == -1
-  
+
 au! BufRead,BufNewFile *.cry set filetype=cryptol
 au! BufRead,BufNewFile *.cyl set filetype=cryptol
 au! BufRead,BufNewFile *.lcry set filetype=cryptol
 au! BufRead,BufNewFile *.lcyl set filetype=cryptol
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
-  
+
 autocmd BufNewFile,BufReadPost *.cr setlocal filetype=crystal
 autocmd BufNewFile,BufReadPost Projectfile setlocal filetype=crystal
 autocmd BufNewFile,BufReadPost *.ecr setlocal filetype=eruby
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cucumber') == -1
-  
+
 autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
-  
+
 autocmd BufRead,BufNewFile *.dart set filetype=dart
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
-  
+
 au BufNewFile,BufRead Dockerfile set filetype=dockerfile
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
-  
+
 au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
 au BufRead,BufNewFile *.eex call s:setf('eelixir')
 au BufRead,BufNewFile * call s:DetectElixir()
@@ -94,25 +94,25 @@ function! s:DetectElixir()
 endfunction
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
-  
+
 au BufNewFile,BufRead *.elm		set filetype=elm
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emberscript') == -1
-  
+
 autocmd BufNewFile,BufRead *.em set filetype=ember-script
 autocmd FileType ember-script set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emblem') == -1
-  
+
 autocmd BufNewFile,BufRead *.emblem set filetype=emblem
 autocmd FileType emblem set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'erlang') == -1
-  
+
 au BufNewFile,BufRead *.erl,*.hrl,rebar.config,*.app,*.app.src,*.yaws,*.xrl set ft=erlang
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fish') == -1
-  
+
 autocmd BufRead,BufNewFile *.fish setfiletype fish
 autocmd BufRead *
             \ if getline(1) =~# '\v^#!%(\f*/|/usr/bin/env\s*<)fish>' |
@@ -128,7 +128,7 @@ autocmd BufNewFile ~/.config/fish/functions/*.fish
             \ 2
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
-  
+
 autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
 autocmd BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitconfig
 autocmd BufNewFile,BufRead */.config/git/config                          set ft=gitconfig
@@ -149,11 +149,11 @@ autocmd BufNewFile,BufRead *
       \ endif
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'glsl') == -1
-  
+
 autocmd! BufNewFile,BufRead *.glsl,*.geom,*.vert,*.frag,*.gsh,*.vsh,*.fsh,*.vs,*.fs,*.gs,*.tcs,*.tes set filetype=glsl
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
-  
+
 let s:current_fileformats = ''
 let s:current_fileencodings = ''
 function! s:gofiletype_pre(type)
@@ -175,25 +175,25 @@ au BufReadPost *.s call s:gofiletype_post()
 au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
-  
+
 autocmd BufNewFile,BufRead *.haml,*.hamlbars,*.hamlc setf haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
-  
+
 au BufRead,BufNewFile *.hsc set filetype=haskell
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haxe') == -1
-  
+
 autocmd BufNewFile,BufRead *.hx setf haxe
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
-  
+
 autocmd BufNewFile,BufRead *Spec.js,*_spec.js set filetype=jasmine.javascript syntax=jasmine
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
-  
+
 au BufNewFile,BufRead *.js setf javascript
 au BufNewFile,BufRead *.jsm setf javascript
 au BufNewFile,BufRead Jakefile setf javascript
@@ -205,7 +205,7 @@ endfun
 au BufNewFile,BufRead * call s:SelectJavascript()
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
-  
+
 if !exists('g:jsx_ext_required')
   let g:jsx_ext_required = 1
 endif
@@ -229,12 +229,12 @@ autocmd BufNewFile,BufRead *.js
   \ if <SID>EnableJSX() | set filetype=javascript.jsx | endif
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
-  
+
 autocmd BufNewFile,BufRead *.json set filetype=json
 autocmd BufNewFile,BufRead *.jsonp set filetype=json
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jst') == -1
-  
+
 au BufNewFile,BufRead *.ejs set filetype=jst
 au BufNewFile,BufRead *.jst set filetype=jst
 au BufNewFile,BufRead *.djs set filetype=jst
@@ -242,21 +242,21 @@ au BufNewFile,BufRead *.hamljs set filetype=jst
 au BufNewFile,BufRead *.ect set filetype=jst
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
-  
+
 au BufRead,BufNewFile *.jl		let b:undo_ftplugin = "setlocal comments< define< formatoptions< iskeyword< lisp<"
 au BufRead,BufNewFile *.jl		set filetype=julia
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
-  
+
 autocmd BufNewFile,BufRead *.kt setfiletype kotlin
 autocmd BufNewFile,BufRead *.kts setfiletype kotlin
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'less') == -1
-  
+
 autocmd BufNewFile,BufRead *.less setf less
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'liquid') == -1
-  
+
 au BufNewFile,BufRead *.liquid					set ft=liquid
 au BufNewFile,BufRead */_layouts/*.html,*/_includes/*.html	set ft=liquid
 au BufNewFile,BufRead *.html,*.xml,*.textile
@@ -271,11 +271,11 @@ au BufNewFile,BufRead */templates/**.liquid,*/layout/**.liquid,*/snippets/**.liq
       \ set ft=liquid |
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mako') == -1
-  
+
 au BufRead,BufNewFile *.mako     set filetype=mako
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'markdown') == -1
-  
+
 autocmd BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mkd,*.mkdn
       \ if &ft =~# '^\%(conf\|modula2\)$' |
       \   set ft=markdown |
@@ -284,40 +284,40 @@ autocmd BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mkd,*.mkdn
       \ endif
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
-  
+
 autocmd BufRead *.html
     \ if getline(1) =~ '^\(%\|<[%&].*>\)' |
     \     set filetype=mason |
     \ endif
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'handlebars') == -1
-  
+
 if has("autocmd")
   au  BufNewFile,BufRead *.mustache,*.hogan,*.hulk,*.hjs set filetype=html.mustache syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
   au  BufNewFile,BufRead *.handlebars,*.hbs set filetype=html.handlebars syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
 endif
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
-  
+
 au BufRead,BufNewFile *.nginx set ft=nginx
 au BufRead,BufNewFile */etc/nginx/* set ft=nginx
 au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
 au BufRead,BufNewFile nginx.conf set ft=nginx
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nim') == -1
-  
+
 au BufNewFile,BufRead *.nim,*.nims set filetype=nim
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nix') == -1
-  
+
 autocmd BufNewFile,BufRead *.nix setfiletype nix
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
-  
+
 au! BufRead,BufNewFile *.cl set filetype=opencl
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
-  
+
 function! s:DetectPerl6()
   let line_no = 1
   let eof     = line('$')
@@ -348,11 +348,11 @@ autocmd BufReadPost *.pl,*.pm,*.t call s:DetectPerl6()
 autocmd BufNew,BufNewFile,BufRead *.nqp setf perl6
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pgsql') == -1
-  
+
 au BufNewFile,BufRead *.pgsql           setf pgsql
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -1
-  
+
 if did_filetype()
 	  finish
 endif
@@ -360,40 +360,40 @@ autocmd BufRead,BufNewFile * :if getline(1) =~ '^.*startuml.*$'| setfiletype pla
 autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml setfiletype plantuml | set filetype=plantuml
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'protobuf') == -1
-  
+
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') == -1
-  
+
 au BufNewFile,BufRead   *.ps1   set ft=ps1
 au BufNewFile,BufRead   *.psd1  set ft=ps1
 au BufNewFile,BufRead   *.psm1  set ft=ps1
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') == -1
-  
+
 au BufNewFile,BufRead   *.ps1xml   set ft=ps1xml
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pug') == -1
-  
+
 autocmd BufNewFile,BufReadPost *.pug set filetype=pug
 autocmd BufNewFile,BufReadPost *.jade set filetype=pug
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
-  
+
 au! BufRead,BufNewFile *.pp setfiletype puppet
 au! BufRead,BufNewFile Puppetfile setfiletype ruby
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'purescript') == -1
-  
+
 au BufNewFile,BufRead *.purs setf purescript
 au FileType purescript let &l:commentstring='{--%s--}'
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
-  
+
 autocmd BufRead,BufNewFile *.qml setfiletype qml
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
-  
+
 function! s:setf(filetype) abort
   if &filetype !=# a:filetype
     let &filetype = a:filetype
@@ -415,7 +415,7 @@ au BufNewFile,BufRead [rR]akefile*				call s:StarSetf('ruby')
 au BufNewFile,BufRead [rR]antfile,*.rant			call s:setf('ruby')
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
-  
+
 function! s:setf(filetype) abort
   if &filetype !=# a:filetype
     let &filetype = a:filetype
@@ -441,15 +441,15 @@ au BufNewFile,BufRead [tT]horfile,*.thor	call s:setf('ruby')
 au BufNewFile,BufRead [vV]agrantfile		call s:setf('ruby')
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
-  
+
 au BufRead,BufNewFile *.rs set filetype=rust
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sbt') == -1
-  
+
 au BufRead,BufNewFile *.sbt set filetype=sbt.scala
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scala') == -1
-  
+
 fun! s:DetectScala()
     if getline(1) =~# '^#!\(/usr\)\?/bin/env\s\+scalas\?'
         set filetype=scala
@@ -460,20 +460,20 @@ au BufRead,BufNewFile * call s:DetectScala()
 au BufRead,BufNewFile *.sbt setfiletype sbt.scala
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slim') == -1
-  
+
 autocmd BufNewFile,BufRead *.slim setf slim
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'solidity') == -1
-  
+
 au BufNewFile,BufRead *.sol setf solidity
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'stylus') == -1
-  
+
 autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'swift') == -1
-  
+
 autocmd BufNewFile,BufRead *.swift set filetype=swift
 autocmd BufRead * call s:Swift()
 function! s:Swift()
@@ -487,7 +487,7 @@ function! s:Swift()
 endfunction
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'systemd') == -1
-  
+
 au BufNewFile,BufRead *.automount set filetype=systemd
 au BufNewFile,BufRead *.mount     set filetype=systemd
 au BufNewFile,BufRead *.path      set filetype=systemd
@@ -498,37 +498,37 @@ au BufNewFile,BufRead *.target    set filetype=systemd
 au BufNewFile,BufRead *.timer     set filetype=systemd
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'textile') == -1
-  
+
 au BufRead,BufNewFile *.textile set filetype=textile
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'thrift') == -1
-  
+
 au BufNewFile,BufRead *.thrift setlocal filetype=thrift
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
-  
+
 autocmd BufNewFile,BufRead {.,}tmux.conf{.*,} setlocal filetype=tmux
 autocmd BufNewFile,BufRead {.,}tmux.conf{.*,} setlocal commentstring=#\ %s
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
-  
+
 autocmd BufNewFile,BufRead *.toml set filetype=toml
 autocmd BufNewFile,BufRead Cargo.lock set filetype=toml
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
-  
+
 autocmd BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
-  
+
 autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala,*.vapi setfiletype vala
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vcl') == -1
-  
+
 au BufRead,BufNewFile *.vcl set filetype=vcl
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vm') == -1
-  
+
 au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
 endif
