@@ -276,12 +276,8 @@ au BufRead,BufNewFile *.mako     set filetype=mako
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'markdown') == -1
   
-autocmd BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mkd,*.mkdn
-      \ if &ft =~# '^\%(conf\|modula2\)$' |
-      \   set ft=markdown |
-      \ else |
-      \   setf markdown |
-      \ endif
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx} set filetype=markdown
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
   

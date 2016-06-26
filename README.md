@@ -66,7 +66,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [less](https://github.com/groenewege/vim-less) (syntax, indent, ftplugin, ftdetect)
 - [liquid](https://github.com/tpope/vim-liquid) (syntax, indent, ftplugin, ftdetect)
 - [mako](https://github.com/sophacles/vim-bundle-mako) (syntax, indent, ftplugin, ftdetect)
-- [markdown](https://github.com/tpope/vim-markdown) (syntax, ftplugin, ftdetect)
+- [markdown](https://github.com/plasticboy/vim-markdown) (syntax, ftdetect)
 - [nginx](https://github.com/othree/nginx-contrib-vim) (syntax, indent, ftdetect)
 - [nim](https://github.com/zah/nim.vim) (syntax, compiler, indent, ftdetect)
 - [nix](https://github.com/spwhitt/vim-nix) (syntax, ftplugin, ftdetect)

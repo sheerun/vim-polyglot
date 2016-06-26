@@ -5,6 +5,7 @@ set -E
 DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
 DIRS_BASIC="syntax compiler indent ftdetect after/syntax after/indent after/ftdetect"
 DIRS_ALL="syntax indent compiler autoload ftplugin ftdetect after"
+DIRS_SYNTAX="syntax ftdetect after/syntax after/ftdetect"
 
 OUTPUT=""
 
@@ -137,7 +138,7 @@ PACKS="
   less:groenewege/vim-less
   liquid:tpope/vim-liquid
   mako:sophacles/vim-bundle-mako
-  markdown:tpope/vim-markdown
+  markdown:plasticboy/vim-markdown:_SYNTAX
   nginx:othree/nginx-contrib-vim
   nim:zah/nim.vim:_BASIC
   nix:spwhitt/vim-nix
