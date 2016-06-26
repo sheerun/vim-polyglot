@@ -7,13 +7,20 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'blade') == -1
 if exists("b:did_indent")
     finish
 endif
+
 runtime! indent/html.vim
+let s:htmlindent = &indentexpr
 unlet! b:did_indent
+
+runtime! indent/php.vim
+let s:phpindent = &indentexpr
+unlet! b:did_indent
+
 let b:did_indent = 1
 
 setlocal autoindent
 setlocal indentexpr=GetBladeIndent()
-setlocal indentkeys=o,O,*<Return>,<>>,!^F,=@else,=@end,=@empty,=@show
+setlocal indentkeys=o,O,*<Return>,<>>,!^F,=@else,=@end,=@empty,=@show,=@stop
 
 " Only define the function once.
 if exists("*GetBladeIndent")
@@ -30,13 +37,19 @@ function! GetBladeIndent()
     let cline = substitute(substitute(getline(v:lnum), '\s\+$', '', ''), '^\s\+', '', '')
     let indent = indent(lnum)
     let cindent = indent(v:lnum)
-    if cline =~# '@\%(else\|elseif\|empty\|end\|show\)'
+    if cline =~# '@\%(else\|elseif\|empty\|end\|show\|stop\)' ||
+                \ cline =~# '\%(<?.*\)\@<!?>\|\%({{.*\)\@<!}}\|\%({!!.*\)\@<!!!}'
         let indent = indent - &sw
     else
         if exists("*GetBladeIndentCustom")
             let hindent = GetBladeIndentCustom()
+        elseif searchpair('@include\s*(', '', ')', 'bWr') ||
+                    \ searchpair('{!!', '', '!!}', 'bWr') ||
+                    \ searchpair('{{', '', '}}', 'bWr') ||
+                    \ searchpair('<?', '', '?>', 'bWr')
+            execute 'let hindent = ' . s:phpindent
         else
-            let hindent = HtmlIndent()
+            execute 'let hindent = ' . s:htmlindent
         endif
         if hindent > -1
             let indent = hindent
@@ -47,10 +60,13 @@ function! GetBladeIndent()
         let indent = cindent <= indent ? -1 : increase
     endif
 
-    if line =~# '@\%(section\)\%(.*\s*@end\)\@!' && line !~# '@\%(section\)\s*([^,]*)'
+    if line =~# '@\%(section\)\%(.*@end\)\@!' && line !~# '@\%(section\)\s*([^,]*)'
         return indent
-    elseif line =~# '@\%(if\|elseif\|else\|unless\|foreach\|forelse\|for\|while\|empty\|push\|section\|can\)\%(.*\s*@end\)\@!'
+    elseif line =~# '@\%(if\|elseif\|else\|unless\|foreach\|forelse\|for\|while\|empty\|push\|section\|can\|hasSection\)\%(.*@end\|.*@stop\)\@!' ||
+                \ line =~# '{{\%(.*}}\)\@!' || line =~# '{!!\%(.*!!}\)\@!'
         return increase
+    elseif line =~# '<?\%(.*?>\)\@!'
+        return indent(lnum-1) == -1 ? increase : indent(lnum) + increase
     else
         return indent
     endif

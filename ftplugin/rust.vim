@@ -4,7 +4,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
 " Description:  Vim syntax file for Rust
 " Maintainer:   Chris Morgan <me@chrismorgan.info>
 " Maintainer:   Kevin Ballard <kevin@sb.org>
-" Last Change:  January 29, 2015
+" Last Change:  June 08, 2016
 
 if exists("b:did_ftplugin")
 	finish
@@ -13,6 +13,9 @@ let b:did_ftplugin = 1
 
 let s:save_cpo = &cpo
 set cpo&vim
+
+augroup rust.vim
+autocmd!
 
 " Variables {{{1
 
@@ -56,7 +59,33 @@ if exists("g:loaded_delimitMate")
 	if exists("b:delimitMate_excluded_regions")
 		let b:rust_original_delimitMate_excluded_regions = b:delimitMate_excluded_regions
 	endif
-	let b:delimitMate_excluded_regions = delimitMate#Get("excluded_regions") . ',rustLifetimeCandidate,rustGenericLifetimeCandidate'
+
+	let s:delimitMate_extra_excluded_regions = ',rustLifetimeCandidate,rustGenericLifetimeCandidate'
+
+	" For this buffer, when delimitMate issues the `User delimitMate_map`
+	" event in the autocommand system, add the above-defined extra excluded
+	" regions to delimitMate's state, if they have not already been added.
+	autocmd User <buffer>
+		\ if expand('<afile>') ==# 'delimitMate_map' && match(
+		\     delimitMate#Get("excluded_regions"),
+		\     s:delimitMate_extra_excluded_regions) == -1
+		\|  let b:delimitMate_excluded_regions =
+		\       delimitMate#Get("excluded_regions")
+		\       . s:delimitMate_extra_excluded_regions
+		\|endif
+
+	" For this buffer, when delimitMate issues the `User delimitMate_unmap`
+	" event in the autocommand system, delete the above-defined extra excluded
+	" regions from delimitMate's state (the deletion being idempotent and
+	" having no effect if the extra excluded regions are not present in the
+	" targeted part of delimitMate's state).
+	autocmd User <buffer>
+		\ if expand('<afile>') ==# 'delimitMate_unmap'
+		\|  let b:delimitMate_excluded_regions = substitute(
+		\       delimitMate#Get("excluded_regions"),
+		\       '\C\V' . s:delimitMate_extra_excluded_regions,
+		\       '', 'g')
+		\|endif
 endif
 
 if has("folding") && exists('g:rust_fold') && g:rust_fold != 0
@@ -161,9 +190,12 @@ let b:undo_ftplugin = "
 		\|ounmap <buffer> ]]
 		\|set matchpairs-=<:>
 		\|unlet b:match_skip
+		\|augroup! rust.vim
 		\"
 
 " }}}1
+
+augroup END
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

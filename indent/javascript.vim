@@ -19,7 +19,7 @@ setlocal nosmartindent
 setlocal indentexpr=GetJavascriptIndent()
 setlocal formatexpr=Fixedgq(v:lnum,v:count)
 setlocal indentkeys=0{,0},0),0],0\,*<Return>,:,!^F,o,O,e
-setlocal cinoptions+=j1,J1
+setlocal cinoptions+=j1,J1,c1
 
 " Only define the function once.
 if exists("*GetJavascriptIndent")
@@ -45,7 +45,7 @@ endif
 
 let s:line_pre = '^\s*\%(\/\*.*\*\/\s*\)*'
 let s:js_keywords = s:line_pre . '\%(break\|import\|export\|catch\|const\|continue\|debugger\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|let\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)\>\C'
-let s:expr_case = s:line_pre . '\%(case\s\+[^\:]*\|default\)\s*:\s*\C'
+let s:expr_case = s:line_pre . '\%(\%(case\>.*\)\|default\)\s*:\C'
 " Regex of syntax group names that are or delimit string or are comments.
 let s:syng_strcom = '\%(string\|regex\|special\|doc\|comment\|template\)\c'
 
@@ -79,7 +79,7 @@ function s:Onescope(lnum)
   end
   let mypos = col('.')
   call cursor(a:lnum, 1)
-  if search('\<\%(while\|for\|if\)\>\s*(\C', 'ce', a:lnum) > 0 &&
+  if search('.*\zs\<\%(while\|for\|if\)\>\s*(\C', 'ce', a:lnum) > 0 &&
         \ s:lookForParens('(', ')', 'W', a:lnum) > 0 &&
         \ col('.') == strlen(s:RemoveTrailingComments(getline(a:lnum)))
     call cursor(a:lnum, mypos)
@@ -142,7 +142,7 @@ function s:GetMSL(lnum, in_one_line_scope)
   " Start on the line we're at and use its indent.
   let msl = a:lnum
   let lnum = s:PrevNonBlankNonString(a:lnum - 1)
-  while lnum > 0
+  while lnum > 0 && !s:Match(msl,s:line_pre . '[])}]')
     " If we have a continuation line, or we're in a string, use line as MSL.
     " Otherwise, terminate search as we have found our MSL already.
     let line = getline(lnum)
@@ -314,6 +314,7 @@ function GetJavascriptIndent()
   " 3.1. Setup {{{1
   " ----------
   " Set up variables for restoring position in file.  Could use v:lnum here.
+  " Avoid use of line('.')/col('.') type functions as the curpos can change
   let vcol = col('.')
 
   " 3.2. Work on the current line {{{1
@@ -336,21 +337,25 @@ function GetJavascriptIndent()
   if line !~ '^\%(\/\*\|\s*\/\/\)' && s:IsInComment(v:lnum, 1)
     return cindent(v:lnum)
   endif
-  
+
   " single opening bracket will assume you want a c style of indenting
-  if s:Match(v:lnum, s:line_pre . '{' . s:line_term) && !s:Match(lnum,s:block_regex) &&
+  if line =~ s:line_pre . '{' && !s:Match(lnum,s:block_regex) &&
         \ !s:Match(lnum,s:comma_last)
     return cindent(v:lnum)
   endif
 
   " cindent each line which has a switch label
   if (line =~ s:expr_case)
-    return cindent(v:lnum)
+    let s:cpo_switch = &cpo
+    set cpo+=%
+    let ind = cindent(v:lnum)
+    let &cpo = s:cpo_switch
+    return ind
   endif
 
   " If we got a closing bracket on an empty line, find its match and indent
   " according to it.
-  let col = s:Match(v:lnum,  s:line_pre . '[]})]')
+  let col = line =~ s:line_pre . '[]})]'
   if col > 0
     let parlnum = v:lnum
     while col
@@ -361,8 +366,8 @@ function GetJavascriptIndent()
         continue
       end
       if parlnum > 0
-        let ind = s:InMultiVarStatement(parlnum, 0, 0)|| s:LineHasOpeningBrackets(parlnum) !~ '2'
-              \ ? indent(parlnum) : indent(s:GetMSL(parlnum, 0))
+        let ind = s:InMultiVarStatement(parlnum, 0, 0)|| s:LineHasOpeningBrackets(parlnum) !~ '2' ?
+              \ indent(parlnum) : indent(s:GetMSL(parlnum, 0))
       endif
     endwhile
     return ind
@@ -371,7 +376,8 @@ function GetJavascriptIndent()
 
   " If line starts with an operator...
   if (line =~ s:operator_first)
-    if (s:Match(lnum, s:operator_first) || s:Match(lnum, s:line_pre . '[])}]'))
+    if (s:Match(lnum, s:operator_first) || (s:Match(lnum, s:line_pre . '[])}]') &&
+          \ !(s:Match(v:lnum,s:line_pre . '\.') && s:Match(lnum, ')' . s:line_term))))
       " and so does previous line, don't indent
       return indent(lnum)
     end
@@ -391,13 +397,15 @@ function GetJavascriptIndent()
     end
 
     " If previous line starts with an operator...
-  elseif (s:Match(lnum, s:operator_first) && !s:Match(lnum,s:continuation_regex))||getline(lnum) =~ ');\=' . s:line_term
+  elseif (s:Match(lnum, s:operator_first) && !s:Match(lnum,s:continuation_regex)) ||
+        \ getline(lnum) =~ '[]})];\=' . s:line_term
     let counts = s:LineHasOpeningBrackets(lnum)
-    if counts[0] == '2' && !s:Match(lnum, s:operator_first)
+    if counts =~ '2' && !s:Match(lnum, s:operator_first)
       call cursor(lnum, 1)
       " Search for the opening tag
-      let mnum = s:lookForParens('(', ')', 'nbW', 0)
-      if mnum > 0 && s:Match(mnum, s:operator_first)
+      let mnum = s:lookForParens('(\|{\|\[', ')\|}\|\]', 'nbW', 0)
+      if mnum > 0 && (s:Match(mnum, s:operator_first) ||
+            \ (s:Onescope(s:PrevNonBlankNonString(mnum - 1))) && !s:Match(mnum, s:line_pre . '{'))
         return indent(mnum) - s:sw()
       end
     elseif s:Match(lnum, s:operator_first)
@@ -413,7 +421,7 @@ function GetJavascriptIndent()
   " If the line is empty and the previous nonblank line was a multi-line
   " comment, use that comment's indent. Deduct one char to account for the
   " space in ' */'.
-  if line =~ '^\s*$' && getline(prevline) !~ '\%(\%(^\s*\/\/\|\/\*\).*\)\@<!\*\/' &&
+  if line =~ '^\s*$' && getline(prevline) =~ '\%(\%(^\s*\/\/\|\/\*\).*\)\@<!\*\/' &&
         \ s:IsInComment(prevline, 1)
     return indent(prevline) - 1
   endif
@@ -430,16 +438,6 @@ function GetJavascriptIndent()
     return 0
   endif
 
-" foo('foo',
-"   bar('bar', function() {
-"     hi();
-"   })
-" );
-
-" function (a, b, c, d,
-"     e, f, g) {
-"       console.log('inner');
-" }
   " If the previous line ended with a block opening, add a level of indent.
   if s:Match(lnum, s:block_regex)
     return s:InMultiVarStatement(lnum, 0, 0) || s:LineHasOpeningBrackets(lnum) !~ '2' ?
@@ -451,15 +449,16 @@ function GetJavascriptIndent()
   let ind = indent(lnum)
   " If the previous line contained an opening bracket, and we are still in it,
   " add indent depending on the bracket type.
-  if s:Match(lnum, '\%([[({]\)\|\%([^\t \])}][})\]]\)')
+  if s:Match(lnum, '[[({})\]]')
     let counts = s:LineHasOpeningBrackets(lnum)
     if counts =~ '2'
-      call cursor(lnum,matchend(s:RemoveTrailingComments(line), '.\+\zs[])}]'))
+      call cursor(lnum,matchend(s:RemoveTrailingComments(line), '.*\zs[])}]'))
       while s:lookForParens('(\|{\|\[', ')\|}\|\]', 'bW', 0) == lnum
         call cursor(lnum, matchend(s:RemoveTrailingComments(strpart(line,0,col('.'))), '.*\zs[])}]'))
       endwhile
-      if line('.') < lnum && !s:InMultiVarStatement(line('.'),0,0)
-        return indent(s:GetMSL(line('.'), 0))
+      let cur = line('.')
+      if cur < lnum && !s:InMultiVarStatement(cur,0,0)
+        return indent(s:GetMSL(cur, 0))
       end
     elseif counts =~ '1' || s:Onescope(lnum)
       return ind + s:sw()
@@ -502,64 +501,64 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 " gq{{{2
 function! Fixedgq(lnum, count)
-    let l:tw = &tw ? &tw : 80;
+  let l:tw = &tw ? &tw : 80;
 
-    let l:count = a:count
-    let l:first_char = indent(a:lnum) + 1
+  let l:count = a:count
+  let l:first_char = indent(a:lnum) + 1
 
-    if mode() == 'i' " gq was not pressed, but tw was set
-        return 1
-    endif
+  if mode() == 'i' " gq was not pressed, but tw was set
+    return 1
+  endif
 
-    " This gq is only meant to do code with strings, not comments
-    if s:IsInComment(a:lnum, l:first_char)
-        return 1
-    endif
+  " This gq is only meant to do code with strings, not comments
+  if s:IsInComment(a:lnum, l:first_char)
+    return 1
+  endif
 
-    if len(getline(a:lnum)) < l:tw && l:count == 1 " No need for gq
-        return 1
-    endif
+  if len(getline(a:lnum)) < l:tw && l:count == 1 " No need for gq
+    return 1
+  endif
 
-    " Put all the lines on one line and do normal spliting after that
-    if l:count > 1
-        while l:count > 1
-            let l:count -= 1
-            normal J
-        endwhile
-    endif
+  " Put all the lines on one line and do normal spliting after that
+  if l:count > 1
+    while l:count > 1
+      let l:count -= 1
+      normal J
+    endwhile
+  endif
 
-    let l:winview = winsaveview()
+  let l:winview = winsaveview()
 
+  call cursor(a:lnum, l:tw + 1)
+  let orig_breakpoint = searchpairpos(' ', '', '\.', 'bcW', '', a:lnum)
+  call cursor(a:lnum, l:tw + 1)
+  let breakpoint = searchpairpos(' ', '', '\.', 'bcW', s:skip_expr, a:lnum)
+
+  " No need for special treatment, normal gq handles edgecases better
+  if breakpoint[1] == orig_breakpoint[1]
+    call winrestview(l:winview)
+    return 1
+  endif
+
+  " Try breaking after string
+  if breakpoint[1] <= indent(a:lnum)
     call cursor(a:lnum, l:tw + 1)
-    let orig_breakpoint = searchpairpos(' ', '', '\.', 'bcW', '', a:lnum)
-    call cursor(a:lnum, l:tw + 1)
-    let breakpoint = searchpairpos(' ', '', '\.', 'bcW', s:skip_expr, a:lnum)
-
-    " No need for special treatment, normal gq handles edgecases better
-    if breakpoint[1] == orig_breakpoint[1]
-        call winrestview(l:winview)
-        return 1
-    endif
-
-    " Try breaking after string
-    if breakpoint[1] <= indent(a:lnum)
-        call cursor(a:lnum, l:tw + 1)
-        let breakpoint = searchpairpos('\.', '', ' ', 'cW', s:skip_expr, a:lnum)
-    endif
+    let breakpoint = searchpairpos('\.', '', ' ', 'cW', s:skip_expr, a:lnum)
+  endif
 
 
-    if breakpoint[1] != 0
-        call feedkeys("r\<CR>")
-    else
-        let l:count = l:count - 1
-    endif
+  if breakpoint[1] != 0
+    call feedkeys("r\<CR>")
+  else
+    let l:count = l:count - 1
+  endif
 
-    " run gq on new lines
-    if l:count == 1
-        call feedkeys("gqq")
-    endif
+  " run gq on new lines
+  if l:count == 1
+    call feedkeys("gqq")
+  endif
 
-    return 0
+  return 0
 endfunction
 "}}}
 " vim: foldmethod=marker:foldlevel=1
