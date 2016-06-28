@@ -112,9 +112,15 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [yaml](https://github.com/stephpy/vim-yaml) (syntax, ftplugin)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
 
-## Disabling a language pack
+## Updating
 
-Individual language packs can be disabled by setting `g:polyglot_disabled`.
+You can either wait for new patch release with updates or run the `./build` script by yourself.
+
+## Troubleshooting
+
+Please make sure you have `syntax on` in your `.vimrc`, otherwise syntax files are not loaded at all.
+
+Individual language packs can be disabled by setting `g:polyglot_disabled` as follows:
 
 ```viml
 " ~/.vimrc
@@ -122,10 +128,6 @@ let g:polyglot_disabled = ['css']
 ```
 
 Note that disabiling languages won't make in general your vim startup any faster / slower (only for specific file type). Vim-polyglot is selection of language plugins that are loaded only on demand.
-
-## Updating
-
-You can either wait for new patch release with updates or run the `./build` script by yourself.
 
 ## Contributing
 
