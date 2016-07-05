@@ -103,8 +103,12 @@ autocmd BufNewFile,BufRead *.em set filetype=ember-script
 autocmd FileType ember-script set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emblem') == -1
-  
-autocmd BufNewFile,BufRead *.emblem set filetype=emblem
+
+if index(g:polyglot_disabled, 'emberscript') == -1
+  autocmd BufNewFile,BufRead *.emblem set filetype=emblem
+else
+  autocmd BufNewFile,BufRead *.em,*.emblem set filetype=emblem
+endif
 autocmd FileType emblem set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'erlang') == -1
