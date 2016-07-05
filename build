@@ -75,7 +75,7 @@ copy_dir() {
 }
 
 concat_ftdetect() {
-  cat ftdetect/* | grep -E '^[^"]' > tmp/polyglot.vim
+  for f in ftdetect/*; do (echo '" '"$f"; cat "${f}"; echo) >> tmp/polyglot.vim; done
   rm -f ftdetect/*
   mv tmp/polyglot.vim ftdetect/
 }
