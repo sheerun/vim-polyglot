@@ -56,6 +56,6 @@ let &l:path =
 setlocal includeexpr=GetElixirFilename(v:fname)
 setlocal suffixesadd=.ex,.exs,.eex,.erl,.yrl,.hrl
 
-setlocal formatoptions-=t formatoptions+=croqlj
+silent! setlocal formatoptions-=t formatoptions+=croqlj
 
 endif

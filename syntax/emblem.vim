@@ -1,10 +1,10 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emblem') == -1
   
 " Language:    emblem
-" Maintainer:  heartsentwined <heartsentwined@cogito-lab.com>
-" URL:         http://github.com/heartsentwined/vim-emblem
-" Version:     1.2.0
-" Last Change: 2013 Apr 22
+" Maintainer:  Yulij Andreevich Lesov <yalesov@gmail.com>
+" URL:         http://github.com/yalesov/vim-emblem
+" Version:     2.0.0
+" Last Change: 2016 Jul 5
 " License:     GPL-3.0
 
 " Quit when a syntax file is already loaded.
@@ -31,7 +31,7 @@ syn match eblClass   '\v(\w|-)+' nextgroup=@eblComponent contained display
 hi def link eblIdOp    eblId
 hi def link eblClassOp eblClass
 
-syn region eblHbsAttrRegion matchgroup=eblHbsAttrRegionOp start='{' end='}' contains=@eblHbsHelpers nextgroup=@eblComponent keepend contained display
+syn region eblHbsAttrRegion matchgroup=eblHbsAttrRegionOp start='{\|(\|\[' end='}\|)\|\]' contains=@eblHbsHelpers nextgroup=@eblComponent keepend contained display
 hi def link eblHbsAttrRegionOp eblOperator
 
 syn match eblInlineText '\v\s+[^:]+.*$' contains=eblItpl contained display
@@ -40,7 +40,7 @@ hi def link eblInlineText eblRaw
 syn cluster eblHbsComponent contains=eblHbsArg,eblHbsAttr,eblHbsTextOp,eblLineOp
 
 syn match eblHbsOp             '\v\s*\=+'                                                      nextgroup=@eblHbsHelpers     skipwhite contained display
-syn match eblHbsHelper         '\v\w(\w|-|\.)*'                                                nextgroup=@eblHbsComponent   skipwhite contained display
+syn match eblHbsHelper         '\v\w(\w|-|\.|\/)*'                                             nextgroup=@eblHbsComponent   skipwhite contained display
 syn match eblHbsTextOp         '|'                                                             nextgroup=eblHbsText                   contained display
 syn match eblHbsText           '.*'                                                                                                   contained display
 hi def link eblHbsOp             eblOperator
@@ -48,24 +48,38 @@ hi def link eblHbsHelper         eblFunction
 hi def link eblHbsTextOp         eblOperator
 hi def link eblHbsText           eblRaw
 
-syn cluster eblHbsHelpers contains=eblHbsHelper,eblHbsCtrlFlowHelper,eblHbsEachHelper
+syn cluster eblHbsHelpers contains=eblHbsHelper,eblHbsCtrlFlowHelper,eblHbsEachHelper,eblHbsWithHelper
 
-syn match eblHbsCtrlFlowHelper '\v<(if|unless|else|with)>'                                     nextgroup=@eblHbsComponent   skipwhite contained display
-syn match eblHbsEachHelper     '\v<each>'                                                      nextgroup=eblHbsEachArg      skipwhite contained display
-syn match eblHbsEachArg        /\v((["'])[^\2]{-}\2|(\w|\.|-|\>)+)/                            nextgroup=eblHbsIn,eblLineOp skipwhite contained display
-syn match eblHbsIn             '\v<in>'                                                        nextgroup=eblHbsInArg        skipwhite contained display
-syn match eblHbsInArg          /\v((["'])[^\2]{-}\2|(\w|\.|-|\>)+)/                            nextgroup=eblLineOp          skipwhite contained display
-hi def link eblHbsCtrlFlowHelper eblKeyword
-hi def link eblHbsEachHelper     eblKeyword
-hi def link eblHbsEachArg        eblLiteral
-hi def link eblHbsIn             eblKeyword
-hi def link eblHbsInArg          eblLiteral
+syn match eblHbsCtrlFlowHelper   '\v<(else if|if|unless|else)>'                                  nextgroup=@eblHbsComponent                           skipwhite contained display
+syn match eblHbsEachHelper       '\v<each>'                                                      nextgroup=eblHbsEachArg                              skipwhite contained display
+syn match eblHbsEachArg          /\v((["'])[^\2]{-}\2|(\w|\.|-|\>)+)/                            nextgroup=eblHbsIn,eblLineOp                         skipwhite contained display
+syn match eblHbsIn               '\v<in>'                                                        nextgroup=eblHbsInArg                                skipwhite contained display
+syn match eblHbsInArg            /\v((["'])[^\2]{-}\2|(\w|\.|-|\>)+)/                            nextgroup=eblLineOp                                  skipwhite contained display
+syn match eblHbsWithHelper       '\v<with>'                                                      nextgroup=eblHbsWithArg                              skipwhite contained display
+syn match eblHbsWithArg          /\v((["'])[^\2]{-}\2|(\w|\.|-|\>)+)/                            nextgroup=eblHbsAs                                   skipwhite contained display
+syn match eblHbsAs               '\v<as>'                                                        nextgroup=eblHbsAsBlockStartArg                      skipwhite contained display
+syn match eblHbsAsBlockStartArg  /\v\|/                                                          nextgroup=eblHbsAsBlockFirstArg                      skipwhite contained display
+syn match eblHbsAsBlockFirstArg  /\v((["'])[^\2]{-}\2|(\w|\.|-|\>)+)/                            nextgroup=eblHbsAsBlockSecondArg,eblHbsAsBlockEndArg skipwhite contained display
+syn match eblHbsAsBlockSecondArg /\v((["'])[^\2]{-}\2|(\w|\.|-|\>)+)/                            nextgroup=eblHbsAsBlockEndArg                        skipwhite contained display
+syn match eblHbsAsBlockEndArg    /\v\|/                                                          nextgroup=eblLineOp                                  skipwhite contained display
+hi def link eblHbsCtrlFlowHelper   eblKeyword
+hi def link eblHbsEachHelper       eblKeyword
+hi def link eblHbsEachArg          eblLiteral
+hi def link eblHbsIn               eblKeyword
+hi def link eblHbsInArg            eblLiteral
+hi def link eblHbsWithHelper       eblKeyword
+hi def link eblHbsWithArg          eblLiteral
+hi def link eblHbsAs               eblKeyword
+hi def link eblHbsAsBlockStartArg  eblOperator
+hi def link eblHbsAsBlockFirstArg  eblLiteral
+hi def link eblHbsAsBlockSecondArg eblLiteral
+hi def link eblHbsAsBlockEndArg    eblOperator
 
 syn match eblHbsArg            /\v\s*((["'])[^\2]{-}\2|(\w|\.|-|\>)+)/                         nextgroup=@eblHbsComponent   skipwhite contained display
 syn match eblHbsAttr           '\v\s*(\w|-)+\=@='                      contains=eblHbsAttrBind nextgroup=eblHbsAttrOp                 contained display
 syn match eblHbsAttrBind       /\v<(\w|-)+Bind>/                                                                                      contained display
 syn match eblHbsAttrOp         '='                                                             nextgroup=eblHbsAttrLit                contained display
-syn match eblHbsAttrLit        /\v(["'])[^\1]{-}\1|[^: ]+/             contains=eblItpl        nextgroup=@eblHbsComponent   skipwhite contained display
+syn match eblHbsAttrLit        /\v(["'])[^\1]{-}\1|[^\.: ]+/             contains=eblItpl        nextgroup=@eblHbsComponent   skipwhite contained display
 hi def link eblHbsArg            eblLiteral
 hi def link eblHbsAttr           eblAttr
 hi def link eblhbsAttrBind       eblBind
@@ -106,6 +120,7 @@ hi def link eblKnownEvent eblEvent
 
 syn region eblItpl matchgroup=eblItplOp start='#{' end='}'  contains=@eblHbsHelpers,eblHbsPartialOp keepend contained display
 syn region eblItpl matchgroup=eblItplOp start='{{' end='}}' contains=@eblHbsHelpers,eblHbsPartialOp keepend contained display
+syn region eblItpl matchgroup=eblItplOp start='(' end=')'   contains=@eblHbsHelpers,eblHbsPartialOp keepend contained display
 hi def link eblItplOp eblOperator
 
 syn match eblHbsPartialOp '\s*>' nextgroup=@eblHbsHelpers skipwhite contained display

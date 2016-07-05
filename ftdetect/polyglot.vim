@@ -99,12 +99,22 @@ au BufNewFile,BufRead *.elm		set filetype=elm
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emberscript') == -1
   
+if !exists('g:vim_ember_script')
+  let g:vim_ember_script = 1
+endif
 autocmd BufNewFile,BufRead *.em set filetype=ember-script
 autocmd FileType ember-script set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emblem') == -1
   
-autocmd BufNewFile,BufRead *.emblem set filetype=emblem
+if !exists('g:vim_emblem')
+  let g:vim_emblem = 1
+endif
+if exists('g:vim_ember_script')
+  autocmd BufNewFile,BufRead *.emblem set filetype=emblem
+else
+  autocmd BufNewFile,BufRead *.em,*.emblem set filetype=emblem
+endif
 autocmd FileType emblem set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'erlang') == -1

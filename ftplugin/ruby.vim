@@ -77,20 +77,20 @@ function! s:query_path(root) abort
     let prefix = ''
   endif
   if &shellxquote == "'"
-    let path_check = prefix.'ruby -e "' . code . '"'
+    let path_check = prefix.'ruby -e --disable-gems"' . code . '"'
   else
-    let path_check = prefix."ruby -e '" . code . "'"
+    let path_check = prefix."ruby -e --disable-gems'" . code . "'"
   endif
 
   let cd = haslocaldir() ? 'lcd' : 'cd'
-  let cwd = getcwd()
+  let cwd = fnameescape(getcwd())
   try
     exe cd fnameescape(a:root)
     let path = split(system(path_check),',')
-    exe cd fnameescape(cwd)
+    exe cd cwd
     return path
   finally
-    exe cd fnameescape(cwd)
+    exe cd cwd
   endtry
 endfunction
 

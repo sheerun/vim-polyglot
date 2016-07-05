@@ -21,6 +21,12 @@ unlet! b:current_syntax
 syn case match
 syn clear htmlError
 
+if has('patch-7.4.1142')
+    syn iskeyword @,48-57,_,192-255,@-@
+else
+    setlocal iskeyword+=@-@
+endif
+
 syn region  bladeEcho       matchgroup=bladeDelimiter start="@\@<!{{" end="}}"  contains=@bladePhp,bladePhpParenBlock  containedin=ALLBUT,@bladeExempt keepend
 syn region  bladeEcho       matchgroup=bladeDelimiter start="{!!" end="!!}"  contains=@bladePhp,bladePhpParenBlock  containedin=ALLBUT,@bladeExempt keepend
 syn region  bladeComment    matchgroup=bladeDelimiter start="{{--" end="--}}"  contains=bladeTodo  containedin=ALLBUT,@bladeExempt keepend
