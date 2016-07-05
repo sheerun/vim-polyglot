@@ -114,7 +114,7 @@ PACKS="
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
   elm:lambdatoast/elm.vim
-  emberscript:heartsentwined/vim-ember-script
+  emberscript:yalesov/vim-ember-script
   emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
   fish:dag/vim-fish

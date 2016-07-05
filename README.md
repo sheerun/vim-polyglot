@@ -42,7 +42,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [dockerfile](https://github.com/honza/dockerfile.vim) (syntax, ftdetect)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, ftplugin, ftdetect)
 - [elm](https://github.com/lambdatoast/elm.vim) (syntax, indent, autoload, ftplugin, ftdetect)
-- [emberscript](https://github.com/heartsentwined/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
+- [emberscript](https://github.com/yalesov/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
 - [emblem](https://github.com/yalesov/vim-emblem) (syntax, indent, ftplugin, ftdetect)
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent, ftdetect)
 - [fish](https://github.com/dag/vim-fish) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
