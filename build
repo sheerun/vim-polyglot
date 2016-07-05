@@ -115,7 +115,7 @@ PACKS="
   elixir:elixir-lang/vim-elixir
   elm:lambdatoast/elm.vim
   emberscript:heartsentwined/vim-ember-script
-  emblem:heartsentwined/vim-emblem
+  emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
   fish:dag/vim-fish
   git:tpope/vim-git
