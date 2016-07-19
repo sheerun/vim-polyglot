@@ -61,7 +61,11 @@ syntax case match
 syn match typescriptSpecial "\\\d\d\d\|\\."
 syn region typescriptStringD start=+"+ skip=+\\\\\|\\"+ end=+"\|$+  contains=typescriptSpecial,@htmlPreproc extend
 syn region typescriptStringS start=+'+ skip=+\\\\\|\\'+ end=+'\|$+  contains=typescriptSpecial,@htmlPreproc extend
-syn region typescriptStringB start=+`+ skip=+\\\\\|\\`+ end=+`+  contains=typescriptSpecial,@htmlPreproc extend
+syn region typescriptStringB start=+`+ skip=+\\\\\|\\`+ end=+`+  contains=typescriptInterpolation,typescriptSpecial,@htmlPreproc extend
+
+syn region typescriptInterpolation matchgroup=typescriptInterpolationDelimiter
+      \ start=/${/ end=/}/ contained
+      \ contains=@typescriptExpression
 
 syn match typescriptSpecialCharacter "'\\.'"
 syn match typescriptNumber "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
@@ -114,7 +118,7 @@ syntax keyword typescriptDeprecated escape unescape all applets alinkColor bgCol
 syntax keyword typescriptConditional if else switch
 syntax keyword typescriptRepeat do while for in of
 syntax keyword typescriptBranch break continue yield await
-syntax keyword typescriptLabel case default async
+syntax keyword typescriptLabel case default async readonly
 syntax keyword typescriptStatement return with
 
 syntax keyword typescriptGlobalObjects Array Boolean Date Function Infinity Math Number NaN Object Packages RegExp String Symbol netscape
@@ -131,7 +135,7 @@ syntax keyword typescriptReserved constructor declare as interface module abstra
   syn match typescriptParameters "([a-zA-Z0-9_?.$][\w?.$]*)\s*:\s*([a-zA-Z0-9_?.$][\w?.$]*)" contained skipwhite
 "}}}
 " DOM2 Objects"{{{
-  syntax keyword typescriptType DOMImplementation DocumentFragment Node NodeList NamedNodeMap CharacterData Attr Element Text Comment CDATASection DocumentType Notation Entity EntityReference ProcessingInstruction void any string boolean number symbol
+  syntax keyword typescriptType DOMImplementation DocumentFragment Node NodeList NamedNodeMap CharacterData Attr Element Text Comment CDATASection DocumentType Notation Entity EntityReference ProcessingInstruction void any string boolean number symbol never
   syntax keyword typescriptExceptions DOMException
 "}}}
 " DOM2 CONSTANT"{{{
@@ -249,6 +253,7 @@ if version >= 508 || !exists("did_typescript_syn_inits")
   HiLink typescriptStringS String
   HiLink typescriptStringD String
   HiLink typescriptStringB String
+  HiLink typescriptInterpolationDelimiter Delimiter
   HiLink typescriptRegexpString String
   HiLink typescriptGlobal Constant
   HiLink typescriptCharacter Character

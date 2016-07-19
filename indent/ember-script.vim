@@ -3,9 +3,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emberscript') =
 " Language:    ember-script
 " Maintainer:  Yulij Andreevich Lesov <yalesov@gmail.com>>
 " URL:         http://github.com/yalesov/vim-ember-script
-" Version:     1.0.3
-" Last Change: 2016 Jul 5
-" License:     GPL-3.0
+" Version:     1.0.4
+" Last Change: 2016 Jul 6
+" License:     ISC
 
 if exists('b:did_indent')
   finish

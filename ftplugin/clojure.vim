@@ -1,13 +1,13 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'clojure') == -1
   
 " Vim filetype plugin file
-" Language:	Clojure
-" Author:	Meikel Brandmeyer <mb@kotka.de>
+" Language:     Clojure
+" Author:       Meikel Brandmeyer <mb@kotka.de>
 "
-" Maintainer:	Sung Pae <self@sungpae.com>
-" URL:		https://github.com/guns/vim-clojure-static
-" License:	Same as Vim
-" Last Change:	%%RELEASE_DATE%%
+" Maintainer:   Sung Pae <self@sungpae.com>
+" URL:          https://github.com/guns/vim-clojure-static
+" License:      Same as Vim
+" Last Change:  %%RELEASE_DATE%%
 
 if exists("b:did_ftplugin")
 	finish
@@ -84,9 +84,9 @@ endif
 " Win32 can filter files in the browse dialog
 if has("gui_win32") && !exists("b:browsefilter")
 	let b:browsefilter = "Clojure Source Files (*.clj)\t*.clj\n" .
-			   \ "ClojureScript Source Files (*.cljs)\t*.cljs\n" .
-			   \ "Java Source Files (*.java)\t*.java\n" .
-			   \ "All Files (*.*)\t*.*\n"
+	                   \ "ClojureScript Source Files (*.cljs)\t*.cljs\n" .
+	                   \ "Java Source Files (*.java)\t*.java\n" .
+	                   \ "All Files (*.*)\t*.*\n"
 	let b:undo_ftplugin .= ' | unlet! b:browsefilter'
 endif
 

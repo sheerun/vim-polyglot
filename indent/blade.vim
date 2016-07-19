@@ -18,9 +18,18 @@ unlet! b:did_indent
 
 let b:did_indent = 1
 
+" Doesn't include 'foreach' and 'forelse' because these already get matched by 'for'.
+let s:directives_start = 'if\|else\|unless\|for\|while\|empty\|push\|section\|can\|hasSection\|verbatim'
+let s:directives_end = 'else\|end\|empty\|show\|stop\|append\|overwrite'
+
+if exists('g:blade_custom_directives_pairs')
+    let s:directives_start .= '\|' . join(keys(g:blade_custom_directives_pairs), '\|')
+    let s:directives_end .= '\|' . join(values(g:blade_custom_directives_pairs), '\|')
+endif
+
 setlocal autoindent
 setlocal indentexpr=GetBladeIndent()
-setlocal indentkeys=o,O,*<Return>,<>>,!^F,=@else,=@end,=@empty,=@show,=@stop
+exe "setlocal indentkeys=o,O,<>>,!^F,0=}},0=!!},=@" . substitute(s:directives_end, '\\|', ',=@', 'g')
 
 " Only define the function once.
 if exists("*GetBladeIndent")
@@ -36,18 +45,21 @@ function! GetBladeIndent()
     let line = substitute(substitute(getline(lnum), '\s\+$', '', ''), '^\s\+', '', '')
     let cline = substitute(substitute(getline(v:lnum), '\s\+$', '', ''), '^\s\+', '', '')
     let indent = indent(lnum)
-    if cline =~# '@\%(else\|elseif\|empty\|end\|show\|stop\)' ||
+    if cline =~# '@\%(' . s:directives_end . '\)' ||
                 \ cline =~# '\%(<?.*\)\@<!?>\|\%({{.*\)\@<!}}\|\%({!!.*\)\@<!!!}'
         let indent = indent - &sw
-    elseif line =~# '<?\%(.*?>\)\@!'
+    elseif line =~# '<?\%(.*?>\)\@!\|@php\%(\s*(\)\@!'
         let indent = indent + &sw
     else
         if exists("*GetBladeIndentCustom")
             let hindent = GetBladeIndentCustom()
-        elseif searchpair('@include\s*(', '', ')', 'bWr') ||
+        " Don't use PHP indentation if line is a comment
+        elseif line !~# '^\s*\%(#\|//\)\|\*/\s*$' && (
+                    \ searchpair('@include\%(If\)\?\s*(', '', ')', 'bWr') ||
                     \ searchpair('{!!', '', '!!}', 'bWr') ||
                     \ searchpair('{{', '', '}}', 'bWr') ||
-                    \ searchpair('<?', '', '?>', 'bWr')
+                    \ searchpair('<?', '', '?>', 'bWr') ||
+                    \ searchpair('@php\%(\s*(\)\@!', '', '@endphp', 'bWr') )
             execute 'let hindent = ' . s:phpindent
         else
             execute 'let hindent = ' . s:htmlindent
@@ -60,7 +72,7 @@ function! GetBladeIndent()
 
     if line =~# '@\%(section\)\%(.*@end\)\@!' && line !~# '@\%(section\)\s*([^,]*)'
         return indent
-    elseif line =~# '@\%(if\|elseif\|else\|unless\|foreach\|forelse\|for\|while\|empty\|push\|section\|can\|hasSection\)\%(.*@end\|.*@stop\)\@!' ||
+    elseif line =~# '@\%(' . s:directives_start . '\)\%(.*@end\|.*@stop\)\@!' ||
                 \ line =~# '{{\%(.*}}\)\@!' || line =~# '{!!\%(.*!!}\)\@!'
         return increase
     else

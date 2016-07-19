@@ -163,9 +163,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emberscript') =
 " Language:    ember-script
 " Maintainer:  Yulij Andreevich Lesov <yalesov@gmail.com>>
 " URL:         http://github.com/yalesov/vim-ember-script
-" Version:     1.0.3
-" Last Change: 2016 Jul 5
-" License:     GPL-3.0
+" Version:     1.0.4
+" Last Change: 2016 Jul 6
+" License:     ISC
 
 if !exists('g:vim_ember_script')
   let g:vim_ember_script = 1
@@ -182,9 +182,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emblem') == -1
 " Language:    emblem
 " Maintainer:  Yulij Andreevich Lesov <yalesov@gmail.com>
 " URL:         http://github.com/yalesov/vim-emblem
-" Version:     2.0.0
-" Last Change: 2016 Jul 5
-" License:     GPL-3.0
+" Version:     2.0.1
+" Last Change: 2016 Jul 6
+" License:     ISC
 
 if !exists('g:vim_emblem')
   let g:vim_emblem = 1

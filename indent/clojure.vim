@@ -1,14 +1,14 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'clojure') == -1
   
 " Vim indent file
-" Language:	Clojure
-" Author:	Meikel Brandmeyer <mb@kotka.de>
-" URL:		http://kotka.de/projects/clojure/vimclojure.html
+" Language:     Clojure
+" Author:       Meikel Brandmeyer <mb@kotka.de>
+" URL:          http://kotka.de/projects/clojure/vimclojure.html
 "
-" Maintainer:	Sung Pae <self@sungpae.com>
-" URL:		https://github.com/guns/vim-clojure-static
-" License:	Same as Vim
-" Last Change:	%%RELEASE_DATE%%
+" Maintainer:   Sung Pae <self@sungpae.com>
+" URL:          https://github.com/guns/vim-clojure-static
+" License:      Same as Vim
+" Last Change:  %%RELEASE_DATE%%
 
 if exists("b:did_indent")
 	finish
@@ -79,8 +79,8 @@ if exists("*searchpairpos")
 	" patterns.
 	function! s:match_one(patterns, string)
 		let list = type(a:patterns) == type([])
-			   \ ? a:patterns
-			   \ : map(split(a:patterns, ','), '"^" . v:val . "$"')
+		           \ ? a:patterns
+		           \ : map(split(a:patterns, ','), '"^" . v:val . "$"')
 		for pat in list
 			if a:string =~# pat | return 1 | endif
 		endfor
@@ -189,6 +189,16 @@ if exists("*searchpairpos")
 		return val
 	endfunction
 
+	" Check if form is a reader conditional, that is, it is prefixed by #?
+	" or @#?
+	function! s:is_reader_conditional_special_case(position)
+		if getline(a:position[0])[a:position[1] - 3 : a:position[1] - 2] == "#?"
+			return 1
+		endif
+
+		return 0
+	endfunction
+
 	" Returns 1 for opening brackets, -1 for _anything else_.
 	function! s:bracket_type(char)
 		return stridx('([{', a:char) > -1 ? 1 : -1
@@ -254,6 +264,10 @@ if exists("*searchpairpos")
 
 		if s:is_method_special_case(paren)
 			return [paren[0], paren[1] + &shiftwidth - 1]
+		endif
+
+		if s:is_reader_conditional_special_case(paren)
+			return paren
 		endif
 
 		" In case we are at the last character, we use the paren position.

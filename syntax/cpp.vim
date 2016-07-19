@@ -39,7 +39,7 @@ syn keyword cppConstant		__cplusplus
 
 " C++ 11 extensions
 if !exists("cpp_no_cpp11")
-  syn keyword cppModifier	override final
+  syn keyword cppModifier	override final auto
   syn keyword cppType		nullptr_t
   syn keyword cppExceptions	noexcept
   syn keyword cppStorageClass	constexpr decltype thread_local

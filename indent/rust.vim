@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
 " Vim indent file
 " Language:         Rust
 " Author:           Chris Morgan <me@chrismorgan.info>
-" Last Change:      2014 Sep 13
+" Last Change:      2016 Jul 15
 
 " Only load this indent file when no other was loaded.
 if exists("b:did_indent")
@@ -134,6 +134,7 @@ function GetRustIndent(lnum)
 				\ && s:get_line_trimmed(a:lnum) !~ '^\s*[\[\]{}]'
 				\ && prevline !~ '^\s*fn\s'
 				\ && prevline !~ '([^()]\+,$'
+				\ && s:get_line_trimmed(a:lnum) !~ '^\s*\S\+\s*=>'
 		" Oh ho! The previous line ended in a comma! I bet cindent will try to
 		" take this too far... For now, let's normally use the previous line's
 		" indent.
@@ -157,6 +158,8 @@ function GetRustIndent(lnum)
 		"
 		" if baz && (foo ||
 		"            bar) {
+		"
+		" Another case is when the current line is a new match arm.
 		"
 		" There are probably other cases where we don't want to do this as
 		" well. Add them as needed.

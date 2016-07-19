@@ -624,6 +624,7 @@ syntax keyword cppSTLtype const_mem_fun_ref_t
 syntax keyword cppSTLtype const_mem_fun_t
 syntax keyword cppSTLtype const_pointer
 syntax keyword cppSTLtype const_reference
+syntax keyword cppSTLtype container_type
 syntax keyword cppSTLtype deque
 syntax keyword cppSTLtype difference_type
 syntax keyword cppSTLtype div_t
