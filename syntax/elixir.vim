@@ -76,7 +76,7 @@ syn region elixirRegex matchgroup=elixirRegexDelimiter start="%r/" end="/[uiomxf
 syn cluster elixirRegexSpecial    contains=elixirRegexEscape,elixirRegexCharClass,elixirRegexQuantifier,elixirRegexEscapePunctuation
 syn cluster elixirStringContained contains=elixirInterpolation,elixirRegexEscape,elixirRegexCharClass
 
-syn region elixirString        matchgroup=elixirStringDelimiter start="'" end="'" skip="\\'\|\\\\"
+syn region elixirString        matchgroup=elixirStringDelimiter start="'" end="'" skip="\\'\|\\\\" contains=@elixirStringContained
 syn region elixirString        matchgroup=elixirStringDelimiter start='"' end='"' skip='\\"' contains=@elixirStringContained
 syn region elixirInterpolation matchgroup=elixirInterpolationDelimiter start="#{" end="}" contained contains=ALLBUT,elixirComment,@elixirNotTop
 
@@ -128,7 +128,7 @@ syn keyword elixirCallbackDefine      defcallback    nextgroup=elixirCallbackDec
 syn keyword elixirStructDefine        defstruct      skipwhite skipnl
 
 " Declarations
-syn match  elixirModuleDeclaration      "[^[:space:];#<]\+"        contained contains=elixirAlias nextgroup=elixirBlock     skipwhite skipnl
+syn match  elixirModuleDeclaration      "[^[:space:];#<]\+"        contained                      nextgroup=elixirBlock     skipwhite skipnl
 syn match  elixirFunctionDeclaration    "[^[:space:];#<,()\[\]]\+" contained                      nextgroup=elixirArguments skipwhite skipnl
 syn match  elixirProtocolDeclaration    "[^[:space:];#<]\+"        contained contains=elixirAlias                           skipwhite skipnl
 syn match  elixirImplDeclaration        "[^[:space:];#<]\+"        contained contains=elixirAlias                           skipwhite skipnl

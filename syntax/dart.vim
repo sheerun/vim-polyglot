@@ -23,12 +23,12 @@ syntax keyword dartConditional    if else switch
 syntax keyword dartRepeat         do while for
 syntax keyword dartBoolean        true false
 syntax keyword dartConstant       null
-syntax keyword dartTypedef        this super class typedef
-syntax keyword dartOperator       new is as in factory
+syntax keyword dartTypedef        this super class typedef enum
+syntax keyword dartOperator       new is as in
 syntax match   dartOperator       "+=\=\|-=\=\|*=\=\|/=\=\|%=\=\|\~/=\=\|<<=\=\|>>=\=\|[<>]=\=\|===\=\|\!==\=\|&=\=\|\^=\=\||=\=\|||\|&&\|\[\]=\=\|=>\|!\|\~\|?\|:"
 syntax keyword dartType           void var bool int double num dynamic
 syntax keyword dartStatement      return
-syntax keyword dartStorageClass   static abstract final const
+syntax keyword dartStorageClass   static abstract final const factory
 syntax keyword dartExceptions     throw rethrow try on catch finally
 syntax keyword dartAssert         assert
 syntax keyword dartClassDecl      extends with implements
@@ -39,11 +39,17 @@ syntax match   dartUserLabelRef   "\k\+" contained
 syntax region  dartLabelRegion   transparent matchgroup=dartLabel start="\<case\>" matchgroup=NONE end=":"
 syntax keyword dartLabel         default
 
-syntax match dartLibrary         "^\(import\|part of\|part\|export\|library\|show\|hide\)\s"
+syntax match   dartLibrary       "^\(import\|export\)\>" nextgroup=dartUri skipwhite
+syntax region  dartUri           contained start=+r\=\z(["']\)+ end=+\z1+ nextgroup=dartCombinators skipwhite
+syntax region  dartCombinators   contained start="" end=";" contains=dartCombinator
+syntax keyword dartCombinator    contained show hide deferred as
+syntax match   dartLibrary       "^\(library\|part of\|part\)\>"
+
+syntax match   dartMetadata      "@\([_$a-zA-Z][_$a-zA-Z0-9]*\.\)*[_$a-zA-Z][_$a-zA-Z0-9]*\>"
 
 " Comments
 syntax keyword dartTodo          contained TODO FIXME XXX
-syntax region  dartComment       start="/\*"  end="\*/" contains=dartTodo,dartDocLink,@Spell
+syntax region  dartComment       start="/\*"  end="\*/" contains=dartComment,dartTodo,dartDocLink,@Spell
 syntax match   dartLineComment   "//.*" contains=dartTodo,@Spell
 syntax match   dartLineDocComment "///.*" contains=dartTodo,dartDocLink,@Spell
 syntax region  dartDocLink       oneline contained start=+\[+ end=+\]+
@@ -96,9 +102,12 @@ highlight default link dartInterpolation   PreProc
 highlight default link dartDocLink         SpecialComment
 highlight default link dartSpecialChar     SpecialChar
 highlight default link dartLibrary         Include
+highlight default link dartUri             String
+highlight default link dartCombinator      Keyword
 highlight default link dartCoreClasses     Type
 highlight default link dartCoreTypedefs    Typedef
 highlight default link dartCoreExceptions  Exception
+highlight default link dartMetadata        PreProc
 
 let b:current_syntax = "dart"
 let b:spell_options = "contained"

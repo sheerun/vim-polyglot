@@ -121,6 +121,7 @@ syntax keyword swiftKeywords
       \ else
       \ extension
       \ fallthrough
+      \ fileprivate
       \ final
       \ for
       \ func
