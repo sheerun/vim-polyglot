@@ -1,3 +1,7 @@
+" Enable jsx syntax by default
+if !exists('g:jsx_ext_required')
+  let g:jsx_ext_required = 0
+endif
 " ftdetect/ansible.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
   
