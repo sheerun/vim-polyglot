@@ -6,6 +6,7 @@ DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/inden
 DIRS_BASIC="syntax compiler indent ftdetect after/syntax after/indent after/ftdetect"
 DIRS_ALL="syntax indent compiler autoload ftplugin ftdetect after"
 DIRS_SYNTAX="syntax ftdetect after/syntax after/ftdetect"
+DIRS_JAVASCRIPT="${DIRS} extras"
 
 OUTPUT=""
 
@@ -129,7 +130,7 @@ PACKS="
   haxe:yaymukund/vim-haxe
   html5:othree/html5.vim
   jasmine:glanotte/vim-jasmine
-  javascript:pangloss/vim-javascript
+  javascript:pangloss/vim-javascript:_JAVASCRIPT
   json:elzr/vim-json
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL
