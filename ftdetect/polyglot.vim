@@ -475,6 +475,19 @@ au BufNewFile,BufRead */templates/**.liquid,*/layout/**.liquid,*/snippets/**.liq
 
 endif
 
+" ftdetect/ls.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'livescript') == -1
+  
+" Language:    LiveScript
+" Maintainer:  George Zahariev
+" URL:         http://github.com/gkz/vim-ls
+" License:     WTFPL
+"
+autocmd BufNewFile,BufRead *.ls set filetype=ls
+autocmd BufNewFile,BufRead *Slakefile set filetype=ls
+
+endif
+
 " ftdetect/mako.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mako') == -1
   
