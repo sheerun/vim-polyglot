@@ -57,7 +57,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)
 - [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftplugin, ftdetect)
-- [json](https://github.com/sheerun/vim-json) (syntax, indent, ftdetect)
+- [json](https://github.com/elzr/vim-json) (syntax, indent, ftplugin, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
 - [jsx](https://github.com/mxw/vim-jsx) (ftdetect, after)
 - [julia](https://github.com/dcjones/julia-minimalist-vim) (syntax, indent, ftdetect)

@@ -2,6 +2,11 @@
 if !exists('g:jsx_ext_required')
   let g:jsx_ext_required = 0
 endif
+
+" Disable json concealing by default
+if !exists('g:vim_json_syntax_conceal')
+  let g:vim_json_syntax_conceal = 0
+endif
 " ftdetect/ansible.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
   
@@ -404,8 +409,9 @@ endif
 " ftdetect/json.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
   
-autocmd BufNewFile,BufRead *.json set filetype=json
-autocmd BufNewFile,BufRead *.jsonp set filetype=json
+autocmd BufNewFile,BufRead *.json setlocal filetype=json
+autocmd BufNewFile,BufRead *.jsonp setlocal filetype=json
+autocmd BufNewFile,BufRead *.geojson setlocal filetype=json
 
 endif
 

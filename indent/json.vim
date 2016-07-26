@@ -44,7 +44,7 @@ let s:block_regex = '\%({\)\s*\%(|\%([*@]\=\h\w*,\=\s*\)\%(,\s*[*@]\=\h\w*\)*|\)
 
 " Check if the character at lnum:col is inside a string.
 function s:IsInString(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') == jsonString
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') == "jsonString"
 endfunction
 
 " Find line above 'lnum' that isn't empty, or in a string.
@@ -143,7 +143,11 @@ function GetJSONIndent()
 
   " If the previous line ended with a block opening, add a level of indent.
   " if s:Match(lnum, s:block_regex)
-    " return indent(lnum) + shiftwidth()
+  "   if exists('*shiftwidth')
+  "     return indent(lnum) + shiftwidth()
+  "   else
+  "     return indent(lnum) + &sw
+  "   endif
   " endif
 
   " If the previous line contained an opening bracket, and we are still in it,
@@ -151,7 +155,11 @@ function GetJSONIndent()
   if line =~ '[[({]'
     let counts = s:LineHasOpeningBrackets(lnum)
     if counts[0] == '1' || counts[1] == '1' || counts[2] == '1'
-      return ind + shiftwidth()
+      if exists('*shiftwidth')
+        return ind + shiftwidth()
+      else
+        return ind + &sw
+      endif
     else
       call cursor(v:lnum, vcol)
     end

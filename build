@@ -130,7 +130,7 @@ PACKS="
   html5:othree/html5.vim
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript
-  json:sheerun/vim-json
+  json:elzr/vim-json
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL
   julia:dcjones/julia-minimalist-vim
