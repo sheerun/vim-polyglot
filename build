@@ -99,6 +99,7 @@ EOF
 }
 
 PACKS="
+  applescript:vim-scripts/applescript.vim
   ansible:pearofducks/ansible-vim
   arduino:sudar/vim-arduino-syntax
   blade:jwalton512/vim-blade
