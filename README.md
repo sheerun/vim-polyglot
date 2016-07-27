@@ -23,6 +23,10 @@ A collection of language packs for Vim.
 
 Optionally download one of the [releases](https://github.com/sheerun/vim-polyglot/releases) and unpack it directly under `~/.vim` directory.
 
+NOTE: Not all features of listed language packs are available. We strip them from functionality slowing vim startup in general (for example we ignore `plugins` folder that is loaded regardless of file type, use `ftplugin` instead).
+
+If you need full functionality of any plugin, please use it directly with your plugin manager.
+
 ## Language packs
 
 - [applescript](https://github.com/vim-scripts/applescript.vim) (syntax)
