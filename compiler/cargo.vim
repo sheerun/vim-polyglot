@@ -29,6 +29,8 @@ function! s:is_absolute(path)
     return a:path[0] == '/' || a:path =~ '[A-Z]\+:'
 endfunction
 
+CompilerSet errorformat+=%-G%\\s%#Compiling%.%#
+
 let s:local_manifest = findfile(s:cargo_manifest_name, '.;')
 if s:local_manifest != ''
     let s:local_manifest = fnamemodify(s:local_manifest, ':p:h').'/'

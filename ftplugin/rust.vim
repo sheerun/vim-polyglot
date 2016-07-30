@@ -195,6 +195,11 @@ let b:undo_ftplugin = "
 
 " }}}1
 
+" Code formatting on save
+if get(g:, "rustfmt_autosave", 0)
+	autocmd BufWritePre *.rs call rustfmt#Format()
+endif
+
 augroup END
 
 let &cpo = s:save_cpo

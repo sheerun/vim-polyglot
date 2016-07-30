@@ -5,7 +5,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
 "
 " Language: JSX (JavaScript)
 " Maintainer: Max Wang <mxawng@gmail.com>
-" Depends: pangloss/vim-javascript
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

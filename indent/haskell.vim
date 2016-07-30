@@ -60,7 +60,7 @@ if !exists('g:haskell_indent_guard')
 endif
 
 setlocal indentexpr=GetHaskellIndent()
-setlocal indentkeys=0{,0},0(,0),0[,0],!^F,o,O,0\=,0=where,0=let,0=deriving,0\,,<space>
+setlocal indentkeys=0{,0},0(,0),0[,0],!^F,o,O,0\=,0=where,0=let,0=deriving,<space>
 
 function! s:isInBlock(hlstack)
   return index(a:hlstack, 'haskellParens') > -1 || index(a:hlstack, 'haskellBrackets') > -1 || index(a:hlstack, 'haskellBlock') > -1
@@ -135,8 +135,34 @@ function! GetHaskellIndent()
   endif
 
   " comment indentation
-  if l:prevline =~ '^\s*--'
-    return match(l:prevline, '\S')
+  if l:line =~ '^\s*--'
+    return match(l:prevline, '-- ')
+  endif
+
+  "   { foo :: Int
+  " >>,
+  "
+  "   |
+  "   ...
+  " >>,
+  if l:line =~ '^\s*,'
+    if s:isInBlock(l:hlstack)
+      normal! 0
+      call search(',', 'cW')
+      let l:n = s:getNesting(s:getHLStack())
+      call search('[([{]', 'bW')
+
+      while l:n != s:getNesting(s:getHLStack())
+        call search('[([{]', 'bW')
+      endwhile
+
+      return col('.') - 1
+    else
+      let l:s = s:indentGuard(match(l:line, ','), l:prevline)
+      if l:s > -1
+        return l:s
+      end
+    endif
   endif
 
   " operator at end of previous line
@@ -359,32 +385,6 @@ function! GetHaskellIndent()
       else
         return &shiftwidth
       endif
-    endif
-  endif
-
-  "   { foo :: Int
-  " >>,
-  "
-  "   |
-  "   ...
-  " >>,
-  if l:line =~ '^\s*,'
-    if s:isInBlock(l:hlstack)
-      normal! 0
-      call search(',', 'cW')
-      let l:n = s:getNesting(s:getHLStack())
-      call search('[(\[{]', 'bW')
-
-      while l:n != s:getNesting(s:getHLStack())
-        call search('[(\[{]', 'bW')
-      endwhile
-
-      return col('.') - 1
-    else
-      let l:s = s:indentGuard(match(l:line, ','), l:prevline)
-      if l:s > -1
-        return l:s
-      end
     endif
   endif
 
