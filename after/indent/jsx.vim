@@ -5,9 +5,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
 "
 " Language: JSX (JavaScript)
 " Maintainer: Max Wang <mxawng@gmail.com>
-" Depends: pangloss/vim-javascript
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Save the current JavaScript indentexpr.
+let b:jsx_js_indentexpr = &indentexpr
 
 " Prologue; load in XML indentation.
 if exists('b:did_indent')
@@ -51,19 +53,31 @@ fu! SynXMLish(syns)
   return SynAttrXMLish(get(a:syns, -1))
 endfu
 
-" Check if a synstack has any XMLish attribute.
-fu! SynXMLishAny(syns)
-  for synattr in a:syns
-    if SynAttrXMLish(synattr)
-      return 1
-    endif
-  endfor
-  return 0
-endfu
-
 " Check if a synstack denotes the end of a JSX block.
 fu! SynJSXBlockEnd(syns)
-  return get(a:syns, -1) == 'jsBraces' && SynAttrXMLish(get(a:syns, -2))
+  return get(a:syns, -1) =~ '\%(js\|javascript\)Braces' &&
+       \ SynAttrXMLish(get(a:syns, -2))
+endfu
+
+" Determine how many jsxRegions deep a synstack is.
+fu! SynJSXDepth(syns)
+  return len(filter(copy(a:syns), 'v:val ==# "jsxRegion"'))
+endfu
+
+" Check whether `cursyn' continues the same jsxRegion as `prevsyn'.
+fu! SynJSXContinues(cursyn, prevsyn)
+  let curdepth = SynJSXDepth(a:cursyn)
+  let prevdepth = SynJSXDepth(a:prevsyn)
+
+  " In most places, we expect the nesting depths to be the same between any
+  " two consecutive positions within a jsxRegion (e.g., between a parent and
+  " child node, between two JSX attributes, etc.).  The exception is between
+  " sibling nodes, where after a completed element (with depth N), we return
+  " to the parent's nesting (depth N - 1).  This case is easily detected,
+  " since it is the only time when the top syntax element in the synstack is
+  " jsxRegion---specifically, the jsxRegion corresponding to the parent.
+  return prevdepth == curdepth ||
+      \ (prevdepth == curdepth + 1 && get(a:cursyn, -1) ==# 'jsxRegion')
 endfu
 
 " Cleverly mix JS and XML indentation.
@@ -71,9 +85,12 @@ fu! GetJsxIndent()
   let cursyn  = SynSOL(v:lnum)
   let prevsyn = SynEOL(v:lnum - 1)
 
-  " Use XML indenting if the syntax at the end of the previous line was either
-  " JSX or was the closing brace of a jsBlock whose parent syntax was JSX.
-  if (SynXMLish(prevsyn) || SynJSXBlockEnd(prevsyn)) && SynXMLishAny(cursyn)
+  " Use XML indenting iff:
+  "   - the syntax at the end of the previous line was either JSX or was the
+  "     closing brace of a jsBlock whose parent syntax was JSX; and
+  "   - the current line continues the same jsxRegion as the previous line.
+  if (SynXMLish(prevsyn) || SynJSXBlockEnd(prevsyn)) &&
+        \ SynJSXContinues(cursyn, prevsyn)
     let ind = XmlIndentGet(v:lnum, 0)
 
     " Align '/>' and '>' with '<' for multiline tags.
@@ -86,7 +103,13 @@ fu! GetJsxIndent()
       let ind = ind + &sw
     endif
   else
-    let ind = GetJavascriptIndent()
+    if len(b:jsx_js_indentexpr)
+      " Invoke the base JS package's custom indenter.  (For vim-javascript,
+      " e.g., this will be GetJavascriptIndent().)
+      let ind = eval(b:jsx_js_indentexpr)
+    else
+      let ind = cindent(v:lnum)
+    endif
   endif
 
   return ind

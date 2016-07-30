@@ -61,7 +61,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [haxe](https://github.com/yaymukund/vim-haxe) (syntax, ftdetect)
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)
 - [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
-- [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftplugin, ftdetect, extras)
+- [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftdetect, ftplugin, extras)
 - [json](https://github.com/elzr/vim-json) (syntax, indent, ftplugin, ftdetect)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent, ftdetect)
 - [jsx](https://github.com/mxw/vim-jsx) (ftdetect, after)

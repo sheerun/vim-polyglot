@@ -48,7 +48,7 @@ syn region jsxChild contained start=+{+ end=++ contains=jsBlock,javascriptBlock
 " preceding it, to avoid conflicts with, respectively, the left shift operator
 " and generic Flow type annotations (http://flowtype.org/).
 syn region jsxRegion
-  \ contains=@XMLSyntax,jsxRegion,jsxChild,jsBlock,javascriptBlock
+  \ contains=@Spell,@XMLSyntax,jsxRegion,jsxChild,jsBlock,javascriptBlock
   \ start=+\%(<\|\w\)\@<!<\z([a-zA-Z][a-zA-Z0-9:\-.]*\)+
   \ skip=+<!--\_.\{-}-->+
   \ end=+</\z1\_\s\{-}>+
