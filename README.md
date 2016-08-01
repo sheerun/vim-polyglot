@@ -91,6 +91,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [puppet](https://github.com/voxpupuli/vim-puppet) (syntax, indent, ftplugin, ftdetect)
 - [purescript](https://github.com/raichoo/purescript-vim) (syntax, indent, ftdetect)
 - [python](https://github.com/mitsuhiko/vim-python-combined) (syntax, indent)
+- [python](https://github.com/aliev/vim-compiler-python) (compiler, autoload, ftdetect)
 - [qml](https://github.com/peterhoeg/vim-qml) (syntax, indent, ftplugin, ftdetect)
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
 - [ragel](https://github.com/jneen/ragel.vim) (syntax)
