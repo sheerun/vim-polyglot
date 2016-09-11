@@ -1,3 +1,4 @@
+augroup filetypedetect
 " Enable jsx syntax by default
 if !exists('g:jsx_ext_required')
   let g:jsx_ext_required = 0
@@ -983,3 +984,4 @@ au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
 
 endif
 
+augroup END
