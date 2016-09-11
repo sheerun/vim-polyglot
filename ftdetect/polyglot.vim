@@ -708,6 +708,13 @@ autocmd BufRead,BufNewFile *.qml setfiletype qml
 
 endif
 
+" ftdetect/raml.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'raml') == -1
+  
+au BufRead,BufNewFile *.raml set ft=raml
+
+endif
+
 " ftdetect/ruby.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
   

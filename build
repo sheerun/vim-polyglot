@@ -166,6 +166,7 @@ PACKS="
   python-compiler:aliev/vim-compiler-python
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim
+  raml:IN3D/vim-raml
   ragel:jneen/ragel.vim
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
