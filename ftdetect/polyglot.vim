@@ -688,6 +688,18 @@ au FileType purescript let &l:commentstring='{--%s--}'
 
 endif
 
+" ftdetect/python.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python-compiler') == -1
+  
+" Vim compiler file
+" Compiler:	Unit testing tool for Python
+" Maintainer:	Ali Aliev <ali@aliev.me>
+" Last Change: 2015 Nov 2
+
+autocmd FileType python compiler python
+
+endif
+
 " ftdetect/qml.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
   

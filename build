@@ -161,6 +161,7 @@ PACKS="
   puppet:voxpupuli/vim-puppet
   purescript:raichoo/purescript-vim
   python:mitsuhiko/vim-python-combined
+  python-compiler:aliev/vim-compiler-python
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim
   ragel:jneen/ragel.vim
