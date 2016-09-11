@@ -77,9 +77,9 @@ function! s:query_path(root) abort
     let prefix = ''
   endif
   if &shellxquote == "'"
-    let path_check = prefix.'ruby -e --disable-gems"' . code . '"'
+    let path_check = prefix.'ruby --disable-gems -e "' . code . '"'
   else
-    let path_check = prefix."ruby -e --disable-gems'" . code . "'"
+    let path_check = prefix."ruby --disable-gems -e '" . code . "'"
   endif
 
   let cd = haslocaldir() ? 'lcd' : 'cd'

@@ -13,6 +13,10 @@ if !exists("g:typescript_compiler_options")
   let g:typescript_compiler_options = ""
 endif
 
+if exists(":CompilerSet") != 2
+  command! -nargs=* CompilerSet setlocal <args>
+endif
+
 let &l:makeprg = g:typescript_compiler_binary . ' ' . g:typescript_compiler_options . ' $*  %'
 
 CompilerSet errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m

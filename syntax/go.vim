@@ -127,12 +127,14 @@ hi def link     goComplexes         Type
 
 
 " Predefined functions and values
-syn match       goBuiltins          /\<\v(append|cap|close|complex|copy|delete|imag|len)\ze\(/
-syn match       goBuiltins          /\<\v(make|new|panic|print|println|real|recover)\ze\(/
-syn keyword     goBoolean           iota true false nil
+syn match       goBuiltins                 /\<\v(append|cap|close|complex|copy|delete|imag|len)\ze\(/
+syn match       goBuiltins                 /\<\v(make|new|panic|print|println|real|recover)\ze\(/
+syn keyword     goPredefinedIdentifiers    nil iota
+syn keyword     goBoolean                  true false
 
-hi def link     goBuiltins          Keyword
-hi def link     goBoolean           Boolean
+hi def link     goBuiltins                 Keyword
+hi def link     goPredefinedIdentifiers    Identifier
+hi def link     goBoolean                  Boolean
 
 " Comments; their contents
 syn keyword     goTodo              contained TODO FIXME XXX BUG
@@ -177,7 +179,7 @@ else
 endif
 
 if g:go_highlight_format_strings != 0
-  syn match       goFormatSpecifier   /%[-#0 +]*\%(\*\|\d\+\)\=\%(\.\%(\*\|\d\+\)\)*[vTtbcdoqxXUeEfgGsp]/ contained containedin=goString
+  syn match       goFormatSpecifier   /\([^%]\(%%\)*\)\@<=%[-#0 +]*\%(\*\|\d\+\)\=\%(\.\%(\*\|\d\+\)\)*[vTtbcdoqxXUeEfgGsp]/ contained containedin=goString
   hi def link     goFormatSpecifier   goSpecialString
 endif
 
@@ -273,6 +275,7 @@ hi def link     goSpaceError        Error
 syn keyword     goTodo              contained NOTE
 hi def link     goTodo              Todo
 
+syn match goVarArgs /\.\.\./
 
 " Operators;
 if g:go_highlight_operators != 0
@@ -287,9 +290,9 @@ if g:go_highlight_operators != 0
   " match remaining two-char operators: := && || <- ++ --
   syn match goOperator /:=\|||\|<-\|++\|--/
   " match ...
-  syn match goOperator /\.\.\./
 
-  hi def link     goPointerOperator   Operator
+  hi def link     goPointerOperator   goOperator
+  hi def link     goVarArgs           goOperator
 endif
 hi def link     goOperator          Operator
 
@@ -314,8 +317,7 @@ hi def link     goMethod            Type
 
 " Fields;
 if g:go_highlight_fields != 0
-  syn match goVarArgs               /\.\.\.\w\+\>/
-  syn match goField                 /\.\a\+\([\ \n\r\:\)\[]\)\@=/hs=s+1
+  syn match goField                 /\.\w\+\([.\ \n\r\:\)\[,]\)\@=/hs=s+1
 endif
 hi def link    goField              Identifier
 
@@ -368,13 +370,27 @@ if g:go_highlight_build_constraints != 0
   hi def link goPackageComment    Comment
 endif
 
-" :GoSameIds
-hi def goSameId term=bold cterm=bold ctermbg=white ctermfg=black
-
 " :GoCoverage commands
 hi def link goCoverageNormalText Comment
-hi def      goCoverageCovered    ctermfg=green 
-hi def      goCoverageUncover    ctermfg=red 
+
+function! s:hi()
+  " :GoSameIds
+  if &background == 'dark'
+    hi def goSameId term=bold cterm=bold ctermbg=white ctermfg=black guibg=white guifg=black
+  else
+    hi def goSameId term=bold cterm=bold ctermbg=14 guibg=Cyan
+  endif
+
+  " :GoCoverage commands
+  hi def      goCoverageCovered    ctermfg=green guifg=#A6E22E
+  hi def      goCoverageUncover    ctermfg=red guifg=#F92672
+endfunction
+
+augroup vim-go-hi
+  autocmd!
+  autocmd ColorScheme * call s:hi()
+augroup end
+call s:hi()
 
 " Search backwards for a global declaration to start processing the syntax.
 "syn sync match goSync grouphere NONE /^\(const\|var\|type\|func\)\>/

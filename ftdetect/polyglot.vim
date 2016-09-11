@@ -615,7 +615,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -
 " Version:      0.1
 
 if did_filetype()
-	  finish
+  finish
 endif
 
 autocmd BufRead,BufNewFile * :if getline(1) =~ '^.*startuml.*$'| setfiletype plantuml | set filetype=plantuml | endif
@@ -736,7 +736,6 @@ au BufNewFile,BufRead *.builder,*.rxml,*.rjs,*.ruby		call s:setf('ruby')
 au BufNewFile,BufRead [rR]akefile,*.rake			call s:setf('ruby')
 au BufNewFile,BufRead [rR]akefile*				call s:StarSetf('ruby')
 
-" TODO: does anyone still use Rantfiles? Remove for Vim 8?
 " Rantfile
 au BufNewFile,BufRead [rR]antfile,*.rant			call s:setf('ruby')
 

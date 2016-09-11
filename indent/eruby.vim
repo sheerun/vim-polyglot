@@ -43,6 +43,10 @@ if exists("*GetErubyIndent")
   finish
 endif
 
+" this file uses line continuations
+let s:cpo_sav = &cpo
+set cpo&vim
+
 function! GetErubyIndent(...)
   " The value of a single shift-width
   if exists('*shiftwidth')
@@ -100,6 +104,9 @@ function! GetErubyIndent(...)
   endif
   return ind
 endfunction
+
+let &cpo = s:cpo_sav
+unlet! s:cpo_sav
 
 " vim:set sw=2 sts=2 ts=8 noet:
 

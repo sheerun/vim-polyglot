@@ -18,7 +18,11 @@ silent! setlocal formatoptions+=j
 
 " Just like c.vim, but additionally doesn't wrap text onto /** line when
 " formatting. Doesn't bungle bulleted lists when formatting.
-setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/**,mb:*,ex:*/,s1:/*,mb:*,ex:*/,://
+if get(g:, 'scala_scaladoc_indent', 0)
+  setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s2:/**,mb:*,ex:*/,s1:/*,mb:*,ex:*/,://
+else
+  setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/**,mb:*,ex:*/,s1:/*,mb:*,ex:*/,://
+endif
 setlocal commentstring=//\ %s
 
 setlocal shiftwidth=2 softtabstop=2 expandtab

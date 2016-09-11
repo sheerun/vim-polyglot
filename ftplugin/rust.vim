@@ -48,7 +48,6 @@ endif
 " This includeexpr isn't perfect, but it's a good start
 setlocal includeexpr=substitute(v:fname,'::','/','g')
 
-" NOT adding .rc as it's being phased out (0.7)
 setlocal suffixesadd=.rs
 
 if exists("g:ftplugin_rust_source_path")

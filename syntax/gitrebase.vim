@@ -23,7 +23,7 @@ syn match   gitrebaseExec   "\v^%(x|exec)>" nextgroup=gitrebaseCommand skipwhite
 syn match   gitrebaseDrop   "\v^d%(rop)=>"   nextgroup=gitrebaseCommit skipwhite
 syn match   gitrebaseSummary ".*"               contains=gitrebaseHash contained
 syn match   gitrebaseCommand ".*"                                      contained
-syn match   gitrebaseComment "^#.*"             contains=gitrebaseHash
+syn match   gitrebaseComment "^\s*#.*"             contains=gitrebaseHash
 syn match   gitrebaseSquashError "\v%^%(s%(quash)=>|f%(ixup)=>)" nextgroup=gitrebaseCommit skipwhite
 
 hi def link gitrebaseCommit         gitrebaseHash

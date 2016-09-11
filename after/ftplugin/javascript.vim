@@ -7,6 +7,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') ==
 
 setlocal iskeyword+=$ suffixesadd+=.js
 
-let b:undo_ftplugin .= ' | setlocal iskeyword< suffixesadd<'
+if exists('b:undo_ftplugin')
+  let b:undo_ftplugin .= ' | setlocal iskeyword< suffixesadd<'
+else
+  let b:undo_ftplugin = 'setlocal iskeyword< suffixesadd<'
+endif
 
 endif

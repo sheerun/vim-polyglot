@@ -94,11 +94,12 @@ let s:end_skip_expr = s:skip_expr .
       \ ' && getline(".") =~ "^\\s*\\<\\(while\\|until\\|for\\):\\@!\\>")'
 
 " Regex that defines continuation lines, not including (, {, or [.
-let s:non_bracket_continuation_regex = '\%([\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)\s*\%(#.*\)\=$'
+let s:non_bracket_continuation_regex =
+      \ '\%([\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|:\@<![^[:alnum:]:][|&?]\|||\|&&\)\s*\%(#.*\)\=$'
 
 " Regex that defines continuation lines.
 let s:continuation_regex =
-      \ '\%(%\@<![({[\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)\s*\%(#.*\)\=$'
+      \ '\%(%\@<![({[\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|:\@<![^[:alnum:]:][|&?]\|||\|&&\)\s*\%(#.*\)\=$'
 
 " Regex that defines continuable keywords
 let s:continuable_regex =
@@ -107,6 +108,12 @@ let s:continuable_regex =
 
 " Regex that defines bracket continuations
 let s:bracket_continuation_regex = '%\@<!\%([({[]\)\s*\%(#.*\)\=$'
+
+" Regex that defines dot continuations
+let s:dot_continuation_regex = '%\@<!\.\s*\%(#.*\)\=$'
+
+" Regex that defines backslash continuations
+let s:backslash_continuation_regex = '%\@<!\\\s*$'
 
 " Regex that defines end of bracket continuation followed by another continuation
 let s:bracket_switch_continuation_regex = '^\([^(]\+\zs).\+\)\+'.s:continuation_regex
@@ -196,7 +203,17 @@ function s:GetMSL(lnum)
     " Otherwise, terminate search as we have found our MSL already.
     let line = getline(lnum)
 
-    if s:Match(msl, s:leading_operator_regex)
+    if !s:Match(msl, s:backslash_continuation_regex) &&
+          \ s:Match(lnum, s:backslash_continuation_regex)
+      " If the current line doesn't end in a backslash, but the previous one
+      " does, look for that line's msl
+      "
+      " Example:
+      "   foo = "bar" \
+      "     "baz"
+      "
+      let msl = lnum
+    elseif s:Match(msl, s:leading_operator_regex)
       " If the current line starts with a leading operator, keep its indent
       " and keep looking for an MSL.
       let msl = lnum
@@ -221,18 +238,30 @@ function s:GetMSL(lnum)
       "     three
       "
       let msl = lnum
+    elseif s:Match(lnum, s:dot_continuation_regex) &&
+          \ (s:Match(msl, s:bracket_continuation_regex) || s:Match(msl, s:block_continuation_regex))
+      " If the current line is a bracket continuation or a block-starter, but
+      " the previous is a dot, keep going to see if the previous line is the
+      " start of another continuation.
+      "
+      " Example:
+      "   parent.
+      "     method_call {
+      "     three
+      "
+      let msl = lnum
     elseif s:Match(lnum, s:non_bracket_continuation_regex) &&
           \ (s:Match(msl, s:bracket_continuation_regex) || s:Match(msl, s:block_continuation_regex))
       " If the current line is a bracket continuation or a block-starter, but
-      " the previous is a non-bracket one, keep going to see if the previous
-      " line is a part of another continuation.
+      " the previous is a non-bracket one, respect the previous' indentation,
+      " and stop here.
       "
       " Example:
       "   method_call one,
       "     two {
       "     three
       "
-      let msl = lnum
+      return lnum
     elseif s:Match(lnum, s:bracket_continuation_regex) &&
           \ (s:Match(msl, s:bracket_continuation_regex) || s:Match(msl, s:block_continuation_regex))
       " If both lines are bracket continuations (the current may also be a

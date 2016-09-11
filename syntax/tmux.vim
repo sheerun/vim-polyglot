@@ -3,7 +3,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
 " Vim syntax file
 " Language: tmux(1) configuration file
 " Maintainer: Tiago Cunha <tcunha@users.sourceforge.net>
-" Last Change: $Date: 2010-07-27 18:29:07 $
 " License: This file is placed in the public domain.
 "
 " To install this file:
@@ -230,6 +229,8 @@ syn keyword tmuxOptsSet
 	\ set-titles
 	\ set-titles-string
 	\ status
+	\ status-bg
+	\ status-fg
 	\ status-interval
 	\ status-justify
 	\ status-keys
@@ -274,6 +275,7 @@ syn keyword tmuxOptsSetw
 	\ window-active-style
 	\ window-status-activity-style
 	\ window-status-bell-style
+	\ window-status-current-bg
 	\ window-status-current-format
 	\ window-status-current-style
 	\ window-status-format

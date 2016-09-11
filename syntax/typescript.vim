@@ -124,7 +124,7 @@ syntax keyword typescriptGlobalObjects Array Boolean Date Function Infinity Math
 
 syntax keyword typescriptExceptions try catch throw finally Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 
-syntax keyword typescriptReserved constructor declare as interface module abstract enum int short export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public type namespace from get set
+syntax keyword typescriptReserved constructor declare as interface module abstract enum int short export interface static byte extends long super char final native synchronized class float package throws goto private transient debugger implements protected volatile double import public type namespace from get set
 "}}}
 "" typescript/DOM/HTML/CSS specified things"{{{
 

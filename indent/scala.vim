@@ -378,12 +378,17 @@ function! GetScalaIndent()
   let prevline = scala#GetLine(prevlnum)
   let curlnum = v:lnum
   let curline = scala#GetLine(curlnum)
+  if get(g:, 'scala_scaladoc_indent', 0)
+    let star_indent = 2
+  else
+    let star_indent = 1
+  end
 
   if prevline =~ '^\s*/\*\*'
     if prevline =~ '\*/\s*$'
       return ind
     else
-      return ind + 1
+      return ind + star_indent
     endif
   endif
 
@@ -538,7 +543,7 @@ function! GetScalaIndent()
   if prevline =~ '^\s*\*/'
    \ || prevline =~ '*/\s*$'
     call scala#ConditionalConfirm("18")
-    let ind = ind - 1
+    let ind = ind - star_indent
   endif
 
   if scala#LineEndsInIncomplete(prevline)

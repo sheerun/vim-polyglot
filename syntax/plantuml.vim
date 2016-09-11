@@ -8,7 +8,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -
 " TODO:         There are some bugs, add << >>
 "
 if exists("b:current_syntax")
-    finish
+  finish
 endif
 
 if version < 600
@@ -22,12 +22,13 @@ let b:current_syntax = "plantuml"
 
 syntax sync minlines=100
 
-syntax match plantumlPreProc /\%(^@startuml\|^@enduml\)\|!\%(include\|ifdef\|define\|endif\)\s*.*/ contains=plantumlDir
+syntax match plantumlPreProc /\%(^@startuml\|^@enduml\)\|!\%(include\|define\|undev\|ifdef\|endif\|ifndef\)\s*.*/ contains=plantumlDir
 syntax region plantumlDir start=/\s\+/ms=s+1 end=/$/ contained
 
-syntax keyword plantumlTypeKeyword namespace component package interface class interface enum object participant activity skinparam abstract
-syntax keyword plantumlKeyword actor boundary control entity database partition title activate as deactivate note left right top bottom of end destroy
-syntax keyword plantumlKeyword if then else endif
+syntax keyword plantumlTypeKeyword actor participant usecase interface abstract enum component state object artifact folder rect node frame cloud database storage agent boundary control entity card
+syntax keyword plantumlKeyword as also autonumber caption title newpage box alt opt loop par break critical note rnote hnote legend group left right of on link over end activate deactivate destroy create footbox hide show skinparam skin top bottom
+syntax keyword plantumlKeyword package namespace page up down if else elseif endif partition footer header center rotate ref return is repeat start stop while endwhile fork again kill
+syntax keyword plantumlKeyword then detach
 
 syntax keyword plantumlCommentTODO XXX TODO FIXME NOTE contained
 syntax match plantumlColor /#[0-9A-Fa-f]\{6\}\>/
@@ -40,18 +41,17 @@ syntax region plantumlLabel start=/\[/ms=s+1 end=/\]/me=s-1 contained contains=p
 syntax match plantumlText /\%([0-9A-Za-zÀ-ÿ]\|\s\|[\.,;_-]\)\+/ contained
 
 " Class
-syntax region plantumlClass start=/{/ end=/\s*}/ contains=plantumlClassArrows,
-\                                                         plantumlKeyword,
-\                                                         @plantumlClassOp
+syntax region plantumlClassString matchgroup=plantumlClass start=/\s*class\ze [^{]\+{/ end=/\s*\ze}/ contains=plantumlKeyword,
+\                                                                                                             @plantumlClassOp
+syntax match plantumlClass /\s*class\ze [^{]\+$/
 
 syntax match plantumlClassPublic      /+\w\+/ contained
-syntax match plantumlClassPrivate     /-\w\+/ contained 
-syntax match plantumlClassProtected   /#\w\+/ contained 
+syntax match plantumlClassPrivate     /-\w\+/ contained
+syntax match plantumlClassProtected   /#\w\+/ contained
 syntax match plantumlClassPackPrivate /\~\w\+/ contained
 
 syntax cluster plantumlClassOp contains=plantumlClassPublic,
 \                                       plantumlClassPrivate,
-\                                       plantumlClassProtected,
 \                                       plantumlClassProtected,
 \                                       plantumlClassPackPrivate
 
@@ -154,6 +154,7 @@ highlight default link plantumlDirectedOrVerticalArrowLR Special
 highlight default link plantumlDirectedOrVerticalArrowRL Special
 highlight default link plantumlLabel Special
 highlight default link plantumlText Label
+highlight default link plantumlClass Type
 highlight default link plantumlClassPublic Structure
 highlight default link plantumlClassPrivate Macro
 highlight default link plantumlClassProtected Statement
