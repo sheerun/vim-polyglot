@@ -7,6 +7,7 @@ DIRS_BASIC="syntax compiler indent ftdetect after/syntax after/indent after/ftde
 DIRS_ALL="syntax indent compiler autoload ftplugin ftdetect after"
 DIRS_SYNTAX="syntax ftdetect after/syntax after/ftdetect"
 DIRS_JAVASCRIPT="${DIRS} extras"
+DIRS_RM="$DIRS_JAVASCRIPT"
 
 OUTPUT=""
 
@@ -195,7 +196,7 @@ PACKS="
 "
 
 rm -rf tmp
-rm -rf $DIRS_ALL
+rm -rf $DIRS_RM
 mkdir tmp
 
 printf "Downloading packs..."
