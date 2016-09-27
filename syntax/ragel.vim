@@ -42,8 +42,8 @@ if !exists("b:ragel_subtype") || b:ragel_subtype == ''
     if b:ragel_subtype == 'rb'
       let b:ragel_subtype = 'ruby'
 
-    " .m -> objc
-    elseif b:ragel_subtype == 'm'
+    " .m -> objc, .mm -> objc
+    elseif b:ragel_subtype == 'm' || b:ragel_subtype == 'mm'
       let b:ragel_subtype = 'objc'
     
     " .cxx -> cpp
