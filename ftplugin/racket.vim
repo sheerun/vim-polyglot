@@ -64,7 +64,7 @@ setl commentstring=#\|\ %s\ \|#
 command! -nargs=* RktDocs :silent execute "!raco docs" '<args>' | redraw!
 
 " Build standalone executable against current file
-command! RktExe  execute "!raco exe -v %"
+command! RktExe  execute "!raco exe --vv %"
 
 " Open a racket/base XREPL
 command! RktREPL execute "!racket -l racket/base -e '(require xrepl)' -i"
