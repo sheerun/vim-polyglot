@@ -60,4 +60,22 @@ nnoremap <buffer> <f9> :!racket -t %<cr>
 "setl commentstring=;;%s
 setl commentstring=#\|\ %s\ \|#
 
+" Search installed racket documentation for key terms in default browser
+command! -nargs=* RktDocs :silent execute "!raco docs" '<args>' | redraw!
+
+" Build standalone executable against current file
+command! RktExe  execute "!raco exe -v %"
+
+" Open a racket/base XREPL
+command! RktREPL execute "!racket -l racket/base -e '(require xrepl)' -i"
+
+" Make .zo from current file and use n number of tasks based on CPU cores to do so
+command! RktMake execute "!raco make -j $(grep -c ^processor /proc/cpuinfo) -v %"
+
+" Print current racket version and run current file
+command! RktRun  execute "!racket --version && racket %"
+
+" Run tests against current file
+command! RktTest execute "!raco test -j $(grep -c ^processor /proc/cpuinfo) %"
+
 endif
