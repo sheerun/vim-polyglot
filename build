@@ -180,6 +180,7 @@ PACKS="
   swift:keith/swift.vim
   systemd:kurayama/systemd-vim-syntax
   textile:timcharper/textile.vim
+  terraform:hashivim/vim-terraform
   thrift:solarnz/thrift.vim
   tmux:keith/tmux.vim
   tomdoc:wellbredgrapefruit/tomdoc.vim

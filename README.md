@@ -107,6 +107,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [swift](https://github.com/keith/swift.vim) (syntax, indent, ftplugin, ftdetect)
 - [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax, ftdetect)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)
+- [terraform](https://github.com/hashivim/vim-terraform) (syntax, indent, ftdetect)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax, ftdetect)
 - [tmux](https://github.com/keith/tmux.vim) (syntax, ftplugin, ftdetect)
 - [tomdoc](https://github.com/wellbredgrapefruit/tomdoc.vim) (syntax)
