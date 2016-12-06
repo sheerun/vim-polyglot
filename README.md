@@ -117,6 +117,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [vcl](https://github.com/smerrill/vcl-vim-plugin) (syntax, ftdetect)
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent, ftdetect)
+- [vue](https://github.com/posva/vim-vue) (syntax, indent, ftdetect, ftplugin)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
 - [yaml](https://github.com/stephpy/vim-yaml) (syntax, ftplugin)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
