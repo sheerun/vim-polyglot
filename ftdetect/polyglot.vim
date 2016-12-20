@@ -980,15 +980,22 @@ endif
 
 " ftdetect/vcl.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vcl') == -1
-  
+
 au BufRead,BufNewFile *.vcl set filetype=vcl
 
 endif
 
 " ftdetect/velocity.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vm') == -1
-  
+
 au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
+
+endif
+
+" ftdetect/vue.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vue') == -1
+
+au BufNewFile,BufRead *.vue setf vue
 
 endif
 
