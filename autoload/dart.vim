@@ -20,18 +20,20 @@ endfunction
 
 function! dart#fmt(q_args) abort
   if executable('dartfmt')
-    let path = expand('%:p:gs:\:/:')
-    if filereadable(path)
-      let joined_lines = system(printf('dartfmt %s %s', a:q_args, shellescape(path)))
-      if 0 == v:shell_error
-        silent % delete _
-        silent put=joined_lines
-        silent 1 delete _
-      else
-        call s:cexpr('line %l\, column %c of %f: %m', joined_lines)
-      endif
+    let buffer_content = join(getline(1, '$'), "\n")
+    let joined_lines = system(printf('dartfmt %s', a:q_args), buffer_content)
+    if 0 == v:shell_error
+      let win_view = winsaveview()
+      silent % delete _
+      silent put=joined_lines
+      silent 1 delete _
+      call winrestview(win_view)
     else
-      call s:error(printf('cannot read a file: "%s"', path))
+      let errors = split(joined_lines, "\n")[2:]
+      let file_path = expand('%')
+      call map(errors, 'file_path.":".v:val')
+      let error_format = '%A%f:line %l\, column %c of stdin: %m,%C%.%#'
+      call s:cexpr(error_format, join(errors, "\n"))
     endif
   else
     call s:error('cannot execute binary file: dartfmt')

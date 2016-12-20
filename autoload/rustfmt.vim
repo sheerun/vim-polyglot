@@ -22,17 +22,20 @@ endif
 
 let s:got_fmt_error = 0
 
-function! rustfmt#Format()
-  let l:curw = winsaveview()
-  let l:tmpname = expand("%:p:h") . "/." . expand("%:p:t") . ".rustfmt"
-  call writefile(getline(1, '$'), l:tmpname)
+function! s:RustfmtCommandRange(filename, line1, line2)
+  let l:arg = {"file": shellescape(a:filename), "range": [a:line1, a:line2]}
+  return printf("%s %s --write-mode=overwrite --file-lines '[%s]'", g:rustfmt_command, g:rustfmt_options, json_encode(l:arg))
+endfunction
 
-  let command = g:rustfmt_command . " --write-mode=overwrite "
+function! s:RustfmtCommand(filename)
+  return g:rustfmt_command . " --write-mode=overwrite " . g:rustfmt_options . " " . shellescape(a:filename)
+endfunction
 
+function! s:RunRustfmt(command, curw, tmpname)
   if exists("*systemlist")
-    let out = systemlist(command . g:rustfmt_options . " " . shellescape(l:tmpname))
+    let out = systemlist(a:command)
   else
-    let out = split(system(command . g:rustfmt_options . " " . shellescape(l:tmpname)), '\r\?\n')
+    let out = split(system(a:command), '\r\?\n')
   endif
 
   if v:shell_error == 0 || v:shell_error == 3
@@ -40,7 +43,7 @@ function! rustfmt#Format()
     try | silent undojoin | catch | endtry
 
     " Replace current file with temp file, then reload buffer
-    call rename(l:tmpname, expand('%'))
+    call rename(a:tmpname, expand('%'))
     silent edit!
     let &syntax = &syntax
 
@@ -78,10 +81,30 @@ function! rustfmt#Format()
     let s:got_fmt_error = 1
     lwindow
     " We didn't use the temp file, so clean up
-    call delete(l:tmpname)
+    call delete(a:tmpname)
   endif
 
-  call winrestview(l:curw)
+  call winrestview(a:curw)
+endfunction
+
+function! rustfmt#FormatRange(line1, line2)
+  let l:curw = winsaveview()
+  let l:tmpname = expand("%:p:h") . "/." . expand("%:p:t") . ".rustfmt"
+  call writefile(getline(1, '$'), l:tmpname)
+
+  let command = s:RustfmtCommandRange(l:tmpname, a:line1, a:line2)
+
+  call s:RunRustfmt(command, l:curw, l:tmpname)
+endfunction
+
+function! rustfmt#Format()
+  let l:curw = winsaveview()
+  let l:tmpname = expand("%:p:h") . "/." . expand("%:p:t") . ".rustfmt"
+  call writefile(getline(1, '$'), l:tmpname)
+
+  let command = s:RustfmtCommand(l:tmpname)
+
+  call s:RunRustfmt(command, l:curw, l:tmpname)
 endfunction
 
 endif

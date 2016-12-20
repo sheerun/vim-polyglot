@@ -1,0 +1,34 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
+  
+" Pubcookie Module <https://www.vanko.me/book/page/pubcookie-module-nginx>
+" Authorizes users using encrypted cookies
+syn keyword ngxDirectiveThirdParty pubcookie_inactive_expire
+syn keyword ngxDirectiveThirdParty pubcookie_hard_expire
+syn keyword ngxDirectiveThirdParty pubcookie_app_id
+syn keyword ngxDirectiveThirdParty pubcookie_dir_depth
+syn keyword ngxDirectiveThirdParty pubcookie_catenate_app_ids
+syn keyword ngxDirectiveThirdParty pubcookie_app_srv_id
+syn keyword ngxDirectiveThirdParty pubcookie_login
+syn keyword ngxDirectiveThirdParty pubcookie_login_method
+syn keyword ngxDirectiveThirdParty pubcookie_post
+syn keyword ngxDirectiveThirdParty pubcookie_domain
+syn keyword ngxDirectiveThirdParty pubcookie_granting_cert_file
+syn keyword ngxDirectiveThirdParty pubcookie_session_key_file
+syn keyword ngxDirectiveThirdParty pubcookie_session_cert_file
+syn keyword ngxDirectiveThirdParty pubcookie_crypt_key_file
+syn keyword ngxDirectiveThirdParty pubcookie_end_session
+syn keyword ngxDirectiveThirdParty pubcookie_encryption
+syn keyword ngxDirectiveThirdParty pubcookie_session_reauth
+syn keyword ngxDirectiveThirdParty pubcookie_auth_type_names
+syn keyword ngxDirectiveThirdParty pubcookie_no_prompt
+syn keyword ngxDirectiveThirdParty pubcookie_on_demand
+syn keyword ngxDirectiveThirdParty pubcookie_addl_request
+syn keyword ngxDirectiveThirdParty pubcookie_no_obscure_cookies
+syn keyword ngxDirectiveThirdParty pubcookie_no_clean_creds
+syn keyword ngxDirectiveThirdParty pubcookie_egd_device
+syn keyword ngxDirectiveThirdParty pubcookie_no_blank
+syn keyword ngxDirectiveThirdParty pubcookie_super_debug
+syn keyword ngxDirectiveThirdParty pubcookie_set_remote_user
+
+
+endif

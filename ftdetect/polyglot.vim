@@ -58,7 +58,7 @@ endif
 " ftdetect/clojure.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'clojure') == -1
   
-autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn,*.cljx,*.cljc setlocal filetype=clojure
+autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn,*.cljx,*.cljc,{build,profile}.boot setlocal filetype=clojure
 
 endif
 
@@ -278,7 +278,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'glsl') == -1
 " Language: OpenGL Shading Language
 " Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
 
-autocmd! BufNewFile,BufRead *.glsl,*.geom,*.vert,*.frag,*.gsh,*.vsh,*.fsh,*.vs,*.fs,*.gs,*.tcs,*.tes set filetype=glsl
+autocmd! BufNewFile,BufRead *.glsl,*.geom,*.vert,*.frag,*.gsh,*.vsh,*.fsh,*.vs,*.fs,*.gs,*.tcs,*.tes,*.tesc,*.tese,*.comp set filetype=glsl
 
 " vim:set sts=2 sw=2 :
 
@@ -357,6 +357,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') ==
 au BufNewFile,BufRead *.js setf javascript
 au BufNewFile,BufRead *.jsm setf javascript
 au BufNewFile,BufRead Jakefile setf javascript
+au BufNewFile,BufRead *.es6 setf javascript
 
 fun! s:SelectJavascript()
   if getline(1) =~# '^#!.*/bin/\%(env\s\+\)\?node\>'
@@ -871,7 +872,7 @@ endif
 " ftdetect/slim.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slim') == -1
   
-autocmd BufNewFile,BufRead *.slim setf slim
+autocmd BufNewFile,BufRead *.slim setfiletype slim
 
 endif
 

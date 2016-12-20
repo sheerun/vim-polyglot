@@ -42,6 +42,7 @@ setlocal indentkeys=o,O,*<Return>,<>>,{,},!^F
 
 
 let s:tags = []
+let s:no_tags = []
 
 " [-- <ELEMENT ? - - ...> --]
 call add(s:tags, 'a')
@@ -165,6 +166,44 @@ call add(s:tags, 'text')
 call add(s:tags, 'textPath')
 call add(s:tags, 'tref')
 call add(s:tags, 'tspan')
+" Common self closing SVG elements
+call add(s:no_tags, 'animate')
+call add(s:no_tags, 'animateTransform')
+call add(s:no_tags, 'circle')
+call add(s:no_tags, 'ellipse')
+call add(s:no_tags, 'feBlend')
+call add(s:no_tags, 'feColorMatrix')
+call add(s:no_tags, 'feComposite')
+call add(s:no_tags, 'feConvolveMatrix')
+call add(s:no_tags, 'feDisplacementMap')
+call add(s:no_tags, 'feFlood')
+call add(s:no_tags, 'feFuncR')
+call add(s:no_tags, 'feFuncG')
+call add(s:no_tags, 'feFuncB')
+call add(s:no_tags, 'feFuncA')
+call add(s:no_tags, 'feGaussianBlur')
+call add(s:no_tags, 'feImage')
+call add(s:no_tags, 'feMergeNode')
+call add(s:no_tags, 'feMorphology')
+call add(s:no_tags, 'feOffset')
+call add(s:no_tags, 'fePointLight')
+call add(s:no_tags, 'feSpotLight')
+call add(s:no_tags, 'feTile')
+call add(s:no_tags, 'feTurbulence')
+call add(s:no_tags, 'hatchpath')
+call add(s:no_tags, 'hkern')
+call add(s:no_tags, 'image')
+call add(s:no_tags, 'line')
+call add(s:no_tags, 'mpath')
+call add(s:no_tags, 'polygon')
+call add(s:no_tags, 'polyline')
+call add(s:no_tags, 'path')
+call add(s:no_tags, 'rect')
+call add(s:no_tags, 'solidColor')
+call add(s:no_tags, 'stop')
+call add(s:no_tags, 'use')
+call add(s:no_tags, 'view')
+call add(s:no_tags, 'vkern')
 
 call add(s:tags, 'html')
 call add(s:tags, 'head')
@@ -176,8 +215,6 @@ call add(s:tags, 'tfoot')
 call add(s:tags, 'tr')
 call add(s:tags, 'th')
 call add(s:tags, 'td')
-
-let s:no_tags = []
 
 call add(s:no_tags, 'base')
 call add(s:no_tags, 'link')

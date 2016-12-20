@@ -132,6 +132,7 @@ syn match     rustOperator     display "&&\|||"
 " This is rustArrowCharacter rather than rustArrow for the sake of matchparen,
 " so it skips the ->; see http://stackoverflow.com/a/30309949 for details.
 syn match     rustArrowCharacter display "->"
+syn match     rustQuestionMark display "?\([a-zA-Z]\+\)\@!"
 
 syn match     rustMacro       '\w\(\w\)*!' contains=rustAssert,rustPanic
 syn match     rustMacro       '#\w\(\w\)*' contains=rustAssert,rustPanic
@@ -280,6 +281,7 @@ hi def link rustInvalidBareKeyword Error
 hi def link rustExternCrate   rustKeyword
 hi def link rustObsoleteExternMod Error
 hi def link rustBoxPlacementParens Delimiter
+hi def link rustQuestionMark  Special
 
 " Other Suggestions:
 " hi rustAttribute ctermfg=cyan

@@ -8,7 +8,7 @@ if exists("b:current_syntax") && b:current_syntax == "glsl"
 endif
 
 " Statements
-syn keyword glslConditional if else
+syn keyword glslConditional if else switch case default
 syn keyword glslRepeat      for while do
 syn keyword glslStatement   discard return break continue
 

@@ -1,0 +1,26 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
+  
+" SR Cache Module <https://github.com/openresty/srcache-nginx-module>
+" Transparent subrequest-based caching layout for arbitrary nginx locations
+syn keyword ngxDirectiveThirdParty srcache_fetch
+syn keyword ngxDirectiveThirdParty srcache_fetch_skip
+syn keyword ngxDirectiveThirdParty srcache_store
+syn keyword ngxDirectiveThirdParty srcache_store_max_size
+syn keyword ngxDirectiveThirdParty srcache_store_skip
+syn keyword ngxDirectiveThirdParty srcache_store_statuses
+syn keyword ngxDirectiveThirdParty srcache_store_ranges
+syn keyword ngxDirectiveThirdParty srcache_header_buffer_size
+syn keyword ngxDirectiveThirdParty srcache_store_hide_header
+syn keyword ngxDirectiveThirdParty srcache_store_pass_header
+syn keyword ngxDirectiveThirdParty srcache_methods
+syn keyword ngxDirectiveThirdParty srcache_ignore_content_encoding
+syn keyword ngxDirectiveThirdParty srcache_request_cache_control
+syn keyword ngxDirectiveThirdParty srcache_response_cache_control
+syn keyword ngxDirectiveThirdParty srcache_store_no_store
+syn keyword ngxDirectiveThirdParty srcache_store_no_cache
+syn keyword ngxDirectiveThirdParty srcache_store_private
+syn keyword ngxDirectiveThirdParty srcache_default_expire
+syn keyword ngxDirectiveThirdParty srcache_max_expire
+
+
+endif

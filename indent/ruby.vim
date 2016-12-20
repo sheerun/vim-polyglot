@@ -51,11 +51,11 @@ let s:syng_strcom = '\<ruby\%(Regexp\|RegexpDelimiter\|RegexpEscape' .
 
 " Regex of syntax group names that are strings.
 let s:syng_string =
-      \ '\<ruby\%(String\|Interpolation\|NoInterpolation\|StringEscape\)\>'
+      \ '\<ruby\%(String\|Interpolation\|InterpolationDelimiter\|NoInterpolation\|StringEscape\)\>'
 
 " Regex of syntax group names that are strings or documentation.
 let s:syng_stringdoc =
-      \'\<ruby\%(String\|Interpolation\|NoInterpolation\|StringEscape\|Documentation\)\>'
+      \ '\<ruby\%(String\|Interpolation\|InterpolationDelimiter\|NoInterpolation\|StringEscape\|Documentation\)\>'
 
 " Expression used to check whether we should skip a match with searchpair().
 let s:skip_expr =
@@ -392,7 +392,7 @@ function! s:FindContainingClass()
       call setpos('.', saved_position)
       return found_lnum
     endif
-  endif
+  endwhile
 
   call setpos('.', saved_position)
   return 0

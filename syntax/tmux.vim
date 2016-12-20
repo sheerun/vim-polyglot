@@ -276,6 +276,7 @@ syn keyword tmuxOptsSetw
 	\ window-status-activity-style
 	\ window-status-bell-style
 	\ window-status-current-bg
+	\ window-status-current-fg
 	\ window-status-current-format
 	\ window-status-current-style
 	\ window-status-format

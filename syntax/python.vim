@@ -99,7 +99,7 @@ syn keyword pythonException	try except finally
 syn keyword pythonOperator	and in is not or
 
 " Print keyword but only if not used as function
-syn match pythonStatement "\<print\>\((\)\@!" display
+syn match pythonStatement "\<print\>\((\|,\|*=\)\@!" display
 
 " Decorators (new in Python 2.4)
 syn match   pythonDecorator	"@" display nextgroup=pythonFunction skipwhite

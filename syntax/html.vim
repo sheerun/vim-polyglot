@@ -44,6 +44,29 @@ syn keyword htmlTagName contained missing-glyph mpath
 syn keyword htmlTagName contained text textPath tref tspan vkern
 syn keyword htmlTagName contained metadata title
 
+" MathML tags
+" https://www.w3.org/TR/MathML3/appendixi.html#index.elem
+syn keyword htmlTagName contained abs and annotation annotation-xml apply approx arccos arccosh arccot arccoth
+syn keyword htmlTagName contained arccsc arccsch arcsec arcsech arcsin arcsinh arctan arctanh arg bind
+syn keyword htmlTagName contained bvar card cartesianproduct cbytes ceiling cerror ci cn codomain complexes
+syn keyword htmlTagName contained compose condition conjugate cos cosh cot coth cs csc csch
+syn keyword htmlTagName contained csymbol curl declare degree determinant diff divergence divide domain domainofapplication
+syn keyword htmlTagName contained emptyset eq equivalent eulergamma exists exp exponentiale factorial factorof false
+syn keyword htmlTagName contained floor fn forall gcd geq grad gt ident image imaginary
+syn keyword htmlTagName contained imaginaryi implies in infinity int integers intersect interval inverse lambda
+syn keyword htmlTagName contained laplacian lcm leq limit list ln log logbase lowlimit lt
+syn keyword htmlTagName contained maction maligngroup malignmark math matrix matrixrow max mean median menclose
+syn keyword htmlTagName contained merror mfenced mfrac mglyph mi mi" min minus mlabeledtr mlongdiv
+syn keyword htmlTagName contained mmultiscripts mn mo mode moment momentabout mover mpadded mphantom mprescripts
+syn keyword htmlTagName contained mroot mrow ms mscarries mscarry msgroup msline mspace msqrt msrow
+syn keyword htmlTagName contained mstack mstyle msub msubsup msup mtable mtd mtext mtr munder
+syn keyword htmlTagName contained munderover naturalnumbers neq none not notanumber notin notprsubset notsubset or
+syn keyword htmlTagName contained otherwise outerproduct partialdiff pi piece piecewise plus power primes product
+syn keyword htmlTagName contained prsubset quotient rationals real reals reln rem root scalarproduct sdev
+syn keyword htmlTagName contained sec sech selector semantics sep set setdiff share sin sinh
+syn keyword htmlTagName contained span subset sum tan tanh tendsto times transpose true union
+syn keyword htmlTagName contained uplimit variance vector vectorproduct xor
+
 " Custom Element
 syn match htmlTagName contained "\<[a-z_]\([a-z0-9_.]\+\)\?\(\-[a-z0-9_.]\+\)\+\>"
 
@@ -79,13 +102,26 @@ syn keyword htmlArg contained async
 " <content>
 syn keyword htmlArg contained select
 " <iframe>
-syn keyword htmlArg contained seamless srcdoc sandbox
+syn keyword htmlArg contained seamless srcdoc sandbox allowfullscreen
 " <picture>
 syn keyword htmlArg contained srcset sizes
+" <a>
+syn keyword htmlArg contained download media
+" <script>, <style>
+syn keyword htmlArg contained nonce
+" <area>, <a>, <img>, <iframe>, <link>
+syn keyword htmlArg contained referrerpolicy
+" <script>
+" https://w3c.github.io/webappsec-subresource-integrity/#the-integrity-attribute
+syn keyword htmlArg contained integrity crossorigin
 
 " Custom Data Attributes
-" http://dev.w3.org/html5/spec/elements.html#embedding-custom-non-visible-data
-syn match   htmlArg "\<\(data\-\([a-z_][a-z0-9_.\-]*\)\+\)\=\>" contained
+" http://w3c.github.io/html/single-page.html#embedding-custom-non-visible-data-with-the-data-attributes
+syn match   htmlArg "\<\(data\-\([a-z_][a-z0-9_.\-]*\)\+\)\{1,}\>" contained
+
+" Vendor Extension Attributes
+" http://w3c.github.io/html/single-page.html#conformance-requirements-extensibility
+syn match   htmlArg "\<\(x\-\([a-z_][a-z0-9_.\-]*\)\+\)\{2,}\>" contained
 
 " Microdata
 " http://dev.w3.org/html5/md/
@@ -119,5 +155,23 @@ syn keyword htmlArg contained x x-height x1 x2 xChannelSelector xlink:actuate xl
 syn keyword htmlArg contained y y1 y2 yChannelSelector 
 syn keyword htmlArg contained z zoomAndPan 
 syn keyword htmlArg contained alignment-baseline baseline-shift clip-path clip-rule clip color-interpolation-filters color-interpolation color-profile color-rendering color cursor direction display dominant-baseline enable-background fill-opacity fill-rule fill filter flood-color flood-opacity font-family font-size-adjust font-size font-stretch font-style font-variant font-weight glyph-orientation-horizontal glyph-orientation-vertical image-rendering kerning letter-spacing lighting-color marker-end marker-mid marker-start mask opacity overflow pointer-events shape-rendering stop-color stop-opacity stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-miterlimit stroke-opacity stroke-width stroke text-anchor text-decoration text-rendering unicode-bidi visibility word-spacing writing-mode
+
+" MathML attributes
+" https://www.w3.org/TR/MathML3/chapter2.html#interf.toplevel.atts
+syn keyword htmlArg contained accent accentunder actiontype align alignmentscope altimg altimg-height altimg-valign altimg-width alttext
+syn keyword htmlArg contained annotation-xml background base baseline bevelled cd cdgroup charalign charspacing close
+syn keyword htmlArg contained closure color columnalign columnalignment columnlines columnspacing columnspan columnwidth crossout decimalpoint
+syn keyword htmlArg contained definitionURL denomalign depth display displaystyle edge encoding equalcolumns equalrows fence
+syn keyword htmlArg contained fontfamily fontsize fontstyle fontweight form frame framespacing groupalign height indentalign
+syn keyword htmlArg contained indentalignfirst indentalignlast indentshift indentshiftfirst indentshiftlast indenttarget index infixlinebreakstyle integer largeop
+syn keyword htmlArg contained leftoverhang length linebreak linebreakmultchar linebreakstyle lineleading linethickness location longdivstyle lquote
+syn keyword htmlArg contained lspace ltr macros math mathbackground mathcolor mathsize mathvariant maxsize maxwidth
+syn keyword htmlArg contained mediummathspace menclose minlabelspacing minsize mode movablelimits msgroup mslinethickness name nargs
+syn keyword htmlArg contained newline notation numalign number occurrence open order other overflow position
+syn keyword htmlArg contained rightoverhang role rowalign rowlines rowspacing rowspan rquote rspace schemaLocation scope
+syn keyword htmlArg contained scriptlevel scriptminsize scriptsize scriptsizemultiplier selection separator separators shift side stackalign
+syn keyword htmlArg contained stretchy subscriptshift superscriptshift symmetric thickmathspace thinmathspace type valign verythickmathspace verythinmathspace
+syn keyword htmlArg contained veryverythickmathspace veryverythinmathspace voffset width xref
+
 
 endif

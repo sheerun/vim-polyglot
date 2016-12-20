@@ -11,7 +11,7 @@ endif
 syntax case match
 
 " keywords
-syntax keyword jasmineSuite describe it beforeEach afterEach
+syntax keyword jasmineSuite describe it beforeEach afterEach beforeAll afterAll
 syntax keyword jasmine jasmine
 
 " special
@@ -34,6 +34,9 @@ syntax match jasmineClock /\.mockDate/
 
 " disabled
 syntax keyword jasmineDisabled xdescribe xit
+
+" focused 
+syntax keyword jasmineFocused fdescribe fit
 
 " expectation
 syntax keyword jasmineExpectation expect
@@ -59,6 +62,7 @@ syntax cluster JavaScriptAll add=
   \ jasmine,
   \ jasmineClock,
   \ jasmineDisabled,
+  \ jasmineFocused,
   \ jasmineExpectation,
   \ jasmineMatcher,
   \ jasmineNot,
@@ -72,6 +76,7 @@ let b:current_syntax = "jasmine"
 hi def link jasmine Special
 hi def link jasmineClock Special
 hi def link jasmineDisabled Error
+hi def link jasmineFocused Special
 hi def link jasmineExpectation Statement
 hi def link jasmineMatcher Statement
 hi def link jasmineNot Special

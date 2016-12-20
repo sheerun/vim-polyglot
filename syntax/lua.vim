@@ -15,20 +15,33 @@ endif
 
 syntax sync fromstart
 
+function! s:FoldableRegion(tag, name, expr)
+  let synexpr = 'syntax region ' . a:name . ' ' . a:expr
+  let pfx = 'g:lua_syntax_fold_'
+  if !exists('g:lua_syntax_nofold') || exists(pfx . a:tag) || exists(pfx . a:name)
+    let synexpr .= ' fold'
+  end
+  exec synexpr
+endfunction
+
 " Clusters
 syntax cluster luaBase contains=luaComment,luaCommentLong,luaConstant,luaNumber,luaString,luaStringLong,luaBuiltIn
-syntax cluster luaExpr contains=@luaBase,luaTable,luaParen,luaBracket,luaSpecialTable,luaSpecialValue,luaOperator,luaEllipsis,luaComma,luaFunc,luaFuncCall,luaError
-syntax cluster luaStat contains=@luaExpr,luaIfThen,luaBlock,luaLoop,luaGoto,luaLabel,luaLocal,luaStatement,luaSemiCol
+syntax cluster luaExpr contains=@luaBase,luaTable,luaParen,luaBracket,luaSpecialTable,luaSpecialValue,luaOperator,luaSymbolOperator,luaEllipsis,luaComma,luaFunc,luaFuncCall,luaError
+syntax cluster luaStat
+      \ contains=@luaExpr,luaIfThen,luaBlock,luaLoop,luaGoto,luaLabel,luaLocal,luaStatement,luaSemiCol,luaErrHand
 
 syntax match luaNoise /\%(\.\|,\|:\|\;\)/
 
 " Symbols
-syntax region luaTable   transparent matchgroup=luaBraces   start="{" end="}" contains=@luaExpr fold
+call s:FoldableRegion('table', 'luaTable',
+      \ 'transparent matchgroup=luaBraces start="{" end="}" contains=@luaExpr')
 syntax region luaParen   transparent matchgroup=luaParens   start='(' end=')' contains=@luaExpr
 syntax region luaBracket transparent matchgroup=luaBrackets start="\[" end="\]" contains=@luaExpr
 syntax match  luaComma ","
 syntax match  luaSemiCol ";"
-syntax match  luaOperator "[#<>=~^&|*/%+-]\|\.\."
+if !exists('g:lua_syntax_nosymboloperator')
+  syntax match luaSymbolOperator "[#<>=~^&|*/%+-]\|\.\."
+endi
 syntax match  luaEllipsis "\.\.\."
 
 " Catch errors caused by unbalanced brackets and keywords
@@ -43,14 +56,16 @@ syntax match luaComment "\%^#!.*"
 " Comments
 syntax keyword luaCommentTodo contained TODO FIXME XXX TBD
 syntax match   luaComment "--.*$" contains=luaCommentTodo,luaDocTag,@Spell
-syntax region  luaCommentLong matchgroup=luaCommentLongTag start="--\[\z(=*\)\[" end="\]\z1\]" contains=luaCommentTodo,luaDocTag,@Spell fold
+call s:FoldableRegion('comment', 'luaCommentLong',
+      \ 'matchgroup=luaCommentLongTag start="--\[\z(=*\)\[" end="\]\z1\]" contains=luaCommentTodo,luaDocTag,@Spell')
 syntax match   luaDocTag contained "\s@\k\+"
 
 " Function calls
 syntax match luaFuncCall /\k\+\%(\s*[{('"]\)\@=/
 
 " Functions
-syntax region luaFunc transparent matchgroup=luaFuncKeyword start="\<function\>" end="\<end\>" contains=@luaStat,luaFuncSig fold
+call s:FoldableRegion('function', 'luaFunc',
+      \ 'transparent matchgroup=luaFuncKeyword start="\<function\>" end="\<end\>" contains=@luaStat,luaFuncSig')
 syntax region luaFuncSig contained transparent start="\(\<function\>\)\@<=" end=")" contains=luaFuncId,luaFuncArgs keepend
 syntax match luaFuncId contained "[^(]*(\@=" contains=luaFuncTable,luaFuncName
 syntax match luaFuncTable contained /\k\+\%(\s*[.:]\)\@=/
@@ -63,7 +78,8 @@ syntax match luaFuncArgComma contained /,/
 syntax region luaIfThen transparent matchgroup=luaCond start="\<if\>" end="\<then\>"me=e-4 contains=@luaExpr nextgroup=luaThenEnd skipwhite skipempty
 
 " then ... end
-syntax region luaThenEnd contained transparent matchgroup=luaCond start="\<then\>" end="\<end\>" contains=@luaStat,luaElseifThen,luaElse fold
+call s:FoldableRegion('control', 'luaThenEnd',
+      \ 'contained transparent matchgroup=luaCond start="\<then\>" end="\<end\>" contains=@luaStat,luaElseifThen,luaElse')
 
 " elseif ... then
 syntax region luaElseifThen contained transparent matchgroup=luaCond start="\<elseif\>" end="\<then\>" contains=@luaExpr
@@ -72,16 +88,20 @@ syntax region luaElseifThen contained transparent matchgroup=luaCond start="\<el
 syntax keyword luaElse contained else
 
 " do ... end
-syntax region luaBlock transparent matchgroup=luaRepeat start="\<do\>" end="\<end\>" contains=@luaStat fold
+call s:FoldableRegion('control', 'luaLoopBlock',
+      \ 'transparent matchgroup=luaRepeat start="\<do\>" end="\<end\>" contains=@luaStat contained')
+call s:FoldableRegion('control', 'luaBlock',
+      \ 'transparent matchgroup=luaStatement start="\<do\>" end="\<end\>" contains=@luaStat')
 
 " repeat ... until
-syntax region luaLoop transparent matchgroup=luaRepeat start="\<repeat\>" end="\<until\>" contains=@luaStat nextgroup=@luaExpr fold
+call s:FoldableRegion('control', 'luaLoop',
+      \ 'transparent matchgroup=luaRepeat start="\<repeat\>" end="\<until\>" contains=@luaStat nextgroup=@luaExpr')
 
 " while ... do
-syntax region luaLoop transparent matchgroup=luaRepeat start="\<while\>" end="\<do\>"me=e-2 contains=@luaExpr nextgroup=luaBlock skipwhite skipempty fold
+syntax region luaLoop transparent matchgroup=luaRepeat start="\<while\>" end="\<do\>"me=e-2 contains=@luaExpr nextgroup=luaLoopBlock skipwhite skipempty
 
 " for ... do and for ... in ... do
-syntax region luaLoop transparent matchgroup=luaRepeat start="\<for\>" end="\<do\>"me=e-2 contains=@luaExpr,luaIn nextgroup=luaBlock skipwhite skipempty
+syntax region luaLoop transparent matchgroup=luaRepeat start="\<for\>" end="\<do\>"me=e-2 contains=@luaExpr,luaIn nextgroup=luaLoopBlock skipwhite skipempty
 syntax keyword luaIn contained in
 
 " goto and labels
@@ -98,7 +118,8 @@ syntax keyword luaStatement break return
 
 " Strings
 syntax match  luaStringSpecial contained #\\[\\abfnrtvz'"]\|\\x[[:xdigit:]]\{2}\|\\[[:digit:]]\{,3}#
-syntax region luaStringLong matchgroup=luaStringLongTag start="\[\z(=*\)\[" end="\]\z1\]" contains=@Spell
+call s:FoldableRegion('string', 'luaStringLong',
+      \ 'matchgroup=luaStringLongTag start="\[\z(=*\)\[" end="\]\z1\]" contains=@Spell')
 syntax region luaString  start=+'+ end=+'+ skip=+\\\\\|\\'+ contains=luaStringSpecial,@Spell
 syntax region luaString  start=+"+ end=+"+ skip=+\\\\\|\\"+ contains=luaStringSpecial,@Spell
 
@@ -113,50 +134,60 @@ syntax match luaFloat  "\.\d\+\%([eE][-+]\=\d\+\)\=\>"
 " Floating point constant, without dot, with exponent
 syntax match luaFloat  "\<\d\+[eE][-+]\=\d\+\>"
 
-" Special names from the Standard Library
-syntax keyword luaSpecialTable
-\ bit32
-\ coroutine
-\ debug
-\ io
-\ math
-\ os
-\ package
-\ string
-\ table
-\ utf8
 
-syntax keyword luaSpecialValue
-\ _G
-\ _VERSION
-\ assert
-\ collectgarbage
-\ dofile
-\ error
-\ getfenv
-\ getmetatable
-\ ipairs
-\ load
-\ loadfile
-\ loadstring
-\ module
-\ next
-\ pairs
-\ pcall
-\ print
-\ rawequal
-\ rawget
-\ rawlen
-\ rawset
-\ require
-\ select
-\ setfenv
-\ setmetatable
-\ tonumber
-\ tostring
-\ type
-\ unpack
-\ xpcall
+" Special names from the Standard Library
+if !exists('g:lua_syntax_nostdlib')
+    syntax keyword luaSpecialValue
+          \ module
+          \ require
+
+    syntax keyword luaSpecialTable _G
+
+    syntax keyword luaErrHand
+          \ assert
+          \ error
+          \ pcall
+          \ xpcall
+
+  if !exists('g:lua_syntax_noextendedstdlib')
+    syntax keyword luaSpecialTable
+          \ bit32
+          \ coroutine
+          \ debug
+          \ io
+          \ math
+          \ os
+          \ package
+          \ string
+          \ table
+          \ utf8
+
+    syntax keyword luaSpecialValue
+          \ _VERSION
+          \ collectgarbage
+          \ dofile
+          \ getfenv
+          \ getmetatable
+          \ ipairs
+          \ load
+          \ loadfile
+          \ loadstring
+          \ next
+          \ pairs
+          \ print
+          \ rawequal
+          \ rawget
+          \ rawlen
+          \ rawset
+          \ select
+          \ setfenv
+          \ setmetatable
+          \ tonumber
+          \ tostring
+          \ type
+          \ unpack
+  endif
+endif
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
@@ -173,21 +204,23 @@ if version >= 508 || !exists("did_lua_syn_inits")
   HiLink luaBrackets         Noise
   HiLink luaBuiltIn          Special
   HiLink luaComment          Comment
+  HiLink luaCommentLongTag   luaCommentLong
   HiLink luaCommentLong      luaComment
   HiLink luaCommentTodo      Todo
   HiLink luaCond             Conditional
-  HiLink luaConstant         Boolean
+  HiLink luaConstant         Constant
   HiLink luaDocTag           Underlined
-  HiLink luaEllipsis         StorageClass
+  HiLink luaEllipsis         Special
   HiLink luaElse             Conditional
   HiLink luaError            Error
   HiLink luaFloat            Float
-  HiLink luaFuncTable        Function
   HiLink luaFuncArgName      Noise
   HiLink luaFuncCall         PreProc
   HiLink luaFuncId           Function
-  HiLink luaFuncKeyword      Type
-  HiLink luaFuncName         Function
+  HiLink luaFuncName         luaFuncId
+  HiLink luaFuncTable        luaFuncId
+  HiLink luaFuncKeyword      luaFunction
+  HiLink luaFunction         Structure
   HiLink luaFuncParens       Noise
   HiLink luaGoto             luaStatement
   HiLink luaGotoLabel        Noise
@@ -195,6 +228,7 @@ if version >= 508 || !exists("did_lua_syn_inits")
   HiLink luaLabel            Label
   HiLink luaLocal            Type
   HiLink luaNumber           Number
+  HiLink luaSymbolOperator   luaOperator
   HiLink luaOperator         Operator
   HiLink luaRepeat           Repeat
   HiLink luaSemiCol          Delimiter
@@ -204,6 +238,7 @@ if version >= 508 || !exists("did_lua_syn_inits")
   HiLink luaString           String
   HiLink luaStringLong       luaString
   HiLink luaStringSpecial    SpecialChar
+  HiLink luaErrHand          Exception
 
   delcommand HiLink
 end

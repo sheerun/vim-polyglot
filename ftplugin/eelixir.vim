@@ -80,6 +80,23 @@ if exists("loaded_matchit")
   let b:match_words = s:match_words
 endif
 
+if !exists('b:surround_45')
+  " When using surround `-` (ASCII 45) would provide `<% selection %>`
+  let b:surround_45 = "<% \r %>"
+endif
+if !exists('b:surround_61')
+  " When using surround `=` (ASCII 61) would provide `<%= selection %>`
+  let b:surround_61 = "<%= \r %>"
+endif
+if !exists('b:surround_35')
+  " When using surround `#` (ASCII 35) would provide `<%# selection %>`
+  let b:surround_35 = "<%# \r %>"
+endif
+if !exists('b:surround_5')
+  " When using surround `<C-e>` (ASCII 5 `ENQ`) would provide `<% selection %>\n<% end %>`
+  let b:surround_5 = "<% \r %>\n<% end %>"
+endif
+
 setlocal comments=:<%#
 setlocal commentstring=<%#\ %s\ %>
 

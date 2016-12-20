@@ -1,0 +1,20 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
+  
+" VTS Module <https://github.com/vozlt/nginx-module-vts>
+" Nginx virtual host traffic status module
+syn keyword ngxDirectiveThirdParty vhost_traffic_status
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_zone
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_display
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_display_format
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_display_jsonp
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_filter
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_filter_by_host
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_filter_by_set_key
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_filter_check_duplicate
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_limit
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_limit_traffic
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_limit_traffic_by_set_key
+syn keyword ngxDirectiveThirdParty vhost_traffic_status_limit_check_duplicate
+
+
+endif

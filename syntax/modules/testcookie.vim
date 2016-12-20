@@ -1,0 +1,32 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
+  
+" Testcookie Module <https://github.com/kyprizel/testcookie-nginx-module>
+" NGINX module for L7 DDoS attack mitigation
+syn keyword ngxDirectiveThirdParty testcookie
+syn keyword ngxDirectiveThirdParty testcookie_name
+syn keyword ngxDirectiveThirdParty testcookie_domain
+syn keyword ngxDirectiveThirdParty testcookie_expires
+syn keyword ngxDirectiveThirdParty testcookie_path
+syn keyword ngxDirectiveThirdParty testcookie_secret
+syn keyword ngxDirectiveThirdParty testcookie_session
+syn keyword ngxDirectiveThirdParty testcookie_arg
+syn keyword ngxDirectiveThirdParty testcookie_max_attempts
+syn keyword ngxDirectiveThirdParty testcookie_p3p
+syn keyword ngxDirectiveThirdParty testcookie_fallback
+syn keyword ngxDirectiveThirdParty testcookie_whitelist 
+syn keyword ngxDirectiveThirdParty testcookie_pass
+syn keyword ngxDirectiveThirdParty testcookie_redirect_via_refresh
+syn keyword ngxDirectiveThirdParty testcookie_refresh_template
+syn keyword ngxDirectiveThirdParty testcookie_refresh_status
+syn keyword ngxDirectiveThirdParty testcookie_deny_keepalive
+syn keyword ngxDirectiveThirdParty testcookie_get_only
+syn keyword ngxDirectiveThirdParty testcookie_https_location
+syn keyword ngxDirectiveThirdParty testcookie_refresh_encrypt_cookie
+syn keyword ngxDirectiveThirdParty testcookie_refresh_encrypt_cookie_key
+syn keyword ngxDirectiveThirdParty testcookie_refresh_encrypt_iv
+syn keyword ngxDirectiveThirdParty testcookie_internal
+syn keyword ngxDirectiveThirdParty testcookie_httponly_flag
+syn keyword ngxDirectiveThirdParty testcookie_secure_flag
+
+
+endif
