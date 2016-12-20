@@ -938,6 +938,16 @@ au BufRead,BufNewFile *.textile set filetype=textile
 
 endif
 
+
+" ftdetect/terraform.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
+
+au BufRead,BufNewFile *.tf setlocal filetype=terraform
+au BufRead,BufNewFile *.tfvars setlocal filetype=terraform
+au BufRead,BufNewFile *.tfstate setlocal filetype=javascript
+
+endif
+
 " ftdetect/thrift.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'thrift') == -1
   
