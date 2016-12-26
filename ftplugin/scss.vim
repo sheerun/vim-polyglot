@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scss') == -1
   
 " Vim filetype plugin
 " Language:	SCSS
