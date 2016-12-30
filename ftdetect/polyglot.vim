@@ -869,6 +869,14 @@ au BufRead,BufNewFile *.sbt setfiletype sbt.scala
 
 endif
 
+" ftdetect/scss.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scss') == -1
+  
+au BufRead,BufNewFile *.scss setfiletype scss
+au BufEnter *.scss :syntax sync fromstart
+
+endif
+
 " ftdetect/slim.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slim') == -1
   
