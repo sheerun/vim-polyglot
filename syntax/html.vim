@@ -68,7 +68,7 @@ syn keyword htmlTagName contained span subset sum tan tanh tendsto times transpo
 syn keyword htmlTagName contained uplimit variance vector vectorproduct xor
 
 " Custom Element
-syn match htmlTagName contained "\<[a-z_]\([a-z0-9_.]\+\)\?\(\-[a-z0-9_.]\+\)\+\>"
+syn match htmlTagName contained "\<[a-z_]\(-\?[a-z0-9_]\)\+\>"
 
 " HTML 5 arguments
 " Core Attributes
