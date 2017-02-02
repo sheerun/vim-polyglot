@@ -8,6 +8,8 @@ endif
 if !exists('g:vim_json_syntax_conceal')
   let g:vim_json_syntax_conceal = 0
 endif
+
+let g:filetype_euphoria = 'elixir'
 " ftdetect/ansible.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
   
