@@ -190,6 +190,7 @@ PACKS="
   vala:tkztmk/vim-vala
   vbnet:vim-scripts/vbnet.vim
   vcl:smerrill/vcl-vim-plugin
+  vue:posva/vim-vue
   vm:lepture/vim-velocity
   xls:vim-scripts/XSLT-syntax
   yaml:stephpy/vim-yaml

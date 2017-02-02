@@ -1000,4 +1000,11 @@ au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
 
 endif
 
+" ftdetect/vue.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vue') == -1
+  
+au BufNewFile,BufRead *.vue setf vue.html.javascript.css
+
+endif
+
 augroup END
