@@ -346,6 +346,16 @@ autocmd BufNewFile,BufRead *.hx setf haxe
 
 endif
 
+" ftdetect/i3.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'i3') == -1
+  
+augroup i3_ftdetect
+  au!
+  au BufRead,BufNewFile *i3/config set ft=i3
+augroup END
+
+endif
+
 " ftdetect/jasmine.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
   

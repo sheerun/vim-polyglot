@@ -60,6 +60,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [haskell](https://github.com/neovimhaskell/haskell-vim) (syntax, indent, ftplugin, ftdetect)
 - [haxe](https://github.com/yaymukund/vim-haxe) (syntax, ftdetect)
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)
+- [i3](https://github.com/PotatoesMaster/i3-vim-syntax) (syntax, ftplugin, ftdetect)
 - [jasmine](https://github.com/glanotte/vim-jasmine) (syntax, ftdetect)
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, compiler, ftdetect, ftplugin, extras)
 - [json](https://github.com/elzr/vim-json) (syntax, indent, ftplugin, ftdetect)
