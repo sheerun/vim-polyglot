@@ -86,7 +86,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [pgsql](https://github.com/exu/pgsql.vim) (syntax, ftdetect)
 - [php](https://github.com/StanAngeloff/php.vim) (syntax)
 - [plantuml](https://github.com/aklt/plantuml-syntax) (syntax, indent, ftplugin, ftdetect)
-- [powershell](https://github.com/Persistent13/vim-ps1) (syntax, indent, ftplugin, ftdetect)
+- [powershell](https://github.com/PProvost/vim-ps1) (syntax, indent, ftplugin, ftdetect)
 - [protobuf](https://github.com/uarun/vim-protobuf) (syntax, indent, ftdetect)
 - [pug](https://github.com/digitaltoad/vim-pug) (syntax, indent, ftplugin, ftdetect)
 - [puppet](https://github.com/voxpupuli/vim-puppet) (syntax, indent, ftplugin, ftdetect)

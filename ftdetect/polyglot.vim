@@ -658,6 +658,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') ==
 au BufNewFile,BufRead   *.ps1   set ft=ps1
 au BufNewFile,BufRead   *.psd1  set ft=ps1
 au BufNewFile,BufRead   *.psm1  set ft=ps1
+au BufNewFile,BufRead   *.pssc  set ft=ps1
 
 endif
 
@@ -672,7 +673,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') ==
 " Vim Script Page:    http://www.vim.org/scripts/script.php?script_id=1327
 
 au BufNewFile,BufRead   *.ps1xml   set ft=ps1xml
-
 
 endif
 
@@ -1015,6 +1015,21 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vue') == -1
   
 au BufNewFile,BufRead *.vue setf vue.html.javascript.css
+
+endif
+
+" ftdetect/xml.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') == -1
+  
+" Vim ftdetect plugin file
+" Language:           Windows PowerShell
+" Maintainer:         Peter Provost <peter@provost.org>
+" Version:            2.10
+" Project Repository: https://github.com/PProvost/vim-ps1
+" Vim Script Page:    http://www.vim.org/scripts/script.php?script_id=1327
+
+au BufNewFile,BufRead   *.cdxml    set ft=xml
+au BufNewFile,BufRead   *.psc1     set ft=xml
 
 endif
 

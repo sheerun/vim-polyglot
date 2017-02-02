@@ -159,7 +159,7 @@ PACKS="
   pgsql:exu/pgsql.vim
   php:StanAngeloff/php.vim
   plantuml:aklt/plantuml-syntax
-  powershell:Persistent13/vim-ps1
+  powershell:PProvost/vim-ps1
   protobuf:uarun/vim-protobuf
   pug:digitaltoad/vim-pug
   puppet:voxpupuli/vim-puppet
