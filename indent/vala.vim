@@ -1,36 +1,87 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
   
-" Copyright (c) 2012 Takezoe Tomoaki <tkztmk@outlook.com>
-"
-" Permission is hereby granted, free of charge, to any person obtaining a copy
-" of
-" this software and associated documentation files (the "Software"), to deal in
-" the Software without restriction, including without limitation the rights to
-" use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-" of
-" the Software, and to permit persons to whom the Software is furnished to do
-" so,
-" subject to the following conditions:
-"
-" The above copyright notice and this permission notice shall be included in all
-" copies or substantial portions of the Software.
-"
-" THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-" IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-" FITNESS
-" FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-" COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-" IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-" CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+" Vim indent file
+" Language:         Vala
+" Author:           Adrià Arrufat <adria.arrufat@protonmail.ch>
+" Last Change:      2016 Dec 04
 
-" Vim indent file for Vala. 
-" It just sets cindent for Vala files...
+" Only load this indent file when no other was loaded.
 if exists("b:did_indent")
   finish
 endif
 let b:did_indent = 1
-setl cin
-let b:undo_indent = "setl cin<"
 
+setlocal cindent
+setlocal cinoptions=L0,(0,Ws,J1,j1
+setlocal cinkeys=0{,0},!^F,o,O,0[,0]
+
+" Some preliminary settings
+setlocal nolisp		" Make sure lisp indenting doesn't supersede us
+setlocal autoindent	" indentexpr isn't much help otherwise
+
+setlocal indentexpr=GetValaIndent(v:lnum)
+
+" Only define the function once.
+if exists("*GetValaIndent")
+  finish
+endif
+
+" Come here when loading the script the first time.
+
+function GetValaIndent(lnum)
+
+	" Hit the start of the file, use zero indent.
+	if a:lnum == 0
+		return 0
+	endif
+
+	" Starting assumption: cindent (called at the end) will do it right
+	" normally. We just want to fix up a few cases.
+
+	let line = getline(a:lnum)
+	" Search backwards for the previous non-empty line.
+	let prevlinenum = prevnonblank(a:lnum - 1)
+	let prevline = getline(prevlinenum)
+	while prevlinenum > 1 && prevline !~ '[^[:blank:]]'
+		let prevlinenum = prevnonblank(prevlinenum - 1)
+		let prevline = s:getline(prevlinenum)
+	endwhile
+
+	" If previous line contains a code attribute (e.g. [CCode (...)])
+	" don't increase the indentation
+	if prevline =~? '^\s*\[[A-Za-z]' && prevline =~? '\]$'
+		return indent(prevlinenum)
+	endif
+
+	" cindent gets lambda body wrong, as it treats the comma as indicating an
+	" unfinished statement (fix borrowed from rust.vim indent file):
+	"
+	" list.foreach ((entry) => {
+	"		stdout.puts (entry);
+	"		stdout.putc ('\n');
+	"		if (entry == null) {
+	" 		print ("empty entry\n");
+	"		}
+	" });
+	"
+	" and we want it to be:
+	" list.foreach ((entry) => {
+	"	stdout.puts (entry);
+	"	stdout.putc ('\n');
+	" 	if (entry == null) {
+	" 		print ("empty entry\n");
+	" 	}
+	" });
+
+	if prevline[len(prevline) - 1] == ","
+				\ && line !~ '^\s*[\[\]{}]'
+				\ && prevline !~ '([^()]\+,$'
+				\ && line !~ '^\s*\S\+\s*=>'
+		return indent(prevlinenum)
+	endif
+
+	" Fall back on cindent, which does it mostly right
+	return cindent(a:lnum)
+endfunction
 
 endif

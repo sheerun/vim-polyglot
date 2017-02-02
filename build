@@ -187,7 +187,7 @@ PACKS="
   toml:cespare/vim-toml
   twig:lumiliet/vim-twig
   typescript:leafgarland/typescript-vim
-  vala:tkztmk/vim-vala
+  vala:arrufat/vala.vim
   vbnet:vim-scripts/vbnet.vim
   vcl:smerrill/vcl-vim-plugin
   vue:posva/vim-vue

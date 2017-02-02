@@ -6,8 +6,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
 " 		Hans Vercammen <hveso3@gmail.com>
 " 		pancake <pancake@nopcode.org>
 " 		Sebastian Reichel <sre@ring0.de>
-" Last Change: 	2012-02-19
-" Filenames: 	*.vala *.vapi
+" 		Adrià Arrufat <adria.arrufat@protonmail.ch>
+" Last Change: 	2016-10-20
+" Filenames: 	*.vala *.vapi *.valadoc
 "
 " REFERENCES:
 " [1] http://live.gnome.org/Vala
@@ -17,7 +18,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
 " 	- better error checking for known errors
 " 	- full support for valadoc
 "
-" 	add vala in /usr/share/vim/vim73/scripts.vim below ruby
+" 	add vala in /usr/share/vim/vim80/scripts.vim below ruby
 " 	to have shebang support
 
 if exists("b:current_syntax")
@@ -30,7 +31,7 @@ set cpo&vim
 " Types
 syn keyword valaType			bool char double float size_t ssize_t string unichar void
 syn keyword valaType 			int int8 int16 int32 int64 long short
-syn keyword valaType 			uint uint8 uint16 uint32 uint64 ulong ushort
+syn keyword valaType 			uchar uint uint8 uint16 uint32 uint64 ulong ushort
 " Storage keywords
 syn keyword valaStorage			class delegate enum errordomain interface namespace struct
 " repeat / condition / label
@@ -49,19 +50,26 @@ syn keyword valaConstant		false null true
 syn keyword valaException		try catch finally throw
 " Unspecified Statements
 syn keyword valaUnspecifiedStatement	as base construct delete get in is lock new out params ref sizeof set this throws typeof using value var yield
+" Arrays and Lists
+syn match   valaArray			"\(\w\(\w\)*\(\s\+\)\?<\)\+\(\(\s\+\)\?\w\(\w\)*\(?\|\*\)\?\(\,\)\?\)\+>\+"
+" Methods
+syn match   valaMethod			"\w\(\w\)*\(\s\+\)\?("he=e-1,me=e-1
+" Operators
+syn match   valaOperator		display "\%(+\|-\|/\|*\|=\|\^\|&\||\|!\|>\|<\|%\|?\)=\?"
+" Delimiters
+syn match   valaDelimiter		display "(\|)\|\[\|\]\|,\|;\|:\|{\|}\|\k\@<!_\k\@!\|[[:punct:]]\@<!@[[:punct:]]\@!"
 
 " Comments
 syn cluster valaCommentGroup 		contains=valaTodo
 syn keyword valaTodo 			contained TODO FIXME XXX NOTE
 
 " valadoc Comments (ported from javadoc comments in java.vim)
-" TODO: need to verify valadoc syntax
 if !exists("vala_ignore_valadoc")
   syn cluster valaDocCommentGroup	contains=valaDocTags,valaDocSeeTag
-  syn region  valaDocTags 		contained start="{@\(link\|linkplain\|inherit[Dd]oc\|doc[rR]oot\|value\)" end="}"
+  syn region  valaDocTags 		contained start="{@\(link\|inherit[Dd]oc\)" end="}"
   syn match   valaDocTags 		contained "@\(param\|exception\|throws\|since\)\s\+\S\+" contains=valaDocParam
   syn match   valaDocParam 		contained "\s\S\+"
-  syn match   valaDocTags 		contained "@\(author\|brief\|version\|return\|deprecated\)\>"
+  syn match   valaDocTags 		contained "@\(return\|deprecated\)\>"
   syn region  valaDocSeeTag		contained matchgroup=valaDocTags start="@see\s\+" matchgroup=NONE end="\_."re=e-1 contains=valaDocSeeTagParam
   syn match   valaDocSeeTagParam	contained @"\_[^"]\+"\|<a\s\+\_.\{-}</a>\|\(\k\|\.\)*\(#\k\+\((\_[^)]\+)\)\=\)\=@ extend
 endif
@@ -80,9 +88,9 @@ if exists("vala_comment_strings")
   endif
 else
   syn region	valaCommentL		start="//" end="$" keepend contains=@valaCommentGroup,valaSpaceError,@Spell
-  syn region	valaComment		matchgroup=valaCommentStart start="/\*" end="\*/" contains=@valaCommentGroup,valaCommentStartError,valaSpaceError,@Spell
+  syn region	valaComment		matchgroup=valaCommentStart start="/\*" end="\*/" fold contains=@valaCommentGroup,valaCommentStartError,valaSpaceError,@Spell
   if !exists("vala_ignore_valadoc")
-    syn region 	valaDocComment 		matchgroup=valaCommentStart start="/\*\*" end="\*/" keepend contains=@valaCommentGroup,@valaDocCommentGroup,valaCommentStartError,valaSpaceError,@Spell
+    syn region 	valaDocComment 		matchgroup=valaCommentStart start="/\*\*" end="\*/" fold keepend contains=@valaCommentGroup,@valaDocCommentGroup,valaCommentStartError,valaSpaceError,@Spell
   endif
 endif
 
@@ -103,7 +111,7 @@ syntax match valaCommentStartError 	display "/\*"me=e-1 contained
 syn match   valaComment		 	"/\*\*/"
 
 " Vala Code Attributes
-syn region  valaAttribute 		start="^\s*\[" end="\]$" contains=valaComment,valaString keepend
+syn region  valaAttribute 		start="^\s*\[" end="\]" contains=valaComment,valaString keepend
 syn region  valaAttribute 		start="\[CCode" end="\]" contains=valaComment,valaString
 
 " Avoid escaped keyword matching
@@ -113,8 +121,12 @@ syn match   valaUserContent 		display "@\I*"
 syn match   valaSpecialError		contained "\\."
 syn match   valaSpecialCharError	contained "[^']"
 syn match   valaSpecialChar		contained +\\["\\'0abfnrtvx]+
-syn region  valaString			start=+"+  end=+"+ end=+$+ contains=valaSpecialChar,valaSpecialError,valaUnicodeNumber,@Spell
-syn region  valaVerbatimString		start=+"""+ end=+"""+ contains=@Spell
+syn match   valaFormatChar		contained +%\(%\|\([-]\)\?\([+]\)\?\([0-9]\+\)\?\(\.\)\?\([0-9]\+\)\?\(l\?[dfiu]\|ll\?[diu]\|c\|g\|hh\?[iu]\|s\)\)+
+syn match   valaTemplateVariable	contained +\($\w\(\w\)*\)+
+syn region  valaTemplateExpression	start=+$(+ end=")"
+syn region  valaString			start=+"+  end=+"+ end=+$+ contains=valaSpecialChar,valaSpecialError,valaUnicodeNumber,@Spell,valaFormatChar
+syn region  valaTemplateString		start=+@"+  end=+"+ end=+$+ contains=valaSpecialChar,valaSpecialError,valaUnicodeNumber,@Spell,valaFormatChar,valaTemplateVariable,valaTemplateExpression
+syn region  valaVerbatimString		start=+"""+ end=+"""+ contains=@Spell,valaFormatChar
 syn match   valaUnicodeNumber		+\\\(u\x\{4}\|U\x\{8}\)+ contained contains=valaUnicodeSpecifier
 syn match   valaUnicodeSpecifier	+\\[uU]+ contained
 syn match   valaCharacter		"'[^']*'" contains=valaSpecialChar,valaSpecialCharError
@@ -144,6 +156,7 @@ endif
 exec "syn sync ccomment valaComment minlines=" . b:vala_minlines
 
 " code folding
+set foldmethod=syntax
 syn region valaBlock			start="{" end="}" transparent fold
 
 " The default highlighting.
@@ -158,6 +171,10 @@ hi def link valaException		Exception
 hi def link valaUnspecifiedStatement	Statement
 hi def link valaUnspecifiedKeyword	Keyword
 hi def link valaContextualStatement	Statement
+hi def link valaArray			StorageClass
+hi def link valaMethod			Function
+hi def link valaOperator		Operator
+hi def link valaDelimiter		Delimiter
 
 hi def link valaCommentError		Error
 hi def link valaCommentStartError	Error
@@ -179,9 +196,13 @@ hi def link valaAttribute 		PreCondit
 hi def link valaCommentString		valaString
 hi def link valaComment2String		valaString
 hi def link valaString			String
+hi def link valaTemplateString		String
 hi def link valaVerbatimString		String
 hi def link valaCharacter		Character
 hi def link valaSpecialChar		SpecialChar
+hi def link valaFormatChar		SpecialChar
+hi def link valaTemplateVariable	SpecialChar
+hi def link valaTemplateExpression	SpecialChar
 hi def link valaNumber			Number
 hi def link valaUnicodeNumber		SpecialChar
 hi def link valaUnicodeSpecifier	SpecialChar
