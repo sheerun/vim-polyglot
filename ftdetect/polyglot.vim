@@ -326,7 +326,6 @@ endif
 " ftdetect/haml.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
   
-autocmd BufNewFile,BufRead *.haml,*.hamlbars,*.hamlc setf haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
 
@@ -879,6 +878,14 @@ au BufRead,BufNewFile * call s:DetectScala()
 
 " Install vim-sbt for additional syntax highlighting.
 au BufRead,BufNewFile *.sbt setfiletype sbt.scala
+
+endif
+
+" ftdetect/scss.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scss') == -1
+  
+au BufRead,BufNewFile *.scss setfiletype scss
+au BufEnter *.scss :syntax sync fromstart
 
 endif
 

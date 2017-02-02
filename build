@@ -128,7 +128,7 @@ PACKS="
   glsl:tikhomirov/vim-glsl
   go:fatih/vim-go:_BASIC
   groovy:vim-scripts/groovy.vim
-  haml:tpope/vim-haml
+  haml:sheerun/vim-haml
   handlebars:mustache/vim-mustache-handlebars
   haskell:neovimhaskell/haskell-vim
   haxe:yaymukund/vim-haxe
@@ -175,6 +175,7 @@ PACKS="
   rust:rust-lang/rust.vim
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
+  scss:cakebaker/scss-syntax.vim
   slim:slim-template/vim-slim
   solidity:ethereum/vim-solidity
   stylus:wavded/vim-stylus
