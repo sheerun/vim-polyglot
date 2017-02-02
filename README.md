@@ -1,4 +1,4 @@
-# vim-polyglot [![Build Status][travis-img-url]][travis-url] [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg?maxAge=2592000)]()
+# vim-polyglot [![Build Status][travis-img-url]][travis-url] [![Maintenance](https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000)]()
 
 [travis-img-url]: https://travis-ci.org/sheerun/vim-polyglot.svg
 [travis-url]: https://travis-ci.org/sheerun/vim-polyglot
