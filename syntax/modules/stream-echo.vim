@@ -1,7 +1,7 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
   
 " Stream Echo Module <https://github.com/openresty/stream-echo-nginx-module>
-" TCP/stream echo module for NGINX (a port of ngx_http_echo_module) 
+" TCP/stream echo module for NGINX (a port of ngx_http_echo_module)
 syn keyword ngxDirectiveThirdParty echo
 syn keyword ngxDirectiveThirdParty echo_duplicate
 syn keyword ngxDirectiveThirdParty echo_flush_wait

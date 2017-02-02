@@ -1,7 +1,7 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
   
 " HTTP Redis Module <https://www.nginx.com/resources/wiki/modules/redis/>
-" Redis <http://code.google.com/p/redis/> support.>
+" Redis <http://code.google.com/p/redis/> support.
 syn keyword ngxDirectiveThirdParty redis_bind
 syn keyword ngxDirectiveThirdParty redis_buffer_size
 syn keyword ngxDirectiveThirdParty redis_connect_timeout

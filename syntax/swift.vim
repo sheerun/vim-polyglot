@@ -172,6 +172,7 @@ syntax keyword swiftKeywords
       \ willSet
 
 syntax match swiftMultiwordKeywords "indirect case"
+syntax match swiftMultiwordKeywords "indirect enum"
 " }}}
 
 " Names surrounded by backticks. This aren't limited to keywords because 1)

@@ -1,6 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
   
-" Nginx-Clojure Module http://nginx-clojure.github.io/index.html<>
+" Nginx-Clojure Module <http://nginx-clojure.github.io/index.html>
 " Parses the Accept-Language header and gives the most suitable locale from a list of supported locales.
 syn keyword ngxDirectiveThirdParty jvm_path
 syn keyword ngxDirectiveThirdParty jvm_var

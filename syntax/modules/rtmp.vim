@@ -3,10 +3,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
 " RTMP Module <https://github.com/arut/nginx-rtmp-module>
 " NGINX-based Media Streaming Server
 syn keyword ngxDirectiveThirdParty rtmp
-syn keyword ngxDirectiveThirdParty server
-syn keyword ngxDirectiveThirdParty listen
+" syn keyword ngxDirectiveThirdParty server
+" syn keyword ngxDirectiveThirdParty listen
 syn keyword ngxDirectiveThirdParty application
-syn keyword ngxDirectiveThirdParty timeout
+" syn keyword ngxDirectiveThirdParty timeout
 syn keyword ngxDirectiveThirdParty ping
 syn keyword ngxDirectiveThirdParty ping_timeout
 syn keyword ngxDirectiveThirdParty max_streams
@@ -16,8 +16,8 @@ syn keyword ngxDirectiveThirdParty max_queue
 syn keyword ngxDirectiveThirdParty max_message
 syn keyword ngxDirectiveThirdParty out_queue
 syn keyword ngxDirectiveThirdParty out_cork
-syn keyword ngxDirectiveThirdParty allow
-syn keyword ngxDirectiveThirdParty deny
+" syn keyword ngxDirectiveThirdParty allow
+" syn keyword ngxDirectiveThirdParty deny
 syn keyword ngxDirectiveThirdParty exec_push
 syn keyword ngxDirectiveThirdParty exec_pull
 syn keyword ngxDirectiveThirdParty exec
@@ -94,8 +94,8 @@ syn keyword ngxDirectiveThirdParty dash_fragment
 syn keyword ngxDirectiveThirdParty dash_playlist_length
 syn keyword ngxDirectiveThirdParty dash_nested
 syn keyword ngxDirectiveThirdParty dash_cleanup
-syn keyword ngxDirectiveThirdParty access_log
-syn keyword ngxDirectiveThirdParty log_format
+" syn keyword ngxDirectiveThirdParty access_log
+" syn keyword ngxDirectiveThirdParty log_format
 syn keyword ngxDirectiveThirdParty max_connections
 syn keyword ngxDirectiveThirdParty rtmp_stat
 syn keyword ngxDirectiveThirdParty rtmp_stat_stylesheet

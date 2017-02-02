@@ -13,7 +13,7 @@ syn keyword ngxDirectiveThirdParty testcookie_arg
 syn keyword ngxDirectiveThirdParty testcookie_max_attempts
 syn keyword ngxDirectiveThirdParty testcookie_p3p
 syn keyword ngxDirectiveThirdParty testcookie_fallback
-syn keyword ngxDirectiveThirdParty testcookie_whitelist 
+syn keyword ngxDirectiveThirdParty testcookie_whitelist
 syn keyword ngxDirectiveThirdParty testcookie_pass
 syn keyword ngxDirectiveThirdParty testcookie_redirect_via_refresh
 syn keyword ngxDirectiveThirdParty testcookie_refresh_template

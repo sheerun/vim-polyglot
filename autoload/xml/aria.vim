@@ -18,8 +18,10 @@ let default_role = {}
 let widget_role = ['alert', 'alertdialog', 'button', 'checkbox', 'combobox', 'dialog', 'gridcell', 'link', 'log', 'marquee', 'menuitem', 'menuitemcheckbox', 'menuitemradio', 'option', 'progressbar', 'radio', 'radiogroup', 'scrollbar', 'slider', 'spinbutton', 'status', 'tab', 'tabpanel', 'textbox', 'timer', 'tooltip', 'treeitem', 'combobox', 'grid', 'listbox', 'menu', 'menubar', 'radiogroup', 'tablist', 'tree', 'treegrid']
 let document_structure = ['article', 'columnheader', 'definition', 'directory', 'document', 'group', 'heading', 'img', 'list', 'listitem', 'math', 'note', 'presentation', 'region', 'row', 'rowheader', 'separator']
 let landmark_role = ['application', 'banner', 'complementary', 'contentinfo', 'form', 'main', 'navigation', 'search']
+let dpub_role = ['dpub-abstract', 'dpub-afterword', 'dpub-appendix', 'dpub-biblioentry', 'dpub-bibliography', 'dpub-biblioref', 'dpub-chapter', 'dpub-cover', 'dpub-epilogue', 'dpub-footnote', 'dpub-footnotes', 'dpub-foreword', 'dpub-glossary', 'dpub-glossdef', 'dpub-glossref', 'dpub-glossterm', 'dpub-index', 'dpub-locator', 'dpub-noteref', 'dpub-notice', 'dpub-pagebreak', 'dpub-pagelist', 'dpub-part', 'dpub-preface', 'dpub-prologue', 'dpub-pullquote', 'dpub-qna', 'dpub-subtitle', 'dpub-tip', 'dpub-title', 'dpub-toc']
 let role = extend(widget_role, document_structure)
 let role = extend(role, landmark_role)
+let role = extend(role, dpub_role)
 
 " http://www.w3.org/TR/wai-aria/states_and_properties#state_prop_taxonomy
 "let global_states_and_properties = {'aria-atomic': ['true', 'false'], 'aria-busy': ['true', 'false'], 'aria-controls': [], 'aria-describedby': [], 'aria-disabled': ['true', 'false'], 'aria-dropeffect': ['copy', 'move', 'link', 'execute', 'popup', 'none'], 'aria-flowto': [], 'aria-grabbed': ['true', 'false', 'undefined'], 'aria-haspopup': ['true', 'false'], 'aria-hidden': ['true', 'false'], 'aria-invalid': ['grammar', 'spelling', 'true', 'false'], 'aria-label': [], 'aria-labelledby': [], 'aria-live': ['off', 'polite', 'assertive'], 'aria-owns': [], 'aria-relevant': ['additions', 'removals', 'text', 'all']}

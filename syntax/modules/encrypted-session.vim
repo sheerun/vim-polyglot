@@ -9,5 +9,4 @@ syn keyword ngxDirectiveThirdParty set_encrypt_session
 syn keyword ngxDirectiveThirdParty set_decrypt_session
 
 
-
 endif

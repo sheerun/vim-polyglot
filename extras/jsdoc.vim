@@ -6,9 +6,9 @@ syntax region jsComment    matchgroup=jsComment start="/\*\s*"  end="\*/" contai
 " tags containing a param
 syntax match  jsDocTags         contained "@\(alias\|api\|augments\|borrows\|class\|constructs\|default\|defaultvalue\|emits\|exception\|exports\|extends\|fires\|kind\|link\|listens\|member\|member[oO]f\|mixes\|module\|name\|namespace\|requires\|template\|throws\|var\|variation\|version\)\>" skipwhite nextgroup=jsDocParam
 " tags containing type and param
-syntax match  jsDocTags         contained "@\(arg\|argument\|cfg\|param\|property\|prop\)\>" skipwhite nextgroup=jsDocType
+syntax match  jsDocTags         contained "@\(arg\|argument\|cfg\|param\|property\|prop\|typedef\)\>" skipwhite nextgroup=jsDocType
 " tags containing type but no param
-syntax match  jsDocTags         contained "@\(callback\|define\|enum\|external\|implements\|this\|type\|typedef\|return\|returns\)\>" skipwhite nextgroup=jsDocTypeNoParam
+syntax match  jsDocTags         contained "@\(callback\|define\|enum\|external\|implements\|this\|type\|return\|returns\)\>" skipwhite nextgroup=jsDocTypeNoParam
 " tags containing references
 syntax match  jsDocTags         contained "@\(lends\|see\|tutorial\)\>" skipwhite nextgroup=jsDocSeeTag
 " other tags (no extra syntax)

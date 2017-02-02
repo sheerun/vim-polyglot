@@ -16,7 +16,7 @@ set cpo&vim
 function! elixir#indent()
   " initiates the `old_ind` dictionary
   let b:old_ind = get(b:, 'old_ind', {})
-  " initialtes the `line` dictionary
+  " initiates the `line` dictionary
   let line = s:build_line(v:lnum)
 
   if s:is_beginning_of_file(line)
@@ -27,31 +27,48 @@ function! elixir#indent()
   elseif !s:is_indentable_line(line)
     " Keep last line indentation if the current line does not have an
     " indentable syntax
-    return indent(line.last.num)
+    return indent(line.last_non_blank.num)
   else
     " Calculates the indenation level based on the rules
-    " All the rules are defined in `autoload/indent.vim`
-    let ind = indent(line.last.num)
-    let ind = elixir#indent#deindent_case_arrow(ind, line)
-    let ind = elixir#indent#indent_parenthesis(ind, line)
-    let ind = elixir#indent#indent_square_brackets(ind, line)
-    let ind = elixir#indent#indent_brackets(ind, line)
-    let ind = elixir#indent#deindent_opened_symbols(ind, line)
-    let ind = elixir#indent#indent_pipeline_assignment(ind, line)
-    let ind = elixir#indent#indent_pipeline_continuation(ind, line)
-    let ind = elixir#indent#indent_after_pipeline(ind, line)
-    let ind = elixir#indent#indent_assignment(ind, line)
-    let ind = elixir#indent#indent_ending_symbols(ind, line)
-    let ind = elixir#indent#indent_keywords(ind, line)
-    let ind = elixir#indent#deindent_keywords(ind, line)
-    let ind = elixir#indent#deindent_ending_symbols(ind, line)
-    let ind = elixir#indent#indent_case_arrow(ind, line)
+    " All the rules are defined in `autoload/elixir/indent.vim`
+    let ind = indent(line.last_non_blank.num)
+    call s:debug('>>> line = ' . string(line.current))
+    call s:debug('>>> ind = ' . ind)
+    let ind = s:indent('deindent_case_arrow', ind, line)
+    let ind = s:indent('indent_parenthesis', ind, line)
+    let ind = s:indent('indent_square_brackets', ind, line)
+    let ind = s:indent('indent_brackets', ind, line)
+    let ind = s:indent('deindent_opened_symbols', ind, line)
+    let ind = s:indent('indent_pipeline_assignment', ind, line)
+    let ind = s:indent('indent_pipeline_continuation', ind, line)
+    let ind = s:indent('indent_after_pipeline', ind, line)
+    let ind = s:indent('indent_assignment', ind, line)
+    let ind = s:indent('indent_ending_symbols', ind, line)
+    let ind = s:indent('indent_keywords', ind, line)
+    let ind = s:indent('deindent_keywords', ind, line)
+    let ind = s:indent('deindent_ending_symbols', ind, line)
+    let ind = s:indent('indent_case_arrow', ind, line)
+    let ind = s:indent('indent_ecto_queries', ind, line)
+    call s:debug('<<< final = ' . ind)
     return ind
   end
 endfunction
 
+function s:indent(rule, ind, line)
+  let Fn = function('elixir#indent#'.a:rule)
+  let ind = Fn(a:ind, a:line)
+  call s:debug(a:rule . ' = ' . ind)
+  return ind
+endfunction
+
+function s:debug(message)
+  if get(g:, 'elixir_indent_debug', 0)
+    echom a:message
+  end
+endfunction
+
 function! s:is_beginning_of_file(line)
-  return a:line.last.num == 0
+  return a:line.last_non_blank.num == 0
 endfunction
 
 function! s:is_indentable_line(line)
@@ -59,13 +76,19 @@ function! s:is_indentable_line(line)
 endfunction
 
 function! s:build_line(line)
-  let line = { 'current': {}, 'last': {} }
-  let line.current.num = a:line
-  let line.current.text = getline(line.current.num)
-  let line.last.num = prevnonblank(line.current.num - 1)
-  let line.last.text = getline(line.last.num)
+  let line = { 'current': {}, 'last': {}, 'last_non_blank': {} }
+  let line.current = s:new_line(a:line)
+  let line.last = s:new_line(line.current.num - 1)
+  let line.last_non_blank = s:new_line(prevnonblank(line.current.num - 1))
 
   return line
+endfunction
+
+function! s:new_line(num)
+  return {
+        \ "num": a:num,
+        \ "text": getline(a:num)
+        \ }
 endfunction
 
 let &cpo = s:cpo_save

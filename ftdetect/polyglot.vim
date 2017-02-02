@@ -334,6 +334,8 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
   
 au BufRead,BufNewFile *.hsc set filetype=haskell
+au BufRead,BufNewFile *.bpk set filetype=haskell
+au BufRead,BufNewFile *.hsig set filetype=haskell
 
 endif
 
@@ -613,7 +615,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -
 " Vim ftdetect file
 " Language:     PlantUML
 " Maintainer:   Aaron C. Meadows < language name at shadowguarddev dot com>
-" Last Change:  19-Jun-2012
 " Version:      0.1
 
 if did_filetype()
@@ -955,10 +956,8 @@ endif
 " ftdetect/toml.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
   
-autocmd BufNewFile,BufRead *.toml set filetype=toml
-
-" Rust uses Cargo.toml and Cargo.lock (both are toml files).
-autocmd BufNewFile,BufRead Cargo.lock set filetype=toml
+" Rust uses several TOML config files that are not named with .toml.
+autocmd BufNewFile,BufRead *.toml,Cargo.lock,.cargo/config set filetype=toml
 
 endif
 

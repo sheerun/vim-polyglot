@@ -17,6 +17,11 @@ if !exists('g:haskell_disable_TH')
     let g:haskell_disable_TH = 0
 endif
 
+if exists('g:haskell_backpack') && g:haskell_backpack == 1
+  syn keyword haskellBackpackStructure unit signature
+  syn keyword haskellBackpackDependency dependency
+endif
+
 syn spell notoplevel
 syn match haskellRecordField contained containedin=haskellBlock
   \ "[_a-z][a-zA-Z0-9_']*\(,\s*[_a-z][a-zA-Z0-9_']*\)*\(\s*::\|\n\s\+::\)"
@@ -48,7 +53,7 @@ syn region haskellForeignImport start="\<foreign\>" end="::" keepend
   \ haskellOperators,
   \ haskellForeignKeywords,
   \ haskellIdentifier
-syn match haskellImport "^\<import\>\s\+\(\<safe\>\s\+\)\?\(\<qualified\>\s\+\)\?.\+\(\s\+\<as\>\s\+.\+\)\?\(\s\+\<hiding\>\)\?"
+syn match haskellImport "^\s*\<import\>\s\+\(\<safe\>\s\+\)\?\(\<qualified\>\s\+\)\?.\+\(\s\+\<as\>\s\+.\+\)\?\(\s\+\<hiding\>\)\?"
   \ contains=
   \ haskellParens,
   \ haskellOperators,
@@ -196,6 +201,10 @@ else
   endif
 endif
 
+if exists('g:haskell_backpack') && g:haskell_backpack == 1
+  highlight def link haskellBackpackStructure Structure
+  highlight def link haskellBackpackDependency Include
+endif
 let b:current_syntax = "haskell"
 
 endif
