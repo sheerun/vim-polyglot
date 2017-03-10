@@ -117,7 +117,7 @@ PACKS="
   css:JulesWang/css.vim
   cucumber:tpope/vim-cucumber
   dart:dart-lang/dart-vim-plugin
-  dockerfile:honza/dockerfile.vim
+  dockerfile:docker/docker::/contrib/syntax/vim/
   elixir:elixir-lang/vim-elixir
   elm:lambdatoast/elm.vim
   emberscript:yalesov/vim-ember-script
