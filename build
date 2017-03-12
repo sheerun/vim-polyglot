@@ -108,6 +108,7 @@ PACKS="
   blade:jwalton512/vim-blade
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/vim-cpp
+  caddyfile:joshglendenning/vim-caddyfile
   cjsx:mtscout6/vim-cjsx
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
@@ -136,6 +137,7 @@ PACKS="
   i3:PotatoesMaster/i3-vim-syntax
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
+  jinja2:Glench/Vim-Jinja2-Syntax
   json:elzr/vim-json
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL
