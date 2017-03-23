@@ -117,6 +117,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [solidity](https://github.com/ethereum/vim-solidity) (syntax, indent, ftdetect)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin, ftdetect)
 - [swift](https://github.com/keith/swift.vim) (syntax, indent, ftplugin, ftdetect)
+- [sxhkd](https://github.com/baskerville/vim-sxhkdrc) (syntax, ftdetect)
 - [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax, ftdetect)
 - [terraform](https://github.com/hashivim/vim-terraform) (syntax, indent, ftdetect, ftplugin)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin, ftdetect)

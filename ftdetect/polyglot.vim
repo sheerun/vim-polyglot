@@ -937,6 +937,17 @@ endfunction
 
 endif
 
+" ftdetect/sxhkdrc.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sxhkd') == -1
+  
+if &compatible || v:version < 603
+    finish
+endif
+
+autocmd BufNewFile,BufRead sxhkdrc,*.sxhkdrc set ft=sxhkdrc
+
+endif
+
 " ftdetect/systemd.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'systemd') == -1
   
