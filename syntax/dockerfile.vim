@@ -1,7 +1,7 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
   
 " dockerfile.vim - Syntax highlighting for Dockerfiles
-" Maintainer:   Honza Pokorny <http://honza.ca>
+" Maintainer:   Honza Pokorny <https://honza.ca>
 " Version:      0.5
 
 
@@ -9,10 +9,11 @@ if exists("b:current_syntax")
     finish
 endif
 
+let b:current_syntax = "dockerfile"
+
 syntax case ignore
 
-syntax match dockerfileKeyword /\v^\s*(FROM|MAINTAINER|RUN|CMD|EXPOSE|ENV|ADD)\s/
-syntax match dockerfileKeyword /\v^\s*(ENTRYPOINT|VOLUME|USER|WORKDIR|COPY)\s/
+syntax match dockerfileKeyword /\v^\s*(ONBUILD\s+)?(ADD|ARG|CMD|COPY|ENTRYPOINT|ENV|EXPOSE|FROM|HEALTHCHECK|LABEL|MAINTAINER|RUN|SHELL|STOPSIGNAL|USER|VOLUME|WORKDIR)\s/
 highlight link dockerfileKeyword Keyword
 
 syntax region dockerfileString start=/\v"/ skip=/\v\\./ end=/\v"/
@@ -21,15 +22,14 @@ highlight link dockerfileString String
 syntax match dockerfileComment "\v^\s*#.*$"
 highlight link dockerfileComment Comment
 
-syntax include @DockerSh syntax/sh.vim
-try
-  syntax include @DockerSh after/syntax/sh.vim
-catch
-endtry
+set commentstring=#\ %s
 
-syntax region dockerShSnip matchgroup=DockerShGroup start="^\s*\%(RUN\|CMD\)\s\+" end="$" contains=@DockerSh
-highlight link DockerShGroup dockerfileKeyword
-
-let b:current_syntax = "dockerfile"
+" match "RUN", "CMD", and "ENTRYPOINT" lines, and parse them as shell
+let s:current_syntax = b:current_syntax
+unlet b:current_syntax
+syntax include @SH syntax/sh.vim
+let b:current_syntax = s:current_syntax
+syntax region shLine matchgroup=dockerfileKeyword start=/\v^\s*(RUN|CMD|ENTRYPOINT)\s/ end=/\v$/ contains=@SH
+" since @SH will handle "\" as part of the same line automatically, this "just works" for line continuation too, but with the caveat that it will highlight "RUN echo '" followed by a newline as if it were a block because the "'" is shell line continuation...  not sure how to fix that just yet (TODO)
 
 endif

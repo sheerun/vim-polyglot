@@ -137,7 +137,7 @@ endif
 " ftdetect/dockerfile.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
   
-au BufNewFile,BufRead Dockerfile set filetype=dockerfile
+au BufNewFile,BufRead [Dd]ockerfile,Dockerfile.* set filetype=dockerfile
 
 endif
 

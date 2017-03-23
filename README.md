@@ -51,7 +51,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [css](https://github.com/JulesWang/css.vim) (syntax)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin, ftdetect)
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin, ftdetect)
-- [dockerfile](https://github.com/honza/dockerfile.vim) (syntax, ftdetect)
+- [dockerfile](https://github.com/docker/docker) (syntax, ftdetect)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, autoload, ftplugin, ftdetect)
 - [elm](https://github.com/lambdatoast/elm.vim) (syntax, indent, autoload, ftplugin, ftdetect)
 - [emberscript](https://github.com/yalesov/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
