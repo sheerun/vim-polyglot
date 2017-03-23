@@ -4,9 +4,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'erlang') == -1
 " Language:     Erlang (http://www.erlang.org)
 " Maintainer:   Csaba Hoch <csaba.hoch@gmail.com>
 " Contributor:  Adam Rutkowski <hq@mtod.org>
-" Last Update:  2013-Nov-23
+" Last Update:  2017-Mar-05
 " License:      Vim license
-" URL:          https://github.com/hcs42/vim-erlang
+" URL:          https://github.com/vim-erlang/vim-erlang-runtime
 
 " Acknowledgements: This script was originally created by Kresimir Marzic [1].
 " The script was then revamped by Csaba Hoch [2]. During the revamp, the new
@@ -31,11 +31,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'erlang') == -1
 "
 "     syn keyword erlangAttribute myattr1 myattr2 contained
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
-if version < 600
-    syntax clear
-elseif exists("b:current_syntax")
+" quit when a syntax file was already loaded
+if exists("b:current_syntax")
     finish
 endif
 
@@ -45,9 +42,7 @@ set cpo&vim
 " Case sensitive
 syn case match
 
-if version >= 600
-  setlocal iskeyword+=$,@-@
-endif
+setlocal iskeyword+=$,@-@
 
 " Comments
 syn match erlangComment           '%.*$' contains=erlangCommentAnnotation,erlangTodo
@@ -88,6 +83,7 @@ syn match erlangMacro    '??\=[[:alnum:]_@]\+'
 syn match erlangMacro    '\%(-define(\)\@<=[[:alnum:]_@]\+'
 syn match erlangMap      '#'
 syn match erlangRecord   '#\s*\l[[:alnum:]_@]*'
+syn region erlangQuotedRecord        start=/#\s*'/ end=/'/ contains=erlangQuotedAtomModifier
 
 " Shebang (this line has to be after the ErlangMap)
 syn match erlangShebang  '^#!.*'
@@ -153,117 +149,108 @@ let b:erlang_syntax_synced = 1
 let s:old_style = (exists("g:erlang_old_style_highlight") &&
                   \g:erlang_old_style_highlight == 1)
 
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_erlang_inits")
-  if version < 508
-    let did_erlang_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
 
-  " Comments
-  HiLink erlangComment Comment
-  HiLink erlangCommentAnnotation Special
-  HiLink erlangTodo Todo
-  HiLink erlangShebang Comment
+" Comments
+hi def link erlangComment Comment
+hi def link erlangCommentAnnotation Special
+hi def link erlangTodo Todo
+hi def link erlangShebang Comment
 
-  " Numbers
-  HiLink erlangNumberInteger Number
-  HiLink erlangNumberFloat Float
+" Numbers
+hi def link erlangNumberInteger Number
+hi def link erlangNumberFloat Float
 
-  " Strings, atoms, characters
-  HiLink erlangString String
+" Strings, atoms, characters
+hi def link erlangString String
 
-  if s:old_style
-    HiLink erlangQuotedAtom Type
-  else
-    HiLink erlangQuotedAtom String
-  endif
-
-  HiLink erlangStringModifier Special
-  HiLink erlangQuotedAtomModifier Special
-  HiLink erlangModifier Special
-
-  " Operators, separators
-  HiLink erlangOperator Operator
-  HiLink erlangRightArrow Operator
-  if s:old_style
-    HiLink erlangBracket Normal
-    HiLink erlangPipe Normal
-  else
-    HiLink erlangBracket Delimiter
-    HiLink erlangPipe Delimiter
-  endif
-
-  " Atoms, functions, variables, macros
-  if s:old_style
-    HiLink erlangAtom Normal
-    HiLink erlangLocalFuncCall Normal
-    HiLink erlangLocalFuncRef Normal
-    HiLink erlangGlobalFuncCall Function
-    HiLink erlangGlobalFuncRef Function
-    HiLink erlangVariable Normal
-    HiLink erlangMacro Normal
-    HiLink erlangRecord Normal
-    HiLink erlangMap Normal
-  else
-    HiLink erlangAtom String
-    HiLink erlangLocalFuncCall Normal
-    HiLink erlangLocalFuncRef Normal
-    HiLink erlangGlobalFuncCall Normal
-    HiLink erlangGlobalFuncRef Normal
-    HiLink erlangVariable Identifier
-    HiLink erlangMacro Macro
-    HiLink erlangRecord Structure
-    HiLink erlangMap Structure
-  endif
-
-  " Bitstrings
-  if !s:old_style
-    HiLink erlangBitType Type
-  endif
-
-  " Constants and Directives
-  if s:old_style
-    HiLink erlangAttribute Type
-    HiLink erlangMacroDef Type
-    HiLink erlangUnknownAttribute Normal
-    HiLink erlangInclude Type
-    HiLink erlangRecordDef Type
-    HiLink erlangDefine Type
-    HiLink erlangPreCondit Type
-    HiLink erlangType Type
-  else
-    HiLink erlangAttribute Keyword
-    HiLink erlangMacroDef Macro
-    HiLink erlangUnknownAttribute Normal
-    HiLink erlangInclude Include
-    HiLink erlangRecordDef Keyword
-    HiLink erlangDefine Define
-    HiLink erlangPreCondit PreCondit
-    HiLink erlangType Type
-  endif
-
-  " Keywords
-  HiLink erlangKeyword Keyword
-
-  " Build-in-functions (BIFs)
-  HiLink erlangBIF Function
-
-  if s:old_style
-    HiLink erlangBoolean Statement
-    HiLink erlangExtra Statement
-    HiLink erlangSignal Statement
-  else
-    HiLink erlangBoolean Boolean
-    HiLink erlangExtra Statement
-    HiLink erlangSignal Statement
-  endif
-
-  delcommand HiLink
+if s:old_style
+hi def link erlangQuotedAtom Type
+else
+hi def link erlangQuotedAtom String
 endif
+
+hi def link erlangStringModifier Special
+hi def link erlangQuotedAtomModifier Special
+hi def link erlangModifier Special
+
+" Operators, separators
+hi def link erlangOperator Operator
+hi def link erlangRightArrow Operator
+if s:old_style
+hi def link erlangBracket Normal
+hi def link erlangPipe Normal
+else
+hi def link erlangBracket Delimiter
+hi def link erlangPipe Delimiter
+endif
+
+" Atoms, functions, variables, macros
+if s:old_style
+hi def link erlangAtom Normal
+hi def link erlangLocalFuncCall Normal
+hi def link erlangLocalFuncRef Normal
+hi def link erlangGlobalFuncCall Function
+hi def link erlangGlobalFuncRef Function
+hi def link erlangVariable Normal
+hi def link erlangMacro Normal
+hi def link erlangRecord Normal
+hi def link erlangQuotedRecord Normal
+hi def link erlangMap Normal
+else
+hi def link erlangAtom String
+hi def link erlangLocalFuncCall Normal
+hi def link erlangLocalFuncRef Normal
+hi def link erlangGlobalFuncCall Normal
+hi def link erlangGlobalFuncRef Normal
+hi def link erlangVariable Identifier
+hi def link erlangMacro Macro
+hi def link erlangRecord Structure
+hi def link erlangQuotedRecord Structure
+hi def link erlangMap Structure
+endif
+
+" Bitstrings
+if !s:old_style
+hi def link erlangBitType Type
+endif
+
+" Constants and Directives
+if s:old_style
+hi def link erlangAttribute Type
+hi def link erlangMacroDef Type
+hi def link erlangUnknownAttribute Normal
+hi def link erlangInclude Type
+hi def link erlangRecordDef Type
+hi def link erlangDefine Type
+hi def link erlangPreCondit Type
+hi def link erlangType Type
+else
+hi def link erlangAttribute Keyword
+hi def link erlangMacroDef Macro
+hi def link erlangUnknownAttribute Normal
+hi def link erlangInclude Include
+hi def link erlangRecordDef Keyword
+hi def link erlangDefine Define
+hi def link erlangPreCondit PreCondit
+hi def link erlangType Type
+endif
+
+" Keywords
+hi def link erlangKeyword Keyword
+
+" Build-in-functions (BIFs)
+hi def link erlangBIF Function
+
+if s:old_style
+hi def link erlangBoolean Statement
+hi def link erlangExtra Statement
+hi def link erlangSignal Statement
+else
+hi def link erlangBoolean Boolean
+hi def link erlangExtra Statement
+hi def link erlangSignal Statement
+endif
+
 
 let b:current_syntax = "erlang"
 

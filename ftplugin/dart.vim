@@ -25,7 +25,9 @@ let &l:errorformat =
   \   '%m'
   \ ], ',')
 
+setlocal includeexpr=dart#resolveUri(v:fname)
+setlocal isfname+=:
 
-let b:undo_ftplugin = 'setl et< fo< sw< sts< com< cms<'
+let b:undo_ftplugin = 'setl et< fo< sw< sts< com< cms< inex< isf<'
 
 endif

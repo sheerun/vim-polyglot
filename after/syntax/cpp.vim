@@ -557,6 +557,7 @@ syntax keyword cppSTLios defaultfloat
 syntax keyword cppSTLios endl
 syntax keyword cppSTLios ends
 syntax keyword cppSTLios fixed
+syntax keyword cppSTLios floatfield
 syntax keyword cppSTLios flush
 syntax keyword cppSTLios get_money
 syntax keyword cppSTLios get_time

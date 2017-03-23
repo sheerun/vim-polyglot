@@ -23,7 +23,8 @@ setlocal comments+=s:{{--,m:\ \ \ \ ,e:--}}
 if exists('loaded_matchit') && exists('b:match_words')
     " Append to html matchit words
     let b:match_words .= ',' .
-                \ '@\%(section\|if\|unless\|foreach\|forelse\|for\|while\|push\|can\|cannot\|hasSection\|php\|verbatim\)\>' .
+                \ '@\%(section\s*([^\,]*)\|if\|unless\|foreach\|forelse\|for\|while\|push\|can\|cannot\|hasSection\|' .
+                \     'php\s*(\@!\|verbatim\|component\|slot\|prepend\)' .
                 \ ':' .
                 \ '@\%(else\|elseif\|empty\|break\|continue\|elsecan\|elsecannot\)\>' .
                 \ ':' .

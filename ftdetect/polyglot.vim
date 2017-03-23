@@ -985,14 +985,17 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
   
 " Rust uses several TOML config files that are not named with .toml.
-autocmd BufNewFile,BufRead *.toml,Cargo.lock,.cargo/config set filetype=toml
+autocmd BufNewFile,BufRead *.toml,Cargo.lock,*/.cargo/config set filetype=toml
 
 endif
 
 " ftdetect/typescript.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
   
-autocmd BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
+" use `set filetype` to override default filetype=xml for *.ts files
+autocmd BufNewFile,BufRead *.ts  set filetype=typescript
+" use `setfiletype` to not override any other plugins like ianks/vim-tsx
+autocmd BufNewFile,BufRead *.tsx setfiletype typescript
 
 endif
 
@@ -1015,6 +1018,20 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vm') == -1
   
 au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
+
+endif
+
+" ftdetect/vim-literate-coffeescript.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
+  
+" Language:   Literate CoffeeScript
+" Maintainer: Michael Smith <michael@diglumi.com>
+" URL:        https://github.com/mintplant/vim-literate-coffeescript
+" License:    MIT
+
+autocmd BufNewFile,BufRead *.litcoffee set filetype=litcoffee
+autocmd BufNewFile,BufRead *.coffee.md set filetype=litcoffee
+
 
 endif
 

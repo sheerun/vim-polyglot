@@ -243,7 +243,7 @@ syntax keyword swiftPreprocessor
 syntax match swiftComment "\v\/\/.*$"
       \ contains=swiftTodos,swiftDocString,swiftMarker,@Spell oneline
 syntax region swiftComment start="/\*" end="\*/"
-      \ contains=swiftTodos,swiftDocString,swiftMarker,swiftComment,@Spell fold
+      \ contains=swiftTodos,swiftDocString,swiftMarker,@Spell fold
 
 
 " Set highlights

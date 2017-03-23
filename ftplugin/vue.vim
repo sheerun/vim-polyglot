@@ -11,4 +11,6 @@ endif
 
 runtime! ftplugin/html.vim
 
+setlocal suffixesadd+=.vue
+
 endif

@@ -3,33 +3,220 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
 " Vim completion for WAI-ARIA data file
 " Language:       HTML + WAI-ARIA
 " Maintainer:     othree <othree@gmail.com>
-" Last Change:    2010 Sep 09
+" Last Change:    2017 Mar 07
 
 " WAI_ARIA: {{{
-" Ref: http://www.w3.org/TR/wai-aria/
-" Version: Draft 15 December 2009
+" Ref: https://www.w3.org/TR/wai-aria-1.1/
+" Version: W3C Candidate Recommendation 27 October 2016
 
 let abstract_role = {}
 let role_attributes = {}
 let default_role = {}
 
-" Ref: http://www.w3.org/TR/wai-aria/roles
-" Version: Draft 15 December 2009
-let widget_role = ['alert', 'alertdialog', 'button', 'checkbox', 'combobox', 'dialog', 'gridcell', 'link', 'log', 'marquee', 'menuitem', 'menuitemcheckbox', 'menuitemradio', 'option', 'progressbar', 'radio', 'radiogroup', 'scrollbar', 'slider', 'spinbutton', 'status', 'tab', 'tabpanel', 'textbox', 'timer', 'tooltip', 'treeitem', 'combobox', 'grid', 'listbox', 'menu', 'menubar', 'radiogroup', 'tablist', 'tree', 'treegrid']
-let document_structure = ['article', 'columnheader', 'definition', 'directory', 'document', 'group', 'heading', 'img', 'list', 'listitem', 'math', 'note', 'presentation', 'region', 'row', 'rowheader', 'separator']
-let landmark_role = ['application', 'banner', 'complementary', 'contentinfo', 'form', 'main', 'navigation', 'search']
-let dpub_role = ['dpub-abstract', 'dpub-afterword', 'dpub-appendix', 'dpub-biblioentry', 'dpub-bibliography', 'dpub-biblioref', 'dpub-chapter', 'dpub-cover', 'dpub-epilogue', 'dpub-footnote', 'dpub-footnotes', 'dpub-foreword', 'dpub-glossary', 'dpub-glossdef', 'dpub-glossref', 'dpub-glossterm', 'dpub-index', 'dpub-locator', 'dpub-noteref', 'dpub-notice', 'dpub-pagebreak', 'dpub-pagelist', 'dpub-part', 'dpub-preface', 'dpub-prologue', 'dpub-pullquote', 'dpub-qna', 'dpub-subtitle', 'dpub-tip', 'dpub-title', 'dpub-toc']
+" Ref: https://www.w3.org/TR/wai-aria-1.1/#roles_categorization
+" Version: W3C Candidate Recommendation 27 October 2016
+let widget_role = [
+    \ 'alert',
+    \ 'alertdialog',
+    \ 'button',
+    \ 'checkbox',
+    \ 'combobox',
+    \ 'dialog',
+    \ 'gridcell',
+    \ 'link',
+    \ 'log',
+    \ 'marquee',
+    \ 'menuitem',
+    \ 'menuitemcheckbox',
+    \ 'menuitemradio',
+    \ 'option',
+    \ 'progressbar',
+    \ 'radio',
+    \ 'radiogroup',
+    \ 'scrollbar',
+    \ 'searchbox',
+    \ 'slider',
+    \ 'spinbutton',
+    \ 'status',
+    \ 'switch',
+    \ 'tab',
+    \ 'tabpanel',
+    \ 'textbox',
+    \ 'timer',
+    \ 'tooltip',
+    \ 'treeitem',
+    \ 'combobox',
+    \ 'grid',
+    \ 'listbox',
+    \ 'menu',
+    \ 'menubar',
+    \ 'radiogroup',
+    \ 'tablist',
+    \ 'tree',
+    \ 'treegrid'
+\ ]
+
+let document_structure = [
+    \ 'article',
+    \ 'cell',
+    \ 'columnheader',
+    \ 'definition',
+    \ 'directory',
+    \ 'document',
+    \ 'feed',
+    \ 'figure',
+    \ 'group',
+    \ 'heading',
+    \ 'img',
+    \ 'list',
+    \ 'listitem',
+    \ 'math',
+    \ 'none',
+    \ 'note',
+    \ 'presentation',
+    \ 'region',
+    \ 'row',
+    \ 'rowheader',
+    \ 'separator',
+    \ 'table',
+    \ 'term'
+\ ]
+
+let landmark_role = [
+    \ 'application',
+    \ 'banner',
+    \ 'complementary',
+    \ 'contentinfo',
+    \ 'form',
+    \ 'main',
+    \ 'navigation',
+    \ 'search'
+\ ]
+
+" Ref: https://www.w3.org/TR/dpub-aria-1.0/
+" Version: W3C Candidate Recommendation 15 December 2016
+let dpub_role = [
+    \ 'dpub-abstract',
+    \ 'dpub-afterword',
+    \ 'dpub-appendix',
+    \ 'dpub-biblioentry',
+    \ 'dpub-bibliography',
+    \ 'dpub-biblioref',
+    \ 'dpub-chapter',
+    \ 'dpub-cover',
+    \ 'dpub-epilogue',
+    \ 'dpub-footnote',
+    \ 'dpub-footnotes',
+    \ 'dpub-foreword',
+    \ 'dpub-glossary',
+    \ 'dpub-glossdef',
+    \ 'dpub-glossref',
+    \ 'dpub-glossterm',
+    \ 'dpub-index',
+    \ 'dpub-locator',
+    \ 'dpub-noteref',
+    \ 'dpub-notice',
+    \ 'dpub-pagebreak',
+    \ 'dpub-pagelist',
+    \ 'dpub-part',
+    \ 'dpub-preface',
+    \ 'dpub-prologue',
+    \ 'dpub-pullquote',
+    \ 'dpub-qna',
+    \ 'dpub-subtitle',
+    \ 'dpub-tip',
+    \ 'dpub-title',
+    \ 'dpub-toc'
+\ ]
+
 let role = extend(widget_role, document_structure)
 let role = extend(role, landmark_role)
 let role = extend(role, dpub_role)
 
-" http://www.w3.org/TR/wai-aria/states_and_properties#state_prop_taxonomy
-"let global_states_and_properties = {'aria-atomic': ['true', 'false'], 'aria-busy': ['true', 'false'], 'aria-controls': [], 'aria-describedby': [], 'aria-disabled': ['true', 'false'], 'aria-dropeffect': ['copy', 'move', 'link', 'execute', 'popup', 'none'], 'aria-flowto': [], 'aria-grabbed': ['true', 'false', 'undefined'], 'aria-haspopup': ['true', 'false'], 'aria-hidden': ['true', 'false'], 'aria-invalid': ['grammar', 'spelling', 'true', 'false'], 'aria-label': [], 'aria-labelledby': [], 'aria-live': ['off', 'polite', 'assertive'], 'aria-owns': [], 'aria-relevant': ['additions', 'removals', 'text', 'all']}
-let widget_attributes = {'aria-autocomplete': ['inline', 'list', 'both', 'none'], 'aria-checked': ['true', 'false', 'mixed', 'undefined'], 'aria-disabled': ['true', 'false'], 'aria-expanded': ['true', 'false', 'undefined'], 'aria-haspopup': ['true', 'false'], 'aria-hidden': ['true', 'false'], 'aria-invalid': ['grammar', 'spelling', 'true', 'false'], 'aria-label': [], 'aria-level': [], 'aria-multiline': ['true', 'false'], 'aria-multiselectable': ['true', 'false'], 'aria-orientation': ['horizontal', 'vertical'], 'aria-pressed': ['true', 'false', 'mixed', 'undefined'], 'aria-readonly': ['true', 'false'], 'aria-required': ['true', 'false'], 'aria-selected': ['true', 'false', 'undefined'], 'aria-sort': ['ascending', 'descending', 'none', 'other'], 'aria-valuemax': [], 'aria-valuemin': [], 'aria-valuenow': [], 'aria-valuetext': []}
-let live_region_attributes = {'aria-atomic': ['true', 'false'], 'aria-busy': ['true', 'false'], 'aria-live': ['off', 'polite', 'assertive'], 'aria-relevant': ['additions', 'removals', 'text', 'all', 'additions text']}
-let drag_and_drop_attributes = {'aria-dropeffect': ['copy', 'move', 'link', 'execute', 'popup', 'none'], 'aria-grabbed': ['true', 'false', 'undefined']}
-let relationship_attributes = {'aria-activedescendant': [], 'aria-controls': [], 'aria-describedby': [], 'aria-flowto': [], 'aria-labelledby': [], 'aria-owns': [], 'aria-posinset': [], 'aria-setsize': []}
-let aria_attributes = widget_attributes
+" https://www.w3.org/TR/wai-aria-1.1/#states_and_properties
+let global_states_and_properties = {
+    \ 'aria-atomic': ['true', 'false'],
+    \ 'aria-busy': ['true', 'false'],
+    \ 'aria-controls': [],
+    \ 'aria-current': [],
+    \ 'aria-describedby': [],
+    \ 'aria-disabled': ['true', 'false'],
+    \ 'aria-dropeffect': ['copy', 'move', 'link', 'execute', 'popup', 'none'],
+    \ 'aria-errormessage': [],
+    \ 'aria-flowto': [],
+    \ 'aria-grabbed': ['true', 'false', 'undefined'],
+    \ 'aria-haspopup': ['true', 'false'],
+    \ 'aria-hidden': ['true', 'false'],
+    \ 'aria-invalid': ['grammar', 'spelling', 'true', 'false'],
+    \ 'aria-keyshortcuts': [],
+    \ 'aria-label': [],
+    \ 'aria-labelledby': [],
+    \ 'aria-live': ['off', 'polite', 'assertive'],
+    \ 'aria-owns': [],
+    \ 'aria-relevant': ['additions', 'removals', 'text', 'all'],
+    \ 'aria-roledescription': [],
+\ }
+
+let widget_attributes = {
+    \ 'aria-autocomplete': ['inline', 'list', 'both', 'none'],
+    \ 'aria-checked': ['true', 'false', 'mixed', 'undefined'],
+    \ 'aria-disabled': ['true', 'false'],
+    \ 'aria-errormessage': [],
+    \ 'aria-expanded': ['true', 'false', 'undefined'],
+    \ 'aria-haspopup': ['true', 'false'],
+    \ 'aria-hidden': ['true', 'false'],
+    \ 'aria-invalid': ['grammar', 'spelling', 'true', 'false'],
+    \ 'aria-label': [],
+    \ 'aria-level': [],
+    \ 'aria-modal': ['true', 'false'],
+    \ 'aria-multiline': ['true', 'false'],
+    \ 'aria-multiselectable': ['true', 'false'],
+    \ 'aria-orientation': ['horizontal', 'vertical'],
+    \ 'aria-placeholder': [],
+    \ 'aria-pressed': ['true', 'false', 'mixed', 'undefined'],
+    \ 'aria-readonly': ['true', 'false'],
+    \ 'aria-required': ['true', 'false'],
+    \ 'aria-selected': ['true', 'false', 'undefined'],
+    \ 'aria-sort': ['ascending', 'descending', 'none', 'other'],
+    \ 'aria-valuemax': [],
+    \ 'aria-valuemin': [],
+    \ 'aria-valuenow': [],
+    \ 'aria-valuetext': []
+\ }
+
+let live_region_attributes = {
+    \ 'aria-atomic': ['true', 'false'],
+    \ 'aria-busy': ['true', 'false'],
+    \ 'aria-live': ['off', 'polite', 'assertive'],
+    \ 'aria-relevant': ['additions', 'removals', 'text', 'all', 'additions text']
+\ }
+
+let drag_and_drop_attributes = {
+    \ 'aria-dropeffect': ['copy', 'move', 'link', 'execute', 'popup', 'none'],
+    \ 'aria-grabbed': ['true', 'false', 'undefined']
+\ }
+
+let relationship_attributes = {
+    \ 'aria-activedescendant': [],
+    \ 'aria-colcount': [],
+    \ 'aria-colindex': [],
+    \ 'aria-colspan': [],
+    \ 'aria-controls': [],
+    \ 'aria-describedby': [],
+    \ 'aria-details': [],
+    \ 'aria-errormessage': [],
+    \ 'aria-flowto': [],
+    \ 'aria-labelledby': [],
+    \ 'aria-owns': [],
+    \ 'aria-posinset': [],
+    \ 'aria-rowcount': [],
+    \ 'aria-rowindex': [],
+    \ 'aria-rowspan': [],
+    \ 'aria-setsize': []
+\ }
+
+let aria_attributes = global_states_and_properties
+let aria_attributes = extend(aria_attributes, widget_attributes)
 let aria_attributes = extend(aria_attributes, live_region_attributes)
 let aria_attributes = extend(aria_attributes, drag_and_drop_attributes)
 let aria_attributes = extend(aria_attributes, relationship_attributes)
@@ -84,6 +271,8 @@ let role_attributes['status'] = abstract_role['composite'] + role_attributes['re
 let role_attributes['tab'] = abstract_role['sectionhead'] + abstract_role['widget'] + ['aria-selected']
 let role_attributes['tabpanel'] = role_attributes['region']
 let role_attributes['textbox'] = abstract_role['input'] + ['aria-autocomplete', 'aria-multiline', 'aria-readonly', 'aria-required']
+let role_attributes['searchbox'] = role_attributes['textbox']
+let role_attributes['switch'] = role_attributes['checkbox']
 let role_attributes['timer'] = role_attributes['status'] 
 let role_attributes['tooltip'] = abstract_role['section'] 
 let role_attributes['treeitem'] = role_attributes['listitem'] + role_attributes['option']
@@ -101,16 +290,22 @@ let role_attributes['treegrid'] = role_attributes['grid'] + role_attributes['tre
 let role_attributes['document'] = abstract_role['structure'] + ['aria-expanded'] 
 
 let role_attributes['article'] = role_attributes['document'] + role_attributes['region'] 
+let role_attributes['cell'] = abstract_role['section'] + ['aria-colindex', 'aria-colspan', 'aria-rowindex', 'aria-rowspan']
 let role_attributes['columnheader'] = role_attributes['gridcell'] + abstract_role['sectionhead'] + ['aria-sort']
 let role_attributes['definition'] = abstract_role['section'] 
+let role_attributes['feed'] = role_attributes['list']
+let role_attributes['figure'] = abstract_role['section'] 
 let role_attributes['heading'] = abstract_role['sectionhead'] + ['aria-level'] 
 let role_attributes['img'] = abstract_role['section'] 
 let role_attributes['math'] = abstract_role['section'] 
 let role_attributes['note'] = abstract_role['section'] 
 let role_attributes['presentation'] = abstract_role['structure']
+let role_attributes['none'] = role_attributes['presentation']
 let role_attributes['row'] = role_attributes['group'] + ['aria-level', 'aria-selected']
 let role_attributes['rowheader'] = role_attributes['gridcell'] + abstract_role['sectionhead']
 let role_attributes['separator'] = abstract_role['structure'] + ['aria-expanded'] 
+let role_attributes['table'] = abstract_role['section'] + ['aria-colcount', 'aria-rowcount']
+let role_attributes['term'] = abstract_role['section']
 
 " Landmark Roles
 let role_attributes['application'] = abstract_role['landmark'] 
@@ -126,19 +321,30 @@ let role_attributes['search'] = abstract_role['landmark']
 let aria_attributes_value = {
     \ 'aria-autocomplete': ['ID', ''],
     \ 'aria-checked': ['Token', ''],
+    \ 'aria-colcount': ['Number', ''],
+    \ 'aria-colindex': ['Number', ''],
+    \ 'aria-colspan': ['Number', ''],
     \ 'aria-disabled': ['true/false', ''],
+    \ 'aria-errormessage': ['ID', ''],
     \ 'aria-expanded': ['Token', ''],
-    \ 'aria-haspopup': ['true/false', ''],
+    \ 'aria-haspopup': ['Token', ''],
     \ 'aria-hidden': ['true/false', ''],
     \ 'aria-invalid': ['Token', ''],
+    \ 'aria-keyshortcuts': ['String', ''],
     \ 'aria-label': ['String', ''],
     \ 'aria-level': ['Int', ''],
+    \ 'aria-modal': ['true/false', ''],
     \ 'aria-multiline': ['true/false', ''],
     \ 'aria-multiselectable': ['true/false', ''],
     \ 'aria-orientation': ['Token', ''],
+    \ 'aria-placeholder': ['String', ''],
     \ 'aria-pressed': ['Token', ''],
     \ 'aria-readonly': ['true/false', ''],
     \ 'aria-required': ['true/false', ''],
+    \ 'aria-roledescription': ['String', ''],
+    \ 'aria-rowcount': ['Number', ''],
+    \ 'aria-rowindex': ['Number', ''],
+    \ 'aria-rowspan': ['Number', ''],
     \ 'aria-selected': ['Token', ''],
     \ 'aria-sort': ['Token', ''],
     \ 'aria-valuemax': ['Number', ''],

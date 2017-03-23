@@ -7,7 +7,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
 " 		pancake <pancake@nopcode.org>
 " 		Sebastian Reichel <sre@ring0.de>
 " 		Adrià Arrufat <adria.arrufat@protonmail.ch>
-" Last Change: 	2016-10-20
 " Filenames: 	*.vala *.vapi *.valadoc
 "
 " REFERENCES:
@@ -53,11 +52,13 @@ syn keyword valaUnspecifiedStatement	as base construct delete get in is lock new
 " Arrays and Lists
 syn match   valaArray			"\(\w\(\w\)*\(\s\+\)\?<\)\+\(\(\s\+\)\?\w\(\w\)*\(?\|\*\)\?\(\,\)\?\)\+>\+"
 " Methods
-syn match   valaMethod			"\w\(\w\)*\(\s\+\)\?("he=e-1,me=e-1
+syn match   valaMethod			"\(@\)\?\w\(\w\)*\(\s\+\)\?("he=e-1,me=e-1
 " Operators
 syn match   valaOperator		display "\%(+\|-\|/\|*\|=\|\^\|&\||\|!\|>\|<\|%\|?\)=\?"
 " Delimiters
 syn match   valaDelimiter		display "(\|)\|\[\|\]\|,\|;\|:\|{\|}\|\k\@<!_\k\@!\|[[:punct:]]\@<!@[[:punct:]]\@!"
+" Enum Fields
+syn match   valaEnumField		"\.\([A-Z_]\)\+\([A-Z_]\)\+"hs=s+1 " ensure there are at least 2 CAPS
 
 " Comments
 syn cluster valaCommentGroup 		contains=valaTodo
@@ -67,9 +68,9 @@ syn keyword valaTodo 			contained TODO FIXME XXX NOTE
 if !exists("vala_ignore_valadoc")
   syn cluster valaDocCommentGroup	contains=valaDocTags,valaDocSeeTag
   syn region  valaDocTags 		contained start="{@\(link\|inherit[Dd]oc\)" end="}"
-  syn match   valaDocTags 		contained "@\(param\|exception\|throws\|since\)\s\+\S\+" contains=valaDocParam
+  syn match   valaDocTags 		contained "@\(param\|exception\|throws\|since\|[Vv]ersion\)\s\+\S\+" contains=valaDocParam
   syn match   valaDocParam 		contained "\s\S\+"
-  syn match   valaDocTags 		contained "@\(return\|deprecated\)\>"
+  syn match   valaDocTags 		contained "@\(return\)\>"
   syn region  valaDocSeeTag		contained matchgroup=valaDocTags start="@see\s\+" matchgroup=NONE end="\_."re=e-1 contains=valaDocSeeTagParam
   syn match   valaDocSeeTagParam	contained @"\_[^"]\+"\|<a\s\+\_.\{-}</a>\|\(\k\|\.\)*\(#\k\+\((\_[^)]\+)\)\=\)\=@ extend
 endif
@@ -109,6 +110,9 @@ syntax match valaCommentError 		display "\*/"
 syntax match valaCommentStartError 	display "/\*"me=e-1 contained
 " match the special comment /**/
 syn match   valaComment		 	"/\*\*/"
+
+" comment script lines
+syn region   valaScript			start="^#!" end="$"
 
 " Vala Code Attributes
 syn region  valaAttribute 		start="^\s*\[" end="\]" contains=valaComment,valaString keepend
@@ -175,6 +179,7 @@ hi def link valaArray			StorageClass
 hi def link valaMethod			Function
 hi def link valaOperator		Operator
 hi def link valaDelimiter		Delimiter
+hi def link valaEnumField		Constant
 
 hi def link valaCommentError		Error
 hi def link valaCommentStartError	Error
@@ -187,6 +192,7 @@ hi def link valaCommentL		valaComment
 hi def link valaCommentStart		valaComment
 hi def link valaCommentSkip		valaComment
 hi def link valaComment			Comment
+hi def link valaScript			Comment
 hi def link valaDocComment		Comment
 hi def link valaDocTags 		Special
 hi def link valaDocParam 		Function

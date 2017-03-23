@@ -14,26 +14,39 @@ syn keyword terraValueBool true false on off yes no
 
 """ data
 syn keyword terraDataTypeBI
+          \ alicloud_images
+          \ alicloud_instance_types
+          \ alicloud_regions
+          \ alicloud_zones
           \ archive_file
           \ atlas_artifact
           \ aws_acm_certificate
           \ aws_alb
           \ aws_alb_listener
           \ aws_ami
+          \ aws_autoscaling_groups
           \ aws_availability_zone
           \ aws_availability_zones
           \ aws_billing_service_account
           \ aws_caller_identity
+          \ aws_canonical_user_id
           \ aws_cloudformation_stack
+          \ aws_db_instance
           \ aws_ebs_snapshot
           \ aws_ebs_volume
+          \ aws_ecs_cluster
           \ aws_ecs_container_definition
+          \ aws_ecs_task_definition
           \ aws_eip
+          \ aws_elb_hosted_zone_id
           \ aws_elb_service_account
           \ aws_iam_account_alias
           \ aws_iam_policy_document
           \ aws_iam_server_certificate
+          \ aws_instance
           \ aws_ip_ranges
+          \ aws_kms_secret
+          \ aws_partition
           \ aws_prefix_list
           \ aws_redshift_service_account
           \ aws_region
@@ -43,17 +56,23 @@ syn keyword terraDataTypeBI
           \ aws_security_group
           \ aws_subnet
           \ aws_vpc
+          \ aws_vpc_endpoint
           \ aws_vpc_endpoint_service
           \ aws_vpc_peering_connection
+          \ aws_vpn_gateway
           \ azurerm_client_config
           \ consul_keys
           \ docker_registry_image
           \ external
           \ fastly_ip_ranges
+          \ google_compute_zones
           \ google_iam_policy
           \ newrelic_application
+          \ ns1_datasource
           \ null_data_source
           \ opsgenie_user
+          \ pagerduty_escalation_policy
+          \ pagerduty_schedule
           \ pagerduty_user
           \ pagerduty_vendor
           \ scaleway_bootscript
@@ -65,6 +84,20 @@ syn keyword terraDataTypeBI
 
 """ resource
 syn keyword terraResourceTypeBI
+          \ alicloud_disk
+          \ alicloud_disk_attachment
+          \ alicloud_eip
+          \ alicloud_eip_association
+          \ alicloud_instance
+          \ alicloud_nat_gateway
+          \ alicloud_route_entry
+          \ alicloud_security_group
+          \ alicloud_security_group_rule
+          \ alicloud_slb
+          \ alicloud_slb_attachment
+          \ alicloud_subnet
+          \ alicloud_vpc
+          \ alicloud_vswitch
           \ arukas_container
           \ atlas_artifact
           \ aws_alb
@@ -110,11 +143,16 @@ syn keyword terraResourceTypeBI
           \ aws_cloudwatch_log_stream
           \ aws_cloudwatch_log_subscription_filter
           \ aws_cloudwatch_metric_alarm
+          \ aws_codebuild_project
           \ aws_codecommit_repository
           \ aws_codecommit_trigger
           \ aws_codedeploy_app
           \ aws_codedeploy_deployment_config
           \ aws_codedeploy_deployment_group
+          \ aws_config_config_rule
+          \ aws_config_configuration_recorder
+          \ aws_config_configuration_recorder_status
+          \ aws_config_delivery_channel
           \ aws_customer_gateway
           \ aws_db_event_subscription
           \ aws_db_instance
@@ -126,6 +164,11 @@ syn keyword terraResourceTypeBI
           \ aws_default_route_table
           \ aws_default_security_group
           \ aws_directory_service_directory
+          \ aws_dms_certificate
+          \ aws_dms_endpoint
+          \ aws_dms_replication_instance
+          \ aws_dms_replication_subnet_group
+          \ aws_dms_replication_task
           \ aws_dynamodb_table
           \ aws_ebs_snapshot
           \ aws_ebs_volume
@@ -147,6 +190,7 @@ syn keyword terraResourceTypeBI
           \ aws_elasticache_security_group
           \ aws_elasticache_subnet_group
           \ aws_elasticsearch_domain
+          \ aws_elasticsearch_domain_policy
           \ aws_elastictranscoder_pipeline
           \ aws_elastictranscoder_preset
           \ aws_elb
@@ -174,6 +218,9 @@ syn keyword terraResourceTypeBI
           \ aws_iam_user_policy
           \ aws_iam_user_policy_attachment
           \ aws_iam_user_ssh_key
+          \ aws_inspector_assessment_target
+          \ aws_inspector_assessment_template
+          \ aws_inspector_resource_group
           \ aws_instance
           \ aws_internet_gateway
           \ aws_key_pair
@@ -244,6 +291,8 @@ syn keyword terraResourceTypeBI
           \ aws_ses_receipt_filter
           \ aws_ses_receipt_rule
           \ aws_ses_receipt_rule_set
+          \ aws_sfn_activity
+          \ aws_sfn_state_machine
           \ aws_simpledb_domain
           \ aws_snapshot_create_volume_permission
           \ aws_sns_topic
@@ -265,6 +314,7 @@ syn keyword terraResourceTypeBI
           \ aws_vpc_endpoint
           \ aws_vpc_endpoint_route_table_association
           \ aws_vpc_peering_connection
+          \ aws_vpc_peering_connection_accepter
           \ aws_vpn_connection
           \ aws_vpn_connection_route
           \ aws_vpn_gateway
@@ -296,6 +346,7 @@ syn keyword terraResourceTypeBI
           \ azurerm_cdn_endpoint
           \ azurerm_cdn_profile
           \ azurerm_container_registry
+          \ azurerm_container_service
           \ azurerm_dns_a_record
           \ azurerm_dns_aaaa_record
           \ azurerm_dns_cname_record
@@ -455,6 +506,8 @@ syn keyword terraResourceTypeBI
           \ google_dns_managed_zone
           \ google_dns_record_set
           \ google_project
+          \ google_project_iam_policy
+          \ google_project_services
           \ google_pubsub_subscription
           \ google_pubsub_topic
           \ google_service_account
@@ -539,6 +592,7 @@ syn keyword terraResourceTypeBI
           \ packet_project
           \ packet_ssh_key
           \ packet_volume
+          \ pagerduty_addon
           \ pagerduty_escalation_policy
           \ pagerduty_schedule
           \ pagerduty_service
@@ -550,6 +604,14 @@ syn keyword terraResourceTypeBI
           \ postgresql_role
           \ postgresql_schema
           \ powerdns_record
+          \ profitbricks_datacenter
+          \ profitbricks_firewall
+          \ profitbricks_ipblock
+          \ profitbricks_lan
+          \ profitbricks_loadbalancer
+          \ profitbricks_nic
+          \ profitbricks_server
+          \ profitbricks_volume
           \ rabbitmq_binding
           \ rabbitmq_exchange
           \ rabbitmq_permissions
@@ -642,7 +704,7 @@ syn match terraBraces        "[{}\[\]]"
 syn region terraValueString   start=/"/ skip=/\\\+"/ end=/"/ contains=terraStringInterp
 syn region terraStringInterp  matchgroup=terraBrackets start=/\${/ end=/}/ contains=terraValueFunction contained
 "" TODO match keywords here, not a-z+
-syn region terraValueFunction matchgroup=terraBrackets start=/[a-z]\+(/ end=/)/ contains=terraValueString,terraValueFunction contained
+syn region terraValueFunction matchgroup=terraBrackets start=/[0-9a-z]\+(/ end=/)/ contains=terraValueString,terraValueFunction contained
 
 hi def link terraComment           Comment
 hi def link terraTodo              Todo

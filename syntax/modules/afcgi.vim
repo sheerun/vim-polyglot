@@ -35,8 +35,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
 " syn keyword ngxDirectiveThirdParty fastcgi_store_access
 " syn keyword ngxDirectiveThirdParty fastcgi_temp_file_write_size
 " syn keyword ngxDirectiveThirdParty fastcgi_temp_path
-syn keyword ngxDirectiveThirdParty fastcgi_upstream_fail_timeout
-syn keyword ngxDirectiveThirdParty fastcgi_upstream_max_fails
+syn keyword ngxDirectiveDeprecated fastcgi_upstream_fail_timeout
+syn keyword ngxDirectiveDeprecated fastcgi_upstream_max_fails
 
 
 endif

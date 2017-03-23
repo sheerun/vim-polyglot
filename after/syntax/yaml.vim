@@ -21,9 +21,7 @@ if version < 600
 endif
 syntax clear
 
-syn match yamlDelimiter	"[:,-]"
 syn match yamlBlock "[\[\]\{\}\|\>]"
-syn match yamlOperator "[?^+-]\|=>"
 
 syn region yamlComment	start="\#" end="$"
 syn match yamlIndicator	"#YAML:\S\+"
@@ -41,10 +39,11 @@ syn keyword yamlConstant TRUE True true YES Yes yes ON On on
 syn keyword yamlConstant FALSE False false NO No no OFF Off off
 
 syn match  yamlKey	"^\s*\zs\S\+\ze\s*:"
+syn match  yamlKey	"^\s*-\s*\zs\S\+\ze\s*:"
 syn match  yamlAnchor	"&\S\+"
 syn match  yamlAlias	"*\S\+"
 
-" Setupt the hilighting links
+" Setup the highlighting links
 
 hi link yamlConstant Keyword
 hi link yamlIndicator PreCondit
@@ -55,10 +54,7 @@ hi link yamlType	Type
 
 hi link yamlComment	Comment
 hi link yamlBlock	Operator
-hi link yamlOperator	Operator
-hi link yamlDelimiter	Delimiter
 hi link yamlString	String
 hi link yamlEscape	Special
-
 
 endif

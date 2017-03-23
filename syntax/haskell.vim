@@ -24,14 +24,14 @@ endif
 
 syn spell notoplevel
 syn match haskellRecordField contained containedin=haskellBlock
-  \ "[_a-z][a-zA-Z0-9_']*\(,\s*[_a-z][a-zA-Z0-9_']*\)*\(\s*::\|\n\s\+::\)"
+  \ "[_a-z][a-zA-Z0-9_']*\(,\s*[_a-z][a-zA-Z0-9_']*\)*\_s\+::\s"
   \ contains=
   \ haskellIdentifier,
   \ haskellOperators,
   \ haskellSeparator,
   \ haskellParens
 syn match haskellTypeSig
-  \ "^\s*\(where\s\+\|let\s\+\|default\s\+\)\?[_a-z][a-zA-Z0-9_']*\(,\s*[_a-z][a-zA-Z0-9_']*\)*\(\s*::\|\n\s\+::\)"
+  \ "^\s*\(where\s\+\|let\s\+\|default\s\+\)\?[_a-z][a-zA-Z0-9_']*\(,\s*[_a-z][a-zA-Z0-9_']*\)*\_s\+::\s"
   \ contains=
   \ haskellWhere,
   \ haskellLet,
@@ -47,7 +47,7 @@ syn match haskellDecl "\<\(type\|data\)\>\s\+\(\<family\>\)\?"
 syn keyword haskellDefault default
 syn keyword haskellImportKeywords import qualified safe as hiding contained
 syn keyword haskellForeignKeywords foreign export import ccall safe unsafe interruptible capi prim contained
-syn region haskellForeignImport start="\<foreign\>" end="::" keepend
+syn region haskellForeignImport start="\<foreign\>" end="\_s\+::\s" keepend
   \ contains=
   \ haskellString,
   \ haskellOperators,

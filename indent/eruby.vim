@@ -97,6 +97,7 @@ function! GetErubyIndent(...)
     let ind = ind + sw
   endif
   if line !~# '^\s*<%' && line =~# '%>\s*$' && line !~# '^\s*end\>'
+	\ && synID(v:lnum, match(cline, '\S') + 1, 1) != hlID('htmlEndTag')
     let ind = ind - sw
   endif
   if cline =~# '^\s*[-=]\=%>\s*$'
