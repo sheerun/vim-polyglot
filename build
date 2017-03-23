@@ -127,6 +127,7 @@ PACKS="
   fish:dag/vim-fish
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl
+  gnuplot:vim-scripts/gnuplot-syntax-highlighting
   go:fatih/vim-go:_BASIC
   groovy:vim-scripts/groovy.vim
   haml:sheerun/vim-haml
