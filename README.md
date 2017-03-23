@@ -37,6 +37,7 @@ If you need full functionality of any plugin, please use it directly with your p
 ## Language packs
 
 - [ansible](https://github.com/pearofducks/ansible-vim) (syntax, indent, ftplugin)
+- [apiblueprint](https://github.com/sheerun/apiblueprint.vim) (syntax)
 - [applescript](https://github.com/vim-scripts/applescript.vim) (syntax)
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent)
 - [blade](https://github.com/jwalton512/vim-blade) (syntax, indent, ftplugin)

@@ -104,6 +104,7 @@ EOF
 }
 
 PACKS="
+  apiblueprint:sheerun/apiblueprint.vim
   applescript:vim-scripts/applescript.vim
   yaml:stephpy/vim-yaml
   ansible:pearofducks/ansible-vim

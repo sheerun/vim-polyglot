@@ -1,4 +1,11 @@
 augroup filetypedetect
+" apiblueprint:sheerun/apiblueprint.vim
+autocmd BufReadPost,BufNewFile *.apib set filetype=apiblueprint
+autocmd FileType apiblueprint set syntax=apiblueprint
+autocmd FileType apiblueprint set makeprg=drafter\ -l\ %
+augroup END
+
+augroup filetypedetect
 " applescript:vim-scripts/applescript.vim
 augroup END
 
