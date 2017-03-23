@@ -105,6 +105,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [python-compiler](https://github.com/aliev/vim-compiler-python) (compiler, autoload, ftdetect)
 - [qml](https://github.com/peterhoeg/vim-qml) (syntax, indent, ftplugin, ftdetect)
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
+- [racket](https://github.com/wlangstroth/vim-racket) (syntax, indent, autoload, ftplugin, ftdetect)
 - [raml](https://github.com/IN3D/vim-raml) (syntax, ftplugin, ftdetect)
 - [ragel](https://github.com/jneen/ragel.vim) (syntax)
 - [rspec](https://github.com/sheerun/rspec.vim) (syntax, ftdetect)

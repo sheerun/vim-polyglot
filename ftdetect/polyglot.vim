@@ -728,6 +728,13 @@ autocmd BufRead,BufNewFile *.qml setfiletype qml
 
 endif
 
+" ftdetect/racket.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'racket') == -1
+  
+au BufRead,BufNewFile *.rkt,*.rktl  set filetype=racket
+
+endif
+
 " ftdetect/raml.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'raml') == -1
   
