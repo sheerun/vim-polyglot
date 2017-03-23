@@ -2,10 +2,10 @@
 
 set -E
 
-DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
-DIRS_BASIC="syntax compiler indent ftdetect after/syntax after/indent after/ftdetect"
-DIRS_ALL="syntax indent compiler autoload ftplugin ftdetect after"
-DIRS_SYNTAX="syntax ftdetect after/syntax after/ftdetect"
+DIRS="syntax indent compiler autoload ftplugin after/syntax after/indent after/ftplugin"
+DIRS_BASIC="syntax compiler indent after/syntax after/indent"
+DIRS_ALL="syntax indent compiler autoload ftplugin after"
+DIRS_SYNTAX="syntax after/syntax"
 DIRS_JAVASCRIPT="${DIRS} extras"
 DIRS_RM="$DIRS_JAVASCRIPT"
 
@@ -49,9 +49,20 @@ extract() {
       fi
     done
 
+    for f in ${dir}/ftdetect/*; do
+      (
+        echo "augroup filetypedetect";
+        echo '" '"$pack";
+        cat "${f}";
+        echo "augroup END";
+        echo
+      ) >> tmp/polyglot.vim;
+    done
 
     output "${subdirs##, })\n"
   done
+
+  mv tmp/polyglot.vim ftdetect/
 
   for pack in $1; do
     name="$(printf "$pack" | cut -d ':' -f 1)"
@@ -76,15 +87,6 @@ copy_dir() {
   done
 }
 
-concat_ftdetect() {
-  echo "augroup filetypedetect" > tmp/polyglot.vim
-  cat config.vim >> tmp/polyglot.vim
-  for f in ftdetect/*; do (echo '" '"$f"; cat "${f}"; echo) >> tmp/polyglot.vim; done
-  echo "augroup END" >> tmp/polyglot.vim
-  rm -f ftdetect/*
-  mv tmp/polyglot.vim ftdetect/
-}
-
 update_readme() {
   OLD_README="$(cat README.md)"
 
@@ -93,7 +95,7 @@ update_readme() {
 +2kb
 /##
 'b,-2c
-$(printf -- "$OUTPUT")
+$(printf -- "$OUTPUT" | sort)
 .
 w
 q
@@ -103,6 +105,7 @@ EOF
 
 PACKS="
   applescript:vim-scripts/applescript.vim
+  yaml:stephpy/vim-yaml
   ansible:pearofducks/ansible-vim
   arduino:sudar/vim-arduino-syntax
   blade:jwalton512/vim-blade
@@ -199,7 +202,6 @@ PACKS="
   vue:posva/vim-vue
   vm:lepture/vim-velocity
   xls:vim-scripts/XSLT-syntax
-  yaml:stephpy/vim-yaml
   yard:sheerun/vim-yardoc
 "
 
@@ -210,7 +212,6 @@ mkdir tmp
 printf "Downloading packs..."
 download "$PACKS"
 extract "$PACKS"
-concat_ftdetect
 update_readme
 
 rm -rf tmp
