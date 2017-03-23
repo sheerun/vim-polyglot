@@ -23,6 +23,13 @@ A collection of language packs for Vim.
 
 Optionally download one of the [releases](https://github.com/sheerun/vim-polyglot/releases) and unpack it directly under `~/.vim` directory.
 
+You can also use Vim 8 built-in package manager:
+
+```
+mkdir -p ~/.vim/pack/default/start
+git clone https://github.com/sheerun/vim-polyglot ~/.vim/pack/default/start/vim-polyglot
+```
+
 NOTE: Not all features of listed language packs are available. We strip them from functionality slowing vim startup in general (for example we ignore `plugins` folder that is loaded regardless of file type, use `ftplugin` instead).
 
 If you need full functionality of any plugin, please use it directly with your plugin manager.
