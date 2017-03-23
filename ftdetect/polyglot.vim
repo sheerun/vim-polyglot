@@ -47,6 +47,13 @@ autocmd BufNewFile,BufRead *.blade.php set filetype=blade
 
 endif
 
+" ftdetect/caddyfile.vim
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'caddyfile') == -1
+  
+au BufNewFile,BufRead Caddyfile set ft=caddyfile
+
+endif
+
 " ftdetect/cjsx.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cjsx') == -1
   
