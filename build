@@ -29,6 +29,9 @@ download() {
 
 extract() {
   printf "\n"
+
+  cat config.vim >> tmp/polyglot.vim
+
   for pack in $1; do
     name="$(printf "$pack" | cut -d ':' -f 1)"
     path="$(printf "$pack" | cut -d ':' -f 2)"
