@@ -217,7 +217,7 @@ function s:Balanced(lnum)
       endif
     endif
     let pos = match(l:line, (l:open ?
-          \ '['.escape(tr(l:line[pos],'({[]})',')}][{(').l:line[pos],']').']' :
+          \ '['.matchstr(['][','()','{}'],l:line[pos]).']' :
           \ '[][(){}]'), pos + 1)
   endwhile
   return !l:open
