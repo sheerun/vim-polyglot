@@ -135,6 +135,7 @@ PACKS="
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl
   gnuplot:vim-scripts/gnuplot-syntax-highlighting
+  graphql:jparise/vim-graphql
   go:fatih/vim-go:_BASIC
   groovy:vim-scripts/groovy.vim
   haml:sheerun/vim-haml
