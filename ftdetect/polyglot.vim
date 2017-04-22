@@ -953,7 +953,7 @@ augroup filetypedetect
 " Tim Harper (tim.theenchanter.com)
 
 " Force filetype to be textile even if already set
-" This will override the system ftplugin/changelog 
+" This will override the system ftplugin/changelog
 " set on some distros
 au BufRead,BufNewFile *.textile set filetype=textile
 augroup END
