@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c/c++') == -1
 " Vim syntax file
 " Language:	C
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last Change:	2016 Nov 17
+" Last Change:	2016 Nov 18
 
 " Quit when a (custom) syntax file was already loaded
 if exists("b:current_syntax")
@@ -365,7 +365,7 @@ syn match	cPreConditMatch	display "^\s*\zs\(%:\|#\)\s*\(else\|endif\)\>"
 if !exists("c_no_if0")
   syn cluster	cCppOutInGroup	contains=cCppInIf,cCppInElse,cCppInElse2,cCppOutIf,cCppOutIf2,cCppOutElse,cCppInSkip,cCppOutSkip
   syn region	cCppOutWrapper	start="^\s*\zs\(%:\|#\)\s*if\s\+0\+\s*\($\|//\|/\*\|&\)" end=".\@=\|$" contains=cCppOutIf,cCppOutElse,@NoSpell fold
-  syn region	cCppOutIf	contained start="0\+" matchgroup=cCppOutWrapper end="^\s*\zs\(%:\|#\)\s*endif\>" contains=cCppOutIf2,cCppOutElse
+  syn region	cCppOutIf	contained start="0\+" matchgroup=cCppOutWrapper end="^\s*\(%:\|#\)\s*endif\>" contains=cCppOutIf2,cCppOutElse
   if !exists("c_no_if0_fold")
     syn region	cCppOutIf2	contained matchgroup=cCppOutWrapper start="0\+" end="^\s*\(%:\|#\)\s*\(else\>\|elif\s\+\(0\+\s*\($\|//\|/\*\|&\)\)\@!\|endif\>\)"me=s-1 contains=cSpaceError,cCppOutSkip,@Spell fold
   else

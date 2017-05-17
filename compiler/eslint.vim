@@ -1,5 +1,10 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
   
+" Vim compiler plugin
+" Language:     JavaScript
+" Maintainer:   vim-javascript community
+" URL:          https://github.com/pangloss/vim-javascript
+
 if exists("current_compiler")
   finish
 endif

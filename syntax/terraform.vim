@@ -42,6 +42,7 @@ syn keyword terraDataTypeBI
           \ aws_elb_service_account
           \ aws_iam_account_alias
           \ aws_iam_policy_document
+          \ aws_iam_role
           \ aws_iam_server_certificate
           \ aws_instance
           \ aws_ip_ranges
@@ -54,14 +55,25 @@ syn keyword terraDataTypeBI
           \ aws_route_table
           \ aws_s3_bucket_object
           \ aws_security_group
+          \ aws_sns_topic
           \ aws_subnet
+          \ aws_subnet_ids
           \ aws_vpc
           \ aws_vpc_endpoint
           \ aws_vpc_endpoint_service
           \ aws_vpc_peering_connection
           \ aws_vpn_gateway
           \ azurerm_client_config
+          \ circonus_account
+          \ circonus_collector
+          \ consul_agent_self
+          \ consul_catalog_nodes
+          \ consul_catalog_service
+          \ consul_catalog_services
           \ consul_keys
+          \ dns_a_record_set
+          \ dns_cname_record_set
+          \ dns_txt_record_set
           \ docker_registry_image
           \ external
           \ fastly_ip_ranges
@@ -70,11 +82,16 @@ syn keyword terraDataTypeBI
           \ newrelic_application
           \ ns1_datasource
           \ null_data_source
+          \ openstack_images_image_v2
+          \ openstack_networking_network_v2
           \ opsgenie_user
           \ pagerduty_escalation_policy
           \ pagerduty_schedule
           \ pagerduty_user
           \ pagerduty_vendor
+          \ profitbricks_datacenter
+          \ profitbricks_image
+          \ profitbricks_location
           \ scaleway_bootscript
           \ scaleway_image
           \ template_cloudinit_config
@@ -84,6 +101,7 @@ syn keyword terraDataTypeBI
 
 """ resource
 syn keyword terraResourceTypeBI
+          \ alicloud_db_instance
           \ alicloud_disk
           \ alicloud_disk_attachment
           \ alicloud_eip
@@ -120,9 +138,13 @@ syn keyword terraResourceTypeBI
           \ aws_api_gateway_integration_response
           \ aws_api_gateway_method
           \ aws_api_gateway_method_response
+          \ aws_api_gateway_method_settings
           \ aws_api_gateway_model
           \ aws_api_gateway_resource
           \ aws_api_gateway_rest_api
+          \ aws_api_gateway_stage
+          \ aws_api_gateway_usage_plan
+          \ aws_api_gateway_usage_plan_key
           \ aws_app_cookie_stickiness_policy
           \ aws_appautoscaling_policy
           \ aws_appautoscaling_target
@@ -138,6 +160,8 @@ syn keyword terraResourceTypeBI
           \ aws_cloudtrail
           \ aws_cloudwatch_event_rule
           \ aws_cloudwatch_event_target
+          \ aws_cloudwatch_log_destination
+          \ aws_cloudwatch_log_destination_policy
           \ aws_cloudwatch_log_group
           \ aws_cloudwatch_log_metric_filter
           \ aws_cloudwatch_log_stream
@@ -149,6 +173,7 @@ syn keyword terraResourceTypeBI
           \ aws_codedeploy_app
           \ aws_codedeploy_deployment_config
           \ aws_codedeploy_deployment_group
+          \ aws_codepipeline
           \ aws_config_config_rule
           \ aws_config_configuration_recorder
           \ aws_config_configuration_recorder_status
@@ -179,9 +204,11 @@ syn keyword terraResourceTypeBI
           \ aws_ecs_task_definition
           \ aws_efs_file_system
           \ aws_efs_mount_target
+          \ aws_egress_only_internet_gateway
           \ aws_eip
           \ aws_eip_association
           \ aws_elastic_beanstalk_application
+          \ aws_elastic_beanstalk_application_version
           \ aws_elastic_beanstalk_configuration_template
           \ aws_elastic_beanstalk_environment
           \ aws_elasticache_cluster
@@ -200,12 +227,14 @@ syn keyword terraResourceTypeBI
           \ aws_flow_log
           \ aws_glacier_vault
           \ aws_iam_access_key
+          \ aws_iam_account_alias
           \ aws_iam_account_password_policy
           \ aws_iam_group
           \ aws_iam_group_membership
           \ aws_iam_group_policy
           \ aws_iam_group_policy_attachment
           \ aws_iam_instance_profile
+          \ aws_iam_openid_connect_provider
           \ aws_iam_policy
           \ aws_iam_policy_attachment
           \ aws_iam_role
@@ -238,6 +267,8 @@ syn keyword terraResourceTypeBI
           \ aws_lightsail_domain
           \ aws_lightsail_instance
           \ aws_lightsail_key_pair
+          \ aws_lightsail_static_ip
+          \ aws_lightsail_static_ip_attachment
           \ aws_load_balancer_backend_server_policy
           \ aws_load_balancer_listener_policy
           \ aws_load_balancer_policy
@@ -287,6 +318,7 @@ syn keyword terraResourceTypeBI
           \ aws_security_group_rule
           \ aws_ses_active_receipt_rule_set
           \ aws_ses_configuration_set
+          \ aws_ses_domain_identity
           \ aws_ses_event_destination
           \ aws_ses_receipt_filter
           \ aws_ses_receipt_rule
@@ -367,6 +399,7 @@ syn keyword terraResourceTypeBI
           \ azurerm_lb_probe
           \ azurerm_lb_rule
           \ azurerm_local_network_gateway
+          \ azurerm_managed_disk
           \ azurerm_network_interface
           \ azurerm_network_security_group
           \ azurerm_network_security_rule
@@ -408,6 +441,12 @@ syn keyword terraResourceTypeBI
           \ chef_environment
           \ chef_node
           \ chef_role
+          \ circonus_check
+          \ circonus_contact_group
+          \ circonus_graph
+          \ circonus_metric
+          \ circonus_metric_cluster
+          \ circonus_rule_set
           \ clc_group
           \ clc_load_balancer
           \ clc_load_balancer_pool
@@ -450,16 +489,23 @@ syn keyword terraResourceTypeBI
           \ consul_node
           \ consul_prepared_query
           \ consul_service
+          \ datadog_downtime
           \ datadog_monitor
           \ datadog_timeboard
+          \ datadog_user
           \ digitalocean_domain
           \ digitalocean_droplet
           \ digitalocean_floating_ip
+          \ digitalocean_loadbalancer
           \ digitalocean_record
           \ digitalocean_ssh_key
           \ digitalocean_tag
           \ digitalocean_volume
           \ dme_record
+          \ dns_a_record_set
+          \ dns_aaaa_record_set
+          \ dns_cname_record
+          \ dns_ptr_record
           \ dnsimple_record
           \ docker_container
           \ docker_image
@@ -469,8 +515,10 @@ syn keyword terraResourceTypeBI
           \ fastly_service_v1
           \ github_issue_label
           \ github_membership
+          \ github_organization_webhook
           \ github_repository
           \ github_repository_collaborator
+          \ github_repository_webhook
           \ github_team
           \ github_team_membership
           \ github_team_repository
@@ -503,6 +551,7 @@ syn keyword terraResourceTypeBI
           \ google_compute_vpn_gateway
           \ google_compute_vpn_tunnel
           \ google_container_cluster
+          \ google_container_node_pool
           \ google_dns_managed_zone
           \ google_dns_record_set
           \ google_project
@@ -539,6 +588,11 @@ syn keyword terraResourceTypeBI
           \ influxdb_continuous_query
           \ influxdb_database
           \ influxdb_user
+          \ kubernetes_config_map
+          \ kubernetes_namespace
+          \ kubernetes_persistent_volume
+          \ kubernetes_persistent_volume_claim
+          \ kubernetes_secret
           \ librato_alert
           \ librato_service
           \ librato_space
@@ -558,6 +612,7 @@ syn keyword terraResourceTypeBI
           \ openstack_blockstorage_volume_attach_v2
           \ openstack_blockstorage_volume_v1
           \ openstack_blockstorage_volume_v2
+          \ openstack_compute_floatingip_associate_v2
           \ openstack_compute_floatingip_v2
           \ openstack_compute_instance_v2
           \ openstack_compute_keypair_v2
@@ -567,6 +622,7 @@ syn keyword terraResourceTypeBI
           \ openstack_fw_firewall_v1
           \ openstack_fw_policy_v1
           \ openstack_fw_rule_v1
+          \ openstack_images_image_v2
           \ openstack_lb_listener_v2
           \ openstack_lb_loadbalancer_v2
           \ openstack_lb_member_v1
@@ -619,12 +675,15 @@ syn keyword terraResourceTypeBI
           \ rabbitmq_queue
           \ rabbitmq_user
           \ rabbitmq_vhost
+          \ rancher_certificate
           \ rancher_environment
+          \ rancher_host
           \ rancher_registration_token
           \ rancher_registry
           \ rancher_registry_credential
           \ rancher_stack
           \ random_id
+          \ random_pet
           \ random_shuffle
           \ rundeck_job
           \ rundeck_private_key
@@ -638,6 +697,9 @@ syn keyword terraResourceTypeBI
           \ scaleway_volume_attachment
           \ softlayer_ssh_key
           \ softlayer_virtual_guest
+          \ spotinst_aws_group
+          \ spotinst_healthcheck
+          \ spotinst_subscription
           \ statuscake_test
           \ tls_cert_request
           \ tls_locally_signed_cert

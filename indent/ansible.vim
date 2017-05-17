@@ -27,7 +27,12 @@ endif
 
 function GetAnsibleIndent(lnum)
   if a:lnum == 1 || !prevnonblank(a:lnum-1)
+    return 0
+  endif
+  if exists("g:ansible_unindent_after_newline")
+    if (a:lnum -1) != prevnonblank(a:lnum - 1)
       return 0
+    endif
   endif
   let prevlnum = prevnonblank(a:lnum - 1)
   let maintain = indent(prevlnum)

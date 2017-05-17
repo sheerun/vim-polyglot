@@ -145,8 +145,8 @@ endif
 
 if get(g:, 'vim_markdown_math', 0)
   syn include @tex syntax/tex.vim
-  syn region mkdMath start="\\\@<!\$" end="\$" contains=@tex keepend
-  syn region mkdMath start="\\\@<!\$\$" end="\$\$" contains=@tex keepend
+  syn region mkdMath start="\\\@<!\$" end="\$" skip="\\\$" contains=@tex keepend
+  syn region mkdMath start="\\\@<!\$\$" end="\$\$" skip="\\\$" contains=@tex keepend
 endif
 
 syn cluster mkdNonListItem contains=@htmlTop,htmlItalic,htmlBold,htmlBoldItalic,mkdFootnotes,mkdInlineURL,mkdLink,mkdLinkDef,mkdLineBreak,mkdBlockquote,mkdCode,mkdRule,htmlH1,htmlH2,htmlH3,htmlH4,htmlH5,htmlH6,mkdMath

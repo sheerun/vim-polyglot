@@ -5,41 +5,64 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vue') == -1
 " Maintainer: Eduardo San Martin Morote
 " Author: Adriaan Zonnenberg
 
-if exists("b:did_indent")
+if exists('b:did_indent')
   finish
 endif
 
-" Load indent files for required languages
-for language in ['stylus', 'pug', 'css', 'javascript', 'html', 'coffee']
+function! s:get_indentexpr(language)
   unlet! b:did_indent
-  exe "runtime! indent/".language.".vim"
-  exe "let s:".language."indent = &indentexpr"
+  execute 'runtime! indent/' . a:language . '.vim'
+  return &indentexpr
+endfunction
+
+" The order is important here, tags without attributes go last.
+" HTML is left out, it will be used when there is no match.
+let s:languages = [
+      \   { 'name': 'pug', 'pairs': ['<template lang="pug"', '</template>'] },
+      \   { 'name': 'stylus', 'pairs': ['<style lang="stylus"', '</style>'] },
+      \   { 'name': 'css', 'pairs': ['<style', '</style>'] },
+      \   { 'name': 'coffee', 'pairs': ['<script lang="coffee"', '</script>'] },
+      \   { 'name': 'javascript', 'pairs': ['<script', '</script>'] },
+      \ ]
+
+for language in s:languages
+  " Set 'indentexpr' if the user has an indent file installed for the language
+  if strlen(globpath(&rtp, 'indent/'. language.name .'.vim'))
+    let language.indentexpr = s:get_indentexpr(language.name)
+  endif
 endfor
+
+let s:html_indent = s:get_indentexpr('html')
 
 let b:did_indent = 1
 
 setlocal indentexpr=GetVueIndent()
 
-if exists("*GetVueIndent")
+if exists('*GetVueIndent')
   finish
 endif
 
 function! GetVueIndent()
-  if searchpair('<template lang="pug"', '', '</template>', 'bWr')
-    exe "let indent = ".s:pugindent
-  elseif searchpair('<style lang="stylus"', '', '</style>', 'bWr')
-    exe "let indent = ".s:stylusindent
-  elseif searchpair('<style', '', '</style>', 'bWr')
-    exe "let indent = ".s:cssindent
-  elseif searchpair('<script lang="coffee"', '', '</script>', 'bWr')
-    exe "let indent = ".s:coffeeindent
-  elseif searchpair('<script', '', '</script>', 'bWr')
-    exe "let indent = ".s:javascriptindent
+  for language in s:languages
+    let opening_tag_line = searchpair(language.pairs[0], '', language.pairs[1], 'bWr')
+
+    if opening_tag_line
+      execute 'let indent = ' . get(language, 'indentexpr', -1)
+      break
+    endif
+  endfor
+
+  if exists('l:indent')
+    if (opening_tag_line == prevnonblank(v:lnum - 1) || opening_tag_line == v:lnum)
+          \ || getline(v:lnum) =~ '\v^\s*\</(script|style|template)'
+      return 0
+    endif
   else
-    exe "let indent = ".s:htmlindent
+    " Couldn't find language, fall back to html
+    execute 'let indent = ' . s:html_indent
   endif
 
-  return indent > -1 ? indent : s:htmlindent
+  return indent
 endfunction
 
 endif

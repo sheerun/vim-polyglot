@@ -27,7 +27,7 @@ syntax sync fromstart
 syntax case match
 
 syntax match   jsNoise          /[:,\;]\{1}/
-syntax match   jsNoise          /[\.]\{1}/ skipwhite skipempty nextgroup=jsObjectProp,jsFuncCall
+syntax match   jsNoise          /[\.]\{1}/ skipwhite skipempty nextgroup=jsObjectProp,jsFuncCall,jsPrototype
 syntax match   jsObjectProp     contained /\<[a-zA-Z_$][0-9a-zA-Z_$]*\>/
 syntax match   jsFuncCall       /\k\+\%(\s*(\)\@=/
 syntax match   jsParensError    /[)}\]]/
@@ -239,8 +239,8 @@ if exists("javascript_plugin_flow")
   runtime extras/flow.vim
 endif
 
-syntax cluster jsExpression  contains=jsBracket,jsParen,jsObject,jsTernaryIf,jsTaggedTemplate,jsTemplateString,jsString,jsRegexpString,jsNumber,jsFloat,jsOperator,jsBooleanTrue,jsBooleanFalse,jsNull,jsFunction,jsArrowFunction,jsGlobalObjects,jsExceptions,jsFutureKeys,jsDomErrNo,jsDomNodeConsts,jsHtmlEvents,jsFuncCall,jsUndefined,jsNan,jsPrototype,jsBuiltins,jsNoise,jsClassDefinition,jsArrowFunction,jsArrowFuncArgs,jsParensError,jsComment,jsArguments,jsThis,jsSuper,jsDo
-syntax cluster jsAll         contains=@jsExpression,jsStorageClass,jsConditional,jsRepeat,jsReturn,jsStatement,jsException,jsTry,jsAsyncKeyword,jsNoise,,jsBlockLabel
+syntax cluster jsExpression  contains=jsBracket,jsParen,jsObject,jsTernaryIf,jsTaggedTemplate,jsTemplateString,jsString,jsRegexpString,jsNumber,jsFloat,jsOperator,jsBooleanTrue,jsBooleanFalse,jsNull,jsFunction,jsArrowFunction,jsGlobalObjects,jsExceptions,jsFutureKeys,jsDomErrNo,jsDomNodeConsts,jsHtmlEvents,jsFuncCall,jsUndefined,jsNan,jsPrototype,jsBuiltins,jsNoise,jsClassDefinition,jsArrowFunction,jsArrowFuncArgs,jsParensError,jsComment,jsArguments,jsThis,jsSuper,jsDo,jsForAwait
+syntax cluster jsAll         contains=@jsExpression,jsStorageClass,jsConditional,jsRepeat,jsReturn,jsStatement,jsException,jsTry,jsAsyncKeyword,jsNoise,jsBlockLabel
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
@@ -384,7 +384,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
 endif
 
 " Define the htmlJavaScript for HTML syntax html.vim
-syntax cluster  htmlJavaScript       contains=@jsAll
+syntax cluster  htmlJavaScript       contains=@jsAll,jsImport,jsExport
 syntax cluster  javaScriptExpression contains=@jsAll
 
 " Vim's default html.vim highlights all javascript as 'Special'

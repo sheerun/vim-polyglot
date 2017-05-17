@@ -17,45 +17,24 @@ if exists("loaded_matchit") && !exists("b:match_words")
         \ ',{:},\[:\],(:)'
 endif
 
+setlocal shiftwidth=2 softtabstop=2 expandtab iskeyword+=!,?
 setlocal comments=:#
 setlocal commentstring=#\ %s
 
-function! GetElixirFilename(word)
-  let word = a:word
-
-  " get first thing that starts uppercase, until the first space or end of line
-  let word = substitute(word,'^\s*\(\u[^ ]\+\).*$','\1','g')
-
-  " remove any trailing characters that don't look like a nested module
-  let word = substitute(word,'\.\U.*$','','g')
-
-  " replace module dots with slash
-  let word = substitute(word,'\.','/','g')
-
-  " remove any special chars
-  let word = substitute(word,'[^A-z0-9-_/]','','g')
-
-  " convert to snake_case
-  let word = substitute(word,'\(\u\+\)\(\u\l\)','\1_\2','g')
-  let word = substitute(word,'\(\u\+\)\(\u\l\)','\1_\2','g')
-  let word = substitute(word,'\(\l\|\d\)\(\u\)','\1_\2','g')
-  let word = substitute(word,'-','_','g')
-  let word = tolower(word)
-
-  return word
-endfunction
-
 let &l:path =
       \ join([
-      \   getcwd().'/lib',
-      \   getcwd().'/src',
-      \   getcwd().'/deps/**/lib',
-      \   getcwd().'/deps/**/src',
+      \   'lib',
+      \   'src',
+      \   'deps/**/lib',
+      \   'deps/**/src',
       \   &g:path
       \ ], ',')
-setlocal includeexpr=GetElixirFilename(v:fname)
+setlocal includeexpr=elixir#util#get_filename(v:fname)
 setlocal suffixesadd=.ex,.exs,.eex,.erl,.yrl,.hrl
 
 silent! setlocal formatoptions-=t formatoptions+=croqlj
+
+let b:undo_ftplugin = 'setlocal sw< sts< et< isk< com< cms< path< inex< sua< '.
+      \ '| unlet! b:match_ignorecase b:match_words'
 
 endif

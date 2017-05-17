@@ -121,9 +121,11 @@ syn keyword htmlArg contained download media
 syn keyword htmlArg contained nonce
 " <area>, <a>, <img>, <iframe>, <link>
 syn keyword htmlArg contained referrerpolicy
-" <script>
 " https://w3c.github.io/webappsec-subresource-integrity/#the-integrity-attribute
 syn keyword htmlArg contained integrity crossorigin
+" <link>
+syn keyword htmlArg contained prefetch 
+" syn keyword htmlArg contained preload
 
 " Custom Data Attributes
 " http://w3c.github.io/html/single-page.html#embedding-custom-non-visible-data-with-the-data-attributes

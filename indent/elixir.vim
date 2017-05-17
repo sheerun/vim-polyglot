@@ -1,97 +1,48 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
   
-setlocal nosmartindent
-setlocal indentexpr=elixir#indent()
-setlocal indentkeys+=0),0],0=\|>,=->
-setlocal indentkeys+=0=end,0=else,0=match,0=elsif,0=catch,0=after,0=rescue
-
-if exists("b:did_indent") || exists("*elixir#indent")
+if exists("b:did_indent")
   finish
 end
 let b:did_indent = 1
 
-let s:cpo_save = &cpo
-set cpo&vim
+setlocal indentexpr=elixir#indent(v:lnum)
 
-function! elixir#indent()
-  " initiates the `old_ind` dictionary
-  let b:old_ind = get(b:, 'old_ind', {})
-  " initiates the `line` dictionary
-  let line = s:build_line(v:lnum)
+setlocal indentkeys+=0=end,0=catch,0=rescue,0=after,0=else,=->,0},0],0),0=\|>,0=<>
+" TODO: @jbodah 2017-02-27: all operators should cause reindent when typed
 
-  if s:is_beginning_of_file(line)
-    " Reset `old_ind` dictionary at the beginning of the file
-    let b:old_ind = {}
-    " At the start of the file use zero indent.
-    return 0
-  elseif !s:is_indentable_line(line)
-    " Keep last line indentation if the current line does not have an
-    " indentable syntax
-    return indent(line.last_non_blank.num)
-  else
-    " Calculates the indenation level based on the rules
-    " All the rules are defined in `autoload/elixir/indent.vim`
-    let ind = indent(line.last_non_blank.num)
-    call s:debug('>>> line = ' . string(line.current))
-    call s:debug('>>> ind = ' . ind)
-    let ind = s:indent('deindent_case_arrow', ind, line)
-    let ind = s:indent('indent_parenthesis', ind, line)
-    let ind = s:indent('indent_square_brackets', ind, line)
-    let ind = s:indent('indent_brackets', ind, line)
-    let ind = s:indent('deindent_opened_symbols', ind, line)
-    let ind = s:indent('indent_pipeline_assignment', ind, line)
-    let ind = s:indent('indent_pipeline_continuation', ind, line)
-    let ind = s:indent('indent_after_pipeline', ind, line)
-    let ind = s:indent('indent_assignment', ind, line)
-    let ind = s:indent('indent_ending_symbols', ind, line)
-    let ind = s:indent('indent_keywords', ind, line)
-    let ind = s:indent('deindent_keywords', ind, line)
-    let ind = s:indent('deindent_ending_symbols', ind, line)
-    let ind = s:indent('indent_case_arrow', ind, line)
-    let ind = s:indent('indent_ecto_queries', ind, line)
-    call s:debug('<<< final = ' . ind)
-    return ind
-  end
+function! elixir#indent(lnum)
+  let lnum = a:lnum
+  let text = getline(lnum)
+  let prev_nb_lnum = prevnonblank(lnum-1)
+  let prev_nb_text = getline(prev_nb_lnum)
+
+  call elixir#indent#debug("==> Indenting line " . lnum)
+  call elixir#indent#debug("text = '" . text . "'")
+
+  let handlers = [
+        \'top_of_file',
+        \'starts_with_end',
+        \'starts_with_mid_or_end_block_keyword',
+        \'following_trailing_do',
+        \'following_trailing_binary_operator',
+        \'starts_with_pipe',
+        \'starts_with_close_bracket',
+        \'starts_with_binary_operator',
+        \'inside_nested_construct',
+        \'starts_with_comment',
+        \'inside_generic_block'
+        \]
+  for handler in handlers
+    call elixir#indent#debug('testing handler elixir#indent#handle_'.handler)
+    let indent = function('elixir#indent#handle_'.handler)(lnum, text, prev_nb_lnum, prev_nb_text)
+    if indent != -1
+      call elixir#indent#debug('line '.lnum.': elixir#indent#handle_'.handler.' returned '.indent)
+      return indent
+    endif
+  endfor
+
+  call elixir#indent#debug("defaulting")
+  return 0
 endfunction
-
-function s:indent(rule, ind, line)
-  let Fn = function('elixir#indent#'.a:rule)
-  let ind = Fn(a:ind, a:line)
-  call s:debug(a:rule . ' = ' . ind)
-  return ind
-endfunction
-
-function s:debug(message)
-  if get(g:, 'elixir_indent_debug', 0)
-    echom a:message
-  end
-endfunction
-
-function! s:is_beginning_of_file(line)
-  return a:line.last_non_blank.num == 0
-endfunction
-
-function! s:is_indentable_line(line)
-  return elixir#util#is_indentable_at(a:line.current.num, 1)
-endfunction
-
-function! s:build_line(line)
-  let line = { 'current': {}, 'last': {}, 'last_non_blank': {} }
-  let line.current = s:new_line(a:line)
-  let line.last = s:new_line(line.current.num - 1)
-  let line.last_non_blank = s:new_line(prevnonblank(line.current.num - 1))
-
-  return line
-endfunction
-
-function! s:new_line(num)
-  return {
-        \ "num": a:num,
-        \ "text": getline(a:num)
-        \ }
-endfunction
-
-let &cpo = s:cpo_save
-unlet s:cpo_save
 
 endif

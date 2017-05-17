@@ -1,52 +1,28 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
   
-let s:SKIP_SYNTAX = '\%(Comment\|String\)$'
+function! elixir#util#get_filename(word) abort
+  let word = a:word
 
-function! elixir#util#is_indentable_at(line, col)
-  if a:col == -1 " skip synID lookup for not found match
-    return 1
-  end
-  " TODO: Remove these 2 lines
-  " I don't know why, but for the test on spec/indent/lists_spec.rb:24.
-  " Vim is making some mess on parsing the syntax of 'end', it is being
-  " recognized as 'elixirString' when should be recognized as 'elixirBlock'.
-  call synID(a:line, a:col, 1)
-  " This forces vim to sync the syntax. Using fromstart is very slow on files
-  " over 1k lines
-  syntax sync minlines=20 maxlines=150
+  " get first thing that starts uppercase, until the first space or end of line
+  let word = substitute(word,'^\s*\(\u[^ ]\+\).*$','\1','g')
 
-  return synIDattr(synID(a:line, a:col, 1), "name")
-        \ !~ s:SKIP_SYNTAX
-endfunction
+  " remove any trailing characters that don't look like a nested module
+  let word = substitute(word,'\.\U.*$','','g')
 
-function! elixir#util#count_indentable_symbol_diff(line, open, close)
-  return
-        \   s:match_count(a:line, a:open)
-        \ - s:match_count(a:line, a:close)
-endfunction
+  " replace module dots with slash
+  let word = substitute(word,'\.','/','g')
 
-function! s:match_count(line, pattern)
-  let size = strlen(a:line.text)
-  let index = 0
-  let counter = 0
+  " remove any special chars
+  let word = substitute(word,'[^A-z0-9-_/]','','g')
 
-  while index < size
-    let index = match(a:line.text, a:pattern, index)
-    if index >= 0
-      let index += 1
-      if elixir#util#is_indentable_at(a:line.num, index)
-        let counter +=1
-      end
-    else
-      break
-    end
-  endwhile
+  " convert to snake_case
+  let word = substitute(word,'\(\u\+\)\(\u\l\)','\1_\2','g')
+  let word = substitute(word,'\(\u\+\)\(\u\l\)','\1_\2','g')
+  let word = substitute(word,'\(\l\|\d\)\(\u\)','\1_\2','g')
+  let word = substitute(word,'-','_','g')
+  let word = tolower(word)
 
-  return counter
-endfunction
-
-function elixir#util#is_blank(string)
-  return a:string =~ '^\s*$'
+  return word
 endfunction
 
 endif

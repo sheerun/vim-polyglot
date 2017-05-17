@@ -71,7 +71,7 @@ endif
 
 function! s:query_path(root) abort
   let code = "print $:.join %q{,}"
-  if &shell =~# 'sh'
+  if &shell =~# 'sh' && empty(&shellxquote)
     let prefix = 'env PATH='.shellescape($PATH).' '
   else
     let prefix = ''
@@ -164,23 +164,23 @@ if !exists("g:no_plugin_maps") && !exists("g:no_ruby_maps")
   nmap <buffer><script> <SID>:  :<C-U>
   nmap <buffer><script> <SID>c: :<C-U><C-R>=v:count ? v:count : ''<CR>
 
-  nnoremap <silent> <buffer> [m :<C-U>call <SID>searchsyn('\<def\>','rubyDefine','b','n')<CR>
-  nnoremap <silent> <buffer> ]m :<C-U>call <SID>searchsyn('\<def\>','rubyDefine','','n')<CR>
-  nnoremap <silent> <buffer> [M :<C-U>call <SID>searchsyn('\<end\>','rubyDefine','b','n')<CR>
-  nnoremap <silent> <buffer> ]M :<C-U>call <SID>searchsyn('\<end\>','rubyDefine','','n')<CR>
-  xnoremap <silent> <buffer> [m :<C-U>call <SID>searchsyn('\<def\>','rubyDefine','b','v')<CR>
-  xnoremap <silent> <buffer> ]m :<C-U>call <SID>searchsyn('\<def\>','rubyDefine','','v')<CR>
-  xnoremap <silent> <buffer> [M :<C-U>call <SID>searchsyn('\<end\>','rubyDefine','b','v')<CR>
-  xnoremap <silent> <buffer> ]M :<C-U>call <SID>searchsyn('\<end\>','rubyDefine','','v')<CR>
+  nnoremap <silent> <buffer> [m :<C-U>call <SID>searchsyn('\<def\>',['rubyDefine'],'b','n')<CR>
+  nnoremap <silent> <buffer> ]m :<C-U>call <SID>searchsyn('\<def\>',['rubyDefine'],'','n')<CR>
+  nnoremap <silent> <buffer> [M :<C-U>call <SID>searchsyn('\<end\>',['rubyDefine'],'b','n')<CR>
+  nnoremap <silent> <buffer> ]M :<C-U>call <SID>searchsyn('\<end\>',['rubyDefine'],'','n')<CR>
+  xnoremap <silent> <buffer> [m :<C-U>call <SID>searchsyn('\<def\>',['rubyDefine'],'b','v')<CR>
+  xnoremap <silent> <buffer> ]m :<C-U>call <SID>searchsyn('\<def\>',['rubyDefine'],'','v')<CR>
+  xnoremap <silent> <buffer> [M :<C-U>call <SID>searchsyn('\<end\>',['rubyDefine'],'b','v')<CR>
+  xnoremap <silent> <buffer> ]M :<C-U>call <SID>searchsyn('\<end\>',['rubyDefine'],'','v')<CR>
 
-  nnoremap <silent> <buffer> [[ :<C-U>call <SID>searchsyn('\<\%(class\<Bar>module\)\>','rubyModule\<Bar>rubyClass','b','n')<CR>
-  nnoremap <silent> <buffer> ]] :<C-U>call <SID>searchsyn('\<\%(class\<Bar>module\)\>','rubyModule\<Bar>rubyClass','','n')<CR>
-  nnoremap <silent> <buffer> [] :<C-U>call <SID>searchsyn('\<end\>','rubyModule\<Bar>rubyClass','b','n')<CR>
-  nnoremap <silent> <buffer> ][ :<C-U>call <SID>searchsyn('\<end\>','rubyModule\<Bar>rubyClass','','n')<CR>
-  xnoremap <silent> <buffer> [[ :<C-U>call <SID>searchsyn('\<\%(class\<Bar>module\)\>','rubyModule\<Bar>rubyClass','b','v')<CR>
-  xnoremap <silent> <buffer> ]] :<C-U>call <SID>searchsyn('\<\%(class\<Bar>module\)\>','rubyModule\<Bar>rubyClass','','v')<CR>
-  xnoremap <silent> <buffer> [] :<C-U>call <SID>searchsyn('\<end\>','rubyModule\<Bar>rubyClass','b','v')<CR>
-  xnoremap <silent> <buffer> ][ :<C-U>call <SID>searchsyn('\<end\>','rubyModule\<Bar>rubyClass','','v')<CR>
+  nnoremap <silent> <buffer> [[ :<C-U>call <SID>searchsyn('\<\%(class\<Bar>module\)\>',['rubyModule','rubyClass'],'b','n')<CR>
+  nnoremap <silent> <buffer> ]] :<C-U>call <SID>searchsyn('\<\%(class\<Bar>module\)\>',['rubyModule','rubyClass'],'','n')<CR>
+  nnoremap <silent> <buffer> [] :<C-U>call <SID>searchsyn('\<end\>',['rubyModule','rubyClass'],'b','n')<CR>
+  nnoremap <silent> <buffer> ][ :<C-U>call <SID>searchsyn('\<end\>',['rubyModule','rubyClass'],'','n')<CR>
+  xnoremap <silent> <buffer> [[ :<C-U>call <SID>searchsyn('\<\%(class\<Bar>module\)\>',['rubyModule','rubyClass'],'b','v')<CR>
+  xnoremap <silent> <buffer> ]] :<C-U>call <SID>searchsyn('\<\%(class\<Bar>module\)\>',['rubyModule','rubyClass'],'','v')<CR>
+  xnoremap <silent> <buffer> [] :<C-U>call <SID>searchsyn('\<end\>',['rubyModule','rubyClass'],'b','v')<CR>
+  xnoremap <silent> <buffer> ][ :<C-U>call <SID>searchsyn('\<end\>',['rubyModule','rubyClass'],'','v')<CR>
 
   let b:undo_ftplugin = b:undo_ftplugin
         \."| sil! exe 'unmap <buffer> [[' | sil! exe 'unmap <buffer> ]]' | sil! exe 'unmap <buffer> []' | sil! exe 'unmap <buffer> ]['"
@@ -290,12 +290,13 @@ function! s:searchsyn(pattern, syn, flags, mode) abort
     norm! gv
   endif
   let i = 0
+  call map(a:syn, 'hlID(v:val)')
   while i < cnt
     let i = i + 1
     let line = line('.')
     let col  = col('.')
     let pos = search(a:pattern,'W'.a:flags)
-    while pos != 0 && s:synname() !~# a:syn
+    while pos != 0 && index(a:syn, s:synid()) < 0
       let pos = search(a:pattern,'W'.a:flags)
     endwhile
     if pos == 0
@@ -305,8 +306,8 @@ function! s:searchsyn(pattern, syn, flags, mode) abort
   endwhile
 endfunction
 
-function! s:synname() abort
-  return synIDattr(synID(line('.'),col('.'),0),'name')
+function! s:synid() abort
+  return synID(line('.'),col('.'),0)
 endfunction
 
 function! s:wrap_i(back,forward) abort
@@ -362,7 +363,7 @@ function! RubyCursorFile() abort
   let pre = matchstr(strpart(getline('.'), 0, col('.')-1), '.*\f\@<!')
   let post = matchstr(strpart(getline('.'), col('.')), '\f\@!.*')
   let ext = getline('.') =~# '^\s*\%(require\%(_relative\)\=\|autoload\)\>' && cfile !~# '\.rb$' ? '.rb' : ''
-  if s:synname() ==# 'rubyConstant'
+  if s:synid() ==# hlID('rubyConstant')
     let cfile = substitute(cfile,'\.\w\+[?!=]\=$','','')
     let cfile = substitute(cfile,'::','/','g')
     let cfile = substitute(cfile,'\(\u\+\)\(\u\l\)','\1_\2', 'g')

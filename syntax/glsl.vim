@@ -28,15 +28,15 @@ syn region  glslPreProc         start="^\s*#\s*\(error\|pragma\|extension\|versi
 syn keyword glslBoolean true false
 
 " Integer Numbers
-syn match glslDecimalInt display "\(0\|[1-9]\d*\)"
-syn match glslOctalInt   display "0\o\+"
-syn match glslHexInt     display "0[xX]\x\+"
+syn match glslDecimalInt display "\(0\|[1-9]\d*\)[uU]\?"
+syn match glslOctalInt   display "0\o\+[uU]\?"
+syn match glslHexInt     display "0[xX]\x\+[uU]\?"
 
 " Float Numbers
-syn match glslFloat display "\d\+\.\([eE][+-]\=\d\+\)\="
-syn match glslFloat display "\.\d\+\([eE][+-]\=\d\+\)\="
-syn match glslFloat display "\d\+[eE][+-]\=\d\+"
-syn match glslFloat display "\d\+\.\d\+\([eE][+-]\=\d\+\)\="
+syn match glslFloat display "\d\+\.\([eE][+-]\=\d\+\)\=\(lf\|LF\|f\|F\)\="
+syn match glslFloat display "\.\d\+\([eE][+-]\=\d\+\)\=\(lf\|LF\|f\|F\)\="
+syn match glslFloat display "\d\+[eE][+-]\=\d\+\(lf\|LF\|f\|F\)\="
+syn match glslFloat display "\d\+\.\d\+\([eE][+-]\=\d\+\)\=\(lf\|LF\|f\|F\)\="
 
 " Swizzles
 syn match glslSwizzle display /\.[xyzw]\{1,4\}\>/
