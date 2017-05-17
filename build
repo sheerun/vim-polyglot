@@ -147,6 +147,7 @@ PACKS="
   i3:PotatoesMaster/i3-vim-syntax
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
+  jinja2:Glench/Vim-Jinja2-Syntax
   json:elzr/vim-json
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL
