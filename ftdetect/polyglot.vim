@@ -21,6 +21,12 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
+" asciidoc:asciidoc/vim-asciidoc
+autocmd BufNewFile,BufRead *.asciidoc,*.adoc
+	\ set ft=asciidoc
+augroup END
+
+augroup filetypedetect
 " yaml:stephpy/vim-yaml
 augroup END
 
