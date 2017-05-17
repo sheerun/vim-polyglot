@@ -732,6 +732,11 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
+" racket:wlangstroth/vim-racket
+au BufRead,BufNewFile *.rkt,*.rktl  set filetype=racket
+augroup END
+
+augroup filetypedetect
 " raml:IN3D/vim-raml
 au BufRead,BufNewFile *.raml set ft=raml
 augroup END
