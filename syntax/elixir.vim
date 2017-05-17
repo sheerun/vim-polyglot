@@ -191,7 +191,7 @@ hi def link elixirExceptionDefine        Define
 hi def link elixirCallbackDefine         Define
 hi def link elixirStructDefine           Define
 hi def link elixirExUnitMacro            Define
-hi def link elixirModuleDeclaration      Type
+hi def link elixirModuleDeclaration      Identifier
 hi def link elixirFunctionDeclaration    Function
 hi def link elixirMacroDeclaration       Macro
 hi def link elixirInclude                Include
