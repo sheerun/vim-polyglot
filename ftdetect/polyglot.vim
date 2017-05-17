@@ -328,6 +328,11 @@ au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
 augroup END
 
 augroup filetypedetect
+" graphql:jparise/vim-graphql
+autocmd  BufRead,BufNewFile *.graphql,*.gql setfiletype graphql
+augroup END
+
+augroup filetypedetect
 " groovy:vim-scripts/groovy.vim
 augroup END
 
@@ -949,7 +954,7 @@ augroup filetypedetect
 " Tim Harper (tim.theenchanter.com)
 
 " Force filetype to be textile even if already set
-" This will override the system ftplugin/changelog 
+" This will override the system ftplugin/changelog
 " set on some distros
 au BufRead,BufNewFile *.textile set filetype=textile
 augroup END
