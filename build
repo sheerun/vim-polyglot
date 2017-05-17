@@ -201,6 +201,7 @@ PACKS="
   tmux:keith/tmux.vim
   tomdoc:wellbredgrapefruit/tomdoc.vim
   toml:cespare/vim-toml
+  tweekmonster/django-plus.vim
   twig:lumiliet/vim-twig
   typescript:leafgarland/typescript-vim
   vala:arrufat/vala.vim
