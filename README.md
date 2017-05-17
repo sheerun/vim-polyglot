@@ -88,7 +88,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [mako](https://github.com/sophacles/vim-bundle-mako) (syntax, indent, ftplugin)
 - [markdown](https://github.com/plasticboy/vim-markdown) (syntax)
 - [mathematica](https://github.com/rsmenon/vim-mathematica) (syntax, ftplugin)
-- [nginx](https://github.com/othree/nginx-contrib-vim) (syntax, indent, ftplugin)
+- [nginx](https://github.com/chr4/nginx.vim) (syntax, indent, ftplugin)
 - [nim](https://github.com/zah/nim.vim) (syntax, compiler, indent)
 - [nix](https://github.com/spwhitt/vim-nix) (syntax, ftplugin)
 - [objc](https://github.com/b4winckler/vim-objc) (ftplugin, syntax, indent)

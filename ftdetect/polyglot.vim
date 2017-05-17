@@ -539,11 +539,12 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
-" nginx:othree/nginx-contrib-vim
+" nginx:chr4/nginx.vim
 au BufRead,BufNewFile *.nginx set ft=nginx
+au BufRead,BufNewFile nginx*.conf set ft=nginx
+au BufRead,BufNewFile *nginx.conf set ft=nginx
 au BufRead,BufNewFile */etc/nginx/* set ft=nginx
 au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
-au BufRead,BufNewFile nginx.conf set ft=nginx
 augroup END
 
 augroup filetypedetect
