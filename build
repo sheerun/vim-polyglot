@@ -189,6 +189,7 @@ PACKS="
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   scss:cakebaker/scss-syntax.vim
+  sirtaj:vim-openscad
   slim:slim-template/vim-slim
   solidity:ethereum/vim-solidity
   stylus:wavded/vim-stylus
