@@ -44,7 +44,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [blade](https://github.com/jwalton512/vim-blade) (syntax, indent, ftplugin)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/vim-cpp) (syntax)
-- [caddyfile](https://github.com/joshglendenning/vim-caddyfile) (syntax, indent, ftplugin)
+- [caddyfile](https://github.com/isobit/vim-caddyfile) (syntax, indent, ftplugin)
 - [cjsx](https://github.com/mtscout6/vim-cjsx) (syntax, ftplugin)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin)
 - [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin)

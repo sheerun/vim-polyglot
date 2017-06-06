@@ -70,7 +70,7 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
-" caddyfile:joshglendenning/vim-caddyfile
+" caddyfile:isobit/vim-caddyfile
 au BufNewFile,BufRead Caddyfile set ft=caddyfile
 augroup END
 
