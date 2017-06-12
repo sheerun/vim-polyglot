@@ -116,7 +116,7 @@ PACKS="
   blade:jwalton512/vim-blade
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/vim-cpp
-  caddyfile:joshglendenning/vim-caddyfile
+  caddyfile:isobit/vim-caddyfile
   cjsx:mtscout6/vim-cjsx
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
