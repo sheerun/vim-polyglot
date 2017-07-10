@@ -133,6 +133,7 @@ PACKS="
   emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
   fish:dag/vim-fish
+  fsharp:fsharp/vim-fsharp:_BASIC
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl
   gnuplot:vim-scripts/gnuplot-syntax-highlighting
