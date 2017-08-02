@@ -110,6 +110,7 @@ PACKS="
   apiblueprint:sheerun/apiblueprint.vim
   applescript:vim-scripts/applescript.vim
   asciidoc:asciidoc/vim-asciidoc
+  autohotkey:hnamikaw/vim-autohotkey
   yaml:stephpy/vim-yaml
   ansible:pearofducks/ansible-vim
   arduino:sudar/vim-arduino-syntax
