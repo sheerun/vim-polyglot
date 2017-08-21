@@ -175,7 +175,7 @@ PACKS="
   protobuf:uarun/vim-protobuf
   pug:digitaltoad/vim-pug
   puppet:voxpupuli/vim-puppet
-  purescript:raichoo/purescript-vim
+  purescript:purescript-contrib/purescript-vim
   python:mitsuhiko/vim-python-combined
   python-compiler:aliev/vim-compiler-python
   qml:peterhoeg/vim-qml
