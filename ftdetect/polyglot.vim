@@ -335,7 +335,7 @@ augroup END
 
 augroup filetypedetect
 " graphql:jparise/vim-graphql
-au BufRead,BufNewFile *.graphql,*.gql setfiletype graphql
+au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
 augroup END
 
 augroup filetypedetect
