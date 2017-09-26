@@ -167,6 +167,7 @@ PACKS="
   ocaml:jrk/vim-ocaml
   octave:vim-scripts/octave.vim--
   opencl:petRUShka/vim-opencl
+  openscad:sirtaj/vim-openscad
   perl:vim-perl/vim-perl
   pgsql:exu/pgsql.vim
   php:StanAngeloff/php.vim
