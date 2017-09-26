@@ -63,6 +63,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [fish](https://github.com/dag/vim-fish) (syntax, indent, compiler, autoload, ftplugin)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin)
 - [glsl](https://github.com/tikhomirov/vim-glsl) (syntax, indent)
+- [gmpl](https://github.com/maelvalais/gmpl.vim) (syntax)
 - [gnuplot](https://github.com/vim-scripts/gnuplot-syntax-highlighting) (syntax)
 - [go](https://github.com/fatih/vim-go) (syntax, compiler, indent)
 - [graphql](https://github.com/jparise/vim-graphql) (syntax, ftplugin)

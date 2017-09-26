@@ -135,6 +135,7 @@ PACKS="
   fish:dag/vim-fish
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl
+  gmpl:maelvalais/gmpl.vim
   gnuplot:vim-scripts/gnuplot-syntax-highlighting
   go:fatih/vim-go:_BASIC
   graphql:jparise/vim-graphql

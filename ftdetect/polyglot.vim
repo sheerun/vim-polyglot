@@ -295,6 +295,11 @@ autocmd! BufNewFile,BufRead *.vert,*.tesc,*.tese,*.geom,*.frag,*.comp set filety
 augroup END
 
 augroup filetypedetect
+" gmpl:maelvalais/gmpl.vim
+au BufRead,BufNewFile *.mod set filetype=gmpl
+augroup END
+
+augroup filetypedetect
 " gnuplot:vim-scripts/gnuplot-syntax-highlighting
 augroup END
 
