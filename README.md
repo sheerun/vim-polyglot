@@ -41,6 +41,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [applescript](https://github.com/vim-scripts/applescript.vim) (syntax)
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent)
 - [asciidoc](https://github.com/asciidoc/vim-asciidoc) (syntax)
+- [autohotkey](https://github.com/hnamikaw/vim-autohotkey) (indent)
 - [blade](https://github.com/jwalton512/vim-blade) (syntax, indent, ftplugin)
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/vim-cpp) (syntax)

@@ -113,6 +113,7 @@ PACKS="
   yaml:stephpy/vim-yaml
   ansible:pearofducks/ansible-vim
   arduino:sudar/vim-arduino-syntax
+  autohotkey:hnamikaw/vim-autohotkey
   blade:jwalton512/vim-blade
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/vim-cpp

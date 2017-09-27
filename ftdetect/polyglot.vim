@@ -57,6 +57,10 @@ au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
 augroup END
 
 augroup filetypedetect
+" autohotkey:hnamikaw/vim-autohotkey
+augroup END
+
+augroup filetypedetect
 " blade:jwalton512/vim-blade
 autocmd BufNewFile,BufRead *.blade.php set filetype=blade
 augroup END
