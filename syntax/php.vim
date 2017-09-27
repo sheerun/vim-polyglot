@@ -1,5 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'php') == -1
-  
+
 " Vim syntax file
 " Language: PHP 5.3 & up
 "
@@ -844,8 +844,8 @@ if !exists("did_php_syn_inits")
   hi def link phpCommentStar      phpComment
   hi def link phpDocComment       phpComment
   hi def link phpCommentTitle     phpComment
-  hi def link phpDocTags          phpComment
-  hi def link phpDocParam         phpComment
+  hi def link phpDocTags          PreProc
+  hi def link phpDocParam         Type
   hi def link phpDocIdentifier    phpComment
 
   hi def link phpFCKeyword        phpKeyword
