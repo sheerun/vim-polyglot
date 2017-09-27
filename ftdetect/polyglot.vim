@@ -926,7 +926,7 @@ autocmd BufNewFile,BufRead *.slim setfiletype slim
 augroup END
 
 augroup filetypedetect
-" solidity:ethereum/vim-solidity
+" solidity:tomlion/vim-solidity
 au BufNewFile,BufRead *.sol setf solidity
 augroup END
 
