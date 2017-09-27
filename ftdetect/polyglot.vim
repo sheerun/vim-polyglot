@@ -1057,6 +1057,17 @@ au BufRead,BufNewFile *.vcl set filetype=vcl
 augroup END
 
 augroup filetypedetect
+" vifm:vifm/vifm.vim
+autocmd BufRead,BufNewFile vifm.rename* :set filetype=vifm-rename
+augroup END
+
+augroup filetypedetect
+" vifm:vifm/vifm.vim
+autocmd BufRead,BufNewFile vifmrc :set filetype=vifm
+autocmd BufRead,BufNewFile *vifm/colors/* :set filetype=vifm
+augroup END
+
+augroup filetypedetect
 " vue:posva/vim-vue
 au BufNewFile,BufRead *.vue setf vue
 augroup END

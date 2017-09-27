@@ -210,6 +210,7 @@ PACKS="
   vala:arrufat/vala.vim
   vbnet:vim-scripts/vbnet.vim
   vcl:smerrill/vcl-vim-plugin
+  vifm:vifm/vifm.vim
   vue:posva/vim-vue
   vm:lepture/vim-velocity
   xls:vim-scripts/XSLT-syntax
