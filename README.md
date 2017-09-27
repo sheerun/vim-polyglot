@@ -138,6 +138,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [vala](https://github.com/arrufat/vala.vim) (syntax, indent)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [vcl](https://github.com/smerrill/vcl-vim-plugin) (syntax)
+- [vifm](https://github.com/vifm/vifm.vim) (syntax)
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent)
 - [vue](https://github.com/posva/vim-vue) (syntax, indent, ftplugin)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
