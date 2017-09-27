@@ -36,7 +36,16 @@ endif
 if !exists('g:haskell_indent_let')
   " let x = 0 in
   " >>>>x
+  "
+  " let x = 0
+  "     y = 1
   let g:haskell_indent_let = 4
+endif
+
+if !exists('g:haskell_indent_let_no_in')
+  " let x = 0
+  "     x
+  let g:haskell_indent_let_no_in = 4
 endif
 
 if !exists('g:haskell_indent_where')
@@ -210,6 +219,9 @@ function! GetHaskellIndent()
   "
   " let x = 1
   " >>>>y = 2
+  "
+  " let x = 1
+  " y 2
   if l:prevline =~ '\C\<let\>\s\+.\+$'
     if l:line =~ '\C^\s*\<let\>'
       let l:s = match(l:prevline, '\C\<let\>')
@@ -221,10 +233,15 @@ function! GetHaskellIndent()
       if s:isSYN('haskellLet', v:lnum - 1, l:s + 1)
         return l:s + g:haskell_indent_in
       endif
-    else
+    elseif l:line =~ '\s=\s'
       let l:s = match(l:prevline, '\C\<let\>')
       if s:isSYN('haskellLet', v:lnum - 1, l:s + 1)
         return l:s + g:haskell_indent_let
+      endif
+    else
+      let l:s = match(l:prevline, '\C\<let\>')
+      if s:isSYN('haskellLet', v:lnum - 1, l:s + 1)
+        return l:s + g:haskell_indent_let_no_in
       endif
     endif
   endif

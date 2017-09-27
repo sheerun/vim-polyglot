@@ -29,7 +29,7 @@ elseif !exists("b:eruby_subtype")
   let s:lines = getline(1)."\n".getline(2)."\n".getline(3)."\n".getline(4)."\n".getline(5)."\n".getline("$")
   let b:eruby_subtype = matchstr(s:lines,'eruby_subtype=\zs\w\+')
   if b:eruby_subtype == ''
-    let b:eruby_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.erb\|\.eruby\|\.erubis\)\+$','',''),'\.\zs\w\+\%(\ze+\w\+\)\=$')
+    let b:eruby_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.erb\|\.eruby\|\.erubis\|\.example\)\+$','',''),'\.\zs\w\+\%(\ze+\w\+\)\=$')
   endif
   if b:eruby_subtype == 'rhtml'
     let b:eruby_subtype = 'html'
@@ -47,7 +47,7 @@ elseif !exists("b:eruby_subtype")
   endif
 endif
 
-if exists("b:eruby_subtype") && b:eruby_subtype != ''
+if exists("b:eruby_subtype") && b:eruby_subtype != '' && b:eruby_subtype !=? 'eruby'
   exe "runtime! ftplugin/".b:eruby_subtype.".vim ftplugin/".b:eruby_subtype."_*.vim ftplugin/".b:eruby_subtype."/*.vim"
 else
   runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim

@@ -25,10 +25,10 @@ let s:languages = [
       \   { 'name': 'javascript', 'pairs': ['<script', '</script>'] },
       \ ]
 
-for language in s:languages
+for s:language in s:languages
   " Set 'indentexpr' if the user has an indent file installed for the language
-  if strlen(globpath(&rtp, 'indent/'. language.name .'.vim'))
-    let language.indentexpr = s:get_indentexpr(language.name)
+  if strlen(globpath(&rtp, 'indent/'. s:language.name .'.vim'))
+    let s:language.indentexpr = s:get_indentexpr(s:language.name)
   endif
 endfor
 

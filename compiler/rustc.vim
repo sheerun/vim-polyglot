@@ -4,9 +4,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
 " Compiler:         Rust Compiler
 " Maintainer:       Chris Morgan <me@chrismorgan.info>
 " Latest Revision:  2013 Jul 12
+" For bugs, patches and license go to https://github.com/rust-lang/rust.vim
 
 if exists("current_compiler")
-  finish
+	finish
 endif
 let current_compiler = "rustc"
 

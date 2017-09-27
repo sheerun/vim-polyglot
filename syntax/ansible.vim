@@ -47,6 +47,58 @@ highlight link yamlFlowString NONE
 " but it does make sense we visualize quotes easily
 highlight link yamlFlowStringDelimiter Delimiter
 
+fun! s:normal_keywords_highlight(name)
+  if a:name == 'Comment'
+    highlight link ansible_normal_keywords Comment
+  elseif a:name == 'Constant'
+    highlight link ansible_normal_keywords Constant
+  elseif a:name == 'Identifier'
+    highlight link ansible_normal_keywords Identifier
+  elseif a:name == 'Statement'
+    highlight link ansible_normal_keywords Statement
+  elseif a:name == 'PreProc'
+    highlight link ansible_normal_keywords PreProc
+  elseif a:name == 'Type'
+    highlight link ansible_normal_keywords Type
+  elseif a:name == 'Special'
+    highlight link ansible_normal_keywords Special
+  elseif a:name == 'Underlined'
+    highlight link ansible_normal_keywords Underlined
+  elseif a:name == 'Ignore'
+    highlight link ansible_normal_keywords Ignore
+  elseif a:name == 'Error'
+    highlight link ansible_normal_keywords Error
+  elseif a:name == 'Todo'
+    highlight link ansible_normal_keywords Todo
+  endif
+endfun
+
+fun! s:with_keywords_highlight(name)
+  if a:name == 'Comment'
+    highlight link ansible_with_keywords Comment
+  elseif a:name == 'Constant'
+    highlight link ansible_with_keywords Constant
+  elseif a:name == 'Identifier'
+    highlight link ansible_with_keywords Identifier
+  elseif a:name == 'Statement'
+    highlight link ansible_with_keywords Statement
+  elseif a:name == 'PreProc'
+    highlight link ansible_with_keywords PreProc
+  elseif a:name == 'Type'
+    highlight link ansible_with_keywords Type
+  elseif a:name == 'Special'
+    highlight link ansible_with_keywords Special
+  elseif a:name == 'Underlined'
+    highlight link ansible_with_keywords Underlined
+  elseif a:name == 'Ignore'
+    highlight link ansible_with_keywords Ignore
+  elseif a:name == 'Error'
+    highlight link ansible_with_keywords Error
+  elseif a:name == 'Todo'
+    highlight link ansible_with_keywords Todo
+  endif
+endfun
+
 fun! s:attribute_highlight(attributes)
   if a:attributes =~ 'a'
     syn match ansible_attributes "\v\w+\=" containedin=yamlPlainScalar
@@ -85,11 +137,19 @@ if exists("g:ansible_extra_keywords_highlight")
   highlight link ansible_extra_special_keywords Statement
 endif
 
-syn keyword ansible_special_keywords include until retries delay when only_if become become_user block rescue always notify containedin=yamlBlockMappingKey contained
-highlight link ansible_special_keywords Statement
+syn keyword ansible_normal_keywords include include_tasks import_tasks until retries delay when only_if become become_user block rescue always notify containedin=yamlBlockMappingKey contained
+if exists("g:ansible_normal_keywords_highlight")
+  call s:normal_keywords_highlight(g:ansible_normal_keywords_highlight)
+else
+  highlight link ansible_normal_keywords Statement
+endif
 
 syn match ansible_with_keywords "\vwith_.+" containedin=yamlBlockMappingKey contained
-highlight link ansible_with_keywords Statement
+if exists("g:ansible_with_keywords_highlight")
+  call s:with_keywords_highlight(g:ansible_with_keywords_highlight)
+else
+  highlight link ansible_with_keywords Statement
+endif
 
 let b:current_syntax = "ansible"
 

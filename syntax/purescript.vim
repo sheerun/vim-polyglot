@@ -65,18 +65,29 @@ syn match purescriptImportParams "hiding" contained
   \ nextgroup=purescriptModuleParams,purescriptImportParams skipwhite
 
 " Function declaration
-syn region purescriptFunctionDecl excludenl start="^\z(\s*\)\(foreign\s\+import\_s\+\)\?[_a-z]\(\w\|\'\)*\_s\{-}\(::\|∷\)" end="^\z1\=\S"me=s-1,re=s-1 keepend
+syn region purescriptFunctionDecl
+  \ excludenl start="^\z(\s*\)\(\(foreign\s\+import\)\_s\+\)\?[_a-z]\(\w\|\'\)*\_s\{-}\(::\|∷\)"
+  \ end="^\z1\=\S"me=s-1,re=s-1 keepend
   \ contains=purescriptFunctionDeclStart,purescriptForall,purescriptOperatorType,purescriptOperatorTypeSig,purescriptType,purescriptTypeVar,purescriptDelimiter,@purescriptComment
-syn match purescriptFunctionDeclStart "^\s*\(foreign\s\+import\_s\+\)\?\([_a-z]\(\w\|\'\)*\)\_s\{-}\(::\|∷\)" contained
-  \ contains=purescriptImportKeyword,purescriptFunction,purescriptOperatorType
+syn region purescriptFunctionDecl
+  \ excludenl start="^\z(\s*\)where\z(\s\+\)[_a-z]\(\w\|\'\)*\_s\{-}\(::\|∷\)"
+  \ end="^\(\z1\s\{5}\z2\)\=\S"me=s-1,re=s-1 keepend
+  \ contains=purescriptFunctionDeclStart,purescriptForall,purescriptOperatorType,purescriptOperatorTypeSig,purescriptType,purescriptTypeVar,purescriptDelimiter,@purescriptComment
+syn region purescriptFunctionDecl
+  \ excludenl start="^\z(\s*\)let\z(\s\+\)[_a-z]\(\w\|\'\)*\_s\{-}\(::\|∷\)"
+  \ end="^\(\z1\s\{3}\z2\)\=\S"me=s-1,re=s-1 keepend
+  \ contains=purescriptFunctionDeclStart,purescriptForall,purescriptOperatorType,purescriptOperatorTypeSig,purescriptType,purescriptTypeVar,purescriptDelimiter,@purescriptComment
+syn match purescriptFunctionDeclStart "^\s*\(\(foreign\s\+import\|let\|where\)\_s\+\)\?\([_a-z]\(\w\|\'\)*\)\_s\{-}\(::\|∷\)" contained
+  \ contains=purescriptImportKeyword,purescriptWhere,purescriptLet,purescriptFunction,purescriptOperatorType
 syn keyword purescriptForall forall
 syn match purescriptForall "∀"
 
 " Keywords
 syn keyword purescriptConditional if then else
-syn keyword purescriptStatement do case of let in
+syn keyword purescriptStatement do case of in
+syn keyword purescriptLet let
 syn keyword purescriptWhere where
-syn match purescriptStructure "\<\(data\|newtype\|type\|class\)\>"
+syn match purescriptStructure "\<\(data\|newtype\|type\|class\|kind\)\>"
   \ nextgroup=purescriptType skipwhite
 syn keyword purescriptStructure derive
 syn keyword purescriptStructure instance
@@ -168,6 +179,7 @@ highlight def link purescriptBlockComment purescriptComment
 highlight def link purescriptStructure purescriptKeyword
 highlight def link purescriptKeyword Keyword
 highlight def link purescriptStatement Statement
+highlight def link purescriptLet Statement
 highlight def link purescriptOperator Operator
 highlight def link purescriptFunction Function
 highlight def link purescriptType Type

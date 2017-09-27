@@ -14,7 +14,7 @@ runtime! indent/ruby.vim
 unlet! b:did_indent
 setlocal indentexpr=
 
-if exists("b:eruby_subtype")
+if exists("b:eruby_subtype") && b:eruby_subtype != '' && b:eruby_subtype !=# 'eruby'
   exe "runtime! indent/".b:eruby_subtype.".vim"
 else
   runtime! indent/html.vim

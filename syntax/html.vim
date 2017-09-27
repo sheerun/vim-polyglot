@@ -106,7 +106,7 @@ syn keyword htmlArg contained form autocomplete autofocus list min max step
 syn keyword htmlArg contained formaction autofocus formenctype formmethod formtarget formnovalidate
 syn keyword htmlArg contained required placeholder pattern
 " <command>, <details>, <time>
-syn keyword htmlArg contained label icon open datetime pubdate
+syn keyword htmlArg contained label icon open datetime-local pubdate
 " <script>
 syn keyword htmlArg contained async
 " <content>

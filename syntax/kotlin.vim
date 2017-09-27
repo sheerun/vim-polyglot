@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
 " Vim syntax file
 " Language: Kotlin
 " Maintainer: Alexander Udalov
-" Latest Revision: 29 December 2016
+" Latest Revision: 18 September 2017
 
 if exists("b:current_syntax")
     finish
@@ -21,7 +21,7 @@ syn keyword ktException try catch finally throw
 syn keyword ktInclude import package
 
 syn keyword ktType Any Boolean Byte Char Double Float Int Long Nothing Short Unit
-syn keyword ktModifier annotation companion enum inner internal private protected public abstract final open override sealed vararg dynamic header impl
+syn keyword ktModifier annotation companion enum inner internal private protected public abstract final open override sealed vararg dynamic header impl expect actual
 syn keyword ktStructure class object interface typealias fun val var constructor init
 
 syn keyword ktReservedKeyword typeof
@@ -51,9 +51,9 @@ syn match ktLabel "\v\w+\@"
 syn match ktSimpleInterpolation "\v\$\h\w*" contained
 syn region ktComplexInterpolation matchgroup=ktComplexInterpolationBrace start="\v\$\{" end="\v\}" contains=ALLBUT,ktSimpleInterpolation
 
-syn match ktNumber "\v<\d+[LFf]?"
-syn match ktNumber "\v<0[Xx]\x+L?"
-syn match ktNumber "\v<0[Bb]\d+L?"
+syn match ktNumber "\v<\d+[_[:digit:]]*[LFf]?"
+syn match ktNumber "\v<0[Xx]\x+[_[:xdigit:]]*L?"
+syn match ktNumber "\v<0[Bb][01]+[_01]*L?"
 syn match ktFloat "\v<\d*(\d[eE][-+]?\d+|\.\d+([eE][-+]?\d+)?)[Ff]?"
 
 syn match ktEscapedName "\v`.*`"

@@ -24,21 +24,21 @@ endif
 
 " Variables -----------------------------------------------{{{1
 
-let s:open_patt = '\%(\<\%(function\|if\|repeat\|do\)\>\|(\|{\)'
-let s:middle_patt = '\<\%(else\|elseif\)\>'
-let s:close_patt = '\%(\<\%(end\|until\)\>\|)\|}\)'
+let s:open_patt = '\C\%(\<\%(function\|if\|repeat\|do\)\>\|(\|{\)'
+let s:middle_patt = '\C\<\%(else\|elseif\)\>'
+let s:close_patt = '\C\%(\<\%(end\|until\)\>\|)\|}\)'
 
 let s:anon_func_start = '\S\+\s*[({].*\<function\s*(.*)\s*$'
 let s:anon_func_end = '\<end\%(\s*[)}]\)\+'
 
 " Expression used to check whether we should skip a match with searchpair().
-let s:skip_expr = "synIDattr(synID(line('.'),col('.'),1),'name') =~ 'luaComment\\|luaString'"
+let s:skip_expr = "synIDattr(synID(line('.'),col('.'),1),'name') =~# 'luaComment\\|luaString'"
 
 " Auxiliary Functions -------------------------------------{{{1
 
 function s:IsInCommentOrString(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ 'luaCommentLong\|luaStringLong'
-        \ && !(getline(a:lnum) =~ '^\s*\%(--\)\?\[=*\[') " opening tag is not considered 'in'
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~# 'luaCommentLong\|luaStringLong'
+        \ && !(getline(a:lnum) =~# '^\s*\%(--\)\?\[=*\[') " opening tag is not considered 'in'
 endfunction
 
 " Find line above 'lnum' that isn't blank, in a comment or string.
@@ -85,7 +85,7 @@ function GetLuaIndent()
   endif
 
   " special case: call(with, {anon = function() -- should indent only once
-  if num_pairs > 1 && contents_prev =~ s:anon_func_start
+  if num_pairs > 1 && contents_prev =~# s:anon_func_start
     let i = 1
   endif
 
@@ -98,7 +98,7 @@ function GetLuaIndent()
   endif
 
   " special case: end}) -- end of call with anon func should unindent once
-  if num_pairs > 1 && contents_cur =~ s:anon_func_end
+  if num_pairs > 1 && contents_cur =~# s:anon_func_end
     let i = -1
   endif
 

@@ -287,9 +287,9 @@ augroup filetypedetect
 " Language: OpenGL Shading Language
 " Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
 
-" Extensions supported by Khronos reference compiler
+" Extensions supported by Khronos reference compiler (with one exception, ".glsl")
 " https://github.com/KhronosGroup/glslang
-autocmd! BufNewFile,BufRead *.vert,*.tesc,*.tese,*.geom,*.frag,*.comp set filetype=glsl
+autocmd! BufNewFile,BufRead *.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp set filetype=glsl
 
 " vim:set sts=2 sw=2 :
 augroup END
@@ -335,7 +335,7 @@ augroup END
 
 augroup filetypedetect
 " graphql:jparise/vim-graphql
-au BufRead,BufNewFile *.graphql,*.gql setfiletype graphql
+au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
 augroup END
 
 augroup filetypedetect
@@ -387,7 +387,7 @@ augroup END
 
 augroup filetypedetect
 " javascript:pangloss/vim-javascript:_JAVASCRIPT
-au BufNewFile,BufRead *.{js,jsm,es,es6},Jakefile setf javascript
+au BufNewFile,BufRead *.{js,mjs,jsm,es,es6},Jakefile setf javascript
 
 fun! s:SourceFlowSyntax()
   if !exists('javascript_plugin_flow') && !exists('b:flow_active') &&
@@ -442,15 +442,16 @@ if !exists('g:jsx_pragma_required')
   let g:jsx_pragma_required = 0
 endif
 
-if g:jsx_pragma_required
-  " Look for the @jsx pragma.  It must be included in a docblock comment before
-  " anything else in the file (except whitespace).
-  let s:jsx_pragma_pattern = '\%^\_s*\/\*\*\%(\_.\%(\*\/\)\@!\)*@jsx\_.\{-}\*\/'
-  let b:jsx_pragma_found = search(s:jsx_pragma_pattern, 'npw')
-endif
+let s:jsx_pragma_pattern = '\%^\_s*\/\*\*\%(\_.\%(\*\/\)\@!\)*@jsx\_.\{-}\*\/'
 
 " Whether to set the JSX filetype on *.js files.
 fu! <SID>EnableJSX()
+  if g:jsx_pragma_required && !exists('b:jsx_ext_found')
+    " Look for the @jsx pragma.  It must be included in a docblock comment
+    " before anything else in the file (except whitespace).
+    let b:jsx_pragma_found = search(s:jsx_pragma_pattern, 'npw')
+  endif
+
   if g:jsx_pragma_required && !b:jsx_pragma_found | return 0 | endif
   if g:jsx_ext_required && !exists('b:jsx_ext_found') | return 0 | endif
   return 1
@@ -524,6 +525,16 @@ augroup END
 
 augroup filetypedetect
 " mako:sophacles/vim-bundle-mako
+if !exists("g:mako_detect_lang_from_ext")
+  let g:mako_detect_lang_from_ext = 1
+endif
+if g:mako_detect_lang_from_ext
+  au BufNewFile *.*.mako   execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
+  " it's important to get this before any of the normal BufRead autocmds execute
+  " for this file, otherwise a mako tag at the start of the file can cause the
+  " filetype to be set to mason
+  au BufReadPre *.*.mako   execute "do BufRead filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
+endif
 au BufRead,BufNewFile *.mako     set filetype=mako
 augroup END
 
@@ -703,7 +714,7 @@ au! BufRead,BufNewFile Puppetfile setfiletype ruby
 augroup END
 
 augroup filetypedetect
-" purescript:raichoo/purescript-vim
+" purescript:purescript-contrib/purescript-vim
 au BufNewFile,BufRead *.purs setf purescript
 au FileType purescript let &l:commentstring='{--%s--}'
 augroup END
@@ -755,7 +766,7 @@ augroup filetypedetect
 
 " Support functions {{{
 function! s:setf(filetype) abort
-  if &filetype !=# a:filetype
+  if &filetype !~# '\<'.a:filetype.'\>'
     let &filetype = a:filetype
   endif
 endfunction

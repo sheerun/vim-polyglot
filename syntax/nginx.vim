@@ -707,8 +707,10 @@ if !exists('g:loaded_sslsecure')
   syn match ngxSSLCipherInsecure '[^!]\zsALL'
   syn match ngxSSLCipherInsecure '[^!]\zsCOMPLEMENTOFALL'
 
-  syn match ngxSSLCipherInsecure '[^!]\zsSHA\ze\D'      " Match SHA1 without matching SHA256+
-  syn match ngxSSLCipherInsecure '[^!]\zsSHA1'
+  " SHA ciphers are only used in HMAC with all known OpenSSL/ LibreSSL cipher suites and MAC
+  " usage is still considered safe
+  " syn match ngxSSLCipherInsecure '[^!]\zsSHA\ze\D'      " Match SHA1 without matching SHA256+
+  " syn match ngxSSLCipherInsecure '[^!]\zsSHA1'
   syn match ngxSSLCipherInsecure '[^!]\zsMD5'
   syn match ngxSSLCipherInsecure '[^!]\zsRC2'
   syn match ngxSSLCipherInsecure '[^!]\zsRC4'

@@ -28,11 +28,12 @@ function! s:cycle()
   call s:choose(get({'s':'edit','p':'squash','e':'reword','r':'fixup'},getline('.')[0],'pick'))
 endfunction
 
-command! -buffer -bar Pick   :call s:choose('pick')
-command! -buffer -bar Squash :call s:choose('squash')
-command! -buffer -bar Edit   :call s:choose('edit')
-command! -buffer -bar Reword :call s:choose('reword')
-command! -buffer -bar Fixup  :call s:choose('fixup')
+command! -buffer -bar -range Pick   :<line1>,<line2>call s:choose('pick')
+command! -buffer -bar -range Squash :<line1>,<line2>call s:choose('squash')
+command! -buffer -bar -range Edit   :<line1>,<line2>call s:choose('edit')
+command! -buffer -bar -range Reword :<line1>,<line2>call s:choose('reword')
+command! -buffer -bar -range Fixup  :<line1>,<line2>call s:choose('fixup')
+command! -buffer -bar -range Drop   :<line1>,<line2>call s:choose('drop')
 command! -buffer -bar Cycle  :call s:cycle()
 " The above are more useful when they are mapped; for example:
 "nnoremap <buffer> <silent> S :Cycle<CR>

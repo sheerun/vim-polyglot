@@ -310,7 +310,7 @@ function! crystal_lang#format(option_str) abort
 
     try
         call setreg('g', formatted, 'v')
-        silent normal! ggvG$"gp
+        silent normal! gg0vG$"gp
     finally
         call setreg('g', save_g_reg, save_g_regtype)
         let &l:selection = sel_save

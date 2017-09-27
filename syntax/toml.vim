@@ -53,6 +53,8 @@ hi def link tomlTodo Todo
 syn match tomlComment /#.*/ contains=@Spell,tomlTodo
 hi def link tomlComment Comment
 
+syn sync minlines=500
+
 let b:current_syntax = "toml"
 
 endif

@@ -36,9 +36,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c++11') == -1
 " -----------------------------------------------------------------------------
 
 " Functions
-syn match   cCustomParen    "(" contains=cParen contains=cCppParen
-syn match   cCustomFunc     "\w\+\s*(\@="
-hi def link cCustomFunc  Function
+if !exists('g:cpp_no_function_highlight')
+    syn match   cCustomParen    "(" contains=cParen contains=cCppParen
+    syn match   cCustomFunc     "\w\+\s*(\@="
+    hi def link cCustomFunc  Function
+endif
 
 " Class and namespace scope
 if exists('g:cpp_class_scope_highlight') && g:cpp_class_scope_highlight
@@ -48,6 +50,52 @@ if exists('g:cpp_class_scope_highlight') && g:cpp_class_scope_highlight
     hi def link cCustomClass Function
 endif
 
+" Clear cppStructure and replace "class" and/or "template" with matches
+" based on user configuration
+let s:needs_cppstructure_match = 0
+if exists('g:cpp_class_decl_highlight') && g:cpp_class_decl_highlight
+	let s:needs_cppstructure_match += 1
+endif
+if exists('g:cpp_experimental_template_highlight') && g:cpp_experimental_template_highlight
+	let s:needs_cppstructure_match += 2
+endif
+
+syn clear cppStructure
+if s:needs_cppstructure_match == 0
+	syn keyword cppStructure typename namespace template class
+elseif s:needs_cppstructure_match == 1
+	syn keyword cppStructure typename namespace template
+elseif s:needs_cppstructure_match == 2
+	syn keyword cppStructure typename namespace class
+elseif s:needs_cppstructure_match == 3
+	syn keyword cppStructure typename namespace
+endif
+unlet s:needs_cppstructure_match
+
+
+" Class name declaration
+if exists('g:cpp_class_decl_highlight') && g:cpp_class_decl_highlight
+	syn match cCustomClassKey "\<class\>"
+	hi def link cCustomClassKey cppStructure
+
+	" Clear cppAccess entirely and redefine as matches
+	syn clear cppAccess
+	syn match cCustomAccessKey "\<private\>"
+	syn match cCustomAccessKey "\<public\>"
+	syn match cCustomAccessKey "\<protected\>"
+	hi def link cCustomAccessKey cppAccess
+
+	" Match the parts of a class declaration
+	syn match cCustomClassName "\<class\_s\+\w\+\>"
+				\ contains=cCustomClassKey
+	syn match cCustomClassName "\<private\_s\+\w\+\>"
+				\ contains=cCustomAccessKey
+	syn match cCustomClassName "\<public\_s\+\w\+\>"
+				\ contains=cCustomAccessKey
+	syn match cCustomClassName "\<protected\_s\+\w\+\>"
+				\ contains=cCustomAccessKey
+	hi def link cCustomClassName Function
+endif
 " Template functions.
 " Naive implementation that sorta works in most cases. Should correctly
 " highlight everything in test/color2.cpp
@@ -79,17 +127,12 @@ elseif exists('g:cpp_experimental_template_highlight') && g:cpp_experimental_tem
                 \ contains=cCustomAngleBracketStart,cCustomTemplateFunc
     hi def link cCustomTemplateClass cCustomClass
 
-
-    " Remove 'template' from cppStructure and use a custom match
-    syn clear cppStructure
-    syn keyword cppStructure class typename namespace
-
     syn match   cCustomTemplate "\<template\>"
     hi def link cCustomTemplate  cppStructure
     syn match   cTemplateDeclare "\<template\_s*<\_[^;()]\{-}>"
-                \ contains=cppStructure,cCustomTemplate,cCustomAngleBracketStart
+                \ contains=cppStructure,cCustomTemplate,cCustomClassKey,cCustomAngleBracketStart
 
-    " Remove 'operator' from cppStructure and use a custom match
+    " Remove 'operator' from cppOperator and use a custom match
     syn clear cppOperator
     syn keyword cppOperator typeid
     syn keyword cppOperator and bitor or xor compl bitand and_eq or_eq xor_eq not not_eq
@@ -106,7 +149,7 @@ endif
 "hi def link cCustomFunc  Function
 
 " Cluster for all the stdlib functions defined below
-syn cluster cppSTLgroup     contains=cppSTLfunction,cppSTLfunctional,cppSTLconstant,cppSTLnamespace,cppSTLtype,cppSTLexception,cppSTLiterator,cppSTLiterator_tagcppSTLenumcppSTLioscppSTLcast
+syn cluster cppSTLgroup     contains=cppSTLfunction,cppSTLfunctional,cppSTLconstant,cppSTLnamespace,cppSTLtype,cppSTLexception,cppSTLiterator,cppSTLiterator_tag,cppSTLenum,cppSTLios,cppSTLcast
 
 
 " -----------------------------------------------------------------------------
@@ -184,6 +227,7 @@ syntax keyword cppSTLfunctional binary_negate
 syntax keyword cppSTLfunctional bit_and
 syntax keyword cppSTLfunctional bit_not
 syntax keyword cppSTLfunctional bit_or
+syntax keyword cppSTLfunctional bit_xor
 syntax keyword cppSTLfunctional divides
 syntax keyword cppSTLfunctional equal_to
 syntax keyword cppSTLfunctional greater
@@ -699,6 +743,7 @@ syntax keyword cppSTLtype slice_array
 syntax keyword cppSTLtype stack
 syntax keyword cppSTLtype stream
 syntax keyword cppSTLtype streambuf
+syntax keyword cppSTLtype streamsize
 syntax keyword cppSTLtype string
 syntax keyword cppSTLtype stringbuf
 syntax keyword cppSTLtype stringstream

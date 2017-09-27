@@ -365,6 +365,7 @@ function! RubyCursorFile() abort
   let ext = getline('.') =~# '^\s*\%(require\%(_relative\)\=\|autoload\)\>' && cfile !~# '\.rb$' ? '.rb' : ''
   if s:synid() ==# hlID('rubyConstant')
     let cfile = substitute(cfile,'\.\w\+[?!=]\=$','','')
+    let cfile = substitute(cfile,'^::','','')
     let cfile = substitute(cfile,'::','/','g')
     let cfile = substitute(cfile,'\(\u\+\)\(\u\l\)','\1_\2', 'g')
     let cfile = substitute(cfile,'\(\l\|\d\)\(\u\)','\1_\2', 'g')

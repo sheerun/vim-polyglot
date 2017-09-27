@@ -4,6 +4,10 @@ if !exists('g:terraform_align')
   let g:terraform_align = 0
 endif
 
+if !exists('g:terraform_remap_spacebar')
+  let g:terraform_remap_spacebar = 0
+endif
+
 if g:terraform_align && exists(':Tabularize')
   inoremap <buffer> <silent> = =<Esc>:call <SID>terraformalign()<CR>a
   function! s:terraformalign()
@@ -31,6 +35,10 @@ function! TerraformFolds()
     return ">1"
   elseif match(thisline, '^output') >= 0
     return ">1"
+  elseif match(thisline, '^data') >= 0
+    return ">1"
+  elseif match(thisline, '^terraform') >= 0
+    return ">1"
   else
     return "="
   endif
@@ -45,10 +53,13 @@ function! TerraformFoldText()
 endfunction
 setlocal foldtext=TerraformFoldText()
 
-"inoremap <space> <C-O>za
-nnoremap <space> za
-onoremap <space> <C-C>za
-vnoremap <space> zf
+" Re-map the space bar to fold and unfold
+if get(g:, "terraform_remap_spacebar", 1)
+  "inoremap <space> <C-O>za
+  nnoremap <space> za
+  onoremap <space> <C-C>za
+  vnoremap <space> zf
+endif
 
 " Match the identation put in place by Hashicorp and :TerraformFmt, https://github.com/hashivim/vim-terraform/issues/21
 if get(g:, "terraform_align", 1)

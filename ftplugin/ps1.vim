@@ -19,8 +19,6 @@ setlocal formatoptions=tcqro
 " Enable autocompletion of hyphenated PowerShell commands,
 " e.g. Get-Content or Get-ADUser
 setlocal iskeyword+=-
-" MS applications (including PowerShell) require a Byte Order Mark (BOM) for UTF-8.
-setlocal bomb
 
 " Change the browse dialog on Win32 to show mainly PowerShell-related files
 if has("gui_win32")

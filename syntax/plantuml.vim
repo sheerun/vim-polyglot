@@ -20,10 +20,10 @@ let b:current_syntax = 'plantuml'
 
 syntax sync minlines=100
 
-syntax match plantumlPreProc /\%(^@startuml\|^@enduml\)\|!\%(define|definelong|else|enddefinelong|endif|ifdef|ifndef|include|pragma|undef\)\s*.*/ contains=plantumlDir
+syntax match plantumlPreProc /\%(^@startuml\|^@enduml\)\|!\%(define|definelong|else|enddefinelong|endif|if|ifdef|ifndef|include|pragma|undef\)\s*.*/ contains=plantumlDir
 syntax region plantumlDir start=/\s\+/ms=s+1 end=/$/ contained
 
-syntax keyword plantumlTypeKeyword abstract actor agent artifact boundary card cloud component control
+syntax keyword plantumlTypeKeyword abstract actor agent archimate artifact boundary card cloud component control
 syntax keyword plantumlTypeKeyword database entity enum file folder frame node object package participant
 syntax keyword plantumlTypeKeyword queue rectangle stack state storage usecase
 
@@ -39,26 +39,27 @@ syntax keyword plantumlKeyword then detach sprite
 
 syntax keyword plantumlCommentTODO XXX TODO FIXME NOTE contained
 syntax match plantumlColor /#[0-9A-Fa-f]\{6\}\>/
-syntax keyword plantumlColor AliceBlue AntiqueWhite Aqua Aquamarine Azure Beige Bisque Black BlanchedAlmond
-syntax keyword plantumlColor Blue BlueViolet Brown BurlyWood CadetBlue Chartreuse Chocolate Coral
-syntax keyword plantumlColor CornflowerBlue Cornsilk Crimson Cyan DarkBlue DarkCyan DarkGoldenRod DarkGray
-syntax keyword plantumlColor DarkGreen DarkGrey DarkKhaki DarkMagenta DarkOliveGreen DarkOrchid DarkRed
-syntax keyword plantumlColor DarkSalmon DarkSeaGreen DarkSlateBlue DarkSlateGray DarkSlateGrey DarkTurquoise
-syntax keyword plantumlColor DarkViolet Darkorange DeepPink DeepSkyBlue DimGray DimGrey DodgerBlue FireBrick
-syntax keyword plantumlColor FloralWhite ForestGreen Fuchsia Gainsboro GhostWhite Gold GoldenRod Gray Green
-syntax keyword plantumlColor GreenYellow Grey HoneyDew HotPink IndianRed Indigo Ivory Khaki Lavender
-syntax keyword plantumlColor LavenderBlush LawnGreen LemonChiffon LightBlue LightCoral LightCyan
-syntax keyword plantumlColor LightGoldenRodYellow LightGray LightGreen LightGrey LightPink LightSalmon
-syntax keyword plantumlColor LightSeaGreen LightSkyBlue LightSlateGray LightSlateGrey LightSteelBlue
-syntax keyword plantumlColor LightYellow Lime LimeGreen Linen Magenta Maroon MediumAquaMarine MediumBlue
-syntax keyword plantumlColor MediumOrchid MediumPurple MediumSeaGreen MediumSlateBlue MediumSpringGreen
-syntax keyword plantumlColor MediumTurquoise MediumVioletRed MidnightBlue MintCream MistyRose Moccasin
-syntax keyword plantumlColor NavajoWhite Navy OldLace Olive OliveDrab Orange OrangeRed Orchid PaleGoldenRod
-syntax keyword plantumlColor PaleGreen PaleTurquoise PaleVioletRed PapayaWhip PeachPuff Peru Pink Plum
-syntax keyword plantumlColor PowderBlue Purple Red RosyBrown RoyalBlue SaddleBrown Salmon SandyBrown SeaGreen
-syntax keyword plantumlColor SeaShell Sienna Silver SkyBlue SlateBlue SlateGray SlateGrey Snow SpringGreen
-syntax keyword plantumlColor SteelBlue Tan Teal Thistle Tomato Turquoise Violet Wheat White WhiteSmoke Yellow
-syntax keyword plantumlColor YellowGreen
+syntax keyword plantumlColor APPLICATION AliceBlue AntiqueWhite Aqua Aquamarine Azure BUSINESS Beige Bisque
+syntax keyword plantumlColor Black BlanchedAlmond Blue BlueViolet Brown BurlyWood CadetBlue Chartreuse
+syntax keyword plantumlColor Chocolate Coral CornflowerBlue Cornsilk Crimson Cyan DarkBlue DarkCyan
+syntax keyword plantumlColor DarkGoldenRod DarkGray DarkGreen DarkGrey DarkKhaki DarkMagenta DarkOliveGreen
+syntax keyword plantumlColor DarkOrchid DarkRed DarkSalmon DarkSeaGreen DarkSlateBlue DarkSlateGray
+syntax keyword plantumlColor DarkSlateGrey DarkTurquoise DarkViolet Darkorange DeepPink DeepSkyBlue DimGray
+syntax keyword plantumlColor DimGrey DodgerBlue FireBrick FloralWhite ForestGreen Fuchsia Gainsboro
+syntax keyword plantumlColor GhostWhite Gold GoldenRod Gray Green GreenYellow Grey HoneyDew HotPink
+syntax keyword plantumlColor IMPLEMENTATION IndianRed Indigo Ivory Khaki Lavender LavenderBlush LawnGreen
+syntax keyword plantumlColor LemonChiffon LightBlue LightCoral LightCyan LightGoldenRodYellow LightGray
+syntax keyword plantumlColor LightGreen LightGrey LightPink LightSalmon LightSeaGreen LightSkyBlue
+syntax keyword plantumlColor LightSlateGray LightSlateGrey LightSteelBlue LightYellow Lime LimeGreen Linen
+syntax keyword plantumlColor MOTIVATION Magenta Maroon MediumAquaMarine MediumBlue MediumOrchid MediumPurple
+syntax keyword plantumlColor MediumSeaGreen MediumSlateBlue MediumSpringGreen MediumTurquoise MediumVioletRed
+syntax keyword plantumlColor MidnightBlue MintCream MistyRose Moccasin NavajoWhite Navy OldLace Olive
+syntax keyword plantumlColor OliveDrab Orange OrangeRed Orchid PHYSICAL PaleGoldenRod PaleGreen PaleTurquoise
+syntax keyword plantumlColor PaleVioletRed PapayaWhip PeachPuff Peru Pink Plum PowderBlue Purple Red
+syntax keyword plantumlColor RosyBrown RoyalBlue STRATEGY SaddleBrown Salmon SandyBrown SeaGreen SeaShell
+syntax keyword plantumlColor Sienna Silver SkyBlue SlateBlue SlateGray SlateGrey Snow SpringGreen SteelBlue
+syntax keyword plantumlColor TECHNOLOGY Tan Teal Thistle Tomato Turquoise Violet Wheat White WhiteSmoke
+syntax keyword plantumlColor Yellow YellowGreen
 
 " Arrows - Differentiate between horizontal and vertical arrows
 syntax match plantumlHorizontalArrow /\%([-\.]\%(|>\|>\|\*\|o\>\|\\\\\|\\\|\/\/\|\/\|\.\|-\)\|\%(<|\|<\|\*\|\<o\|\\\\\|\\\|\/\/\|\/\)[\.-]\)\%(\[[^\]]*\]\)\?/ contains=plantumlLabel
@@ -67,8 +68,12 @@ syntax match plantumlDirectedOrVerticalArrowRL /\%(<|\|<<\|<\|\*\|\<o\|\\\\\|\\\
 syntax region plantumlLabel start=/\[/ms=s+1 end=/\]/me=s-1 contained contains=plantumlText
 syntax match plantumlText /\%([0-9A-Za-zÀ-ÿ]\|\s\|[\.,;_-]\)\+/ contained
 
+" Note
+syntax region plantumlNoteMultiLine start=/\%(^\s*[rh]\?note\)\@<=\s\%([^:"]\+$\)\@=/ end=/^\%(\s*end \?[rh]\?note$\)\@=/ contains=plantumlSpecialString,plantumlNoteMultiLineStart
+syntax match plantumlNoteMultiLineStart /\%(^\s*[rh]\?note\)\@<=\s\%([^:]\+$\)/ contained contains=plantumlKeyword,plantumlColor,plantumlString
+
 " Class
-syntax region plantumlClass start=/\%(class\s[^{]\+\)\@<=\zs{/ end=/^\s*}/ contains=plantumlClassArrows,
+syntax region plantumlClass start=/\%(\%(class\|interface\|object\)\s[^{]\+\)\@<=\zs{/ end=/^\s*}/ contains=plantumlClassArrows,
 \                                                                                  plantumlClassKeyword,
 \                                                                                  @plantumlClassOp,
 \                                                                                  plantumlClassSeparator,
@@ -101,6 +106,7 @@ syntax match plantumlStereotype /<<.\{-1,}>>/ contains=plantumlSpecialString
 " Activity diagram
 syntax match plantumlActivityThing /([^)]*)/
 syntax match plantumlActivitySynch /===[^=]\+===/
+syntax match plantumlActivityLabel /\%(^\%(#\S\+\)\?\)\@<=:\_[^;|<>/\]}]\+[;|<>/\]}]$/ contains=plantumlSpecialString
 
 " Sequence diagram
 syntax match plantumlSequenceDivider /^\s*==[^=]\+==\s*$/
@@ -235,8 +241,8 @@ syntax keyword plantumlSkinparamKeyword SwimlaneBorderColor SwimlaneBorderThickn
 syntax keyword plantumlSkinparamKeyword SwimlaneTitleFontName SwimlaneTitleFontSize SwimlaneTitleFontStyle TabSize
 syntax keyword plantumlSkinparamKeyword TitleBackgroundColor TitleBorderColor TitleBorderRoundCorner
 syntax keyword plantumlSkinparamKeyword TitleBorderThickness TitleFontColor TitleFontName TitleFontSize TitleFontStyle
-syntax keyword plantumlSkinparamKeyword UsecaseBackgroundColor UsecaseBorderColor UsecaseFontColor UsecaseFontName
-syntax keyword plantumlSkinparamKeyword UsecaseFontSize UsecaseFontStyle UsecaseStereotypeFontColor
+syntax keyword plantumlSkinparamKeyword UsecaseBackgroundColor UsecaseBorderColor UsecaseBorderThickness UsecaseFontColor
+syntax keyword plantumlSkinparamKeyword UsecaseFontName UsecaseFontSize UsecaseFontStyle UsecaseStereotypeFontColor
 syntax keyword plantumlSkinparamKeyword UsecaseStereotypeFontName UsecaseStereotypeFontSize UsecaseStereotypeFontStyle
 " Not in 'java - jar plantuml.jar - language' output
 syntax keyword plantumlSkinparamKeyword activityArrowColor activityArrowFontColor activityArrowFontName
@@ -300,7 +306,9 @@ highlight default link plantumlMultilineComment Comment
 highlight default link plantumlColonLine Comment
 highlight default link plantumlActivityThing Type
 highlight default link plantumlActivitySynch Type
+highlight default link plantumlActivityLabel String
 highlight default link plantumlSkinparamKeyword Identifier
+highlight default link plantumlNoteMultiLine String
 highlight default link plantumlUsecaseActor String
 highlight default link plantumlStereotype Type
 

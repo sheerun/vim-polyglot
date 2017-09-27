@@ -24,6 +24,7 @@ syn keyword terraDataTypeBI
           \ aws_alb
           \ aws_alb_listener
           \ aws_ami
+          \ aws_ami_ids
           \ aws_autoscaling_groups
           \ aws_availability_zone
           \ aws_availability_zones
@@ -32,12 +33,17 @@ syn keyword terraDataTypeBI
           \ aws_canonical_user_id
           \ aws_cloudformation_stack
           \ aws_db_instance
+          \ aws_db_snapshot
           \ aws_ebs_snapshot
+          \ aws_ebs_snapshot_ids
           \ aws_ebs_volume
           \ aws_ecs_cluster
           \ aws_ecs_container_definition
           \ aws_ecs_task_definition
+          \ aws_efs_file_system
           \ aws_eip
+          \ aws_elastic_beanstalk_solution_stack
+          \ aws_elasticache_cluster
           \ aws_elb_hosted_zone_id
           \ aws_elb_service_account
           \ aws_iam_account_alias
@@ -46,6 +52,9 @@ syn keyword terraDataTypeBI
           \ aws_iam_server_certificate
           \ aws_instance
           \ aws_ip_ranges
+          \ aws_kinesis_stream
+          \ aws_kms_alias
+          \ aws_kms_ciphertext
           \ aws_kms_secret
           \ aws_partition
           \ aws_prefix_list
@@ -56,6 +65,7 @@ syn keyword terraDataTypeBI
           \ aws_s3_bucket_object
           \ aws_security_group
           \ aws_sns_topic
+          \ aws_ssm_parameter
           \ aws_subnet
           \ aws_subnet_ids
           \ aws_vpc
@@ -64,6 +74,7 @@ syn keyword terraDataTypeBI
           \ aws_vpc_peering_connection
           \ aws_vpn_gateway
           \ azurerm_client_config
+          \ azurerm_public_ip
           \ circonus_account
           \ circonus_collector
           \ consul_agent_self
@@ -71,20 +82,30 @@ syn keyword terraDataTypeBI
           \ consul_catalog_service
           \ consul_catalog_services
           \ consul_keys
+          \ digitalocean_image
           \ dns_a_record_set
           \ dns_cname_record_set
           \ dns_txt_record_set
           \ docker_registry_image
           \ external
           \ fastly_ip_ranges
+          \ github_team
+          \ github_user
+          \ google_compute_network
+          \ google_compute_subnetwork
           \ google_compute_zones
+          \ google_container_engine_versions
           \ google_iam_policy
+          \ google_storage_object_signed_url
+          \ http
           \ newrelic_application
           \ ns1_datasource
           \ null_data_source
           \ openstack_images_image_v2
           \ openstack_networking_network_v2
           \ opsgenie_user
+          \ ovh_publiccloud_region
+          \ ovh_publiccloud_regions
           \ pagerduty_escalation_policy
           \ pagerduty_schedule
           \ pagerduty_user
@@ -106,6 +127,11 @@ syn keyword terraResourceTypeBI
           \ alicloud_disk_attachment
           \ alicloud_eip
           \ alicloud_eip_association
+          \ alicloud_ess_scaling_configuration
+          \ alicloud_ess_scaling_group
+          \ alicloud_ess_scaling_rule
+          \ alicloud_ess_schedule
+          \ alicloud_forward_entry
           \ alicloud_instance
           \ alicloud_nat_gateway
           \ alicloud_route_entry
@@ -113,6 +139,7 @@ syn keyword terraResourceTypeBI
           \ alicloud_security_group_rule
           \ alicloud_slb
           \ alicloud_slb_attachment
+          \ alicloud_snat_entry
           \ alicloud_subnet
           \ alicloud_vpc
           \ alicloud_vswitch
@@ -174,6 +201,7 @@ syn keyword terraResourceTypeBI
           \ aws_codedeploy_deployment_config
           \ aws_codedeploy_deployment_group
           \ aws_codepipeline
+          \ aws_cognito_identity_pool
           \ aws_config_config_rule
           \ aws_config_configuration_recorder
           \ aws_config_configuration_recorder_status
@@ -184,10 +212,15 @@ syn keyword terraResourceTypeBI
           \ aws_db_option_group
           \ aws_db_parameter_group
           \ aws_db_security_group
+          \ aws_db_snapshot
           \ aws_db_subnet_group
           \ aws_default_network_acl
           \ aws_default_route_table
           \ aws_default_security_group
+          \ aws_default_subnet
+          \ aws_default_vpc
+          \ aws_default_vpc_dhcp_options
+          \ aws_devicefarm_project
           \ aws_directory_service_directory
           \ aws_dms_certificate
           \ aws_dms_endpoint
@@ -224,6 +257,7 @@ syn keyword terraResourceTypeBI
           \ aws_elb_attachment
           \ aws_emr_cluster
           \ aws_emr_instance_group
+          \ aws_emr_security_configuration
           \ aws_flow_log
           \ aws_glacier_vault
           \ aws_iam_access_key
@@ -277,6 +311,7 @@ syn keyword terraResourceTypeBI
           \ aws_network_acl
           \ aws_network_acl_rule
           \ aws_network_interface
+          \ aws_network_interface_attachment
           \ aws_opsworks_application
           \ aws_opsworks_custom_layer
           \ aws_opsworks_ganglia_layer
@@ -338,6 +373,12 @@ syn keyword terraResourceTypeBI
           \ aws_ssm_activation
           \ aws_ssm_association
           \ aws_ssm_document
+          \ aws_ssm_maintenance_window
+          \ aws_ssm_maintenance_window_target
+          \ aws_ssm_maintenance_window_task
+          \ aws_ssm_parameter
+          \ aws_ssm_patch_baseline
+          \ aws_ssm_patch_group
           \ aws_subnet
           \ aws_volume_attachment
           \ aws_vpc
@@ -358,6 +399,8 @@ syn keyword terraResourceTypeBI
           \ aws_waf_sql_injection_match_set
           \ aws_waf_web_acl
           \ aws_waf_xss_match_set
+          \ aws_wafregional_byte_match_set
+          \ aws_wafregional_ipset
           \ azure_affinity_group
           \ azure_data_disk
           \ azure_dns_server
@@ -391,6 +434,7 @@ syn keyword terraResourceTypeBI
           \ azurerm_eventhub_authorization_rule
           \ azurerm_eventhub_consumer_group
           \ azurerm_eventhub_namespace
+          \ azurerm_express_route_circuit
           \ azurerm_key_vault
           \ azurerm_lb
           \ azurerm_lb_backend_address_pool
@@ -413,6 +457,7 @@ syn keyword terraResourceTypeBI
           \ azurerm_servicebus_subscription
           \ azurerm_servicebus_topic
           \ azurerm_sql_database
+          \ azurerm_sql_elasticpool
           \ azurerm_sql_firewall_rule
           \ azurerm_sql_server
           \ azurerm_storage_account
@@ -493,6 +538,7 @@ syn keyword terraResourceTypeBI
           \ datadog_monitor
           \ datadog_timeboard
           \ datadog_user
+          \ digitalocean_certificate
           \ digitalocean_domain
           \ digitalocean_droplet
           \ digitalocean_floating_ip
@@ -513,6 +559,7 @@ syn keyword terraResourceTypeBI
           \ docker_volume
           \ dyn_record
           \ fastly_service_v1
+          \ github_branch_protection
           \ github_issue_label
           \ github_membership
           \ github_organization_webhook
@@ -522,8 +569,15 @@ syn keyword terraResourceTypeBI
           \ github_team
           \ github_team_membership
           \ github_team_repository
+          \ gitlab_deploy_key
+          \ gitlab_group
+          \ gitlab_project
+          \ gitlab_project_hook
+          \ google_bigquery_dataset
+          \ google_bigquery_table
           \ google_compute_address
           \ google_compute_autoscaler
+          \ google_compute_backend_bucket
           \ google_compute_backend_service
           \ google_compute_disk
           \ google_compute_firewall
@@ -542,6 +596,10 @@ syn keyword terraResourceTypeBI
           \ google_compute_project_metadata
           \ google_compute_region_backend_service
           \ google_compute_route
+          \ google_compute_router
+          \ google_compute_router_interface
+          \ google_compute_router_peer
+          \ google_compute_snapshot
           \ google_compute_ssl_certificate
           \ google_compute_subnetwork
           \ google_compute_target_http_proxy
@@ -569,9 +627,13 @@ syn keyword terraResourceTypeBI
           \ google_storage_object_acl
           \ heroku_addon
           \ heroku_app
+          \ heroku_app_feature
           \ heroku_cert
           \ heroku_domain
           \ heroku_drain
+          \ heroku_pipeline
+          \ heroku_pipeline_coupling
+          \ heroku_space
           \ icinga2_checkcommand
           \ icinga2_host
           \ icinga2_hostgroup
@@ -589,14 +651,20 @@ syn keyword terraResourceTypeBI
           \ influxdb_database
           \ influxdb_user
           \ kubernetes_config_map
+          \ kubernetes_horizontal_pod_autoscaler
+          \ kubernetes_limit_range
           \ kubernetes_namespace
           \ kubernetes_persistent_volume
           \ kubernetes_persistent_volume_claim
+          \ kubernetes_resource_quota
           \ kubernetes_secret
+          \ kubernetes_service
           \ librato_alert
+          \ librato_metric
           \ librato_service
           \ librato_space
           \ librato_space_chart
+          \ local_file
           \ logentries_log
           \ logentries_logset
           \ mailgun_domain
@@ -609,6 +677,14 @@ syn keyword terraResourceTypeBI
           \ newrelic_alert_policy_channel
           \ nomad_job
           \ null_resource
+          \ oneandone_firewall_policy
+          \ oneandone_loadbalancer
+          \ oneandone_monitoring_policy
+          \ oneandone_private_network
+          \ oneandone_public_ip
+          \ oneandone_server
+          \ oneandone_shared_storage
+          \ oneandone_vpn
           \ openstack_blockstorage_volume_attach_v2
           \ openstack_blockstorage_volume_v1
           \ openstack_blockstorage_volume_v2
@@ -619,6 +695,8 @@ syn keyword terraResourceTypeBI
           \ openstack_compute_secgroup_v2
           \ openstack_compute_servergroup_v2
           \ openstack_compute_volume_attach_v2
+          \ openstack_dns_recordset_v2
+          \ openstack_dns_zone_v2
           \ openstack_fw_firewall_v1
           \ openstack_fw_policy_v1
           \ openstack_fw_rule_v1
@@ -644,6 +722,10 @@ syn keyword terraResourceTypeBI
           \ openstack_objectstorage_container_v1
           \ opsgenie_team
           \ opsgenie_user
+          \ ovh_publiccloud_private_network
+          \ ovh_publiccloud_private_network_subnet
+          \ ovh_publiccloud_user
+          \ ovh_vrack_publiccloud_attachment
           \ packet_device
           \ packet_project
           \ packet_ssh_key
@@ -701,6 +783,7 @@ syn keyword terraResourceTypeBI
           \ spotinst_healthcheck
           \ spotinst_subscription
           \ statuscake_test
+          \ template_dir
           \ tls_cert_request
           \ tls_locally_signed_cert
           \ tls_private_key
@@ -713,9 +796,11 @@ syn keyword terraResourceTypeBI
           \ ultradns_dirpool
           \ ultradns_probe_http
           \ ultradns_probe_ping
+          \ ultradns_rdpool
           \ ultradns_record
           \ ultradns_tcpool
           \ vcd_dnat
+          \ vcd_edgegateway_vpn
           \ vcd_firewall_rules
           \ vcd_network
           \ vcd_snat
@@ -764,9 +849,13 @@ syn match terraBraces        "[{}\[\]]"
 """ skip \" in strings.
 """ we may also want to pass \\" into a function to escape quotes.
 syn region terraValueString   start=/"/ skip=/\\\+"/ end=/"/ contains=terraStringInterp
-syn region terraStringInterp  matchgroup=terraBrackets start=/\${/ end=/}/ contains=terraValueFunction contained
+syn region terraStringInterp  matchgroup=terraBrackets start=/\${/ end=/}/ contains=terraValueFunction,terraValueVarSubscript,terraStringInterp contained
+syn region terraHereDocText   start=/<<\z([A-Z]\+\)/ end=/^\z1/ contains=terraStringInterp
 "" TODO match keywords here, not a-z+
-syn region terraValueFunction matchgroup=terraBrackets start=/[0-9a-z]\+(/ end=/)/ contains=terraValueString,terraValueFunction contained
+syn region terraValueFunction matchgroup=terraBrackets start=/[a-z]\+(/ end=/)/ contains=terraValueString,terraValueFunction,terraValueVarSubscript contained
+" User variables or module outputs can be lists or maps, and accessed with
+" var.map["foo"]
+syn region terraValueVarSubscript start=/\(\<var\|\<module\)\.[a-z0-9_-]\+\[/ end=/\]/ contains=terraValueString,terraValueFunction,terraValueVarSubscript contained
 
 hi def link terraComment           Comment
 hi def link terraTodo              Todo
@@ -788,11 +877,13 @@ hi def link terraValueBool         Boolean
 hi def link terraValueDec          Number
 hi def link terraValueHexaDec      Number
 hi def link terraValueString       String
+hi def link terraHereDocText       String
 hi def link terraProvisioner       Structure
 hi def link terraProvisionerName   String
 hi def link terraModule            Structure
 hi def link terraModuleName        String
 hi def link terraValueFunction     Identifier
+hi def link terraValueVarSubscript Identifier
 
 let b:current_syntax = "terraform"
 

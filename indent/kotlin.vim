@@ -3,13 +3,14 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
 " Vim indent file
 " Language: Kotlin
 " Maintainer: Alexander Udalov
-" Latest Revision: 27 June 2015
+" Latest Revision: 15 July 2017
 
 if exists("b:did_indent")
     finish
 endif
 let b:did_indent = 1
 
+setlocal cinoptions& cinoptions+=j1,L0
 setlocal indentexpr=GetKotlinIndent()
 setlocal indentkeys=0},0),!^F,o,O,e,<CR>
 setlocal autoindent " TODO ?
@@ -24,6 +25,21 @@ function! GetKotlinIndent()
     let prev = getline(prev_num)
     let prev_indent = indent(prev_num)
     let cur = getline(v:lnum)
+
+    if cur =~ '^\s*\*'
+        return cindent(v:lnum)
+    endif
+
+    if prev =~ '^\s*\*/'
+        let st = prev
+        while st > 1
+            if getline(st) =~ '^\s*/\*'
+                break
+            endif
+            let st = st - 1
+        endwhile
+        return indent(st)
+    endif
 
     let prev_open_paren = prev =~ '^.*(\s*$'
     let cur_close_paren = cur =~ '^\s*).*$'

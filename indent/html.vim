@@ -260,20 +260,28 @@ let s:html_indent_tags = '[a-z_][a-z0-9_.-]*'
 let s:cpo_save = &cpo
 set cpo-=C
 
-" [-- count indent-increasing tags of line a:lnum --]
-fun! <SID>HtmlIndentOpen(lnum, pattern)
-    let s = substitute('x'.getline(a:lnum),
-    \ '.\{-}\(\(<\)\('.a:pattern.'\)\>\)', "\1", 'g')
+func! <SID>HtmlIndentPatternCount(content, pattern)
+    let s = substitute('x'.a:content, a:pattern, "\1", 'g')
     let s = substitute(s, "[^\1].*$", '', '')
     return strlen(s)
 endfun
 
+" [-- count indent-increasing tags of line a:lnum --]
+fun! <SID>HtmlIndentOpen(lnum, pattern)
+    return <SID>HtmlIndentPatternCount(getline(a:lnum),
+    \ '.\{-}\(\(<\)\('.a:pattern.'\)\>\)')
+endfun
+
 " [-- count indent-decreasing tags of line a:lnum --]
 fun! <SID>HtmlIndentClose(lnum, pattern)
-    let s = substitute('x'.getline(a:lnum),
-    \ '.\{-}\(\(<\)/\('.a:pattern.'\)\>>\)', "\1", 'g')
-    let s = substitute(s, "[^\1].*$", '', '')
-    return strlen(s)
+    return <SID>HtmlIndentPatternCount(getline(a:lnum),
+    \ '.\{-}\(\(<\)/\('.a:pattern.'\)\>>\)')
+endfun
+
+" [-- count self close tags of line a:lnum --]
+fun! <SID>HtmlIndentSelfClose(lnum, pattern)
+    return <SID>HtmlIndentPatternCount(getline(a:lnum),
+    \ '.\{-}\(\(<\('.a:pattern.'\).*\)\@<!\/>\)')
 endfun
 
 " [-- count indent-increasing '{' of (java|css) line a:lnum --]
@@ -292,8 +300,9 @@ fun! <SID>HtmlIndentSum(lnum, style)
         if a:style == match(getline(a:lnum), '^\s*</\<\('.s:html_indent_tags.'\)\>')
             let open = <SID>HtmlIndentOpen(a:lnum, s:html_indent_tags) - <SID>HtmlIndentOpen(a:lnum, s:html_noindent_tags)
             let close = <SID>HtmlIndentClose(a:lnum, s:html_indent_tags) - <SID>HtmlIndentClose(a:lnum, s:html_noindent_tags)
-            if 0 != open || 0 != close
-                return open - close
+            let self_close = <SID>HtmlIndentSelfClose(a:lnum, s:html_noindent_tags)
+            if 0 != open || 0 != close || 0 != self_close
+                return open - close - self_close
             endif
         endif
     endif
@@ -310,6 +319,13 @@ fun! <SID>HtmlIndentSum(lnum, style)
 endfun
 
 fun! HtmlIndentGet(lnum)
+    " Get shiftwidth value.
+    if exists('*shiftwidth')
+        let sw = shiftwidth()
+    else
+        let sw = &sw
+    endif
+
     " Find a non-empty line above the current line.
     let lnum = prevnonblank(a:lnum - 1)
 
@@ -396,7 +412,7 @@ fun! HtmlIndentGet(lnum)
             endif
 
             if 0 == match(getline(a:lnum), '^\s*</')
-                return indent(preline) - (1*&sw)
+                return indent(preline) - (1*sw)
             else
                 return indent(preline)
             endif
@@ -417,7 +433,7 @@ fun! HtmlIndentGet(lnum)
       " let tags_exp = '<\(' . join(tags, '\|') . '\)>'
       " let close_tags_exp = '</\(' . join(tags, '\|') . '\)>'
       " if getline(a:lnum) =~ tags_exp
-        " let block_start = search('^'.repeat(' ', lind + (&sw * ind - 1)).'\S'  , 'bnW')
+        " let block_start = search('^'.repeat(' ', lind + (sw * ind - 1)).'\S'  , 'bnW')
         " let prev_tag = search(tags_exp, 'bW', block_start)
         " let prev_closetag = search(close_tags_exp, 'W', a:lnum)
         " if prev_tag && !prev_closetag
@@ -426,7 +442,7 @@ fun! HtmlIndentGet(lnum)
       " endif
 
       " if getline(a:lnum) =~ '</\w\+>'
-        " let block_start = search('^'.repeat(' ', lind + (&sw * ind - 1)).'\S'  , 'bnW')
+        " let block_start = search('^'.repeat(' ', lind + (sw * ind - 1)).'\S'  , 'bnW')
         " let prev_tag = search(tags_exp, 'bW', block_start)
         " let prev_closetag = search(close_tags_exp, 'W', a:lnum)
         " if prev_tag && !prev_closetag
@@ -439,7 +455,7 @@ fun! HtmlIndentGet(lnum)
         setlocal noic
     endif
 
-    return lind + (&sw * ind)
+    return lind + (sw * ind)
 endfun
 
 let &cpo = s:cpo_save
