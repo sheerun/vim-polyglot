@@ -1,129 +1,115 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
   
-" Vim indent file
-" Language:     Haskell
-" Maintainer:   lilydjwg <lilydjwg@gmail.com>
-" Version:	1.0
-" References:	http://en.wikibooks.org/wiki/Haskell/Indentation
-" 		http://book.realworldhaskell.org/read/
-" See Also:	The Align plugin http://www.vim.org/scripts/script.php?script_id=294
+" indentation for Elm (http://elm-lang.org/)
 
 " Only load this indent file when no other was loaded.
-if exists("b:did_indent")
-    finish
+if exists('b:did_indent')
+	finish
 endif
 let b:did_indent = 1
 
-setlocal indentexpr=HaskellIndent()
-for i in split('0{,:,0#,e', ',')
-    exec "setlocal indentkeys-=" . i
-endfor
-setlocal indentkeys+=0=else,0=in,0=where,0),0<bar>
-setlocal tabstop=8
+" Local defaults
 setlocal expandtab
+setlocal indentexpr=GetElmIndent()
+setlocal indentkeys+=0=else,0=if,0=of,0=import,0=then,0=type,0\|,0},0\],0),=-},0=in
+setlocal nolisp
+setlocal nosmartindent
 
-if !exists('g:Haskell_no_mapping')
-    inoremap <silent> <BS> <C-R>=<SID>HaskellDedent(1)<CR>
-    inoremap <silent> <C-D> <C-R>=<SID>HaskellDedent(0)<CR>
+" Comment formatting
+setlocal comments=s1fl:{-,mb:\ ,ex:-},:--
+
+" Only define the function once.
+if exists('*GetElmIndent')
+	finish
 endif
 
-" Only define the functions once.
-if exists("*HaskellIndent")
-    finish
-endif
-
-let s:align_map = {
-            \ 'in': '\<let\>',
-            \ '\<else\>': '\<then\>',
-            \ ',': '\v%(\s|\w|^)@<=[[{]%(\s|\w|"|$)@='
-            \ }
-let s:indent_self = ['=']
-let s:indent_next = ['let', 'in', 'where', 'do', 'if']
-let s:indent_if_final = ['=', 'do', '->', 'of', 'where']
-
-function HaskellIndent()
-    let lnum = v:lnum - 1
-
-    " Hit the start of the file, use zero indent.
-    if lnum == 0
-        return 0
-    endif
-
-    let ind = indent(lnum)
-    let prevline = getline(lnum)
-    let curline = getline(v:lnum)
-    let curwords = split(curline)
-    if len(curwords) > 0
-        if has_key(s:align_map, curwords[0])
-            let word = s:align_map[curwords[0]]
-            let m = -1
-            let line = v:lnum
-            while m == -1
-                let line -= 1
-                if line <= 0
-                    return -1
-                endif
-                let m = match(getline(line), word)
-            endwhile
-            return m
-        elseif index(s:indent_self, curwords[0]) != -1
-            return ind + &sw
-        elseif curwords[0] == '|'
-            return match(prevline, '\v%(\s|\w|^)@<=[|=]%(\s|\w)@=')
-        elseif index([')', '}'], curwords[0]) != -1
-            return ind - &sw
-        elseif curwords[0] == 'where'
-            if prevline =~ '\v^\s+\|%(\s|\w)@='
-                return ind - 1
-            endif
-        endif
-    endif
-
-    let prevwords = split(prevline)
-    if len(prevwords) == 0
-        return 0
-    endif
-
-    if prevwords[-1] == 'where' && prevwords[0] == 'module'
-        return 0
-    elseif index(s:indent_if_final, prevwords[-1]) != -1
-        return ind + &sw
-    elseif prevwords[-1] =~ '\v%(\s|\w|^)@<=[[{(]$'
-        return ind + &sw
-    else
-        for word in reverse(prevwords)
-            if index(s:indent_next, word) != -1
-                return match(prevline, '\<'.word.'\>') + len(word) + 1
-            endif
-        endfor
-    endif
-
-    if len(curwords) > 0 && curwords[0] == 'where'
-        return ind + &sw
-    endif
-
-    return ind
+" Indent pairs
+function! s:FindPair(pstart, pmid, pend)
+	"call search(a:pend, 'bW')
+	return indent(searchpair(a:pstart, a:pmid, a:pend, 'bWn', 'synIDattr(synID(line("."), col("."), 0), "name") =~? "string\\|comment"'))
 endfunction
 
-function s:HaskellDedent(isbs)
-    if a:isbs && strpart(getline('.'), 0, col('.')-1) !~ '^\s\+$'
-        return "\<BS>"
-    endif
+function! GetElmIndent()
+	let l:lnum = v:lnum - 1
 
-    let curind = indent('.')
-    let line = line('.') - 1
-    while curind > 0 && line > 0
-        let ind = indent(line)
-        if ind >= curind
-            let line -= 1
-        else
-            echomsg curind ind
-            call setline('.', repeat(' ', ind) .
-                        \ substitute(getline('.'), '^\s\+', '', ''))
-            return ''
-        endif
-    endwhile
-    return a:isbs ? "\<BS>" : ''
-endfunction
+	" Ident 0 if the first line of the file:
+	if l:lnum == 0
+		return 0
+	endif
+
+	let l:ind = indent(l:lnum)
+	let l:lline = getline(l:lnum)
+	let l:line = getline(v:lnum)
+
+	" Indent if current line begins with '}':
+	if l:line =~? '^\s*}'
+		return s:FindPair('{', '', '}')
+
+	" Indent if current line begins with 'else':
+	elseif l:line =~# '^\s*else\>'
+		if l:lline !~# '^\s*\(if\|then\)\>'
+			return s:FindPair('\<if\>', '', '\<else\>')
+		endif
+
+	" Indent if current line begins with 'then':
+	elseif l:line =~# '^\s*then\>'
+		if l:lline !~# '^\s*\(if\|else\)\>'
+			return s:FindPair('\<if\>', '', '\<then\>')
+		endif
+
+	" HACK: Indent lines in case with nearest case clause:
+	elseif l:line =~# '->' && l:line !~# ':' && l:line !~# '\\'
+		return indent(search('^\s*case', 'bWn')) + &shiftwidth
+
+	" HACK: Don't change the indentation if the last line is a comment.
+	elseif l:lline =~# '^\s*--'
+		return l:ind
+
+	" Align the end of block comments with the start
+	elseif l:line =~# '^\s*-}'
+		return indent(search('{-', 'bWn'))
+
+	" Indent double shift after let with an empty rhs
+	elseif l:lline =~# '\<let\>.*\s=$'
+		return l:ind + 4 + &shiftwidth
+
+	" Align 'in' with the parent let.
+	elseif l:line =~# '^\s*in\>'
+		return indent(search('^\s*let', 'bWn'))
+
+	" Align bindings with the parent let.
+	elseif l:lline =~# '\<let\>'
+		return l:ind + 4
+
+	" Align bindings with the parent in.
+	elseif l:lline =~# '^\s*in\>'
+		return l:ind + 4
+
+	endif
+
+	" Add a 'shiftwidth' after lines ending with:
+	if l:lline =~# '\(|\|=\|->\|<-\|(\|\[\|{\|\<\(of\|else\|if\|then\)\)\s*$'
+		let l:ind = l:ind + &shiftwidth
+
+	" Add a 'shiftwidth' after lines starting with type ending with '=':
+	elseif l:lline =~# '^\s*type' && l:line =~# '^\s*='
+		let l:ind = l:ind + &shiftwidth
+
+	" Back to normal indent after comments:
+	elseif l:lline =~# '-}\s*$'
+		call search('-}', 'bW')
+		let l:ind = indent(searchpair('{-', '', '-}', 'bWn', 'synIDattr(synID(line("."), col("."), 0), "name") =~? "string"'))
+
+	" Ident some operators if there aren't any starting the last line.
+	elseif l:line =~# '^\s*\(!\|&\|(\|`\|+\||\|{\|[\|,\)=' && l:lline !~# '^\s*\(!\|&\|(\|`\|+\||\|{\|[\|,\)=' && l:lline !~# '^\s*$'
+		let l:ind = l:ind + &shiftwidth
+
+	elseif l:lline ==# '' && getline(l:lnum - 1) !=# ''
+		let l:ind = indent(search('^\s*\S+', 'bWn'))
+
+	endif
+
+	return l:ind
+endfunc
 
 endif

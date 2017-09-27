@@ -1,81 +1,73 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
   
-" Vim syntax file
-" Language: Elm (http://elm-lang.org/)
-" Maintainer: Alexander Noriega
-" Latest Revision: 19 April 2015
+" syntax highlighting for Elm (http://elm-lang.org/)
 
-if exists("b:current_syntax")
+if exists('b:current_syntax')
   finish
 endif
 
 " Keywords
-syn keyword elmKeyword alias as case else exposing if import in let module of port then type where
+syn keyword elmConditional case else if of then
+syn keyword elmAlias alias
+syn keyword elmTypedef type port let in
+syn keyword elmImport exposing as import module where
 
-" Builtin operators
-syn match elmBuiltinOp "\~"
-syn match elmBuiltinOp "||"
-syn match elmBuiltinOp "|>"
-syn match elmBuiltinOp "|"
-syn match elmBuiltinOp "`"
-syn match elmBuiltinOp "\^"
-syn match elmBuiltinOp "\\"
-syn match elmBuiltinOp ">>"
-syn match elmBuiltinOp ">="
-syn match elmBuiltinOp ">"
-syn match elmBuiltinOp "=="
-syn match elmBuiltinOp "="
-syn match elmBuiltinOp "<\~"
-syn match elmBuiltinOp "<|"
-syn match elmBuiltinOp "<="
-syn match elmBuiltinOp "<<"
-syn match elmBuiltinOp "<-"
-syn match elmBuiltinOp "<"
-syn match elmBuiltinOp "::"
-syn match elmBuiltinOp ":"
-syn match elmBuiltinOp "/="
-syn match elmBuiltinOp "//"
-syn match elmBuiltinOp "/"
-syn match elmBuiltinOp "\.\."
-syn match elmBuiltinOp "\."
-syn match elmBuiltinOp "->"
-syn match elmBuiltinOp "-"
-syn match elmBuiltinOp "++"
-syn match elmBuiltinOp "+"
-syn match elmBuiltinOp "*"
-syn match elmBuiltinOp "&&"
-syn match elmBuiltinOp "%"
-
-" Special names
-syntax match specialName "^main "
-
-" Comments
-syn match elmTodo "[tT][oO][dD][oO]\|FIXME\|XXX" contained
-syn match elmLineComment "--.*" contains=elmTodo,@spell
-syn region elmComment matchgroup=elmComment start="{-|\=" end="-}" contains=elmTodo,elmComment,@spell
-
-" String literals
-syn region elmString start="\"" skip="\\\"" end="\"" contains=elmStringEscape
-syn match elmStringEscape "\\u[0-9a-fA-F]\{4}" contained
-syn match elmStringEscape "\\[nrfvbt\\\"]" contained
-
-" Number literals
-syn match elmNumber "\(\<\d\+\>\)"
-syn match elmNumber "\(\<\d\+\.\d\+\>\)"
+" Operators
+syn match elmOperator "\([-!#$%`&\*\+./<=>\?@\\^|~:]\|\<_\>\)"
 
 " Types
 syn match elmType "\<[A-Z][0-9A-Za-z_'-]*"
+syn keyword elmNumberType number
 
-let b:current_syntax = "elm"
+" Delimiters
+syn match elmDelimiter  "[,;]"
+syn match elmBraces  "[()[\]{}]"
 
-hi def link elmKeyword            Keyword
-hi def link elmBuiltinOp          Special
-hi def link elmType               Type
-hi def link elmTodo               Todo
-hi def link elmLineComment        Comment
-hi def link elmComment            Comment
-hi def link elmString             String
-hi def link elmNumber             Number
-hi def link specialName           Special
+" Functions
+syn match elmTupleFunction "\((,\+)\)"
+
+" Comments
+syn keyword elmTodo TODO FIXME XXX contained
+syn match elmLineComment "--.*" contains=elmTodo,@spell
+syn region elmComment matchgroup=elmComment start="{-|\=" end="-}" contains=elmTodo,elmComment,@spell
+
+" Strings
+syn match elmStringEscape "\\u[0-9a-fA-F]\{4}" contained
+syn match elmStringEscape "\\[nrfvbt\\\"]" contained
+syn region elmString start="\"" skip="\\\"" end="\"" contains=elmStringEscape,@spell
+syn region elmTripleString start="\"\"\"" skip="\\\"" end="\"\"\"" contains=elmStringEscape,@spell
+syn match elmChar "'[^'\\]'\|'\\.'\|'\\u[0-9a-fA-F]\{4}'"
+
+" Numbers
+syn match elmInt "-\?\<\d\+\>\|0[xX][0-9a-fA-F]\+\>"
+syn match elmFloat "\(\<\d\+\.\d\+\>\)"
+
+" Identifiers
+syn match elmTopLevelDecl "^\s*[a-zA-Z][a-zA-z0-9_]*\('\)*\s\+:\s\+" contains=elmOperator
+
+hi def link elmTopLevelDecl Function
+hi def link elmTupleFunction Normal
+hi def link elmTodo Todo
+hi def link elmComment Comment
+hi def link elmLineComment Comment
+hi def link elmString String
+hi def link elmTripleString String
+hi def link elmChar String
+hi def link elmStringEscape Special
+hi def link elmInt Number
+hi def link elmFloat Float
+hi def link elmDelimiter Delimiter
+hi def link elmBraces Delimiter
+hi def link elmTypedef TypeDef
+hi def link elmImport Include
+hi def link elmConditional Conditional
+hi def link elmAlias Delimiter
+hi def link elmOperator Operator
+hi def link elmType Identifier
+hi def link elmNumberType Identifier
+
+syn sync minlines=500
+
+let b:current_syntax = 'elm'
 
 endif

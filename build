@@ -129,7 +129,7 @@ PACKS="
   dart:dart-lang/dart-vim-plugin
   dockerfile:docker/docker::/contrib/syntax/vim/
   elixir:elixir-lang/vim-elixir
-  elm:lambdatoast/elm.vim
+  elm:ElmCast/elm-vim
   emberscript:yalesov/vim-ember-script
   emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime

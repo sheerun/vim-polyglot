@@ -60,7 +60,7 @@ Most importantly, vim-polyglot contains all runtime syntax files from upstream [
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin)
 - [dockerfile](https://github.com/docker/docker) (syntax)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, autoload, ftplugin)
-- [elm](https://github.com/lambdatoast/elm.vim) (syntax, indent, autoload, ftplugin)
+- [elm](https://github.com/ElmCast/elm-vim) (syntax, indent, autoload, ftplugin)
 - [emberscript](https://github.com/yalesov/vim-ember-script) (syntax, indent, ftplugin)
 - [emblem](https://github.com/yalesov/vim-emblem) (syntax, indent, ftplugin)
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent)

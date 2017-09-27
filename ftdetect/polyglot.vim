@@ -187,8 +187,10 @@ endfunction
 augroup END
 
 augroup filetypedetect
-" elm:lambdatoast/elm.vim
-au BufNewFile,BufRead *.elm		set filetype=elm
+" elm:ElmCast/elm-vim
+" detection for Elm (http://elm-lang.org/)
+
+au BufRead,BufNewFile *.elm set filetype=elm
 augroup END
 
 augroup filetypedetect
