@@ -598,6 +598,12 @@ au! BufRead,BufNewFile *.cl set filetype=opencl
 augroup END
 
 augroup filetypedetect
+" openscad:sirtaj/vim-openscad
+au BufRead,BufNewFile *.scad    setfiletype openscad
+an 50.80.265 &Syntax.NO.OpenSCAD :cal SetSyn("openscad")<CR>
+augroup END
+
+augroup filetypedetect
 " perl:vim-perl/vim-perl
 " Highlight .html files as Mason if they start with Mason tags
 autocmd BufRead *.html
