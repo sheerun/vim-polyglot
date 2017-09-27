@@ -62,6 +62,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [emblem](https://github.com/yalesov/vim-emblem) (syntax, indent, ftplugin)
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent)
 - [fish](https://github.com/dag/vim-fish) (syntax, indent, compiler, autoload, ftplugin)
+- [fsharp](https://github.com/fsharp/vim-fsharp) (syntax, indent)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin)
 - [glsl](https://github.com/tikhomirov/vim-glsl) (syntax, indent)
 - [gmpl](https://github.com/maelvalais/gmpl.vim) (syntax)

@@ -262,6 +262,12 @@ autocmd BufNewFile ~/.config/fish/functions/*.fish
 augroup END
 
 augroup filetypedetect
+" fsharp:fsharp/vim-fsharp:_BASIC
+" F#, fsharp
+autocmd BufNewFile,BufRead *.fs,*.fsi,*.fsx set filetype=fsharp
+augroup END
+
+augroup filetypedetect
 " git:tpope/vim-git
 " Git
 autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
