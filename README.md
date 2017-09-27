@@ -81,6 +81,7 @@ Most importantly, vim-polyglot contains all runtime syntax files from upstream [
 - [i3](https://github.com/PotatoesMaster/i3-vim-syntax) (syntax, ftplugin)
 - [jasmine](https://github.com/glanotte/vim-jasmine) (syntax)
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, compiler, ftplugin, extras)
+- [jenkins](https://github.com/martinda/Jenkinsfile-vim-syntax) (syntax, indent)
 - [json](https://github.com/elzr/vim-json) (syntax, indent, ftplugin)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent)
 - [jsx](https://github.com/mxw/vim-jsx) (after)

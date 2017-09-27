@@ -428,6 +428,15 @@ au BufNewFile,BufRead * call s:SelectJavascript()
 augroup END
 
 augroup filetypedetect
+" jenkins:martinda/Jenkinsfile-vim-syntax
+" Jenkinsfile
+autocmd BufRead,BufNewFile Jenkinsfile set ft=Jenkinsfile
+autocmd BufRead,BufNewFile Jenkinsfile* setf Jenkinsfile
+autocmd BufRead,BufNewFile *.jenkinsfile set ft=Jenkinsfile
+autocmd BufRead,BufNewFile *.jenkinsfile setf Jenkinsfile
+augroup END
+
+augroup filetypedetect
 " json:elzr/vim-json
 autocmd BufNewFile,BufRead *.json setlocal filetype=json
 autocmd BufNewFile,BufRead *.jsonp setlocal filetype=json
