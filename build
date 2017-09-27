@@ -107,6 +107,7 @@ EOF
 }
 
 PACKS="
+  vim:vim/vim::/runtime/
   apiblueprint:sheerun/apiblueprint.vim
   applescript:vim-scripts/applescript.vim
   asciidoc:asciidoc/vim-asciidoc
@@ -124,7 +125,6 @@ PACKS="
   cryptol:victoredwardocallaghan/cryptol.vim
   crystal:rhysd/vim-crystal
   cql:elubow/cql-vim
-  css:JulesWang/css.vim
   cucumber:tpope/vim-cucumber
   dart:dart-lang/dart-vim-plugin
   dockerfile:docker/docker::/contrib/syntax/vim/

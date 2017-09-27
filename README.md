@@ -34,6 +34,10 @@ NOTE: Not all features of listed language packs are available. We strip them fro
 
 If you need full functionality of any plugin, please use it directly with your plugin manager.
 
+## Basic language pack
+
+Most importantly, vim-polyglot contains all runtime syntax files from upstream [vim](https://github.com/vim/vim) repository, plus:
+
 ## Language packs
 
 - [ansible](https://github.com/pearofducks/ansible-vim) (syntax, indent, ftplugin)
@@ -52,7 +56,6 @@ If you need full functionality of any plugin, please use it directly with your p
 - [cql](https://github.com/elubow/cql-vim) (syntax)
 - [cryptol](https://github.com/victoredwardocallaghan/cryptol.vim) (syntax, compiler, ftplugin)
 - [crystal](https://github.com/rhysd/vim-crystal) (syntax, indent, autoload, ftplugin)
-- [css](https://github.com/JulesWang/css.vim) (syntax)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin)
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin)
 - [dockerfile](https://github.com/docker/docker) (syntax)
@@ -139,6 +142,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [vcl](https://github.com/smerrill/vcl-vim-plugin) (syntax)
 - [vifm](https://github.com/vifm/vifm.vim) (syntax, autoload, ftplugin)
+- [vim](https://github.com/vim/vim) (syntax, indent, compiler, autoload, ftplugin)
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent)
 - [vue](https://github.com/posva/vim-vue) (syntax, indent, ftplugin)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)

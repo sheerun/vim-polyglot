@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vim') == -1
   
 " Vim syntax file
 " Language:     Cascading Style Sheets
@@ -8,14 +8,12 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
 "               Nikolai Weibull (Add CSS2 support)
 " Maintainer:   Jules Wang      <w.jq0722@gmail.com>
 " URL:          https://github.com/JulesWang/css.vim
-" Last Change:  2015 Aug.25
+" Last Change:  2017 Jan 14
+"  		cssClassName updated by Ryuichi Hayashida Jan 2016
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
+" quit when a syntax file was already loaded
 if !exists("main_syntax")
-  if version < 600
-    syntax clear
-  elseif exists("b:current_syntax")
+  if exists("b:current_syntax")
     finish
   endif
   let main_syntax = 'css'
@@ -61,7 +59,7 @@ syn match cssSelectorOp2 "[~|^$*]\?=" contained
 syn region cssAttributeSelector matchgroup=cssSelectorOp start="\[" end="]" contains=cssUnicodeEscape,cssSelectorOp2,cssStringQ,cssStringQQ
 
 " .class and #id
-syn match cssClassName "\.[A-Za-z][A-Za-z0-9_-]\+" contains=cssClassNameDot
+syn match cssClassName "\.-\=[A-Za-z_][A-Za-z0-9_-]*" contains=cssClassNameDot
 syn match cssClassNameDot contained '\.'
 
 try
@@ -70,16 +68,21 @@ catch /^.*/
 syn match cssIdentifier "#[A-Za-z_@][A-Za-z0-9_@-]*"
 endtry
 
-" digits and units
-syn match cssValueNumber contained "[-+]\=\d\+\(\.\d*\)\=%\=" contains=cssUnitDecorators
-syn match cssValue contained transparent "[-+]\=\d\+\(\.\d*\)\=\([a-z]\+\)\=\>" contains=cssUnitDecorators,cssValueNumber
+" digits
+syn match cssValueInteger contained "[-+]\=\d\+" contains=cssUnitDecorators
+syn match cssValueNumber contained "[-+]\=\d\+\(\.\d*\)\=" contains=cssUnitDecorators
+syn match cssValueLength contained "[-+]\=\d\+\(\.\d*\)\=\(%\|mm\|cm\|in\|pt\|pc\|em\|ex\|px\|rem\|dpi\|dppx\|dpcm\)\>" contains=cssUnitDecorators
+syn match cssValueAngle contained "[-+]\=\d\+\(\.\d*\)\=\(deg\|grad\|rad\)\>" contains=cssUnitDecorators
+syn match cssValueTime contained "+\=\d\+\(\.\d*\)\=\(ms\|s\)\>" contains=cssUnitDecorators
+syn match cssValueFrequency contained "+\=\d\+\(\.\d*\)\=\(Hz\|kHz\)\>" contains=cssUnitDecorators
+
 
 syn match cssIncludeKeyword /@\(-[a-z]\+-\)\=\(media\|keyframes\|import\|charset\|namespace\|page\)/ contained
 " @media
 syn region cssInclude start=/@media\>/ end=/\ze{/ skipwhite skipnl contains=cssMediaProp,cssValueLength,cssMediaKeyword,cssValueInteger,cssMediaAttr,cssVendor,cssMediaType,cssIncludeKeyword,cssMediaComma,cssComment nextgroup=cssMediaBlock
 syn keyword cssMediaType contained screen print aural braille embossed handheld projection tty tv speech all contained skipwhite skipnl
 syn keyword cssMediaKeyword only not and contained
-syn region cssMediaBlock transparent matchgroup=cssBraces start='{' end='}' contains=css.*Attr,css.*Prop,cssComment,cssValue,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssTagName,cssClassName,cssIdentifier,cssPseudoClass,cssSelectorOp,cssSelectorOp2,cssAttributeSelector fold
+syn region cssMediaBlock transparent matchgroup=cssBraces start='{' end='}' contains=css.*Attr,css.*Prop,cssComment,cssValue.*,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssTagName,cssClassName,cssIdentifier,cssPseudoClass,cssSelectorOp,cssSelectorOp2,cssAttributeSelector fold
 syn match cssMediaComma "," skipwhite skipnl contained
 
 " Reference: http://www.w3.org/TR/css3-mediaqueries/
@@ -94,7 +97,7 @@ syn keyword cssMediaAttr contained portrait landscape progressive interlace
 " http://www.w3.org/TR/css3-page/
 syn match cssPage "@page\>[^{]*{\@=" contains=cssPagePseudo,cssIncludeKeyword nextgroup=cssPageWrap transparent skipwhite skipnl
 syn match cssPagePseudo /:\(left\|right\|first\|blank\)/ contained skipwhite skipnl
-syn region cssPageWrap contained transparent matchgroup=cssBraces start="{" end="}" contains=cssPageMargin,cssPageProp,cssAttrRegion,css.*Prop,cssComment,cssValue,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks
+syn region cssPageWrap contained transparent matchgroup=cssBraces start="{" end="}" contains=cssPageMargin,cssPageProp,cssAttrRegion,css.*Prop,cssComment,cssValue.*,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks
 syn match cssPageMargin /@\(\(top\|left\|right\|bottom\)-\(left\|center\|right\|middle\|bottom\)\)\(-corner\)\=/ contained nextgroup=cssDefinition skipwhite skipnl
 syn keyword cssPageProp contained content size
 " http://www.w3.org/TR/CSS2/page.html#break-inside
@@ -104,7 +107,7 @@ syn keyword cssPageProp contained orphans widows
 " http://www.w3.org/TR/css3-animations/#keyframes
 syn match cssKeyFrame "@\(-[a-z]\+-\)\=keyframes\>[^{]*{\@=" nextgroup=cssKeyFrameWrap contains=cssVendor,cssIncludeKeyword skipwhite skipnl transparent
 syn region cssKeyFrameWrap contained transparent matchgroup=cssBraces start="{" end="}" contains=cssKeyFrameSelector
-syn match cssKeyFrameSelector /\([-+]\=\d\+\(\.\d*\)\=%\|from\|to\)\=/  contained skipwhite skipnl nextgroup=cssDefinition
+syn match cssKeyFrameSelector /\(\d*%\|from\|to\)\=/  contained skipwhite skipnl nextgroup=cssDefinition
 
 " @import
 syn region cssInclude start=/@import\>/    end=/\ze;/ transparent contains=cssStringQ,cssStringQQ,cssUnicodeEscape,cssComment,cssIncludeKeyword,cssURL,cssMediaProp,cssValueLength,cssMediaKeyword,cssValueInteger,cssMediaAttr,cssVendor,cssMediaType
@@ -114,7 +117,7 @@ syn region cssInclude start=/@namespace\>/ end=/\ze;/ transparent contains=cssSt
 " @font-face
 " http://www.w3.org/TR/css3-fonts/#at-font-face-rule
 syn match cssFontDescriptor "@font-face\>" nextgroup=cssFontDescriptorBlock skipwhite skipnl
-syn region cssFontDescriptorBlock contained transparent matchgroup=cssBraces start="{" end="}" contains=cssComment,cssError,cssUnicodeEscape,cssCommonAttr,cssFontDescriptorProp,cssValue,cssFontDescriptorFunction,cssFontDescriptorAttr,cssNoise
+syn region cssFontDescriptorBlock contained transparent matchgroup=cssBraces start="{" end="}" contains=cssComment,cssError,cssUnicodeEscape,cssCommonAttr,cssFontDescriptorProp,cssValue.*,cssFontDescriptorFunction,cssFontDescriptorAttr,cssNoise
 
 syn match cssFontDescriptorProp contained "\<font-family\>"
 syn keyword cssFontDescriptorProp contained src
@@ -161,8 +164,8 @@ syn keyword cssColor contained midnightblue mintcream mistyrose moccasin navajow
 syn keyword cssColor contained oldlace olivedrab orange orangered orchid
 syn match cssColor contained /\<pale\(goldenrod\|green\|turquoise\|violetred\)\>/
 syn keyword cssColor contained papayawhip peachpuff peru pink plum powderblue
-syn keyword cssColor contained rosybrown royalblue rebeccapurple saddlebrown salmon
-syn keyword cssColor contained sandybrown seagreen seashell sienna skyblue slateblue
+syn keyword cssColor contained rosybrown royalblue saddlebrown salmon sandybrown
+syn keyword cssColor contained seagreen seashell sienna skyblue slateblue
 syn keyword cssColor contained slategray slategrey snow springgreen steelblue tan
 syn keyword cssColor contained thistle tomato turquoise violet wheat
 syn keyword cssColor contained whitesmoke yellowgreen
@@ -183,10 +186,10 @@ syn match cssColor contained "#[0-9A-Fa-f]\{3\}\>" contains=cssUnitDecorators
 syn match cssColor contained "#[0-9A-Fa-f]\{6\}\>" contains=cssUnitDecorators
 
 syn region cssURL contained matchgroup=cssFunctionName start="\<url\s*(" end=")" contains=cssStringQ,cssStringQQ oneline
-syn region cssFunction contained matchgroup=cssFunctionName start="\<\(rgb\|clip\|attr\|counter\|rect\|cubic-bezier\|steps\)\s*(" end=")" oneline  contains=cssValue,cssFunctionComma
-syn region cssFunction contained matchgroup=cssFunctionName start="\<\(rgba\|hsl\|hsla\|color-stop\|from\|to\)\s*(" end=")" oneline  contains=cssColor,cssValue,cssFunctionComma,cssFunction
-syn region cssFunction contained matchgroup=cssFunctionName start="\<\(linear-\|radial-\)\=\gradient\s*(" end=")" oneline  contains=cssColor,cssValue,cssFunction,cssGradientAttr,cssFunctionComma
-syn region cssFunction contained matchgroup=cssFunctionName start="\<\(matrix\(3d\)\=\|scale\(3d\|X\|Y\|Z\)\=\|translate\(3d\|X\|Y\|Z\)\=\|skew\(X\|Y\)\=\|rotate\(3d\|X\|Y\|Z\)\=\|perspective\)\s*(" end=")" oneline contains=cssValueInteger,cssValue,cssFunctionComma
+syn region cssFunction contained matchgroup=cssFunctionName start="\<\(rgb\|clip\|attr\|counter\|rect\|cubic-bezier\|steps\)\s*(" end=")" oneline  contains=cssValueInteger,cssValueNumber,cssValueLength,cssFunctionComma
+syn region cssFunction contained matchgroup=cssFunctionName start="\<\(rgba\|hsl\|hsla\|color-stop\|from\|to\)\s*(" end=")" oneline  contains=cssColor,cssValueInteger,cssValueNumber,cssValueLength,cssFunctionComma,cssFunction
+syn region cssFunction contained matchgroup=cssFunctionName start="\<\(linear-\|radial-\)\=\gradient\s*(" end=")" oneline  contains=cssColor,cssValueInteger,cssValueNumber,cssValueLength,cssFunction,cssGradientAttr,cssFunctionComma
+syn region cssFunction contained matchgroup=cssFunctionName start="\<\(matrix\(3d\)\=\|scale\(3d\|X\|Y\|Z\)\=\|translate\(3d\|X\|Y\|Z\)\=\|skew\(X\|Y\)\=\|rotate\(3d\|X\|Y\|Z\)\=\|perspective\)\s*(" end=")" oneline contains=cssValueInteger,cssValueNumber,cssValueLength,cssValueAngle,cssFunctionComma
 syn keyword cssGradientAttr contained top bottom left right cover center middle ellipse at
 syn match cssFunctionComma contained ","
 
@@ -223,6 +226,7 @@ syn keyword cssBackgroundAttr contained left center right top bottom
 " background-repeat attributes
 syn match cssBackgroundAttr contained "\<no-repeat\>"
 syn match cssBackgroundAttr contained "\<repeat\(-[xy]\)\=\>"
+syn keyword cssBackgroundAttr contained space round
 
 " background-size attributes
 syn keyword cssBackgroundAttr contained cover contain
@@ -234,7 +238,7 @@ syn match cssBorderProp contained "\<box-decoration-break\>"
 syn match cssBorderProp contained "\<box-shadow\>"
 
 " border-image attributes
-syn keyword cssBorderAttr contained stretch round fill
+syn keyword cssBorderAttr contained stretch round space fill
 
 " border-style attributes
 syn keyword cssBorderAttr contained dotted dashed solid double groove ridge inset outset
@@ -262,18 +266,14 @@ syn match cssDimensionProp contained "\<\(min\|max\)-\(width\|height\)\>"
 syn keyword cssDimensionProp contained height
 syn keyword cssDimensionProp contained width
 
-" CSS Flexible Box Layout Module Level 1
-" http://www.w3.org/TR/css3-flexbox/
-" CSS Box Alignment Module Level 3
-" http://www.w3.org/TR/css-align-3/
-syn match cssFlexibleBoxProp contained "\<flex\(-\(direction\|wrap\|flow\|grow\|shrink\|basis\)\)\=\>"
-syn match cssFlexibleBoxProp contained "\<\(align\|justify\)\(-\(items\|self\|content\)\)\=\>"
-syn keyword cssFlexibleBoxProp contained order
-
-syn match cssFlexibleBoxAttr contained "\<\(row\|column\|wrap\)\(-reverse\)\=\>"
-syn keyword cssFlexibleBoxAttr contained nowrap stretch baseline center
-syn match cssFlexibleBoxAttr contained "\<flex\(-\(start\|end\)\)\=\>"
-syn match cssFlexibleBoxAttr contained "\<space\(-\(between\|around\)\)\=\>"
+" shadow and sizing are in other property groups
+syn match cssFlexibleBoxProp contained "\<box-\(align\|direction\|flex\|ordinal-group\|orient\|pack\|shadow\|sizing\)\>"
+syn keyword cssFlexibleBoxAttr contained start end baseline
+syn keyword cssFlexibleBoxAttr contained reverse
+syn keyword cssFlexibleBoxAttr contained single multiple
+syn keyword cssFlexibleBoxAttr contained horizontal
+syn match cssFlexibleBoxAttr contained "\<vertical\(-align\)\@!\>" "escape vertical-align
+syn match cssFlexibleBoxAttr contained "\<\(inline\|block\)-axis\>"
 
 " CSS Fonts Module Level 3
 " http://www.w3.org/TR/css-fonts-3/
@@ -314,15 +314,11 @@ syn match cssMultiColumnProp contained "\<break-\(after\|before\|inside\)\>"
 syn match cssMultiColumnProp contained "\<column-\(count\|fill\|gap\|rule\(-\(color\|style\|width\)\)\=\|span\|width\)\>"
 syn keyword cssMultiColumnProp contained columns
 syn keyword cssMultiColumnAttr contained balance medium
-syn keyword cssMultiColumnAttr contained always left right page column
-syn match cssMultiColumnAttr contained "\<avoid\(-\(page\|column\)\)\=\>"
+syn keyword cssMultiColumnAttr contained always avoid left right page column
+syn match cssMultiColumnAttr contained "\<avoid-\(page\|column\)\>"
 
 " http://www.w3.org/TR/css3-break/#page-break
 syn match cssMultiColumnProp contained "\<page\(-break-\(before\|after\|inside\)\)\=\>"
-
-" http://www.w3.org/TR/SVG11/interact.html
-syn match cssInteractProp contained "\<pointer-events\>"
-syn match cssInteractAttr contained "\<\(visible\)\=\(Painted\|Fill\|Stroke\)\=\>"
 
 " TODO find following items in w3c docs.
 syn keyword cssGeneratedContentProp contained quotes crop
@@ -352,7 +348,7 @@ syn match cssPositioningAttr contained "\<list-item\>"
 syn match cssPositioningAttr contained "\<inline\(-\(block\|box\|table\)\)\=\>"
 syn keyword cssPositioningAttr contained static relative absolute fixed
 
-syn keyword cssPrintAttr contained landscape portrait crop cross always
+syn keyword cssPrintAttr contained landscape portrait crop cross always avoid
 
 syn match cssTableProp contained "\<\(caption-side\|table-layout\|border-collapse\|border-spacing\|empty-cells\)\>"
 syn keyword cssTableAttr contained fixed collapse separate show hide once always
@@ -425,10 +421,6 @@ syn keyword cssUIAttr contained both horizontal vertical
 syn match cssUIProp contained "\<text-overflow\>"
 syn keyword cssUIAttr contained clip ellipsis
 
-syn match cssUIProp contained "\<image-rendering\>"
-syn keyword cssUIAttr contained pixellated
-syn match cssUIAttr contained "\<crisp-edges\>"
-
 " Already highlighted Props: font content
 "------------------------------------------------
 " Webkit/iOS specific attributes
@@ -468,7 +460,7 @@ syn match cssMobileTextProp contained "\<text-size-adjust\>"
 
 syn match cssBraces contained "[{}]"
 syn match cssError contained "{@<>"
-syn region cssDefinition transparent matchgroup=cssBraces start='{' end='}' contains=cssAttrRegion,css.*Prop,cssComment,cssValue,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise fold
+syn region cssDefinition transparent matchgroup=cssBraces start='{' end='}' contains=cssAttrRegion,css.*Prop,cssComment,cssValue.*,cssColor,cssURL,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssVendor,cssDefinition,cssHacks,cssNoise fold
 syn match cssBraceError "}"
 syn match cssAttrComma ","
 
@@ -487,7 +479,7 @@ syn match cssPseudoClassId contained  "\<focus\(-inner\)\=\>"
 syn match cssPseudoClassId contained  "\<\(input-\)\=placeholder\>"
 
 " Misc highlight groups
-syntax match cssUnitDecorators /\(#\|-\|+\|%\|mm\|cm\|in\|pt\|pc\|em\|ex\|px\|ch\|rem\|vh\|vw\|vmin\|vmax\|dpi\|dppx\|dpcm\|Hz\|kHz\|s\|ms\|deg\|grad\|rad\)/ contained
+syntax match cssUnitDecorators /\(#\|-\|%\|mm\|cm\|in\|pt\|pc\|em\|ex\|px\|ch\|rem\|vh\|vw\|vmin\|vmax\|dpi\|dppx\|dpcm\|Hz\|kHz\|s\|ms\|deg\|grad\|rad\)/ contained
 syntax match cssNoise contained /\(:\|;\|\/\)/
 
 " Comment
@@ -512,11 +504,11 @@ syn match cssHacks contained /\(_\|*\)/
 
 " Attr Enhance
 " Some keywords are both Prop and Attr, so we have to handle them
-syn region cssAttrRegion start=/:/ end=/\ze\(;\|)\|}\)/ contained contains=css.*Attr,cssColor,cssImportant,cssValue,cssFunction,cssString.*,cssURL,cssComment,cssUnicodeEscape,cssVendor,cssError,cssAttrComma,cssNoise
+syn region cssAttrRegion start=/:/ end=/\ze\(;\|)\|}\)/ contained contains=css.*Attr,cssColor,cssImportant,cssValue.*,cssFunction,cssString.*,cssURL,cssComment,cssUnicodeEscape,cssVendor,cssError,cssAttrComma,cssNoise
 
 " Hack for transition
 " 'transition' has Props after ':'.
-syn region cssAttrRegion start=/transition\s*:/ end=/\ze\(;\|)\|}\)/ contained contains=css.*Prop,css.*Attr,cssColor,cssImportant,cssValue,cssFunction,cssString.*,cssURL,cssComment,cssUnicodeEscape,cssVendor,cssError,cssAttrComma,cssNoise
+syn region cssAttrRegion start=/transition\s*:/ end=/\ze\(;\|)\|}\)/ contained contains=css.*Prop,css.*Attr,cssColor,cssImportant,cssValue.*,cssFunction,cssString.*,cssURL,cssComment,cssUnicodeEscape,cssVendor,cssError,cssAttrComma,cssNoise
 
 
 if main_syntax == "css"
@@ -524,136 +516,129 @@ if main_syntax == "css"
 endif
 
 " Define the default highlighting.
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_css_syn_inits")
-  if version < 508
-    let did_css_syn_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
+" Only when an item doesn't have highlighting yet
 
-  HiLink cssComment Comment
-  HiLink cssVendor Comment
-  HiLink cssHacks Comment
-  HiLink cssTagName Statement
-  HiLink cssDeprecated Error
-  HiLink cssSelectorOp Special
-  HiLink cssSelectorOp2 Special
-  HiLink cssAttrComma Special
+hi def link cssComment Comment
+hi def link cssVendor Comment
+hi def link cssHacks Comment
+hi def link cssTagName Statement
+hi def link cssDeprecated Error
+hi def link cssSelectorOp Special
+hi def link cssSelectorOp2 Special
+hi def link cssAttrComma Special
 
-  HiLink cssAnimationProp cssProp
-  HiLink cssAuralProp cssProp
-  HiLink cssBackgroundProp cssProp
-  HiLink cssBorderProp cssProp
-  HiLink cssBoxProp cssProp
-  HiLink cssColorProp cssProp
-  HiLink cssContentForPagedMediaProp cssProp
-  HiLink cssDimensionProp cssProp
-  HiLink cssFlexibleBoxProp cssProp
-  HiLink cssFontProp cssProp
-  HiLink cssGeneratedContentProp cssProp
-  HiLink cssGridProp cssProp
-  HiLink cssHyerlinkProp cssProp
-  HiLink cssIEUIProp cssProp
-  HiLink cssInteractProp cssProp
-  HiLink cssLineboxProp cssProp
-  HiLink cssListProp cssProp
-  HiLink cssMarqueeProp cssProp
-  HiLink cssMobileTextProp cssProp
-  HiLink cssMultiColumnProp cssProp
-  HiLink cssPagedMediaProp cssProp
-  HiLink cssPositioningProp cssProp
-  HiLink cssPrintProp cssProp
-  HiLink cssRenderProp cssProp
-  HiLink cssRubyProp cssProp
-  HiLink cssSpeechProp cssProp
-  HiLink cssTableProp cssProp
-  HiLink cssTextProp cssProp
-  HiLink cssTransformProp cssProp
-  HiLink cssTransitionProp cssProp
-  HiLink cssUIProp cssProp
+hi def link cssAnimationProp cssProp
+hi def link cssBackgroundProp cssProp
+hi def link cssBorderProp cssProp
+hi def link cssBoxProp cssProp
+hi def link cssColorProp cssProp
+hi def link cssContentForPagedMediaProp cssProp
+hi def link cssDimensionProp cssProp
+hi def link cssFlexibleBoxProp cssProp
+hi def link cssFontProp cssProp
+hi def link cssGeneratedContentProp cssProp
+hi def link cssGridProp cssProp
+hi def link cssHyerlinkProp cssProp
+hi def link cssLineboxProp cssProp
+hi def link cssListProp cssProp
+hi def link cssMarqueeProp cssProp
+hi def link cssMultiColumnProp cssProp
+hi def link cssPagedMediaProp cssProp
+hi def link cssPositioningProp cssProp
+hi def link cssPrintProp cssProp
+hi def link cssRubyProp cssProp
+hi def link cssSpeechProp cssProp
+hi def link cssTableProp cssProp
+hi def link cssTextProp cssProp
+hi def link cssTransformProp cssProp
+hi def link cssTransitionProp cssProp
+hi def link cssUIProp cssProp
+hi def link cssIEUIProp cssProp
+hi def link cssAuralProp cssProp
+hi def link cssRenderProp cssProp
+hi def link cssMobileTextProp cssProp
 
-  HiLink cssAnimationAttr cssAttr
-  HiLink cssAuralAttr cssAttr
-  HiLink cssBackgroundAttr cssAttr
-  HiLink cssBorderAttr cssAttr
-  HiLink cssBoxAttr cssAttr
-  HiLink cssContentForPagedMediaAttr cssAttr
-  HiLink cssCommonAttr cssAttr
-  HiLink cssDimensionAttr cssAttr
-  HiLink cssFlexibleBoxAttr cssAttr
-  HiLink cssFontAttr cssAttr
-  HiLink cssGeneratedContentAttr cssAttr
-  HiLink cssGridAttr cssAttr
-  HiLink cssHyerlinkAttr cssAttr
-  HiLink cssIEUIAttr cssAttr
-  HiLink cssInteractAttr cssAttr
-  HiLink cssLineboxAttr cssAttr
-  HiLink cssListAttr cssAttr
-  HiLink cssMarginAttr cssAttr
-  HiLink cssMarqueeAttr cssAttr
-  HiLink cssMultiColumnAttr cssAttr
-  HiLink cssPaddingAttr cssAttr
-  HiLink cssPagedMediaAttr cssAttr
-  HiLink cssPositioningAttr cssAttr
-  HiLink cssGradientAttr cssAttr
-  HiLink cssPrintAttr cssAttr
-  HiLink cssRenderAttr cssAttr
-  HiLink cssRubyAttr cssAttr
-  HiLink cssSpeechAttr cssAttr
-  HiLink cssTableAttr cssAttr
-  HiLink cssTextAttr cssAttr
-  HiLink cssTransformAttr cssAttr
-  HiLink cssTransitionAttr cssAttr
-  HiLink cssUIAttr cssAttr
+hi def link cssAnimationAttr cssAttr
+hi def link cssBackgroundAttr cssAttr
+hi def link cssBorderAttr cssAttr
+hi def link cssBoxAttr cssAttr
+hi def link cssContentForPagedMediaAttr cssAttr
+hi def link cssDimensionAttr cssAttr
+hi def link cssFlexibleBoxAttr cssAttr
+hi def link cssFontAttr cssAttr
+hi def link cssGeneratedContentAttr cssAttr
+hi def link cssGridAttr cssAttr
+hi def link cssHyerlinkAttr cssAttr
+hi def link cssLineboxAttr cssAttr
+hi def link cssListAttr cssAttr
+hi def link cssMarginAttr cssAttr
+hi def link cssMarqueeAttr cssAttr
+hi def link cssMultiColumnAttr cssAttr
+hi def link cssPaddingAttr cssAttr
+hi def link cssPagedMediaAttr cssAttr
+hi def link cssPositioningAttr cssAttr
+hi def link cssGradientAttr cssAttr
+hi def link cssPrintAttr cssAttr
+hi def link cssRubyAttr cssAttr
+hi def link cssSpeechAttr cssAttr
+hi def link cssTableAttr cssAttr
+hi def link cssTextAttr cssAttr
+hi def link cssTransformAttr cssAttr
+hi def link cssTransitionAttr cssAttr
+hi def link cssUIAttr cssAttr
+hi def link cssIEUIAttr cssAttr
+hi def link cssAuralAttr cssAttr
+hi def link cssRenderAttr cssAttr
+hi def link cssCommonAttr cssAttr
 
-  HiLink cssPseudoClassId PreProc
-  HiLink cssPseudoClassLang Constant
-  HiLink cssValueNumber Number
-  HiLink cssFunction Constant
-  HiLink cssURL String
-  HiLink cssFunctionName Function
-  HiLink cssFunctionComma Function
-  HiLink cssColor Constant
-  HiLink cssIdentifier Function
-  HiLink cssInclude Include
-  HiLink cssIncludeKeyword atKeyword
-  HiLink cssImportant Special
-  HiLink cssBraces Function
-  HiLink cssBraceError Error
-  HiLink cssError Error
-  HiLink cssUnicodeEscape Special
-  HiLink cssStringQQ String
-  HiLink cssStringQ String
-  HiLink cssAttributeSelector String
-  HiLink cssMedia atKeyword
-  HiLink cssMediaType Special
-  HiLink cssMediaComma Normal
-  HiLink cssMediaKeyword Statement
-  HiLink cssMediaProp cssProp
-  HiLink cssMediaAttr cssAttr
-  HiLink cssPage atKeyword
-  HiLink cssPagePseudo PreProc
-  HiLink cssPageMargin atKeyword
-  HiLink cssPageProp cssProp
-  HiLink cssKeyFrame atKeyword
-  HiLink cssKeyFrameSelector Constant
-  HiLink cssFontDescriptor Special
-  HiLink cssFontDescriptorFunction Constant
-  HiLink cssFontDescriptorProp cssProp
-  HiLink cssFontDescriptorAttr cssAttr
-  HiLink cssUnicodeRange Constant
-  HiLink cssClassName Function
-  HiLink cssClassNameDot Function
-  HiLink cssProp StorageClass
-  HiLink cssAttr Constant
-  HiLink cssUnitDecorators Number
-  HiLink cssNoise Noise
-  HiLink atKeyword PreProc
-  delcommand HiLink
-endif
+hi def link cssPseudoClassId PreProc
+hi def link cssPseudoClassLang Constant
+hi def link cssValueLength Number
+hi def link cssValueInteger Number
+hi def link cssValueNumber Number
+hi def link cssValueAngle Number
+hi def link cssValueTime Number
+hi def link cssValueFrequency Number
+hi def link cssFunction Constant
+hi def link cssURL String
+hi def link cssFunctionName Function
+hi def link cssFunctionComma Function
+hi def link cssColor Constant
+hi def link cssIdentifier Function
+hi def link cssInclude Include
+hi def link cssIncludeKeyword atKeyword
+hi def link cssImportant Special
+hi def link cssBraces Function
+hi def link cssBraceError Error
+hi def link cssError Error
+hi def link cssUnicodeEscape Special
+hi def link cssStringQQ String
+hi def link cssStringQ String
+hi def link cssAttributeSelector String
+hi def link cssMedia atKeyword
+hi def link cssMediaType Special
+hi def link cssMediaComma Normal
+hi def link cssMediaKeyword Statement
+hi def link cssMediaProp cssProp
+hi def link cssMediaAttr cssAttr
+hi def link cssPage atKeyword
+hi def link cssPagePseudo PreProc
+hi def link cssPageMargin atKeyword
+hi def link cssPageProp cssProp
+hi def link cssKeyFrame atKeyword
+hi def link cssKeyFrameSelector Constant
+hi def link cssFontDescriptor Special
+hi def link cssFontDescriptorFunction Constant
+hi def link cssFontDescriptorProp cssProp
+hi def link cssFontDescriptorAttr cssAttr
+hi def link cssUnicodeRange Constant
+hi def link cssClassName Function
+hi def link cssClassNameDot Function
+hi def link cssProp StorageClass
+hi def link cssAttr Constant
+hi def link cssUnitDecorators Number
+hi def link cssNoise Noise
+hi def link atKeyword PreProc
 
 let b:current_syntax = "css"
 

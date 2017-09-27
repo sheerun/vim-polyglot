@@ -10,6 +10,10 @@ endif
 
 let g:filetype_euphoria = 'elixir'
 augroup filetypedetect
+" vim:vim/vim::/runtime/
+augroup END
+
+augroup filetypedetect
 " apiblueprint:sheerun/apiblueprint.vim
 autocmd BufReadPost,BufNewFile *.apib set filetype=apiblueprint
 autocmd FileType apiblueprint set syntax=apiblueprint
@@ -148,10 +152,6 @@ augroup filetypedetect
 if has("autocmd")
   au  BufNewFile,BufRead *.cql set filetype=cql
 endif
-augroup END
-
-augroup filetypedetect
-" css:JulesWang/css.vim
 augroup END
 
 augroup filetypedetect
