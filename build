@@ -134,6 +134,7 @@ PACKS="
   emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
   fish:dag/vim-fish
+  fsharp:fsharp/vim-fsharp:_BASIC
   git:tpope/vim-git
   gmpl:maelvalais/gmpl.vim
   openscad:sirtaj/vim-openscad
