@@ -134,6 +134,8 @@ PACKS="
   erlang:vim-erlang/vim-erlang-runtime
   fish:dag/vim-fish
   git:tpope/vim-git
+  gmpl:maelvalais/gmpl.vim
+  openscad:sirtaj/vim-openscad
   glsl:tikhomirov/vim-glsl
   gnuplot:vim-scripts/gnuplot-syntax-highlighting
   go:fatih/vim-go:_BASIC
