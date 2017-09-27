@@ -357,11 +357,6 @@ au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
 augroup END
 
 augroup filetypedetect
-" graphql:jparise/vim-graphql
-au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
-augroup END
-
-augroup filetypedetect
 " groovy:vim-scripts/groovy.vim
 augroup END
 
