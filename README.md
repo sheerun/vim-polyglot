@@ -34,10 +34,6 @@ NOTE: Not all features of listed language packs are available. We strip them fro
 
 If you need full functionality of any plugin, please use it directly with your plugin manager.
 
-## Basic language pack
-
-Most importantly, vim-polyglot contains all runtime syntax files from upstream [vim](https://github.com/vim/vim) repository, plus:
-
 ## Language packs
 
 - [ansible](https://github.com/pearofducks/ansible-vim) (syntax, indent, ftplugin)
@@ -142,7 +138,6 @@ Most importantly, vim-polyglot contains all runtime syntax files from upstream [
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [vcl](https://github.com/smerrill/vcl-vim-plugin) (syntax)
 - [vifm](https://github.com/vifm/vifm.vim) (syntax, autoload, ftplugin)
-- [vim](https://github.com/vim/vim) (syntax, indent, compiler, autoload, ftplugin)
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent)
 - [vue](https://github.com/posva/vim-vue) (syntax, indent, ftplugin)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)

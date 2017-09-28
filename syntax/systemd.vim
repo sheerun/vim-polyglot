@@ -1,15 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vim') == -1
-  
-" Vim syntax file
-" Language:  systemd.unit(5)
-
-if !exists('b:current_syntax')
-  " Looks a lot like dosini files.
-  runtime! syntax/dosini.vim
-  let b:current_syntax = 'systemd'
-endif
-
-endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'systemd') == -1
   
 " Filename:     systemd.vim

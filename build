@@ -107,7 +107,6 @@ EOF
 }
 
 PACKS="
-  vim:vim/vim::/runtime/
   apiblueprint:sheerun/apiblueprint.vim
   applescript:vim-scripts/applescript.vim
   asciidoc:asciidoc/vim-asciidoc
