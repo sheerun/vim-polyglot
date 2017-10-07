@@ -112,6 +112,7 @@ PACKS="
   asciidoc:asciidoc/vim-asciidoc
   yaml:stephpy/vim-yaml
   ansible:pearofducks/ansible-vim
+  apex/apexlog/visualforce:ejholmes/vim-forcedotcom
   arduino:sudar/vim-arduino-syntax
   autohotkey:hnamikaw/vim-autohotkey
   blade:jwalton512/vim-blade
