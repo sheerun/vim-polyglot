@@ -588,7 +588,7 @@ au BufNewFile,BufRead *.nim,*.nims set filetype=nim
 augroup END
 
 augroup filetypedetect
-" nix:spwhitt/vim-nix
+" nix:LnL7/vim-nix
 autocmd BufNewFile,BufRead *.nix setfiletype nix
 augroup END
 
