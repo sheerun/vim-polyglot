@@ -9,7 +9,7 @@ A collection of language packs for Vim.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
 - It **installs and updates 100+ times faster** than 100+ packages it consists of.
-- Solid syntax and indentation support. Only the best language packs.
+- Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
 - Each build is tested by automated vimrunner script on CI. See `spec` directory.
