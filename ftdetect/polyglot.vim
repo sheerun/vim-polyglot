@@ -92,6 +92,10 @@ autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn,*.cljx,*.cljc,{build,profile}.boot
 augroup END
 
 augroup filetypedetect
+" cmake:pboettch/vim-cmake-syntax
+augroup END
+
+augroup filetypedetect
 " coffee-script:kchmck/vim-coffee-script
 " Language:    CoffeeScript
 " Maintainer:  Mick Koch <mick@kochm.co>

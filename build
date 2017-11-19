@@ -120,6 +120,7 @@ PACKS="
   caddyfile:isobit/vim-caddyfile
   cjsx:mtscout6/vim-cjsx
   clojure:guns/vim-clojure-static
+  cmake:pboettch/vim-cmake-syntax
   coffee-script:kchmck/vim-coffee-script
   cryptol:victoredwardocallaghan/cryptol.vim
   crystal:rhysd/vim-crystal
