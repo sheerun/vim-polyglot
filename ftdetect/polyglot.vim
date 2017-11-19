@@ -163,6 +163,7 @@ augroup END
 
 augroup filetypedetect
 " dockerfile:docker/docker::/contrib/syntax/vim/
+autocmd BufRead,BufNewFile Dockerfile.*,Dockerfile set filetype=dockerfile
 augroup END
 
 augroup filetypedetect
