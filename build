@@ -165,7 +165,7 @@ PACKS="
   mathematica:rsmenon/vim-mathematica
   nginx:chr4/nginx.vim
   nim:zah/nim.vim:_BASIC
-  nix:spwhitt/vim-nix
+  nix:LnL7/vim-nix
   objc:b4winckler/vim-objc
   ocaml:jrk/vim-ocaml
   octave:vim-scripts/octave.vim--
