@@ -9,3 +9,7 @@ if !exists('g:vim_json_syntax_conceal')
 endif
 
 let g:filetype_euphoria = 'elixir'
+
+augroup filetypedetect
+  autocmd BufNewFile,BufReadPost *.vb setlocal filetype=vbnet
+augroup END

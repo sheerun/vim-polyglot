@@ -9,6 +9,10 @@ if !exists('g:vim_json_syntax_conceal')
 endif
 
 let g:filetype_euphoria = 'elixir'
+
+augroup filetypedetect
+  autocmd BufNewFile,BufReadPost *.vb setlocal filetype=vbnet
+augroup END
 augroup filetypedetect
 " apiblueprint:sheerun/apiblueprint.vim
 autocmd BufReadPost,BufNewFile *.apib set filetype=apiblueprint
