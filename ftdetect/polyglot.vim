@@ -296,12 +296,6 @@ au BufRead,BufNewFile *.mod set filetype=gmpl
 augroup END
 
 augroup filetypedetect
-" openscad:sirtaj/vim-openscad
-au BufRead,BufNewFile *.scad    setfiletype openscad
-an 50.80.265 &Syntax.NO.OpenSCAD :cal SetSyn("openscad")<CR>
-augroup END
-
-augroup filetypedetect
 " glsl:tikhomirov/vim-glsl
 " Language: OpenGL Shading Language
 " Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
