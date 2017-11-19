@@ -339,15 +339,18 @@ function! s:gofiletype_post()
   let &g:fileencodings = s:current_fileencodings
 endfunction
 
-au BufNewFile *.go setfiletype go | setlocal fileencoding=utf-8 fileformat=unix
-au BufRead *.go call s:gofiletype_pre("go")
-au BufReadPost *.go call s:gofiletype_post()
+augroup vim-go-filetype
+  autocmd!
+  au BufNewFile *.go setfiletype go | setlocal fileencoding=utf-8 fileformat=unix
+  au BufRead *.go call s:gofiletype_pre("go")
+  au BufReadPost *.go call s:gofiletype_post()
 
-au BufNewFile *.s setfiletype asm | setlocal fileencoding=utf-8 fileformat=unix
-au BufRead *.s call s:gofiletype_pre("asm")
-au BufReadPost *.s call s:gofiletype_post()
+  au BufNewFile *.s setfiletype asm | setlocal fileencoding=utf-8 fileformat=unix
+  au BufRead *.s call s:gofiletype_pre("asm")
+  au BufReadPost *.s call s:gofiletype_post()
 
-au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
+  au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
+augroup end
 
 " vim: sw=2 ts=2 et
 augroup END
@@ -919,7 +922,7 @@ fun! s:DetectScala()
     endif
 endfun
 
-au BufRead,BufNewFile *.scala set filetype=scala
+au BufRead,BufNewFile *.scala,*.sc set filetype=scala
 au BufRead,BufNewFile * call s:DetectScala()
 
 " Install vim-sbt for additional syntax highlighting.
@@ -1021,8 +1024,8 @@ augroup END
 
 augroup filetypedetect
 " toml:cespare/vim-toml
-" Rust uses several TOML config files that are not named with .toml.
-autocmd BufNewFile,BufRead *.toml,Cargo.lock,*/.cargo/config set filetype=toml
+" Go dep and Rust use several TOML config files that are not named with .toml.
+autocmd BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config set filetype=toml
 augroup END
 
 augroup filetypedetect

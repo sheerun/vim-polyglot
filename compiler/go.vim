@@ -6,10 +6,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
 "
 " compiler/go.vim: Vim compiler file for Go.
 
-if exists("current_compiler")
+if exists("g:current_compiler")
   finish
 endif
-let current_compiler = "go"
+let g:current_compiler = "go"
 
 if exists(":CompilerSet") != 2
   command -nargs=* CompilerSet setlocal <args>

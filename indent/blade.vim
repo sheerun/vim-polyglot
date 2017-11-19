@@ -19,7 +19,7 @@ let b:did_indent = 1
 
 " Doesn't include 'foreach' and 'forelse' because these already get matched by 'for'.
 let s:directives_start = 'if\|else\|unless\|for\|while\|empty\|push\|section\|can\|hasSection\|verbatim\|php\|' .
-            \ 'component\|slot\|prepend'
+            \ 'component\|slot\|prepend\|auth\|guest'
 let s:directives_end = 'else\|end\|empty\|show\|stop\|append\|overwrite'
 
 if exists('g:blade_custom_directives_pairs')

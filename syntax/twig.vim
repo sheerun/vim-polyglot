@@ -19,9 +19,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'twig') == -1
 "     2011 July 27:   Changed all references of jinja tp twig
 "     2014 December 4:   Do not assume that the base filetype is HTML.
 
-if exists('b:main_syntax')
-  finish
-endif
 if exists('b:current_syntax')
   let b:main_syntax = b:current_syntax
 else

@@ -35,6 +35,8 @@ syn match   i3NoStartupId '--no-startup-id' contained
 syn keyword i3WsSpecialParam next prev next_on_output prev_on_output back_and_forth current number
 syn keyword i3BordersSpecialParam none vertical horizontal both
 syn keyword i3ModeParam dock hide invisible skipwhite
+syn keyword i3GapsCommand gaps smart_gaps smart_borders
+syn keyword i3GapsParam inner outer current all set plus minus no_gaps
 
 " these are not keywords but we add them for consistency
 syn keyword i3PseudoParam no false inactive
@@ -99,6 +101,7 @@ highlight link i3ColorLast            Constant
 highlight link i3WsSpecialParam       Constant
 highlight link i3BordersSpecialParam  Constant
 highlight link i3ModeParam            Constant
+highlight link i3GapsParam            Constant
 
 highlight link i3Var                  Identifier
 highlight link i3SetVar               Identifier
@@ -115,6 +118,7 @@ highlight link i3Font                 String
 highlight link i3ExecKeyword          Keyword
 highlight link i3Command              Keyword
 highlight link i3WsKeyword            Keyword
+highlight link i3GapsCommand          Keyword
 
 highlight link i3ColorDef1            Define
 highlight link i3ColorDef3            Define

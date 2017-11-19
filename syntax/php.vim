@@ -621,7 +621,7 @@ if !exists("php_ignore_phpdoc") || !php_ignore_phpdoc
 
   syn region phpDocTags  start="{@\(example\|id\|internal\|inheritdoc\|link\|source\|toc\|tutorial\)" end="}" containedin=phpDocComment
   syn match phpDocTags "@\%(abstract\|access\|api\|author\|brief\|bug\|category\|class\|copyright\|created\|date\|deprecated\|details\|example\|exception\|file\|filesource\|final\|global\|id\|ignore\|inheritdoc\|internal\|license\|link\|magic\|method\|name\|package\|param\|property\|return\|see\|since\|source\|static\|staticvar\|struct\|subpackage\|throws\|toc\|todo\|tutorial\|type\|uses\|var\|version\|warning\)" containedin=phpDocComment nextgroup=phpDocParam,phpDocIdentifier skipwhite contained
-  syn match phpDocParam "\s\+\zs\%(\h\w*|\?\)\+" nextgroup=phpDocIdentifier skipwhite contained
+  syn match phpDocParam "\s\+\zs\(|\|\\\|\h\w*\)*\h\w*" nextgroup=phpDocIdentifier skipwhite contained
   syn match phpDocIdentifier "\s\+\zs$\h\w*" contained
 
   syn case match

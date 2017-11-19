@@ -49,7 +49,7 @@ syn region jsxChild contained start=+{+ end=++ contains=jsBlock,javascriptBlock
 " and generic Flow type annotations (http://flowtype.org/).
 syn region jsxRegion
   \ contains=@Spell,@XMLSyntax,jsxRegion,jsxChild,jsBlock,javascriptBlock
-  \ start=+\%(<\|\w\)\@<!<\z([a-zA-Z][a-zA-Z0-9:\-.]*\)+
+  \ start=+\%(<\|\w\)\@<!<\z([a-zA-Z][a-zA-Z0-9:\-.]*\>[:,]\@!\)\([^>]*>(\)\@!+
   \ skip=+<!--\_.\{-}-->+
   \ end=+</\z1\_\s\{-}>+
   \ end=+/>+

@@ -39,6 +39,8 @@ function! TerraformFolds()
     return ">1"
   elseif match(thisline, '^terraform') >= 0
     return ">1"
+  elseif match(thisline, '^locals') >= 0
+    return ">1"
   else
     return "="
   endif

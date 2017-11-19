@@ -120,10 +120,10 @@ syn region elixirSigil matchgroup=elixirSigilDelimiter start=+\~\a\z('''\)+ end=
 " Documentation
 if exists('g:elixir_use_markdown_for_docs') && g:elixir_use_markdown_for_docs
   syn include @markdown syntax/markdown.vim
-  syn cluster elixirDocStringContained contains=@markdown,@Spell
+  syn cluster elixirDocStringContained contains=@markdown,@Spell,elixirInterpolation
 else
   let g:elixir_use_markdown_for_docs = 0
-  syn cluster elixirDocStringContained contains=elixirDocTest,elixirTodo,@Spell
+  syn cluster elixirDocStringContained contains=elixirDocTest,elixirTodo,@Spell,elixirInterpolation
 
   " doctests
   syn region elixirDocTest start="^\s*\%(iex\|\.\.\.\)\%((\d*)\)\?>\s" end="^\s*$" contained

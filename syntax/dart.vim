@@ -72,6 +72,7 @@ syntax keyword dartTodo          contained TODO FIXME XXX
 syntax region  dartComment       start="/\*"  end="\*/" contains=dartComment,dartTodo,dartDocLink,@Spell
 syntax match   dartLineComment   "//.*" contains=dartTodo,@Spell
 syntax match   dartLineDocComment "///.*" contains=dartTodo,dartDocLink,@Spell
+syntax match   dartShebangLine   /^\%1l#!.*/
 syntax region  dartDocLink       oneline contained start=+\[+ end=+\]+
 
 " Strings
@@ -110,6 +111,7 @@ highlight default link dartOperator        Operator
 highlight default link dartComment         Comment
 highlight default link dartLineComment     Comment
 highlight default link dartLineDocComment  Comment
+highlight default link dartShebangLine     Comment
 highlight default link dartConstant        Constant
 highlight default link dartTypedef         Typedef
 highlight default link dartTodo            Todo

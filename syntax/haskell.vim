@@ -99,6 +99,7 @@ syn region haskellBlockComment start="{-" end="-}"
   \ haskellTodo,
   \ @Spell
 syn region haskellPragma start="{-#" end="#-}"
+syn region haskellLiquid start="{-@" end="@-}"
 syn match haskellPreProc "^#.*$"
 syn keyword haskellTodo TODO FIXME contained
 " Treat a shebang line at the start of the file as a comment
@@ -147,6 +148,7 @@ highlight def link haskellShebang Comment
 highlight def link haskellLineComment Comment
 highlight def link haskellBlockComment Comment
 highlight def link haskellPragma SpecialComment
+highlight def link haskellLiquid SpecialComment
 highlight def link haskellString String
 highlight def link haskellChar String
 highlight def link haskellBacktick Operator

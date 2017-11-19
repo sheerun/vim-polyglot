@@ -7,20 +7,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
 " Previous:    Vincent Pit <perl@profvince.com>
 " Last Change: 2016-02-01
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
-if version < 600
-  syntax clear
-elseif exists("b:current_syntax")
+if exists("b:current_syntax")
   finish
 endif
 
-" Read the C syntax to start with
-if version < 600
-  source <sfile>:p:h/c.vim
-else
-  runtime! syntax/c.vim
-endif
+runtime! syntax/c.vim
 
 " Configuration:
 " let xs_superseded = 0 " mark C functions superseded by Perl replacements (ex. memcpy vs Copy)
@@ -3672,29 +3663,16 @@ syn keyword xsMacro whichsig write xio_any xio_dirp xiv_iv xlv_targoff
 syn keyword xsMacro xpv_len xuv_uv yystype
 
 " Define the default highlighting.
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_xs_syntax_inits")
-  if version < 508
-    let did_xs_syntax_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
-
-  HiLink xsPrivate    Error
-  HiLink xsSuperseded Error
-  HiLink xsType       Type
-  HiLink xsString     String
-  HiLink xsConstant   Constant
-  HiLink xsException  Exception
-  HiLink xsKeyword    Keyword
-  HiLink xsFunction   Function
-  HiLink xsVariable   Identifier
-  HiLink xsMacro      Macro
-
-  delcommand HiLink
-endif
+hi def link xsPrivate    Error
+hi def link xsSuperseded Error
+hi def link xsType       Type
+hi def link xsString     String
+hi def link xsConstant   Constant
+hi def link xsException  Exception
+hi def link xsKeyword    Keyword
+hi def link xsFunction   Function
+hi def link xsVariable   Identifier
+hi def link xsMacro      Macro
 
 let b:current_syntax = "xs"
 

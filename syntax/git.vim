@@ -15,7 +15,7 @@ syn sync minlines=50
 syn include @gitDiff syntax/diff.vim
 
 syn region gitHead start=/\%^/ end=/^$/
-syn region gitHead start=/\%(^commit \x\{40\}\%(\s*(.*)\)\=$\)\@=/ end=/^$/
+syn region gitHead start=/\%(^commit\%( \x\{40\}\)\{1,\}\%(\s*(.*)\)\=$\)\@=/ end=/^$/
 
 " For git reflog and git show ...^{tree}, avoid sync issues
 syn match gitHead /^\d\{6\} \%(\w\{4} \)\=\x\{40\}\%( [0-3]\)\=\t.*/

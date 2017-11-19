@@ -92,32 +92,33 @@ endif
 
 if nim_highlight_builtins == 1
   " builtin functions, types and objects, not really part of the syntax
-  syn keyword nimBuiltin int int8 int16 int32 int64 uint uint8 uint16 uint32 uint64 float float32 float64 bool
-  syn keyword nimBuiltin char string cstring pointer range array openarray seq
+  syn keyword nimBuiltin int int8 int16 int32 int64 uint uint8 uint16 uint32 uint64 float float32 float64
+  syn keyword nimBuiltin bool void chr char string cstring pointer range array openarray openArray seq varargs varArgs
   syn keyword nimBuiltin set Byte Natural Positive Conversion
   syn keyword nimBuiltin BiggestInt BiggestFloat cchar cschar cshort cint csize cuchar cushort
   syn keyword nimBuiltin clong clonglong cfloat cdouble clongdouble cuint culong culonglong cchar
-  syn keyword nimBuiltin CompileDate CompileTime nimVersion nimMajor
-  syn keyword nimBuiltin nimMinor nimPatch cpuEndian hostOS hostCPU inf
-  syn keyword nimBuiltin neginf nan QuitSuccess QuitFailure dbgLineHook stdin
+  syn keyword nimBuiltin CompileDate CompileTime nimversion nimVersion nimmajor nimMajor
+  syn keyword nimBuiltin nimminor nimMinor nimpatch nimPatch cpuendian cpuEndian hostos hostOS hostcpu hostCPU inf
+  syn keyword nimBuiltin neginf nan QuitSuccess QuitFailure dbglinehook dbgLineHook stdin
   syn keyword nimBuiltin stdout stderr defined new high low sizeof succ pred
-  syn keyword nimBuiltin inc dec newSeq len incl excl card ord chr ze ze64
-  syn keyword nimBuiltin toU8 toU16 toU32 abs min max add repr
+  syn keyword nimBuiltin inc dec newseq newSeq len incl excl card ord chr ze ze64
+  syn keyword nimBuiltin tou8 toU8 tou16 toU16 tou32 toU32 abs min max add repr
   syn match   nimBuiltin "\<contains\>"
-  syn keyword nimBuiltin toFloat toBiggestFloat toInt toBiggestInt addQuitProc
-  syn keyword nimBuiltin copy setLen newString zeroMem copyMem moveMem
-  syn keyword nimBuiltin equalMem alloc alloc0 realloc dealloc setLen assert
-  syn keyword nimBuiltin swap getRefcount getCurrentException Msg
-  syn keyword nimBuiltin getOccupiedMem getFreeMem getTotalMem isNil seqToPtr
+  syn keyword nimBuiltin tofloat toFloat tobiggestfloat toBiggestFloat toint toInt tobiggestint toBiggestInt
+  syn keyword nimBuiltin addquitproc addQuitProc
+  syn keyword nimBuiltin copy setlen setLen newstring newString zeromem zeroMem copymem copyMem movemem moveMem
+  syn keyword nimBuiltin equalmem equalMem alloc alloc0 realloc dealloc assert
+  syn keyword nimBuiltin echo swap getrefcount getRefcount getcurrentexception getCurrentException Msg
+  syn keyword nimBuiltin getoccupiedmem getOccupiedMem getfreemem getFreeMem gettotalmem getTotalMem isnil isNil seqtoptr seqToPtr
   syn keyword nimBuiltin find pop GC_disable GC_enable GC_fullCollect
   syn keyword nimBuiltin GC_setStrategy GC_enableMarkAndSweep GC_Strategy
   syn keyword nimBuiltin GC_disableMarkAnd Sweep GC_getStatistics GC_ref
   syn keyword nimBuiltin GC_ref GC_ref GC_unref GC_unref GC_unref quit
   syn keyword nimBuiltin OpenFile OpenFile CloseFile EndOfFile readChar
-  syn keyword nimBuiltin FlushFile readFile write readLine writeln writeln
-  syn keyword nimBuiltin getFileSize ReadBytes ReadChars readBuffer writeBytes
-  syn keyword nimBuiltin writeChars writeBuffer setFilePos getFilePos
-  syn keyword nimBuiltin fileHandle countdown countup items lines
+  syn keyword nimBuiltin FlushFile readfile readFile readline readLine write writeln writeLn writeline writeLine
+  syn keyword nimBuiltin getfilesize getFileSize ReadBytes ReadChars readbuffer readBuffer writebytes writeBytes
+  syn keyword nimBuiltin writechars writeChars writebuffer writeBuffer setfilepos setFilePos getfilepos getFilePos
+  syn keyword nimBuiltin filehandle fileHandle countdown countup items lines
   syn keyword nimBuiltin FileMode File RootObj FileHandle ByteAddress Endianness
 endif
 
