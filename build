@@ -193,6 +193,7 @@ PACKS="
   scala:derekwyatt/vim-scala
   scss:cakebaker/scss-syntax.vim
   slim:slim-template/vim-slim
+  slime:slime-lang/vim-slime-syntax
   solidity:tomlion/vim-solidity
   stylus:wavded/vim-stylus
   swift:keith/swift.vim

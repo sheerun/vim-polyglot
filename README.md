@@ -121,6 +121,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [scala](https://github.com/derekwyatt/vim-scala) (syntax, indent, compiler, ftplugin)
 - [scss](https://github.com/cakebaker/scss-syntax.vim) (syntax, autoload, ftplugin)
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftplugin)
+- [slime](https://github.com/slime-lang/vim-slime-syntax) (syntax, indent)
 - [solidity](https://github.com/tomlion/vim-solidity) (syntax, indent, ftplugin)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin)
 - [swift](https://github.com/keith/swift.vim) (syntax, indent, ftplugin)

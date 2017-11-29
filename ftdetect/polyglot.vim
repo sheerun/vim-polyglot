@@ -949,6 +949,11 @@ autocmd BufNewFile,BufRead *.slim setfiletype slim
 augroup END
 
 augroup filetypedetect
+" slime:slime-lang/vim-slime-syntax
+autocmd BufNewFile,BufRead *.slime set filetype=slime
+augroup END
+
+augroup filetypedetect
 " solidity:tomlion/vim-solidity
 au BufNewFile,BufRead *.sol setf solidity
 augroup END
