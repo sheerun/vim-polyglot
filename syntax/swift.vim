@@ -55,9 +55,11 @@ delfunction s:CommentKeywordMatch
 
 " Literals
 " Strings
-syntax region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolatedWrapper oneline
+syntax region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftMultilineInterpolatedWrapper oneline
+syntax region swiftMultilineString start=/"""/ end=/"""/ contains=swiftMultilineInterpolatedWrapper
+syntax region swiftMultilineInterpolatedWrapper start="\v\\\(\s*" end="\v\s*\)" contained containedin=swiftMultilineString contains=swiftInterpolatedString oneline
 syntax region swiftInterpolatedWrapper start="\v[^\\]\zs\\\(\s*" end="\v\s*\)" contained containedin=swiftString contains=swiftInterpolatedString,swiftString oneline
-syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftInterpolatedWrapper oneline
+syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftInterpolatedWrapper,swiftMultilineInterpolatedWrapper oneline
 
 " Numbers
 syntax match swiftNumber "\v<\d+>"
@@ -222,7 +224,7 @@ syntax keyword swiftDebugIdentifier
 
 syntax keyword swiftLineDirective #setline
 
-syntax region swiftTypeWrapper start=":\s*\(\.\)\@!\<\u" skip="\s*,\s*$*\s*" end="$\|/"me=e-1 contains=ALLBUT,swiftInterpolatedWrapper transparent
+syntax region swiftTypeWrapper start=":\s*\(\.\)\@!\<\u" skip="\s*,\s*$*\s*" end="$\|/"me=e-1 contains=ALLBUT,swiftInterpolatedWrapper,swiftMultilineInterpolatedWrapper transparent
 syntax region swiftTypeCastWrapper start="\(as\|is\)\(!\|?\)\=\s\+" end="\v(\s|$|\{)" contains=swiftType,swiftCastKeyword keepend transparent oneline
 syntax region swiftGenericsWrapper start="\v\<" end="\v\>" contains=swiftType transparent oneline
 syntax region swiftLiteralWrapper start="\v\=\s*" skip="\v[^\[\]]\(\)" end="\v(\[\]|\(\))" contains=ALL transparent oneline
@@ -257,7 +259,9 @@ highlight default link swiftComment Comment
 highlight default link swiftMarker Comment
 
 highlight default link swiftString String
+highlight default link swiftMultilineString String
 highlight default link swiftInterpolatedWrapper Delimiter
+highlight default link swiftMultilineInterpolatedWrapper Delimiter
 highlight default link swiftTypeDeclaration Delimiter
 highlight default link swiftNumber Number
 highlight default link swiftBoolean Boolean

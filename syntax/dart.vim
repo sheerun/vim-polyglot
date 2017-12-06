@@ -84,8 +84,8 @@ endif
 syntax cluster dartStringContains contains=@dartRawStringContains,dartInterpolation,dartSpecialChar
 syntax region  dartString         oneline start=+\z(["']\)+ end=+\z1+ contains=@dartStringContains keepend
 syntax region  dartRawString      oneline start=+r\z(["']\)+ end=+\z1+ contains=@dartRawStringContains keepend
-syntax region  dartMultilineString     start=+\z("\{3\}\|'\{3\}\)+ end=+\z1+ contains=@dartStringContains
-syntax region  dartRawMultilineString     start=+r\z("\{3\}\|'\{3\}\)+ end=+\z1+ contains=@dartSRawtringContains
+syntax region  dartMultilineString     start=+\z("\{3\}\|'\{3\}\)+ end=+\z1+ contains=@dartStringContains keepend
+syntax region  dartRawMultilineString     start=+r\z("\{3\}\|'\{3\}\)+ end=+\z1+ contains=@dartSRawtringContains keepend
 syntax match   dartInterpolation contained "\$\(\w\+\|{[^}]\+}\)" extend
 syntax match   dartSpecialChar   contained "\\\(u\x\{4\}\|u{\x\+}\|x\x\x\|x{\x\+}\|.\)" extend
 

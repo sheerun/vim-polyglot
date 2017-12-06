@@ -583,7 +583,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'img': [
     \ [],
-    \ extend(copy(global_attributes), {'src': [], 'alt': [], 'height': [], 'width': [], 'usemap': [], 'ismap': ['ismap', ''], 'referrerpolicy': ['no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'unsafe-url'], 'crossorigin': ['anonymous', 'use-credentials']})
+    \ extend(copy(global_attributes), {'src': [], 'alt': [], 'height': [], 'width': [], 'decoding': ['async', 'sync', 'auto'], 'usemap': [], 'ismap': ['ismap', ''], 'referrerpolicy': ['no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'unsafe-url'], 'crossorigin': ['anonymous', 'use-credentials']})
 \ ],
 \ 'input': [
     \ [],

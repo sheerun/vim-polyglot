@@ -52,7 +52,7 @@ syn keyword nimKeyword       ptr
 syn keyword nimKeyword       raise ref return
 syn keyword nimKeyword       shared shl shr static
 syn keyword nimKeyword       try tuple type
-syn keyword nimKeyword       var
+syn keyword nimKeyword       var vtref vtptr
 syn keyword nimKeyword       when while with without
 syn keyword nimKeyword       xor
 syn keyword nimKeyword       yield

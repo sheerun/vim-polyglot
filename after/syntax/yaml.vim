@@ -26,7 +26,7 @@ syn match yamlBlock "[\[\]\{\}\|\>]"
 syn region yamlComment	start="\#" end="$"
 syn match yamlIndicator	"#YAML:\S\+"
 
-syn region yamlString	start="'" end="'" skip="\\'"
+syn region yamlString	start="\%(^\| \)\zs'" end="'\ze\%( \|$\)" skip="\\'"
 syn region yamlString	start='"' end='"' skip='\\"' contains=yamlEscape
 syn match  yamlEscape	+\\[abfnrtv'"\\]+ contained
 syn match  yamlEscape	"\\\o\o\=\o\=" contained

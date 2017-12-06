@@ -22,7 +22,7 @@ syntax match fishCommandSub /\v\(\s*\zs\k+>/
 
 syntax region fishLineContinuation matchgroup=fishStatement
             \ start='\v^\s*\zs\k+>' skip='\\$' end='$'
-            \ contains=fishSpecial,fishIdentifier,fishString,fishCharacter,fishStatement,fishCommandSub
+            \ contains=fishSpecial,fishIdentifier,fishString,fishCharacter,fishStatement,fishCommandSub,fishComment
 
 highlight default link fishKeyword Keyword
 highlight default link fishConditional Conditional

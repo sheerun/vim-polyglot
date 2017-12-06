@@ -126,6 +126,8 @@ syn keyword htmlArg contained integrity crossorigin
 " <link>
 syn keyword htmlArg contained prefetch 
 " syn keyword htmlArg contained preload
+" <img>
+syn keyword htmlArg contained decoding
 
 " Custom Data Attributes
 " http://w3c.github.io/html/single-page.html#embedding-custom-non-visible-data-with-the-data-attributes

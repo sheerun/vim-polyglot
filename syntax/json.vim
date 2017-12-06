@@ -103,10 +103,10 @@ if version >= 508 || !exists("did_json_syn_inits")
   hi def link jsonString		String
   hi def link jsonTest			Label
   hi def link jsonEscape		Special
-  hi def link jsonNumber		Delimiter
+  hi def link jsonNumber		Number
   hi def link jsonBraces		Delimiter
   hi def link jsonNull			Function
-  hi def link jsonBoolean		Delimiter
+  hi def link jsonBoolean		Boolean
   hi def link jsonKeyword		Label
 
 	if (!exists("g:vim_json_warnings") || g:vim_json_warnings==1)

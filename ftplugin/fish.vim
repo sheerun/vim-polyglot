@@ -31,7 +31,7 @@ endif
 " Use the 'man' wrapper function in fish to include fish's man pages.
 " Have to use a script for this; 'fish -c man' would make the the man page an
 " argument to fish instead of man.
-execute 'setlocal keywordprg=fish\ '.expand('<sfile>:p:h:h').'/bin/man.fish'
+execute 'setlocal keywordprg=fish\ '.fnameescape(expand('<sfile>:p:h:h').'/bin/man.fish')
 
 let b:match_words =
             \ escape('<%(begin|function|if|switch|while|for)>:<end>', '<>%|)')

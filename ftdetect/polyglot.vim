@@ -395,7 +395,7 @@ augroup filetypedetect
 " i3:PotatoesMaster/i3-vim-syntax
 augroup i3_ftdetect
   au!
-  au BufRead,BufNewFile *i3/config set ft=i3
+  au BufRead,BufNewFile *i3/config,*sway/config set ft=i3
 augroup END
 augroup END
 
@@ -439,6 +439,7 @@ augroup filetypedetect
 autocmd BufNewFile,BufRead *.json setlocal filetype=json
 autocmd BufNewFile,BufRead *.jsonp setlocal filetype=json
 autocmd BufNewFile,BufRead *.geojson setlocal filetype=json
+autocmd BufNewFile,BufRead *.template setlocal filetype=json
 augroup END
 
 augroup filetypedetect
