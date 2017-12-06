@@ -22,19 +22,6 @@ if exists('s:current_syntax_save')
 endif
 
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'glsl') == -1
-  
-" Language: OpenGL Shading Language
-" Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
-
-syn include @GLSL syntax/glsl.vim
-syn region ShaderScript
-      \ start="<script [^>]*type=\('\|\"\)x-shader/x-\(vertex\|fragment\)\('\|\"\)[^>]*>"
-      \ keepend
-      \ end="</script>"me=s-1
-      \ contains=@GLSL,htmlScriptTag,@htmlPreproc
-
-endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
   
 " Vim syntax file
