@@ -249,6 +249,7 @@ syn match   groovySpecialCharError contained "[^']"
 syn match   groovySpecialChar      contained "\\\([4-9]\d\|[0-3]\d\d\|[\"\\'ntbrf]\|u\x\{4\}\)"
 syn region  groovyString          start=+"+ end=+"+ end=+$+ contains=groovySpecialChar,groovySpecialError,@Spell,groovyELExpr
 syn region  groovyString          start=+'+ end=+'+ end=+$+ contains=groovySpecialChar,groovySpecialError,@Spell,groovyELExpr
+syn region  groovyString          start=+"""+ end=+"""+ contains=groovySpecialChar,groovySpecialError,@Spell,groovyELExpr
 " syn region groovyELExpr start=+${+ end=+}+ keepend contained
  syn match groovyELExpr /\${.\{-}}/ contained
 GroovyHiLink groovyELExpr Identifier
