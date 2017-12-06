@@ -242,22 +242,77 @@ augroup END
 
 augroup filetypedetect
 " fish:dag/vim-fish
+autocmd BufRead,BufNewFile *.fish setfiletype fish
+
+" Detect fish scripts by the shebang line.
+autocmd BufRead *
+            \ if getline(1) =~# '\v^#!%(\f*/|/usr/bin/env\s*<)fish>' |
+            \     setlocal filetype=fish |
+            \ endif
+
+" Move cursor to first empty line when using funced.
+autocmd BufRead fish_funced_*_*.fish call search('^$')
+
+" Fish histories are YAML documents.
+autocmd BufRead,BufNewFile ~/.config/fish/fish_{read_,}history setfiletype yaml
+
+" Universal variable storages should not be hand edited.
+autocmd BufRead,BufNewFile ~/.config/fish/fishd.* setlocal readonly
+
+" Mimic `funced` when manually creating functions.
+autocmd BufNewFile ~/.config/fish/functions/*.fish
+            \ call append(0, ['function '.expand('%:t:r'),
+                             \'',
+                             \'end']) |
+            \ 2
 augroup END
 
 augroup filetypedetect
 " fsharp:fsharp/vim-fsharp:_BASIC
+" F#, fsharp
+autocmd BufNewFile,BufRead *.fs,*.fsi,*.fsx set filetype=fsharp
 augroup END
 
 augroup filetypedetect
 " git:tpope/vim-git
+" Git
+autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
+autocmd BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitconfig
+autocmd BufNewFile,BufRead */.config/git/config                          set ft=gitconfig
+autocmd BufNewFile,BufRead *.git/modules/**/config                       set ft=gitconfig
+autocmd BufNewFile,BufRead git-rebase-todo                               set ft=gitrebase
+autocmd BufNewFile,BufRead .gitsendemail.*                               set ft=gitsendemail
+autocmd BufNewFile,BufRead *.git/**
+      \ if getline(1) =~ '^\x\{40\}\>\|^ref: ' |
+      \   set ft=git |
+      \ endif
+
+" This logic really belongs in scripts.vim
+autocmd BufNewFile,BufRead,StdinReadPost *
+      \ if getline(1) =~ '^\(commit\|tree\|object\) \x\{40\}\>\|^tag \S\+$' |
+      \   set ft=git |
+      \ endif
+autocmd BufNewFile,BufRead *
+      \ if getline(1) =~ '^From \x\{40\} Mon Sep 17 00:00:00 2001$' |
+      \   set filetype=gitsendemail |
+      \ endif
 augroup END
 
 augroup filetypedetect
 " gmpl:maelvalais/gmpl.vim
+au BufRead,BufNewFile *.mod set filetype=gmpl
 augroup END
 
 augroup filetypedetect
 " glsl:tikhomirov/vim-glsl
+" Language: OpenGL Shading Language
+" Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
+
+" Extensions supported by Khronos reference compiler (with one exception, ".glsl")
+" https://github.com/KhronosGroup/glslang
+autocmd! BufNewFile,BufRead *.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp set filetype=glsl
+
+" vim:set sts=2 sw=2 :
 augroup END
 
 augroup filetypedetect
@@ -907,6 +962,11 @@ augroup END
 augroup filetypedetect
 " slim:slim-template/vim-slim
 autocmd BufNewFile,BufRead *.slim setfiletype slim
+augroup END
+
+augroup filetypedetect
+" slime:slime-lang/vim-slime-syntax
+autocmd BufNewFile,BufRead *.slime set filetype=slime
 augroup END
 
 augroup filetypedetect
