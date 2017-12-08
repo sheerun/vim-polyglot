@@ -151,6 +151,7 @@ PACKS="
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax
   json:elzr/vim-json
+  json5:GutenYe/json5.vim
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL
   julia:JuliaEditorSupport/julia-vim
