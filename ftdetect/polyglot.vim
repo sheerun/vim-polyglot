@@ -83,6 +83,11 @@ au BufNewFile,BufRead Caddyfile set ft=caddyfile
 augroup END
 
 augroup filetypedetect
+" carp:hellerve/carp-vim
+au BufRead,BufNewFile *.carp set filetype=carp
+augroup END
+
+augroup filetypedetect
 " cjsx:mtscout6/vim-cjsx
 augroup CJSX
   au!
