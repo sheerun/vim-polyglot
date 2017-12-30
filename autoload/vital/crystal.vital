@@ -1,0 +1,10 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
+  
+crystal
+a977489
+
+Process
+Web.JSON
+ColorEcho
+
+endif

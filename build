@@ -80,7 +80,7 @@ extract() {
 }
 
 copy_dir() {
-  for file in $(find "$1/$2" -name '*.vim'); do
+  for file in $(find "$1/$2" -name '*.vim' -o -name '*.vital'); do
     file_path="$(dirname "${file##$1/}")"
     mkdir -p "$file_path"
     touch "$file_path/$(basename "$file")"
