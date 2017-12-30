@@ -52,6 +52,13 @@ extract() {
       fi
     done
 
+    output "${subdirs##, })\n"
+
+    if (echo "julia coffee-script elixir fish git plantuml scala swift"  | fgrep -q "$name"); then
+	echo "Skipping ftdetect installation of $name"
+	continue
+    fi
+
     for f in ${dir}/ftdetect/*; do
       (
         echo "augroup filetypedetect";
@@ -62,7 +69,6 @@ extract() {
       ) >> tmp/polyglot.vim;
     done
 
-    output "${subdirs##, })\n"
   done
 
   mv tmp/polyglot.vim ftdetect/

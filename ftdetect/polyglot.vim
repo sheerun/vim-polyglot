@@ -15,6 +15,17 @@ augroup filetypedetect
 augroup END
 
 let g:python_highlight_all = 1
+
+augroup filetypedetect
+  if v:version < 704
+    " NOTE: this line fixes an issue with the default system-wide lisp ftplugin
+    "       which didn't define b:undo_ftplugin on older Vim versions
+    "       (*.jl files are recognized as lisp)
+    autocmd BufRead,BufNewFile *.jl    let b:undo_ftplugin = "setlocal comments< define< formatoptions< iskeyword< lisp<"
+  endif
+  
+  autocmd BufRead,BufNewFile *.jl      set filetype=julia
+augroup END
 augroup filetypedetect
 " apiblueprint:sheerun/apiblueprint.vim
 autocmd BufReadPost,BufNewFile *.apib set filetype=apiblueprint
@@ -107,39 +118,6 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
-" coffee-script:kchmck/vim-coffee-script
-" Language:    CoffeeScript
-" Maintainer:  Mick Koch <mick@kochm.co>
-" URL:         http://github.com/kchmck/vim-coffee-script
-" License:     WTFPL
-
-autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-autocmd BufNewFile,BufRead *Cakefile set filetype=coffee
-autocmd BufNewFile,BufRead *.coffeekup,*.ck set filetype=coffee
-autocmd BufNewFile,BufRead *._coffee set filetype=coffee
-
-function! s:DetectCoffee()
-    if getline(1) =~ '^#!.*\<coffee\>'
-        set filetype=coffee
-    endif
-endfunction
-
-autocmd BufNewFile,BufRead * call s:DetectCoffee()
-augroup END
-
-augroup filetypedetect
-" coffee-script:kchmck/vim-coffee-script
-" Language:   Literate CoffeeScript
-" Maintainer: Michael Smith <michael@diglumi.com>
-" URL:        https://github.com/mintplant/vim-literate-coffeescript
-" License:    MIT
-
-autocmd BufNewFile,BufRead *.litcoffee set filetype=litcoffee
-autocmd BufNewFile,BufRead *.coffee.md set filetype=litcoffee
-
-augroup END
-
-augroup filetypedetect
 " cryptol:victoredwardocallaghan/cryptol.vim
 " Copyright © 2013 Edward O'Callaghan. All Rights Reserved.
 "  Normal Cryptol Program;
@@ -178,23 +156,6 @@ augroup END
 
 augroup filetypedetect
 " dockerfile:docker/docker::/contrib/syntax/vim/
-augroup END
-
-augroup filetypedetect
-" elixir:elixir-lang/vim-elixir
-au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
-au BufRead,BufNewFile *.eex call s:setf('eelixir')
-au BufRead,BufNewFile * call s:DetectElixir()
-
-function! s:setf(filetype) abort
-  let &filetype = a:filetype
-endfunction
-
-function! s:DetectElixir()
-  if getline(1) =~ '^#!.*\<elixir\>'
-    call s:setf('elixir')
-  endif
-endfunction
 augroup END
 
 augroup filetypedetect
@@ -248,61 +209,9 @@ au BufNewFile,BufRead *.erl,*.hrl,rebar.config,*.app,*.app.src,*.yaws,*.xrl,*.es
 augroup END
 
 augroup filetypedetect
-" fish:dag/vim-fish
-autocmd BufRead,BufNewFile *.fish setfiletype fish
-
-" Detect fish scripts by the shebang line.
-autocmd BufRead *
-            \ if getline(1) =~# '\v^#!%(\f*/|/usr/bin/env\s*<)fish>' |
-            \     setlocal filetype=fish |
-            \ endif
-
-" Move cursor to first empty line when using funced.
-autocmd BufRead fish_funced_*_*.fish call search('^$')
-
-" Fish histories are YAML documents.
-autocmd BufRead,BufNewFile ~/.config/fish/fish_{read_,}history setfiletype yaml
-
-" Universal variable storages should not be hand edited.
-autocmd BufRead,BufNewFile ~/.config/fish/fishd.* setlocal readonly
-
-" Mimic `funced` when manually creating functions.
-autocmd BufNewFile ~/.config/fish/functions/*.fish
-            \ call append(0, ['function '.expand('%:t:r'),
-                             \'',
-                             \'end']) |
-            \ 2
-augroup END
-
-augroup filetypedetect
 " fsharp:fsharp/vim-fsharp:_BASIC
 " F#, fsharp
 autocmd BufNewFile,BufRead *.fs,*.fsi,*.fsx set filetype=fsharp
-augroup END
-
-augroup filetypedetect
-" git:tpope/vim-git
-" Git
-autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
-autocmd BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitconfig
-autocmd BufNewFile,BufRead */.config/git/config                          set ft=gitconfig
-autocmd BufNewFile,BufRead *.git/modules/**/config                       set ft=gitconfig
-autocmd BufNewFile,BufRead git-rebase-todo                               set ft=gitrebase
-autocmd BufNewFile,BufRead .gitsendemail.*                               set ft=gitsendemail
-autocmd BufNewFile,BufRead *.git/**
-      \ if getline(1) =~ '^\x\{40\}\>\|^ref: ' |
-      \   set ft=git |
-      \ endif
-
-" This logic really belongs in scripts.vim
-autocmd BufNewFile,BufRead,StdinReadPost *
-      \ if getline(1) =~ '^\(commit\|tree\|object\) \x\{40\}\>\|^tag \S\+$' |
-      \   set ft=git |
-      \ endif
-autocmd BufNewFile,BufRead *
-      \ if getline(1) =~ '^From \x\{40\} Mon Sep 17 00:00:00 2001$' |
-      \   set filetype=gitsendemail |
-      \ endif
 augroup END
 
 augroup filetypedetect
@@ -505,31 +414,6 @@ autocmd BufNewFile,BufRead *.js
 augroup END
 
 augroup filetypedetect
-" julia:JuliaEditorSupport/julia-vim
-if v:version < 704
-  " NOTE: this line fixes an issue with the default system-wide lisp ftplugin
-  "       which didn't define b:undo_ftplugin on older Vim versions
-  "       (*.jl files are recognized as lisp)
-  autocmd BufRead,BufNewFile *.jl    let b:undo_ftplugin = "setlocal comments< define< formatoptions< iskeyword< lisp<"
-endif
-
-autocmd BufRead,BufNewFile *.jl      set filetype=julia
-
-autocmd FileType *                   call LaTeXtoUnicode#Refresh()
-autocmd BufEnter *                   call LaTeXtoUnicode#Refresh()
-
-" This autocommand is used to postpone the first initialization of LaTeXtoUnicode as much as possible,
-" by calling LaTeXtoUnicode#SetTab amd LaTeXtoUnicode#SetAutoSub only at InsertEnter or later
-function! s:L2UTrigger()
-  augroup L2UInit
-    autocmd!
-    autocmd InsertEnter *            let g:did_insert_enter = 1 | call LaTeXtoUnicode#Init(0)
-  augroup END
-endfunction
-autocmd BufEnter *                   call s:L2UTrigger()
-augroup END
-
-augroup filetypedetect
 " kotlin:udalov/kotlin-vim
 autocmd BufNewFile,BufRead *.kt setfiletype kotlin
 autocmd BufNewFile,BufRead *.kts setfiletype kotlin
@@ -703,16 +587,6 @@ augroup END
 
 augroup filetypedetect
 " php:StanAngeloff/php.vim
-augroup END
-
-augroup filetypedetect
-" plantuml:aklt/plantuml-syntax
-if did_filetype()
-  finish
-endif
-
-autocmd BufRead,BufNewFile * :if getline(1) =~ '^.*startuml.*$'| setfiletype plantuml | set filetype=plantuml | endif
-autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml setfiletype plantuml | set filetype=plantuml
 augroup END
 
 augroup filetypedetect
@@ -955,21 +829,6 @@ au BufRead,BufNewFile *.sbt set filetype=sbt.scala
 augroup END
 
 augroup filetypedetect
-" scala:derekwyatt/vim-scala
-fun! s:DetectScala()
-    if getline(1) =~# '^#!\(/usr\)\?/bin/env\s\+scalas\?'
-        set filetype=scala
-    endif
-endfun
-
-au BufRead,BufNewFile *.scala,*.sc set filetype=scala
-au BufRead,BufNewFile * call s:DetectScala()
-
-" Install vim-sbt for additional syntax highlighting.
-au BufRead,BufNewFile *.sbt setfiletype sbt.scala
-augroup END
-
-augroup filetypedetect
 " scss:cakebaker/scss-syntax.vim
 au BufRead,BufNewFile *.scss setfiletype scss
 au BufEnter *.scss :syntax sync fromstart
@@ -995,22 +854,6 @@ augroup filetypedetect
 " Stylus
 autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
-augroup END
-
-augroup filetypedetect
-" swift:keith/swift.vim
-autocmd BufNewFile,BufRead *.swift set filetype=swift
-autocmd BufRead * call s:Swift()
-function! s:Swift()
-  if !empty(&filetype)
-    return
-  endif
-
-  let line = getline(1)
-  if line =~ "^#!.*swift"
-    setfiletype swift
-  endif
-endfunction
 augroup END
 
 augroup filetypedetect
