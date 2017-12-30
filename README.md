@@ -46,6 +46,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [c++11](https://github.com/octol/vim-cpp-enhanced-highlight) (syntax)
 - [c/c++](https://github.com/vim-jp/vim-cpp) (syntax)
 - [caddyfile](https://github.com/isobit/vim-caddyfile) (syntax, indent, ftplugin)
+- [carp](https://github.com/hellerve/carp-vim) (syntax)
 - [cjsx](https://github.com/mtscout6/vim-cjsx) (syntax, ftplugin)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin)
 - [cmake](https://github.com/pboettch/vim-cmake-syntax) (syntax, indent)
