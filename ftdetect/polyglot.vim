@@ -448,6 +448,11 @@ autocmd BufNewFile,BufRead *.template setlocal filetype=json
 augroup END
 
 augroup filetypedetect
+" json5:GutenYe/json5.vim
+au BufNewFile,BufRead *.json5 setfiletype json5
+augroup END
+
+augroup filetypedetect
 " jst:briancollins/vim-jst
 au BufNewFile,BufRead *.ejs set filetype=jst
 au BufNewFile,BufRead *.jst set filetype=jst
