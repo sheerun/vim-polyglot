@@ -181,8 +181,9 @@ PACKS="
   pug:digitaltoad/vim-pug
   puppet:voxpupuli/vim-puppet
   purescript:purescript-contrib/purescript-vim
-  python:mitsuhiko/vim-python-combined
+  python:vim-python/python-syntax
   python-compiler:aliev/vim-compiler-python
+  python-ident:Vimjas/vim-python-pep8-indent
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim
   racket:wlangstroth/vim-racket

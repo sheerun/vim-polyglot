@@ -13,6 +13,8 @@ let g:filetype_euphoria = 'elixir'
 augroup filetypedetect
   autocmd BufNewFile,BufReadPost *.vb setlocal filetype=vbnet
 augroup END
+
+let g:python_highlight_all = 1
 augroup filetypedetect
 " apiblueprint:sheerun/apiblueprint.vim
 autocmd BufReadPost,BufNewFile *.apib set filetype=apiblueprint
@@ -780,7 +782,7 @@ au FileType purescript let &l:commentstring='{--%s--}'
 augroup END
 
 augroup filetypedetect
-" python:mitsuhiko/vim-python-combined
+" python:vim-python/python-syntax
 augroup END
 
 augroup filetypedetect
@@ -791,6 +793,10 @@ augroup filetypedetect
 " Last Change: 2015 Nov 2
 
 autocmd FileType python compiler python
+augroup END
+
+augroup filetypedetect
+" python-ident:Vimjas/vim-python-pep8-indent
 augroup END
 
 augroup filetypedetect
