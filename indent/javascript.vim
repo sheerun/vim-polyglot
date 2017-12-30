@@ -360,10 +360,8 @@ function GetJavascriptIndent()
 
   " start with strings,comments,etc.
   if s:stack[-1] =~? 'comment\|doc'
-    if l:line =~ '^\s*\*'
-      return cindent(v:lnum)
-    elseif l:line !~ '^\s*\/[/*]'
-      return -1
+    if l:line !~ '^\s*\/[/*]'
+      return l:line =~ '^\s*\*' ? cindent(v:lnum) : -1
     endif
   elseif s:stack[-1] =~? b:syng_str
     if b:js_cache[0] == v:lnum - 1 && s:Balanced(v:lnum-1,getline(v:lnum-1))
