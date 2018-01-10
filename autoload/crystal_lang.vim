@@ -3,10 +3,20 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:V = vital#of('crystal')
+let s:V = vital#crystal#new()
 let s:P = s:V.import('Process')
-let s:J = s:V.import('Web.JSON')
 let s:C = s:V.import('ColorEcho')
+
+if exists('*json_decode')
+    function! s:decode_json(text) abort
+        return json_decode(a:text)
+    endfunction
+else
+    let s:J = s:V.import('Web.JSON')
+    function! s:decode_json(text) abort
+        return s:J.decode(a:text)
+    endfunction
+endif
 
 function! s:echo_error(msg, ...) abort
     echohl ErrorMsg
@@ -102,7 +112,7 @@ function! crystal_lang#jump_to_definition(file, pos) abort
         return s:echo_error(cmd_result.output)
     endif
 
-    let impl = s:J.decode(cmd_result.output)
+    let impl = s:decode_json(cmd_result.output)
     if impl.status !=# 'ok'
         return s:echo_error(impl.message)
     endif
@@ -149,7 +159,6 @@ endfunction
 
 function! crystal_lang#complete(findstart, base) abort
     if a:findstart
-        echom 'find start'
         return s:find_completion_start()
     endif
 
@@ -158,7 +167,7 @@ function! crystal_lang#complete(findstart, base) abort
         return
     endif
 
-    let contexts = s:J.decode(cmd_result.output)
+    let contexts = s:decode_json(cmd_result.output)
     if contexts.status !=# 'ok'
         return
     endif

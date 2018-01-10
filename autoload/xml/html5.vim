@@ -82,6 +82,7 @@ let attributes_value = {
     \ 'action': ['URL', ''],
     \ 'allowfullscreen': ['Bool', ''],
     \ 'allowpaymentrequest': ['Bool', ''],
+    \ 'allowpresentation': ['Bool', ''],
     \ 'allowusermedia': ['Bool', ''],
     \ 'alt': ['Text', ''],
     \ 'async': ['Bool', ''],
@@ -579,7 +580,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'iframe': [
     \ [],
-    \ extend(copy(global_attributes), {'src': [], 'srcdoc': [], 'name': [], 'width': [], 'height': [], 'sandbox': ['allow-same-origin', 'allow-forms', 'allow-scripts'], 'seamless': ['seamless', ''], 'referrerpolicy': ['no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'unsafe-url'], 'allowfullscreen': [], 'allowpaymentrequest': [], 'allowusermedia': []})
+    \ extend(copy(global_attributes), {'src': [], 'srcdoc': [], 'name': [], 'width': [], 'height': [], 'sandbox': ['allow-same-origin', 'allow-forms', 'allow-scripts'], 'seamless': ['seamless', ''], 'referrerpolicy': ['no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'unsafe-url'], 'allowfullscreen': [], 'allowpaymentrequest': [], 'allowpresentation': [], 'allowusermedia': []})
 \ ],
 \ 'img': [
     \ [],

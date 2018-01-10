@@ -112,13 +112,13 @@ else
 endif
 syntax cluster juliaTypesItemsAll	contains=juliaBaseTypeBasic,juliaBaseTypeNum,juliaBaseTypeC,juliaBaseTypeError,juliaBaseTypeIter,juliaBaseTypeString,juliaBaseTypeArray,juliaBaseTypeDict,juliaBaseTypeSet,juliaBaseTypeIO,juliaBaseTypeProcess,juliaBaseTypeRange,juliaBaseTypeRegex,juliaBaseTypeFact,juliaBaseTypeFact,juliaBaseTypeSort,juliaBaseTypeRound,juliaBaseTypeSpecial,juliaBaseTypeRandom,juliaBaseTypeDisplay,juliaBaseTypeTime,juliaBaseTypeOther
 syntax cluster juliaTypesItems05	contains=juliaBaseTypeIter05,juliaBaseTypeRange05
-syntax cluster juliaTypesItems0506	contains=juliaBaseTypeRange0506,juliaBaseTypeSet0506
+syntax cluster juliaTypesItems0506	contains=juliaBaseTypeNum0506,juliaBaseTypeRange0506,juliaBaseTypeSet0506
 syntax cluster juliaTypesItems0607	contains=juliaBaseTypeBasic0607,juliaBaseTypeArray0607,juliaBaseTypeSet0607,juliaBaseTypeProcess0607,juliaBaseTypeRange0607,juliaBaseTypeTime0607
-syntax cluster juliaTypesItems07	contains=juliaBaseTypeRange07,juliaBaseTypeSet07
+syntax cluster juliaTypesItems07	contains=juliaBaseTypeBasic07,juliaBaseTypeNum07,juliaBaseTypeError07,juliaBaseTypeIter07,juliaBaseTypeRange07,juliaBaseTypeArray07,juliaBaseTypeSet07,juliaBaseTypeC07,juliaBaseTypeDisplay07,juliaBaseTypeIO07
 
 syntax cluster juliaConstItemsAll	contains=juliaConstNum,juliaConstBool,juliaConstEnv,juliaConstIO,juliaConstMMap,juliaConstC,juliaConstGeneric
 syntax cluster juliaConstItems0506	contains=juliaConstNum0506
-syntax cluster juliaConstItems07	contains=juliaPossibleEuler
+syntax cluster juliaConstItems07	contains=juliaConstGeneric07,juliaPossibleEuler
 if b:julia_syntax_version <= 6
   syntax cluster juliaConstItems	contains=@juliaConstItemsAll,@juliaConstItems0506
 else
@@ -208,20 +208,28 @@ exec 'syntax match   juliaOuter    contained "\<outer\ze\s\+' . s:idregex . '\>"
 
 syntax match   juliaBaseTypeBasic	display "\<\%(Tuple\|NTuple\|Symbol\|\%(Intrinsic\)\?Function\|Union\|Type\%(Name\|Constructor\|Var\)\?\|Any\|ANY\|Vararg\|Top\|None\|Nothing\|Ptr\|Void\|Exception\|Module\|Box\|Expr\|LambdaStaticData\|\%(Data\|Union\)Type\|\%(LineNumber\|Label\|Goto\|Quote\|Top\|Symbol\|Getfield\)Node\|\%(Weak\|Global\)\?Ref\|Associative\|Method\(Table\)\?\|GetfieldNode\|Nullable\|Pair\|Val\|TypeMap\%(Level\|Entry\)\)\>"
 syntax match   juliaBaseTypeBasic0607	display "\<\%(UnionAll\|CodeInfo\)\>"
-syntax match   juliaBaseTypeNum		display "\<\%(U\?Int\%(8\|16\|32\|64\|128\)\?\|Float\%(16\|32\|64\)\|Complex\%(32\|64\|128\)\?\|Bool\|Char\|Number\|Signed\|Unsigned\|Integer\|AbstractFloat\|Real\|Rational\|Irrational\|Enum\|BigInt\|BigFloat\|MathConst\)\>"
+syntax match   juliaBaseTypeBasic07	display "\<\%(Some\|Missing\)\>"
+syntax match   juliaBaseTypeNum		display "\<\%(U\?Int\%(8\|16\|32\|64\|128\)\?\|Float\%(16\|32\|64\)\|Complex\|Bool\|Char\|Number\|Signed\|Unsigned\|Integer\|AbstractFloat\|Real\|Rational\|Irrational\|Enum\|BigInt\|BigFloat\|MathConst\)\>"
+syntax match   juliaBaseTypeNum0506	display "\<Complex\%(32\|64\|128\)\>"
+syntax match   juliaBaseTypeNum07	display "\<\%(AbstractIrrational\|ComplexF\%(16\|32\|64\)\)\>"
 syntax match   juliaBaseTypeC		display "\<\%(FileOffset\|C\%(u\?\%(char\|short\|int\|long\(long\)\?\|w\?string\)\|float\|double\|\%(ptrdiff\|s\?size\|wchar\|off\|u\?intmax\)_t\)\)\>"
+syntax match   juliaBaseTypeC07		display "\<Cvoid\>"
 syntax match   juliaBaseTypeError	display "\<\%(\%(Bounds\|Divide\|Domain\|\%(Stack\)\?Overflow\|EOF\|Undef\%(Ref\|Var\)\|System\|Type\|Parse\|Argument\|Key\|Load\|Method\|Inexact\|OutOfMemory\|Init\|Assertion\|Unicode\|ReadOnlyMemory\)Error\|\%(Interrupt\|Error\|ProcessExited\|Captured\|Composite\|InvalidState\|Null\|Remote\)Exception\|DimensionMismatch\|SegmentationFault\)\>"
+syntax match   juliaBaseTypeError07	display "\<\%(StringIndexError\|MissingException\)\>"
 syntax match   juliaBaseTypeIter	display "\<\%(EachLine\|Enumerate\|Cartesian\%(Index\|Range\)\|LinSpace\)\>"
 syntax match   juliaBaseTypeIter05	display "\<\%(Zip\|Filter\)\>"
+syntax match   juliaBaseTypeIter07	display "\<CartesianIndices\>"
 syntax match   juliaBaseTypeString	display "\<\%(DirectIndex\|Sub\|Rep\|Rev\|Abstract\)\?String\>"
 syntax match   juliaBaseTypeArray	display "\<\%(\%(Sub\)\?Array\|\%(Abstract\|Dense\|Strided\)\?\%(Array\|Matrix\|Vec\%(tor\|OrMat\)\)\|SparseMatrixCSC\|\%(AbstractSparse\|Bit\|Shared\)\%(Array\|Vector\|Matrix\)\|\%\(D\|Bid\|\%(Sym\)\?Trid\)iagonal\|Hermitian\|Symmetric\|UniformScaling\|\%(Lower\|Upper\)Triangular\|SparseVector\|VecElement\)\>"
 syntax match   juliaBaseTypeArray0607	display "\<\%(Conj\%(Array\|Matrix\|Vector\)\|Index\%(Cartesian\|Linear\|Style\)\|PermutedDimsArray\|RowVector\)\>"
+syntax match   juliaBaseTypeArray07	display "\<\%(BroadcastStyle\|Adjoint\|Transpose\|LinearIndices\)\>"
 syntax match   juliaBaseTypeDict	display "\<\%(WeakKey\|ObjectId\)\?Dict\>"
 syntax match   juliaBaseTypeSet		display "\<Set\>"
 syntax match   juliaBaseTypeSet0506	display "\<IntSet\>"
 syntax match   juliaBaseTypeSet0607	display "\<AbstractSet\>"
-syntax match   juliaBaseTypeSet07	display "\<BitSet\>"
+syntax match   juliaBaseTypeSet07	display "\<\%(\%(Bit\|Key\)Set\|AbstractDict\)\>"
 syntax match   juliaBaseTypeIO		display "\<\%(IO\%(Stream\|Buffer\|Context\)\?\|RawFD\|StatStruct\|DevNull\|FileMonitor\|PollingFileWatcher\|Timer\|Base64\%(Decode\|Encode\)Pipe\|\%(UDP\|TCP\)Socket\|\%(Abstract\)\?Channel\|BufferStream\|ReentrantLock\)\>"
+syntax match   juliaBaseTypeIO07	display "\<GenericIOBuffer\>"
 syntax match   juliaBaseTypeProcess	display "\<\%(ProcessGroup\|Pipe\|Cmd\)\>"
 syntax match   juliaBaseTypeProcess0607	display "\<PipeBuffer\>"
 syntax match   juliaBaseTypeRange	display "\<\%(Dims\|RangeIndex\|\%(Ordinal\|Step\|\%(Abstract\)\?Unit\)Range\|Colon\)\>"
@@ -236,6 +244,7 @@ syntax match   juliaBaseTypeRound	display "\<Round\%(ingMode\|FromZero\|Down\|Ne
 syntax match   juliaBaseTypeSpecial	display "\<\%(LocalProcess\|ClusterManager\)\>"
 syntax match   juliaBaseTypeRandom	display "\<\%(AbstractRNG\|MersenneTwister\|RandomDevice\)\>"
 syntax match   juliaBaseTypeDisplay	display "\<\%(Text\(Display\)\?\|Display\|MIME\|HTML\)\>"
+syntax match   juliaBaseTypeDisplay07	display "\<AbstractDisplay\>"
 syntax match   juliaBaseTypeTime	display "\<\%(Date\%(Time\)\?\)\>"
 syntax match   juliaBaseTypeTime0607	display "\<DateFormat\>"
 syntax match   juliaBaseTypeOther	display "\<\%(RemoteRef\|Task\|Condition\|VersionNumber\|IPv[46]\|SerializationState\|WorkerConfig\|Future\|RemoteChannel\|IPAddr\|Stack\%(Trace\|Frame\)\|\(Caching\|Worker\)Pool\|AbstractSerializer\)\>"
@@ -254,6 +263,7 @@ syntax match   juliaConstEnv		display "\<\%(ARGS\|ENV\|CPU_CORES\|OS_NAME\|ENDIA
 syntax match   juliaConstIO		display "\<\%(STD\%(OUT\|IN\|ERR\)\)\>"
 syntax match   juliaConstC		display "\<\%(WORD_SIZE\|C_NULL\)\>"
 syntax match   juliaConstGeneric	display "\<\%(nothing\|Main\)\>"
+syntax match   juliaConstGeneric07	display "\<missing\>"
 
 syntax match   juliaPossibleMacro	transparent "@" contains=juliaMacroCall,juliaMacroCallP,juliaPrintfMacro
 
@@ -442,11 +452,11 @@ for t in ["Iter", "Range"]
   let h = b:julia_syntax_version == 5 ? "Type" : b:julia_syntax_version == 6 ? "juliaDeprecated" : "NONE"
   exec "hi! def link juliaBaseType" . t . "05 " . h
 endfor
-for t in ["Range", "Set"]
+for t in ["Num", "Range", "Set"]
   let h = b:julia_syntax_version <= 6 ? "Type" : "juliaDeprecated"
   exec "hi! def link juliaBaseType" . t . "0506 " . h
 endfor
-for t in ["Range", "Set"]
+for t in ["Range", "Set", "Basic", "C", "Array", "Iter", "Display", "IO", "Num", "Error"]
   let h = b:julia_syntax_version >= 7 ? "Type" : "NONE"
   exec "hi! def link juliaBaseType" . t . "07 " . h
 endfor
@@ -468,6 +478,9 @@ hi def link juliaConstLimits		Constant
 hi def link juliaConstGeneric		Constant
 hi def link juliaRangeEnd		Constant
 hi def link juliaConstBool		Boolean
+
+let h = b:julia_syntax_version >= 7 ? "Constant" : "NONE"
+exec "hi! def link juliaConstGeneric07 " . h
 
 hi def link juliaComprehensionFor	Keyword
 hi def link juliaComprehensionIf	Keyword

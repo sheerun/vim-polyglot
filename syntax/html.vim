@@ -112,7 +112,7 @@ syn keyword htmlArg contained async
 " <content>
 syn keyword htmlArg contained select
 " <iframe>
-syn keyword htmlArg contained seamless srcdoc sandbox allowfullscreen allowusermedia allowpaymentrequest 
+syn keyword htmlArg contained seamless srcdoc sandbox allowfullscreen allowusermedia allowpaymentrequest allowpresentation
 " <picture>
 syn keyword htmlArg contained srcset sizes
 " <a>

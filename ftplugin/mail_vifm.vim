@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
   
 " Mail file type extension to pick files for attachments via vifm
 " Maintainer:  xaizek <xaizek@posteo.net>
-" Last Change: January 23, 2016
+" Last Change: January 01, 2018
 
 " Insert attachment picked via vifm after 'Subject' header
 function! s:AddMailAttacments()
@@ -26,7 +26,7 @@ function! s:AddMailAttacments()
 	else
 		" Work around handicapped neovim...
 		let callback = { 'listf': l:listf }
-		function! callback.on_exit(id, code)
+		function! callback.on_exit(id, code, event)
 			buffer #
 			silent! bdelete! #
 			call s:HandleRunResults(a:code, self.listf)
