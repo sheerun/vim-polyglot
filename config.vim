@@ -25,4 +25,47 @@ augroup filetypedetect
   endif
   
   autocmd BufRead,BufNewFile *.jl      set filetype=julia
+
+  " coffeescript
+  autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+  autocmd BufNewFile,BufRead *Cakefile set filetype=coffee
+  autocmd BufNewFile,BufRead *.coffeekup,*.ck set filetype=coffee
+  autocmd BufNewFile,BufRead *._coffee set filetype=coffee
+  autocmd BufNewFile,BufRead *.litcoffee set filetype=litcoffee
+  autocmd BufNewFile,BufRead *.coffee.md set filetype=litcoffee
+
+
+  " elixir
+  au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
+  au BufRead,BufNewFile *.eex call s:setf('eelixir')
+
+  " fish
+  autocmd BufRead,BufNewFile *.fish setfiletype fish
+  autocmd BufRead fish_funced_*_*.fish call search('^$')
+  autocmd BufRead,BufNewFile ~/.config/fish/fish_{read_,}history setfiletype yaml
+  autocmd BufRead,BufNewFile ~/.config/fish/fishd.* setlocal readonly
+  autocmd BufNewFile ~/.config/fish/functions/*.fish
+              \ call append(0, ['function '.expand('%:t:r'),
+                               \'',
+                               \'end']) |
+              \ 2
+  
+  " git
+  autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
+  autocmd BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitconfig
+  autocmd BufNewFile,BufRead */.config/git/config                          set ft=gitconfig
+  autocmd BufNewFile,BufRead *.git/modules/**/config                       set ft=gitconfig
+  autocmd BufNewFile,BufRead git-rebase-todo                               set ft=gitrebase
+  autocmd BufNewFile,BufRead .gitsendemail.*                               set ft=gitsendemail
+
+  " plantuml
+  autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml setfiletype plantuml | set filetype=plantuml
+
+  " scala
+  au BufRead,BufNewFile *.scala,*.sc set filetype=scala
+  au BufRead,BufNewFile *.sbt setfiletype sbt.scala
+
+  " swift
+  autocmd BufNewFile,BufRead *.swift set filetype=swift
 augroup END
+
