@@ -154,6 +154,7 @@ PACKS="
   haxe:yaymukund/vim-haxe
   html5:othree/html5.vim
   i3:PotatoesMaster/i3-vim-syntax
+  idris:idris-hackers/idris-vim
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax
