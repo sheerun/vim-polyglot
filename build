@@ -195,6 +195,7 @@ PACKS="
   racket:wlangstroth/vim-racket
   raml:IN3D/vim-raml
   ragel:jneen/ragel.vim
+  reason:reasonml/vim-reason
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
   rust:rust-lang/rust.vim
