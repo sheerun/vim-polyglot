@@ -157,6 +157,7 @@ PACKS="
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax
+  jinga:lepture/vim-jinja
   json:elzr/vim-json
   json5:GutenYe/json5.vim
   jst:briancollins/vim-jst
