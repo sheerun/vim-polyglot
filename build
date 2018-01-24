@@ -207,7 +207,7 @@ PACKS="
   stylus:wavded/vim-stylus
   swift:keith/swift.vim
   sxhkd:baskerville/vim-sxhkdrc
-  systemd:kurayama/systemd-vim-syntax
+  systemd:wgwoods/vim-systemd-syntax
   terraform:hashivim/vim-terraform
   textile:timcharper/textile.vim
   thrift:solarnz/thrift.vim
