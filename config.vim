@@ -16,6 +16,8 @@ augroup END
 
 let g:python_highlight_all = 1
 
+let g:vim_pandoc_syntax_exists = 1
+
 augroup filetypedetect
   if v:version < 704
     " NOTE: this line fixes an issue with the default system-wide lisp ftplugin
