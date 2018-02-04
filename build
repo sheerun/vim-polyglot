@@ -204,6 +204,7 @@ PACKS="
   slim:slim-template/vim-slim
   slime:slime-lang/vim-slime-syntax
   solidity:tomlion/vim-solidity
+  solidity-compiler:dmdque/solidity.vim
   stylus:wavded/vim-stylus
   swift:keith/swift.vim
   sxhkd:baskerville/vim-sxhkdrc

@@ -132,6 +132,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftplugin)
 - [slime](https://github.com/slime-lang/vim-slime-syntax) (syntax, indent)
 - [solidity](https://github.com/tomlion/vim-solidity) (syntax, indent, ftplugin)
+- [solidity-compiler](https://github.com/dmdque/solidity.vim) (compiler)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin)
 - [swift](https://github.com/keith/swift.vim) (syntax, indent, ftplugin)
 - [sxhkd](https://github.com/baskerville/vim-sxhkdrc) (syntax)
