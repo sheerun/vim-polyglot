@@ -2,11 +2,13 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
   
 " Mail file type extension to pick files for attachments via vifm
 " Maintainer:  xaizek <xaizek@posteo.net>
-" Last Change: January 01, 2018
+" Last Change: January 02, 2018
 
 " Insert attachment picked via vifm after 'Subject' header
-function! s:AddMailAttacments()
-	" TODO: reduce duplication between this file and plugins/vifm.vim
+function! s:AddMailAttachments()
+	call vifm#globals#Init()
+
+	" XXX: similar code is in plugins/vifm.vim, but it's different in details
 	let l:listf = tempname()
 
 	if !has('nvim')
@@ -59,7 +61,7 @@ function! s:HandleRunResults(exitcode, listf)
 	call delete(a:listf)
 endfunction
 
-nnoremap <buffer> <silent> <localleader>a :call <sid>AddMailAttacments()<cr>
+nnoremap <buffer> <silent> <localleader>a :call <sid>AddMailAttachments()<cr>
 
 " vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab cinoptions-=(0 :
 

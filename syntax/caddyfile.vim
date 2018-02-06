@@ -7,7 +7,7 @@ if exists("b:current_syntax")
 	finish
 endif
 
-syn match caddyDirective "^\s*\([a-z]\+\)" nextgroup=caddyDirectiveArgs skipwhite
+syn match caddyDirective "^\s*\([a-zA-Z0-9_]\+\)" nextgroup=caddyDirectiveArgs skipwhite
 syn region caddyDirectiveArgs start="" end="\({\|#\|$\)"me=s-1 oneline contained contains=caddyPlaceholder,caddyString nextgroup=caddyDirectiveBlock skipwhite
 syn region caddyDirectiveBlock start="{" skip="\\}" end="}" contained contains=caddySubdirective,caddyComment
 

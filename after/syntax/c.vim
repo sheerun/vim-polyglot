@@ -21,7 +21,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c++11') == -1
 "  Highlight function names.
 " -----------------------------------------------------------------------------
 if !exists('g:cpp_no_function_highlight')
-    syn match    cCustomParen    "(" contains=cParen contains=cCppParen
+    syn match    cCustomParen    transparent "(" contains=cParen contains=cCppParen
     syn match    cCustomFunc     "\w\+\s*(\@=" contains=cCustomParen
     hi def link cCustomFunc  Function
 endif
@@ -32,7 +32,7 @@ endif
 if exists('g:cpp_member_variable_highlight') && g:cpp_member_variable_highlight
     syn match   cCustomDot    "\." contained
     syn match   cCustomPtr    "->" contained
-    syn match   cCustomMemVar "\(\.\|->\)\w\+" contains=cCustomDot,cCustomPtr
+    syn match   cCustomMemVar "\(\.\|->\)\h\w*" contains=cCustomDot,cCustomPtr
     hi def link cCustomMemVar Function
 endif
 

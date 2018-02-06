@@ -19,18 +19,33 @@ else
 endif
 
 syn keyword carpSyntax def defn let do if while ref address set! the
-syn keyword carpSyntax defmacro defdynamic quote car cdr cons list array
+syn keyword carpSyntax defmacro defdynamic quote cons list array
 syn keyword carpSyntax expand deftype register system-include register-type
 syn keyword carpSyntax defmodule copy use module defalias definterface eval
 syn keyword carpSyntax expand instantiate type info help quit env build run
 syn keyword carpSyntax cat use project-set! local-include system-include
-syn keyword carpSyntax add-cflag add-lib project load reload
+syn keyword carpSyntax add-cflag add-lib project load reload let-do ignore
+syn keyword carpSyntax fmt mac-only linux-only windows-only use-all when
+syn keyword carpSyntax unless defn-do comment forever-do case and* or*
+syn keyword carpSyntax str* println*
+syn match carpSyntax "\vc(a|d){1,4}r"
 
-syn keyword carpFunc Int Float Double Bool String Char Array Fn Ref Long
+syn keyword carpFunc Int Float Double Bool String Char Array Fn Ref Long λ
 syn keyword carpFunc not or and + - * / = /= >= <= > < inc dec
 syn keyword carpFunc println print get-line from-string mod seed random
 syn keyword carpFunc random-between str mask delete append count duplicate
 syn keyword carpFunc cstr chars from-chars to-int from-int sin cos sqrt acos
+syn keyword carpFunc atan2 exit time srand for cond floor abs sort-with
+syn keyword carpFunc subarray prefix-array suffix-array reverse sum min max
+syn keyword carpFunc first last reduce format zero read-file bit-shift-left
+syn keyword carpFunc bit-shift-right bit-and bit-or bit-xor bit-not safe-add
+syn keyword carpFunc safe-sub safe-mul even? odd? cmp allocate repeat-indexed
+syn keyword carpFunc sanitize-addresses memory-balance reset-memory-balance!
+syn keyword carpFunc log-memory-balance! memory-logged assert-balanced trace
+syn keyword carpFunc pi e swaop! update! char-at tail head split-by words lines
+syn keyword carpFunc pad-left pad-right count-char empty? random-sized substring
+syn keyword carpFunc prefix-string suffix-string starts-with? ends-with?
+syn keyword carpFunc string-join free sleep-seconds sleep-micros
 syn keyword carpFunc atan2 exit time srand for cond floor abs neg to-float
 syn keyword carpFunc from-float tan asin atan cosh sinh tanh exp frexp ldexp
 syn keyword carpFunc log log10 modf pow ceil clamp approx refstr foreach

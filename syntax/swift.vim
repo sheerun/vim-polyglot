@@ -3,7 +3,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'swift') == -1
 " File: swift.vim
 " Author: Keith Smiley
 " Description: Runtime files for Swift
-" Last Modified: June 15, 2014
 
 if exists("b:current_syntax")
   finish
@@ -242,6 +241,8 @@ syntax keyword swiftPreprocessor
       \ #else
       \ #endif
       \ #selector
+      \ #warning
+      \ #error
 
 
 " Comment patterns

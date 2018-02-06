@@ -250,7 +250,7 @@ function s:Balanced(lnum,line)
   let pos = match(a:line, '[][(){}]')
   while pos != -1
     if s:SynAt(a:lnum,pos + 1) !~? b:syng_strcom
-      let l:open += match(' ' . a:line[pos],'[[({]')
+      let l:open += matchend(a:line[pos],'[[({]')
       if l:open < 0
         return
       endif
@@ -271,10 +271,7 @@ function s:OneScope()
     return s:Pure('s:PreviousToken') != '.'
   elseif strpart(getline('.'),col('.')-2,2) == '=>'
     call cursor(0,col('.')-1)
-    if s:PreviousToken() == ')'
-      return s:GetPair('(', ')', 'bW', s:skip_expr)
-    endif
-    return 1
+    return s:PreviousToken() != ')' || s:GetPair('(', ')', 'bW', s:skip_expr)
   endif
 endfunction
 
@@ -299,9 +296,9 @@ endfunction
 " encloses the entire context, 'cont' if whether a:firstline is a continued
 " expression, which could have started in a braceless context
 function s:IsContOne(cont)
-  let [l:num, b_l] = [b:js_cache[1] + !b:js_cache[1], 0]
-  let pind = b:js_cache[1] ? indent(b:js_cache[1]) + s:sw() : 0
-  let ind = indent('.') + !a:cont
+  let [l:num, pind] = b:js_cache[1] ?
+        \ [b:js_cache[1], indent(b:js_cache[1]) + s:sw()] : [1,0]
+  let [ind, b_l] = [indent('.') + !a:cont, 0]
   while line('.') > l:num && ind > pind || line('.') == l:num
     if indent('.') < ind && s:OneScope()
       let b_l += 1
@@ -319,8 +316,8 @@ function s:IsContOne(cont)
 endfunction
 
 function s:IsSwitch()
-  call call('cursor',b:js_cache[1:])
-  return search('\m\C\%#.\_s*\%(\%(\/\/.*\_$\|\/\*\_.\{-}\*\/\)\@>\_s*\)*\%(case\|default\)\>','nWc'.s:z)
+  return search('\m\C\%'.join(b:js_cache[1:],'l\%').
+        \ 'c{\_s*\%(\%(\/\/.*\_$\|\/\*\_.\{-}\*\/\)\@>\_s*\)*\%(case\|default\)\>','nW'.s:z)
 endfunction
 
 " https://github.com/sweet-js/sweet.js/wiki/design#give-lookbehind-to-the-reader
@@ -376,7 +373,7 @@ function GetJavascriptIndent()
   if s:PreviousToken() is ''
     return
   endif
-  let [l:lnum, pline] = [line('.'), getline('.')[:col('.')-1]]
+  let [l:lnum, lcol, pline] = getpos('.')[1:2] + [getline('.')[:col('.')-1]]
 
   let l:line = substitute(l:line,'^\s*','','')
   let l:line_raw = l:line
@@ -429,7 +426,7 @@ function GetJavascriptIndent()
       endif
     endif
     if idx == -1 && pline[-1:] !~ '[{;]'
-      call cursor(l:lnum, len(pline))
+      call cursor(l:lnum, lcol)
       let sol = matchstr(l:line,s:opfirst)
       if sol is '' || sol == '/' && s:SynAt(v:lnum,
             \ 1 + len(getline(v:lnum)) - len(l:line)) =~? 'regex'
@@ -445,10 +442,11 @@ function GetJavascriptIndent()
       else
         let is_op = s:sw()
       endif
-      call cursor(l:lnum, len(pline))
+      call cursor(l:lnum, lcol)
       let b_l = s:Nat(s:IsContOne(is_op) - (!is_op && l:line =~ '^{')) * s:sw()
     endif
-  elseif idx.s:LookingAt().&cino =~ '^-1(.*(' && (search('\m\S','nbW',num) || s:ParseCino('U'))
+  elseif idx == -1 && s:LookingAt() == '(' && &cino =~ '(' &&
+        \ (search('\m\S','nbW',num) || s:ParseCino('U'))
     let pval = s:ParseCino('(')
     if !pval
       let [Wval, vcol] = [s:ParseCino('W'), virtcol('.')]
@@ -472,6 +470,10 @@ function GetJavascriptIndent()
     return num_ind
   elseif num
     return s:Nat(num_ind + get(l:,'case_offset',s:sw()) + l:switch_offset + b_l + is_op)
+  endif
+  let nest = get(get(b:,'hi_indent',{}),'blocklnr')
+  if nest
+    return indent(nest) + s:sw() + b_l + is_op
   endif
   return b_l + is_op
 endfunction

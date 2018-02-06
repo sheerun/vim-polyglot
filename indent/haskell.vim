@@ -296,9 +296,20 @@ function! GetHaskellIndent()
 
   "" where foo
   "" >>>>>>bar
+  ""
+  "" where foo :: Int
+  "" >>>>>>>>>>-> Int
+  ""
+  "" where foo x
+  "" >>>>>>>>|
   if l:prevline =~ '\C\<where\>\s\+\S\+.*$'
     if  l:line =~ '^\s*[=-]>\s' && l:prevline =~ ' :: '
       return match(l:prevline, ':: ')
+    elseif  l:line =~ '^\s*|\s'
+      let l:s = match(l:prevline, '\C\<where\>')
+      if s:isSYN('haskellWhere', v:lnum - 1, l:s + 1)
+        return l:s + g:haskell_indent_where + g:haskell_indent_guard
+      endif
     else
       let l:s = match(l:prevline, '\C\<where\>')
       if s:isSYN('haskellWhere', v:lnum - 1, l:s + 1)

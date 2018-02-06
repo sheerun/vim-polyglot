@@ -50,18 +50,17 @@ command! -buffer -nargs=* CrystalHierarchy echo crystal_lang#type_hierarchy(expa
 command! -buffer -nargs=? CrystalSpecSwitch call crystal_lang#switch_spec_file(<f-args>)
 command! -buffer -nargs=? CrystalSpecRunAll call crystal_lang#run_all_spec(<f-args>)
 command! -buffer -nargs=? CrystalSpecRunCurrent call crystal_lang#run_current_spec(<f-args>)
-command! -buffer -nargs=* -bar CrystalFormat call crystal_lang#format(<q-args>)
+command! -buffer -nargs=* -bar CrystalFormat call crystal_lang#format(<q-args>, 0)
 
-nnoremap <Plug>(crystal-jump-to-definition) :<C-u>CrystalDef<CR>
-nnoremap <Plug>(crystal-show-context) :<C-u>CrystalContext<CR>
-nnoremap <Plug>(crystal-spec-switch) :<C-u>CrystalSpecSwitch<CR>
-nnoremap <Plug>(crystal-spec-run-all) :<C-u>CrystalSpecRunAll<CR>
-nnoremap <Plug>(crystal-spec-run-current) :<C-u>CrystalSpecRunCurrent<CR>
-nnoremap <Plug>(crystal-format) :<C-u>CrystalFormat<CR>
+nnoremap <buffer><Plug>(crystal-jump-to-definition) :<C-u>CrystalDef<CR>
+nnoremap <buffer><Plug>(crystal-show-context) :<C-u>CrystalContext<CR>
+nnoremap <buffer><Plug>(crystal-spec-switch) :<C-u>CrystalSpecSwitch<CR>
+nnoremap <buffer><Plug>(crystal-spec-run-all) :<C-u>CrystalSpecRunAll<CR>
+nnoremap <buffer><Plug>(crystal-spec-run-current) :<C-u>CrystalSpecRunCurrent<CR>
+nnoremap <buffer><Plug>(crystal-format) :<C-u>CrystalFormat<CR>
 
 augroup plugin-ft-crystal
-    autocmd!
-    autocmd BufWritePre <buffer> if g:crystal_auto_format | CrystalFormat | endif
+    autocmd BufWritePre <buffer> if g:crystal_auto_format | call crystal_lang#format('', 1) | endif
 augroup END
 
 if get(g:, 'crystal_define_mappings', 1)
