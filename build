@@ -5,7 +5,7 @@ set -E
 DIRS="syntax indent compiler autoload ftplugin after/syntax after/indent after/ftplugin"
 DIRS_BASIC="syntax compiler indent after/syntax after/indent"
 DIRS_ALL="syntax indent compiler autoload ftplugin after"
-DIRS_SYNTAX="syntax after/syntax"
+DIRS_SYNTAX="syntax indent after/syntax after/indent"
 DIRS_JAVASCRIPT="${DIRS} extras"
 DIRS_RM="$DIRS_JAVASCRIPT"
 

@@ -97,7 +97,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [livescript](https://github.com/gkz/vim-ls) (syntax, indent, compiler, ftplugin)
 - [lua](https://github.com/tbastos/vim-lua) (syntax, indent)
 - [mako](https://github.com/sophacles/vim-bundle-mako) (syntax, indent, ftplugin)
-- [markdown](https://github.com/plasticboy/vim-markdown) (syntax)
+- [markdown](https://github.com/plasticboy/vim-markdown) (syntax, indent)
 - [mathematica](https://github.com/rsmenon/vim-mathematica) (syntax, ftplugin)
 - [nginx](https://github.com/chr4/nginx.vim) (syntax, indent, ftplugin)
 - [nim](https://github.com/zah/nim.vim) (syntax, compiler, indent)
