@@ -11,7 +11,7 @@ describe "My Vim plugin" do
 
   extensions.each do |ext|
     it "should parse #{ext} file" do
-      Timeout::timeout(5) do
+      Timeout::timeout(15) do
         write_file "#{ext}", ""
         vim.edit "#{ext}"
         vim.insert "sample"
