@@ -313,6 +313,11 @@ endif
 augroup END
 
 augroup filetypedetect
+" haproxy:CH-DanReif/haproxy.vim
+au BufRead,BufNewFile haproxy*.c* set ft=haproxy
+augroup END
+
+augroup filetypedetect
 " haskell:neovimhaskell/haskell-vim
 au BufRead,BufNewFile *.hsc set filetype=haskell
 au BufRead,BufNewFile *.bpk set filetype=haskell
