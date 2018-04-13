@@ -112,13 +112,13 @@ else
 endif
 syntax cluster juliaTypesItemsAll	contains=juliaBaseTypeBasic,juliaBaseTypeNum,juliaBaseTypeC,juliaBaseTypeError,juliaBaseTypeIter,juliaBaseTypeString,juliaBaseTypeArray,juliaBaseTypeDict,juliaBaseTypeSet,juliaBaseTypeIO,juliaBaseTypeProcess,juliaBaseTypeRange,juliaBaseTypeRegex,juliaBaseTypeFact,juliaBaseTypeFact,juliaBaseTypeSort,juliaBaseTypeRound,juliaBaseTypeSpecial,juliaBaseTypeRandom,juliaBaseTypeDisplay,juliaBaseTypeTime,juliaBaseTypeOther
 syntax cluster juliaTypesItems05	contains=juliaBaseTypeIter05,juliaBaseTypeRange05
-syntax cluster juliaTypesItems0506	contains=juliaBaseTypeNum0506,juliaBaseTypeRange0506,juliaBaseTypeSet0506
+syntax cluster juliaTypesItems0506	contains=juliaBaseTypeNum0506,juliaBaseTypeRange0506,juliaBaseTypeDict0506,juliaBaseTypeSet0506
 syntax cluster juliaTypesItems0607	contains=juliaBaseTypeBasic0607,juliaBaseTypeArray0607,juliaBaseTypeSet0607,juliaBaseTypeProcess0607,juliaBaseTypeRange0607,juliaBaseTypeTime0607
-syntax cluster juliaTypesItems07	contains=juliaBaseTypeBasic07,juliaBaseTypeNum07,juliaBaseTypeError07,juliaBaseTypeIter07,juliaBaseTypeRange07,juliaBaseTypeArray07,juliaBaseTypeSet07,juliaBaseTypeC07,juliaBaseTypeDisplay07,juliaBaseTypeIO07
+syntax cluster juliaTypesItems07	contains=juliaBaseTypeBasic07,juliaBaseTypeNum07,juliaBaseTypeError07,juliaBaseTypeIter07,juliaBaseTypeRange07,juliaBaseTypeArray07,juliaBaseTypeDict07,juliaBaseTypeSet07,juliaBaseTypeC07,juliaBaseTypeDisplay07,juliaBaseTypeIO07
 
-syntax cluster juliaConstItemsAll	contains=juliaConstNum,juliaConstBool,juliaConstEnv,juliaConstIO,juliaConstMMap,juliaConstC,juliaConstGeneric
-syntax cluster juliaConstItems0506	contains=juliaConstNum0506
-syntax cluster juliaConstItems07	contains=juliaConstGeneric07,juliaPossibleEuler
+syntax cluster juliaConstItemsAll	contains=juliaConstNum,juliaConstBool,juliaConstEnv,juliaConstMMap,juliaConstC,juliaConstGeneric
+syntax cluster juliaConstItems0506	contains=juliaConstNum0506,juliaConstIO0506
+syntax cluster juliaConstItems07	contains=juliaConstGeneric07,juliaPossibleEuler,juliaConstEnv07,juliaConstIO07
 if b:julia_syntax_version <= 6
   syntax cluster juliaConstItems	contains=@juliaConstItemsAll,@juliaConstItems0506
 else
@@ -223,7 +223,9 @@ syntax match   juliaBaseTypeString	display "\<\%(DirectIndex\|Sub\|Rep\|Rev\|Abs
 syntax match   juliaBaseTypeArray	display "\<\%(\%(Sub\)\?Array\|\%(Abstract\|Dense\|Strided\)\?\%(Array\|Matrix\|Vec\%(tor\|OrMat\)\)\|SparseMatrixCSC\|\%(AbstractSparse\|Bit\|Shared\)\%(Array\|Vector\|Matrix\)\|\%\(D\|Bid\|\%(Sym\)\?Trid\)iagonal\|Hermitian\|Symmetric\|UniformScaling\|\%(Lower\|Upper\)Triangular\|SparseVector\|VecElement\)\>"
 syntax match   juliaBaseTypeArray0607	display "\<\%(Conj\%(Array\|Matrix\|Vector\)\|Index\%(Cartesian\|Linear\|Style\)\|PermutedDimsArray\|RowVector\)\>"
 syntax match   juliaBaseTypeArray07	display "\<\%(BroadcastStyle\|Adjoint\|Transpose\|LinearIndices\)\>"
-syntax match   juliaBaseTypeDict	display "\<\%(WeakKey\|ObjectId\)\?Dict\>"
+syntax match   juliaBaseTypeDict	display "\<\%(WeakKey\)\?Dict\>"
+syntax match   juliaBaseTypeDict0506	display "\<ObjectIdDict\>"
+syntax match   juliaBaseTypeDict07	display "\<IdDict\>"
 syntax match   juliaBaseTypeSet		display "\<Set\>"
 syntax match   juliaBaseTypeSet0506	display "\<IntSet\>"
 syntax match   juliaBaseTypeSet0607	display "\<AbstractSet\>"
@@ -236,7 +238,7 @@ syntax match   juliaBaseTypeRange	display "\<\%(Dims\|RangeIndex\|\%(Ordinal\|St
 syntax match   juliaBaseTypeRange05	display "\<FloatRange\>"
 syntax match   juliaBaseTypeRange0506	display "\<Range\>"
 syntax match   juliaBaseTypeRange0607	display "\<\%(ExponentialBackOff\|StepRangeLen\)\>"
-syntax match   juliaBaseTypeRange07	display "\<AbstractRange\>"
+syntax match   juliaBaseTypeRange07	display "\<\(Abstract\|Lin\)Range\>"
 syntax match   juliaBaseTypeRegex	display "\<Regex\%(Match\)\?\>"
 syntax match   juliaBaseTypeFact	display "\<Factorization\>"
 syntax match   juliaBaseTypeSort	display "\<\%(Insertion\|\(Partial\)\?Quick\|Merge\)Sort\>"
@@ -259,8 +261,10 @@ syntax match   juliaConstNum0506	display "\%(\<\%(eu\?\|eulergamma\|γ\|catalan\
 syntax match   juliaPossibleEuler	"ℯ" contains=juliaEuler
 exec 'syntax match   juliaEuler	        contained "\%(\%(^\|[' . s:nonidS_chars . ']\|' . s:operators . '\)\%([.0-9eEf_]*\d\)\?\)\@'.s:d(80).'<=ℯ\ze\%($\|[' . s:nonidS_chars . ']\|' . s:operators . '\)"'
 syntax match   juliaConstBool		display "\<\%(true\|false\)\>"
-syntax match   juliaConstEnv		display "\<\%(ARGS\|ENV\|CPU_CORES\|OS_NAME\|ENDIAN_BOM\|LOAD_PATH\|VERSION\|JULIA_HOME\|PROGRAM_FILE\)\>"
-syntax match   juliaConstIO		display "\<\%(STD\%(OUT\|IN\|ERR\)\|DevNull\)\>"
+syntax match   juliaConstEnv		display "\<\%(ARGS\|ENV\|OS_NAME\|ENDIAN_BOM\|LOAD_PATH\|VERSION\|JULIA_HOME\|PROGRAM_FILE\)\>"
+syntax match   juliaConstEnv07		display "\<DEPOT_PATH\>"
+syntax match   juliaConstIO0506		display "\<\%(STD\%(OUT\|IN\|ERR\)\|DevNull\)\>"
+syntax match   juliaConstIO07		display "\<\%(std\%(out\|in\|err\)\|devnull\)\>"
 syntax match   juliaConstC		display "\<\%(WORD_SIZE\|C_NULL\)\>"
 syntax match   juliaConstGeneric	display "\<\%(nothing\|Main\)\>"
 syntax match   juliaConstGeneric07	display "\<missing\>"
@@ -452,11 +456,11 @@ for t in ["Iter", "Range"]
   let h = b:julia_syntax_version == 5 ? "Type" : b:julia_syntax_version == 6 ? "juliaDeprecated" : "NONE"
   exec "hi! def link juliaBaseType" . t . "05 " . h
 endfor
-for t in ["Num", "Range", "Set"]
+for t in ["Num", "Range", "Dict", "Set"]
   let h = b:julia_syntax_version <= 6 ? "Type" : "juliaDeprecated"
   exec "hi! def link juliaBaseType" . t . "0506 " . h
 endfor
-for t in ["Range", "Set", "Basic", "C", "Array", "Iter", "Display", "IO", "Num", "Error"]
+for t in ["Range", "Dict", "Set", "Basic", "C", "Array", "Iter", "Display", "IO", "Num", "Error"]
   let h = b:julia_syntax_version >= 7 ? "Type" : "NONE"
   exec "hi! def link juliaBaseType" . t . "07 " . h
 endfor
@@ -472,15 +476,18 @@ let h = b:julia_syntax_version >= 7 ? "Constant" : "NONE"
 exec "hi! def link juliaEuler " . h
 
 hi def link juliaConstEnv		Constant
-hi def link juliaConstIO		Constant
 hi def link juliaConstC			Constant
 hi def link juliaConstLimits		Constant
 hi def link juliaConstGeneric		Constant
 hi def link juliaRangeEnd		Constant
 hi def link juliaConstBool		Boolean
 
-let h = b:julia_syntax_version >= 7 ? "Constant" : "NONE"
-exec "hi! def link juliaConstGeneric07 " . h
+for t in ["Generic", "IO", "Env"]
+  let h = b:julia_syntax_version >= 7 ? "Constant" : "NONE"
+  exec "hi! def link juliaConst" . t . "07 " . h
+endfor
+let h = b:julia_syntax_version < 7 ? "Constant" : "juliaDeprecated"
+exec "hi! def link juliaConstIO0506 " . h
 
 hi def link juliaComprehensionFor	Keyword
 hi def link juliaComprehensionIf	Keyword

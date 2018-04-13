@@ -36,7 +36,7 @@ if empty(&formatprg)
     setlocal formatprg=mix\ format\ -
 endif
 
-let &l:define = 'def\(macro|guard|delegate\)p'
+let &l:define = 'def\(macro\|guard\|delegate\)\=p\='
 
 silent! setlocal formatoptions-=t formatoptions+=croqlj
 

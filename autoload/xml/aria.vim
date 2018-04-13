@@ -94,44 +94,61 @@ let landmark_role = [
 \ ]
 
 " Ref: https://www.w3.org/TR/dpub-aria-1.0/
-" Version: W3C Candidate Recommendation 15 December 2016
+" Version: W3C Recommendation 14 December 2017
 let dpub_role = [
-    \ 'dpub-abstract',
-    \ 'dpub-afterword',
-    \ 'dpub-appendix',
-    \ 'dpub-biblioentry',
-    \ 'dpub-bibliography',
-    \ 'dpub-biblioref',
-    \ 'dpub-chapter',
-    \ 'dpub-cover',
-    \ 'dpub-epilogue',
-    \ 'dpub-footnote',
-    \ 'dpub-footnotes',
-    \ 'dpub-foreword',
-    \ 'dpub-glossary',
-    \ 'dpub-glossdef',
-    \ 'dpub-glossref',
-    \ 'dpub-glossterm',
-    \ 'dpub-index',
-    \ 'dpub-locator',
-    \ 'dpub-noteref',
-    \ 'dpub-notice',
-    \ 'dpub-pagebreak',
-    \ 'dpub-pagelist',
-    \ 'dpub-part',
-    \ 'dpub-preface',
-    \ 'dpub-prologue',
-    \ 'dpub-pullquote',
-    \ 'dpub-qna',
-    \ 'dpub-subtitle',
-    \ 'dpub-tip',
-    \ 'dpub-title',
-    \ 'dpub-toc'
+    \ 'doc-abstract',
+    \ 'doc-acknowledgments',
+    \ 'doc-afterword',
+    \ 'doc-appendix',
+    \ 'doc-backlink',
+    \ 'doc-biblioentry',
+    \ 'doc-bibliography',
+    \ 'doc-biblioref',
+    \ 'doc-chapter',
+    \ 'doc-colophon',
+    \ 'doc-conclusion',
+    \ 'doc-cover',
+    \ 'doc-credit',
+    \ 'doc-credits',
+    \ 'doc-dedication',
+    \ 'doc-endnote',
+    \ 'doc-endnotes',
+    \ 'doc-epigraph',
+    \ 'doc-epilogue',
+    \ 'doc-errata',
+    \ 'doc-example',
+    \ 'doc-footnote',
+    \ 'doc-foreword',
+    \ 'doc-glossary',
+    \ 'doc-glossref',
+    \ 'doc-index',
+    \ 'doc-introduction',
+    \ 'doc-noteref',
+    \ 'doc-notice',
+    \ 'doc-pagebreak',
+    \ 'doc-pagelist',
+    \ 'doc-part',
+    \ 'doc-preface',
+    \ 'doc-prologue',
+    \ 'doc-pullquote',
+    \ 'doc-qna',
+    \ 'doc-subtitle',
+    \ 'doc-tip',
+    \ 'doc-toc'
+\ ]
+
+" Ref: https://www.w3.org/TR/graphics-aria-1.0/
+" Version: W3C Candidate Recommendation 29 March 2018
+let graphic_role = [
+    \ 'graphics-document',
+    \ 'graphics-object',
+    \ 'graphics-symbol'
 \ ]
 
 let role = extend(widget_role, document_structure)
 let role = extend(role, landmark_role)
 let role = extend(role, dpub_role)
+let role = extend(role, graphic_role)
 
 " https://www.w3.org/TR/wai-aria-1.1/#states_and_properties
 let global_states_and_properties = {

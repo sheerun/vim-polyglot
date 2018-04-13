@@ -38,7 +38,8 @@ syn match haskellTypeSig
   \ haskellParens
 syn keyword haskellWhere where
 syn keyword haskellLet let
-syn keyword haskellDeclKeyword module class instance newtype deriving in
+syn match HaskellDerive "\<deriving\>\s\+\<\(anyclass\|instance\|newtype\|stock\)\?"
+syn keyword haskellDeclKeyword module class instance newtype in
 syn match haskellDecl "\<\(type\|data\)\>\s\+\(\<family\>\)\?"
 syn keyword haskellDefault default
 syn keyword haskellImportKeywords import qualified safe as hiding contained
@@ -161,11 +162,13 @@ highlight def link haskellType Type
 highlight def link haskellImportKeywords Include
 if get(g:, 'haskell_classic_highlighting', 0)
   highlight def link haskellDeclKeyword Keyword
+  highlight def link HaskellDerive Keyword
   highlight def link haskellDecl Keyword
   highlight def link haskellWhere Keyword
   highlight def link haskellLet Keyword
 else
   highlight def link haskellDeclKeyword Structure
+  highlight def link HaskellDerive Structure
   highlight def link haskellDecl Structure
   highlight def link haskellWhere Structure
   highlight def link haskellLet Structure

@@ -9,6 +9,8 @@ if exists("b:current_syntax")
 endif
 
 runtime! syntax/html.vim
+syntax clear htmlTagName
+syntax match htmlTagName contained "\<[a-zA-Z0-9:-]*\>"
 unlet! b:current_syntax
 
 ""
@@ -43,6 +45,7 @@ function! s:register_language(language, tag, ...)
 endfunction
 
 if !exists("g:vue_disable_pre_processors") || !g:vue_disable_pre_processors
+  call s:register_language('less', 'style')
   call s:register_language('pug', 'template', s:attr('lang', '\%(pug\|jade\)'))
   call s:register_language('slm', 'template')
   call s:register_language('handlebars', 'template')
@@ -52,7 +55,6 @@ if !exists("g:vue_disable_pre_processors") || !g:vue_disable_pre_processors
   call s:register_language('stylus', 'style')
   call s:register_language('sass', 'style')
   call s:register_language('scss', 'style')
-  call s:register_language('less', 'style')
 endif
 
 syn region  vueSurroundingTag   contained start=+<\(script\|style\|template\)+ end=+>+ fold contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent

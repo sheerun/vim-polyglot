@@ -1,6 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'purescript') == -1
   
-setlocal comments=s1fl:{-,mb:\ \ ,ex:-},:--
+setlocal comments=s1fl:{-,mb:\ \ ,ex:-},:--\ \|,:--
 setlocal include=^import
 setlocal includeexpr=printf('%s.purs',substitute(v:fname,'\\.','/','g'))
 

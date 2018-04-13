@@ -67,6 +67,7 @@ syn region typescriptInterpolation matchgroup=typescriptInterpolationDelimiter
       \ start=/${/ end=/}/ contained
       \ contains=@typescriptExpression
 
+syn match typescriptNumber "-\=\<\d[0-9_]*L\=\>" display
 syn match typescriptNumber "-\=\<0[xX][0-9a-fA-F][0-9a-fA-F_]*\>" display
 syn match typescriptNumber "-\=\<0[bB][01][01_]*\>" display
 syn match typescriptNumber "-\=\<0[oO]\o[0-7_]*\>" display

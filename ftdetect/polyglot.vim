@@ -77,17 +77,9 @@ autocmd FileType apiblueprint set makeprg=drafter\ -l\ %
 augroup END
 
 augroup filetypedetect
-" applescript:vim-scripts/applescript.vim
-augroup END
-
-augroup filetypedetect
 " asciidoc:asciidoc/vim-asciidoc
 autocmd BufNewFile,BufRead *.asciidoc,*.adoc
 	\ set ft=asciidoc
-augroup END
-
-augroup filetypedetect
-" yaml:stephpy/vim-yaml
 augroup END
 
 augroup filetypedetect
@@ -106,9 +98,23 @@ function! s:isAnsible()
   return 0
 endfunction
 
-:au BufNewFile,BufRead * if s:isAnsible() | set ft=ansible | en
-:au BufNewFile,BufRead *.j2 set ft=ansible_template
-:au BufNewFile,BufRead hosts set ft=ansible_hosts
+function! s:setupTemplate()
+  if exists("g:ansible_template_syntaxes")
+    let filepath = expand("%:p")
+    for syntax_name in items(g:ansible_template_syntaxes)
+      let s:syntax_string = '\v/'.syntax_name[0]
+      if filepath =~ s:syntax_string
+        execute 'set ft='.syntax_name[1].'.jinja2'
+        return
+      endif
+    endfor
+  endif
+  set ft=jinja2
+endfunction
+
+au BufNewFile,BufRead * if s:isAnsible() | set ft=yaml.ansible | en
+au BufNewFile,BufRead *.j2 call s:setupTemplate()
+au BufNewFile,BufRead hosts set ft=ansible_hosts
 augroup END
 
 augroup filetypedetect
@@ -117,20 +123,8 @@ au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
 augroup END
 
 augroup filetypedetect
-" autohotkey:hnamikaw/vim-autohotkey
-augroup END
-
-augroup filetypedetect
 " blade:jwalton512/vim-blade
 autocmd BufNewFile,BufRead *.blade.php set filetype=blade
-augroup END
-
-augroup filetypedetect
-" c++11:octol/vim-cpp-enhanced-highlight
-augroup END
-
-augroup filetypedetect
-" c/c++:vim-jp/vim-cpp
 augroup END
 
 augroup filetypedetect
@@ -154,10 +148,6 @@ augroup END
 augroup filetypedetect
 " clojure:guns/vim-clojure-static
 autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn,*.cljx,*.cljc,{build,profile}.boot setlocal filetype=clojure
-augroup END
-
-augroup filetypedetect
-" cmake:pboettch/vim-cmake-syntax
 augroup END
 
 augroup filetypedetect
@@ -195,10 +185,6 @@ augroup END
 augroup filetypedetect
 " dart:dart-lang/dart-vim-plugin
 autocmd BufRead,BufNewFile *.dart set filetype=dart
-augroup END
-
-augroup filetypedetect
-" dockerfile:docker/docker::/contrib/syntax/vim/
 augroup END
 
 augroup filetypedetect
@@ -275,10 +261,6 @@ autocmd! BufNewFile,BufRead *.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp set
 augroup END
 
 augroup filetypedetect
-" gnuplot:vim-scripts/gnuplot-syntax-highlighting
-augroup END
-
-augroup filetypedetect
 " go:fatih/vim-go:_BASIC
 " vint: -ProhibitAutocmdWithNoGroup
 
@@ -317,10 +299,6 @@ au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
 augroup END
 
 augroup filetypedetect
-" groovy:vim-scripts/groovy.vim
-augroup END
-
-augroup filetypedetect
 " haml:sheerun/vim-haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
@@ -344,10 +322,6 @@ augroup END
 augroup filetypedetect
 " haxe:yaymukund/vim-haxe
 autocmd BufNewFile,BufRead *.hx setf haxe
-augroup END
-
-augroup filetypedetect
-" html5:othree/html5.vim
 augroup END
 
 augroup filetypedetect
@@ -428,7 +402,7 @@ augroup filetypedetect
 
 " Whether the .jsx extension is required.
 if !exists('g:jsx_ext_required')
-  let g:jsx_ext_required = 1
+  let g:jsx_ext_required = 0
 endif
 
 " Whether the @jsx pragma is required.
@@ -461,10 +435,6 @@ augroup filetypedetect
 " kotlin:udalov/kotlin-vim
 autocmd BufNewFile,BufRead *.kt setfiletype kotlin
 autocmd BufNewFile,BufRead *.kts setfiletype kotlin
-augroup END
-
-augroup filetypedetect
-" latex:LaTeX-Box-Team/LaTeX-Box
 augroup END
 
 augroup filetypedetect
@@ -504,10 +474,6 @@ autocmd BufNewFile,BufRead *Slakefile set filetype=ls
 augroup END
 
 augroup filetypedetect
-" lua:tbastos/vim-lua
-augroup END
-
-augroup filetypedetect
 " mako:sophacles/vim-bundle-mako
 if !exists("g:mako_detect_lang_from_ext")
   let g:mako_detect_lang_from_ext = 1
@@ -527,10 +493,6 @@ augroup filetypedetect
 " markdown filetype file
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx} set filetype=markdown
-augroup END
-
-augroup filetypedetect
-" mathematica:rsmenon/vim-mathematica
 augroup END
 
 augroup filetypedetect
@@ -557,18 +519,6 @@ augroup filetypedetect
 
 au BufRead,BufNewFile *.nix set filetype=nix
 au FileType nix setl sw=2 sts=2 et iskeyword+=-
-augroup END
-
-augroup filetypedetect
-" objc:b4winckler/vim-objc
-augroup END
-
-augroup filetypedetect
-" ocaml:jrk/vim-ocaml
-augroup END
-
-augroup filetypedetect
-" octave:vim-scripts/octave.vim--
 augroup END
 
 augroup filetypedetect
@@ -627,10 +577,6 @@ augroup filetypedetect
 " pgsql:exu/pgsql.vim
 " postgreSQL
 au BufNewFile,BufRead *.pgsql           setf pgsql
-augroup END
-
-augroup filetypedetect
-" php:StanAngeloff/php.vim
 augroup END
 
 augroup filetypedetect
@@ -700,10 +646,6 @@ au FileType purescript let &l:commentstring='{--%s--}'
 augroup END
 
 augroup filetypedetect
-" python:vim-python/python-syntax
-augroup END
-
-augroup filetypedetect
 " python-compiler:aliev/vim-compiler-python
 " Vim compiler file
 " Compiler:	Unit testing tool for Python
@@ -714,16 +656,8 @@ autocmd FileType python compiler python
 augroup END
 
 augroup filetypedetect
-" python-ident:Vimjas/vim-python-pep8-indent
-augroup END
-
-augroup filetypedetect
 " qml:peterhoeg/vim-qml
 autocmd BufRead,BufNewFile *.qml setfiletype qml
-augroup END
-
-augroup filetypedetect
-" r-lang:vim-scripts/R.vim
 augroup END
 
 augroup filetypedetect
@@ -734,14 +668,6 @@ augroup END
 augroup filetypedetect
 " raml:IN3D/vim-raml
 au BufRead,BufNewFile *.raml set ft=raml
-augroup END
-
-augroup filetypedetect
-" ragel:jneen/ragel.vim
-augroup END
-
-augroup filetypedetect
-" rspec:sheerun/rspec.vim
 augroup END
 
 augroup filetypedetect
@@ -951,13 +877,9 @@ autocmd BufNewFile,BufRead {.,}tmux*.conf* setfiletype tmux
 augroup END
 
 augroup filetypedetect
-" tomdoc:wellbredgrapefruit/tomdoc.vim
-augroup END
-
-augroup filetypedetect
 " toml:cespare/vim-toml
 " Go dep and Rust use several TOML config files that are not named with .toml.
-autocmd BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config set filetype=toml
+autocmd BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config,Pipfile set filetype=toml
 augroup END
 
 augroup filetypedetect
@@ -985,10 +907,6 @@ au BufRead,BufNewFile *.vala,*.vapi,*.valadoc setfiletype vala
 augroup END
 
 augroup filetypedetect
-" vbnet:vim-scripts/vbnet.vim
-augroup END
-
-augroup filetypedetect
 " vcl:smerrill/vcl-vim-plugin
 au BufRead,BufNewFile *.vcl set filetype=vcl
 augroup END
@@ -1006,19 +924,11 @@ augroup END
 
 augroup filetypedetect
 " vue:posva/vim-vue
-au BufNewFile,BufRead *.vue setf vue
+au BufNewFile,BufRead *.vue,*.wpy setf vue
 augroup END
 
 augroup filetypedetect
 " vm:lepture/vim-velocity
 au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
-augroup END
-
-augroup filetypedetect
-" xls:vim-scripts/XSLT-syntax
-augroup END
-
-augroup filetypedetect
-" yard:sheerun/vim-yardoc
 augroup END
 

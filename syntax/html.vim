@@ -79,6 +79,7 @@ syn keyword htmlTagName contained uplimit variance vector vectorproduct xor
 
 " Custom Element
 syn match htmlTagName contained "\<[a-z][-.0-9_a-z]*-[-.0-9_a-z]*\>"
+syn match htmlTagName contained "[.0-9_a-z]\@<=-[-.0-9_a-z]*\>"
 
 " HTML 5 arguments
 " Core Attributes
