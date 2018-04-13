@@ -59,7 +59,7 @@ extract() {
 	continue
     fi
 
-    for f in ${dir}/ftdetect/*; do
+    [ -d "${dir}/ftdetect" ] && for f in "${dir}/ftdetect/"*; do
       (
         echo "augroup filetypedetect";
         echo '" '"$pack";
