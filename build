@@ -55,8 +55,8 @@ extract() {
     output "${subdirs##, })\n"
 
     if (echo "julia coffee-script elixir fish git plantuml scala swift"  | fgrep -q "$name"); then
-	echo "Skipping ftdetect installation of $name"
-	continue
+      echo "Skipping ftdetect installation of $name"
+      continue
     fi
 
     [ -d "${dir}/ftdetect" ] && for f in "${dir}/ftdetect/"*; do
