@@ -136,7 +136,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin)
 - [swift](https://github.com/keith/swift.vim) (syntax, indent, ftplugin)
 - [sxhkd](https://github.com/baskerville/vim-sxhkdrc) (syntax)
-- [systemd](https://github.com/kurayama/systemd-vim-syntax) (syntax)
+- [systemd](https://github.com/wgwoods/vim-systemd-syntax) (syntax)
 - [terraform](https://github.com/hashivim/vim-terraform) (syntax, indent, ftplugin)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax)

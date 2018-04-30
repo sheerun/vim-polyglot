@@ -978,7 +978,7 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'systemd') == -1
   augroup filetypedetect
-  " systemd, from systemd.vim in kurayama/systemd-vim-syntax
+  " systemd, from systemd.vim in wgwoods/vim-systemd-syntax
 au BufNewFile,BufRead *.automount set filetype=systemd
 au BufNewFile,BufRead *.mount     set filetype=systemd
 au BufNewFile,BufRead *.path      set filetype=systemd
