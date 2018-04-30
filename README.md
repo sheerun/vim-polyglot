@@ -78,7 +78,6 @@ If you need full functionality of any plugin, please use it directly with your p
 - [groovy](https://github.com/vim-scripts/groovy.vim) (syntax)
 - [haml](https://github.com/sheerun/vim-haml) (syntax, indent, compiler, ftplugin)
 - [handlebars](https://github.com/mustache/vim-mustache-handlebars) (syntax, indent, ftplugin)
-- [haproxy](https://github.com/CH-DanReif/haproxy.vim) (syntax)
 - [haskell](https://github.com/neovimhaskell/haskell-vim) (syntax, indent, ftplugin)
 - [haxe](https://github.com/yaymukund/vim-haxe) (syntax)
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)

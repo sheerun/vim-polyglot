@@ -1,17 +1,44 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
   
 " Vim syntax file
-" Language: Jinja2 - with special modifications for compound-filetype
-" compatibility
-" Maintainer: Dave Honneffer <pearofducks@gmail.com>
-" Last Change: 2018.02.11
+" Language:	Jinja template
+" Maintainer:	Armin Ronacher <armin.ronacher@active-4.com>
+" Last Change:	2008 May 9
+" Version:      1.1
+"
+" Known Bugs:
+"   because of odd limitations dicts and the modulo operator
+"   appear wrong in the template.
+"
+" Changes:
+"
+"     2008 May 9:     Added support for Jinja2 changes (new keyword rules)
 
-if !exists("main_syntax")
-  let main_syntax = 'jinja2'
+" .vimrc variable to disable html highlighting
+if !exists('g:jinja_syntax_html')
+   let g:jinja_syntax_html=1
 endif
 
-let b:current_syntax = ''
-unlet b:current_syntax
+" For version 5.x: Clear all syntax items
+" For version 6.x: Quit when a syntax file was already loaded
+if !exists("main_syntax")
+  if version < 600
+    syntax clear
+  elseif exists("b:current_syntax")
+  finish
+endif
+  let main_syntax = 'jinja'
+endif
+
+" Pull in the HTML syntax.
+if g:jinja_syntax_html
+  if version < 600
+    so <sfile>:p:h/html.vim
+  else
+    runtime! syntax/html.vim
+    unlet b:current_syntax
+  endif
+endif
 
 syntax case match
 
@@ -68,8 +95,15 @@ syn match jinjaStatement containedin=jinjaTagBlock contained /\<with\(out\)\?\s\
 
 
 " Define the default highlighting.
-if !exists("did_jinja_syn_inits")
-  command -nargs=+ HiLink hi def link <args>
+" For version 5.7 and earlier: only when not done already
+" For version 5.8 and later: only when an item doesn't have highlighting yet
+if version >= 508 || !exists("did_jinja_syn_inits")
+  if version < 508
+    let did_jinja_syn_inits = 1
+    command -nargs=+ HiLink hi link <args>
+  else
+    command -nargs=+ HiLink hi def link <args>
+  endif
 
   HiLink jinjaPunctuation jinjaOperator
   HiLink jinjaAttribute jinjaVariable
@@ -96,6 +130,10 @@ if !exists("did_jinja_syn_inits")
   delcommand HiLink
 endif
 
-let b:current_syntax = "jinja2"
+let b:current_syntax = "jinja"
+
+if main_syntax == 'jinja'
+  unlet main_syntax
+endif
 
 endif

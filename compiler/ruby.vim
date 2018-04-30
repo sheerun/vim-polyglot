@@ -23,21 +23,21 @@ set cpo-=C
 " default settings runs script normally
 " add '-c' switch to run syntax check only:
 "
-"   CompilerSet makeprg=ruby\ -c
+"   CompilerSet makeprg=ruby\ -wc\ $*
 "
 " or add '-c' at :make command line:
 "
 "   :make -c %<CR>
 "
-CompilerSet makeprg=ruby
+CompilerSet makeprg=ruby\ -w\ $*
 
 CompilerSet errorformat=
     \%+E%f:%l:\ parse\ error,
     \%W%f:%l:\ warning:\ %m,
     \%E%f:%l:in\ %*[^:]:\ %m,
     \%E%f:%l:\ %m,
-    \%-C%\t%\\d%#:%#\ %#from\ %f:%l:in\ %.%#,
-    \%-Z%\t%\\d%#:%#\ %#from\ %f:%l,
+    \%-C%\tfrom\ %f:%l:in\ %.%#,
+    \%-Z%\tfrom\ %f:%l,
     \%-Z%p^,
     \%-G%.%#
 

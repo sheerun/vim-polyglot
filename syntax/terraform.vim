@@ -181,7 +181,6 @@ syn keyword terraDataTypeBI
           \ opentelekomcloud_networking_secgroup_v2
           \ opentelekomcloud_s3_bucket_object
           \ opsgenie_user
-          \ oraclepaas_database_service_instance
           \ ovh_publiccloud_region
           \ ovh_publiccloud_regions
           \ packet_precreated_ip_block
@@ -189,7 +188,6 @@ syn keyword terraDataTypeBI
           \ pagerduty_schedule
           \ pagerduty_user
           \ pagerduty_vendor
-          \ panos_system_info
           \ profitbricks_datacenter
           \ profitbricks_image
           \ profitbricks_location
@@ -1033,10 +1031,6 @@ syn keyword terraResourceTypeBI
           \ opentelekomcloud_smn_topic_v2
           \ opsgenie_team
           \ opsgenie_user
-          \ oraclepaas_database_access_rule
-          \ oraclepaas_database_service_instance
-          \ oraclepaas_java_access_rule
-          \ oraclepaas_java_service_instance
           \ ovh_domain_zone_record
           \ ovh_publiccloud_private_network
           \ ovh_publiccloud_private_network_subnet
@@ -1058,19 +1052,6 @@ syn keyword terraResourceTypeBI
           \ pagerduty_team
           \ pagerduty_team_membership
           \ pagerduty_user
-          \ panos_address_group
-          \ panos_address_object
-          \ panos_administrative_tag
-          \ panos_dag_tags
-          \ panos_ethernet_interface
-          \ panos_general_settings
-          \ panos_management_profile
-          \ panos_nat_policy
-          \ panos_security_policies
-          \ panos_service_group
-          \ panos_service_object
-          \ panos_virtual_router
-          \ panos_zone
           \ postgresql_database
           \ postgresql_extension
           \ postgresql_role

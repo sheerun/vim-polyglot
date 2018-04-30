@@ -59,7 +59,7 @@ extract() {
 	continue
     fi
 
-    [ -d "${dir}/ftdetect" ] && for f in "${dir}/ftdetect/"*; do
+    for f in ${dir}/ftdetect/*; do
       (
         echo "augroup filetypedetect";
         echo '" '"$pack";
@@ -150,7 +150,6 @@ PACKS="
   groovy:vim-scripts/groovy.vim
   haml:sheerun/vim-haml
   handlebars:mustache/vim-mustache-handlebars
-  haproxy:CH-DanReif/haproxy.vim
   haskell:neovimhaskell/haskell-vim
   haxe:yaymukund/vim-haxe
   html5:othree/html5.vim
