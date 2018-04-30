@@ -59,7 +59,7 @@ extract() {
 	continue
     fi
 
-    for f in "${dir}/ftdetect/"*; do
+    [ -d "${dir}/ftdetect" ] && for f in "${dir}/ftdetect/"*; do
       cat <<EOF >> tmp/polyglot.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '${pack%%:*}') == -1
   augroup filetypedetect
@@ -152,6 +152,7 @@ PACKS="
   groovy:vim-scripts/groovy.vim
   haml:sheerun/vim-haml
   handlebars:mustache/vim-mustache-handlebars
+  haproxy:CH-DanReif/haproxy.vim
   haskell:neovimhaskell/haskell-vim
   haxe:yaymukund/vim-haxe
   html5:othree/html5.vim
