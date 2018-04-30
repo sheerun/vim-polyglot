@@ -176,7 +176,12 @@ Note that disabling languages won't make in general your vim startup any faster 
 
 Language packs are periodically updated using automated `build` script.
 
-Feel free to add your language, and send pull-request.
+Feel free to add your language, and send pull-request.  In your pull request, please include:
+1. How you chose the particular repo from which to pull support for this language.
+2. An updated https://github.com/sheerun/vim-polyglot/blob/master/build .
+3. If at all possible, absolutely nothing else (in particular, please don't run `build` and include that in your PR).
+
+The easier it is to validate that the new language won't do anything wacky, the faster it'll be merged.  In particular, languages that utilize global plugins (loaded for every filetype), or plugins with dangerous features (like `call` based on the contents of a file being edited), will never be merged, as they will be slow or dangerous, respectively.
 
 ## License
 
