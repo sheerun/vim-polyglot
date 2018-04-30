@@ -52,6 +52,12 @@ extract() {
       fi
     done
 
+    # syntax for go.vim depends on autoload for go.vim, but we exclude the
+    # autoload always and the ftplugin because it's too complex.  FML.
+    if [ "${pack%%:*}" = "go" ]; then
+      copy_file "${dir}${subtree}" "${dir}${subtree}/autoload/go/config.vim" "${name}"
+    fi
+
     output "${subdirs##, })\n"
 
     if (echo "julia coffee-script elixir fish git plantuml scala swift"  | fgrep -q "$name"); then
@@ -89,18 +95,35 @@ EOF
 
 copy_dir() {
   for file in $(find "$1/$2" -name '*.vim' -o -name '*.vital'); do
-    file_path="$(dirname "${file##$1/}")"
-    mkdir -p "$file_path"
-    touch "$file_path/$(basename "$file")"
-
-    # Use comma instead of / to handle cases like c/c++
-    sed -e "s,%%PACK%%,$3," -e "/%%CONTENT%%/{r $file" -e "d;}" plugin_guard.vim.template >> $file_path/$(basename "$file")
+    copy_file "$1" "$file" "$3"
   done
 }
 
-update_readme() {
-  OLD_README="$(cat README.md)"
+copy_file() {
+  ## $1 is the build dir (e.g. tmp/vim-go)
+  ## $2 is the full file path, as returned by `find` (e.g. tmp/vim-go/indent/go.vim)
+  ## $3 is the name of the package (so that we can detect if it's disabled at runtime)
+  local tmp_dir="$1"
+  local file_in_tmp="$2"
+  local file_basename="${2##*/}"
+  local file_path="${file_in_tmp##$tmp_dir/}" # Just this file's (full) path
+  file_path="${file_path%/*}"                # Minus the actual name of the file
+  local file_in_dst="${file_path}/${file_basename}" # Could also be ${file_in_tmp##$tmp_dir/}
+  local package_name="$3"
 
+  if [ "${file_in_tmp##$tmp_dir/}" != "${file_in_dst}" ]; then
+    echo "Failure in logic in build script; '${file_in_tmp##$tmp_dir/}' != '${file_in_dst}'.  Bailing." >&2
+    exit 1
+  fi
+
+  mkdir -p "${file_path}"
+  touch "$file_in_dst"
+
+  # Use comma instead of / to handle cases like c/c++
+  sed -e "s,%%PACK%%,${package_name}," -e "/%%CONTENT%%/{r ${file_in_tmp}" -e "d;}" plugin_guard.vim.template >> "$file_in_dst"
+}
+
+update_readme() {
   ed README.md <<- EOF
 /Language packs
 +2kb
