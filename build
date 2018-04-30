@@ -234,8 +234,8 @@ rm -rf $DIRS_RM
 mkdir tmp
 
 printf "Downloading packs..."
-download "$PACKS"
-extract "$PACKS"
+download "$(sed '/^#/d' <<<"$PACKS")"
+extract "$(sed '/^#/d' <<<"$PACKS")"
 update_readme
 
 rm -rf tmp
