@@ -36,11 +36,12 @@ syn region  nixComment start=+/\*+ end=+\*/+ contains=nixTodo,@Spell
 
 syn region nixInterpolation matchgroup=nixInterpolationDelimiter start="\${" end="}" contained contains=@nixExpr,nixInterpolationParam
 
-syn match nixSimpleStringSpecial /\\["nrt\\$]/ contained
-syn match nixInterpolationSpecial /''['$]/ contained
+syn match nixSimpleStringSpecial /\\./ contained
+syn match nixStringSpecial /''['$]/ contained
+syn match nixStringSpecial /''\\./ contained
 
 syn region nixSimpleString matchgroup=nixStringDelimiter start=+"+ skip=+\\"+ end=+"+ contains=nixInterpolation,nixSimpleStringSpecial
-syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$]+ end=+''+ contains=nixInterpolation,nixInterpolationSpecial
+syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ end=+''+ contains=nixInterpolation,nixStringSpecial
 
 syn match nixFunctionCall "[a-zA-Z_][a-zA-Z0-9_'-]*"
 
@@ -117,27 +118,34 @@ syn region nixWithExpr matchgroup=nixWithExprKeyword start="\<with\>" matchgroup
 
 syn region nixAssertExpr matchgroup=nixAssertKeyword start="\<assert\>" matchgroup=NONE end=";" contains=@nixExpr
 
-syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixRecKeyword,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixSimpleFunctionArgument,nixPath,nixHomePath,nixSearchPathRef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr
+syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixRecKeyword,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixSimpleFunctionArgument,nixPath,nixHomePath,nixSearchPathRef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr,nixInterpolation
 
 " These definitions override @nixExpr and have to come afterwards:
 
 syn match nixInterpolationParam "[a-zA-Z_][a-zA-Z0-9_'-]*\%(\.[a-zA-Z_][a-zA-Z0-9_'-]*\)*" contained
 
-" Non-namespaced Nix builtins as of version 1.10:
+" Non-namespaced Nix builtins as of version 2.0:
 syn keyword nixSimpleBuiltin
-      \ abort baseNameOf derivation dirOf fetchTarball import map removeAttrs
-      \ throw toString
+      \ abort baseNameOf derivation derivationStrict dirOf fetchGit
+      \ fetchMercurial fetchTarball import isNull map placeholder removeAttrs
+      \ scopedImport throw toString
 
-" Namespaced and non-namespaced Nix builtins as of version 1.10:
+
+" Namespaced and non-namespaced Nix builtins as of version 2.0:
 syn keyword nixNamespacedBuiltin contained
-      \ abort add all any attrNames attrValues baseNameOf compareVersions
-      \ concatLists currentSystem deepSeq derivation dirOf div elem elemAt
-      \ fetchTarball fetchurl filter filterSource foldl' fromJSON genList
-      \ getAttr getEnv hasAttr hashString head import intersectAttrs isAttrs
-      \ isBool isFunction isInt isList isString length lessThan listToAttrs map
-      \ mul parseDrvName pathExists readDir readFile removeAttrs replaceStrings
-      \ seq sort stringLength sub substring tail throw toFile toJSON toPath
-      \ toString toXML trace typeOf
+      \ abort add addErrorContext all any attrNames attrValues baseNameOf
+      \ catAttrs compareVersions concatLists concatStringsSep currentSystem
+      \ currentTime deepSeq derivation derivationStrict dirOf div elem elemAt
+      \ fetchGit fetchMercurial fetchTarball fetchurl filter \ filterSource
+      \ findFile foldl' fromJSON functionArgs genList \ genericClosure getAttr
+      \ getEnv hasAttr hasContext hashString head import intersectAttrs isAttrs
+      \ isBool isFloat isFunction isInt isList isNull isString langVersion
+      \ length lessThan listToAttrs map match mul nixPath nixVersion
+      \ parseDrvName partition path pathExists placeholder readDir readFile
+      \ removeAttrs replaceStrings scopedImport seq sort split splitVersion
+      \ storeDir storePath stringLength sub substring tail throw toFile toJSON
+      \ toPath toString toXML trace tryEval typeOf unsafeDiscardOutputDependency
+      \ unsafeDiscardStringContext unsafeGetAttrPos valueSize
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
@@ -158,7 +166,6 @@ hi def link nixInteger                Integer
 hi def link nixInterpolation          Macro
 hi def link nixInterpolationDelimiter Delimiter
 hi def link nixInterpolationParam     Macro
-hi def link nixInterpolationSpecial   Special
 hi def link nixLetExprKeyword         Keyword
 hi def link nixNamespacedBuiltin      Special
 hi def link nixNull                   Constant
@@ -173,6 +180,7 @@ hi def link nixSimpleString           String
 hi def link nixSimpleStringSpecial    SpecialChar
 hi def link nixString                 String
 hi def link nixStringDelimiter        Delimiter
+hi def link nixStringSpecial          Special
 hi def link nixTodo                   Todo
 hi def link nixURI                    Include
 hi def link nixWithExprKeyword        Keyword

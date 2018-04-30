@@ -20,20 +20,21 @@ syn keyword purescriptBoolean true false
 " Delimiters
 syn match purescriptDelimiter "[,;|.()[\]{}]"
 
-" Constructor
-syn match purescriptConstructor "\%(\<class\s\+\)\@15<!\<[A-Z]\w*\>"
-syn region purescriptConstructorDecl matchgroup=purescriptConstructor start="\<[A-Z]\w*\>" end="\(|\|$\)"me=e-1,re=e-1 contained
-  \ containedin=purescriptData,purescriptNewtype
-  \ contains=purescriptType,purescriptTypeVar,purescriptDelimiter,purescriptOperatorType,purescriptOperatorTypeSig,@purescriptComment
-
 " Type
-syn match purescriptType "\%(\<class\s\+\)\@15<!\<[A-Z]\w*\>" contained
+syn match purescriptType "\%(\<class\s\+\)\@15<!\<\u\w*\>" contained
   \ containedin=purescriptTypeAlias
   \ nextgroup=purescriptType,purescriptTypeVar skipwhite
 syn match purescriptTypeVar "\<[_a-z]\(\w\|\'\)*\>" contained
   \ containedin=purescriptData,purescriptNewtype,purescriptTypeAlias,purescriptFunctionDecl
 syn region purescriptTypeExport matchgroup=purescriptType start="\<[A-Z]\(\S\&[^,.]\)*\>("rs=e-1 matchgroup=purescriptDelimiter end=")" contained extend
   \ contains=purescriptConstructor,purescriptDelimiter
+
+" Constructor
+syn match purescriptConstructor "\%(\<class\s\+\)\@15<!\<\u\w*\>"
+syn region purescriptConstructorDecl matchgroup=purescriptConstructor start="\<[A-Z]\w*\>" end="\(|\|$\)"me=e-1,re=e-1 contained
+  \ containedin=purescriptData,purescriptNewtype
+  \ contains=purescriptType,purescriptTypeVar,purescriptDelimiter,purescriptOperatorType,purescriptOperatorTypeSig,@purescriptComment
+
 
 " Function
 syn match purescriptFunction "\%(\<instance\s\+\|\<class\s\+\)\@18<!\<[_a-z]\(\w\|\'\)*\>" contained
@@ -52,28 +53,42 @@ syn match purescriptClass "\<class\>" containedin=purescriptClassDecl contained
 syn match purescriptClassName "\<[A-Z]\w*\>" containedin=purescriptClassDecl contained
 
 " Module
-syn match purescriptModuleName "\(\w\+\.\?\)*" contained excludenl
+syn match purescriptModuleName "\(\u\w\*\.\?\)*" contained excludenl
 syn match purescriptModuleKeyword "\<module\>"
 syn match purescriptModule "^module\>\s\+\<\(\w\+\.\?\)*\>"
   \ contains=purescriptModuleKeyword,purescriptModuleName
-  \ nextgroup=purescriptModuleParams skipwhite skipnl skipempty
+  \ nextgroup=purescriptModuleParams
+  \ skipwhite
+  \ skipnl
+  \ skipempty
 syn region purescriptModuleParams start="(" skip="([^)]\{-})" end=")" fold contained keepend
-  \ contains=purescriptClassDecl,purescriptClass,purescriptClassName,purescriptDelimiter,purescriptType,purescriptTypeExport,purescriptFunction,purescriptStructure,purescriptModuleKeyword,@purescriptComment
+  \ contains=purescriptClassDecl,purescriptClass,purescriptClassName,purescriptDelimiter,purescriptType,purescriptTypeExport,purescriptStructure,purescriptModuleKeyword,@purescriptComment
   \ nextgroup=purescriptImportParams skipwhite
 
 " Import
 syn match purescriptImportKeyword "\<\(foreign\|import\|qualified\)\>"
-syn keyword purescriptAsKeyword as contained
-syn keyword purescriptHidingKeyword hiding contained
-syn match purescriptImport "\<import\>\s\+\(qualified\s\+\)\?\<\(\w\+\.\?\)*\>"
+syn match purescriptImport "\<import\>\s\+\(qualified\s\+\)\?\<\(\w\+\.\?\)*"
   \ contains=purescriptImportKeyword,purescriptModuleName
-  \ nextgroup=purescriptModuleParams,purescriptImportParams skipwhite
-syn match purescriptImportParams "as\s\+\(\w\+\)" contained
-  \ contains=purescriptModuleName,purescriptAsKeyword
-  \ nextgroup=purescriptModuleParams,purescriptImportParams skipwhite
-syn match purescriptImportParams "hiding" contained
+  \ nextgroup=purescriptImportParams,purescriptImportAs,purescriptImportHiding
+  \ skipwhite
+syn region purescriptImportParams
+  \ start="("
+  \ skip="([^)]\{-})"
+  \ end=")"
+  \ contained
+  \ contains=purescriptClass,purescriptClass,purescriptStructure,purescriptType,purescriptIdentifier
+  \ nextgroup=purescriptImportAs
+  \ skipwhite
+syn keyword purescriptAsKeyword as contained
+syn match purescriptImportAs "\<as\>\_s\+\u\w*"
+  \ contains=purescriptAsKeyword,purescriptModuleName
+  \ nextgroup=purescriptModuleName
+syn keyword purescriptHidingKeyword hiding contained
+syn match purescriptImportHiding "hiding"
+  \ contained
   \ contains=purescriptHidingKeyword
-  \ nextgroup=purescriptModuleParams,purescriptImportParams skipwhite
+  \ nextgroup=purescriptImportParams
+  \ skipwhite
 
 " Function declaration
 syn region purescriptFunctionDecl
@@ -97,7 +112,6 @@ syn match purescriptForall "∀"
 syn keyword purescriptConditional if then else
 syn keyword purescriptStatement do case of in
 syn keyword purescriptLet let
-" syn keyword purescriptClass class
 syn keyword purescriptWhere where
 syn match purescriptStructure "\<\(data\|newtype\|type\|kind\)\>"
   \ nextgroup=purescriptType skipwhite
@@ -140,19 +154,22 @@ syn match purescriptTypeAliasStart "^type\s\+\([A-Z]\w*\)" contained
 
 " String
 syn match purescriptChar "'[^'\\]'\|'\\.'\|'\\u[0-9a-fA-F]\{4}'"
-syn region purescriptString start=+"+ skip=+\\\\\|\\"+ end=+"+
-syn region purescriptMultilineString start=+"""+ end=+"""+ fold
+syn region purescriptString start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=@Spell
+syn region purescriptMultilineString start=+"""+ end=+"""+ fold contains=@Spell
 
 " Comment
-syn match purescriptLineComment "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$"
+syn match purescriptLineComment "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$" contains=@Spell
 syn region purescriptBlockComment start="{-" end="-}" fold
-  \ contains=purescriptBlockComment
-syn cluster purescriptComment contains=purescriptLineComment,purescriptBlockComment
+  \ contains=purescriptBlockComment,@Spell
+syn cluster purescriptComment contains=purescriptLineComment,purescriptBlockComment,@Spell
 
 syn sync minlines=50
 
 " highlight links
+highlight def link purescriptModule Include
+highlight def link purescriptImport Include
 highlight def link purescriptModuleKeyword purescriptKeyword
+highlight def link purescriptImportAs Include
 highlight def link purescriptModuleName Include
 highlight def link purescriptModuleParams purescriptDelimiter
 highlight def link purescriptImportKeyword purescriptKeyword

@@ -11,7 +11,12 @@ endif
 let b:did_ftplugin = 1
 
 
-setlocal comments=:#
-setlocal commentstring=#\ %s
+setlocal
+    \ comments=:#
+    \ commentstring=#\ %s
+    \ shiftwidth=2
+    \ softtabstop=2
+    \ expandtab
+    \ iskeyword+=-
 
 endif

@@ -320,7 +320,7 @@ function! GetHaskellIndent()
 
   " newtype Foo = Foo
   " >>deriving
-  if l:prevline =~ '\C\s*\<\(newtype\|data\)\>[^{]\+' && l:line =~ '\C^\s*\<deriving\>'
+  if l:prevline =~ '\C^\s*\<\(newtype\|data\)\>[^{]\+' && l:line =~ '\C^\s*\<deriving\>'
     return match(l:prevline, '\S') + &shiftwidth
   endif
 

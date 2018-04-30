@@ -22,6 +22,7 @@ function! dart#fmt(q_args) abort
   if executable('dartfmt')
     let buffer_content = join(getline(1, '$'), "\n")
     let joined_lines = system(printf('dartfmt %s', a:q_args), buffer_content)
+    if buffer_content ==# joined_lines[:-2] | return | endif
     if 0 == v:shell_error
       let win_view = winsaveview()
       let lines = split(joined_lines, "\n")
@@ -127,6 +128,15 @@ function! s:PackageMap() abort
     let map[package] = lib_dir
   endfor
   return [v:true, map]
+endfunction
+
+" Toggle whether dartfmt is run on save or not.
+function! dart#ToggleFormatOnSave() abort
+  if get(g:, "dart_format_on_save", 0)
+    let g:dart_format_on_save = 0
+    return
+  endif
+  let g:dart_format_on_save = 1
 endfunction
 
 " Finds a file name '.packages' in the cwd, or in any directory above the open

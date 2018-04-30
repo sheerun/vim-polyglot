@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
   
 " vifm syntax file
 " Maintainer:  xaizek <xaizek@posteo.net>
-" Last Change: September 18, 2017
+" Last Change: April 18, 2018
 " Inspired By: Vim syntax file by Dr. Charles E. Campbell, Jr.
 
 if exists('b:current_syntax')
@@ -18,11 +18,12 @@ set cpo-=C
 syntax keyword vifmCommand contained alink apropos bmark bmarks bmgo change
 		\ chmod chown clone compare cope[n] co[py] cq[uit] d[elete] delbmarks
 		\ delm[arks] di[splay] dirs e[dit] el[se] empty en[dif] exi[t] file fin[d]
-		\ fini[sh] gr[ep] h[elp] histnext his[tory] histprev jobs locate ls lstrash
-		\ marks mes[sages] mkdir m[ove] noh[lsearch] on[ly] popd pushd pu[t] pw[d]
-		\ q[uit] redr[aw] reg[isters] rename restart restore rlink screen sh[ell]
-		\ siblnext siblprev sor[t] sp[lit] s[ubstitute] touch tr trashes tree sync
-		\ undol[ist] ve[rsion] vie[w] vifm vs[plit] winc[md] w[rite] wq x[it] y[ank]
+		\ fini[sh] go[to] gr[ep] h[elp] histnext his[tory] histprev jobs locate ls
+		\ lstrash marks mes[sages] mkdir m[ove] noh[lsearch] on[ly] popd pushd pu[t]
+		\ pw[d] qa[ll] q[uit] redr[aw] reg[isters] rename restart restore rlink
+		\ screen sh[ell] siblnext siblprev sor[t] sp[lit] s[ubstitute] tabc[lose]
+		\ tabm[ove] tabname tabnew touch tr trashes tree sync undol[ist] ve[rsion]
+		\ vie[w] vifm vs[plit] winc[md] w[rite] wq wqa[ll] xa[ll] x[it] y[ank]
 		\ nextgroup=vifmArgs
 
 " commands that might be prepended to a command without changing everything else
@@ -63,7 +64,7 @@ syntax case match
 
 " Builtin functions
 syntax match vifmBuiltinFunction
-		\ '\(chooseopt\|expand\|executable\|filetype\|getpanetype\|has\|layoutis\|paneisat\|system\|term\)\ze('
+		\ '\(chooseopt\|expand\|executable\|filetype\|fnameescape\|getpanetype\|has\|layoutis\|paneisat\|system\|tabpagenr\|term\)\ze('
 
 " Operators
 syntax match vifmOperator "\(==\|!=\|>=\?\|<=\?\|\.\|-\|+\|&&\|||\)" skipwhite
@@ -74,7 +75,7 @@ syntax case ignore
 syntax keyword vifmHiGroups contained WildMenu Border Win CmdLine CurrLine
 		\ OtherLine Directory Link Socket Device Executable Selected BrokenLink
 		\ TopLine TopLineSel StatusLine JobLine SuggestBox Fifo ErrorMsg CmpMismatch
-		\ AuxWin
+		\ AuxWin TabLine TabLineSel
 syntax keyword vifmHiStyles contained bold underline reverse inverse standout
 		\ none
 syntax keyword vifmHiColors contained black red green yellow blue magenta cyan
@@ -124,31 +125,32 @@ syntax case match
 syntax keyword vifmOption contained aproposprg autochpos caseoptions cdpath cd
 		\ chaselinks classify columns co confirm cf cpoptions cpo cvoptions
 		\ deleteprg dotdirs dotfiles dirsize fastrun fillchars fcs findprg
-		\ followlinks fusehome gdefault grepprg history hi hlsearch hls iec
-		\ ignorecase ic iooptions incsearch is laststatus lines locateprg ls
+		\ followlinks fusehome gdefault grepprg histcursor history hi hlsearch hls
+		\ iec ignorecase ic iooptions incsearch is laststatus lines locateprg ls
 		\ lsoptions lsview milleroptions millerview mintimeoutlen number nu
-		\ numberwidth nuw previewprg relativenumber rnu rulerformat ruf runexec
-		\ scrollbind scb scrolloff so sort sortgroups sortorder sortnumbers shell sh
-		\ shortmess shm sizefmt slowfs smartcase scs statusline stl suggestoptions
-		\ syscalls tabstop timefmt timeoutlen title tm trash trashdir ts tuioptions
-		\ to undolevels ul vicmd viewcolumns vifminfo vimhelp vixcmd wildmenu wmnu
-		\ wildstyle wordchars wrap wrapscan ws
+		\ numberwidth nuw previewprg quickview relativenumber rnu rulerformat ruf
+		\ runexec scrollbind scb scrolloff so sort sortgroups sortorder sortnumbers
+		\ shell sh shortmess shm showtabline stal sizefmt slowfs smartcase scs
+		\ statusline stl suggestoptions syncregs syscalls tabscope tabstop timefmt
+		\ timeoutlen title tm trash trashdir ts tuioptions to undolevels ul vicmd
+		\ viewcolumns vifminfo vimhelp vixcmd wildmenu wmnu wildstyle wordchars wrap
+		\ wrapscan ws
 
 " Disabled boolean options
 syntax keyword vifmOption contained noautochpos nocf nochaselinks nodotfiles
 		\ nofastrun nofollowlinks nohlsearch nohls noiec noignorecase noic
 		\ noincsearch nois nolaststatus nols nolsview nomillerview nonumber nonu
-		\ norelativenumber nornu noscrollbind noscb norunexec nosmartcase noscs
-		\ nosortnumbers nosyscalls notitle notrash novimhelp nowildmenu nowmnu
-		\ nowrap nowrapscan nows
+		\ noquickview norelativenumber nornu noscrollbind noscb norunexec
+		\ nosmartcase noscs nosortnumbers nosyscalls notitle notrash novimhelp
+		\ nowildmenu nowmnu nowrap nowrapscan nows
 
 " Inverted boolean options
 syntax keyword vifmOption contained invautochpos invcf invchaselinks invdotfiles
 		\ invfastrun invfollowlinks invhlsearch invhls inviec invignorecase invic
 		\ invincsearch invis invlaststatus invls invlsview invmillerview invnumber
-		\ invnu invrelativenumber invrnu invscrollbind invscb invrunexec invsmartcase
-		\ invscs invsortnumbers invsyscalls invtitle invtrash invvimhelp invwildmenu
-		\ invwmnu invwrap invwrapscan invws
+		\ invnu invquickview invrelativenumber invrnu invscrollbind invscb
+		\ invrunexec invsmartcase invscs invsortnumbers invsyscalls invtitle
+		\ invtrash invvimhelp invwildmenu invwmnu invwrap invwrapscan invws
 
 " Expressions
 syntax region vifmStatement start='^\(\s\|:\)*'
@@ -372,7 +374,7 @@ syntax match vifmNumber contained /\d\+/
 
 " Ange-bracket notation
 syntax case ignore
-syntax match vifmNotation '<\(esc\|cr\|space\|del\|nop\|\(s-\)\?tab\|home\|end\|left\|right\|up\|down\|bs\|delete\|pageup\|pagedown\|\([acms]-\)\?f\d\{1,2\}\|c-s-[a-z[\]^_]\|s-c-[a-z[\]^_]\|c-[a-z[\]^_]\|[am]-c-[a-z]\|c-[am]-[a-z]\|[am]-[a-z]\)>'
+syntax match vifmNotation '<\(esc\|cr\|space\|del\|nop\|\(s-\)\?tab\|home\|end\|left\|right\|up\|down\|bs\|delete\|insert\|pageup\|pagedown\|\([acms]-\)\?f\d\{1,2\}\|c-s-[a-z[\]^_]\|s-c-[a-z[\]^_]\|c-[a-z[\]^_]\|[am]-c-[a-z]\|c-[am]-[a-z]\|[am]-[a-z]\)>'
 syntax case match
 
 " Whole line comment

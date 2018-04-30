@@ -33,6 +33,12 @@ function! GetNixIndent()
     return 0
   endif
 
+  " Skip indentation for single line comments explicitly, in case a
+  " comment was just inserted (eg. visual block mode)
+  if getline(v:lnum) =~ '^\s*#'
+    return indent(v:lnum)
+  endif
+
   if synIDattr(synID(v:lnum, 1, 1), "name") !~ s:skip_syntax
     let current_line = getline(v:lnum)
     let last_line = getline(lnum)
@@ -63,7 +69,7 @@ function! GetNixIndent()
 
     let ind = indent(v:lnum)
     let bslnum = searchpair('''''', '', '''''', 'bnW',
-          \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "InterpolationSpecial$"')
+          \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "StringSpecial$"')
 
     if ind <= indent(bslnum)
       let ind = indent(bslnum) + &sw
