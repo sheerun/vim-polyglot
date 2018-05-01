@@ -3,41 +3,44 @@
 set -E
 
 DIRS="syntax indent compiler autoload ftplugin after/syntax after/indent after/ftplugin"
+# shellcheck disable=SC2034
 DIRS_BASIC="syntax compiler indent after/syntax after/indent"
+# shellcheck disable=SC2034
 DIRS_ALL="syntax indent compiler autoload ftplugin after"
+# shellcheck disable=SC2034
 DIRS_SYNTAX="syntax indent after/syntax after/indent"
 DIRS_JAVASCRIPT="${DIRS} extras"
-DIRS_RM="$DIRS_JAVASCRIPT"
+read -r -a DIRS_RM <<<"$DIRS_JAVASCRIPT"
 
 OUTPUT=""
 
 output() {
   OUTPUT="$OUTPUT$1"
-  printf -- "$1"
+  echo -n "$1"
 }
 
 download() {
   for pack in $1; do
-    path="$(printf "$pack" | cut -d ':' -f 2)"
-    dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
+    path="$(cut -d ':' -f 2 <<<"$pack")"
+    dir="tmp/$(cut -d '/' -f 2 <<<"$path")"
     rm -rf "$dir"
-    (mkdir -p "$dir" && curl --silent -L https://codeload.github.com/$path/tar.gz/master | tar -zx -C "$dir" --strip 1 && printf '.') &
+    (mkdir -p "$dir" && curl --silent -L "https://codeload.github.com/$path/tar.gz/master" | tar -zx -C "$dir" --strip 1 && printf '.') &
   done
 
   wait
 }
 
 extract() {
-  printf "\n"
+  echo
 
   cat config.vim >> tmp/polyglot.vim
 
   for pack in $1; do
-    name="$(printf "$pack" | cut -d ':' -f 1)"
-    path="$(printf "$pack" | cut -d ':' -f 2)"
-    dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
-    directories="DIRS$(printf "$pack" | cut -d ':' -f 3)"
-    subtree="$(printf "$pack" | cut -d ':' -f 4)"
+    name="$(cut -d ':' -f 1 <<<"$pack")"
+    path="$(cut -d ':' -f 2 <<<"$pack")"
+    dir="tmp/$(cut -d '/' -f 2 <<<"$path")"
+    directories="DIRS$(cut -d ':' -f 3 <<<"$pack")"
+    subtree="$(cut -d ':' -f 4 <<<"$pack")"
     output "- [$name](https://github.com/$path) ("
 
     subdirs=""
@@ -58,10 +61,10 @@ extract() {
       copy_file "${dir}${subtree}" "${dir}${subtree}/autoload/go/config.vim" "${name}"
     fi
 
-    output "${subdirs##, })\n"
+    output "${subdirs##, })"$'\n'
 
-    if (echo "julia coffee-script elixir fish git plantuml scala swift"  | fgrep -q "$name"); then
-      echo "Skipping ftdetect installation of $name"
+    if (echo "julia coffee-script elixir fish git plantuml scala swift" | grep -qF "$name"); then
+      echo "Skipping ftdetect installation of $name" >&2
       continue
     fi
 
@@ -82,19 +85,19 @@ EOF
   mv tmp/polyglot.vim ftdetect/
 
   for pack in $1; do
-    name="$(printf "$pack" | cut -d ':' -f 1)"
-    path="$(printf "$pack" | cut -d ':' -f 2)"
-    dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
-    subtree="$(printf "$pack" | cut -d ':' -f 4)"
+    name="$(cut -d ':' -f 1 <<<"$pack")"
+    path="$(cut -d ':' -f 2 <<<"$pack")"
+    dir="tmp/$(cut -d '/' -f 2 <<<"$path")"
+    subtree="$(cut -d ':' -f 4 <<<"$pack")"
 
     if [ -d "$dir${subtree:-/}plugin" ]; then
-      printf "Possible error (plugin directory exists): $path\n"
+      echo "Possible error (plugin directory exists): $path" >&2
     fi
   done
 }
 
 copy_dir() {
-  for file in $(find "$1/$2" -name '*.vim' -o -name '*.vital'); do
+  find "$1/$2" \( -name '*.vim' -o -name '*.vital' \) -print0 | while read -r -d $'\0' file; do
     copy_file "$1" "$file" "$3"
   done
 }
@@ -129,7 +132,7 @@ update_readme() {
 +2kb
 /##
 'b,-2c
-$(printf -- "$OUTPUT" | sort)
+$(echo -n "$OUTPUT" | sort)
 .
 w
 q
@@ -253,7 +256,7 @@ PACKS="
 "
 
 rm -rf tmp
-rm -rf $DIRS_RM
+rm -rf "${DIRS_RM[@]}"
 mkdir tmp
 
 printf "Downloading packs..."
