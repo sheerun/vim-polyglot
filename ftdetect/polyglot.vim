@@ -342,6 +342,13 @@ au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
+  augroup filetypedetect
+  " graphql, from graphql.vim in jparise/vim-graphql
+au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
   augroup filetypedetect
   " haml, from haml.vim in sheerun/vim-haml

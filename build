@@ -172,6 +172,7 @@ PACKS="
   glsl:tikhomirov/vim-glsl
   gnuplot:vim-scripts/gnuplot-syntax-highlighting
   go:fatih/vim-go:_BASIC
+  graphql:jparise/vim-graphql
   groovy:vim-scripts/groovy.vim
   haml:sheerun/vim-haml
   handlebars:mustache/vim-mustache-handlebars

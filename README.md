@@ -75,6 +75,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [gmpl](https://github.com/maelvalais/gmpl.vim) (syntax)
 - [gnuplot](https://github.com/vim-scripts/gnuplot-syntax-highlighting) (syntax)
 - [go](https://github.com/fatih/vim-go) (syntax, compiler, indent)
+- [graphql](https://github.com/jparise/vim-graphql) (syntax, indent, ftplugin)
 - [groovy](https://github.com/vim-scripts/groovy.vim) (syntax)
 - [haml](https://github.com/sheerun/vim-haml) (syntax, indent, compiler, ftplugin)
 - [handlebars](https://github.com/mustache/vim-mustache-handlebars) (syntax, indent, ftplugin)
