@@ -142,7 +142,7 @@ EOF
 
 PACKS="
   apiblueprint:sheerun/apiblueprint.vim
-  applescript:vim-scripts/applescript.vim
+  applescript:mityu/vim-applescript:_SYNTAX
   asciidoc:asciidoc/vim-asciidoc
   yaml:stephpy/vim-yaml
   ansible:pearofducks/ansible-vim
