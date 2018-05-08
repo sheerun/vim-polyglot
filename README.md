@@ -44,7 +44,7 @@ If you need full functionality of any plugin, please use it directly with your p
 
 - [ansible](https://github.com/pearofducks/ansible-vim) (syntax, indent, ftplugin)
 - [apiblueprint](https://github.com/sheerun/apiblueprint.vim) (syntax)
-- [applescript](https://github.com/vim-scripts/applescript.vim) (syntax)
+- [applescript](https://github.com/mityu/vim-applescript) (syntax, indent)
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent)
 - [asciidoc](https://github.com/asciidoc/vim-asciidoc) (syntax)
 - [autohotkey](https://github.com/hnamikaw/vim-autohotkey) (indent)

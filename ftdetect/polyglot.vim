@@ -78,6 +78,26 @@ autocmd FileType apiblueprint set makeprg=drafter\ -l\ %
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'applescript') == -1
+  augroup filetypedetect
+  " applescript, from applescript.vim in mityu/vim-applescript:_SYNTAX
+"Plugin Name: AppleScript
+"Author: mityu
+"Last Change: 04-Mar-2017.
+
+let s:cpo_save=&cpo
+set cpo&vim
+
+au BufNewFile,BufRead *.scpt setf applescript
+au BufNewFile,BufRead *.applescript setf applescript
+
+let &cpo=s:cpo_save
+unlet s:cpo_save
+
+" vim: foldmethod=marker
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'asciidoc') == -1
   augroup filetypedetect
   " asciidoc, from asciidoc.vim in asciidoc/vim-asciidoc
