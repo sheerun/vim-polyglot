@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
   
 " vifm syntax file
 " Maintainer:  xaizek <xaizek@posteo.net>
-" Last Change: April 18, 2018
+" Last Change: April 30, 2018
 " Inspired By: Vim syntax file by Dr. Charles E. Campbell, Jr.
 
 if exists('b:current_syntax')
@@ -176,7 +176,7 @@ syntax region vifmStatementC start='\(\s\|:\)*'
 		\,vifmComment,vifmInlineComment,vifmNotComment,vifmExprCommandSt,vifmNormalCommandSt
 		\,vifmCdCommandSt,vifmSet,vifmArgument,vifmSoCommand,vifmSoCommandSt
 		\,vifmInvertCommand,vifmInvertCommandSt,vifmPrefixCommands
-		\,vifmAutocmdCommand,vifmAutoEvent,vifmPatternCommands
+		\,vifmAutocmdCommand,vifmAutoEvent,vifmPatternCommands,vifmLetC,vifmUnletC
 syntax region vifmCmdCommandSt start='^\(\s\|:\)*com\%[mand]\>'
 		\ skip='\(\n\s*\\\)\|\(\n\s*".*$\)' end='$' keepend
 		\ contains=vifmCmdCommand,vifmComment,vifmInlineComment,vifmNotComment
@@ -353,8 +353,17 @@ syntax region vifmLet
 		\ keepend
 		\ contains=vifmLetCommand,vifmEnvVar,vifmString,vifmStringInExpr,vifmComment
 		\,vifmInlineComment,vifmNotComment
+syntax region vifmLetC
+		\ start='\<let\>' skip='\(\n\s*\\\)\|\(\n\s*".*$\)' end='$\||'
+		\ keepend
+		\ contains=vifmLetCommand,vifmEnvVar,vifmString,vifmStringInExpr,vifmComment
+		\,vifmInlineComment,vifmNotComment,vifmBuiltinFunction
 syntax region vifmUnlet
 		\ start='^\(\s\|:\)*\<unl\%[et]\>' skip='\(\n\s*\\\)\|\(\n\s*".*$\)' end='$'
+		\ keepend
+		\ contains=vifmUnletCommand,vifmEnvVar,vifmComment,vifmInlineComment,vifmNotComment
+syntax region vifmUnletC
+		\ start='\<unl\%[et]\>' skip='\(\n\s*\\\)\|\(\n\s*".*$\)' end='$\||'
 		\ keepend
 		\ contains=vifmUnletCommand,vifmEnvVar,vifmComment,vifmInlineComment,vifmNotComment
 syntax region vifmString contained start=+="+hs=s+1 skip=+\\\\\|\\"+  end=+"+
