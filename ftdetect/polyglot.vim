@@ -69,6 +69,10 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.swift set filetype=swift
 augroup END
 
+" Fix for https://github.com/sheerun/vim-polyglot/issues/236#issuecomment-387984954
+if (!exists('g:graphql_javascript_tags'))
+  let g:graphql_javascript_tags = ['gql', 'graphql', 'Relay.QL']
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'apiblueprint') == -1
   augroup filetypedetect
   " apiblueprint, from apiblueprint.vim in sheerun/apiblueprint.vim
