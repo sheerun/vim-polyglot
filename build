@@ -201,6 +201,7 @@ PACKS="
   mako:sophacles/vim-bundle-mako
   markdown:plasticboy/vim-markdown:_SYNTAX
   mathematica:rsmenon/vim-mathematica
+  moonscript:leafo/moonscript-vim
   nginx:chr4/nginx.vim
   nim:zah/nim.vim:_BASIC
   nix:LnL7/vim-nix
