@@ -20,7 +20,7 @@ syn keyword elixirTodo FIXME NOTE TODO OPTIMIZE XXX HACK contained
 
 syn match elixirId '\<[_a-zA-Z]\w*[!?]\?\>' contains=elixirUnusedVariable
 
-syn match elixirKeyword '\(\.\)\@<!\<\(for\|case\|when\|with\|cond\|if\|unless\|try\|receive\|send\|exit\|raise\|throw\|after\|rescue\|catch\|else\|quote\|unquote\|super\|spawn\|spawn_link\|spawn_monitor\|is_atom\|is_binary\|is_bitstring\|is_boolean\|is_float\|is_function\|is_integer\|is_list\|is_map\|is_nil\|is_number\|is_pid\|is_port\|is_reference\|is_tuple\|abs\|binary_part\|bit_size\|byte_size\|div\|elem\|hd\|length\|map_size\|node\|rem\|round\|tl\|trunc\|tuple_size\)\>'
+syn match elixirKeyword '\(\.\)\@<!\<\(for\|case\|when\|with\|cond\|if\|unless\|try\|receive\|after\|rescue\|catch\|else\|quote\|unquote\|super\|unquote_splicing\)\>:\@!'
 
 syn keyword elixirInclude import require alias use
 

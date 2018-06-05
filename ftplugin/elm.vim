@@ -43,14 +43,14 @@ setlocal comments=:--
 setlocal commentstring=--\ %s
 
 " Commands
-command -buffer -nargs=? -complete=file ElmMake call elm#Make(<f-args>)
-command -buffer ElmMakeMain call elm#Make("Main.elm")
-command -buffer -nargs=? -complete=file ElmTest call elm#Test(<f-args>)
-command -buffer ElmRepl call elm#Repl()
-command -buffer ElmErrorDetail call elm#ErrorDetail()
-command -buffer ElmShowDocs call elm#ShowDocs()
-command -buffer ElmBrowseDocs call elm#BrowseDocs()
-command -buffer ElmFormat call elm#Format()
+command! -buffer -nargs=? -complete=file ElmMake call elm#Make(<f-args>)
+command! -buffer ElmMakeMain call elm#Make("Main.elm")
+command! -buffer -nargs=? -complete=file ElmTest call elm#Test(<f-args>)
+command! -buffer ElmRepl call elm#Repl()
+command! -buffer ElmErrorDetail call elm#ErrorDetail()
+command! -buffer ElmShowDocs call elm#ShowDocs()
+command! -buffer ElmBrowseDocs call elm#BrowseDocs()
+command! -buffer ElmFormat call elm#Format()
 
 if get(g:, 'elm_setup_keybindings', 1)
   nmap <buffer> <LocalLeader>m <Plug>(elm-make)

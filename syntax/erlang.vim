@@ -81,6 +81,7 @@ syn match erlangGlobalFuncRef  '\<\%(\a[[:alnum:]_@]*\%(\s\|\n\|%.*\n\)*\.\%(\s\
 syn match erlangVariable '\<[A-Z_][[:alnum:]_@]*'
 syn match erlangMacro    '??\=[[:alnum:]_@]\+'
 syn match erlangMacro    '\%(-define(\)\@<=[[:alnum:]_@]\+'
+syn region erlangQuotedMacro         start=/??\=\s*'/ end=/'/ contains=erlangQuotedAtomModifier
 syn match erlangMap      '#'
 syn match erlangRecord   '#\s*\l[[:alnum:]_@]*'
 syn region erlangQuotedRecord        start=/#\s*'/ end=/'/ contains=erlangQuotedAtomModifier
@@ -193,6 +194,7 @@ hi def link erlangGlobalFuncCall Function
 hi def link erlangGlobalFuncRef Function
 hi def link erlangVariable Normal
 hi def link erlangMacro Normal
+hi def link erlangQuotedMacro Normal
 hi def link erlangRecord Normal
 hi def link erlangQuotedRecord Normal
 hi def link erlangMap Normal
@@ -204,6 +206,7 @@ hi def link erlangGlobalFuncCall Normal
 hi def link erlangGlobalFuncRef Normal
 hi def link erlangVariable Identifier
 hi def link erlangMacro Macro
+hi def link erlangQuotedMacro Macro
 hi def link erlangRecord Structure
 hi def link erlangQuotedRecord Structure
 hi def link erlangMap Structure

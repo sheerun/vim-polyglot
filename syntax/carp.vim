@@ -34,7 +34,7 @@ syn keyword carpFunc Int Float Double Bool String Char Array Fn Ref Long λ
 syn keyword carpFunc Pattern
 syn keyword carpFunc not or and + - * / = /= >= <= > < inc dec
 syn keyword carpFunc println print get-line from-string mod random
-syn keyword carpFunc random-between str mask delete append count duplicate
+syn keyword carpFunc random-between str mask delete append length duplicate
 syn keyword carpFunc cstr chars from-chars to-int from-int sin cos sqrt acos
 syn keyword carpFunc atan2 exit time seed-random for cond floor abs sort-with
 syn keyword carpFunc subarray prefix-array suffix-array reverse sum min max

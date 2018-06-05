@@ -310,7 +310,7 @@ endif
 " eRuby Config {{{1
 if exists('main_syntax') && main_syntax == 'eruby'
   let b:ruby_no_expensive = 1
-end
+endif
 
 " Module, Class, Method and Alias Declarations {{{1
 syn match  rubyAliasDeclaration    "[^[:space:];#.()]\+" contained contains=rubySymbol,rubyGlobalVariable,rubyPredefinedVariable nextgroup=rubyAliasDeclaration2 skipwhite
