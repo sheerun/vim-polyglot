@@ -127,17 +127,27 @@ copy_file() {
 }
 
 update_readme() {
-  ed README.md <<- EOF
-/Language packs
-+2kb
-/##
-'b,-2c
-$(echo -n "$OUTPUT" | sort)
-.
-w
-q
-EOF
+  local tf of
+  tf="$(mktemp)"
+  of="$(mktemp)"
+  sort <<<"$OUTPUT" | grep -vxE '[[:space:]]*' > "$of"
 
+  awk 'suppress == 0 {
+      gsub(/<!--Package Count-->[^<]*<!--\/Package Count-->/,
+           "<!--Package Count-->'"$(awk 'END {print NR}' "$of")"'<!--/Package Count-->");
+      print;
+    }
+    /<!--Language Packs-->/ {
+      suppress = 1;
+      while ( ( getline line < "'"$of"'" ) > 0 ) {
+        print line;
+      }
+    }
+    /<!--\/Language Packs-->/ {
+      suppress = 0;
+      print;
+    }' "README.md" >"$tf"
+  mv "$tf" "README.md"
 }
 
 PACKS="
