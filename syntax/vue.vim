@@ -37,7 +37,7 @@ function! s:register_language(language, tag, ...)
     unlet! b:current_syntax
     execute 'syntax region vue_' . a:language
           \ 'keepend'
-          \ 'start=/<' . a:tag . ' \_[^>]*' . attr . '\_[^>]*>/'
+          \ 'start=/<' . a:tag . '\>\_[^>]*' . attr . '\_[^>]*>/'
           \ 'end="</' . a:tag . '>"me=s-1'
           \ 'contains=@' . a:language . ',vueSurroundingTag'
           \ 'fold'

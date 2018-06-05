@@ -7,13 +7,13 @@ if exists('b:current_syntax')
 endif
 
 " Keywords
-syn keyword elmConditional case else if of then
+syn keyword elmConditional else if of then
 syn keyword elmAlias alias
-syn keyword elmTypedef type port let in
+syn keyword elmTypedef contained type port
 syn keyword elmImport exposing as import module where
 
 " Operators
-syn match elmOperator "\([-!#$%`&\*\+./<=>\?@\\^|~:]\|\<_\>\)"
+syn match elmOperator contained "\([-!#$%`&\*\+./<=>\?@\\^|~:]\|\<_\>\)"
 
 " Types
 syn match elmType "\<[A-Z][0-9A-Za-z_'-]*"
@@ -29,7 +29,7 @@ syn match elmTupleFunction "\((,\+)\)"
 " Comments
 syn keyword elmTodo TODO FIXME XXX contained
 syn match elmLineComment "--.*" contains=elmTodo,@spell
-syn region elmComment matchgroup=elmComment start="{-|\=" end="-}" contains=elmTodo,elmComment,@spell
+syn region elmComment matchgroup=elmComment start="{-|\=" end="-}" contains=elmTodo,elmComment,@spell fold
 
 " Strings
 syn match elmStringEscape "\\u[0-9a-fA-F]\{4}" contained
@@ -45,6 +45,16 @@ syn match elmFloat "\(\<\d\+\.\d\+\>\)"
 " Identifiers
 syn match elmTopLevelDecl "^\s*[a-zA-Z][a-zA-z0-9_]*\('\)*\s\+:\s\+" contains=elmOperator
 
+" Folding
+syn region elmTopLevelTypedef start="type" end="\n\(\n\n\)\@=" contains=ALL fold
+syn region elmTopLevelFunction start="^[a-zA-Z].\+\n[a-zA-Z].\+=" end="^\(\n\+\)\@=" contains=ALL fold
+syn region elmCaseBlock matchgroup=elmCaseBlockDefinition start="^\z\(\s\+\)\<case\>" end="^\z1\@!\W\@=" end="\(\n\n\z1\@!\)\@=" end="\n\z1\@!\(\n\n\)\@=" contains=ALL fold
+syn region elmCaseItemBlock start="^\z\(\s\+\).\+->$" end="^\z1\@!\W\@=" end="\(\n\n\z1\@!\)\@=" end="\(\n\z1\S\)\@=" contains=ALL fold
+syn region elmLetBlock matchgroup=elmLetBlockDefinition start="\<let\>" end="\<in\>" contains=ALL fold
+
+hi def link elmCaseBlockDefinition Conditional
+hi def link elmCaseBlockItemDefinition Conditional
+hi def link elmLetBlockDefinition TypeDef
 hi def link elmTopLevelDecl Function
 hi def link elmTupleFunction Normal
 hi def link elmTodo Todo

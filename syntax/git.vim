@@ -27,7 +27,9 @@ syn region gitDiff start=/^\%(@@ -\)\@=/ end=/^\%(diff --\%(git\|cc\|combined\) 
 syn region gitDiffMerge start=/^\%(diff --\%(cc\|combined\) \)\@=/ end=/^\%(diff --\|$\)\@=/ contains=@gitDiff
 syn region gitDiffMerge start=/^\%(@@@@* -\)\@=/ end=/^\%(diff --\|$\)\@=/ contains=@gitDiff
 syn match gitDiffAdded "^ \++.*" contained containedin=gitDiffMerge
+syn match gitDiffAdded "{+.*+}" contained containedin=gitDiff
 syn match gitDiffRemoved "^ \+-.*" contained containedin=gitDiffMerge
+syn match gitDiffRemoved "\[-.*-\]" contained containedin=gitDiff
 
 syn match  gitKeyword /^\%(object\|type\|tag\|commit\|tree\|parent\|encoding\)\>/ contained containedin=gitHead nextgroup=gitHash,gitType skipwhite
 syn match  gitKeyword /^\%(tag\>\|ref:\)/ contained containedin=gitHead nextgroup=gitReference skipwhite

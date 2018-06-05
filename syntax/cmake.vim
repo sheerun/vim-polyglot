@@ -21,8 +21,10 @@ endif
 let s:keepcpo= &cpo
 set cpo&vim
 
-syn region cmakeComment start="#" end="$" contains=cmakeTodo,cmakeLuaComment,@Spell
-syn region cmakeLuaComment start="\[\z(=*\)\[" end="\]\z1\]" contains=cmakeTodo,@Spell
+syn region cmakeBracketArgument start="\[\z(=\?\|=[0-9]*\)\[" end="\]\z1\]" contains=cmakeTodo,@Spell
+
+syn region cmakeComment start="#" end="$" contains=cmakeTodo,@Spell
+syn region cmakeBracketComment start="#\[\z(=\?\|=[0-9]*\)\[" end="\]\z1\]" contains=cmakeTodo,@Spell
 
 syn match cmakeEscaped /\(\\\\\|\\"\|\\n\|\\t\)/ contained
 syn region cmakeRegistry start="\[" end="]" contained oneline contains=cmakeTodo,cmakeEscaped
@@ -358,6 +360,8 @@ syn keyword cmakeTodo
             \ TODO FIXME XXX
             \ contained
 
+hi def link cmakeBracketArgument String
+hi def link cmakeBracketComment Comment
 hi def link cmakeCommand Function
 hi def link cmakeCommandConditional Conditional
 hi def link cmakeCommandDeprecated WarningMsg
@@ -367,7 +371,6 @@ hi def link cmakeEnvironment Special
 hi def link cmakeEscaped Special
 hi def link cmakeGeneratorExpression WarningMsg
 hi def link cmakeGeneratorExpressions Constant
-hi def link cmakeLuaComment Comment
 hi def link cmakeModule Include
 hi def link cmakeProperty Constant
 hi def link cmakeRegistry Underlined

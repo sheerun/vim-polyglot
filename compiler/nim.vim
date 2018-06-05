@@ -13,7 +13,7 @@ endif
 let s:cpo_save = &cpo
 set cpo-=C
 
-CompilerSet makeprg=nim\ c\ --verbosity:0\ $*\ %:p
+CompilerSet makeprg=nim\ c\ --verbosity:0\ --listfullpaths\ $*\ %:p
 
 CompilerSet errorformat=
   \%-GHint:\ %m,

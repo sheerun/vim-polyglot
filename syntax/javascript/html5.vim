@@ -42,9 +42,12 @@ syn keyword javascriptDomElemFuncs load addTextTrack
 syn keyword javascriptDomElemAttrs videoWidth videoHeight poster
 
 " drag and drop
-syn keyword javascriptDomElemAttrs onDragStart onDragEnd onDragEnter onDragLeave onDragOver onDrag onDrop draggable dropzone
+syn keyword javascriptDomElemAttrs ondragstart ondragend ondragenter ondragleave ondragover ondrag ondrop draggable dropzone
 
 " <checkbox>
 syn keyword javascriptDomElemAttrs indeterminate
+
+" select https://w3c.github.io/selection-api/#extensions-to-globaleventhandlers
+syn keyword javascriptDomElemAttrs onselectstart onselectchange
 
 endif
