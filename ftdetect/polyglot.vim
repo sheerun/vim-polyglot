@@ -297,6 +297,14 @@ au BufNewFile,BufRead *.erl,*.hrl,rebar.config,*.app,*.app.src,*.yaws,*.xrl,*.es
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ferm') == -1
+  augroup filetypedetect
+  " ferm, from ferm.vim in vim-scripts/ferm.vim
+autocmd BufNewFile,BufRead ferm.conf setf ferm 
+autocmd BufNewFile,BufRead *.ferm setf ferm
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fsharp') == -1
   augroup filetypedetect
   " fsharp, from fsharp.vim in fsharp/vim-fsharp:_BASIC
