@@ -7,7 +7,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
 " Release Coordinator:	Doug Kearns <dougkearns@gmail.com>
 
 " Only do this when not done yet for this buffer
-if exists("b:did_ftplugin")
+if get(b:, 'did_ftplugin') =~# '\<eruby\>'
   finish
 endif
 
@@ -25,6 +25,8 @@ endif
 
 if &filetype =~ '^eruby\.'
   let b:eruby_subtype = matchstr(&filetype,'^eruby\.\zs\w\+')
+elseif &filetype =~ '^.*\.eruby\>'
+  let b:eruby_subtype = matchstr(&filetype,'^.\{-\}\ze\.eruby\>')
 elseif !exists("b:eruby_subtype")
   let s:lines = getline(1)."\n".getline(2)."\n".getline(3)."\n".getline(4)."\n".getline(5)."\n".getline("$")
   let b:eruby_subtype = matchstr(s:lines,'eruby_subtype=\zs\w\+')
@@ -47,11 +49,14 @@ elseif !exists("b:eruby_subtype")
   endif
 endif
 
-if exists("b:eruby_subtype") && b:eruby_subtype != '' && b:eruby_subtype !=? 'eruby'
-  exe "runtime! ftplugin/".b:eruby_subtype.".vim ftplugin/".b:eruby_subtype."_*.vim ftplugin/".b:eruby_subtype."/*.vim"
-else
-  runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim
+if &filetype =~# '^eruby\>'
+  if exists("b:eruby_subtype") && b:eruby_subtype != '' && b:eruby_subtype !=? 'eruby'
+    exe "runtime! ftplugin/".b:eruby_subtype.".vim ftplugin/".b:eruby_subtype."_*.vim ftplugin/".b:eruby_subtype."/*.vim"
+  else
+    runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim
+  endif
 endif
+let s:did_ftplugin = get(b:, 'did_ftplugin', 1)
 unlet! b:did_ftplugin
 
 " Override our defaults if these were set by an included ftplugin.
@@ -68,8 +73,23 @@ if exists("b:match_words")
   unlet b:match_words
 endif
 
+let s:cfilemap = v:version >= 704 ? maparg('<Plug><cfile>', 'c', 0, 1) : {}
+if !get(s:cfilemap, 'buffer') || !s:cfilemap.expr || s:cfilemap.rhs =~# 'ErubyAtCursor()'
+  let s:cfilemap = {}
+endif
+if !has_key(s:cfilemap, 'rhs')
+  let s:cfilemap.rhs = "substitute(&l:inex =~# '\\<v:fname\\>' && len(expand('<cfile>')) ? eval(substitute(&l:inex, '\\<v:fname\\>', '\\=string(expand(\"<cfile>\"))', 'g')) : '', '^$', \"\\022\\006\",'')"
+endif
+let s:ctagmap = v:version >= 704 ? maparg('<Plug><ctag>', 'c', 0, 1) : {}
+if !get(s:ctagmap, 'buffer') || !s:ctagmap.expr || s:ctagmap.rhs =~# 'ErubyAtCursor()'
+  let s:ctagmap = {}
+endif
+let s:include = &l:include
+let s:path = &l:path
+let s:suffixesadd = &l:suffixesadd
+
 runtime! ftplugin/ruby.vim ftplugin/ruby_*.vim ftplugin/ruby/*.vim
-let b:did_ftplugin = 1
+let b:did_ftplugin = s:did_ftplugin . '.eruby'
 
 " Combine the new set of values with those previously included.
 if exists("b:undo_ftplugin")
@@ -81,6 +101,15 @@ endif
 if exists("b:match_words")
   let s:match_words = b:match_words . ',' . s:match_words
 endif
+
+if len(s:include)
+  let &l:include = s:include
+endif
+let &l:path = s:path . (s:path =~# ',$\|^$' ? '' : ',') . &l:path
+let &l:suffixesadd = s:suffixesadd . (s:suffixesadd =~# ',$\|^$' ? '' : ',') . &l:suffixesadd
+exe 'cmap <buffer><script><expr> <Plug><cfile> ErubyAtCursor() ? ' . maparg('<Plug><cfile>', 'c') . ' : ' . s:cfilemap.rhs
+exe 'cmap <buffer><script><expr> <Plug><ctag> ErubyAtCursor() ? ' . maparg('<Plug><ctag>', 'c') . ' : ' . get(s:ctagmap, 'rhs', '"\022\027"')
+unlet s:cfilemap s:ctagmap s:include s:path s:suffixesadd
 
 " Change the browse dialog on Win32 to show mainly eRuby-related files
 if has("gui_win32")
@@ -100,6 +129,11 @@ let b:undo_ftplugin = "setl cms< "
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
+function! ErubyAtCursor() abort
+  let groups = map(['erubyBlock', 'erubyComment', 'erubyExpression', 'erubyOneLiner'], 'hlID(v:val)')
+  return !empty(filter(synstack(line('.'), col('.')), 'index(groups, v:val) >= 0'))
+endfunction
 
 " vim: nowrap sw=2 sts=2 ts=8:
 

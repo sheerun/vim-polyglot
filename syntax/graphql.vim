@@ -39,8 +39,8 @@ syn match graphqlConstant   "\<[A-Z_]\+\>" display
 
 syn keyword graphqlMetaFields __schema __type __typename
 
-syn region  graphqlFold matchgroup=graphqlBraces start="{" end=/}\(\_s\+\ze\("\|{\)\)\@!/ transparent fold contains=ALLBUT,graphqlStructure
-syn region  graphqlList matchgroup=graphqlBraces start="\[" end=/]\(\_s\+\ze"\)\@!/ transparent contains=ALLBUT,graphqlDirective,graphqlStructure
+syn region  graphqlFold matchgroup=graphqlBraces start="{" end="}" transparent fold contains=ALLBUT,graphqlStructure
+syn region  graphqlList matchgroup=graphqlBraces start="\[" end="]" transparent contains=ALLBUT,graphqlDirective,graphqlStructure
 
 hi def link graphqlComment          Comment
 hi def link graphqlOperator         Operator

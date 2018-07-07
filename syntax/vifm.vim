@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
   
 " vifm syntax file
 " Maintainer:  xaizek <xaizek@posteo.net>
-" Last Change: April 30, 2018
+" Last Change: July 4, 2018
 " Inspired By: Vim syntax file by Dr. Charles E. Campbell, Jr.
 
 if exists('b:current_syntax')
@@ -76,8 +76,9 @@ syntax keyword vifmHiGroups contained WildMenu Border Win CmdLine CurrLine
 		\ OtherLine Directory Link Socket Device Executable Selected BrokenLink
 		\ TopLine TopLineSel StatusLine JobLine SuggestBox Fifo ErrorMsg CmpMismatch
 		\ AuxWin TabLine TabLineSel
-syntax keyword vifmHiStyles contained bold underline reverse inverse standout
-		\ none
+		\ User1 User2 User3 User4 User5 User6 User7 User8 User9
+syntax keyword vifmHiStyles contained
+		\ bold underline reverse inverse standout italic none
 syntax keyword vifmHiColors contained black red green yellow blue magenta cyan
 		\ white default lightblack lightred lightgreen lightyellow lightblue
 		\ lightmagenta lightcyan lightwhite Grey0 NavyBlue DarkBlue Blue3 Blue3_2
@@ -233,7 +234,7 @@ syntax region vifmExecute start='!' skip='\(\n\s*\\\)\|\(\n\s*".*$\)' end='$'
 syntax region vifmMapArgs start='\ze\S\+'
 		\ end='\ze.' skip='\(\n\s*\\\)\|\(\n\s*".*$\)'
 		\ contained
-		\ nextgroup=vifmMapLhs
+		\ nextgroup=vifmMapArgList
 syntax region vifmCMapArgs start='\S\+'
 		\ end='\n\s*\\' skip='\(\n\s*\\\)\|\(\n\s*".*$\)'
 		\ contained
@@ -381,6 +382,9 @@ syntax region vifmArgument contained start=+'+ skip=+\\\\\|\\'\|''+  end=+'+
 syntax match vifmEnvVar contained /\$[0-9a-zA-Z_]\+/
 syntax match vifmNumber contained /\d\+/
 
+" Optional map arguments right after command name
+syntax match vifmMapArgList '\(<silent>\s*\)*' contained nextgroup=vifmMapLhs
+
 " Ange-bracket notation
 syntax case ignore
 syntax match vifmNotation '<\(esc\|cr\|space\|del\|nop\|\(s-\)\?tab\|home\|end\|left\|right\|up\|down\|bs\|delete\|insert\|pageup\|pagedown\|\([acms]-\)\?f\d\{1,2\}\|c-s-[a-z[\]^_]\|s-c-[a-z[\]^_]\|c-[a-z[\]^_]\|[am]-c-[a-z]\|c-[am]-[a-z]\|[am]-[a-z]\)>'
@@ -391,7 +395,7 @@ syntax region vifmComment contained contains=@Spell start='^\(\s\|:\)*"' end='$'
 " Comment at the end of a line
 syntax match vifmInlineComment contained contains=@Spell '\s"[^"]*$'
 " This prevents highlighting non-first line of multi-line command
-syntax match vifmNotComment contained '\s"[^"]*\(\(\n\s*\(\\\|"\)\)\@!\|$\)'
+syntax match vifmNotComment contained '\s"[^"]*\(\n\s*\(\\\|"\)\)\@='
 
 " Empty line
 syntax match vifmEmpty /^\s*$/
@@ -435,6 +439,7 @@ highlight link vifmHiStyles PreProc
 highlight link vifmHiColors Special
 highlight link vifmOption PreProc
 highlight link vifmNotation Special
+highlight link vifmMapArgList Special
 highlight link vifmString String
 highlight link vifmStringInExpr String
 highlight link vifmEnvVar PreProc
