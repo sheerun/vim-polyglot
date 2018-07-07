@@ -58,7 +58,7 @@ syn keyword i3SeparatorSymbol separator_symbol nextgroup=@i3String skipwhite
 
 " Set statement
 syn match   i3SetVar "\$\w\+" contained nextgroup=@i3String skipwhite
-syn keyword i3SetKeyword set nextgroup=i3SetVar skipwhite
+syn keyword i3SetKeyword set set_from_resource nextgroup=i3SetVar skipwhite
 
 " Workspaces
 syn keyword i3WsKeyword workspace nextgroup=i3WsSpecialParam,@i3String skipwhite
