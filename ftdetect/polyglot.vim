@@ -442,23 +442,17 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
   augroup filetypedetect
   " javascript, from javascript.vim in pangloss/vim-javascript:_JAVASCRIPT
-au BufNewFile,BufRead *.{js,mjs,jsm,es,es6},Jakefile setf javascript
-
-fun! s:SourceFlowSyntax()
-  if !exists('javascript_plugin_flow') && !exists('b:flow_active') &&
-        \ search('\v\C%^\_s*%(//\s*|/\*[ \t\n*]*)\@flow>','nw')
-    runtime extras/flow.vim
-    let b:flow_active = 1
-  endif
-endfun
-au FileType javascript au BufRead,BufWritePost <buffer> call s:SourceFlowSyntax()
-
 fun! s:SelectJavascript()
   if getline(1) =~# '^#!.*/bin/\%(env\s\+\)\?node\>'
     set ft=javascript
   endif
 endfun
-au BufNewFile,BufRead * call s:SelectJavascript()
+
+augroup javascript_syntax_detection
+  autocmd!
+  autocmd BufNewFile,BufRead *.{js,mjs,jsm,es,es6},Jakefile setfiletype javascript
+  autocmd BufNewFile,BufRead * call s:SelectJavascript()
+augroup END
   augroup end
 endif
 
@@ -951,6 +945,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
   augroup filetypedetect
   " rust, from rust.vim in rust-lang/rust.vim
 au BufRead,BufNewFile *.rs set filetype=rust
+au BufRead,BufNewFile Cargo.toml if &filetype == "" | set filetype=cfg | endif
+
+" vim: set et sw=4 sts=4 ts=8:
   augroup end
 endif
 

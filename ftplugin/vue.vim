@@ -5,7 +5,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vue') == -1
 " Maintainer: Eduardo San Martin Morote
 " Author: Adriaan Zonnenberg
 
-if exists("b:did_ftplugin")
+if exists('b:did_ftplugin')
   finish
 endif
 
@@ -20,11 +20,9 @@ if !exists('g:no_plugin_maps') && !exists('g:no_vue_maps')
   nnoremap <silent> <buffer> ][ :call search('^</\(template\<Bar>script\<Bar>style\)', 'W')<CR>
 endif
 
-if exists('g:loaded_ale')
-  let g:ale_linters = get(g:, 'ale_linters', {})
-  let g:ale_linters.vue = get(g:ale_linters, 'vue', ['eslint'])
-  let g:ale_linter_aliases = get(g:, 'ale_linter_aliases', {})
-  let g:ale_linter_aliases.vue = get(g:ale_linter_aliases, 'vue', 'javascript')
-endif
+" Run only ESLint for Vue files by default.
+" linters specifically for Vue can still be loaded.
+let b:ale_linter_aliases = ['vue', 'javascript']
+let b:ale_linters = ['eslint']
 
 endif

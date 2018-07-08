@@ -261,7 +261,7 @@ class VimRubyCompletion
     nums.each do |x|
       ln = buf[x]
       begin
-        eval( "require %s" % $1 ) if /.*require\s*(.*)$/.match( ln )
+        eval( "require %s" % $1 ) if /.*require\s*(["'].*?["'])/.match( ln )
       rescue Exception
         #ignore?
       end

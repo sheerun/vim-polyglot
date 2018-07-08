@@ -9,11 +9,17 @@ if exists('s:current_syntax')
   let b:current_syntax = s:current_syntax
 endif
 
-syntax region graphqlTemplateString start=+`+ skip=+\\\(`\|$\)+ end=+`+ contains=@GraphQLSyntax,jsTemplateExpression,jsSpecial extend
-exec 'syntax match graphqlTaggedTemplate +\%(' . join(g:graphql_javascript_tags, '\|') . '\)\%(`\)\@=+ nextgroup=graphqlTemplateString'
+let s:tags = '\%(' . join(g:graphql_javascript_tags, '\|') . '\)'
+
+exec 'syntax region graphqlTemplateString start=+' . s:tags . '\@20<=`+ skip=+\\`+ end=+`+ contains=@GraphQLSyntax,jsTemplateExpression,jsSpecial extend'
+exec 'syntax match graphqlTaggedTemplate +' . s:tags . '\ze`+ nextgroup=graphqlTemplateString'
+
+" Support expression interpolation ((${...})) inside template strings.
+syntax region graphqlTemplateExpression start=+${+ end=+}+ contained contains=jsTemplateExpression containedin=graphqlFold keepend
 
 hi def link graphqlTemplateString jsTemplateString
 hi def link graphqlTaggedTemplate jsTaggedTemplate
+hi def link graphqlTemplateExpression jsTemplateExpression
 
 syn cluster jsExpression add=graphqlTaggedTemplate
 syn cluster graphqlTaggedTemplate add=graphqlTemplateString
