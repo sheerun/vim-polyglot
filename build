@@ -188,6 +188,7 @@ PACKS="
   go:fatih/vim-go:_BASIC
   graphql:jparise/vim-graphql
   groovy:vim-scripts/groovy.vim
+  groovy-indent:vim-scripts/groovyindent-unix
   haml:sheerun/vim-haml
   handlebars:mustache/vim-mustache-handlebars
   haproxy:CH-DanReif/haproxy.vim
