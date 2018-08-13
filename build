@@ -237,6 +237,7 @@ PACKS="
   raml:IN3D/vim-raml
   ragel:jneen/ragel.vim
   rspec:sheerun/rspec.vim
+  rst:marshallward/vim-restructuredtext
   ruby:vim-ruby/vim-ruby
   rust:rust-lang/rust.vim
   sbt:derekwyatt/vim-sbt
