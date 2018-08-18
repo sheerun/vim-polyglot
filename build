@@ -194,7 +194,7 @@ PACKS="
   haskell:neovimhaskell/haskell-vim
   haxe:yaymukund/vim-haxe
   html5:othree/html5.vim
-  i3:PotatoesMaster/i3-vim-syntax
+  i3:mboughaba/i3config.vim
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax
