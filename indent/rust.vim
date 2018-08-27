@@ -31,8 +31,10 @@ if exists("*GetRustIndent")
     finish
 endif
 
+" vint: -ProhibitAbbreviationOption
 let s:save_cpo = &cpo
 set cpo&vim
+" vint: +ProhibitAbbreviationOption
 
 " Come here when loading the script the first time.
 
@@ -46,12 +48,12 @@ function! s:get_line_trimmed(lnum)
         " If the last character in the line is a comment, do a binary search for
         " the start of the comment.  synID() is slow, a linear search would take
         " too long on a long line.
-        if synIDattr(synID(a:lnum, line_len, 1), "name") =~ 'Comment\|Todo'
+        if synIDattr(synID(a:lnum, line_len, 1), "name") =~? 'Comment\|Todo'
             let min = 1
             let max = line_len
             while min < max
                 let col = (min + max) / 2
-                if synIDattr(synID(a:lnum, col, 1), "name") =~ 'Comment\|Todo'
+                if synIDattr(synID(a:lnum, col, 1), "name") =~? 'Comment\|Todo'
                     let max = col
                 else
                     let min = col + 1
@@ -71,7 +73,7 @@ function! s:is_string_comment(lnum, col)
     if has('syntax_items')
         for id in synstack(a:lnum, a:col)
             let synname = synIDattr(id, "name")
-            if synname == "rustString" || synname =~ "^rustComment"
+            if synname ==# "rustString" || synname =~# "^rustComment"
                 return 1
             endif
         endfor
@@ -90,13 +92,13 @@ function GetRustIndent(lnum)
 
     if has('syntax_items')
         let synname = synIDattr(synID(a:lnum, 1, 1), "name")
-        if synname == "rustString"
+        if synname ==# "rustString"
             " If the start of the line is in a string, don't change the indent
             return -1
-        elseif synname =~ '\(Comment\|Todo\)'
-                    \ && line !~ '^\s*/\*'  " not /* opening line
-            if synname =~ "CommentML" " multi-line
-                if line !~ '^\s*\*' && getline(a:lnum - 1) =~ '^\s*/\*'
+        elseif synname =~? '\(Comment\|Todo\)'
+                    \ && line !~# '^\s*/\*'  " not /* opening line
+            if synname =~? "CommentML" " multi-line
+                if line !~# '^\s*\*' && getline(a:lnum - 1) =~# '^\s*/\*'
                     " This is (hopefully) the line after a /*, and it has no
                     " leader, so the correct indentation is that of the
                     " previous line.
@@ -123,22 +125,22 @@ function GetRustIndent(lnum)
     " Search backwards for the previous non-empty line.
     let prevlinenum = prevnonblank(a:lnum - 1)
     let prevline = s:get_line_trimmed(prevlinenum)
-    while prevlinenum > 1 && prevline !~ '[^[:blank:]]'
+    while prevlinenum > 1 && prevline !~# '[^[:blank:]]'
         let prevlinenum = prevnonblank(prevlinenum - 1)
         let prevline = s:get_line_trimmed(prevlinenum)
     endwhile
 
     " Handle where clauses nicely: subsequent values should line up nicely.
-    if prevline[len(prevline) - 1] == ","
+    if prevline[len(prevline) - 1] ==# ","
                 \ && prevline =~# '^\s*where\s'
         return indent(prevlinenum) + 6
     endif
 
-    if prevline[len(prevline) - 1] == ","
-                \ && s:get_line_trimmed(a:lnum) !~ '^\s*[\[\]{}]'
-                \ && prevline !~ '^\s*fn\s'
-                \ && prevline !~ '([^()]\+,$'
-                \ && s:get_line_trimmed(a:lnum) !~ '^\s*\S\+\s*=>'
+    if prevline[len(prevline) - 1] ==# ","
+                \ && s:get_line_trimmed(a:lnum) !~# '^\s*[\[\]{}]'
+                \ && prevline !~# '^\s*fn\s'
+                \ && prevline !~# '([^()]\+,$'
+                \ && s:get_line_trimmed(a:lnum) !~# '^\s*\S\+\s*=>'
         " Oh ho! The previous line ended in a comma! I bet cindent will try to
         " take this too far... For now, let's normally use the previous line's
         " indent.
@@ -197,7 +199,7 @@ function GetRustIndent(lnum)
             else
                 " At the module scope, inside square brackets only
                 "if getline(a:lnum)[0] == ']' || search('\[', '', '\]', 'nW') == a:lnum
-                if line =~ "^\\s*]"
+                if line =~# "^\\s*]"
                     " It's the closing line, dedent it
                     return 0
                 else
@@ -211,8 +213,10 @@ function GetRustIndent(lnum)
     return cindent(a:lnum)
 endfunction
 
+" vint: -ProhibitAbbreviationOption
 let &cpo = s:save_cpo
 unlet s:save_cpo
+" vint: +ProhibitAbbreviationOption
 
 " vim: set et sw=4 sts=4 ts=8:
 

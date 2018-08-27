@@ -86,7 +86,7 @@ function! s:Run(dict, rustc_args, args)
 
     let pwd = a:dict.istemp ? a:dict.tmpdir : ''
     let output = s:system(pwd, shellescape(rustc) . " " . join(map(rustc_args, 'shellescape(v:val)')))
-    if output != ''
+    if output !=# ''
         echohl WarningMsg
         echo output
         echohl None
@@ -153,7 +153,7 @@ function! s:Expand(dict, pretty, args)
 endfunction
 
 function! rust#CompleteExpand(lead, line, pos)
-    if a:line[: a:pos-1] =~ '^RustExpand!\s*\S*$'
+    if a:line[: a:pos-1] =~# '^RustExpand!\s*\S*$'
         " first argument and it has a !
         let list = ["normal", "expanded", "typed", "expanded,identified", "flowgraph=", "everybody_loops"]
         if !empty(a:lead)
@@ -182,7 +182,7 @@ function! s:Emit(dict, type, args)
         let args = [relpath, '--emit', a:type, '-o', output_path] + a:args
         let pwd = a:dict.istemp ? a:dict.tmpdir : ''
         let output = s:system(pwd, shellescape(rustc) . " " . join(map(args, 'shellescape(v:val)')))
-        if output != ''
+        if output !=# ''
             echohl WarningMsg
             echo output
             echohl None
@@ -192,10 +192,10 @@ function! s:Emit(dict, type, args)
             exe 'silent keepalt read' fnameescape(output_path)
             1
             d
-            if a:type == "llvm-ir"
+            if a:type ==# "llvm-ir"
                 setl filetype=llvm
                 let extension = 'll'
-            elseif a:type == "asm"
+            elseif a:type ==# "asm"
                 setl filetype=asm
                 let extension = 's'
             endif
@@ -261,8 +261,8 @@ function! s:WithPath(func, ...)
             let dict.tmpdir_relpath = filename
             let dict.path = dict.tmpdir.'/'.filename
 
-            let saved.mod = &mod
-            set nomod
+            let saved.mod = &modified
+            set nomodified
 
             silent exe 'keepalt write! ' . fnameescape(dict.path)
             if pathisempty
@@ -343,7 +343,7 @@ function! s:ShellTokenize(text)
             endif
             let l:state = 3
         elseif l:state == 5 " single-quoted
-            if l:c == "'"
+            if l:c ==# "'"
                 let l:state = 1
             else
                 let l:current .= l:c
@@ -361,7 +361,7 @@ function! s:RmDir(path)
     if empty(a:path)
         echoerr 'Attempted to delete empty path'
         return 0
-    elseif a:path == '/' || a:path == $HOME
+    elseif a:path ==# '/' || a:path ==# $HOME
         echoerr 'Attempted to delete protected path: ' . a:path
         return 0
     endif

@@ -64,6 +64,7 @@ syn cluster carpQuotedOrNormal  contains=carpDelimiter
 syn region carpQuotedStruc start="@("rs=s+2 end=")"re=e-1 contains=@carpQuotedStuff,@carpQuotedOrNormal contained
 syn region carpQuotedStruc start="&("rs=s+2 end=")"re=e-1 contains=@carpQuotedStuff,@carpQuotedOrNormal contained
 syn region carpQuotedStruc start="("rs=s+1 end=")"re=e-1 contains=@carpQuotedStuff,@carpQuotedOrNormal contained
+syn region carpQuotedStruc start="{"rs=s+1 end="}"re=e-1 contains=@carpQuotedStuff,@carpQuotedOrNormal contained
 syn region carpQuotedStruc start="\["rs=s+1 end="\]"re=e-1 contains=@carpQuotedStuff,@carpQuotedOrNormal contained
 
 syn cluster carpQuotedStuff add=carpQuotedStruc
@@ -73,6 +74,7 @@ syn region carpStruc matchgroup=Delimiter start="&("rs=s+2 matchgroup=Delimiter 
 syn region carpStruc matchgroup=Delimiter start="&"rs=s+1 end=![ \t()\[\]";]!me=e-1 contains=@carpNormal
 syn region carpStruc matchgroup=Delimiter start="@"rs=s+1 end=![ \t()\[\]";]!me=e-1 contains=@carpNormal
 syn region carpStruc matchgroup=Delimiter start="("rs=s+1 matchgroup=Delimiter end=")"re=e-1 contains=@carpNormal
+syn region carpStruc matchgroup=Delimiter start="{"rs=s+1 matchgroup=Delimiter end="}"re=e-1 contains=@carpNormal
 syn region carpStruc matchgroup=Delimiter start="\["rs=s+1 matchgroup=Delimiter end="\]"re=e-1 contains=@carpNormal
 
 syn region carpString start=/\%(\\\)\@<!"/ skip=/\\[\\"]/ end=/"/
