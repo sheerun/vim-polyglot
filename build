@@ -193,7 +193,7 @@ PACKS="
   handlebars:mustache/vim-mustache-handlebars
   haproxy:CH-DanReif/haproxy.vim
   haskell:neovimhaskell/haskell-vim
-  haxe:yaymukund/vim-haxe
+  haxe:jdonaldson/vaxe
   html5:othree/html5.vim
   i3:PotatoesMaster/i3-vim-syntax
   jasmine:glanotte/vim-jasmine
