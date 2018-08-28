@@ -163,6 +163,7 @@ PACKS="
   c/c++:vim-jp/vim-cpp
   caddyfile:isobit/vim-caddyfile
   carp:hellerve/carp-vim
+  chuck:wilsaj/chuck.vim
   cjsx:mtscout6/vim-cjsx
   clojure:guns/vim-clojure-static
   cmake:pboettch/vim-cmake-syntax
