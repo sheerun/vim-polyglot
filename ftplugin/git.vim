@@ -12,7 +12,7 @@ endif
 let b:did_ftplugin = 1
 
 if !exists('b:git_dir')
-  if expand('%:p') =~# '[\/]\.git[\/]modules[\/]'
+  if expand('%:p') =~# '[\/]\.git[\/]modules[\/]\|:[\/][\/]\|^\a\a\+:'
     " Stay out of the way
   elseif expand('%:p') =~# '[\/]\.git[\/]worktrees'
     let b:git_dir = matchstr(expand('%:p'),'.*\.git[\/]worktrees[\/][^\/]\+\>')

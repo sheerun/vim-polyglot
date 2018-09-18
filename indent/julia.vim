@@ -50,8 +50,9 @@ function GetJuliaNestingStruct(lnum, ...)
   let e = a:0 > 1 ? a:2 : -1
   let blocks_stack = []
   let num_closed_blocks = 0
+  let tt = get(b:, 'julia_syntax_version', 10) == 6 ? '\|\%(\%(abstract\|primitive\)\s\+\)\@<!type' : ''
   while 1
-    let fb = JuliaMatch(a:lnum, line, '@\@<!\<\%(if\|else\%(if\)\=\|while\|for\|try\|catch\|finally\|\%(staged\)\?function\|macro\|begin\|mutable\s\+struct\|\%(mutable\s\+\)\@<!struct\|\%(abstract\|primitive\)\s\+type\|\%(\%(abstract\|primitive\)\s\+\)\@<!type\|immutable\|let\|\%(bare\)\?module\|quote\|do\)\>', s, e)
+    let fb = JuliaMatch(a:lnum, line, '@\@<!\<\%(if\|else\%(if\)\?\|while\|for\|try\|catch\|finally\|\%(staged\)\?function\|macro\|begin\|mutable\s\+struct\|\%(mutable\s\+\)\@<!struct\|\%(abstract\|primitive\)\s\+type\|immutable\|let\|\%(bare\)\?module\|quote\|do'.tt.'\)\>', s, e)
     let fe = JuliaMatch(a:lnum, line, '@\@<!\<end\>', s, e)
 
     if fb < 0 && fe < 0
@@ -133,7 +134,7 @@ function GetJuliaNestingStruct(lnum, ...)
         continue
       endif
 
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<\%(while\|for\|\%(staged\)\?function\|macro\|begin\|\%(mutable\s\+\)\?struct\|\%(\%(abstract\|primitive\)\s\+\)\?type\|immutable\|let\|quote\|do\)\>', s)
+      let i = JuliaMatch(a:lnum, line, '@\@<!\<\%(while\|for\|\%(staged\)\?function\|macro\|begin\|\%(mutable\s\+\)\?struct\|\%(abstract\|primitive\)\s\+type\|immutable\|let\|quote\|do'.tt.'\)\>', s)
       if i >= 0 && i == fb
         if match(line, '\C\<\%(mutable\|abstract\|primitive\)', i) != -1
           let s = i+11

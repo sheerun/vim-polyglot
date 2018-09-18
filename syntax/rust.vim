@@ -206,11 +206,6 @@ syn region rustCommentBlockNest         matchgroup=rustCommentBlock         star
 syn region rustCommentBlockDocNest      matchgroup=rustCommentBlockDoc      start="/\*"                     end="\*/" contains=rustTodo,rustCommentBlockDocNest,@Spell contained transparent
 syn region rustCommentBlockDocNestError matchgroup=rustCommentBlockDocError start="/\*"                     end="\*/" contains=rustTodo,rustCommentBlockDocNestError,@Spell contained transparent
 
-if exists("b:current_syntax_embed")
-syn match rustCommentLine                                                  "^//"
-syn match rustCommentLineDoc                                               "^//\%(//\@!\|!\)"
-endif
-
 " FIXME: this is a really ugly and not fully correct implementation. Most
 " importantly, a case like ``/* */*`` should have the final ``*`` not being in
 " a comment, but in practice at present it leaves comments open two levels
@@ -235,12 +230,18 @@ if !exists("b:current_syntax_embed")
     syntax include @RustCodeInComment <sfile>:p:h/rust.vim
     unlet b:current_syntax_embed
 
+    " Currently regions marked as ```<some-other-syntax> will not get
+    " highlighted at all. In the future, we can do as vim-markdown does and
+    " highlight with the other syntax. But for now, let's make sure we find
+    " the closing block marker, because the rules below won't catch it.
+    syn region rustCommentLinesDocNonRustCode matchgroup=rustCommentDocCodeFence start='^\z(\s*//[!/]\s*```\).\+$' end='^\z1$' keepend contains=rustCommentLineDoc
+
     " We borrow the rules from rust’s src/librustdoc/html/markdown.rs, so that
     " we only highlight as Rust what it would perceive as Rust (almost; it’s
     " possible to trick it if you try hard, and indented code blocks aren’t
     " supported because Markdown is a menace to parse and only mad dogs and
     " Englishmen would try to handle that case correctly in this syntax file).
-    syn region rustCommentLinesDocRustCode matchgroup=rustCommentDocCodeFence start='^\z(\s*//[!/]\s*```\)[^A-Za-z0-9_-]*\%(\%(should_panic\|no_run\|ignore\|allow_fail\|rust\|test_harness\|compile_fail\|E\d\{4}\)\%([^A-Za-z0-9_-]\+\|$\)\)*$' end='^\z1$' keepend contains=@RustCodeInComment
+    syn region rustCommentLinesDocRustCode matchgroup=rustCommentDocCodeFence start='^\z(\s*//[!/]\s*```\)[^A-Za-z0-9_-]*\%(\%(should_panic\|no_run\|ignore\|allow_fail\|rust\|test_harness\|compile_fail\|E\d\{4}\)\%([^A-Za-z0-9_-]\+\|$\)\)*$' end='^\z1$' keepend contains=@RustCodeInComment,rustCommentLineDocLeader
     syn region rustCommentBlockDocRustCode matchgroup=rustCommentDocCodeFence start='^\z(\%(\s*\*\)\?\s*```\)[^A-Za-z0-9_-]*\%(\%(should_panic\|no_run\|ignore\|allow_fail\|rust\|test_harness\|compile_fail\|E\d\{4}\)\%([^A-Za-z0-9_-]\+\|$\)\)*$' end='^\z1$' keepend contains=@RustCodeInComment,rustCommentBlockDocStar
     " Strictly, this may or may not be correct; this code, for example, would
     " mishighlight:
@@ -254,6 +255,7 @@ if !exists("b:current_syntax_embed")
     "
     " … but I don’t care. Balance of probability, and all that.
     syn match rustCommentBlockDocStar /^\s*\*\s\?/ contained
+    syn match rustCommentLineDocLeader "^\s*//\%(//\@!\|!\)" contained
 endif
 
 " Default highlighting {{{1
@@ -308,6 +310,7 @@ hi def link rustFuncCall      Function
 hi def link rustShebang       Comment
 hi def link rustCommentLine   Comment
 hi def link rustCommentLineDoc SpecialComment
+hi def link rustCommentLineDocLeader rustCommentLineDoc
 hi def link rustCommentLineDocError Error
 hi def link rustCommentBlock  rustCommentLine
 hi def link rustCommentBlockDoc rustCommentLineDoc

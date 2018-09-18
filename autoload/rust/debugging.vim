@@ -18,6 +18,7 @@ let s:global_variable_list = [
             \ 'rust_last_rustc_args',
             \ 'rust_original_delimitMate_excluded_regions',
             \ 'rust_playpen_url',
+            \ 'rust_prev_delimitMate_quotes',
             \ 'rust_recent_nearest_cargo_tol',
             \ 'rust_recent_root_cargo_toml',
             \ 'rust_recommended_style',

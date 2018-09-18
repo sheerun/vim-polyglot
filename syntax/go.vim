@@ -49,12 +49,12 @@ hi def link     goFloats            Type
 hi def link     goComplexes         Type
 
 " Predefined functions and values
-syn match       goBuiltins                 /\<\v(append|cap|close|complex|copy|delete|imag|len)\ze\(/
-syn match       goBuiltins                 /\<\v(make|new|panic|print|println|real|recover)\ze\(/
+syn keyword     goBuiltins                 append cap close complex copy delete imag len
+syn keyword     goBuiltins                 make new panic print println real recover
 syn keyword     goBoolean                  true false
 syn keyword     goPredefinedIdentifiers    nil iota
 
-hi def link     goBuiltins                 Keyword
+hi def link     goBuiltins                 Identifier
 hi def link     goBoolean                  Boolean
 hi def link     goPredefinedIdentifiers    goBoolean
 
@@ -150,14 +150,14 @@ endif
 " var, const
 if go#config#FoldEnable('varconst')
   syn region    goVar               start='var ('   end='^\s*)$' transparent fold
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goArgumentName,goArgumentType,goSimpleArguments
+                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goArgumentName,goArgumentType,goSimpleArguments,goPointerOperator
   syn region    goConst             start='const (' end='^\s*)$' transparent fold
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goArgumentName,goArgumentType,goSimpleArguments
+                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goArgumentName,goArgumentType,goSimpleArguments,goPointerOperator
 else
   syn region    goVar               start='var ('   end='^\s*)$' transparent
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goArgumentName,goArgumentType,goSimpleArguments
+                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goArgumentName,goArgumentType,goSimpleArguments,goPointerOperator
   syn region    goConst             start='const (' end='^\s*)$' transparent
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goArgumentName,goArgumentType,goSimpleArguments
+                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goArgumentName,goArgumentType,goSimpleArguments,goPointerOperator
 endif
 
 " Single-line var, const, and import.
@@ -216,6 +216,7 @@ endif
 " Extra types commonly seen
 if go#config#HighlightExtraTypes()
   syn match goExtraType /\<bytes\.\(Buffer\)\>/
+  syn match goExtraType /\<context\.\(Context\)\>/
   syn match goExtraType /\<io\.\(Reader\|ReadSeeker\|ReadWriter\|ReadCloser\|ReadWriteCloser\|Writer\|WriteCloser\|Seeker\)\>/
   syn match goExtraType /\<reflect\.\(Kind\|Type\|Value\)\>/
   syn match goExtraType /\<unsafe\.Pointer\>/
@@ -375,8 +376,10 @@ function! s:hi()
   hi def      goCoverageUncover    ctermfg=red guifg=#F92672
 
   " :GoDebug commands
-  hi GoDebugBreakpoint term=standout ctermbg=117 ctermfg=0 guibg=#BAD4F5  guifg=Black
-  hi GoDebugCurrent    term=reverse  ctermbg=12  ctermfg=7 guibg=DarkBlue guifg=White
+  if go#config#HighlightDebug()
+    hi GoDebugBreakpoint term=standout ctermbg=117 ctermfg=0 guibg=#BAD4F5  guifg=Black
+    hi GoDebugCurrent term=reverse  ctermbg=12  ctermfg=7 guibg=DarkBlue guifg=White
+  endif
 endfunction
 
 augroup vim-go-hi

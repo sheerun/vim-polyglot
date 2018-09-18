@@ -12,8 +12,10 @@ endif
 runtime compiler/rustc.vim
 let current_compiler = "cargo"
 
+" vint: -ProhibitAbbreviationOption
 let s:save_cpo = &cpo
 set cpo&vim
+" vint: +ProhibitAbbreviationOption
 
 if exists(':CompilerSet') != 2
     command -nargs=* CompilerSet setlocal <args>
@@ -41,8 +43,10 @@ CompilerSet errorformat+=
             \%-Gnote:\ Run\ with\ \`RUST_BACKTRACE=%.%#,
             \%.%#panicked\ at\ \\'%m\\'\\,\ %f:%l:%c
 
+" vint: -ProhibitAbbreviationOption
 let &cpo = s:save_cpo
 unlet s:save_cpo
+" vint: +ProhibitAbbreviationOption
 
 " vim: set et sw=4 sts=4 ts=8:
 
