@@ -105,7 +105,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [mathematica](https://github.com/rsmenon/vim-mathematica) (syntax, ftplugin)
 - [nginx](https://github.com/chr4/nginx.vim) (syntax, indent, ftplugin)
 - [nim](https://github.com/zah/nim.vim) (syntax, compiler, indent)
-- [nix](https://github.com/LnL7/vim-nix) (syntax, indent, ftplugin)
+- [nix](https://github.com/LnL7/vim-nix) (syntax, indent, compiler, ftplugin)
 - [objc](https://github.com/b4winckler/vim-objc) (ftplugin, syntax, indent)
 - [ocaml](https://github.com/jrk/vim-ocaml) (syntax, indent, ftplugin)
 - [octave](https://github.com/vim-scripts/octave.vim--) (syntax)

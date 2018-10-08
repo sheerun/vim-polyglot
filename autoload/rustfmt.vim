@@ -63,6 +63,20 @@ function! s:RustfmtWriteMode()
     endif
 endfunction
 
+function! s:RustfmtConfig()
+    let l:rustfmt_toml = findfile('rustfmt.toml', expand('%:p:h') . ';')
+    if l:rustfmt_toml !=# ''
+        return '--config-path '.l:rustfmt_toml
+    endif
+
+    let l:_rustfmt_toml = findfile('.rustfmt.toml', expand('%:p:h') . ';')
+    if l:_rustfmt_toml !=# ''
+        return '--config-path '.l:_rustfmt_toml
+    endif
+
+    return ''
+endfunction
+
 function! s:RustfmtCommandRange(filename, line1, line2)
     if g:rustfmt_file_lines == 0
         echo "--file-lines is not supported in the installed `rustfmt` executable"
@@ -71,6 +85,7 @@ function! s:RustfmtCommandRange(filename, line1, line2)
 
     let l:arg = {"file": shellescape(a:filename), "range": [a:line1, a:line2]}
     let l:write_mode = s:RustfmtWriteMode()
+    let l:rustfmt_config = s:RustfmtConfig()
 
     " FIXME: When --file-lines gets to be stable, enhance this version range checking
     " accordingly.
@@ -78,34 +93,73 @@ function! s:RustfmtCommandRange(filename, line1, line2)
                 \ (s:rustfmt_unstable_features && (s:rustfmt_version < '1.'))
                 \ ? '--unstable-features' : ''
 
-    let l:cmd = printf("%s %s %s %s --file-lines '[%s]' %s", g:rustfmt_command, 
-                \ l:write_mode, g:rustfmt_options, 
-                \ l:unstable_features, json_encode(l:arg), shellescape(a:filename))
+    let l:cmd = printf("%s %s %s %s %s --file-lines '[%s]' %s", g:rustfmt_command,
+                \ l:write_mode, g:rustfmt_options,
+                \ l:unstable_features, l:rustfmt_config,
+                \ json_encode(l:arg), shellescape(a:filename))
     return l:cmd
 endfunction
 
-function! s:RustfmtCommand(filename)
-    let l:write_mode = s:RustfmtWriteMode()
-    return g:rustfmt_command . " ". l:write_mode . " " . g:rustfmt_options . " " . shellescape(a:filename)
+function! s:RustfmtCommand()
+    if g:rustfmt_emit_files
+        let l:write_mode = "--emit=stdout"
+    else
+        let l:write_mode = "--write-mode=display"
+    endif
+    " rustfmt will pick on the right config on its own due to the
+    " current directory change.
+    return g:rustfmt_command . " ". l:write_mode . " " . g:rustfmt_options
+endfunction
+
+function! s:DeleteLines(start, end) abort
+    silent! execute a:start . ',' . a:end . 'delete _'
 endfunction
 
 function! s:RunRustfmt(command, tmpname, fail_silently)
     mkview!
 
-    if exists("*systemlist")
-        let out = systemlist(a:command)
+    let l:stderr_tmpname = tempname()
+    let l:command = a:command . ' 2> ' . l:stderr_tmpname
+
+    if a:tmpname ==# ''
+        " Rustfmt in stdin/stdout mode
+
+        " chdir to the directory of the file
+        let l:has_lcd = haslocaldir()
+        let l:prev_cd = getcwd()
+        execute 'lchdir! '.expand('%:h')
+
+        let l:buffer = getline(1, '$')
+        if exists("*systemlist")
+            silent let out = systemlist(l:command, l:buffer)
+        else
+            silent let out = split(system(l:command, l:buffer), '\r\?\n')
+        endif
     else
-        let out = split(system(a:command), '\r\?\n')
+        if exists("*systemlist")
+            silent let out = systemlist(l:command)
+        else
+            silent let out = split(system(l:command), '\r\?\n')
+        endif
     endif
 
-    if v:shell_error == 0 || v:shell_error == 3
+    let l:stderr = readfile(l:stderr_tmpname)
+
+    call delete(l:stderr_tmpname)
+
+    if v:shell_error == 0
         " remove undo point caused via BufWritePre
         try | silent undojoin | catch | endtry
 
-        " take the tmpfile's content, this is better than rename
-        " because it preserves file modes.
-        let l:content = readfile(a:tmpname)
-        1,$d _
+        if a:tmpname ==# ''
+            let l:content = l:out
+        else
+            " take the tmpfile's content, this is better than rename
+            " because it preserves file modes.
+            let l:content = readfile(a:tmpname)
+        endif
+
+        call s:DeleteLines(len(l:content), line('$'))
         call setline(1, l:content)
 
         " only clear location list if it was previously filled to prevent
@@ -117,61 +171,69 @@ function! s:RunRustfmt(command, tmpname, fail_silently)
         endif
     elseif g:rustfmt_fail_silently == 0 && a:fail_silently == 0
         " otherwise get the errors and put them in the location list
-        let errors = []
+        let l:errors = []
 
-        let prev_line = ""
-        for line in out
+        let l:prev_line = ""
+        for l:line in l:stderr
             " error: expected one of `;` or `as`, found `extern`
             "  --> src/main.rs:2:1
-            let tokens = matchlist(line, '^\s-->\s\(.\{-}\):\(\d\+\):\(\d\+\)$')
+            let tokens = matchlist(l:line, '^\s\+-->\s\(.\{-}\):\(\d\+\):\(\d\+\)$')
             if !empty(tokens)
-                call add(errors, {"filename": @%,
+                call add(l:errors, {"filename": @%,
                             \"lnum":	tokens[2],
                             \"col":	tokens[3],
-                            \"text":	prev_line})
+                            \"text":	l:prev_line})
             endif
-            let prev_line = line
+            let l:prev_line = l:line
         endfor
 
-        if empty(errors)
-            % | " Couldn't detect rustfmt error format, output errors
-        endif
-
-        if !empty(errors)
-            call setloclist(0, errors, 'r')
+        if !empty(l:errors)
+            call setloclist(0, l:errors, 'r')
             echohl Error | echomsg "rustfmt returned error" | echohl None
+        else
+            echo "rust.vim: was not able to parse rustfmt messages. Here is the raw output:"
+            echo "\n"
+            for l:line in l:stderr
+                echo l:line
+            endfor
         endif
 
         let s:got_fmt_error = 1
         lwindow
     endif
 
-    call delete(a:tmpname)
+    " Restore the current directory if needed
+    if a:tmpname ==# ''
+        if l:has_lcd
+            execute 'lchdir! '.l:prev_cd
+        else
+            execute 'chdir! '.l:prev_cd
+        endif
+    endif
 
     silent! loadview
 endfunction
 
-function! s:rustfmtSaveToTmp()
+function! rustfmt#FormatRange(line1, line2)
     let l:tmpname = tempname()
     call writefile(getline(1, '$'), l:tmpname)
-    return l:tmpname
-endfunction
-
-function! rustfmt#FormatRange(line1, line2)
-    let l:tmpname = s:rustfmtSaveToTmp()
     let command = s:RustfmtCommandRange(l:tmpname, a:line1, a:line2)
     call s:RunRustfmt(command, l:tmpname, 0)
+    call delete(l:tmpname)
 endfunction
 
 function! rustfmt#Format()
-    let l:tmpname = s:rustfmtSaveToTmp()
-    let command = s:RustfmtCommand(l:tmpname)
-    call s:RunRustfmt(command, l:tmpname, 0)
+    call s:RunRustfmt(s:RustfmtCommand(), '', 0)
+endfunction
+
+function! rustfmt#Cmd()
+    " Mainly for debugging
+    return s:RustfmtCommand()
 endfunction
 
 function! rustfmt#PreWrite()
     if rust#GetConfigVar('rustfmt_autosave_if_config_present', 0)
-        if findfile('rustfmt.toml', '.;') !=# '' 
+        if findfile('rustfmt.toml', '.;') !=# '' || findfile('.rustfmt.toml', '.;') !=# ''
             let b:rustfmt_autosave = 1
             let b:rustfmt_autosave_because_of_config = 1
         endif
@@ -181,9 +243,7 @@ function! rustfmt#PreWrite()
         return
     endif
 
-    let l:tmpname = s:rustfmtSaveToTmp()
-    let command = s:RustfmtCommand(l:tmpname)
-    call s:RunRustfmt(command, l:tmpname, 1)
+    call s:RunRustfmt(s:RustfmtCommand(), '', 1)
 endfunction
 
 

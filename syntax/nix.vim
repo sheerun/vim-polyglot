@@ -36,12 +36,15 @@ syn region  nixComment start=+/\*+ end=+\*/+ contains=nixTodo,@Spell
 
 syn region nixInterpolation matchgroup=nixInterpolationDelimiter start="\${" end="}" contained contains=@nixExpr,nixInterpolationParam
 
-syn match nixSimpleStringSpecial /\\./ contained
+syn match nixSimpleStringSpecial /\\\%([nrt"\\$]\|$\)/ contained
 syn match nixStringSpecial /''['$]/ contained
-syn match nixStringSpecial /''\\./ contained
+syn match nixStringSpecial /''\\[nrt]/ contained
 
-syn region nixSimpleString matchgroup=nixStringDelimiter start=+"+ skip=+\\"+ end=+"+ contains=nixInterpolation,nixSimpleStringSpecial
-syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ end=+''+ contains=nixInterpolation,nixStringSpecial
+syn match nixInvalidSimpleStringEscape /\\[^nrt"\\$]/ contained
+syn match nixInvalidStringEscape /''\\[^nrt]/ contained
+
+syn region nixSimpleString matchgroup=nixStringDelimiter start=+"+ skip=+\\"+ end=+"+ contains=nixInterpolation,nixSimpleStringSpecial,nixInvalidSimpleStringEscape
+syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ end=+''+ contains=nixInterpolation,nixStringSpecial,nixInvalidStringEscape
 
 syn match nixFunctionCall "[a-zA-Z_][a-zA-Z0-9_'-]*"
 
@@ -53,7 +56,7 @@ syn match nixSearchPathRef "<[a-zA-Z0-9._+-]\+\%(\/[a-zA-Z0-9._+-]\+\)*>" contai
 syn match nixURI "[a-zA-Z][a-zA-Z0-9.+-]*:[a-zA-Z0-9%/?:@&=$,_.!~*'+-]\+"
 
 syn match nixAttributeDot "\." contained
-syn match nixAttribute "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%([^a-zA-Z0-9_'-.]\|$\)" contained
+syn match nixAttribute "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%([^a-zA-Z0-9_'.-]\|$\)" contained
 syn region nixAttributeAssignment start="=" end="\ze;" contained contains=@nixExpr
 syn region nixAttributeDefinition start=/\ze[a-zA-Z_"$]/ end=";" contained contains=nixComment,nixAttribute,nixInterpolation,nixSimpleString,nixAttributeDot,nixAttributeAssignment
 
@@ -149,41 +152,43 @@ syn keyword nixNamespacedBuiltin contained
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
-hi def link nixArgOperator            Operator
-hi def link nixArgumentDefinition     Identifier
-hi def link nixArgumentEllipsis       Operator
-hi def link nixAssertKeyword          Keyword
-hi def link nixAttribute              Identifier
-hi def link nixAttributeDot           Operator
-hi def link nixBoolean                Boolean
-hi def link nixBuiltin                Special
-hi def link nixComment                Comment
-hi def link nixConditional            Conditional
-hi def link nixHomePath               Include
-hi def link nixIfExprKeyword          Keyword
-hi def link nixInherit                Keyword
-hi def link nixInteger                Integer
-hi def link nixInterpolation          Macro
-hi def link nixInterpolationDelimiter Delimiter
-hi def link nixInterpolationParam     Macro
-hi def link nixLetExprKeyword         Keyword
-hi def link nixNamespacedBuiltin      Special
-hi def link nixNull                   Constant
-hi def link nixOperator               Operator
-hi def link nixPath                   Include
-hi def link nixPathDelimiter          Delimiter
-hi def link nixRecKeyword             Keyword
-hi def link nixSearchPath             Include
-hi def link nixSimpleBuiltin          Keyword
-hi def link nixSimpleFunctionArgument Identifier
-hi def link nixSimpleString           String
-hi def link nixSimpleStringSpecial    SpecialChar
-hi def link nixString                 String
-hi def link nixStringDelimiter        Delimiter
-hi def link nixStringSpecial          Special
-hi def link nixTodo                   Todo
-hi def link nixURI                    Include
-hi def link nixWithExprKeyword        Keyword
+hi def link nixArgOperator               Operator
+hi def link nixArgumentDefinition        Identifier
+hi def link nixArgumentEllipsis          Operator
+hi def link nixAssertKeyword             Keyword
+hi def link nixAttribute                 Identifier
+hi def link nixAttributeDot              Operator
+hi def link nixBoolean                   Boolean
+hi def link nixBuiltin                   Special
+hi def link nixComment                   Comment
+hi def link nixConditional               Conditional
+hi def link nixHomePath                  Include
+hi def link nixIfExprKeyword             Keyword
+hi def link nixInherit                   Keyword
+hi def link nixInteger                   Integer
+hi def link nixInterpolation             Macro
+hi def link nixInterpolationDelimiter    Delimiter
+hi def link nixInterpolationParam        Macro
+hi def link nixInvalidSimpleStringEscape Error
+hi def link nixInvalidStringEscape       Error
+hi def link nixLetExprKeyword            Keyword
+hi def link nixNamespacedBuiltin         Special
+hi def link nixNull                      Constant
+hi def link nixOperator                  Operator
+hi def link nixPath                      Include
+hi def link nixPathDelimiter             Delimiter
+hi def link nixRecKeyword                Keyword
+hi def link nixSearchPath                Include
+hi def link nixSimpleBuiltin             Keyword
+hi def link nixSimpleFunctionArgument    Identifier
+hi def link nixSimpleString              String
+hi def link nixSimpleStringSpecial       SpecialChar
+hi def link nixString                    String
+hi def link nixStringDelimiter           Delimiter
+hi def link nixStringSpecial             Special
+hi def link nixTodo                      Todo
+hi def link nixURI                       Include
+hi def link nixWithExprKeyword           Keyword
 
 " This could lead up to slow syntax highlighting for large files, but usually
 " large files such as all-packages.nix are one large attribute set, so if we'd

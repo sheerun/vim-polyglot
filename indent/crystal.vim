@@ -129,17 +129,17 @@ let s:access_modifier_regex = '\C^\s*\%(public\|protected\|private\)\s*\%(#.*\)\
 
 " Check if the character at lnum:col is inside a string, comment, or is ascii.
 function s:IsInStringOrComment(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_strcom
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~# s:syng_strcom
 endfunction
 
 " Check if the character at lnum:col is inside a string.
 function s:IsInString(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_string
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~# s:syng_string
 endfunction
 
 " Check if the character at lnum:col is inside a string or documentation.
 function s:IsInStringOrDocumentation(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_stringdoc
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~# s:syng_stringdoc
 endfunction
 
 " Check if the character at lnum:col is inside a string delimiter

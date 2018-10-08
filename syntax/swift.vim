@@ -195,6 +195,7 @@ syntax keyword swiftAttributes
       \ @IBDesignable
       \ @IBInspectable
       \ @IBOutlet
+      \ @inlinable
       \ @noescape
       \ @nonobjc
       \ @noreturn
@@ -204,6 +205,7 @@ syntax keyword swiftAttributes
       \ @objc
       \ @testable
       \ @UIApplicationMain
+      \ @usableFromInline
       \ @warn_unused_result
 
 syntax keyword swiftConditionStatement #available

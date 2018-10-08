@@ -209,6 +209,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
   augroup filetypedetect
   " crystal, from crystal.vim in rhysd/vim-crystal
+" vint: -ProhibitAutocmdWithNoGroup
 autocmd BufNewFile,BufReadPost *.cr setlocal filetype=crystal
 autocmd BufNewFile,BufReadPost Projectfile setlocal filetype=crystal
 autocmd BufNewFile,BufReadPost *.ecr setlocal filetype=eruby
@@ -369,6 +370,25 @@ au BufRead *.s call s:gofiletype_pre("asm")
 au BufReadPost *.s call s:gofiletype_post()
 
 au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
+
+" Set the filetype if the first non-comment and non-blank line starts with
+" 'module <path>'.
+au BufNewFile,BufRead go.mod call s:gomod()
+
+fun! s:gomod()
+  for l:i in range(1, line('$'))
+    let l:l = getline(l:i)
+    if l:l ==# '' || l:l[:1] ==# '//'
+      continue
+    endif
+
+    if l:l =~# '^module .\+'
+      set filetype=gomod
+    endif
+
+    break
+  endfor
+endfun
 
 " vim: sw=2 ts=2 et
   augroup end
@@ -623,13 +643,14 @@ au BufRead,BufNewFile nginx*.conf set ft=nginx
 au BufRead,BufNewFile *nginx.conf set ft=nginx
 au BufRead,BufNewFile */etc/nginx/* set ft=nginx
 au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
+au BufRead,BufNewFile */nginx/*.conf set ft=nginx
   augroup end
 endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nim') == -1
   augroup filetypedetect
   " nim, from nim.vim in zah/nim.vim:_BASIC
-au BufNewFile,BufRead *.nim,*.nims set filetype=nim
+au BufNewFile,BufRead *.nim,*.nims,*.nimble set filetype=nim
   augroup end
 endif
 
@@ -944,8 +965,10 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
   augroup filetypedetect
   " rust, from rust.vim in rust-lang/rust.vim
-au BufRead,BufNewFile *.rs set filetype=rust
-au BufRead,BufNewFile Cargo.toml if &filetype == "" | set filetype=cfg | endif
+" vint: -ProhibitAutocmdWithNoGroup
+
+autocmd BufRead,BufNewFile *.rs set filetype=rust
+autocmd BufRead,BufNewFile Cargo.toml if &filetype == "" | set filetype=cfg | endif
 
 " vim: set et sw=4 sts=4 ts=8:
   augroup end
@@ -1067,7 +1090,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
   augroup filetypedetect
   " toml, from toml.vim in cespare/vim-toml
 " Go dep and Rust use several TOML config files that are not named with .toml.
-autocmd BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config,Pipfile set filetype=toml
+autocmd BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config,*/.cargo/credentials,Pipfile set filetype=toml
   augroup end
 endif
 

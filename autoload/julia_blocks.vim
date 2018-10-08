@@ -244,8 +244,8 @@ function! julia_blocks#init_mappings()
   call julia_blocks#select_reset()
   augroup JuliaBlocks
     au!
-    au InsertEnter *.jl call julia_blocks#select_reset()
-    au CursorMoved *.jl call s:cursor_moved()
+    au InsertEnter <buffer> call julia_blocks#select_reset()
+    au CursorMoved <buffer> call s:cursor_moved()
   augroup END
 
   " we would need some autocmd event associated with exiting from

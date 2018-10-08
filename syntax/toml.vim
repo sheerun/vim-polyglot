@@ -27,12 +27,16 @@ syn region tomlString oneline start=/'/ end=/'/
 syn region tomlString start=/'''/ end=/'''/
 hi def link tomlString String
 
-syn match tomlInteger /\<[+-]\=[0-9]\(_\=\d\)*\>/ display
-syn match tomlInteger /\<[+-]\=\(inf\|nan\)\>/ display
+syn match tomlInteger /[+-]\=\<[1-9]\(_\=\d\)*\>/ display
+syn match tomlInteger /[+-]\=\<0\>/ display
+syn match tomlInteger /[+-]\=\<0x[[:xdigit:]]\(_\=[[:xdigit:]]\)*\>/ display
+syn match tomlInteger /[+-]\=\<0o[0-7]\(_\=[0-7]\)*\>/ display
+syn match tomlInteger /[+-]\=\<0b[01]\(_\=[01]\)*\>/ display
+syn match tomlInteger /[+-]\=\<\(inf\|nan\)\>/ display
 hi def link tomlInteger Number
 
-syn match tomlFloat /\<[+-]\=[0-9]\(_\=\d\)*\.\d\+\>/ display
-syn match tomlFloat /\<[+-]\=[0-9]\(_\=\d\)*\(\.[0-9]\(_\=\d\)*\)\=[eE][+-]\=[0-9]\(_\=\d\)*\>/ display
+syn match tomlFloat /[+-]\=\<\d\(_\=\d\)*\.\d\+\>/ display
+syn match tomlFloat /[+-]\=\<\d\(_\=\d\)*\(\.\d\(_\=\d\)*\)\=[eE][+-]\=\d\(_\=\d\)*\>/ display
 hi def link tomlFloat Float
 
 syn match tomlBoolean /\<\%(true\|false\)\>/ display

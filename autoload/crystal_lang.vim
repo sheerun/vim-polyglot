@@ -310,6 +310,10 @@ function! crystal_lang#format(option_str, ...) abort
     call setpos('.', pos_save)
 endfunction
 
+function! crystal_lang#expand(file, pos, ...) abort
+    return crystal_lang#tool('expand', a:file, a:pos, get(a:, 1, ''))
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
