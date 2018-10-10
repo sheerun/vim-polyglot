@@ -130,7 +130,7 @@ update_readme() {
   local tf of
   tf="$(mktemp)"
   of="$(mktemp)"
-  sort <<<"$OUTPUT" | grep -vxE '[[:space:]]*' > "$of"
+  LC_ALL=C sort <<<"$OUTPUT" | grep -vxE '[[:space:]]*' > "$of"
 
   awk 'suppress == 0 {
       gsub(/<!--Package Count-->[^<]*<!--\/Package Count-->/,
