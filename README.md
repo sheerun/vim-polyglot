@@ -43,6 +43,7 @@ If you need full functionality of any plugin, please use it directly with your p
 ## Language packs
 
 <!--Language Packs-->
+
 - [ansible](https://github.com/pearofducks/ansible-vim) (syntax, indent, ftplugin)
 - [apiblueprint](https://github.com/sheerun/apiblueprint.vim) (syntax)
 - [applescript](https://github.com/mityu/vim-applescript) (syntax, indent)
@@ -126,7 +127,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
 - [racket](https://github.com/wlangstroth/vim-racket) (syntax, indent, autoload, ftplugin)
 - [ragel](https://github.com/jneen/ragel.vim) (syntax)
-- [raml](https://github.com/IN3D/vim-raml) (syntax, ftplugin)
+- [raml](https://github.com/IN3D/vim-raml) (syntax, indent, ftplugin)
 - [rspec](https://github.com/sheerun/rspec.vim) (syntax)
 - [ruby](https://github.com/vim-ruby/vim-ruby) (syntax, indent, compiler, autoload, ftplugin)
 - [rust](https://github.com/rust-lang/rust.vim) (syntax, indent, compiler, autoload, ftplugin)
@@ -157,7 +158,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
 - [yaml](https://github.com/stephpy/vim-yaml) (syntax, ftplugin)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
-<!--/Language Packs-->
+  <!--/Language Packs-->
 
 ## Updating
 
@@ -180,12 +181,13 @@ Note that disabling languages won't make in general your vim startup any faster 
 
 Language packs are periodically updated using automated `build` script.
 
-Feel free to add your language, and send pull-request.  In your pull request, please include:
+Feel free to add your language, and send pull-request. In your pull request, please include:
+
 1. How you chose the particular repo from which to pull support for this language.
 2. An updated https://github.com/sheerun/vim-polyglot/blob/master/build .
 3. If at all possible, absolutely nothing else (in particular, please don't run `build` and include that in your PR).
 
-The easier it is to validate that the new language won't do anything wacky, the faster it'll be merged.  In particular, languages that utilize global plugins (loaded for every filetype), or plugins with dangerous features (like `call` based on the contents of a file being edited), will never be merged, as they will be slow or dangerous, respectively.
+The easier it is to validate that the new language won't do anything wacky, the faster it'll be merged. In particular, languages that utilize global plugins (loaded for every filetype), or plugins with dangerous features (like `call` based on the contents of a file being edited), will never be merged, as they will be slow or dangerous, respectively.
 
 ## License
 
