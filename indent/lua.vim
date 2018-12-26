@@ -113,7 +113,7 @@ function GetLuaIndent()
   " restore cursor
   call setpos(".", original_cursor_pos)
 
-  return indent(prev_line) + (&sw * i)
+  return indent(prev_line) + (shiftwidth() * i)
 
 endfunction
 

@@ -40,14 +40,14 @@ syn keyword nimKeyword       bind block break
 syn keyword nimKeyword       case cast concept const continue converter
 syn keyword nimKeyword       defer discard distinct div do
 syn keyword nimKeyword       elif else end enum except export
-syn keyword nimKeyword       finally for from func
+syn keyword nimKeyword       finally for from
 syn keyword nimKeyword       generic
 syn keyword nimKeyword       if import in include interface is isnot iterator
 syn keyword nimKeyword       let
 syn keyword nimKeyword       mixin using mod
 syn keyword nimKeyword       nil not notin
 syn keyword nimKeyword       object of or out
-syn keyword nimKeyword       proc method macro template nextgroup=nimFunction skipwhite
+syn keyword nimKeyword       proc func method macro template nextgroup=nimFunction skipwhite
 syn keyword nimKeyword       ptr
 syn keyword nimKeyword       raise ref return
 syn keyword nimKeyword       shared shl shr static

@@ -110,7 +110,7 @@ syn match purescriptForall "∀"
 
 " Keywords
 syn keyword purescriptConditional if then else
-syn keyword purescriptStatement do case of in
+syn keyword purescriptStatement do case of in ado
 syn keyword purescriptLet let
 syn keyword purescriptWhere where
 syn match purescriptStructure "\<\(data\|newtype\|type\|kind\)\>"

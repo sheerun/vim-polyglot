@@ -61,9 +61,9 @@ endfunction
 
 augroup terraform
   autocmd!
-  autocmd VimEnter *
+  autocmd BufEnter *
         \ command! -nargs=+ -complete=custom,s:commands Terraform execute '!terraform '.<q-args>. ' -no-color'
-  autocmd VimEnter * command! -nargs=0 TerraformFmt call terraform#fmt()
+  autocmd BufEnter * command! -nargs=0 TerraformFmt call terraform#fmt()
   if get(g:, "terraform_fmt_on_save", 1)
     autocmd BufWritePre *.tf call terraform#fmt()
     autocmd BufWritePre *.tfvars call terraform#fmt()

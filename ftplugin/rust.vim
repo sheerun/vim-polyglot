@@ -17,176 +17,178 @@ let s:save_cpo = &cpo
 set cpo&vim
 " vint: +ProhibitAbbreviationOption
 
-augroup rust.vim
-    autocmd!
-
-    if get(b:, 'current_compiler', '') ==# ''
-        if strlen(findfile('Cargo.toml', '.;')) > 0
-            compiler cargo
-        else
-            compiler rustc
-        endif
-    endif
-
-    " Variables {{{1
-
-    " The rust source code at present seems to typically omit a leader on /*!
-    " comments, so we'll use that as our default, but make it easy to switch.
-    " This does not affect indentation at all (I tested it with and without
-    " leader), merely whether a leader is inserted by default or not.
-    if get(g:, 'rust_bang_comment_leader', 0)
-        " Why is the `,s0:/*,mb:\ ,ex:*/` there, you ask? I don't understand why,
-        " but without it, */ gets indented one space even if there were no
-        " leaders. I'm fairly sure that's a Vim bug.
-        setlocal comments=s1:/*,mb:*,ex:*/,s0:/*,mb:\ ,ex:*/,:///,://!,://
+if get(b:, 'current_compiler', '') ==# ''
+    if strlen(findfile('Cargo.toml', '.;')) > 0
+        compiler cargo
     else
-        setlocal comments=s0:/*!,m:\ ,ex:*/,s1:/*,mb:*,ex:*/,:///,://!,://
+        compiler rustc
     endif
-    setlocal commentstring=//%s
-    setlocal formatoptions-=t formatoptions+=croqnl
-    " j was only added in 7.3.541, so stop complaints about its nonexistence
-    silent! setlocal formatoptions+=j
+endif
 
-    " smartindent will be overridden by indentexpr if filetype indent is on, but
-    " otherwise it's better than nothing.
-    setlocal smartindent nocindent
+" Variables {{{1
 
-    if get(g:, 'rust_recommended_style', 1)
-        let b:rust_set_style = 1
-        setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
-        setlocal textwidth=99
+" The rust source code at present seems to typically omit a leader on /*!
+" comments, so we'll use that as our default, but make it easy to switch.
+" This does not affect indentation at all (I tested it with and without
+" leader), merely whether a leader is inserted by default or not.
+if get(g:, 'rust_bang_comment_leader', 0)
+    " Why is the `,s0:/*,mb:\ ,ex:*/` there, you ask? I don't understand why,
+    " but without it, */ gets indented one space even if there were no
+    " leaders. I'm fairly sure that's a Vim bug.
+    setlocal comments=s1:/*,mb:*,ex:*/,s0:/*,mb:\ ,ex:*/,:///,://!,://
+else
+    setlocal comments=s0:/*!,m:\ ,ex:*/,s1:/*,mb:*,ex:*/,:///,://!,://
+endif
+setlocal commentstring=//%s
+setlocal formatoptions-=t formatoptions+=croqnl
+" j was only added in 7.3.541, so stop complaints about its nonexistence
+silent! setlocal formatoptions+=j
+
+" smartindent will be overridden by indentexpr if filetype indent is on, but
+" otherwise it's better than nothing.
+setlocal smartindent nocindent
+
+if get(g:, 'rust_recommended_style', 1)
+    let b:rust_set_style = 1
+    setlocal tabstop=8 shiftwidth=4 softtabstop=4 expandtab
+    setlocal textwidth=99
+endif
+
+" This includeexpr isn't perfect, but it's a good start
+setlocal includeexpr=substitute(v:fname,'::','/','g')
+
+setlocal suffixesadd=.rs
+
+if exists("g:ftplugin_rust_source_path")
+    let &l:path=g:ftplugin_rust_source_path . ',' . &l:path
+endif
+
+if exists("g:loaded_delimitMate")
+    if exists("b:delimitMate_excluded_regions")
+        let b:rust_original_delimitMate_excluded_regions = b:delimitMate_excluded_regions
     endif
 
-    " This includeexpr isn't perfect, but it's a good start
-    setlocal includeexpr=substitute(v:fname,'::','/','g')
-
-    setlocal suffixesadd=.rs
-
-    if exists("g:ftplugin_rust_source_path")
-        let &l:path=g:ftplugin_rust_source_path . ',' . &l:path
-    endif
-
-    if exists("g:loaded_delimitMate")
-        if exists("b:delimitMate_excluded_regions")
-            let b:rust_original_delimitMate_excluded_regions = b:delimitMate_excluded_regions
-        endif
+    augroup rust.vim.DelimitMate
+        autocmd!
 
         autocmd User delimitMate_map   :call rust#delimitmate#onMap()
         autocmd User delimitMate_unmap :call rust#delimitmate#onUnmap()
+    augroup END
+endif
+
+" Integration with auto-pairs (https://github.com/jiangmiao/auto-pairs)
+if exists("g:AutoPairsLoaded") && !get(g:, 'rust_keep_autopairs_default', 0)
+    let b:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
+endif
+
+if has("folding") && get(g:, 'rust_fold', 0)
+    let b:rust_set_foldmethod=1
+    setlocal foldmethod=syntax
+    if g:rust_fold == 2
+        setlocal foldlevel<
+    else
+        setlocal foldlevel=99
     endif
+endif
 
-    " Integration with auto-pairs (https://github.com/jiangmiao/auto-pairs)
-    if exists("g:AutoPairsLoaded") && !get(g:, 'rust_keep_autopairs_default', 0)
-        let b:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
-    endif
+if has('conceal') && get(g:, 'rust_conceal', 0)
+    let b:rust_set_conceallevel=1
+    setlocal conceallevel=2
+endif
 
-    if has("folding") && get(g:, 'rust_fold', 0)
-        let b:rust_set_foldmethod=1
-        setlocal foldmethod=syntax
-        if g:rust_fold == 2
-            setlocal foldlevel<
-        else
-            setlocal foldlevel=99
-        endif
-    endif
+" Motion Commands {{{1
 
-    if has('conceal') && get(g:, 'rust_conceal', 0)
-        let b:rust_set_conceallevel=1
-        setlocal conceallevel=2
-    endif
+" Bind motion commands to support hanging indents
+nnoremap <silent> <buffer> [[ :call rust#Jump('n', 'Back')<CR>
+nnoremap <silent> <buffer> ]] :call rust#Jump('n', 'Forward')<CR>
+xnoremap <silent> <buffer> [[ :call rust#Jump('v', 'Back')<CR>
+xnoremap <silent> <buffer> ]] :call rust#Jump('v', 'Forward')<CR>
+onoremap <silent> <buffer> [[ :call rust#Jump('o', 'Back')<CR>
+onoremap <silent> <buffer> ]] :call rust#Jump('o', 'Forward')<CR>
 
-    " Motion Commands {{{1
+" Commands {{{1
 
-    " Bind motion commands to support hanging indents
-    nnoremap <silent> <buffer> [[ :call rust#Jump('n', 'Back')<CR>
-    nnoremap <silent> <buffer> ]] :call rust#Jump('n', 'Forward')<CR>
-    xnoremap <silent> <buffer> [[ :call rust#Jump('v', 'Back')<CR>
-    xnoremap <silent> <buffer> ]] :call rust#Jump('v', 'Forward')<CR>
-    onoremap <silent> <buffer> [[ :call rust#Jump('o', 'Back')<CR>
-    onoremap <silent> <buffer> ]] :call rust#Jump('o', 'Forward')<CR>
+" See |:RustRun| for docs
+command! -nargs=* -complete=file -bang -buffer RustRun call rust#Run(<bang>0, <q-args>)
 
-    " Commands {{{1
+" See |:RustExpand| for docs
+command! -nargs=* -complete=customlist,rust#CompleteExpand -bang -buffer RustExpand call rust#Expand(<bang>0, <q-args>)
 
-    " See |:RustRun| for docs
-    command! -nargs=* -complete=file -bang -buffer RustRun call rust#Run(<bang>0, <q-args>)
+" See |:RustEmitIr| for docs
+command! -nargs=* -buffer RustEmitIr call rust#Emit("llvm-ir", <q-args>)
 
-    " See |:RustExpand| for docs
-    command! -nargs=* -complete=customlist,rust#CompleteExpand -bang -buffer RustExpand call rust#Expand(<bang>0, <q-args>)
+" See |:RustEmitAsm| for docs
+command! -nargs=* -buffer RustEmitAsm call rust#Emit("asm", <q-args>)
 
-    " See |:RustEmitIr| for docs
-    command! -nargs=* -buffer RustEmitIr call rust#Emit("llvm-ir", <q-args>)
+" See |:RustPlay| for docs
+command! -range=% RustPlay :call rust#Play(<count>, <line1>, <line2>, <f-args>)
 
-    " See |:RustEmitAsm| for docs
-    command! -nargs=* -buffer RustEmitAsm call rust#Emit("asm", <q-args>)
+" See |:RustFmt| for docs
+command! -buffer RustFmt call rustfmt#Format()
 
-    " See |:RustPlay| for docs
-    command! -range=% RustPlay :call rust#Play(<count>, <line1>, <line2>, <f-args>)
+" See |:RustFmtRange| for docs
+command! -range -buffer RustFmtRange call rustfmt#FormatRange(<line1>, <line2>)
 
-    " See |:RustFmt| for docs
-    command! -buffer RustFmt call rustfmt#Format()
+" See |:RustInfo| for docs
+command! -bar RustInfo call rust#debugging#Info()
 
-    " See |:RustFmtRange| for docs
-    command! -range -buffer RustFmtRange call rustfmt#FormatRange(<line1>, <line2>)
+" See |:RustInfoToClipboard| for docs
+command! -bar RustInfoToClipboard call rust#debugging#InfoToClipboard()
 
-    " See |:RustInfo| for docs
-    command! -bar RustInfo call rust#debugging#Info()
+" See |:RustInfoToFile| for docs
+command! -bar -nargs=1 RustInfoToFile call rust#debugging#InfoToFile(<f-args>)
 
-    " See |:RustInfoToClipboard| for docs
-    command! -bar RustInfoToClipboard call rust#debugging#InfoToClipboard()
+" See |:RustTest| for docs
+command! -buffer -nargs=* -bang RustTest call rust#Test(<bang>0, <q-args>)
 
-    " See |:RustInfoToFile| for docs
-    command! -bar -nargs=1 RustInfoToFile call rust#debugging#InfoToFile(<f-args>)
+if !exists("b:rust_last_rustc_args") || !exists("b:rust_last_args")
+    let b:rust_last_rustc_args = []
+    let b:rust_last_args = []
+endif
 
-    " See |:RustTest| for docs
-    command! -buffer -nargs=* -bang RustTest call rust#Test(<bang>0, <q-args>)
+" Cleanup {{{1
 
-    if !exists("b:rust_last_rustc_args") || !exists("b:rust_last_args")
-        let b:rust_last_rustc_args = []
-        let b:rust_last_args = []
-    endif
-
-    " Cleanup {{{1
-
-    let b:undo_ftplugin = "
-                \ setlocal formatoptions< comments< commentstring< includeexpr< suffixesadd<
-                \|if exists('b:rust_set_style')
-                    \|setlocal tabstop< shiftwidth< softtabstop< expandtab< textwidth<
-                    \|endif
-                    \|if exists('b:rust_original_delimitMate_excluded_regions')
-                        \|let b:delimitMate_excluded_regions = b:rust_original_delimitMate_excluded_regions
-                        \|unlet b:rust_original_delimitMate_excluded_regions
-                        \|else
-                            \|unlet! b:delimitMate_excluded_regions
+let b:undo_ftplugin = "
+            \ setlocal formatoptions< comments< commentstring< includeexpr< suffixesadd<
+            \|if exists('b:rust_set_style')
+                \|setlocal tabstop< shiftwidth< softtabstop< expandtab< textwidth<
+                \|endif
+                \|if exists('b:rust_original_delimitMate_excluded_regions')
+                    \|let b:delimitMate_excluded_regions = b:rust_original_delimitMate_excluded_regions
+                    \|unlet b:rust_original_delimitMate_excluded_regions
+                    \|else
+                        \|unlet! b:delimitMate_excluded_regions
+                        \|endif
+                        \|if exists('b:rust_set_foldmethod')
+                            \|setlocal foldmethod< foldlevel<
+                            \|unlet b:rust_set_foldmethod
                             \|endif
-                            \|if exists('b:rust_set_foldmethod')
-                                \|setlocal foldmethod< foldlevel<
-                                \|unlet b:rust_set_foldmethod
+                            \|if exists('b:rust_set_conceallevel')
+                                \|setlocal conceallevel<
+                                \|unlet b:rust_set_conceallevel
                                 \|endif
-                                \|if exists('b:rust_set_conceallevel')
-                                    \|setlocal conceallevel<
-                                    \|unlet b:rust_set_conceallevel
-                                    \|endif
-                                    \|unlet! b:rust_last_rustc_args b:rust_last_args
-                                    \|delcommand RustRun
-                                    \|delcommand RustExpand
-                                    \|delcommand RustEmitIr
-                                    \|delcommand RustEmitAsm
-                                    \|delcommand RustPlay
-                                    \|nunmap <buffer> [[
-                                    \|nunmap <buffer> ]]
-                                    \|xunmap <buffer> [[
-                                    \|xunmap <buffer> ]]
-                                    \|ounmap <buffer> [[
-                                    \|ounmap <buffer> ]]
-                                    \|setlocal matchpairs-=<:>
-                                    \|unlet b:match_skip
-                                    \"
+                                \|unlet! b:rust_last_rustc_args b:rust_last_args
+                                \|delcommand RustRun
+                                \|delcommand RustExpand
+                                \|delcommand RustEmitIr
+                                \|delcommand RustEmitAsm
+                                \|delcommand RustPlay
+                                \|nunmap <buffer> [[
+                                \|nunmap <buffer> ]]
+                                \|xunmap <buffer> [[
+                                \|xunmap <buffer> ]]
+                                \|ounmap <buffer> [[
+                                \|ounmap <buffer> ]]
+                                \|setlocal matchpairs-=<:>
+                                \|unlet b:match_skip
+                                \"
 
-    " }}}1
+" }}}1
 
-    " Code formatting on save
+" Code formatting on save
+augroup rust.vim.PreWrite
+    autocmd!
     autocmd BufWritePre <buffer> silent! call rustfmt#PreWrite()
-
 augroup END
 
 setlocal matchpairs+=<:>

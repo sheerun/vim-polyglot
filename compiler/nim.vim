@@ -23,5 +23,7 @@ CompilerSet errorformat=
 let &cpo = s:cpo_save
 unlet s:cpo_save
 
+let g:syntastic_nim_checkers = ['nim']
+
 
 endif

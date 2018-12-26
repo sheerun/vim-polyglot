@@ -39,6 +39,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'php') == -1
 "           php_sql_nowdoc = 1 for SQL syntax highlighting inside nowdocs (default: 1)
 "           b:sql_type_override = 'postgresql' for PostgreSQL syntax highlighting in current buffer (default: 'mysql')
 "           g:sql_type_default = 'postgresql' to set global SQL syntax highlighting language default (default: 'mysql')"
+"           php_xml_heredoc = 1 for XML syntax highlighting inside heredocs (default: 0)
+"           php_xml_nowdoc = 1 for XML syntax highlighting inside nowdocs (default: 0)
 "           php_html_in_strings = 1  for HTML syntax highlighting inside strings (default: 0)
 "           php_html_in_heredoc = 1 for HTML syntax highlighting inside heredocs (default: 1)
 "           php_html_in_nowdoc = 1 for HTML syntax highlighting inside nowdocs (default: 1)
@@ -158,6 +160,21 @@ if ((exists("php_sql_query") && php_sql_query) || (exists("php_sql_heredoc") && 
   if (exists("php_sql_query") && php_sql_query)
     syn cluster phpAddStrings contains=@sqlTop
   endif
+endif
+
+if !exists("php_xml_heredoc")
+  let php_xml_heredoc=0
+endif
+
+if !exists("php_xml_nowdoc")
+  let php_xml_nowdoc=0
+endif
+
+if ((exists("php_xml_heredoc") && php_xml_heredoc) || (exists("php_xml_nowdoc") && php_xml_nowdoc))
+  syn include @xmlTop syntax/xml.vim
+
+  syn sync clear
+  unlet! b:current_syntax
 endif
 
 " set default for php_folding so we don't have to keep checking its existence.
@@ -667,6 +684,9 @@ if version >= 704
   if (exists("php_sql_heredoc") && php_sql_heredoc)
     SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@3<=\z(\(\I\i*\)\=\(sql\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@sqlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
   endif
+  if (exists("php_xml_heredoc") && php_xml_heredoc)
+    SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@3<=\z(\(\I\i*\)\=\(xml\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@xmlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+  endif
   " @end phpHereDoc
 else
   " @copy phpHereDoc strip_maximum_size
@@ -679,6 +699,9 @@ else
   endif
   if (exists("php_sql_heredoc") && php_sql_heredoc)
     SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(sql\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@sqlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+  endif
+  if (exists("php_xml_heredoc") && php_xml_heredoc)
+    SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(xml\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@xmlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
   endif
   " @end phpHereDoc
 endif
@@ -695,6 +718,9 @@ if version >= 704
   if (exists("php_sql_nowdoc") && php_sql_nowdoc)
     SynFold syn region phpNowDoc matchgroup=Delimiter start=+\(<<<\)\@3<='\z(\(\I\i*\)\=\(sql\)\c\(\i*\)\)'$+ end="^\z1\(;\=$\)\@=" contained contains=@sqlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
   endif
+  if (exists("php_xml_nowdoc") && php_xml_nowdoc)
+    SynFold syn region phpNowDoc matchgroup=Delimiter start=+\(<<<\)\@3<='\z(\(\I\i*\)\=\(xml\)\c\(\i*\)\)'$+ end="^\z1\(;\=$\)\@=" contained contains=@xmlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+  endif
   " @end phpNowDoc
 else
   " @copy phpHereDoc strip_maximum_size
@@ -707,6 +733,9 @@ else
   endif
   if (exists("php_sql_heredoc") && php_sql_heredoc)
     SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(sql\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@sqlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
+  endif
+  if (exists("php_xml_heredoc") && php_xml_heredoc)
+    SynFold syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(xml\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@xmlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar,phpStrEsc keepend extend
   endif
   " @end phpNowDoc
 endif

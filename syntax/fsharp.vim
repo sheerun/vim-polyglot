@@ -47,7 +47,7 @@ syn match fsharpSymbol "\%(member\)\@<=\s\+\w\+\.\zs\w\+"
 
 
 " types
-syn match    fsharpTypeName   "\%(\<type\s\+\)\@<=\w\+"
+syn match    fsharpTypeName   "\%#=1\%(\<type\s\+\)\@<=\w\+"
 
 
 " errors
@@ -182,7 +182,7 @@ syn match    fsharpFloat         "\<-\=\d\(_\|\d\)*\.\(_\|\d\)*\([eE][-+]\=\d\(_
 syn match    fsharpFloat         "\<\d\+\.\d*"
 
 " modules
-syn match    fsharpModule     "\%(\<open\s\+\)\@<=[a-zA-Z.]\+"
+syn match    fsharpModule     "\%#=1\%(\<open\s\+\)\@<=[a-zA-Z.]\+"
 
 " attributes
 syn region   fsharpAttrib matchgroup=fsharpAttribute start="\[<" end=">]"

@@ -21,6 +21,7 @@ syn match   gitrebaseSquash "\v^s%(quash)=>" nextgroup=gitrebaseCommit skipwhite
 syn match   gitrebaseFixup  "\v^f%(ixup)=>"  nextgroup=gitrebaseCommit skipwhite
 syn match   gitrebaseExec   "\v^%(x|exec)>" nextgroup=gitrebaseCommand skipwhite
 syn match   gitrebaseDrop   "\v^d%(rop)=>"   nextgroup=gitrebaseCommit skipwhite
+syn match   gitrebaseBreak  "\v^b%(reak)=>"  nextgroup=gitrebaseCommit skipwhite
 syn match   gitrebaseSummary ".*"               contains=gitrebaseHash contained
 syn match   gitrebaseCommand ".*"                                      contained
 syn match   gitrebaseComment "^\s*#.*"             contains=gitrebaseHash
@@ -35,6 +36,7 @@ hi def link gitrebaseSquash         Type
 hi def link gitrebaseFixup          Special
 hi def link gitrebaseExec           Function
 hi def link gitrebaseDrop           Comment
+hi def link gitrebaseBreak          Macro
 hi def link gitrebaseSummary        String
 hi def link gitrebaseComment        Comment
 hi def link gitrebaseSquashError    Error

@@ -24,18 +24,17 @@ endif
 function! rustfmt#DetectVersion()
     " Save rustfmt '--help' for feature inspection
     silent let s:rustfmt_help = system(g:rustfmt_command . " --help")
-    let s:rustfmt_unstable_features = 1 - (s:rustfmt_help !~# "--unstable-features")
+    let s:rustfmt_unstable_features = s:rustfmt_help =~# "--unstable-features"
 
     " Build a comparable rustfmt version varible out of its `--version` output:
-    silent let s:rustfmt_version = system(g:rustfmt_command . " --version")
-    let s:rustfmt_version = matchlist(s:rustfmt_version, '\vrustfmt ([0-9]+[.][0-9]+[.][0-9]+)')
-
-    if len(s:rustfmt_version) < 3 
+    silent let l:rustfmt_version_full = system(g:rustfmt_command . " --version")
+    let l:rustfmt_version_list = matchlist(l:rustfmt_version_full,
+        \    '\vrustfmt ([0-9]+[.][0-9]+[.][0-9]+)')
+    if len(l:rustfmt_version_list) < 3
         let s:rustfmt_version = "0"
     else
-        let s:rustfmt_version = s:rustfmt_version[1]
+        let s:rustfmt_version = l:rustfmt_version_list[1]
     endif
-
     return s:rustfmt_version
 endfunction
 
@@ -46,7 +45,7 @@ if !exists("g:rustfmt_emit_files")
 endif
 
 if !exists("g:rustfmt_file_lines")
-    let g:rustfmt_file_lines = 1 - (s:rustfmt_help !~# "--file-lines JSON")
+    let g:rustfmt_file_lines = s:rustfmt_help =~# "--file-lines JSON"
 endif
 
 let s:got_fmt_error = 0
@@ -87,11 +86,9 @@ function! s:RustfmtCommandRange(filename, line1, line2)
     let l:write_mode = s:RustfmtWriteMode()
     let l:rustfmt_config = s:RustfmtConfig()
 
-    " FIXME: When --file-lines gets to be stable, enhance this version range checking
+    " FIXME: When --file-lines gets to be stable, add version range checking
     " accordingly.
-    let l:unstable_features = 
-                \ (s:rustfmt_unstable_features && (s:rustfmt_version < '1.'))
-                \ ? '--unstable-features' : ''
+    let l:unstable_features = s:rustfmt_unstable_features ? '--unstable-features' : ''
 
     let l:cmd = printf("%s %s %s %s %s --file-lines '[%s]' %s", g:rustfmt_command,
                 \ l:write_mode, g:rustfmt_options,
@@ -119,6 +116,8 @@ function! s:RunRustfmt(command, tmpname, fail_silently)
     mkview!
 
     let l:stderr_tmpname = tempname()
+    call writefile([], l:stderr_tmpname)
+
     let l:command = a:command . ' 2> ' . l:stderr_tmpname
 
     if a:tmpname ==# ''
@@ -133,7 +132,8 @@ function! s:RunRustfmt(command, tmpname, fail_silently)
         if exists("*systemlist")
             silent let out = systemlist(l:command, l:buffer)
         else
-            silent let out = split(system(l:command, l:buffer), '\r\?\n')
+            silent let out = split(system(l:command,
+                        \ join(l:buffer, "\n")), '\r\?\n')
         endif
     else
         if exists("*systemlist")

@@ -4,8 +4,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'handlebars') ==
 " Language:	Mustache, Handlebars
 " Maintainer:	Juvenn Woo <machese@gmail.com>
 " Screenshot:   http://imgur.com/6F408
-" Version:	2
-" Last Change:  Oct 10th 2015
+" Version:	3
+" Last Change:  26 Nov 2018
 " Remarks: based on eruby indent plugin by tpope
 " References:
 "   [Mustache](http://github.com/defunkt/mustache)
@@ -20,6 +20,9 @@ endif
 
 unlet! b:did_indent
 setlocal indentexpr=
+
+" keep track of whether or not we are in a block expression for indenting
+unlet! s:in_block_expr
 
 runtime! indent/html.vim
 unlet! b:did_indent
@@ -75,26 +78,48 @@ function! GetHandlebarsIndent(...)
     let b:indent.lnum = -1
   endif
   let lnum = prevnonblank(v:lnum-1)
-  let line = getline(lnum)
-  let cline = getline(v:lnum)
+  let prevLine = getline(lnum)
+  let currentLine = getline(v:lnum)
 
   " all indent rules only apply if the block opening/closing
   " tag is on a separate line
 
   " indent after block {{#block
-  if line =~# '\v\s*\{\{\#.*\s*'
+  if prevLine =~# '\v\s*\{\{\#.*\s*'
+    let s:in_block_expr = 1
     let ind = ind + sw
   endif
-  " unindent after block close {{/block}}
-  if cline =~# '\v^\s*\{\{\/\S*\}\}\s*'
+  " but not if the block ends on the same line
+  if prevLine =~# '\v\s*\{\{\#(.+)(\s+|\}\}).*\{\{\/\1'
+    let s:in_block_expr = 0
     let ind = ind - sw
   endif
+  " unindent after block close {{/block}}
+  if currentLine =~# '\v^\s*\{\{\/\S*\}\}\s*'
+    let s:in_block_expr = 0
+    let ind = ind - sw
+  endif
+  " indent after component block {{a-component
+  if prevLine =~# '\v\s*\{\{\w'
+    let s:in_block_expr = 0
+    let ind = ind + sw
+  endif
+  " but not if the component block ends on the same line
+  if prevLine =~# '\v\s*\{\{\w(.+)\}\}'
+    let ind = ind - sw
+  endif
+  " unindent }} lines, and following lines if not inside a block expression
+  if currentLine =~# '\v^\s*\}\}\s*$' || (currentLine !~# '\v^\s*\{\{\/' && prevLine =~# '\v^\s*[^\{\} \t]+\}\}\s*$')
+    if !s:in_block_expr
+      let ind = ind - sw
+    endif
+  endif
   " unindent {{else}}
-  if cline =~# '\v^\s*\{\{else.*\}\}\s*$'
+  if currentLine =~# '\v^\s*\{\{else.*\}\}\s*$'
     let ind = ind - sw
   endif
   " indent again after {{else}}
-  if line =~# '\v^\s*\{\{else.*\}\}\s*$'
+  if prevLine =~# '\v^\s*\{\{else.*\}\}\s*$'
     let ind = ind + sw
   endif
 

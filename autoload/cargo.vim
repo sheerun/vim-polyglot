@@ -86,6 +86,34 @@ function! cargo#bench(args)
     call cargo#cmd("bench " . a:args)
 endfunction
 
+function! cargo#runtarget(args)
+    let l:filename = expand('%:p')
+    let l:read_manifest = system('cargo read-manifest')
+    let l:metadata = json_decode(l:read_manifest)
+    let l:targets = get(l:metadata, 'targets', [])
+    let l:did_run = 0
+    for l:target in l:targets
+        let l:src_path = get(l:target, 'src_path', '')
+        let l:kinds = get(l:target, 'kind', [])
+        let l:name = get(l:target, 'name', '')
+        if l:src_path == l:filename
+        if index(l:kinds, 'example') != -1
+            let l:did_run = 1
+            call cargo#run("--example " . shellescape(l:name) . " " . a:args)
+            return
+        elseif index(l:kinds, 'bin') != -1
+            let l:did_run = 1
+            call cargo#run("--bin " . shellescape(l:name) . " " . a:args)
+            return
+        endif
+        endif
+    endfor
+    if l:did_run != 1
+        call cargo#run(a:args)
+        return
+    endif
+endfunction
+
 " vim: set et sw=4 sts=4 ts=8:
 
 endif

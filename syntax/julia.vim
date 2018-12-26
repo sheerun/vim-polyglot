@@ -192,7 +192,7 @@ exec 'syntax match   juliaOuter    contained "\<outer\ze\s\+' . s:idregex . '\>"
 
 syntax match   juliaBaseTypeBasic	display "\<\%(Tuple\|NTuple\|Symbol\|Function\|Union\%(All\)\?\|Type\%(Name\|Var\)\?\|Any\|ANY\|Vararg\|Ptr\|Exception\|Module\|Expr\|DataType\|\%(LineNumber\|Quote\)Node\|\%(Weak\|Global\)\?Ref\|Method\|Pair\|Val\)\>"
 syntax match   juliaBaseTypeBasic06	display "\<\%(Void\|\%(Label\|Goto\)Node\|Associative\|MethodTable\|Nullable\|TypeMap\%(Level\|Entry\)\|CodeInfo\)\>"
-syntax match   juliaBaseTypeBasic1011	display "\<\%(Nothing\|Some\|Missing\)\>"
+syntax match   juliaBaseTypeBasic1011	display "\<\%(Nothing\|Some\|Missing\|NamedTuple\)\>"
 syntax match   juliaBaseTypeNum		display "\<\%(U\?Int\%(8\|16\|32\|64\|128\)\?\|Float\%(16\|32\|64\)\|Complex\|Bool\|Char\|Number\|Signed\|Unsigned\|Integer\|AbstractFloat\|Real\|Rational\|Irrational\|Enum\|BigInt\|BigFloat\|MathConst\)\>"
 syntax match   juliaBaseTypeNum06	display "\<Complex\%(32\|64\|128\)\>"
 syntax match   juliaBaseTypeNum1011	display "\<\%(AbstractIrrational\|ComplexF\%(16\|32\|64\)\)\>"
@@ -205,7 +205,7 @@ syntax match   juliaBaseTypeIter1011	display "\<CartesianIndices\>"
 syntax match   juliaBaseTypeString	display "\<\%(DirectIndex\|Sub\|Rep\|Rev\|Abstract\)\?String\>"
 syntax match   juliaBaseTypeString1011	display "\<SubstitutionString\>"
 syntax match   juliaBaseTypeArray	display "\<\%(\%(Sub\)\?Array\|\%(Abstract\|Dense\|Strided\)\?\%(Array\|Matrix\|Vec\%(tor\|OrMat\)\)\|SparseMatrixCSC\|\%(AbstractSparse\|Bit\|Shared\)\%(Array\|Vector\|Matrix\)\|\%\(D\|Bid\|\%(Sym\)\?Trid\)iagonal\|Hermitian\|Symmetric\|UniformScaling\|\%(Lower\|Upper\)Triangular\|SparseVector\|VecElement\|Conj\%(Array\|Matrix\|Vector\)\|Index\%(Cartesian\|Linear\|Style\)\|PermutedDimsArray\|RowVector\)\>"
-syntax match   juliaBaseTypeArray1011	display "\<\%(Broadcast\|Adjoint\|Transpose\|LinearIndices\)\>"
+syntax match   juliaBaseTypeArray1011	display "\<\%(Broadcasted\|Adjoint\|Transpose\|LinearIndices\)\>"
 syntax match   juliaBaseTypeDict	display "\<\%(WeakKey\)\?Dict\>"
 syntax match   juliaBaseTypeDict06	display "\<ObjectIdDict\>"
 syntax match   juliaBaseTypeDict1011	display "\<IdDict\>"
@@ -251,10 +251,10 @@ syntax match   juliaPossibleMacro	transparent "@" contains=juliaMacroCall,juliaM
 
 exec 'syntax match   juliaMacro		contained "@' . s:idregex . '\%(\.' . s:idregex . '\)*"'
 syntax match   juliaMacro		contained "@\.\ze[^0-9]"
+exec 'syntax region  juliaMacroCall	contained transparent start="\(@' . s:idregex . '\%(\.' . s:idregex . '\)*\)\@=\1\%([^(]\|$\)" end="\ze\%([])};#]\|$\|\<for\>\|\<end\>\)" contains=@juliaExpressions,juliaMacro,juliaSymbolS,juliaQuotedParBlockS,juliaQuotedQMarkParS'
+exec 'syntax region  juliaMacroCall	contained transparent start="\(@.\)\@=\1\%([^(]\|$\)" end="\ze\%([])};#]\|$\|\<for\>\|\<end\>\)" contains=@juliaExpressions,juliaMacro,juliaSymbolS,juliaQuotedParBlockS,juliaQuotedQMarkParS'
 exec 'syntax region  juliaMacroCallP	contained transparent start="@' . s:idregex . '\%(\.' . s:idregex . '\)*(" end=")\@'.s:d(1).'<=" contains=juliaMacro,juliaParBlock'
 exec 'syntax region  juliaMacroCallP	contained transparent start="@.(" end=")\@'.s:d(1).'<=" contains=juliaMacro,juliaParBlock'
-exec 'syntax region  juliaMacroCall	contained transparent start="\(@' . s:idregex . '\%(\.' . s:idregex . '\)*\)\@=\1\%([^(]\|$\)" end="\ze\%([])};#]\|$\|\<for\>\)" contains=@juliaExpressions,juliaMacro,juliaSymbolS,juliaQuotedParBlockS,juliaQuotedQMarkParS'
-exec 'syntax region  juliaMacroCall	contained transparent start="\(@.\)\@=\1\%([^(]\|$\)" end="\ze\%([])};#]\|$\|\<for\>\)" contains=@juliaExpressions,juliaMacro,juliaSymbolS,juliaQuotedParBlockS,juliaQuotedQMarkParS'
 
 syntax match   juliaNumbers		transparent "\<\d\|\.\d\|\<im\>" contains=juliaNumber,juliaFloat,juliaComplexUnit
 

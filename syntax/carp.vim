@@ -23,7 +23,7 @@ syn keyword carpSyntax defmacro defdynamic quote cons list array fn
 syn keyword carpSyntax expand deftype register system-include register-type
 syn keyword carpSyntax defmodule copy use module defalias definterface eval
 syn keyword carpSyntax expand instantiate type info help quit env build run
-syn keyword carpSyntax cat project-set! local-include
+syn keyword carpSyntax cat project-set! local-include cons-last
 syn keyword carpSyntax add-cflag add-lib project load reload let-do ignore
 syn keyword carpSyntax fmt mac-only linux-only windows-only use-all when
 syn keyword carpSyntax unless defn-do comment forever-do case and* or*

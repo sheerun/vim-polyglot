@@ -445,12 +445,12 @@ function! s:SearchTestFunctionNameUnderCursor() abort
     let cursor_line = line('.')
 
     " Find #[test] attribute
-    if search('#\[test]', 'bcW') is 0
+    if search('\m\C#\[test\]', 'bcW') is 0
         return ''
     endif
 
     " Move to an opening brace of the test function
-    let test_func_line = search('^\s*fn\s\+\h\w*\s*(.\+{$', 'eW')
+    let test_func_line = search('\m\C^\s*fn\s\+\h\w*\s*(.\+{$', 'eW')
     if test_func_line is 0
         return ''
     endif
@@ -462,19 +462,36 @@ function! s:SearchTestFunctionNameUnderCursor() abort
         return ''
     endif
 
-    return matchstr(getline(test_func_line), '^\s*fn\s\+\zs\h\w*')
+    return matchstr(getline(test_func_line), '\m\C^\s*fn\s\+\zs\h\w*')
 endfunction
 
 function! rust#Test(all, options) abort
-    let pwd = expand('%:p:h')
-    if findfile('Cargo.toml', pwd . ';') ==# ''
+    let manifest = findfile('Cargo.toml', expand('%:p:h') . ';')
+    if manifest ==# ''
         return rust#Run(1, '--test ' . a:options)
     endif
 
-    let pwd = shellescape(pwd)
+    if exists(':terminal')
+        let cmd = 'terminal '
+    else
+        let cmd = '!'
+        let manifest = shellescape(manifest)
+    endif
 
     if a:all
-        execute '!cd ' . pwd . ' && cargo test ' . a:options
+        if a:options ==# ''
+            execute cmd . 'cargo test --manifest-path' manifest
+        else
+            execute cmd . 'cargo test --manifest-path' manifest a:options
+        endif
+        return
+    endif
+
+    let mod_name = expand('%:t:r')
+    if mod_name ==# ''
+        echohl ErrorMsg
+        echo 'Cannot extract a module name from file name. Please add ! to command if you want to run all tests'
+        echohl None
         return
     endif
 
@@ -487,7 +504,13 @@ function! rust#Test(all, options) abort
             echohl None
             return
         endif
-        execute '!cd ' . pwd . ' && cargo test ' . func_name . ' ' . a:options
+        let spec = mod_name . '::' . func_name
+        if a:options ==# ''
+            execute cmd . 'cargo test --manifest-path' manifest spec
+        else
+            execute cmd . 'cargo test --manifest-path' manifest spec a:options
+        endif
+        return
     finally
         call setpos('.', saved)
     endtry

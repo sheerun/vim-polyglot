@@ -14,7 +14,7 @@ function! cargo#quickfix#CmdPre() abort
 endfunction
 
 function! cargo#quickfix#CmdPost() abort
-    if b:rust_compiler_cargo_qf_prev_cd_saved
+    if exists("b:rust_compiler_cargo_qf_prev_cd_saved") && b:rust_compiler_cargo_qf_prev_cd_saved
         " Restore the current directory.
         if b:rust_compiler_cargo_qf_has_lcd
             execute 'lchdir! '.b:rust_compiler_cargo_qf_prev_cd

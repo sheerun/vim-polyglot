@@ -25,7 +25,7 @@ syntax keyword dartConditional    if else switch
 syntax keyword dartRepeat         do while for
 syntax keyword dartBoolean        true false
 syntax keyword dartConstant       null
-syntax keyword dartTypedef        this super class typedef enum
+syntax keyword dartTypedef        this super class typedef enum mixin
 syntax keyword dartOperator       new is as in
 syntax match   dartOperator       "+=\=\|-=\=\|*=\=\|/=\=\|%=\=\|\~/=\=\|<<=\=\|>>=\=\|[<>]=\=\|===\=\|\!==\=\|&=\=\|\^=\=\||=\=\|||\|&&\|\[\]=\=\|=>\|!\|\~\|?\|:"
 syntax keyword dartType           void var bool int double num dynamic covariant

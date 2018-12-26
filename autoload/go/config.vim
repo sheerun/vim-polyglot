@@ -1,5 +1,9 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
   
+" don't spam the user when Vim is started in Vi compatibility mode
+let s:cpo_save = &cpo
+set cpo&vim
+
 function! go#config#AutodetectGopath() abort
 	return get(g:, 'go_autodetect_gopath', 0)
 endfunction
@@ -137,6 +141,10 @@ function! go#config#SetGuruScope(scope) abort
   endif
 endfunction
 
+function! go#config#GocodeUnimportedPackages() abort
+  return get(g:, 'go_gocode_unimported_packages', 0)
+endfunction
+
 let s:sock_type = (has('win32') || has('win64')) ? 'tcp' : 'unix'
 function! go#config#GocodeSocketType() abort
   return get(g:, 'go_gocode_socket_type', s:sock_type)
@@ -147,7 +155,7 @@ function! go#config#GocodeProposeBuiltins() abort
 endfunction
 
 function! go#config#GocodeProposeSource() abort
-  return get(g:, 'go_gocode_propose_source', 1)
+  return get(g:, 'go_gocode_propose_source', 0)
 endfunction
 
 function! go#config#EchoCommandInfo() abort
@@ -200,7 +208,7 @@ endfunction
 
 function! go#config#DebugCommands() abort
   " make sure g:go_debug_commands is set so that it can be added to easily.
-  let g:go_debug_commands = get(g:, 'go_debug_commands', {})
+  let g:go_debug_commands = get(g:, 'go_debug_commands', [])
   return g:go_debug_commands
 endfunction
 
@@ -308,10 +316,6 @@ function! go#config#DeclsMode() abort
   return get(g:, "go_decls_mode", "")
 endfunction
 
-function! go#config#DocCommand() abort
-  return get(g:, "go_doc_command", ["godoc"])
-endfunction
-
 function! go#config#FmtCommand() abort
   return get(g:, "go_fmt_command", "gofmt")
 endfunction
@@ -352,6 +356,10 @@ endfunction
 
 function! go#config#BinPath() abort
   return get(g:, "go_bin_path", "")
+endfunction
+
+function! go#config#SearchBinPathFirst() abort
+  return get(g:, 'go_search_bin_path_first', 1)
 endfunction
 
 function! go#config#HighlightArrayWhitespaceError() abort
@@ -422,6 +430,10 @@ function! go#config#HighlightVariableDeclarations() abort
   return get(g:, 'go_highlight_variable_declarations', 0)
 endfunction
 
+function! go#config#HighlightDebug() abort
+  return get(g:, 'go_highlight_debug', 1)
+endfunction
+
 function! go#config#FoldEnable(...) abort
   if a:0 > 0
     return index(go#config#FoldEnable(), a:1) > -1
@@ -434,6 +446,10 @@ endfunction
 if exists("g:go_gorename_prefill") && g:go_gorename_prefill == 1
   unlet g:go_gorename_prefill
 endif
+
+" restore Vi compatibility settings
+let &cpo = s:cpo_save
+unlet s:cpo_save
 
 " vim: sw=2 ts=2 et
 
