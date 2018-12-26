@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
 " Vim indent file
 " Language:	Haml
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
-" Last Change:	2010 May 21
+" Last Change:	2016 Aug 29
 
 if exists("b:did_indent")
   finish
@@ -12,7 +12,7 @@ runtime! indent/ruby.vim
 unlet! b:did_indent
 let b:did_indent = 1
 
-setlocal autoindent sw=2 et
+setlocal autoindent
 setlocal indentexpr=GetHamlIndent()
 setlocal indentkeys=o,O,*<Return>,},],0),!^F,=end,=else,=elsif,=rescue,=ensure,=when
 

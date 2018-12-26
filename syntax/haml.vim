@@ -4,7 +4,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
 " Language:	Haml
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
 " Filenames:	*.haml
-" Last Change:	2010 Aug 09
+" Last Change:	2018 Aug 21
 
 if exists("b:current_syntax")
   finish
@@ -40,7 +40,7 @@ syn match   hamlDespacer "[<>]" contained nextgroup=hamlDespacer,hamlSelfCloser,
 syn match   hamlSelfCloser "/" contained
 syn match   hamlClassChar "\." contained nextgroup=hamlClass
 syn match   hamlIdChar "#{\@!" contained nextgroup=hamlId
-syn match   hamlClass "\%(\w\|-\)\+" contained nextgroup=@hamlComponent
+syn match   hamlClass "\%(\w\|-\|\:\)\+" contained nextgroup=@hamlComponent
 syn match   hamlId    "\%(\w\|-\)\+" contained nextgroup=@hamlComponent
 syn region  hamlDocType start="^\s*!!!" end="$"
 

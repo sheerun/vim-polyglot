@@ -119,7 +119,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [pug](https://github.com/digitaltoad/vim-pug) (syntax, indent, ftplugin)
 - [puppet](https://github.com/voxpupuli/vim-puppet) (syntax, indent, ftplugin)
 - [purescript](https://github.com/purescript-contrib/purescript-vim) (syntax, indent, ftplugin)
-- [python-compiler](https://github.com/aliev/vim-compiler-python) (compiler, autoload)
+- [python-compiler](https://github.com/aliev/vim-compiler-python) ()
 - [python-ident](https://github.com/Vimjas/vim-python-pep8-indent) (indent)
 - [python](https://github.com/vim-python/python-syntax) (syntax)
 - [qml](https://github.com/peterhoeg/vim-qml) (syntax, indent, ftplugin)

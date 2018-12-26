@@ -827,18 +827,6 @@ au FileType purescript let &l:commentstring='{--%s--}'
   augroup end
 endif
 
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python-compiler') == -1
-  augroup filetypedetect
-  " python-compiler, from python.vim in aliev/vim-compiler-python
-" Vim compiler file
-" Compiler:	Unit testing tool for Python
-" Maintainer:	Ali Aliev <ali@aliev.me>
-" Last Change: 2015 Nov 2
-
-autocmd FileType python compiler python
-  augroup end
-endif
-
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
   augroup filetypedetect
   " qml, from qml.vim in peterhoeg/vim-qml
