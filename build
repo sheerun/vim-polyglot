@@ -225,6 +225,7 @@ PACKS="
   pgsql:exu/pgsql.vim
   php:StanAngeloff/php.vim
   plantuml:aklt/plantuml-syntax
+  pony:jakwings/vim-pony
   powershell:PProvost/vim-ps1
   protobuf:uarun/vim-protobuf
   pug:digitaltoad/vim-pug

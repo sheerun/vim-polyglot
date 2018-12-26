@@ -795,6 +795,13 @@ au BufNewFile,BufRead *.pgsql           setf pgsql
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pony') == -1
+  augroup filetypedetect
+  " pony, from pony.vim in jakwings/vim-pony
+autocmd BufRead,BufNewFile *.pony setf pony
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') == -1
   augroup filetypedetect
   " powershell, from ps1.vim in PProvost/vim-ps1
