@@ -458,11 +458,11 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'i3') == -1
   augroup filetypedetect
-  " i3, from i3.vim in PotatoesMaster/i3-vim-syntax
-augroup i3_ftdetect
-  au!
-  au BufRead,BufNewFile *i3/config,*sway/config set ft=i3
-augroup END
+  " i3, from i3config.vim in mboughaba/i3config.vim
+aug i3config#ft_detect
+    au!
+    au BufNewFile,BufRead .i3.config,i3.config,*.i3config,*.i3.config set filetype=i3config
+aug end
   augroup end
 endif
 
@@ -824,6 +824,18 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'purescript') ==
   " purescript, from purescript.vim in purescript-contrib/purescript-vim
 au BufNewFile,BufRead *.purs setf purescript
 au FileType purescript let &l:commentstring='{--%s--}'
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python-compiler') == -1
+  augroup filetypedetect
+  " python-compiler, from python.vim in aliev/vim-compiler-python
+" Vim compiler file
+" Compiler:	Unit testing tool for Python
+" Maintainer:	Ali Aliev <ali@aliev.me>
+" Last Change: 2015 Nov 2
+
+autocmd FileType python compiler python
   augroup end
 endif
 
