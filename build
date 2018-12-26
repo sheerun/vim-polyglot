@@ -239,6 +239,7 @@ PACKS="
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
   rust:rust-lang/rust.vim
+  rst:marshallward/vim-restructuredtext
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   scss:cakebaker/scss-syntax.vim
