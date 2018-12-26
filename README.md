@@ -63,7 +63,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [crystal](https://github.com/rhysd/vim-crystal) (syntax, indent, autoload, ftplugin)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin)
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin)
-- [dockerfile](https://github.com/docker/docker) (syntax)
+- [dockerfile](https://github.com/ekalinin/Dockerfile.vim) (syntax, indent, ftplugin)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, autoload, ftplugin)
 - [elm](https://github.com/ElmCast/elm-vim) (syntax, indent, autoload, ftplugin)
 - [emberscript](https://github.com/yalesov/vim-ember-script) (syntax, indent, ftplugin)

@@ -172,7 +172,7 @@ PACKS="
   cql:elubow/cql-vim
   cucumber:tpope/vim-cucumber
   dart:dart-lang/dart-vim-plugin
-  dockerfile:docker/docker::/contrib/syntax/vim/
+  dockerfile:ekalinin/Dockerfile.vim
   elixir:elixir-lang/vim-elixir
   elm:ElmCast/elm-vim
   emberscript:yalesov/vim-ember-script

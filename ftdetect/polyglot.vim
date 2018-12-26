@@ -240,6 +240,25 @@ autocmd BufRead,BufNewFile *.dart set filetype=dart
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
+  augroup filetypedetect
+  " dockerfile, from Dockerfile.vim in ekalinin/Dockerfile.vim
+" Dockerfile
+autocmd BufRead,BufNewFile Dockerfile set ft=Dockerfile
+autocmd BufRead,BufNewFile Dockerfile* set ft=Dockerfile
+autocmd BufRead,BufNewFile *.dock set ft=Dockerfile
+autocmd BufRead,BufNewFile *.[Dd]ockerfile set ft=Dockerfile
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
+  augroup filetypedetect
+  " dockerfile, from docker-compose.vim in ekalinin/Dockerfile.vim
+" docker-compose.yml
+autocmd BufRead,BufNewFile docker-compose*.{yaml,yml}* set ft=yaml.docker-compose
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
   augroup filetypedetect
   " elm, from elm.vim in ElmCast/elm-vim
