@@ -59,7 +59,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead .gitsendemail.*                               set ft=gitsendemail
 
   " plantuml
-  autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml setfiletype plantuml | set filetype=plantuml
+  autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml,*.puml setfiletype plantuml | set filetype=plantuml
 
   " scala
   au BufRead,BufNewFile *.scala,*.sc set filetype=scala
