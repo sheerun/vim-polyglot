@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 100+ times faster** than the <!--Package Count-->116<!--/Package Count--> packages it consists of.
+- It **installs and updates 100+ times faster** than the <!--Package Count-->117<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -103,6 +103,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [mako](https://github.com/sophacles/vim-bundle-mako) (syntax, indent, ftplugin)
 - [markdown](https://github.com/plasticboy/vim-markdown) (syntax, indent)
 - [mathematica](https://github.com/rsmenon/vim-mathematica) (syntax, ftplugin)
+- [moonscript](https://github.com/leafo/moonscript-vim) (syntax, indent, ftplugin)
 - [nginx](https://github.com/chr4/nginx.vim) (syntax, indent, ftplugin)
 - [nim](https://github.com/zah/nim.vim) (syntax, compiler, indent)
 - [nix](https://github.com/LnL7/vim-nix) (syntax, indent, compiler, ftplugin)

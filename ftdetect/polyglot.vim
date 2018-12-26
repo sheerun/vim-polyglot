@@ -650,6 +650,27 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,i
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'moonscript') == -1
+  augroup filetypedetect
+  " moonscript, from moon.vim in leafo/moonscript-vim
+" Language:    MoonScript
+" Maintainer:  leafo <leafot@gmail.com>
+" Based On:    CoffeeScript by Mick Koch <kchmck@gmail.com>
+" URL:         http://github.com/leafo/moonscript-vim
+" License:     WTFPL
+
+autocmd BufNewFile,BufRead *.moon set filetype=moon
+
+function! s:DetectMoon()
+    if getline(1) =~ '^#!.*\<moon\>'
+        set filetype=moon
+    endif
+endfunction
+
+autocmd BufNewFile,BufRead * call s:DetectMoon()
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
   augroup filetypedetect
   " nginx, from nginx.vim in chr4/nginx.vim
