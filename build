@@ -151,12 +151,11 @@ update_readme() {
 }
 
 PACKS="
+  ansible:pearofducks/ansible-vim
   apiblueprint:sheerun/apiblueprint.vim
   applescript:mityu/vim-applescript:_SYNTAX
-  asciidoc:asciidoc/vim-asciidoc
-  yaml:stephpy/vim-yaml
-  ansible:pearofducks/ansible-vim
   arduino:sudar/vim-arduino-syntax
+  asciidoc:asciidoc/vim-asciidoc
   autohotkey:hnamikaw/vim-autohotkey
   blade:jwalton512/vim-blade
   c++11:octol/vim-cpp-enhanced-highlight
@@ -167,9 +166,9 @@ PACKS="
   clojure:guns/vim-clojure-static
   cmake:pboettch/vim-cmake-syntax
   coffee-script:kchmck/vim-coffee-script
+  cql:elubow/cql-vim
   cryptol:victoredwardocallaghan/cryptol.vim
   crystal:rhysd/vim-crystal
-  cql:elubow/cql-vim
   cucumber:tpope/vim-cucumber
   dart:dart-lang/dart-vim-plugin
   dockerfile:ekalinin/Dockerfile.vim
@@ -182,8 +181,8 @@ PACKS="
   fish:dag/vim-fish
   fsharp:fsharp/vim-fsharp:_BASIC
   git:tpope/vim-git
-  gmpl:maelvalais/gmpl.vim
   glsl:tikhomirov/vim-glsl
+  gmpl:maelvalais/gmpl.vim
   gnuplot:vim-scripts/gnuplot-syntax-highlighting
   go:fatih/vim-go:_BASIC
   graphql:jparise/vim-graphql
@@ -198,8 +197,8 @@ PACKS="
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax
-  json:elzr/vim-json
   json5:GutenYe/json5.vim
+  json:elzr/vim-json
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL
   julia:JuliaEditorSupport/julia-vim
@@ -231,18 +230,18 @@ PACKS="
   pug:digitaltoad/vim-pug
   puppet:voxpupuli/vim-puppet
   purescript:purescript-contrib/purescript-vim
-  python:vim-python/python-syntax
   python-compiler:aliev/vim-compiler-python
   python-ident:Vimjas/vim-python-pep8-indent
+  python:vim-python/python-syntax
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim
   racket:wlangstroth/vim-racket
-  raml:IN3D/vim-raml
   ragel:jneen/ragel.vim
+  raml:IN3D/vim-raml
   rspec:sheerun/rspec.vim
+  rst:marshallward/vim-restructuredtext
   ruby:vim-ruby/vim-ruby
   rust:rust-lang/rust.vim
-  rst:marshallward/vim-restructuredtext
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   scss:cakebaker/scss-syntax.vim
@@ -265,9 +264,10 @@ PACKS="
   vbnet:vim-scripts/vbnet.vim
   vcl:smerrill/vcl-vim-plugin
   vifm:vifm/vifm.vim
-  vue:posva/vim-vue
   vm:lepture/vim-velocity
+  vue:posva/vim-vue
   xls:vim-scripts/XSLT-syntax
+  yaml:stephpy/vim-yaml
   yard:sheerun/vim-yardoc
 "
 
