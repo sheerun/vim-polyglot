@@ -171,6 +171,7 @@ PACKS="
   crystal:rhysd/vim-crystal
   cql:elubow/cql-vim
   cucumber:tpope/vim-cucumber
+  cue:mgrabovsky/vim-cuesheet
   dart:dart-lang/dart-vim-plugin
   dockerfile:ekalinin/Dockerfile.vim
   elixir:elixir-lang/vim-elixir
