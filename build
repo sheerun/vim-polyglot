@@ -68,7 +68,7 @@ extract() {
       continue
     fi
 
-    [ -d "${dir}/ftdetect" ] && for f in "${dir}/ftdetect/"*; do
+    [ -d "${dir}${subtree:-/}ftdetect" ] && for f in "${dir}${subtree:-/}ftdetect/"*; do
       cat <<EOF >> tmp/polyglot.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '${pack%%:*}') == -1
   augroup filetypedetect
