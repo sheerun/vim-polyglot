@@ -6,7 +6,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
 " Maintainer:		Tim Pope <vimNOSPAM@tpope.org>
 " URL:			https://github.com/vim-ruby/vim-ruby
 " Release Coordinator:	Doug Kearns <dougkearns@gmail.com>
-" ----------------------------------------------------------------------------
 
 if exists("current_compiler")
   finish

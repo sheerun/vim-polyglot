@@ -44,7 +44,7 @@ endif
 syntax match mustacheError '}}}\?'
 syntax match mustacheInsideError '{{[{$#<>=!\/]\?'
 syntax region mustacheInside start=/{{[^!][$#^/]\?/ end=/}}}\?/ keepend containedin=TOP,@htmlMustacheContainer
-syntax match mustacheOperators '=\|\.\|/' contained containedin=mustacheInside,mustacheParam,@htmlMustacheContainer
+syntax match mustacheOperators '=\|\.\|/' contained containedin=mustacheInside,mustacheParam
 syntax region mustacheHtmlValue start=/={{[^!][$#^/]\?/rs=s+1,hs=s+1 end=/}}/ oneline keepend contained containedin=htmlTag contains=mustacheInside
 syntax region mustachePartial start=/{{[<>]/lc=2 end=/}}/me=e-2 contained containedin=mustacheInside,@htmlMustacheContainer
 syntax region mustacheMarkerSet start=/{{=/lc=2 end=/=}}/me=e-2 contained containedin=mustacheInside,@htmlMustacheContainer

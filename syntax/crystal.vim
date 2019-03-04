@@ -83,6 +83,12 @@ syn match crystalFloat	"\%(\%(\w\|[]})\"']\s*\)\@<!-\)\=\<\%(0\|[1-9]\d*\%(_\d\+
 syn match crystalLocalVariableOrMethod "\<[_[:lower:]][_[:alnum:]]*[?!=]\=" contains=NONE display transparent
 syn match crystalBlockArgument	    "&[_[:lower:]][_[:alnum:]]"		 contains=NONE display transparent
 
+syn match  crystalTypeName		"\%(\%([.@$]\@<!\.\)\@<!\<\|::\)\_s*\zs\u\w*\%(\>\|::\)\@=" contained
+syn match  crystalClassName		"\%(\%([.@$]\@<!\.\)\@<!\<\|::\)\_s*\zs\u\w*\%(\>\|::\)\@=" contained
+syn match  crystalModuleName		"\%(\%([.@$]\@<!\.\)\@<!\<\|::\)\_s*\zs\u\w*\%(\>\|::\)\@=" contained
+syn match  crystalStructName		"\%(\%([.@$]\@<!\.\)\@<!\<\|::\)\_s*\zs\u\w*\%(\>\|::\)\@=" contained
+syn match  crystalLibName		"\%(\%([.@$]\@<!\.\)\@<!\<\|::\)\_s*\zs\u\w*\%(\>\|::\)\@=" contained
+syn match  crystalEnumName		"\%(\%([.@$]\@<!\.\)\@<!\<\|::\)\_s*\zs\u\w*\%(\>\|::\)\@=" contained
 syn match  crystalConstant		"\%(\%([.@$]\@<!\.\)\@<!\<\|::\)\_s*\zs\u\w*\%(\>\|::\)\@="
 syn match  crystalClassVariable	"@@\%(\h\|%\|[^\x00-\x7F]\)\%(\w\|%\|[^\x00-\x7F]\)*" display
 syn match  crystalInstanceVariable "@\%(\h\|%\|[^\x00-\x7F]\)\%(\w\|%\|[^\x00-\x7F]\)*"  display
@@ -176,15 +182,15 @@ end
 
 syn match crystalAliasDeclaration    "[^[:space:];#.()]\+" contained contains=crystalSymbol,crystalGlobalVariable,crystalPredefinedVariable nextgroup=crystalAliasDeclaration2 skipwhite
 syn match crystalAliasDeclaration2   "[^[:space:];#.()]\+" contained contains=crystalSymbol,crystalGlobalVariable,crystalPredefinedVariable
-syn match crystalMethodDeclaration   "[^[:space:];#(]\+"	 contained contains=crystalConstant,crystalBoolean,crystalPseudoVariable,crystalInstanceVariable,crystalClassVariable,crystalGlobalVariable
-syn match crystalFunctionDeclaration "[^[:space:];#(=]\+"	 contained contains=crystalConstant
-syn match crystalTypeDeclaration     "[^[:space:];#=]\+"	 contained contains=crystalConstant
-syn match crystalClassDeclaration    "[^[:space:];#<]\+"	 contained contains=crystalConstant,crystalOperator
-syn match crystalModuleDeclaration   "[^[:space:];#<]\+"	 contained contains=crystalConstant,crystalOperator
-syn match crystalStructDeclaration   "[^[:space:];#<]\+"	 contained contains=crystalConstant,crystalOperator
-syn match crystalLibDeclaration      "[^[:space:];#<]\+"	 contained contains=crystalConstant,crystalOperator
-syn match crystalMacroDeclaration    "[^[:space:];#<\"]\+"	 contained contains=crystalConstant,crystalOperator
-syn match crystalEnumDeclaration     "[^[:space:];#<\"]\+"	 contained contains=crystalConstant
+syn match crystalMethodDeclaration   "[^[:space:];#(]\+"	 contained contains=crystalConstant,crystalFunction,crystalBoolean,crystalPseudoVariable,crystalInstanceVariable,crystalClassVariable,crystalGlobalVariable
+syn match crystalFunctionDeclaration "[^[:space:];#(=]\+"	 contained contains=crystalFunction
+syn match crystalTypeDeclaration     "[^[:space:];#=]\+"	 contained contains=crystalTypeName
+syn match crystalClassDeclaration    "[^[:space:];#<]\+"	 contained contains=crystalClassName,crystalOperator
+syn match crystalModuleDeclaration   "[^[:space:];#]\+"		 contained contains=crystalModuleName,crystalOperator
+syn match crystalStructDeclaration   "[^[:space:];#<]\+"	 contained contains=crystalStructName,crystalOperator
+syn match crystalLibDeclaration      "[^[:space:];#]\+"		 contained contains=crystalLibName,crystalOperator
+syn match crystalMacroDeclaration    "[^[:space:];#(]\+"	 contained contains=crystalFunction
+syn match crystalEnumDeclaration     "[^[:space:];#<\"]\+"	 contained contains=crystalEnumName
 syn match crystalFunction "\<[_[:alpha:]][_[:alnum:]]*[?!=]\=[[:alnum:]_.:?!=]\@!" contained containedin=crystalMethodDeclaration,crystalFunctionDeclaration
 syn match crystalFunction "\%(\s\|^\)\@<=[_[:alpha:]][_[:alnum:]]*[?!=]\=\%(\s\|$\)\@=" contained containedin=crystalAliasDeclaration,crystalAliasDeclaration2
 syn match crystalFunction "\%([[:space:].]\|^\)\@<=\%(\[\][=?]\=\|\*\*\|[+-]@\=\|[*/%|&^~]\|<<\|>>\|[<>]=\=\|<=>\|===\|[=!]=\|[=!]\~\|!\|`\)\%([[:space:];#(]\|$\)\@=" contained containedin=crystalAliasDeclaration,crystalAliasDeclaration2,crystalMethodDeclaration,crystalFunctionDeclaration
@@ -345,6 +351,12 @@ else
 endif
 hi def link crystalClassVariable	crystalIdentifier
 hi def link crystalConstant		Type
+hi def link crystalTypeName		crystalConstant
+hi def link crystalClassName		crystalConstant
+hi def link crystalModuleName		crystalConstant
+hi def link crystalStructName		crystalConstant
+hi def link crystalLibName		crystalConstant
+hi def link crystalEnumName		crystalConstant
 hi def link crystalGlobalVariable	crystalIdentifier
 hi def link crystalBlockParameter	crystalIdentifier
 hi def link crystalInstanceVariable	crystalIdentifier

@@ -28,14 +28,15 @@ syntax keyword dartConstant       null
 syntax keyword dartTypedef        this super class typedef enum mixin
 syntax keyword dartOperator       new is as in
 syntax match   dartOperator       "+=\=\|-=\=\|*=\=\|/=\=\|%=\=\|\~/=\=\|<<=\=\|>>=\=\|[<>]=\=\|===\=\|\!==\=\|&=\=\|\^=\=\||=\=\|||\|&&\|\[\]=\=\|=>\|!\|\~\|?\|:"
-syntax keyword dartType           void var bool int double num dynamic covariant
+syntax keyword dartType           void var bool int double num dynamic
 syntax keyword dartStatement      return
 syntax keyword dartStorageClass   static abstract final const factory
 syntax keyword dartExceptions     throw rethrow try on catch finally
 syntax keyword dartAssert         assert
 syntax keyword dartClassDecl      extends with implements
 syntax keyword dartBranch         break continue nextgroup=dartUserLabelRef skipwhite
-syntax keyword dartKeyword        get set operator call external async await yield sync native
+syntax keyword dartKeyword        get set operator call external async await
+    \ yield sync native covariant
 syntax match   dartUserLabelRef   "\k\+" contained
 
 syntax region  dartLabelRegion   transparent matchgroup=dartLabel start="\<case\>" matchgroup=NONE end=":"

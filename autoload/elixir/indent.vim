@@ -267,7 +267,7 @@ function! elixir#indent#handle_inside_block(context)
     let config = {
           \'f': {'aligned_clauses': s:keyword('end'), 'pattern_match_clauses': never_match},
           \'c': {'aligned_clauses': s:keyword('end'), 'pattern_match_clauses': never_match},
-          \'t': {'aligned_clauses': s:keyword('end\|catch\|rescue\|after'), 'pattern_match_clauses': s:keyword('catch\|rescue')},
+          \'t': {'aligned_clauses': s:keyword('end\|catch\|rescue\|after\|else'), 'pattern_match_clauses': s:keyword('catch\|rescue\|else')},
           \'r': {'aligned_clauses': s:keyword('end\|after'), 'pattern_match_clauses': s:keyword('after')},
           \'i': {'aligned_clauses': s:keyword('end\|else'), 'pattern_match_clauses': never_match},
           \'[': {'aligned_clauses': ']', 'pattern_match_clauses': never_match},

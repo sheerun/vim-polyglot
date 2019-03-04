@@ -3,6 +3,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == 
 " terraform.vim - basic vim/terraform integration
 " Maintainer: HashiVim <https://github.com/hashivim>
 
+set formatoptions-=t
+
 if exists("g:loaded_terraform") || v:version < 700 || &cp || !executable('terraform')
   finish
 endif
@@ -44,7 +46,7 @@ endfunction
 " https://github.com/fatih/vim-hclfmt/blob/master/autoload/fmt.vim
 function! terraform#fmt()
   let l:curw = winsaveview()
-  let l:tmpfile = tempname()
+  let l:tmpfile = tempname() . ".tf"
   call writefile(getline(1, "$"), l:tmpfile)
   let output = system("terraform fmt -write " . l:tmpfile)
   if v:shell_error == 0

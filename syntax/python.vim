@@ -46,6 +46,7 @@ if s:Enabled('g:python_highlight_all')
   if s:Enabled('g:python_highlight_builtins')
     call s:EnableByDefault('g:python_highlight_builtin_objs')
     call s:EnableByDefault('g:python_highlight_builtin_funcs')
+    call s:EnableByDefault('g:python_highlight_builtin_types')
   endif
   call s:EnableByDefault('g:python_highlight_exceptions')
   call s:EnableByDefault('g:python_highlight_string_formatting')
@@ -94,7 +95,7 @@ else
   syn match   pythonStatement   '\<async\s\+def\>' nextgroup=pythonFunction skipwhite
   syn match   pythonStatement   '\<async\s\+with\>'
   syn match   pythonStatement   '\<async\s\+for\>'
-  syn cluster pythonExpression contains=pythonStatement,pythonRepeat,pythonConditional,pythonOperator,pythonNumber,pythonHexNumber,pythonOctNumber,pythonBinNumber,pythonFloat,pythonString,pythonBytes,pythonBoolean,pythonBuiltinObj,pythonBuiltinFunc
+  syn cluster pythonExpression contains=pythonStatement,pythonRepeat,pythonConditional,pythonOperator,pythonNumber,pythonHexNumber,pythonOctNumber,pythonBinNumber,pythonFloat,pythonString,pythonBytes,pythonBoolean,pythonNone,pythonSingleton,pythonBuiltinObj,pythonBuiltinFunc,pythonBuiltinType
 endif
 
 
@@ -328,18 +329,17 @@ else
 
   syn match   pythonFloat       '\.\d\%([_0-9]*\d\)\=\%([eE][+-]\=\d\%([_0-9]*\d\)\=\)\=[jJ]\=\>' display
   syn match   pythonFloat       '\<\d\%([_0-9]*\d\)\=[eE][+-]\=\d\%([_0-9]*\d\)\=[jJ]\=\>' display
-  syn match   pythonFloat       '\<\d\%([_0-9]*\d\)\=\.\d\%([_0-9]*\d\)\=\%([eE][+-]\=\d\%([_0-9]*\d\)\=\)\=[jJ]\=' display
+  syn match   pythonFloat       '\<\d\%([_0-9]*\d\)\=\.\d\=\%([_0-9]*\d\)\=\%([eE][+-]\=\d\%([_0-9]*\d\)\=\)\=[jJ]\=' display
 endif
 
 "
-" Builtin objects and types
+" Builtin objects
 "
 
 if s:Enabled('g:python_highlight_builtin_objs')
   syn keyword pythonNone        None
   syn keyword pythonBoolean     True False
-  syn keyword pythonBuiltinObj  Ellipsis NotImplemented
-  syn match pythonBuiltinObj    '\v\.@<!<%(object|bool|int|float|tuple|str|list|dict|set|frozenset|bytearray|bytes)>'
+  syn keyword pythonSingleton   Ellipsis NotImplemented
   syn keyword pythonBuiltinObj  __debug__ __doc__ __file__ __name__ __package__
   syn keyword pythonBuiltinObj  __loader__ __spec__ __path__ __cached__
 endif
@@ -357,7 +357,7 @@ if s:Enabled('g:python_highlight_builtin_funcs')
       let s:funcs_re .= '|print'
     endif
   else
-      let s:funcs_re .= '|ascii|exec|print'
+      let s:funcs_re .= '|ascii|breakpoint|exec|print'
   endif
 
   let s:funcs_re = 'syn match pythonBuiltinFunc ''\v\.@<!\zs<%(' . s:funcs_re . ')>'
@@ -371,11 +371,20 @@ if s:Enabled('g:python_highlight_builtin_funcs')
 endif
 
 "
+" Builtin types
+"
+
+if s:Enabled('g:python_highlight_builtin_types')
+  syn match pythonBuiltinType    '\v\.@<!<%(object|bool|int|float|tuple|str|list|dict|set|frozenset|bytearray|bytes)>'
+endif
+
+
+"
 " Builtin exceptions and warnings
 "
 
 if s:Enabled('g:python_highlight_exceptions')
-    let s:exs_re = 'BaseException|Exception|ArithmeticError|LookupError|EnvironmentError|AssertionError|AttributeError|BufferError|EOFError|FloatingPointError|GeneratorExit|IOError|ImportError|IndexError|KeyError|KeyboardInterrupt|MemoryError|NameError|NotImplementedError|OSError|OverflowError|ReferenceError|RuntimeError|StopIteration|SyntaxError|IndentationError|TabError|SystemError|SystemExit|TypeError|UnboundLocalError|UnicodeError|UnicodeEncodeError|UnicodeDecodeError|UnicodeTranslateError|ValueError|VMSError|WindowsError|ZeroDivisionError|Warning|UserWarning|BytesWarning|DeprecationWarning|PendingDepricationWarning|SyntaxWarning|RuntimeWarning|FutureWarning|ImportWarning|UnicodeWarning'
+    let s:exs_re = 'BaseException|Exception|ArithmeticError|LookupError|EnvironmentError|AssertionError|AttributeError|BufferError|EOFError|FloatingPointError|GeneratorExit|IOError|ImportError|IndexError|KeyError|KeyboardInterrupt|MemoryError|NameError|NotImplementedError|OSError|OverflowError|ReferenceError|RuntimeError|StopIteration|SyntaxError|IndentationError|TabError|SystemError|SystemExit|TypeError|UnboundLocalError|UnicodeError|UnicodeEncodeError|UnicodeDecodeError|UnicodeTranslateError|ValueError|VMSError|WindowsError|ZeroDivisionError|Warning|UserWarning|BytesWarning|DeprecationWarning|PendingDeprecationWarning|SyntaxWarning|RuntimeWarning|FutureWarning|ImportWarning|UnicodeWarning'
 
   if s:Python2Syntax()
       let s:exs_re .= '|StandardError'
@@ -416,7 +425,6 @@ if v:version >= 508 || !exists('did_python_syn_inits')
 
   HiLink pythonDecorator        Define
   HiLink pythonDottedName       Function
-  HiLink pythonDot              Normal
 
   HiLink pythonComment          Comment
   if !s:Enabled('g:python_highlight_file_headers_as_comments')
@@ -472,9 +480,11 @@ if v:version >= 508 || !exists('did_python_syn_inits')
 
   HiLink pythonBoolean          Boolean
   HiLink pythonNone             Constant
+  HiLink pythonSingleton        Constant
 
-  HiLink pythonBuiltinObj       Structure
+  HiLink pythonBuiltinObj       Identifier
   HiLink pythonBuiltinFunc      Function
+  HiLink pythonBuiltinType      Structure
 
   HiLink pythonExClass          Structure
   HiLink pythonClassVar         Identifier

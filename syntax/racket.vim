@@ -57,6 +57,14 @@ syn keyword racketSyntax define* define*-values define*-syntax define*-syntaxes 
 syn keyword racketSyntax package? package-exported-identifiers package-original-identifiers
 syn keyword racketSyntax block #%stratified-body
 
+" 8 Contracts
+" 8.2 Function contracts
+syn keyword racketSyntax -> ->* ->i ->d case-> dynamic->* unconstrained-domain->
+
+" 8.6.1 Nested Contract Boundaries
+syn keyword racketSyntax with-contract define/contract define-struct/contract
+syn keyword racketSyntax invariant-assertion current-contract-region
+
 " 9 Pattern Matching
 syn keyword racketSyntax match match* match/values define/match
 syn keyword racketSyntax match-lambda match-lambda* match-lambda**
@@ -74,6 +82,9 @@ syn keyword racketSyntax % prompt control prompt-at control-at reset shift
 syn keyword racketSyntax reset-at shift-at prompt0 reset0 control0 shift0
 syn keyword racketSyntax prompt0-at reset0-at control0-at shift0-at
 syn keyword racketSyntax set cupto
+
+" 11.3.2 Parameters
+syn keyword racketSyntax parameterize parameterize*
 
 " 12.5 Writing
 syn keyword racketSyntax write display displayln print
@@ -93,7 +104,8 @@ syn keyword racketSyntax make-custodian-box custodian-box-value
 " lambda sign
 syn match racketSyntax /\<[\u03bb]\>/
 
-" Functions
+
+" Functions ==================================================================
 
 syn keyword racketFunc boolean? not equal? eqv? eq? equal?/recur immutable?
 syn keyword racketFunc true false symbol=? boolean=? false?
@@ -108,8 +120,8 @@ syn keyword racketFunc inexact->exact exact->inexact
 
 " 3.2.2.1 Arithmetic
 syn keyword racketFunc + - * / quotient remainder quotient/remainder modulo
-syn keyword racketFunc add1 sub1 abs max min gcd lcm round floor ceiling
-syn keyword racketFunc truncate numerator denominator rationalize
+syn keyword racketFunc add1 sub1 abs max min gcd lcm round exact-round floor
+syn keyword racketFunc ceiling truncate numerator denominator rationalize
 
 " 3.2.2.2 Number Comparison
 syn keyword racketFunc = < <= > >=
@@ -374,6 +386,19 @@ syn keyword racketFunc class-field-accessor class-field-mutator
 "5.4.3 Generics
 syn keyword racketFunc generic send-generic make-generic
 
+" 8.1 Data-strucure contracts
+syn keyword racketFunc flat-contract-with-explanation flat-named-contract
+" TODO where do any/c and none/c `value`s go?
+syn keyword racketFunc or/c first-or/c and/c not/c =/c </c >/c <=/c >=/c
+syn keyword racketFunc between/c real-in integer-in char-in natural-number/c
+syn keyword racketFunc string-len/c printable/c one-of/c symbols vectorof
+syn keyword racketFunc vector-immutableof vector/c box/c box-immutable/c listof
+syn keyword racketFunc non-empty-listof list*of cons/c cons/dc list/c *list/c
+syn keyword racketFunc syntax/c struct/c struct/dc parameter/c
+syn keyword racketFunc procedure-arity-includes/c hash/c hash/dc channel/c
+syn keyword racketFunc prompt-tag/c continuation-mark-key/c evt/c promise/c
+syn keyword racketFunc flat-contract flat-contract-predicate suggest/c
+
 " 9.1 Multiple Values
 syn keyword racketFunc values call-with-values
 
@@ -420,6 +445,11 @@ syn keyword racketFunc continuation? continuation-prompt-tag dynamic-wind
 " 10.4.1 Additional Control Operators
 syn keyword racketFunc call/prompt abort/cc call/comp abort fcontrol spawn splitter new-prompt
 
+" 11.3.2 Parameters
+syn keyword racketFunc make-parameter make-derived-parameter parameter?
+syn keyword racketFunc parameter-procedure=? current-parameterization
+syn keyword racketFunc call-with-parameterization parameterization?
+
 " 14.1.1 Manipulating Paths
 syn keyword racketFunc path? path-string? path-for-some-system? string->path path->string path->bytes
 syn keyword racketFunc string->path-element bytes->path-element path-element->string path-element->bytes
@@ -434,6 +464,9 @@ syn keyword racketFunc path-replace-suffix path-add-suffix
 syn keyword racketFunc explode-path file-name-from-path filename-extension find-relative-path normalize-path
 syn keyword racketFunc path-element? path-only simple-form-path some-simple-path->string string->some-system-path
 
+" 15.6 Time
+syn keyword racketFunc current-seconds current-inexact-milliseconds
+syn keyword racketFunc seconds->date current-milliseconds
 
 
 syn match racketDelimiter !\<\.\>!

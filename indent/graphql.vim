@@ -15,7 +15,7 @@ setlocal nolisp
 setlocal nosmartindent
 
 setlocal indentexpr=GetGraphQLIndent()
-setlocal indentkeys=0{,0},0),0[,0],0#,!^F,o,O,e
+setlocal indentkeys=0{,0},0),0[,0],0#,!^F,o,O
 
 " If our indentation function already exists, we have nothing more to do.
 if exists('*GetGraphQLIndent')

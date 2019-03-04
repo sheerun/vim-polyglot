@@ -27,7 +27,7 @@ syn match yamlBlock "[>|]\d\?[+-]"
 syn region yamlComment	start="\#" end="$"
 syn match yamlIndicator	"#YAML:\S\+"
 
-syn region yamlString	start="\(^\|\s\|\[\|\,\|\-\)'" end="'" skip="\\'"
+syn region yamlString	start="\(^\|\s\|\[\|\,\|\-\)\@<='" end="'" skip="\\'"
 syn region yamlString	start='"' end='"' skip='\\"' contains=yamlEscape
 syn region yamlString	matchgroup=yamlBlock start=/[>|]\s*\n\+\z(\s\+\)\S/rs=s+1 skip=/^\%(\z1\S\|^$\)/ end=/^\z1\@!.*/me=s-1
 syn region yamlString	matchgroup=yamlBlock start=/[>|]\(\d\|[+-]\)\s*\n\+\z(\s\+\)\S/rs=s+2 skip=/^\%(\z1\S\|^$\)/ end=/^\z1\@!.*/me=s-1
