@@ -63,7 +63,7 @@ extract() {
 
     output "${subdirs##, })"$'\n'
 
-    if (echo "julia coffee-script elixir fish git plantuml scala swift jinja" | grep -qF "$name"); then
+    if (echo "julia coffee-script elixir fish git plantuml scala swift jinja mdx" | grep -qF "$name"); then
       echo "Skipping ftdetect installation of $name" >&2
       continue
     fi
@@ -217,6 +217,7 @@ PACKS="
   mako:sophacles/vim-bundle-mako
   markdown:plasticboy/vim-markdown:_SYNTAX
   mathematica:rsmenon/vim-mathematica
+  mdx:jxnblk/vim-mdx-js
   meson:mesonbuild/meson:_ALL:/data/syntax-highlighting/vim/
   moonscript:leafo/moonscript-vim
   nginx:chr4/nginx.vim
