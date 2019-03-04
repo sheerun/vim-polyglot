@@ -479,6 +479,21 @@ aug end
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'idris') == -1
+  augroup filetypedetect
+  " idris, from idris.vim in idris-hackers/idris-vim
+au BufNewFile,BufRead *.idr setf idris
+au BufNewFile,BufRead idris-response setf idris
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'idris') == -1
+  augroup filetypedetect
+  " idris, from lidris.vim in idris-hackers/idris-vim
+au BufNewFile,BufRead *.lidr setf lidris
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
   augroup filetypedetect
   " jasmine, from jasmine.vim in glanotte/vim-jasmine
