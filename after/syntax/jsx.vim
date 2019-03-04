@@ -62,6 +62,20 @@ syn region jsxRegion
   \ keepend
   \ extend
 
+" Shorthand fragment support
+"
+" Note that since the main jsxRegion contains @XMLSyntax, we cannot simply
+" adjust the regex above since @XMLSyntax will highlight the opening `<` as an
+" XMLError. Instead we create a new group with the same name that does not
+" include @XMLSyntax and instead uses matchgroup to get the same highlighting.
+syn region jsxRegion
+  \ contains=@Spell,jsxRegion,jsxChild,jsBlock,javascriptBlock
+  \ matchgroup=xmlTag
+  \ start=/<>/
+  \ end=/<\/>/
+  \ keepend
+  \ extend
+
 " Add jsxRegion to the lowest-level JS syntax cluster.
 syn cluster jsExpression add=jsxRegion
 

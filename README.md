@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 100+ times faster** than the <!--Package Count-->125<!--/Package Count--> packages it consists of.
+- It **installs and updates 100+ times faster** than the <!--Package Count-->126<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -97,7 +97,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [json5](https://github.com/GutenYe/json5.vim) (syntax)
 - [json](https://github.com/elzr/vim-json) (syntax, indent, ftplugin)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent)
-- [jsx](https://github.com/mxw/vim-jsx) (after)
+- [jsx](https://github.com/amadeus/vim-jsx) (syntax, indent, ftplugin)
 - [julia](https://github.com/JuliaEditorSupport/julia-vim) (syntax, indent, autoload, ftplugin)
 - [kotlin](https://github.com/udalov/kotlin-vim) (syntax, indent, ftplugin)
 - [latex](https://github.com/LaTeX-Box-Team/LaTeX-Box) (syntax, indent, ftplugin)
@@ -166,6 +166,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent)
 - [vue](https://github.com/posva/vim-vue) (syntax, indent, ftplugin)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
+- [xml](https://github.com/amadeus/vim-xml) (syntax)
 - [yaml](https://github.com/stephpy/vim-yaml) (syntax, ftplugin)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
 <!--/Language Packs-->

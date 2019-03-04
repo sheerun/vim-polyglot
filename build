@@ -205,7 +205,7 @@ PACKS="
   json5:GutenYe/json5.vim
   json:elzr/vim-json
   jst:briancollins/vim-jst
-  jsx:mxw/vim-jsx:_ALL
+  jsx:amadeus/vim-jsx
   julia:JuliaEditorSupport/julia-vim
   kotlin:udalov/kotlin-vim
   latex:LaTeX-Box-Team/LaTeX-Box
@@ -273,6 +273,7 @@ PACKS="
   vifm:vifm/vifm.vim
   vm:lepture/vim-velocity
   vue:posva/vim-vue
+  xml:amadeus/vim-xml
   xls:vim-scripts/XSLT-syntax
   yaml:stephpy/vim-yaml
   yard:sheerun/vim-yardoc
