@@ -72,9 +72,6 @@ augroup filetypedetect
   "jinja
   autocmd BufNewFile,BufRead *.jinja2,*.j2,*.jinja,*.nunjucks,*.nunjs,*.njk set ft=jinja
 
-  "mdx
-  autocmd BufNewFile,BufRead *.mdx set filetype=markdown.mdx
-
   "tsx
   autocmd BufNewFile,BufRead *.tsx setfiletype typescript.jsx
 augroup END
@@ -711,6 +708,19 @@ endif
 " markdown filetype file
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} setfiletype markdown
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx} setfiletype markdown
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mdx') == -1
+  augroup filetypedetect
+  " mdx, from mdx.vim in jxnblk/vim-mdx-js
+" Vim ftdetect file
+"
+" Language: MDX
+" Maintainer: Brent Jackson <jxnblk@gmail.com>
+"
+
+autocmd BufNewFile,BufRead *.mdx set filetype=markdown.mdx
   augroup end
 endif
 
