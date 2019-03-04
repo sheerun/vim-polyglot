@@ -72,8 +72,8 @@ augroup filetypedetect
   "jinja
   autocmd BufNewFile,BufRead *.jinja2,*.j2,*.jinja,*.nunjucks,*.nunjs,*.njk set ft=jinja
 
-  "mdx
-  autocmd BufNewFile,BufRead *.mdx set filetype=markdown.mdx
+  "tsx
+  autocmd BufNewFile,BufRead *.tsx setfiletype typescript.jsx
 augroup END
 
 " Fix for https://github.com/sheerun/vim-polyglot/issues/236#issuecomment-387984954
