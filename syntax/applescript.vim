@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'applescript') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'applescript') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:    AppleScript
 " Maintainer:  Jim Eberle <jim.eberle@fastnlight.com>
@@ -245,5 +247,3 @@ hi def link scptTodo Todo
 
 let b:current_syntax = "applescript"
 
-
-endif

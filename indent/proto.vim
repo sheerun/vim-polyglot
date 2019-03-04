@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'protobuf') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'protobuf') != -1
+  finish
+endif
+
 " Vim indent file
 " Language:	Protobuf
 " Maintainer:	Johannes Zellner <johannes@zellner.org>
@@ -17,5 +19,3 @@ setlocal expandtab
 setlocal shiftwidth=2
 
 let b:undo_indent = "setl cin<"
-
-endif

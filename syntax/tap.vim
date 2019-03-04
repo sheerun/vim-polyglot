@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'perl') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:    Verbose TAP Output
 " Maintainer:  Rufus Cable <rufus@threebytesfull.com>
@@ -97,5 +99,3 @@ if !exists("did_tapverboseoutput_syntax_inits")
 endif
 
 let b:current_syntax="tapVerboseOutput"
-
-endif

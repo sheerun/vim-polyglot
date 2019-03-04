@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ocaml') != -1
+  finish
+endif
+
 " Vim indent file
 " Language:     OCaml
 " Maintainers:  Jean-Francois Yuen   <jfyuen@happycoders.org>
@@ -267,5 +269,3 @@ function! GetOCamlIndent()
 endfunction
 
 " vim:sw=2
-
-endif

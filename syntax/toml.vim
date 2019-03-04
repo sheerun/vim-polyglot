@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'toml') != -1
+  finish
+endif
+
 " Language:   TOML
 " Maintainer: Caleb Spare <cespare@gmail.com>
 " URL:        https://github.com/cespare/vim-toml
@@ -72,5 +74,3 @@ hi def link tomlComment Comment
 syn sync minlines=500
 
 let b:current_syntax = "toml"
-
-endif

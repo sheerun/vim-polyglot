@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'elm') != -1
+  finish
+endif
+
 let s:errors = []
 
 function! s:elmOracle(...) abort
@@ -381,5 +383,3 @@ function! s:ExecuteInRoot(cmd) abort
 
 	return l:out
 endfunction
-
-endif

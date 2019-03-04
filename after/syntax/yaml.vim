@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'yaml') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'yaml') != -1
+  finish
+endif
+
 " To make this file do stuff, add something like the following (without the
 " leading ") to your ~/.vimrc:
 " au BufNewFile,BufRead *.yaml,*.yml so ~/src/PyYaml/YAML.vim
@@ -61,5 +63,3 @@ hi link yamlInline	Operator
 hi link yamlBlock	Operator
 hi link yamlString	String
 hi link yamlEscape	Special
-
-endif

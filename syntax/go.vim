@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'go') != -1
+  finish
+endif
+
 " Copyright 2009 The Go Authors. All rights reserved.
 " Use of this source code is governed by a BSD-style
 " license that can be found in the LICENSE file.
@@ -412,5 +414,3 @@ syn sync minlines=500
 let b:current_syntax = "go"
 
 " vim: sw=2 ts=2 et
-
-endif

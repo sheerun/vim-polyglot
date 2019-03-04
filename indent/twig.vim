@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'twig') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'twig') != -1
+  finish
+endif
+
 if exists("b:ran_once")
 	finish
 endif
@@ -76,5 +78,3 @@ fun! s:BuildStructures()
 endfun
 
 call s:BuildStructures()
-
-endif

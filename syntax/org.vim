@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'org') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'org') != -1
+  finish
+endif
+
 " Support org authoring markup as closely as possible
 " (we're adding two markdown-like variants for =code= and blockquotes)
 " -----------------------------------------------------------------------------
@@ -383,5 +385,3 @@ if exists('g:loaded_SyntaxRange')
 endif
 
 " vi: ft=vim:tw=80:sw=4:ts=4:fdm=marker
-
-endif

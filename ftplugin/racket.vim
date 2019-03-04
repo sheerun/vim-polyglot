@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'racket') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'racket') != -1
+  finish
+endif
+
 " Language:     Racket
 " Maintainer:   Will Langstroth <will@langstroth.com>
 " URL:          http://github.com/wlangstroth/vim-racket
@@ -59,5 +61,3 @@ nnoremap <buffer> <f9> :!racket -t %<cr>
 
 "setl commentstring=;;%s
 setl commentstring=#\|\ %s\ \|#
-
-endif

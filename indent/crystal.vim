@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'crystal') != -1
+  finish
+endif
+
 " Only load this indent file when no other was loaded.
 if exists('b:did_indent')
   finish
@@ -635,5 +637,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim:set sw=2 sts=2 ts=8 et:
-
-endif

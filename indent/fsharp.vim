@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fsharp') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'fsharp') != -1
+  finish
+endif
+
 " Vim indent file
 " Language:     FSharp
 " Maintainers:  Jean-Francois Yuen   <jfyuen@happycoders.org>
@@ -249,5 +251,3 @@ function! GetFsharpIndent()
 endfunction
 
 " vim: sw=4 et sts=4
-
-endif

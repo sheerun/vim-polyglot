@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vue') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'vue') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language: Vue.js
 " Maintainer: Eduardo San Martin Morote
@@ -63,5 +65,3 @@ syn keyword htmlArg             contained scoped ts
 syn match   htmlArg "[@v:][-:.0-9_a-z]*\>" contained
 
 let b:current_syntax = "vue"
-
-endif

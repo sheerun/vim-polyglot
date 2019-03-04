@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'crystal') != -1
+  finish
+endif
+
 " Language: Crystal
 " Based on Ruby syntax highlight
 " which was made by Mirko Nasato and Doug Kearns
@@ -399,5 +401,3 @@ hi def link crystalSpaceError		crystalError
 let b:current_syntax = 'crystal'
 
 " vim: nowrap sw=2 sts=2 ts=8 noet:
-
-endif

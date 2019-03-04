@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'html5') != -1
+  finish
+endif
+
 " Vim completion for HTML5 data file
 " Language:	    HTML (version 5.1 Draft 2016 Jan 13)
 " Maintainer:   Kao, Wei-Ko(othree) ( othree AT gmail DOT com )
@@ -870,5 +872,3 @@ let g:xmldata_html5 = {
     \ 'wbr': ['/>', ''],
 \ },
 \ }
-
-endif

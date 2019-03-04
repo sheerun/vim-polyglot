@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'markdown') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'markdown') != -1
+  finish
+endif
+
 if exists("b:did_indent") | finish | endif
 let b:did_indent = 1
 
@@ -75,5 +77,3 @@ function GetMarkdownIndent()
         return ind
     endif
 endfunction
-
-endif

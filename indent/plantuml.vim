@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'plantuml') != -1
+  finish
+endif
+
 if exists('b:did_indent')
   finish
 endif
@@ -55,5 +57,3 @@ function! s:insidePlantUMLTags(lnum) abort
   call cursor(a:lnum, 1)
   return search('@startuml', 'Wbn') && search('@enduml', 'Wn')
 endfunction
-
-endif

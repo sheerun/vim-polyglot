@@ -1,5 +1,5 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jenkins') == -1
-  
-runtime indent/groovy.vim
-
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'jenkins') != -1
+  finish
 endif
+
+runtime indent/groovy.vim

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'javascript') != -1
+  finish
+endif
+
 " Vim compiler plugin
 " Language:     JavaScript
 " Maintainer:   vim-javascript community
@@ -16,5 +18,3 @@ endif
 
 CompilerSet makeprg=eslint\ -f\ compact\ %
 CompilerSet errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m
-
-endif

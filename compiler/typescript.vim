@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
+  finish
+endif
+
 if exists("current_compiler")
   finish
 endif
@@ -30,5 +32,3 @@ CompilerSet errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ocaml') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:     OCaml
 " Filenames:    *.ml *.mli *.mll *.mly
@@ -331,5 +333,3 @@ endif
 let b:current_syntax = "ocaml"
 
 " vim: ts=8
-
-endif

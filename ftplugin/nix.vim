@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nix') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'nix') != -1
+  finish
+endif
+
 " Vim filetype plugin
 " Language:    Nix
 " Maintainer:  Daiderd Jordan <daiderd@gmail.com>
@@ -18,5 +20,3 @@ setlocal
     \ softtabstop=2
     \ expandtab
     \ iskeyword+=-
-
-endif

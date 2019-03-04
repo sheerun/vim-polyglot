@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mathematica') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'mathematica') != -1
+  finish
+endif
+
 "Vim conceal file
 " Language: Mathematica
 " Maintainer: R. Menon <rsmenon@icloud.com>
@@ -103,5 +105,3 @@ endif
 
 hi! link Conceal Normal
 setlocal conceallevel=2
-
-endif

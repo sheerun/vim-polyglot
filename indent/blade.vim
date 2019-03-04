@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'blade') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'blade') != -1
+  finish
+endif
+
 " Vim indent file
 " Language:     Blade (Laravel)
 " Maintainer:   Jason Walton <jwalton512@gmail.com>
@@ -95,5 +97,3 @@ function! GetBladeIndent()
 
     return indent
 endfunction
-
-endif

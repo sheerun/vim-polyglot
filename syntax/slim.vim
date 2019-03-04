@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slim') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'slim') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language: Slim
 " Maintainer: Andrew Stone <andy@stonean.com>
@@ -109,5 +111,3 @@ hi def link slimInlineTagChar             Delimiter
 hi def link slimFilter                    PreProc
 
 let b:current_syntax = "slim"
-
-endif

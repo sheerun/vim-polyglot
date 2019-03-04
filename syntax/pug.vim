@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pug') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'pug') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language: Pug
 " Maintainer: Joshua Borton
@@ -112,6 +114,4 @@ let b:current_syntax = "pug"
 
 if main_syntax == "pug"
   unlet main_syntax
-endif
-
 endif

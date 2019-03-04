@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slim') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'slim') != -1
+  finish
+endif
+
 if exists("b:did_ftplugin")
   finish
 endif
@@ -25,5 +27,3 @@ let b:undo_ftplugin = "setl isk<" . " | " . s:undo_ftplugin
 
 setlocal iskeyword+=-
 setlocal commentstring=/%s
-
-endif

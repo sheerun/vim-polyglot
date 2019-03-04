@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'elixir') != -1
+  finish
+endif
+
 if exists('current_compiler')
     finish
 endif
@@ -11,5 +13,3 @@ endif
 
 CompilerSet errorformat=%f:%l:\ %t:\ %m
 CompilerSet makeprg=mix\ credo\ suggest\ --format=flycheck
-
-endif

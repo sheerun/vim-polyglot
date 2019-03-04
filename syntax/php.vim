@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'php') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'php') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language: PHP 5.3 & up
 "
@@ -958,5 +960,3 @@ endif
 " }}}
 
 " vim: ts=8 sts=2 sw=2 fdm=marker expandtab
-
-endif

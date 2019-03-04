@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'elm') != -1
+  finish
+endif
+
 if !executable('ctags')
     finish
 elseif globpath(&runtimepath, 'plugin/tagbar.vim') ==? ''
@@ -20,5 +22,3 @@ function! s:SetTagbar()
 endfunction
 
 call s:SetTagbar()
-
-endif

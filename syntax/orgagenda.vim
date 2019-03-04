@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'org') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'org') != -1
+  finish
+endif
+
 " TODO do we really need a separate syntax file for the agenda?
 "      - Most of the stuff here is also in syntax.org
 "      - DRY!
@@ -79,5 +81,3 @@ syntax match hyperlinkBracketsLeft		contained "\[\{2}" conceal
 syntax match hyperlinkURL				contained "[^][]*\]\[" conceal
 syntax match hyperlinkBracketsRight		contained "\]\{2}" conceal
 hi def link hyperlink Underlined
-
-endif

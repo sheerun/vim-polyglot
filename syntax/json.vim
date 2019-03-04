@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'json') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:	JSON
 " Maintainer:	Eli Parra <eli@elzr.com> https://github.com/elzr/vim-json
@@ -139,5 +141,3 @@ endif
 "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 "THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 "See https://twitter.com/elzr/status/294964017926119424
-
-endif

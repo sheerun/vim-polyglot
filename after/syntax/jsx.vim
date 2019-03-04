@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'jsx') != -1
+  finish
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim syntax file
 "
@@ -65,5 +67,3 @@ syn cluster jsExpression add=jsxRegion
 
 " Allow jsxRegion to contain reserved words.
 syn cluster javascriptNoReserved add=jsxRegion
-
-endif

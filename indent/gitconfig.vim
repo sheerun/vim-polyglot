@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'git') != -1
+  finish
+endif
+
 " Vim indent file
 " Language:	git config file
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -38,5 +40,3 @@ function! GetGitconfigIndent()
     return -1
   endif
 endfunction
-
-endif

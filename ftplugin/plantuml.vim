@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'plantuml') != -1
+  finish
+endif
+
 if exists('b:loaded_plantuml_plugin')
   finish
 endif
@@ -33,5 +35,3 @@ let b:endwise_syngroups = 'plantumlKeyword'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

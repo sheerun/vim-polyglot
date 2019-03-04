@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'html5') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:     Electron
 " Maintainer:   othree <othree@gmail.com>
@@ -15,5 +17,3 @@ syn keyword htmlArg contained useragent disablewebsecurity partition allowpopups
 syn keyword htmlArg contained webpreferences blinkfeatures disableblinkfeatures
 syn keyword htmlArg contained guestinstance disableguestresize 
 
-
-endif

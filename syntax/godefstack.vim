@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'go') != -1
+  finish
+endif
+
 if exists("b:current_syntax")
   finish
 endif
@@ -20,5 +22,3 @@ hi def link godefStackFilename          Directory
 hi def link godefStackEntryLocationNumber LineNr
 
 " vim: sw=2 ts=2 et
-
-endif

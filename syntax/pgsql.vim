@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pgsql') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'pgsql') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:     pgsql
 " Maintainer:   Devrim GUNDUZ <devrim@PostgreSQL.org>
@@ -2281,5 +2283,3 @@ let b:current_syntax = "pgsql"
 
 " Section: Modelines {{{1
 " vim600: set foldmethod=marker foldlevel=0 :
-
-endif

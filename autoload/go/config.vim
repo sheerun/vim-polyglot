@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'go') != -1
+  finish
+endif
+
 " don't spam the user when Vim is started in Vi compatibility mode
 let s:cpo_save = &cpo
 set cpo&vim
@@ -458,5 +460,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim: sw=2 ts=2 et
-
-endif

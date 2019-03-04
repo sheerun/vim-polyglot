@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'go') != -1
+  finish
+endif
+
 " gomod.vim: Vim syntax file for go.mod file
 "
 " Quit when a (custom) syntax file was already loaded
@@ -62,5 +64,3 @@ syntax match gomodVersion "v[2-9]\{1}\d\?\.0\.0-\d\{14\}-\x\+\%(+incompatible\>\
 highlight default link gomodVersion Identifier
 
 let b:current_syntax = "gomod"
-
-endif

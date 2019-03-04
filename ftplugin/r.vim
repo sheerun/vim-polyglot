@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'r-lang') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'r-lang') != -1
+  finish
+endif
+
 " ftplugin for R files
 "
 " Author: Iago Mosqueira <i.mosqueira@ic.ac.uk>
@@ -69,5 +71,3 @@ inoremap <M-Enter> <Esc>:execute line(".") 'w >> ~/.r-pipe'<CR>o
 
 " Send current file to R
 noremap <buffer> <F5> :execute '1 ,' line("$") 'w >> ~/.r-pipe' <CR><CR>
-
-endif

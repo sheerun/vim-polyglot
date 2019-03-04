@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c/c++') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'c/c++') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:	C
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
@@ -489,5 +491,3 @@ unlet s:ft
 let &cpo = s:cpo_save
 unlet s:cpo_save
 " vim: ts=8
-
-endif

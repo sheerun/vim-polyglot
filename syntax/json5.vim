@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json5') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'json5') != -1
+  finish
+endif
+
 " Syntax setup {{{1
 if exists('b:current_syntax') && b:current_syntax == 'json5'
   finish
@@ -52,5 +54,3 @@ if !exists('b:current_syntax')
 endif
 
 " vim: fdm=marker
-
-endif

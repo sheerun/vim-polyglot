@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'html5') != -1
+  finish
+endif
+
 " Vim indent script for HTML
 " Header: "{{{
 " Maintainer:	Bram Moolenaar
@@ -1061,5 +1063,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim: fdm=marker ts=8 sw=2 tw=78
-
-endif

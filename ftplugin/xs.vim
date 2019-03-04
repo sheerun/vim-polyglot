@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'perl') != -1
+  finish
+endif
+
 " Vim filetype plugin file
 " Language:      XS (Perl extension interface language)
 " Maintainer:    vim-perl <vim-perl@googlegroups.com>
@@ -14,5 +16,3 @@ endif
 
 " Just use the C plugin for now.
 runtime! ftplugin/c.vim ftplugin/c_*.vim ftplugin/c/*.vim
-
-endif

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'coffee-script') != -1
+  finish
+endif
+
 " Language:    CoffeeScript
 " Maintainer:  Mick Koch <mick@kochm.co>
 " URL:         http://github.com/kchmck/vim-coffee-script
@@ -20,10 +22,10 @@ if exists('s:current_syntax_save')
   let b:current_syntax = s:current_syntax_save
   unlet s:current_syntax_save
 endif
-
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'glsl') != -1
+  finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'glsl') == -1
-  
+
 " Language: OpenGL Shading Language
 " Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
 
@@ -33,10 +35,10 @@ syn region ShaderScript
       \ keepend
       \ end="</script>"me=s-1
       \ contains=@GLSL,htmlScriptTag,@htmlPreproc
-
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'html5') != -1
+  finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
+
 " Vim syntax file
 " Language:     HTML (version 5.1)
 " Last Change:  2017 Feb 15
@@ -49,10 +51,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
 " https://github.com/w3c/html/issues/694
 syntax region htmlComment start=+<!--+ end=+-->+ contains=@Spell
 syntax region htmlComment start=+<!DOCTYPE+ keepend end=+>+
-
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'less') != -1
+  finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'less') == -1
-  
+
 if !exists("g:less_html_style_tags")
   let g:less_html_style_tags = 1
 endif
@@ -78,6 +80,4 @@ syn region lessStyle start=+<style [^>]*type *=[^>]*text/less[^>]*>+ keepend end
 " Reset since 'less' isn't really the current_syntax.
 if exists("s:pre_less_cur_syn")
    let b:current_syntax = s:pre_less_cur_syn
-endif
-
 endif

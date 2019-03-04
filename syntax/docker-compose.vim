@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'dockerfile') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language: Dockerfile
 " Maintainer: Eugene Kalinin
@@ -85,5 +87,3 @@ set commentstring=#\ %s
 
 " Enable automatic comment insertion
 setlocal fo+=cro
-
-endif

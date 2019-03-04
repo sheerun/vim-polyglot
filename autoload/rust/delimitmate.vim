@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'rust') != -1
+  finish
+endif
+
 let s:delimitMate_extra_excluded_regions = ',rustLifetimeCandidate,rustGenericLifetimeCandidate'
 
 " For this buffer, when delimitMate issues the `User delimitMate_map`
@@ -44,5 +46,3 @@ endfunction
 
 " vim: set et sw=4 sts=4 ts=8:
 
-
-endif

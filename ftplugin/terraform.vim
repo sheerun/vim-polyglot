@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'terraform') != -1
+  finish
+endif
+
 " terraform.vim - basic vim/terraform integration
 " Maintainer: HashiVim <https://github.com/hashivim>
 
@@ -71,5 +73,3 @@ augroup terraform
     autocmd BufWritePre *.tfvars call terraform#fmt()
   endif
 augroup END
-
-endif

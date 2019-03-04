@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'org') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'org') != -1
+  finish
+endif
+
 syn match org_todo_key /\[\zs[^]]*\ze\]/
 hi def link org_todo_key Identifier
 
@@ -47,5 +49,3 @@ endif
 
 call s:ReadTodoKeywords(g:org_todo_keywords, s:todo_headings)
 unlet! s:todo_headings
-
-endif

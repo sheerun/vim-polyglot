@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'julia') != -1
+  finish
+endif
+
 " Vim filetype plugin file
 " Language:	Julia
 " Maintainer:	Carlo Baldassi <carlobaldassi@gmail.com>
@@ -107,5 +109,3 @@ let b:undo_ftplugin .= " | delcommand JuliaDoc | delcommand JuliaDocKeywordprg"
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
-
-endif

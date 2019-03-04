@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slime') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'slime') != -1
+  finish
+endif
+
 " Vim indent file
 " Language:	Slime
 
@@ -75,5 +77,3 @@ function! GetSlimeIndent()
 endfunction
 
 " vim:set sw=2:
-
-endif

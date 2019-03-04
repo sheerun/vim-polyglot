@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'go') != -1
+  finish
+endif
+
 if exists("b:did_indent")
   finish
 endif
@@ -54,5 +56,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim: sw=2 ts=2 et
-
-endif

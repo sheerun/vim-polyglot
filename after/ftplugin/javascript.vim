@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'javascript') != -1
+  finish
+endif
+
 " Vim filetype plugin file
 " Language:     JavaScript
 " Maintainer:   vim-javascript community
@@ -11,6 +13,4 @@ if exists('b:undo_ftplugin')
   let b:undo_ftplugin .= ' | setlocal iskeyword< suffixesadd<'
 else
   let b:undo_ftplugin = 'setlocal iskeyword< suffixesadd<'
-endif
-
 endif

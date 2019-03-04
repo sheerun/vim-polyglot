@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cucumber') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'cucumber') != -1
+  finish
+endif
+
 " Vim compiler file
 " Compiler:	Cucumber
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -29,5 +31,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim:set sw=2 sts=2:
-
-endif

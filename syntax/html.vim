@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'html5') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:     HTML (version 5.1)
 "               SVG (SVG 1.1 Second Edition)
@@ -190,5 +192,3 @@ syn keyword htmlArg contained scriptlevel scriptminsize scriptsize scriptsizemul
 syn keyword htmlArg contained stretchy subscriptshift superscriptshift symmetric thickmathspace thinmathspace type valign verythickmathspace verythinmathspace
 syn keyword htmlArg contained veryverythickmathspace veryverythinmathspace voffset width xref
 
-
-endif

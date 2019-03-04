@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'html5') != -1
+  finish
+endif
+
 " Vim completion for WAI-ARIA data file
 " Language:       HTML + WAI-ARIA
 " Maintainer:     othree <othree@gmail.com>
@@ -457,5 +459,3 @@ let g:xmldata_aria = {
     \ 'default_role': default_role,
     \ 'vimariaattrinfo': aria_attributes_value
 \ }
-
-endif

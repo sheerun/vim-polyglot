@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'twig') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'twig') != -1
+  finish
+endif
+
 " Vim filetype plugin
 " Language: Twig
 " Maintainer: F. Gabriel Gosselin <gabrielNOSPAM@evidens.ca>
@@ -40,5 +42,3 @@ else
 endif
 
 " vim:set sw=2:
-
-endif

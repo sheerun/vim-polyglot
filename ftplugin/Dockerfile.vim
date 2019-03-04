@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'dockerfile') != -1
+  finish
+endif
+
 function! DockerfileReplaceInstruction(original, replacement)
     let syn = synIDtrans(synID(line("."), col(".") - 1, 0))
     if syn != hlID("Comment") && syn != hlID("Constant") && strlen(getline(".")) == 0
@@ -27,5 +29,3 @@ inoreabbr <silent> <buffer> workdir <C-R>=DockerfileReplaceInstruction("workdir"
 inoreabbr <silent> <buffer> arg <C-R>=DockerfileReplaceInstruction("arg", "ARG")<CR>
 inoreabbr <silent> <buffer> onbuild <C-R>=DockerfileReplaceInstruction("onbuild", "ONBUILD")<CR>
 inoreabbr <silent> <buffer> stopsignal <C-R>=DockerfileReplaceInstruction("stopsignal", "STOPSIGNAL")<CR>
-
-endif

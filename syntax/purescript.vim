@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'purescript') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'purescript') != -1
+  finish
+endif
+
 " syntax highlighting for purescript
 "
 " Heavily modified version of the purescript syntax
@@ -217,5 +219,3 @@ highlight def link purescriptType Type
 highlight def link purescriptComment Comment
 
 let b:current_syntax = "purescript"
-
-endif

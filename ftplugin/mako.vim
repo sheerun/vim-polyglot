@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mako') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'mako') != -1
+  finish
+endif
+
 " Vim filetype plugin file
 " Language:     Mako
 " Maintainer:   Randy Stauner <randy@magnificent-tears.com>
@@ -11,5 +13,3 @@ let b:did_ftplugin = 1
 
 setlocal comments=:##
 setlocal commentstring=##%s
-
-endif

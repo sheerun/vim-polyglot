@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'puppet') != -1
+  finish
+endif
+
 " Language:     Puppet
 " Maintainer:   Voxpupuli
 " URL:          https://github.com/voxpupuli/vim-puppet
@@ -436,5 +438,3 @@ HiLink puppetComment              Comment
 delcommand HiLink
 
 let b:current_syntax = "puppet"
-
-endif

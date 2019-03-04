@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ansible') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language: Jinja2 - with special modifications for compound-filetype
 " compatibility
@@ -97,5 +99,3 @@ if !exists("did_jinja_syn_inits")
 endif
 
 let b:current_syntax = "jinja2"
-
-endif

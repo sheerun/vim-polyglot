@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'dart') != -1
+  finish
+endif
+
 if exists('b:did_ftplugin')
   finish
 endif
@@ -29,5 +31,3 @@ setlocal includeexpr=dart#resolveUri(v:fname)
 setlocal isfname+=:
 
 let b:undo_ftplugin = 'setl et< fo< sw< sts< com< cms< inex< isf<'
-
-endif

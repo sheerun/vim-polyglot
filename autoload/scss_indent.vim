@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scss') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'scss') != -1
+  finish
+endif
+
 " usage:
 " set indentexpr=scss_indent#GetIndent(v:lnum)
 fun! scss_indent#GetIndent(lnum)
@@ -37,5 +39,3 @@ fun! scss_indent#GetIndent(lnum)
     return 0
   endif
 endfun
-
-endif

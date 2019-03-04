@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'terraform') != -1
+  finish
+endif
+
 " Forked from Larry Gilbert's syntax file
 " github.com/L2G/vim-syntax-terraform
 
@@ -3357,5 +3359,3 @@ hi def link terraValueFunction     Identifier
 hi def link terraValueVarSubscript Identifier
 
 let b:current_syntax = "terraform"
-
-endif

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ruby') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:		Ruby
 " Maintainer:		Doug Kearns <dougkearns@gmail.com>
@@ -558,5 +560,3 @@ unlet! s:cpo_sav
 delc SynFold
 
 " vim: nowrap sw=2 sts=2 ts=8 noet fdm=marker:
-
-endif

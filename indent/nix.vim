@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nix') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'nix') != -1
+  finish
+endif
+
 " Vim indent file
 " Language:    Nix
 " Maintainer:  Daiderd Jordan <daiderd@gmail.com>
@@ -103,5 +105,3 @@ endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'nginx') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language: nginx.conf
 " Maintainer: Chris Aumann <me@chr4.org>
@@ -2305,5 +2307,3 @@ hi link ngxGzipOn Error
 hi link ngxSSLCipherInsecure Error
 
 hi link ngxThirdPartyLuaBlock Function
-
-endif

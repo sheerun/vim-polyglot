@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'vifm') != -1
+  finish
+endif
+
 " Filetype plugin for vifm rename buffer
 " Maintainer:  xaizek <xaizek@posteo.net>
 " Last Change: October 05, 2014
@@ -58,5 +60,3 @@ setlocal cursorbind
 setlocal scrollbind
 
 " vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab cinoptions-=(0 :
-
-endif

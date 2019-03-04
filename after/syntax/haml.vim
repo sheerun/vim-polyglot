@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'coffee-script') != -1
+  finish
+endif
+
 " Language:    CoffeeScript
 " Maintainer:  Sven Felix Oberquelle <Svelix.Github@gmail.com>
 " URL:         http://github.com/kchmck/vim-coffee-script
@@ -22,6 +24,4 @@ syn region  hamlCoffeescriptFilter matchgroup=hamlFilter
 if exists('s:current_syntax_save')
   let b:current_syntax = s:current_syntax_save
   unlet s:current_syntax_save
-endif
-
 endif

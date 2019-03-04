@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'elm') != -1
+  finish
+endif
+
 " syntax highlighting for Elm (http://elm-lang.org/)
 
 if exists('b:current_syntax')
@@ -79,5 +81,3 @@ hi def link elmNumberType Identifier
 syn sync minlines=500
 
 let b:current_syntax = 'elm'
-
-endif

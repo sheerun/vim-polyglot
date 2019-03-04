@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'org') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'org') != -1
+  finish
+endif
+
 " Delete the next line to avoid the special indention of items
 if !exists("g:org_indent")
   let g:org_indent = 0
@@ -133,5 +135,3 @@ EOF
 		return l:tmp
 	endif
 endfunction
-
-endif

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scala') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'scala') != -1
+  finish
+endif
+
 " Vim filetype plugin
 " Language:             Scala
 " Maintainer:           Derek Wyatt
@@ -176,5 +178,3 @@ noremap <script> <buffer> <silent> ]] :call <SID>NextSection(0)<cr>
 noremap <script> <buffer> <silent> [[ :call <SID>NextSection(1)<cr>
 
 " vim:set sw=2 sts=2 ts=8 et:
-
-endif

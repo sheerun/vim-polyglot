@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'org') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'org') != -1
+  finish
+endif
+
 " org.vim -- Text outlining and task management for Vim based on Emacs' Org-Mode
 " @Author       : Jan Christoph Ebersbach (jceb@e-jc.de)
 " @License      : AGPL3 (see http://www.gnu.org/licenses/agpl.txt)
@@ -169,5 +171,3 @@ fun CalendarAction(day, month, year, week, dir)
 	" restore calendar_action
 	let g:calendar_action = g:org_calendar_action_backup
 endf
-
-endif

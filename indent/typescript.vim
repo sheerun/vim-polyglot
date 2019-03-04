@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
+  finish
+endif
+
 " Vim indent file
 " Language: Typescript
 " Acknowledgement: Almost direct copy from https://github.com/pangloss/vim-javascript
@@ -359,5 +361,3 @@ endfunction
 let &cpo = s:cpo_save
 unlet s:cpo_save
 
-
-endif

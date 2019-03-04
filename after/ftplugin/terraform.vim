@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'terraform') != -1
+  finish
+endif
+
 if !exists('g:terraform_align')
   let g:terraform_align = 0
 endif
@@ -80,6 +82,4 @@ if exists('g:terraform_commentstring')
     let &l:commentstring=g:terraform_commentstring
 else
     setlocal commentstring=#%s
-endif
-
 endif

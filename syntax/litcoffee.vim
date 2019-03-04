@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'coffee-script') != -1
+  finish
+endif
+
 " Language:   Literate CoffeeScript
 " Maintainer: Michael Smith <michael@diglumi.com>
 " URL:        https://github.com/mintplant/vim-literate-coffeescript
@@ -23,5 +25,3 @@ syn region inlineCoffee start='^    \|\t' end='$' contains=@coffee
 highlight default link notCoffee Comment
 
 let b:current_syntax = "litcoffee"
-
-endif

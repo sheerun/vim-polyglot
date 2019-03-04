@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'vifm') != -1
+  finish
+endif
+
 " vifm command-line editing buffer filetype plugin
 " Maintainer:  xaizek <xaizek@posteo.net>
 " Last Change: August 18, 2013
@@ -13,5 +15,3 @@ let b:did_ftplugin = 1
 call vifm#edit#Init()
 
 " vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab cinoptions-=(0 :
-
-endif

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cmake') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'cmake') != -1
+  finish
+endif
+
 " Vim syntax file
 " Program:      CMake - Cross-Platform Makefile Generator
 " Version:      cmake version 3.13.20181220-g0495c
@@ -3283,5 +3285,3 @@ let &cpo = s:keepcpo
 unlet s:keepcpo
 
 " vim: set nowrap:
-
-endif

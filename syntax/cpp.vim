@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c/c++') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'c/c++') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:	C++
 " Current Maintainer:	vim-jp (https://github.com/vim-jp/vim-cpp)
@@ -76,5 +78,3 @@ hi def link cppNumber		Number
 let b:current_syntax = "cpp"
 
 " vim: ts=8
-
-endif

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'latex') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'latex') != -1
+  finish
+endif
+
 " LaTeX Box latexmk functions
 
 " Options and variables {{{
@@ -554,5 +556,3 @@ endif
 " }}}
 
 " vim:fdm=marker:ff=unix:noet:ts=4:sw=4
-
-endif

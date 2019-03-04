@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'dart') != -1
+  finish
+endif
+
 
 function! s:error(text) abort
   echohl Error
@@ -170,5 +172,3 @@ function! dart#setModifiable() abort
     setlocal nomodifiable
   endif
 endfunction
-
-endif

@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'jsx') != -1
+  finish
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim indent file
 "
@@ -114,5 +116,3 @@ fu! GetJsxIndent()
 
   return ind
 endfu
-
-endif

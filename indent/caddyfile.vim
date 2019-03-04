@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'caddyfile') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'caddyfile') != -1
+  finish
+endif
+
 if exists('b:did_indent')
 	finish
 endif
@@ -41,5 +43,3 @@ function! GetCaddyfileIndent(lnum)
 
 	return ind
 endfunction
-
-endif

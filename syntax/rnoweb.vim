@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'r-lang') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'r-lang') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:    R noweb Files
 " Maintainer:  Johannes Ranke <jranke@uni-bremen.de>
@@ -56,5 +58,3 @@ hi def link rnowebChunkReference Delimiter
 
 let   b:current_syntax = "rnoweb"
 " vim: foldmethod=marker:
-
-endif

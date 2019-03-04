@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'julia') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:	julia
 " Maintainer:	Carlo Baldassi <carlobaldassi@gmail.com>
@@ -559,5 +561,3 @@ end
 syntax sync fromstart
 
 let b:current_syntax = "julia"
-
-endif

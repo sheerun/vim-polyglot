@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'html5') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:     RDFa
 " Maintainer:   othree <othree@gmail.com>
@@ -11,5 +13,3 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
 " RDFa
 " http://www.w3.org/TR/rdfa-syntax/#s_syntax
 syn keyword htmlArg contained about content datatype href inlist prefix property rel resource rev src typeof vocab
-
-endif

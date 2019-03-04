@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'moonscript') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'moonscript') != -1
+  finish
+endif
+
 " Language:    MoonScript
 " Maintainer:  leafo <leafot@gmail.com>
 " Based On:    CoffeeScript by Mick Koch <kchmck@gmail.com>
@@ -16,5 +18,3 @@ setlocal comments=:--
 setlocal commentstring=--\ %s
 
 let b:undo_ftplugin = "setlocal commentstring< comments< formatoptions<"
-
-endif

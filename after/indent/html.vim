@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'coffee-script') != -1
+  finish
+endif
+
 " Language:    CoffeeScript
 " Maintainer:  Mick Koch <mick@kochm.co>
 " URL:         http://github.com/kchmck/vim-coffee-script
@@ -33,5 +35,3 @@ function! GetCoffeeHtmlIndent(curlinenum)
   " Otherwise use html indenting.
   exec 'return ' s:htmlIndentExpr
 endfunction
-
-endif

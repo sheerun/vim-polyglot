@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'protobuf') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'protobuf') != -1
+  finish
+endif
+
 " Protocol Buffers - Google's data interchange format
 " Copyright 2008 Google Inc.  All rights reserved.
 " https://developers.google.com/protocol-buffers/
@@ -107,5 +109,3 @@ if version >= 508 || !exists("did_proto_syn_inits")
 endif
 
 let b:current_syntax = "proto"
-
-endif

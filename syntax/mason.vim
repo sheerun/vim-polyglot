@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'perl') != -1
+  finish
+endif
+
 " Vim syntax file
 " Language:     Mason (Perl embedded in HTML)
 " Maintainer:   vim-perl <vim-perl@googlegroups.com>
@@ -82,6 +84,4 @@ let b:current_syntax = "mason"
 
 if main_syntax == 'mason'
 	unlet main_syntax
-endif
-
 endif

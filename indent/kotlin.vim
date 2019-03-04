@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'kotlin') != -1
+  finish
+endif
+
 " Vim indent file
 " Language: Kotlin
 " Maintainer: Alexander Udalov
@@ -66,5 +68,3 @@ function! GetKotlinIndent()
 
     return prev_indent
 endfunction
-
-endif

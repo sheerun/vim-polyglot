@@ -1,5 +1,7 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
-  
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'elixir') != -1
+  finish
+endif
+
 if exists("b:current_syntax")
   finish
 endif
@@ -228,5 +230,3 @@ let b:current_syntax = "elixir"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif
