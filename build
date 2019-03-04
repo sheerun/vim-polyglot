@@ -68,7 +68,7 @@ extract() {
       continue
     fi
 
-    [ -d "${dir}/ftdetect" ] && for f in "${dir}/ftdetect/"*; do
+    [ -d "${dir}${subtree:-/}ftdetect" ] && for f in "${dir}${subtree:-/}ftdetect/"*; do
       cat <<EOF >> tmp/polyglot.vim
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '${pack%%:*}') == -1
   augroup filetypedetect
@@ -215,6 +215,7 @@ PACKS="
   mako:sophacles/vim-bundle-mako
   markdown:plasticboy/vim-markdown:_SYNTAX
   mathematica:rsmenon/vim-mathematica
+  meson:mesonbuild/meson:_ALL:/data/syntax-highlighting/vim/
   moonscript:leafo/moonscript-vim
   nginx:chr4/nginx.vim
   nim:zah/nim.vim:_BASIC

@@ -683,6 +683,14 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,i
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'meson') == -1
+  augroup filetypedetect
+  " meson, from meson.vim in mesonbuild/meson:_ALL:/data/syntax-highlighting/vim/
+au BufNewFile,BufRead meson.build set filetype=meson
+au BufNewFile,BufRead meson_options.txt set filetype=meson
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'moonscript') == -1
   augroup filetypedetect
   " moonscript, from moon.vim in leafo/moonscript-vim
