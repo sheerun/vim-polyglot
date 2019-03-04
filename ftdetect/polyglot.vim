@@ -771,6 +771,55 @@ au BufRead,BufNewFile *.nix set filetype=nix
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+  augroup filetypedetect
+  " ocaml, from jbuild.vim in rgrinberg/vim-ocaml
+au BufRead,BufNewFile jbuild,dune,dune-project set ft=jbuild
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+  augroup filetypedetect
+  " ocaml, from oasis.vim in rgrinberg/vim-ocaml
+au BufNewFile,BufRead _oasis set filetype=oasis
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+  augroup filetypedetect
+  " ocaml, from ocaml.vim in rgrinberg/vim-ocaml
+au BufRead,BufNewFile *.ml,*.mli,*.mll,*.mly,.ocamlinit,*.mlt,*.mlp,*.mlip,*.mli.cppo,*.ml.cppo set ft=ocaml
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+  augroup filetypedetect
+  " ocaml, from ocamlbuild_tags.vim in rgrinberg/vim-ocaml
+au BufNewFile,BufRead _tags set filetype=ocamlbuild_tags
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+  augroup filetypedetect
+  " ocaml, from omake.vim in rgrinberg/vim-ocaml
+au! BufRead,BufNewFile OMakefile,OMakeroot,*.om,OMakeroot.in set ft=omake
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+  augroup filetypedetect
+  " ocaml, from opam.vim in rgrinberg/vim-ocaml
+au BufNewFile,BufRead opam,*.opam set filetype=opam
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+  augroup filetypedetect
+  " ocaml, from sexplib.vim in rgrinberg/vim-ocaml
+au BufRead,BufNewFile *.sexp set ft=sexplib
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
   augroup filetypedetect
   " opencl, from opencl.vim in petRUShka/vim-opencl

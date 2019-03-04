@@ -224,7 +224,7 @@ PACKS="
   nim:zah/nim.vim:_BASIC
   nix:LnL7/vim-nix
   objc:b4winckler/vim-objc
-  ocaml:jrk/vim-ocaml
+  ocaml:rgrinberg/vim-ocaml
   octave:vim-scripts/octave.vim--
   opencl:petRUShka/vim-opencl
   perl:vim-perl/vim-perl
