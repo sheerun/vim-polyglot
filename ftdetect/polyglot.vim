@@ -716,14 +716,6 @@ au! BufRead,BufNewFile *.cl set filetype=opencl
   augroup end
 endif
 
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'org') == -1
-  augroup filetypedetect
-  " org, from org.vim in jceb/vim-orgmode
-autocmd BufNewFile,BufRead *.org setfiletype org
-"autocmd BufNewFile,BufReadPost org:todo* setfiletype orgtodo
-  augroup end
-endif
-
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
   augroup filetypedetect
   " perl, from mason-in-html.vim in vim-perl/vim-perl

@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 100+ times faster** than the <!--Package Count-->118<!--/Package Count--> packages it consists of.
+- It **installs and updates 100+ times faster** than the <!--Package Count-->117<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -111,7 +111,6 @@ If you need full functionality of any plugin, please use it directly with your p
 - [ocaml](https://github.com/jrk/vim-ocaml) (syntax, indent, ftplugin)
 - [octave](https://github.com/vim-scripts/octave.vim--) (syntax)
 - [opencl](https://github.com/petRUShka/vim-opencl) (syntax, indent, ftplugin)
-- [org](https://github.com/jceb/vim-orgmode) (syntax, indent, ftplugin)
 - [perl](https://github.com/vim-perl/vim-perl) (syntax, indent, ftplugin)
 - [pgsql](https://github.com/exu/pgsql.vim) (syntax)
 - [php](https://github.com/StanAngeloff/php.vim) (syntax)
