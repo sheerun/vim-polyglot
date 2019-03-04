@@ -1,4 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'python-ident') != -1
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'python-indent') != -1
   finish
 endif
 

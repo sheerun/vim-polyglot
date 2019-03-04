@@ -238,7 +238,7 @@ PACKS="
   puppet:voxpupuli/vim-puppet
   purescript:purescript-contrib/purescript-vim
   python-compiler:aliev/vim-compiler-python
-  python-ident:Vimjas/vim-python-pep8-indent
+  python-indent:Vimjas/vim-python-pep8-indent
   python:vim-python/python-syntax
   qmake:artoj/qmake-syntax-vim
   qml:peterhoeg/vim-qml
