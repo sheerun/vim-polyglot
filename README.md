@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 100+ times faster** than the <!--Package Count-->117<!--/Package Count--> packages it consists of.
+- It **installs and updates 100+ times faster** than the <!--Package Count-->118<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -62,6 +62,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [cryptol](https://github.com/victoredwardocallaghan/cryptol.vim) (syntax, compiler, ftplugin)
 - [crystal](https://github.com/rhysd/vim-crystal) (syntax, indent, autoload, ftplugin)
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin)
+- [cue](https://github.com/mgrabovsky/vim-cuesheet) (syntax)
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin)
 - [dockerfile](https://github.com/ekalinin/Dockerfile.vim) (syntax, indent, ftplugin)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, autoload, ftplugin)

@@ -242,6 +242,13 @@ autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cue') == -1
+  augroup filetypedetect
+  " cue, from cuesheet.vim in mgrabovsky/vim-cuesheet
+autocmd BufRead,BufNewFile *.cue set filetype=cuesheet
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
   augroup filetypedetect
   " dart, from dart.vim in dart-lang/dart-vim-plugin

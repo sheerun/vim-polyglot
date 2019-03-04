@@ -170,6 +170,7 @@ PACKS="
   cryptol:victoredwardocallaghan/cryptol.vim
   crystal:rhysd/vim-crystal
   cucumber:tpope/vim-cucumber
+  cue:mgrabovsky/vim-cuesheet
   dart:dart-lang/dart-vim-plugin
   dockerfile:ekalinin/Dockerfile.vim
   elixir:elixir-lang/vim-elixir
