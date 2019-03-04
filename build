@@ -213,7 +213,6 @@ PACKS="
   less:groenewege/vim-less
   liquid:tpope/vim-liquid
   livescript:gkz/vim-ls
-  llvm:llvm/llvm-project:_ALL:/llvm/utils/vim/
   lua:tbastos/vim-lua
   mako:sophacles/vim-bundle-mako
   markdown:plasticboy/vim-markdown:_SYNTAX
