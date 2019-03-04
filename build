@@ -237,6 +237,7 @@ PACKS="
   python-compiler:aliev/vim-compiler-python
   python-ident:Vimjas/vim-python-pep8-indent
   python:vim-python/python-syntax
+  qmake:artoj/qmake-syntax-vim
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim
   racket:wlangstroth/vim-racket

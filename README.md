@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 100+ times faster** than the <!--Package Count-->123<!--/Package Count--> packages it consists of.
+- It **installs and updates 100+ times faster** than the <!--Package Count-->124<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -129,6 +129,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [python-compiler](https://github.com/aliev/vim-compiler-python) (compiler, autoload)
 - [python-ident](https://github.com/Vimjas/vim-python-pep8-indent) (indent)
 - [python](https://github.com/vim-python/python-syntax) (syntax)
+- [qmake](https://github.com/artoj/qmake-syntax-vim) (syntax)
 - [qml](https://github.com/peterhoeg/vim-qml) (syntax, indent, ftplugin)
 - [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
 - [racket](https://github.com/wlangstroth/vim-racket) (syntax, indent, autoload, ftplugin)

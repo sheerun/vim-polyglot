@@ -908,6 +908,20 @@ autocmd FileType python compiler python
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qmake') == -1
+  augroup filetypedetect
+  " qmake, from pri.vim in artoj/qmake-syntax-vim
+au BufRead,BufNewFile *.pri set filetype=qmake
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qmake') == -1
+  augroup filetypedetect
+  " qmake, from pro.vim in artoj/qmake-syntax-vim
+au BufRead,BufNewFile *.pro set filetype=qmake
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
   augroup filetypedetect
   " qml, from qml.vim in peterhoeg/vim-qml
