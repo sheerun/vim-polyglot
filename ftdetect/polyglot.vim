@@ -906,6 +906,17 @@ au BufRead,BufNewFile *.raml set ft=raml
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'reason') == -1
+  augroup filetypedetect
+  " reason, from reason.vim in reasonml-editor/vim-reason-plus
+" Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+
+au BufRead,BufNewFile *.re set filetype=reason
+au BufRead,BufNewFile *.rei set filetype=reason
+au BufNewFile,BufRead .merlin       set ft=merlin
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
   augroup filetypedetect
   " ruby, from ruby.vim in vim-ruby/vim-ruby
