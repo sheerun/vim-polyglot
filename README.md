@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 100+ times faster** than the <!--Package Count-->124<!--/Package Count--> packages it consists of.
+- It **installs and updates 100+ times faster** than the <!--Package Count-->125<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -72,6 +72,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent)
 - [ferm](https://github.com/vim-scripts/ferm.vim) (syntax)
 - [fish](https://github.com/dag/vim-fish) (syntax, indent, compiler, autoload, ftplugin)
+- [flatbuffers](https://github.com/dcharbon/vim-flatbuffers) (syntax)
 - [fsharp](https://github.com/fsharp/vim-fsharp) (syntax, indent)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin)
 - [glsl](https://github.com/tikhomirov/vim-glsl) (syntax, indent)

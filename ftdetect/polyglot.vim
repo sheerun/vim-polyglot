@@ -345,6 +345,13 @@ autocmd BufNewFile,BufRead *.ferm setf ferm
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'flatbuffers') == -1
+  augroup filetypedetect
+  " flatbuffers, from fbs.vim in dcharbon/vim-flatbuffers
+autocmd BufNewFile,BufRead *.fbs setfiletype fbs
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fsharp') == -1
   augroup filetypedetect
   " fsharp, from fsharp.vim in fsharp/vim-fsharp:_BASIC
