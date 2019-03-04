@@ -63,7 +63,7 @@ extract() {
 
     output "${subdirs##, })"$'\n'
 
-    if (echo "julia coffee-script elixir fish git plantuml scala swift" | grep -qF "$name"); then
+    if (echo "julia coffee-script elixir fish git plantuml scala swift jinja" | grep -qF "$name"); then
       echo "Skipping ftdetect installation of $name" >&2
       continue
     fi
@@ -199,6 +199,7 @@ PACKS="
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax
+  jinja:lepture/vim-jinja
   json5:GutenYe/json5.vim
   json:elzr/vim-json
   jst:briancollins/vim-jst
