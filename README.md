@@ -105,6 +105,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [less](https://github.com/groenewege/vim-less) (syntax, indent, ftplugin)
 - [liquid](https://github.com/tpope/vim-liquid) (syntax, indent, ftplugin)
 - [livescript](https://github.com/gkz/vim-ls) (syntax, indent, compiler, ftplugin)
+- [llvm](https://github.com/llvm/llvm-project) (syntax, indent, ftplugin)
 - [lua](https://github.com/tbastos/vim-lua) (syntax, indent)
 - [mako](https://github.com/sophacles/vim-bundle-mako) (syntax, indent, ftplugin)
 - [markdown](https://github.com/plasticboy/vim-markdown) (syntax, indent)
