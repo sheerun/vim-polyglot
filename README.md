@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 100+ times faster** than the <!--Package Count-->128<!--/Package Count--> packages it consists of.
+- It **installs and updates 100+ times faster** than the <!--Package Count-->129<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -103,6 +103,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [kotlin](https://github.com/udalov/kotlin-vim) (syntax, indent, ftplugin)
 - [latex](https://github.com/LaTeX-Box-Team/LaTeX-Box) (syntax, indent, ftplugin)
 - [less](https://github.com/groenewege/vim-less) (syntax, indent, ftplugin)
+- [lilypond](https://github.com/anowlcalledjosh/vim-lilypond) (syntax, indent, compiler, ftplugin)
 - [liquid](https://github.com/tpope/vim-liquid) (syntax, indent, ftplugin)
 - [livescript](https://github.com/gkz/vim-ls) (syntax, indent, compiler, ftplugin)
 - [lua](https://github.com/tbastos/vim-lua) (syntax, indent)

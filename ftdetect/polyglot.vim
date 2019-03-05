@@ -667,6 +667,16 @@ au BufNewFile,BufRead */templates/**.liquid,*/layout/**.liquid,*/snippets/**.liq
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'lilypond') == -1
+  augroup filetypedetect
+  " lilypond, from lilypond.vim in anowlcalledjosh/vim-lilypond
+"
+" Installed As:	vim/ftdetect/lilypond.vim
+"
+au! BufNewFile,BufRead *.ly,*.ily		set ft=lilypond
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'livescript') == -1
   augroup filetypedetect
   " livescript, from ls.vim in gkz/vim-ls
