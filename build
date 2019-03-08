@@ -216,6 +216,7 @@ PACKS="
   livescript:gkz/vim-ls
   lua:tbastos/vim-lua
   mako:sophacles/vim-bundle-mako
+  man:gpanders/vim-man
   markdown:plasticboy/vim-markdown:_SYNTAX
   mathematica:rsmenon/vim-mathematica
   mdx:jxnblk/vim-mdx-js
