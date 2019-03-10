@@ -73,8 +73,8 @@ syn region  pugPlainFilter matchgroup=pugFilter start="^\z(\s*\):\%(sass\|less\|
 
 syn match  pugScriptConditional "^\s*\<\%(if\|else\|else if\|elif\|unless\|while\|until\|case\|when\|default\)\>[?!]\@!"
 syn match  pugScriptStatement "^\s*\<\%(each\|for\|block\|prepend\|append\|mixin\|extends\|include\)\>[?!]\@!"
-syn region  pugScriptLoopRegion start="^\s*\(for \)" end="$" contains=pugScriptLoopKeywords
-syn keyword  pugScriptLoopKeywords for in
+syn region  pugScriptLoopRegion start="^\s*\(for\|each\)" end="$" contains=pugScriptLoopKeywords
+syn keyword  pugScriptLoopKeywords contained for each in
 
 syn region  pugJavascript start="^\z(\s*\)script\%(:\w\+\)\=" end="^\%(\z1\s\|\s*$\)\@!" contains=@htmlJavascript,pugJavascriptTag,pugCoffeescriptFilter keepend
 syn region javascriptInterpolation start=/${/ end=/}/ contained

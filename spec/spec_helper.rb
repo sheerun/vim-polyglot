@@ -8,6 +8,10 @@ Vimrunner::RSpec.configure do |config|
   # instance per test (slower, but can be easier to manage).
   config.reuse_server = !ENV['REUSE_SERVER'].nil?
 
+  if Gem::Platform.local.os == "darwin"
+    config.reuse_server = true
+  end
+
   # Decide how to start a Vim instance. In this block, an instance should be
   # spawned and set up with anything project-specific.
   config.start_vim do
