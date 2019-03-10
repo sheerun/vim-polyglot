@@ -10,12 +10,14 @@ describe "My Vim plugin" do
   extensions = extensions.split(/[\n,]/)
 
   extensions.each do |ext|
-    it "should parse #{ext} file" do
-      Timeout::timeout(20) do
-        write_file "#{ext}", ""
-        vim.edit "#{ext}"
-        vim.insert "sample"
-        vim.write
+    if ext.match?(/[a-z\.]+/i)
+      it "should parse #{ext} file" do
+        Timeout::timeout(20) do
+          write_file "#{ext}", ""
+          vim.edit "#{ext}"
+          vim.insert "sample"
+          vim.write
+        end
       end
     end
   end
