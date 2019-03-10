@@ -365,7 +365,7 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'glsl') == -1
   augroup filetypedetect
-  " glsl, from glsl.vim in tikhomirov/vim-glsl
+  " glsl, from glsl.vim in tikhomirov/vim-glsl:_NOAFTER
 " Language: OpenGL Shading Language
 " Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
 
@@ -640,7 +640,7 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'less') == -1
   augroup filetypedetect
-  " less, from less.vim in groenewege/vim-less
+  " less, from less.vim in groenewege/vim-less:_NOAFTER
 autocmd BufNewFile,BufRead *.less setf less
   augroup end
 endif

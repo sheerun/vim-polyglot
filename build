@@ -9,6 +9,8 @@ DIRS_BASIC="syntax compiler indent after/syntax after/indent"
 DIRS_ALL="syntax indent compiler autoload ftplugin after"
 # shellcheck disable=SC2034
 DIRS_SYNTAX="syntax indent after/syntax after/indent"
+# shellcheck disable=SC2034
+DIRS_NOAFTER="syntax compiler indent autoload ftplugin"
 DIRS_JAVASCRIPT="${DIRS} extras"
 read -r -a DIRS_RM <<<"$DIRS_JAVASCRIPT"
 
@@ -165,7 +167,7 @@ PACKS="
   cjsx:mtscout6/vim-cjsx
   clojure:guns/vim-clojure-static
   cmake:pboettch/vim-cmake-syntax
-  coffee-script:kchmck/vim-coffee-script
+  coffee-script:kchmck/vim-coffee-script:_NOAFTER
   cql:elubow/cql-vim
   cryptol:victoredwardocallaghan/cryptol.vim
   crystal:rhysd/vim-crystal
@@ -183,7 +185,7 @@ PACKS="
   flatbuffers:dcharbon/vim-flatbuffers
   fsharp:fsharp/vim-fsharp:_BASIC
   git:tpope/vim-git
-  glsl:tikhomirov/vim-glsl
+  glsl:tikhomirov/vim-glsl:_NOAFTER
   gmpl:maelvalais/gmpl.vim
   gnuplot:vim-scripts/gnuplot-syntax-highlighting
   go:fatih/vim-go:_BASIC
@@ -210,7 +212,7 @@ PACKS="
   julia:JuliaEditorSupport/julia-vim
   kotlin:udalov/kotlin-vim
   latex:LaTeX-Box-Team/LaTeX-Box
-  less:groenewege/vim-less
+  less:groenewege/vim-less:_NOAFTER
   liquid:tpope/vim-liquid
   lilypond:anowlcalledjosh/vim-lilypond
   livescript:gkz/vim-ls
