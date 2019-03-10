@@ -8,7 +8,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 100+ times faster** than the <!--Package Count-->130<!--/Package Count--> packages it consists of.
+- It **installs and updates 100+ times faster** than the <!--Package Count-->132<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -43,6 +43,7 @@ If you need full functionality of any plugin, please use it directly with your p
 ## Language packs
 
 <!--Language Packs-->
+- [acpiasl](https://github.com/martinlroth/vim-acpi-asl) (syntax)
 - [ansible](https://github.com/pearofducks/ansible-vim) (syntax, indent, ftplugin)
 - [apiblueprint](https://github.com/sheerun/apiblueprint.vim) (syntax)
 - [applescript](https://github.com/mityu/vim-applescript) (syntax, indent)
@@ -150,6 +151,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [scss](https://github.com/cakebaker/scss-syntax.vim) (syntax, autoload, ftplugin)
 - [slim](https://github.com/slim-template/vim-slim) (syntax, indent, ftplugin)
 - [slime](https://github.com/slime-lang/vim-slime-syntax) (syntax, indent)
+- [smt2](https://github.com/bohlender/vim-smt2) (syntax, autoload, ftplugin)
 - [solidity](https://github.com/tomlion/vim-solidity) (syntax, indent, ftplugin)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin)
 - [swift](https://github.com/keith/swift.vim) (syntax, indent, ftplugin)

@@ -88,6 +88,14 @@ augroup END
 if (!exists('g:graphql_javascript_tags'))
   let g:graphql_javascript_tags = ['gql', 'graphql', 'Relay.QL']
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'acpiasl') == -1
+  augroup filetypedetect
+  " acpiasl, from asl.vim in martinlroth/vim-acpi-asl
+au BufRead,BufNewFile *.asl set filetype=asl
+au BufRead,BufNewFile *.dsl set filetype=asl
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
   augroup filetypedetect
   " ansible, from ansible.vim in pearofducks/ansible-vim
@@ -1233,6 +1241,13 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slime') == -1
   augroup filetypedetect
   " slime, from slime.vim in slime-lang/vim-slime-syntax
 autocmd BufNewFile,BufRead *.slime set filetype=slime
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'smt2') == -1
+  augroup filetypedetect
+  " smt2, from smt2.vim in bohlender/vim-smt2
+autocmd BufRead,BufNewFile *.smt,*.smt2 set filetype=smt2
   augroup end
 endif
 

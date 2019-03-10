@@ -153,6 +153,7 @@ update_readme() {
 }
 
 PACKS="
+  acpiasl:martinlroth/vim-acpi-asl
   ansible:pearofducks/ansible-vim
   apiblueprint:sheerun/apiblueprint.vim
   applescript:mityu/vim-applescript:_SYNTAX
@@ -260,6 +261,7 @@ PACKS="
   scss:cakebaker/scss-syntax.vim
   slim:slim-template/vim-slim
   slime:slime-lang/vim-slime-syntax
+  smt2:bohlender/vim-smt2
   solidity:tomlion/vim-solidity
   stylus:wavded/vim-stylus
   swift:keith/swift.vim
