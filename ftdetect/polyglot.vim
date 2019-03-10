@@ -3,6 +3,14 @@ if !exists('g:jsx_ext_required')
   let g:jsx_ext_required = 0
 endif
 
+" Make csv loading faster
+if !exists('g:csv_start')
+  let g:csv_start = 1
+endif
+if !exists('g:csv_end')
+  let g:csv_end = 2
+endif
+
 " Disable json concealing by default
 if !exists('g:vim_json_syntax_conceal')
   let g:vim_json_syntax_conceal = 0
@@ -238,6 +246,14 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
 autocmd BufNewFile,BufReadPost *.cr setlocal filetype=crystal
 autocmd BufNewFile,BufReadPost Projectfile setlocal filetype=crystal
 autocmd BufNewFile,BufReadPost *.ecr setlocal filetype=eruby
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'csv') == -1
+  augroup filetypedetect
+  " csv, from csv.vim in chrisbra/csv.vim
+" Install Filetype detection for CSV files
+au BufRead,BufNewFile *.csv,*.dat,*.tsv,*.tab set filetype=csv
   augroup end
 endif
 

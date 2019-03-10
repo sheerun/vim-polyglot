@@ -3,6 +3,14 @@ if !exists('g:jsx_ext_required')
   let g:jsx_ext_required = 0
 endif
 
+" Make csv loading faster
+if !exists('g:csv_start')
+  let g:csv_start = 1
+endif
+if !exists('g:csv_end')
+  let g:csv_end = 2
+endif
+
 " Disable json concealing by default
 if !exists('g:vim_json_syntax_conceal')
   let g:vim_json_syntax_conceal = 0

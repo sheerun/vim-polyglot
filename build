@@ -171,6 +171,7 @@ PACKS="
   cql:elubow/cql-vim
   cryptol:victoredwardocallaghan/cryptol.vim
   crystal:rhysd/vim-crystal
+  csv:chrisbra/csv.vim
   cucumber:tpope/vim-cucumber
   cue:mgrabovsky/vim-cuesheet
   dart:dart-lang/dart-vim-plugin
