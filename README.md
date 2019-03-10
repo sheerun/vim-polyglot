@@ -1,4 +1,4 @@
-![vim-polyglot](https://i.imgur.com/1kRHKwh.png)
+![vim-polyglot](https://i.imgur.com/9RxQK6k.png)
 
 [![Build Status][travis-img-url]][travis-url] [![Maintenance](https://img.shields.io/maintenance/yes/2019.svg?maxAge=2592000)]()
 
