@@ -218,6 +218,7 @@ PACKS="
   liquid:tpope/vim-liquid
   lilypond:anowlcalledjosh/vim-lilypond
   livescript:gkz/vim-ls
+  llvm:rhysd/vim-llvm
   lua:tbastos/vim-lua
   mako:sophacles/vim-bundle-mako
   markdown:plasticboy/vim-markdown:_SYNTAX

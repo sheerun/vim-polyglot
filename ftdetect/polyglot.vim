@@ -714,6 +714,27 @@ autocmd BufNewFile,BufRead *Slakefile set filetype=ls
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'llvm') == -1
+  augroup filetypedetect
+  " llvm, from llvm-lit.vim in rhysd/vim-llvm
+au BufRead,BufNewFile lit.*cfg set filetype=python
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'llvm') == -1
+  augroup filetypedetect
+  " llvm, from llvm.vim in rhysd/vim-llvm
+au BufRead,BufNewFile *.ll set filetype=llvm
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'llvm') == -1
+  augroup filetypedetect
+  " llvm, from tablegen.vim in rhysd/vim-llvm
+au BufRead,BufNewFile *.td set filetype=tablegen
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mako') == -1
   augroup filetypedetect
   " mako, from mako.vim in sophacles/vim-bundle-mako
