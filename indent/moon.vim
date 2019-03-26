@@ -313,8 +313,8 @@ function! s:GetMoonIndent(curlinenum)
     endif
   endif
 
-  " No indenting or outdenting is needed.
-  return -1
+  " Indent enough to be at the same level as previou sline
+  return previndent
 endfunction
 
 " Wrap s:GetMoonIndent to keep the cursor position.
