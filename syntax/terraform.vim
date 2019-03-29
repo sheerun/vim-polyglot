@@ -29,6 +29,7 @@ syn keyword terraDataTypeBI
           \ alicloud_cen_instances
           \ alicloud_cen_region_route_entries
           \ alicloud_cen_route_entries
+          \ alicloud_cs_kubernetes_clusters
           \ alicloud_db_instances
           \ alicloud_disks
           \ alicloud_dns_domain_groups
@@ -401,6 +402,7 @@ syn keyword terraDataTypeBI
           \ google_organization
           \ google_project
           \ google_project_services
+          \ google_projects
           \ google_service_account
           \ google_service_account_key
           \ google_storage_bucket_object
@@ -471,6 +473,24 @@ syn keyword terraDataTypeBI
           \ logentries_logset
           \ logicmonitor_collectors
           \ logicmonitor_device_group
+          \ ncloud_access_control_group
+          \ ncloud_access_control_groups
+          \ ncloud_access_control_rule
+          \ ncloud_access_control_rules
+          \ ncloud_member_server_image
+          \ ncloud_member_server_images
+          \ ncloud_nas_volume
+          \ ncloud_nas_volumes
+          \ ncloud_port_forwarding_rule
+          \ ncloud_port_forwarding_rules
+          \ ncloud_public_ip
+          \ ncloud_regions
+          \ ncloud_root_password
+          \ ncloud_server_image
+          \ ncloud_server_images
+          \ ncloud_server_product
+          \ ncloud_server_products
+          \ ncloud_zones
           \ newrelic_alert_channel
           \ newrelic_alert_policy
           \ newrelic_application
@@ -502,6 +522,12 @@ syn keyword terraDataTypeBI
           \ nutanix_volume_groups
           \ oci_audit_configuration
           \ oci_audit_events
+          \ oci_autoscaling_auto_scaling_configuration
+          \ oci_autoscaling_auto_scaling_configurations
+          \ oci_budget_alert_rule
+          \ oci_budget_alert_rules
+          \ oci_budget_budget
+          \ oci_budget_budgets
           \ oci_containerengine_cluster_kube_config
           \ oci_containerengine_cluster_option
           \ oci_containerengine_clusters
@@ -609,6 +635,7 @@ syn keyword terraDataTypeBI
           \ oci_database_db_system_shapes
           \ oci_database_db_systems
           \ oci_database_db_versions
+          \ oci_database_exadata_iorm_config
           \ oci_dns_records
           \ oci_dns_steering_policies
           \ oci_dns_steering_policy
@@ -633,6 +660,8 @@ syn keyword terraDataTypeBI
           \ oci_health_checks_vantage_points
           \ oci_identity_api_keys
           \ oci_identity_auth_tokens
+          \ oci_identity_authentication_policy
+          \ oci_identity_availability_domain
           \ oci_identity_availability_domains
           \ oci_identity_compartment
           \ oci_identity_compartments
@@ -648,6 +677,8 @@ syn keyword terraDataTypeBI
           \ oci_identity_regions
           \ oci_identity_smtp_credentials
           \ oci_identity_swift_passwords
+          \ oci_identity_tag_default
+          \ oci_identity_tag_defaults
           \ oci_identity_tag_namespaces
           \ oci_identity_tags
           \ oci_identity_tenancy
@@ -677,6 +708,12 @@ syn keyword terraDataTypeBI
           \ oci_load_balancer_rule_sets
           \ oci_load_balancer_shapes
           \ oci_load_balancers
+          \ oci_monitoring_alarm
+          \ oci_monitoring_alarm_history_collection
+          \ oci_monitoring_alarm_statuses
+          \ oci_monitoring_alarms
+          \ oci_monitoring_metric_data
+          \ oci_monitoring_metrics
           \ oci_objectstorage_bucket
           \ oci_objectstorage_bucket_summaries
           \ oci_objectstorage_namespace
@@ -687,6 +724,10 @@ syn keyword terraDataTypeBI
           \ oci_objectstorage_objects
           \ oci_objectstorage_preauthrequest
           \ oci_objectstorage_preauthrequests
+          \ oci_ons_notification_topic
+          \ oci_ons_notification_topics
+          \ oci_ons_subscription
+          \ oci_ons_subscriptions
           \ oci_streaming_stream
           \ oci_streaming_streams
           \ oneandone_instance_size
@@ -874,6 +915,7 @@ syn keyword terraDataTypeBI
           \ triton_package
           \ ucloud_eips
           \ ucloud_images
+          \ ucloud_instances
           \ ucloud_projects
           \ ucloud_zones
           \ vault_approle_auth_backend_role_id
@@ -921,6 +963,8 @@ syn keyword terraResourceTypeBI
           \ alicloud_api_gateway_group
           \ alicloud_api_gateway_vpc_access
           \ alicloud_cdn_domain
+          \ alicloud_cdn_domain_config
+          \ alicloud_cdn_domain_new
           \ alicloud_cen_bandwidth_limit
           \ alicloud_cen_bandwidth_package
           \ alicloud_cen_bandwidth_package_attachment
@@ -931,6 +975,7 @@ syn keyword terraResourceTypeBI
           \ alicloud_common_bandwidth_package
           \ alicloud_common_bandwidth_package_attachment
           \ alicloud_container_cluster
+          \ alicloud_cr_namespace
           \ alicloud_cs_application
           \ alicloud_cs_kubernetes
           \ alicloud_cs_managed_kubernetes
@@ -983,6 +1028,10 @@ syn keyword terraResourceTypeBI
           \ alicloud_mns_queue
           \ alicloud_mns_topic
           \ alicloud_mns_topic_subscription
+          \ alicloud_nas_access_group
+          \ alicloud_nas_access_rule
+          \ alicloud_nas_file_system
+          \ alicloud_nas_mount_target
           \ alicloud_nat_gateway
           \ alicloud_network_interface
           \ alicloud_network_interface_attachment
@@ -1394,6 +1443,7 @@ syn keyword terraResourceTypeBI
           \ aws_route53_health_check
           \ aws_route53_query_log
           \ aws_route53_record
+          \ aws_route53_resolver_endpoint
           \ aws_route53_zone
           \ aws_route53_zone_association
           \ aws_route_table
@@ -1538,6 +1588,8 @@ syn keyword terraResourceTypeBI
           \ azurerm_api_management_group
           \ azurerm_api_management_group_user
           \ azurerm_api_management_product
+          \ azurerm_api_management_product_group
+          \ azurerm_api_management_property
           \ azurerm_api_management_user
           \ azurerm_app_service
           \ azurerm_app_service_active_slot
@@ -2119,6 +2171,7 @@ syn keyword terraResourceTypeBI
           \ google_dataproc_cluster
           \ google_dataproc_job
           \ google_dns_managed_zone
+          \ google_dns_policy
           \ google_dns_record_set
           \ google_endpoints_service
           \ google_filestore_instance
@@ -2204,6 +2257,7 @@ syn keyword terraResourceTypeBI
           \ google_storage_object_access_control
           \ google_storage_object_acl
           \ google_storage_transfer_job
+          \ google_tpu_node
           \ grafana_alert_notification
           \ grafana_dashboard
           \ grafana_data_source
@@ -2348,6 +2402,7 @@ syn keyword terraResourceTypeBI
           \ kubernetes_config_map
           \ kubernetes_daemonset
           \ kubernetes_deployment
+          \ kubernetes_endpoint
           \ kubernetes_horizontal_pod_autoscaler
           \ kubernetes_limit_range
           \ kubernetes_namespace
@@ -2393,6 +2448,15 @@ syn keyword terraResourceTypeBI
           \ mysql_role
           \ mysql_user
           \ mysql_user_password
+          \ ncloud_block_storage
+          \ ncloud_block_storage_snapshot
+          \ ncloud_load_balancer
+          \ ncloud_load_balancer_ssl_certificate
+          \ ncloud_login_key
+          \ ncloud_nas_volume
+          \ ncloud_port_forwarding_rule
+          \ ncloud_public_ip
+          \ ncloud_server
           \ netlify_build_hook
           \ netlify_deploy_key
           \ netlify_hook
@@ -2486,6 +2550,9 @@ syn keyword terraResourceTypeBI
           \ nutanix_virtual_machine
           \ nutanix_volume_group
           \ oci_audit_configuration
+          \ oci_autoscaling_auto_scaling_configuration
+          \ oci_budget_alert_rule
+          \ oci_budget_budget
           \ oci_containerengine_cluster
           \ oci_containerengine_node_pool
           \ oci_core_app_catalog_listing_resource_version
@@ -2540,6 +2607,7 @@ syn keyword terraResourceTypeBI
           \ oci_database_backup
           \ oci_database_db_home
           \ oci_database_db_system
+          \ oci_database_exadata_iorm_config
           \ oci_dns_record
           \ oci_dns_steering_policy
           \ oci_dns_steering_policy_attachment
@@ -2557,6 +2625,7 @@ syn keyword terraResourceTypeBI
           \ oci_health_checks_ping_probe
           \ oci_identity_api_key
           \ oci_identity_auth_token
+          \ oci_identity_authentication_policy
           \ oci_identity_compartment
           \ oci_identity_customer_secret_key
           \ oci_identity_dynamic_group
@@ -2567,6 +2636,7 @@ syn keyword terraResourceTypeBI
           \ oci_identity_smtp_credential
           \ oci_identity_swift_password
           \ oci_identity_tag
+          \ oci_identity_tag_default
           \ oci_identity_tag_namespace
           \ oci_identity_ui_password
           \ oci_identity_user
@@ -2587,11 +2657,14 @@ syn keyword terraResourceTypeBI
           \ oci_load_balancer_load_balancer
           \ oci_load_balancer_path_route_set
           \ oci_load_balancer_rule_set
+          \ oci_monitoring_alarm
           \ oci_objectstorage_bucket
           \ oci_objectstorage_namespace_metadata
           \ oci_objectstorage_object
           \ oci_objectstorage_object_lifecycle_policy
           \ oci_objectstorage_preauthrequest
+          \ oci_ons_notification_topic
+          \ oci_ons_subscription
           \ oci_streaming_stream
           \ oneandone_baremetal
           \ oneandone_block_storage
@@ -3138,6 +3211,7 @@ syn keyword terraResourceTypeBI
           \ triton_service_group
           \ triton_snapshot
           \ triton_vlan
+          \ ucloud_db_instance
           \ ucloud_disk
           \ ucloud_disk_attachment
           \ ucloud_eip
@@ -3147,6 +3221,8 @@ syn keyword terraResourceTypeBI
           \ ucloud_lb_attachment
           \ ucloud_lb_listener
           \ ucloud_lb_rule
+          \ ucloud_lb_ssl
+          \ ucloud_lb_ssl_attachment
           \ ucloud_security_group
           \ ucloud_subnet
           \ ucloud_udpn_connection
@@ -3199,6 +3275,7 @@ syn keyword terraResourceTypeBI
           \ vault_ldap_auth_backend_group
           \ vault_ldap_auth_backend_user
           \ vault_mount
+          \ vault_namespace
           \ vault_okta_auth_backend
           \ vault_okta_auth_backend_group
           \ vault_okta_auth_backend_user

@@ -12,7 +12,7 @@ if exists("g:loaded_terraform") || v:version < 700 || &cp || !executable('terraf
 endif
 let g:loaded_terraform = 1
 
-if !exists("g:terraform_fmt_on_save")
+if !exists("g:terraform_fmt_on_save") || !filereadable(expand("%:p"))
   let g:terraform_fmt_on_save = 0
 endif
 

@@ -31,10 +31,10 @@ syn keyword lispFunc ignore-stdout ignore-stderr ignore-outputs
 syn keyword lispFunc with-stdout-to with-stderr-to with-outputs-to
 syn keyword lispFunc write-file system bash
 
-syn cluster lispBaseListCluster add=jbuildVar
-syn match jbuildVar '\${[@<^]}' containedin=lispSymbol
-syn match jbuildVar '\${\k\+\(:\k\+\)\?}' containedin=lispSymbol
+syn cluster lispBaseListCluster add=duneVar
+syn match duneVar '\${[@<^]}' containedin=lispSymbol
+syn match duneVar '\${\k\+\(:\k\+\)\?}' containedin=lispSymbol
 
-hi def link jbuildVar Identifier
+hi def link duneVar Identifier
 
-let b:current_syntax = "jbuild"
+let b:current_syntax = "dune"

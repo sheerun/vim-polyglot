@@ -234,6 +234,9 @@ function! rustfmt#Cmd()
 endfunction
 
 function! rustfmt#PreWrite()
+    if !filereadable(expand("%@"))
+        return
+    endif
     if rust#GetConfigVar('rustfmt_autosave_if_config_present', 0)
         if findfile('rustfmt.toml', '.;') !=# '' || findfile('.rustfmt.toml', '.;') !=# ''
             let b:rustfmt_autosave = 1

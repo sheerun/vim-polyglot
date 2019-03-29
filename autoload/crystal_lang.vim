@@ -37,21 +37,45 @@ function! s:run_cmd(cmd) abort
     return s:P.system(a:cmd)
 endfunction
 
-function! s:find_root_by_spec(d) abort
-    let dir = finddir('spec', a:d . ';')
-    if dir ==# ''
+function! s:find_root_by(search_dir, d) abort
+    let found_dir = finddir(a:search_dir, a:d . ';')
+    if found_dir ==# ''
         return ''
     endif
 
-    " Note: ':h:h' for {root}/spec/ -> {root}/spec -> {root}
-    return fnamemodify(dir, ':p:h:h')
+    " Note: ':h:h' for {root}/{search_dir}/ -> {root}/{search_dir} -> {root}
+    return fnamemodify(found_dir, ':p:h:h')
+endfunction
+
+" Search the root directory containing a 'spec/' and a 'src/' directories.
+"
+" Searching for the 'spec/' directory is not enough: for example the crystal
+" compiler has a 'cr_sources/src/spec/' directory that would otherwise give the root
+" directory as 'cr_source/src/' instead of 'cr_sources/'.
+function! s:find_root_by_spec_and_src(d) abort
+    " Search for 'spec/'
+    let root = s:find_root_by('spec', a:d)
+    " Check that 'src/' is also there
+    if root !=# '' && isdirectory(root . '/src')
+        return root
+    endif
+
+    " Search for 'src/'
+    let root = s:find_root_by('src', a:d)
+    " Check that 'spec/' is also there
+    if root !=# '' && isdirectory(root . '/spec')
+        return root
+    endif
+
+    " Cannot find a directory containing both 'src/' and 'spec/'
+    return ''
 endfunction
 
 function! crystal_lang#entrypoint_for(file_path) abort
     let parent_dir = fnamemodify(a:file_path, ':p:h')
-    let root_dir = s:find_root_by_spec(parent_dir)
+    let root_dir = s:find_root_by_spec_and_src(parent_dir)
     if root_dir ==# ''
-        " No spec diretory found. No need to make temporary file
+        " No spec directory found. No need to make temporary file
         return a:file_path
     endif
 
@@ -232,7 +256,7 @@ endfunction
 
 function! crystal_lang#run_all_spec(...) abort
     let path = a:0 == 0 ? expand('%:p:h') : a:1
-    let root_path = s:find_root_by_spec(path)
+    let root_path = s:find_root_by_spec_and_src(path)
     if root_path ==# ''
         return s:echo_error("'spec' directory is not found")
     endif
@@ -250,9 +274,9 @@ function! crystal_lang#run_current_spec(...) abort
     let source_dir = fnamemodify(path, ':h')
 
     " /foo/bar
-    let root_dir = s:find_root_by_spec(source_dir)
+    let root_dir = s:find_root_by_spec_and_src(source_dir)
     if root_dir ==# ''
-        return s:echo_error("'spec' directory is not found")
+        return s:echo_error("Root directory with 'src/' and 'spec/' not found")
     endif
 
     " src

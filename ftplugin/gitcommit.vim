@@ -17,8 +17,10 @@ let b:did_ftplugin = 1
 
 setlocal comments=:# commentstring=#\ %s
 setlocal nomodeline tabstop=8 formatoptions+=tl textwidth=72
-setlocal formatoptions-=c formatoptions-=r formatoptions-=o formatoptions-=q
-let b:undo_ftplugin = 'setl modeline< tabstop< formatoptions< tw< com< cms<'
+setlocal formatoptions-=c formatoptions-=r formatoptions-=o formatoptions-=q formatoptions+=n
+setlocal formatlistpat+=\\\|^\\s*[-*+]\\s\\+
+
+let b:undo_ftplugin = 'setl modeline< tabstop< formatoptions< tw< com< cms< formatlistpat<'
 
 if exists("g:no_gitcommit_commands") || v:version < 700
   finish

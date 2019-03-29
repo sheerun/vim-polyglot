@@ -462,14 +462,6 @@ au BufNewFile,BufRead *.gradle set filetype=groovy
   augroup end
 endif
 
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
-  augroup filetypedetect
-  " graphql, from graphql.vim in jparise/vim-graphql
-" vint: -ProhibitAutocmdWithNoGroup
-au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
-  augroup end
-endif
-
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
   augroup filetypedetect
   " haml, from haml.vim in sheerun/vim-haml
@@ -841,8 +833,8 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
   augroup filetypedetect
-  " ocaml, from jbuild.vim in rgrinberg/vim-ocaml
-au BufRead,BufNewFile jbuild,dune,dune-project set ft=jbuild
+  " ocaml, from dune.vim in rgrinberg/vim-ocaml
+au BufRead,BufNewFile jbuild,dune,dune-project set ft=dune
   augroup end
 endif
 
@@ -1225,7 +1217,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
 " vint: -ProhibitAutocmdWithNoGroup
 
 autocmd BufRead,BufNewFile *.rs setf rust
-autocmd BufRead,BufNewFile Cargo.toml if &filetype == "" | set filetype=cfg | endif
+autocmd BufRead,BufNewFile Cargo.toml setf FALLBACK cfg
 
 " vim: set et sw=4 sts=4 ts=8:
   augroup end

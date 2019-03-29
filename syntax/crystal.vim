@@ -309,7 +309,7 @@ if !exists('g:crystal_no_comment_fold')
 endif
 
 " Note: this is a hack to prevent 'keywords' being highlighted as such when called as methods with an explicit receiver
-syn match crystalKeywordAsMethod "\%(\%(\.\@<!\.\)\|::\)\_s*\%(alias\|begin\|break\|case\|class\|def\|defined\|do\|else\)\>"		  transparent contains=NONE
+syn match crystalKeywordAsMethod "\%(\%(\.\@<!\.\)\|::\)\_s*\%(alias\|begin\|break\|case\|class\|def\|defined\|do\|else\|select\)\>"		  transparent contains=NONE
 syn match crystalKeywordAsMethod "\%(\%(\.\@<!\.\)\|::\)\_s*\%(elsif\|end\|ensure\|false\|for\|if\|ifdef\|in\|module\|next\|nil\)\>"		  transparent contains=NONE
 syn match crystalKeywordAsMethod "\%(\%(\.\@<!\.\)\|::\)\_s*\%(rescue\|return\|self\|super\|previous_def\|then\|true\)\>"		  transparent contains=NONE
 syn match crystalKeywordAsMethod "\%(\%(\.\@<!\.\)\|::\)\_s*\%(undef\|unless\|until\|when\|while\|yield\|with\|__FILE__\|__LINE__\)\>" transparent contains=NONE

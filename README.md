@@ -10,7 +10,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 120+ times faster** than the <!--Package Count-->127<!--/Package Count--> packages it consists of.
+- It **installs and updates 120+ times faster** than the <!--Package Count-->132<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -84,7 +84,6 @@ If you need full functionality of any plugin, please use it directly with your p
 - [gnuplot](https://github.com/vim-scripts/gnuplot-syntax-highlighting) (syntax)
 - [go](https://github.com/fatih/vim-go) (syntax, compiler, indent)
 - [gradle](https://github.com/tfnico/vim-gradle) (compiler)
-- [graphql](https://github.com/jparise/vim-graphql) (syntax, indent, ftplugin)
 - [groovy-indent](https://github.com/vim-scripts/groovyindent-unix) (indent)
 - [groovy](https://github.com/vim-scripts/groovy.vim) (syntax)
 - [haml](https://github.com/sheerun/vim-haml) (syntax, indent, compiler, ftplugin)

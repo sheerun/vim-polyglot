@@ -192,7 +192,6 @@ PACKS="
   gnuplot:vim-scripts/gnuplot-syntax-highlighting
   go:fatih/vim-go:_BASIC
   gradle:tfnico/vim-gradle
-  graphql:jparise/vim-graphql
   groovy:vim-scripts/groovy.vim
   groovy-indent:vim-scripts/groovyindent-unix
   haml:sheerun/vim-haml
