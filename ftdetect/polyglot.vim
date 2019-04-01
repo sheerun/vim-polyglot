@@ -1417,3 +1417,6 @@ au BufNewFile,BufRead *.vue,*.wpy setf vue
   augroup end
 endif
 
+  " por, from portugol.vim in JunioJsv/portugol-vim-syntax
+au BufRead,BufNewFile *.por set filetype=portugol
+
