@@ -1425,3 +1425,11 @@ au BufNewFile,BufRead *.vue,*.wpy setf vue
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'xdc') == -1
+  augroup filetypedetect
+  " xdc, from xdc.vim in amal-khailtash/vim-xdc-syntax
+" xdc
+autocmd BufNewFile,BufRead *.xdc setfiletype xdc
+  augroup end
+endif
+

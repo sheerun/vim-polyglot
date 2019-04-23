@@ -281,6 +281,7 @@ PACKS="
   vifm:vifm/vifm.vim
   vm:lepture/vim-velocity
   vue:posva/vim-vue
+  xdc:amal-khailtash/vim-xdc-syntax
   xml:amadeus/vim-xml
   xls:vim-scripts/XSLT-syntax
   yaml:stephpy/vim-yaml
