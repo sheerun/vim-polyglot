@@ -214,7 +214,6 @@ PACKS="
   kotlin:udalov/kotlin-vim
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less:_NOAFTER
-  liquid:tpope/vim-liquid
   lilypond:anowlcalledjosh/vim-lilypond
   livescript:gkz/vim-ls
   llvm:rhysd/vim-llvm
