@@ -217,6 +217,7 @@ PACKS="
   lilypond:anowlcalledjosh/vim-lilypond
   livescript:gkz/vim-ls
   llvm:rhysd/vim-llvm
+  log:MTDL9/vim-log-highlighting
   lua:tbastos/vim-lua
   mako:sophacles/vim-bundle-mako
   markdown:plasticboy/vim-markdown:_SYNTAX

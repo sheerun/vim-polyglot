@@ -109,6 +109,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [lilypond](https://github.com/anowlcalledjosh/vim-lilypond) (syntax, indent, compiler, ftplugin)
 - [livescript](https://github.com/gkz/vim-ls) (syntax, indent, compiler, ftplugin)
 - [llvm](https://github.com/rhysd/vim-llvm) (syntax, indent, ftplugin)
+- [log](https://github.com/MTDL9/vim-log-highlighting) (syntax)
 - [lua](https://github.com/tbastos/vim-lua) (syntax, indent)
 - [mako](https://github.com/sophacles/vim-bundle-mako) (syntax, indent, ftplugin)
 - [markdown](https://github.com/plasticboy/vim-markdown) (syntax, indent)
