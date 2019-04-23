@@ -58,7 +58,7 @@ syn match i3ConfigInitialize /^\s*set\s\+.*$/ contains=i3ConfigVariable,i3Config
 
 " Gaps
 syn keyword i3ConfigGapStyleKeyword inner outer horizontal vertical top right bottom left current all set plus minus toggle contained
-syn match i3ConfigGapStyle /^\s*\(gaps\)\s\+\(inner\|outer\|horizontal\|vertical\|left\|top\|right\|bottom\)\(\s\+\(current\|all\)\)\?\(\s\+\(set\|plus\|minus\|toggle\)\)\?\(\s\+\(\d\+\|\$.*\)\)$/ contains=i3ConfigGapStyleKeyword,number,i3ConfigVariable
+syn match i3ConfigGapStyle /^\s*\(gaps\)\s\+\(inner\|outer\|horizontal\|vertical\|left\|top\|right\|bottom\)\(\s\+\(current\|all\)\)\?\(\s\+\(set\|plus\|minus\|toggle\)\)\?\(\s\+\(-\?\d\+\|\$.*\)\)$/ contains=i3ConfigGapStyleKeyword,number,i3ConfigVariable
 syn keyword i3ConfigSmartGapKeyword on inverse_outer contained
 syn match i3ConfigSmartGap /^\s*smart_gaps\s\+\(on\|inverse_outer\)\s\?$/ contains=i3ConfigSmartGapKeyword
 syn keyword i3ConfigSmartBorderKeyword on no_gaps contained

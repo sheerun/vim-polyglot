@@ -21,7 +21,7 @@ else
 endif
 
 syn keyword carpSyntax def defn let do if while ref address set! the
-syn keyword carpSyntax defmacro defdynamic quote cons list array fn
+syn keyword carpSyntax defmacro defdynamic defndynamic quote cons list array fn
 syn keyword carpSyntax expand deftype register system-include register-type
 syn keyword carpSyntax defmodule copy use module defalias definterface eval
 syn keyword carpSyntax expand instantiate type info help quit env build run

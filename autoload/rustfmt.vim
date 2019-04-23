@@ -149,6 +149,7 @@ function! s:RunRustfmt(command, tmpname, fail_silently)
 
     call delete(l:stderr_tmpname)
 
+    let l:open_lwindow = 0
     if v:shell_error == 0
         " remove undo point caused via BufWritePre
         try | silent undojoin | catch | endtry
@@ -169,7 +170,7 @@ function! s:RunRustfmt(command, tmpname, fail_silently)
         if s:got_fmt_error
             let s:got_fmt_error = 0
             call setloclist(0, [])
-            lwindow
+            let l:open_lwindow = 1
         endif
     elseif g:rustfmt_fail_silently == 0 && a:fail_silently == 0
         " otherwise get the errors and put them in the location list
@@ -201,7 +202,7 @@ function! s:RunRustfmt(command, tmpname, fail_silently)
         endif
 
         let s:got_fmt_error = 1
-        lwindow
+        let l:open_lwindow = 1
     endif
 
     " Restore the current directory if needed
@@ -211,6 +212,11 @@ function! s:RunRustfmt(command, tmpname, fail_silently)
         else
             execute 'chdir! '.l:prev_cd
         endif
+    endif
+
+    " Open lwindow after we have changed back to the previous directory
+    if l:open_lwindow == 1
+        lwindow
     endif
 
     silent! loadview

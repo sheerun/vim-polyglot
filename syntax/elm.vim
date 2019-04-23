@@ -46,6 +46,7 @@ syn match elmFloat "\(\<\d\+\.\d\+\>\)"
 
 " Identifiers
 syn match elmTopLevelDecl "^\s*[a-zA-Z][a-zA-z0-9_]*\('\)*\s\+:\(\r\n\|\r\|\n\|\s\)\+" contains=elmOperator
+syn match elmFuncName /^\l\w*/
 
 " Folding
 syn region elmTopLevelTypedef start="type" end="\n\(\n\n\)\@=" contains=ALL fold
@@ -54,6 +55,7 @@ syn region elmCaseBlock matchgroup=elmCaseBlockDefinition start="^\z\(\s\+\)\<ca
 syn region elmCaseItemBlock start="^\z\(\s\+\).\+->$" end="^\z1\@!\W\@=" end="\(\n\n\z1\@!\)\@=" end="\(\n\z1\S\)\@=" contains=ALL fold
 syn region elmLetBlock matchgroup=elmLetBlockDefinition start="\<let\>" end="\<in\>" contains=ALL fold
 
+hi def link elmFuncName Function
 hi def link elmCaseBlockDefinition Conditional
 hi def link elmCaseBlockItemDefinition Conditional
 hi def link elmLetBlockDefinition TypeDef

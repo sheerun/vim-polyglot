@@ -1069,7 +1069,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'racket') == -1
   augroup filetypedetect
   " racket, from racket.vim in wlangstroth/vim-racket
-au BufRead,BufNewFile *.rkt,*.rktl  set filetype=racket
+au BufRead,BufNewFile *.rkt,*.rktl setf racket
   augroup end
 endif
 
