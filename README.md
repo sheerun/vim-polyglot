@@ -125,7 +125,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [octave](https://github.com/vim-scripts/octave.vim--) (syntax)
 - [opencl](https://github.com/petRUShka/vim-opencl) (syntax, indent, ftplugin)
 - [perl](https://github.com/vim-perl/vim-perl) (syntax, indent, ftplugin)
-- [pgsql](https://github.com/exu/pgsql.vim) (syntax)
+- [pgsql](https://github.com/lifepillar/pgsql.vim) (syntax, indent)
 - [php](https://github.com/StanAngeloff/php.vim) (syntax)
 - [plantuml](https://github.com/aklt/plantuml-syntax) (syntax, indent, ftplugin)
 - [pony](https://github.com/jakwings/vim-pony) (syntax, indent, autoload, ftplugin)

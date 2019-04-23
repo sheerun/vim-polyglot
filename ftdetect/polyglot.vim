@@ -948,9 +948,8 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pgsql') == -1
   augroup filetypedetect
-  " pgsql, from pgsql.vim in exu/pgsql.vim
-" postgreSQL
-au BufNewFile,BufRead *.pgsql           setf pgsql
+  " pgsql, from pgsql.vim in lifepillar/pgsql.vim
+au BufNewFile,BufRead *.pgsql let b:sql_type_override='pgsql' | setfiletype sql
   augroup end
 endif
 
