@@ -758,6 +758,14 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,i
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mathematica') == -1
+  augroup filetypedetect
+  " mathematica, from mma.vim in voldikss/vim-mma
+autocmd BufNewFile,BufRead *.wl set filetype=mma
+autocmd BufNewFile,BufRead *.wls set filetype=mma
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mdx') == -1
   augroup filetypedetect
   " mdx, from mdx.vim in jxnblk/vim-mdx-js
