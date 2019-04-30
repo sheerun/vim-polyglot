@@ -199,6 +199,7 @@ PACKS="
   haproxy:CH-DanReif/haproxy.vim
   haskell:neovimhaskell/haskell-vim
   haxe:yaymukund/vim-haxe
+  hive:zebradil/hive.vim
   html5:othree/html5.vim
   i3:mboughaba/i3config.vim
   idris:idris-hackers/idris-vim
