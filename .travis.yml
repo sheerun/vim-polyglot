@@ -7,6 +7,4 @@ addons:
       - xvfb
 before_script:
   - "./build"
-  - "export DISPLAY=:99.0"
-  - "Xvfb :99.0 2>/dev/null &"
-script: test/run.sh
+script: xvfb-run test/run.sh
