@@ -22,5 +22,7 @@ describe "My Vim plugin" do
     end
   end
 
-  vim.kill
+  after(:all) do
+    vim.kill
+  end
 end
