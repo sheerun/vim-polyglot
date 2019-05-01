@@ -15,5 +15,5 @@ for f in $TEST_FILES;
 do
     echo should parse $f file
     touch /tmp/$f
-    $VIM /tmp/$f
+    $VIM /tmp/$f > /dev/null
 done
