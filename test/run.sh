@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-VIM="/usr/bin/vim -c 'setrtp^=$(pwd)' -s test/test.vimscript"
-
 TEST_FILES=$(/bin/grep '^au' ftdetect/polyglot.vim \
     | /bin/grep -E '\b(setfiletype|filetype|setf|ft)\b' \
     | /usr/bin/awk '{print $3}' \
@@ -11,9 +9,10 @@ TEST_FILES=$(/bin/grep '^au' ftdetect/polyglot.vim \
     | /bin/grep -iE '^[a-z\.]+$' \
     | /usr/bin/sort -u)
 
+stty rows 5
 for f in $TEST_FILES;
 do
     echo should parse $f file >&2
     touch /tmp/$f
-    $VIM /tmp/$f <`tty`>`tty`
+    /usr/bin/vim -n -c "set t_te=" -c "set t_ti=" -c "setrtp^=$(pwd)" -s test/test.vimscript /tmp/$f <`tty`>`tty`
 done
