@@ -9,7 +9,7 @@ describe "My Vim plugin" do
 
   extensions = extensions.split(/[\n,]/)
 
-  extensions.each do |ext|
+  extensions.sort!.uniq!.each do |ext|
     if ext.match?(/^[a-z\.]+$/i)
       it "should parse #{ext} file" do
         Timeout::timeout(20) do
