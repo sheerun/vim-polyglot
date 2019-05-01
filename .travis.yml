@@ -7,4 +7,4 @@ addons:
       - xvfb
 before_script:
   - "./build"
-script: xvfb-run test/run.sh > /dev/null
+script: xvfb-run test/run.sh
