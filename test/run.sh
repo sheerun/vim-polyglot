@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-VIM="/bin/vim -c 'setrtp^=$(pwd)' -s test/test.vimscript"
+VIM="/usr/bin/vim -c 'setrtp^=$(pwd)' -s test/test.vimscript"
 
 TEST_FILES=$(/bin/grep '^au' ftdetect/polyglot.vim \
     | /bin/grep -E '\b(setfiletype|filetype|setf|ft)\b' \
