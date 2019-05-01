@@ -21,4 +21,6 @@ describe "My Vim plugin" do
       end
     end
   end
+
+  vim.kill
 end
