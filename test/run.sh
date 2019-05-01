@@ -14,5 +14,5 @@ for f in $TEST_FILES;
 do
     echo should parse $f file >&2
     touch /tmp/$f
-    /usr/bin/vim -n -c "set t_te=" -c "set t_ti=" -c "setrtp^=$(pwd)" -s test/test.vimscript /tmp/$f <`tty`>`tty`
+    /usr/bin/vim -n -c "set t_te=" -c "set t_ti=" -c "set rtp^=$(pwd)" -s test/test.vimscript /tmp/$f <`tty`>`tty`
 done
