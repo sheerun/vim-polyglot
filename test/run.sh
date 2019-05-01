@@ -13,7 +13,7 @@ TEST_FILES=$(/bin/grep '^au' ftdetect/polyglot.vim \
 
 for f in $TEST_FILES;
 do
-    echo should parse $f file
+    echo should parse $f file >&2
     touch /tmp/$f
     $VIM /tmp/$f
 done
