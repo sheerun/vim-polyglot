@@ -7,6 +7,5 @@ addons:
     packages:
       - vim-gtk
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-script: bundle exec rspec --format=documentation
+  - "./build"
+script: xvfb-run bundle exec rspec --format=documentation
