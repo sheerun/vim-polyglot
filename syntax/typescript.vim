@@ -128,7 +128,7 @@ syntax keyword typescriptBranch break continue yield await
 syntax keyword typescriptLabel case default async readonly
 syntax keyword typescriptStatement return with
 
-syntax keyword typescriptGlobalObjects Array Boolean Date Function Infinity Math Number NaN Object Packages RegExp String Symbol netscape
+syntax keyword typescriptGlobalObjects Array Boolean Date Function Infinity JSON Math Number NaN Object Packages RegExp String Symbol netscape
 
 syntax keyword typescriptExceptions try catch throw finally Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 
@@ -210,7 +210,7 @@ syn match typescriptBraces "[{}\[\]]"
 syn match typescriptParens "[()]"
 syn match typescriptOpSymbols "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-="
 syn match typescriptEndColons "[;,]"
-syn match typescriptLogicSymbols "\(&&\)\|\(||\)"
+syn match typescriptLogicSymbols "\(&&\)\|\(||\)\|\(!\)"
 
 " typescriptFold Function {{{
 

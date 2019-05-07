@@ -291,8 +291,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') ==
   augroup filetypedetect
   " dockerfile, from Dockerfile.vim in ekalinin/Dockerfile.vim
 " Dockerfile
-autocmd BufRead,BufNewFile Dockerfile set ft=Dockerfile
+autocmd BufRead,BufNewFile [Dd]ockerfile set ft=Dockerfile
 autocmd BufRead,BufNewFile Dockerfile* set ft=Dockerfile
+autocmd BufRead,BufNewFile [Dd]ockerfile.vim set ft=vim
 autocmd BufRead,BufNewFile *.dock set ft=Dockerfile
 autocmd BufRead,BufNewFile *.[Dd]ockerfile set ft=Dockerfile
   augroup end
