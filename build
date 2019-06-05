@@ -183,7 +183,7 @@ PACKS="
   emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
   ferm:vim-scripts/ferm.vim
-  fish:dag/vim-fish
+  fish:georgewitteman/vim-fish
   flatbuffers:dcharbon/vim-flatbuffers
   fsharp:fsharp/vim-fsharp:_BASIC
   git:tpope/vim-git
