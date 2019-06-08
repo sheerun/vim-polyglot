@@ -1,3 +1,9 @@
+function! s:setf(filetype) abort
+  if &filetype !=# a:filetype
+    let &filetype = a:filetype
+  endif
+endfunction
+
 " Enable jsx syntax by default
 if !exists('g:jsx_ext_required')
   let g:jsx_ext_required = 0
