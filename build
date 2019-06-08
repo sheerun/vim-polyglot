@@ -277,6 +277,7 @@ PACKS="
   tomdoc:wellbredgrapefruit/tomdoc.vim
   toml:cespare/vim-toml
   tptp:c-cube/vim-tptp
+  tsx:ianks/vim-tsx
   twig:lumiliet/vim-twig
   typescript:leafgarland/typescript-vim
   vala:arrufat/vala.vim

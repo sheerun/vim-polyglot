@@ -79,9 +79,6 @@ augroup filetypedetect
 
   "jinja
   autocmd BufNewFile,BufRead *.jinja2,*.j2,*.jinja,*.nunjucks,*.nunjs,*.njk set ft=jinja
-
-  "tsx
-  autocmd BufNewFile,BufRead *.tsx setfiletype typescript.jsx
 augroup END
 
 " Fix for https://github.com/sheerun/vim-polyglot/issues/236#issuecomment-387984954
@@ -1371,6 +1368,22 @@ au BufRead,BufNewFile *.tptp set filetype=tptp
 au BufRead,BufNewFile *.tptp set syntax=tptp
 au BufRead,BufNewFile *.ax set filetype=tptp
 au BufRead,BufNewFile *.ax set syntax=tptp
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tsx') == -1
+  augroup filetypedetect
+  " tsx, from typescript.vim in ianks/vim-tsx
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim ftdetect file
+"
+" Language: TSX (JavaScript)
+" Maintainer: Ian Ker-Seymer <i.kerseymer@gmail.com>
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+autocmd BufNewFile,BufRead *.tsx let b:tsx_ext_found = 1
+autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
   augroup end
 endif
 
