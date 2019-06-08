@@ -274,7 +274,7 @@ PACKS="
   terraform:hashivim/vim-terraform
   textile:timcharper/textile.vim
   thrift:solarnz/thrift.vim
-  tmux:keith/tmux.vim
+  tmux:ericpruitt/tmux.vim
   tomdoc:wellbredgrapefruit/tomdoc.vim
   toml:cespare/vim-toml
   tptp:c-cube/vim-tptp
