@@ -274,6 +274,7 @@ PACKS="
   tmux:keith/tmux.vim
   tomdoc:wellbredgrapefruit/tomdoc.vim
   toml:cespare/vim-toml
+  tptp:c-cube/vim-tptp
   twig:lumiliet/vim-twig
   typescript:leafgarland/typescript-vim
   vala:arrufat/vala.vim
