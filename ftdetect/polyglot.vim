@@ -542,6 +542,16 @@ autocmd BufNewFile,BufRead *.hx setf haxe
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'hcl') == -1
+  augroup filetypedetect
+  " hcl, from hcl.vim in b4b4r07/vim-hcl
+autocmd BufNewFile,BufRead *.hcl set filetype=hcl
+autocmd BufNewFile,BufRead *.nomad set filetype=hcl
+autocmd BufNewFile,BufRead *.tf set filetype=hcl
+autocmd BufNewFile,BufRead Appfile set filetype=hcl
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'hive') == -1
   augroup filetypedetect
   " hive, from hive.vim in zebradil/hive.vim
@@ -1328,13 +1338,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'thrift') == -1
   augroup filetypedetect
   " thrift, from thrift.vim in solarnz/thrift.vim
 au BufNewFile,BufRead *.thrift setlocal filetype=thrift
-  augroup end
-endif
-
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
-  augroup filetypedetect
-  " tmux, from tmux.vim in keith/tmux.vim
-autocmd BufNewFile,BufRead {.,}tmux*.conf* setfiletype tmux
   augroup end
 endif
 
