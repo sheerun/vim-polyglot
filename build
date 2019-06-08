@@ -176,6 +176,7 @@ PACKS="
   cucumber:tpope/vim-cucumber
   cue:mgrabovsky/vim-cuesheet
   dart:dart-lang/dart-vim-plugin
+  dlang:JesseKPhillips/d.vim
   dockerfile:ekalinin/Dockerfile.vim
   elixir:elixir-lang/vim-elixir
   elm:ElmCast/elm-vim

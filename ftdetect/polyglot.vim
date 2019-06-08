@@ -290,6 +290,41 @@ autocmd BufRead,BufNewFile *.dart set filetype=dart
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dlang') == -1
+  augroup filetypedetect
+  " dlang, from d.vim in JesseKPhillips/d.vim
+autocmd BufNewFile,BufRead *.d setf d
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dlang') == -1
+  augroup filetypedetect
+  " dlang, from dcov.vim in JesseKPhillips/d.vim
+autocmd BufNewFile,BufRead *.lst set filetype=dcov
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dlang') == -1
+  augroup filetypedetect
+  " dlang, from dd.vim in JesseKPhillips/d.vim
+au BufRead,BufNewFile *.dd set filetype=dd
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dlang') == -1
+  augroup filetypedetect
+  " dlang, from ddoc.vim in JesseKPhillips/d.vim
+au BufRead,BufNewFile *.ddoc set filetype=ddoc
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dlang') == -1
+  augroup filetypedetect
+  " dlang, from dsdl.vim in JesseKPhillips/d.vim
+autocmd BufNewFile,BufRead *.sdl set filetype=dsdl
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
   augroup filetypedetect
   " dockerfile, from Dockerfile.vim in ekalinin/Dockerfile.vim
