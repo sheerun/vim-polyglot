@@ -706,6 +706,15 @@ au BufRead,BufNewFile *.td set filetype=tablegen
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'log') == -1
+  augroup filetypedetect
+  " log, from log.vim in MTDL9/vim-log-highlighting
+
+au BufNewFile,BufRead *.log set filetype=log
+au BufNewFile,BufRead *_log set filetype=log
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mako') == -1
   augroup filetypedetect
   " mako, from mako.vim in sophacles/vim-bundle-mako
