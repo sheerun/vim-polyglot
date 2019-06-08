@@ -91,6 +91,10 @@ augroup END
 if (!exists('g:graphql_javascript_tags'))
   let g:graphql_javascript_tags = ['gql', 'graphql', 'Relay.QL']
 endif
+
+augroup filetypedetect
+  autocmd BufNewFile,BufReadPost *.tsx setlocal filetype=typescript.tsx
+augroup END
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'acpiasl') == -1
   augroup filetypedetect
   " acpiasl, from asl.vim in martinlroth/vim-acpi-asl

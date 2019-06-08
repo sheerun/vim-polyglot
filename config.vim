@@ -91,3 +91,7 @@ augroup END
 if (!exists('g:graphql_javascript_tags'))
   let g:graphql_javascript_tags = ['gql', 'graphql', 'Relay.QL']
 endif
+
+augroup filetypedetect
+  autocmd BufNewFile,BufReadPost *.tsx setlocal filetype=typescript.tsx
+augroup END
