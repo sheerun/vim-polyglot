@@ -25,8 +25,10 @@ download() {
   for pack in $1; do
     path="$(cut -d ':' -f 2 <<<"$pack")"
     dir="tmp/$(cut -d '/' -f 2 <<<"$path")"
+    repo="$(awk -F\# '{print $1}' <<<"$path")"
+    branch="$(awk -F\# '{print $2}' <<<"$path")"
     rm -rf "$dir"
-    (mkdir -p "$dir" && curl --silent -L "https://codeload.github.com/$path/tar.gz/master" | tar -zx -C "$dir" --strip 1 && printf '.') &
+    (mkdir -p "$dir" && curl --silent -L "https://codeload.github.com/$repo/tar.gz/${branch:-master}" | tar -zx -C "$dir" --strip 1 && printf '.') &
   done
 
   wait
@@ -268,6 +270,7 @@ PACKS="
   slime:slime-lang/vim-slime-syntax
   smt2:bohlender/vim-smt2
   solidity:tomlion/vim-solidity
+  styled-components:styled-components/vim-styled-components#main
   stylus:wavded/vim-stylus
   svg-indent:jasonshell/vim-svg-indent
   svg:vim-scripts/svg.vim
