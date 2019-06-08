@@ -205,6 +205,7 @@ PACKS="
   html5:othree/html5.vim
   i3:mboughaba/i3config.vim
   idris:idris-hackers/idris-vim
+  ion:vmchale/ion-vim
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax

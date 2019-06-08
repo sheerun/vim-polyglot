@@ -586,6 +586,19 @@ au BufNewFile,BufRead *.lidr setf lidris
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ion') == -1
+  augroup filetypedetect
+  " ion, from ion.vim in vmchale/ion-vim
+autocmd BufNewFile,BufRead ~/.config/ion/initrc set filetype=ion
+autocmd BufNewFile,BufRead *.ion set filetype=ion
+
+autocmd BufNewFile,BufRead,StdinReadPost *
+    \ if getline(1) =~ '^#!.*\Wion\s*$' |
+    \   set ft=ion |
+    \ endif
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
   augroup filetypedetect
   " jasmine, from jasmine.vim in glanotte/vim-jasmine
