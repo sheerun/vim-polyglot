@@ -210,7 +210,7 @@ PACKS="
   json5:GutenYe/json5.vim
   json:elzr/vim-json
   jst:briancollins/vim-jst
-  jsx:amadeus/vim-jsx
+  jsx:MaxMEllon/vim-jsx-pretty
   julia:JuliaEditorSupport/julia-vim
   kotlin:udalov/kotlin-vim
   latex:LaTeX-Box-Team/LaTeX-Box
@@ -277,7 +277,6 @@ PACKS="
   tomdoc:wellbredgrapefruit/tomdoc.vim
   toml:cespare/vim-toml
   tptp:c-cube/vim-tptp
-  tsx:ianks/vim-tsx
   twig:lumiliet/vim-twig
   typescript:leafgarland/typescript-vim
   vala:arrufat/vala.vim
