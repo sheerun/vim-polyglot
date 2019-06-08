@@ -30,9 +30,13 @@ syn keyword carpSyntax add-cflag add-lib project load reload let-do ignore
 syn keyword carpSyntax fmt mac-only linux-only windows-only use-all when
 syn keyword carpSyntax unless defn-do comment forever-do case and* or*
 syn keyword carpSyntax str* println* break doc sig hidden private
+syn keyword carpSyntax while-do const-assert save-docs defproject
+syn keyword carpSyntax relative-include not-on-windows load-and-use
+syn keyword carpSyntax deftest
 syn match carpSyntax "\vc(a|d){1,4}r"
 
 syn keyword carpFunc Int Float Double Bool String Char Array Fn Ref Long λ
+syn keyword carpFunc Maybe Map Result Set Pair
 syn keyword carpFunc Pattern
 syn keyword carpFunc not or and + - * / = /= >= <= > < inc dec
 syn keyword carpFunc println print get-line from-string mod random
@@ -45,6 +49,7 @@ syn keyword carpFunc bit-shift-right bit-and bit-or bit-xor bit-not safe-add
 syn keyword carpFunc safe-sub safe-mul even? odd? cmp allocate repeat-indexed
 syn keyword carpFunc sanitize-addresses memory-balance reset-memory-balance!
 syn keyword carpFunc log-memory-balance! memory-logged assert-balanced trace
+syn keyword carpFunc assert
 syn keyword carpFunc pi e swap! update! char-at tail head split-by words lines
 syn keyword carpFunc pad-left pad-right count-char empty? random-sized substring
 syn keyword carpFunc prefix-string suffix-string starts-with? ends-with?
@@ -54,7 +59,24 @@ syn keyword carpFunc from-float tan asin atan cosh sinh tanh exp frexp ldexp
 syn keyword carpFunc log log10 modf pow ceil clamp approx refstr foreach
 syn keyword carpFunc => ==> repeat nth replicate range raw aset aset!
 syn keyword carpFunc push-back pop-back sort index-of element-count
-
+syn keyword carpFunc apply unsafe-from from just? nothing? ptr from-ptr 
+syn keyword carpFunc map and-then unwrap-or-zero or-else unwrap-or-else
+syn keyword carpFunc unsafe-from-success from-success unsafe-from-error
+syn keyword carpFunc from-error to-maybe success? error? to-result
+syn keyword carpFunc create create-with-len put put! get-with-default get
+syn keyword carpFunc get-maybe update update-with-default contains? remove
+syn keyword carpFunc all? for-each endo-map kv-reduce vals keys from-array
+syn keyword carpFunc to-array subset? union difference intersection
+syn keyword carpFunc init-from-refs
+syn keyword carpFunc car cdr caar cadr cdar cddr caaar caadr cadar cdaar caddr
+syn keyword carpFunc cdadr cddar cdddr caaaar caaadr caaddr cadaar cadadr caddar
+syn keyword carpFunc cadddr cdaaar cdaadr cdadar cdaddr cddaar cddadr cdddar 
+syn keyword carpFunc cddddr
+syn keyword carpFunc private? hidden?
+syn keyword carpFunc print-sig print-doc
+syn keyword carpFunc assert-op assert-equal assert-not-equal assert-true
+syn keyword carpFunc assert-false assert-exit print-test-results with-test
+syn keyword carpFunc dir-from-path file-from-path
 
 syn match carpSymbol ,\k+,  contained
 syn match carpTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE)/ containedin=carpComment,carpString

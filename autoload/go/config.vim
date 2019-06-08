@@ -18,6 +18,10 @@ function! go#config#VersionWarning() abort
   return get(g:, 'go_version_warning', 1)
 endfunction
 
+function! go#config#NullModuleWarning() abort
+  return get(g:, 'go_null_module_warning', 1)
+endfunction
+
 function! go#config#BuildTags() abort
   return get(g:, 'go_build_tags', '')
 endfunction
@@ -118,7 +122,7 @@ function! go#config#ListAutoclose() abort
 endfunction
 
 function! go#config#InfoMode() abort
-  return get(g:, 'go_info_mode', 'gocode')
+  return get(g:, 'go_info_mode', 'gopls')
 endfunction
 
 function! go#config#GuruScope() abort
@@ -183,7 +187,7 @@ function! go#config#DefReuseBuffer() abort
 endfunction
 
 function! go#config#DefMode() abort
-  return get(g:, 'go_def_mode', 'guru')
+  return get(g:, 'go_def_mode', 'gopls')
 endfunction
 
 function! go#config#DeclsIncludes() abort

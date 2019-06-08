@@ -12,11 +12,14 @@ if (exists("b:did_ftplugin"))
 endif
 let b:did_ftplugin = 1
 
-
 setlocal
-    \ comments=:#
-    \ commentstring=#\ %s
+  \ comments=:#
+  \ commentstring=#\ %s
+  \ iskeyword+=-
+
+if get(g:, 'nix_recommended_style', 1)
+  setlocal
     \ shiftwidth=2
     \ softtabstop=2
-    \ expandtab
-    \ iskeyword+=-
+    \ expandtab 
+endif

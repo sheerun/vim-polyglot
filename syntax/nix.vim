@@ -40,6 +40,7 @@ syn region nixInterpolation matchgroup=nixInterpolationDelimiter start="\${" end
 
 syn match nixSimpleStringSpecial /\\\%([nrt"\\$]\|$\)/ contained
 syn match nixStringSpecial /''['$]/ contained
+syn match nixStringSpecial /\$\$/ contained
 syn match nixStringSpecial /''\\[nrt]/ contained
 
 syn match nixInvalidSimpleStringEscape /\\[^nrt"\\$]/ contained

@@ -76,7 +76,7 @@ syn match rustMacroRepeatCount ".\?[*+]" contained
 syn match rustMacroVariable "$\w\+"
 
 " Reserved (but not yet used) keywords {{{2
-syn keyword   rustReservedKeyword alignof become do offsetof priv pure sizeof typeof unsized abstract virtual final override
+syn keyword   rustReservedKeyword become do priv typeof unsized abstract virtual final override
 
 " Built-in types {{{2
 syn keyword   rustType        isize usize char bool u8 u16 u32 u64 u128 f32

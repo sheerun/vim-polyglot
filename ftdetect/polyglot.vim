@@ -1202,8 +1202,14 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
   " rust, from rust.vim in rust-lang/rust.vim
 " vint: -ProhibitAutocmdWithNoGroup
 
-autocmd BufRead,BufNewFile *.rs setf rust
+autocmd BufRead,BufNewFile *.rs call s:set_rust_filetype()
 autocmd BufRead,BufNewFile Cargo.toml setf FALLBACK cfg
+
+function! s:set_rust_filetype() abort
+    if &filetype !=# 'rust'
+        set filetype=rust
+    endif
+endfunction
 
 " vim: set et sw=4 sts=4 ts=8:
   augroup end
@@ -1294,10 +1300,10 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
   augroup filetypedetect
   " terraform, from terraform.vim in hashivim/vim-terraform
-au BufRead,BufNewFile *.tf setlocal filetype=terraform
-au BufRead,BufNewFile *.tfvars setlocal filetype=terraform
-au BufRead,BufNewFile *.tfstate setlocal filetype=json
-au BufRead,BufNewFile *.tfstate.backup setlocal filetype=json
+autocmd BufRead,BufNewFile *.tf set filetype=terraform
+autocmd BufRead,BufNewFile *.tfvars set filetype=terraform
+autocmd BufRead,BufNewFile *.tfstate set filetype=json
+autocmd BufRead,BufNewFile *.tfstate.backup set filetype=json
   augroup end
 endif
 

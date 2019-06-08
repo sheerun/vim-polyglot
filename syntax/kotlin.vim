@@ -5,18 +5,16 @@ endif
 " Vim syntax file
 " Language: Kotlin
 " Maintainer: Alexander Udalov
-" Latest Revision: 14 January 2019
+" Latest Revision: 26 May 2019
 
-if exists("b:current_syntax")
+if exists('b:current_syntax')
     finish
 endif
-
-let b:current_syntax = "kotlin"
 
 syn keyword ktStatement break continue return
 syn keyword ktConditional if else when
 syn keyword ktRepeat do for while
-syn keyword ktOperator as in is by
+syn keyword ktOperator in is by
 syn keyword ktKeyword get set out super this where
 syn keyword ktException try catch finally throw
 
@@ -32,6 +30,8 @@ syn keyword ktBoolean true false
 syn keyword ktConstant null
 
 syn keyword ktModifier data tailrec lateinit reified external inline noinline crossinline const operator infix suspend
+
+syn match ktOperator "\v\?:|::|\<\=? | \>\=?|[!=]\=\=?|<as>\??|[-!%&*+/|]"
 
 syn keyword ktTodo TODO FIXME XXX contained
 syn match ktShebang "\v^#!.*$"
@@ -69,48 +69,48 @@ syn match ktEscapedName "\v`.*`"
 syn match ktExclExcl "!!"
 syn match ktArrow "->"
 
+hi def link ktStatement Statement
+hi def link ktConditional Conditional
+hi def link ktRepeat Repeat
+hi def link ktOperator Operator
+hi def link ktKeyword Keyword
+hi def link ktException Exception
+hi def link ktReservedKeyword Error
 
+hi def link ktInclude Include
 
-hi link ktStatement Statement
-hi link ktConditional Conditional
-hi link ktRepeat Repeat
-hi link ktOperator Operator
-hi link ktKeyword Keyword
-hi link ktException Exception
-hi link ktReservedKeyword Error
+hi def link ktType Type
+hi def link ktModifier StorageClass
+hi def link ktStructure Structure
+hi def link ktTypedef Typedef
 
-hi link ktInclude Include
+hi def link ktBoolean Boolean
+hi def link ktConstant Constant
 
-hi link ktType Type
-hi link ktModifier StorageClass
-hi link ktStructure Structure
-hi link ktTypedef Typedef
+hi def link ktTodo Todo
+hi def link ktShebang Comment
+hi def link ktLineComment Comment
+hi def link ktComment Comment
+hi def link ktCommentMatchGroup Comment
+hi def link ktDocComment Comment
+hi def link ktDocTag Special
+hi def link ktDocTagParam Identifier
 
-hi link ktBoolean Boolean
-hi link ktConstant Constant
+hi def link ktSpecialChar SpecialChar
+hi def link ktSpecialCharError Error
+hi def link ktString String
+hi def link ktCharacter Character
 
-hi link ktTodo Todo
-hi link ktShebang Comment
-hi link ktLineComment Comment
-hi link ktComment Comment
-hi link ktCommentMatchGroup Comment
-hi link ktDocComment Comment
-hi link ktDocTag Special
-hi link ktDocTagParam Identifier
+hi def link ktAnnotation Identifier
+hi def link ktLabel Identifier
 
-hi link ktSpecialChar SpecialChar
-hi link ktSpecialCharError Error
-hi link ktString String
-hi link ktCharacter Character
+hi def link ktSimpleInterpolation Identifier
+hi def link ktComplexInterpolationBrace Identifier
 
-hi link ktAnnotation Identifier
-hi link ktLabel Identifier
+hi def link ktNumber Number
+hi def link ktFloat Float
 
-hi link ktSimpleInterpolation Identifier
-hi link ktComplexInterpolationBrace Identifier
+hi def link ktExclExcl Special
+hi def link ktArrow Structure
 
-hi link ktNumber Number
-hi link ktFloat Float
-
-hi link ktExclExcl Special
-hi link ktArrow Structure
+let b:current_syntax = 'kotlin'

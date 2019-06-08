@@ -3,19 +3,30 @@ if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'terraform') != -
 endif
 
 " Only load this file if no other indent file was loaded
-if exists("b:did_indent")
+if exists('b:did_indent')
   finish
 endif
 let b:did_indent = 1
 
+let s:cpo_save = &cpoptions
+set cpoptions&vim
+
 setlocal nolisp
-setlocal autoindent sw=2 ts=2
+setlocal autoindent shiftwidth=2 tabstop=2 softtabstop=2
 setlocal indentexpr=TerraformIndent(v:lnum)
 setlocal indentkeys+=<:>,0=},0=)
+let b:undo_indent = 'setlocal lisp< autoindent< shiftwidth< tabstop< softtabstop<'
+  \ . ' indentexpr< indentkeys<'
 
-if exists("*TerraformIndent")
+let &cpoptions = s:cpo_save
+unlet s:cpo_save
+
+if exists('*TerraformIndent')
   finish
 endif
+
+let s:cpo_save = &cpoptions
+set cpoptions&vim
 
 function! TerraformIndent(lnum)
   " Beginning of the file should have no indent
@@ -32,8 +43,8 @@ function! TerraformIndent(lnum)
   let thisindent = previndent
 
   " Config block starting with [ { ( should increase the indent level
-  if prevline =~ '[\[{\(]\s*$'
-    let thisindent += &sw
+  if prevline =~# '[\[{\(]\s*$'
+    let thisindent += &shiftwidth
   endif
 
   " Current line without comments should continue the indent level
@@ -41,9 +52,12 @@ function! TerraformIndent(lnum)
 
   " Config block ending with ) } ] should get the indentation
   " level from the initial config block
-  if thisline =~ '^\s*[\)}\]]'
-    let thisindent -= &sw
+  if thisline =~# '^\s*[\)}\]]'
+    let thisindent -= &shiftwidth
   endif
 
   return thisindent
 endfunction
+
+let &cpoptions = s:cpo_save
+unlet s:cpo_save

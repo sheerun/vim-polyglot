@@ -2,6 +2,12 @@ if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'plantuml') != -1
   finish
 endif
 
+scriptencoding utf-8
+" Vim indent file
+" Language:     PlantUML
+" Maintainer:   Anders Thøgersen <first name at bladre dot dk>
+" License:      VIM LICENSE
+
 if exists('b:did_indent')
   finish
 endif
@@ -14,14 +20,6 @@ setlocal indentkeys=o,O,<CR>,<:>,!^F,0end,0else,}
 if exists('*GetPlantUMLIndent')
   finish
 endif
-
-let s:incIndent =
-      \ '^\s*\%(loop\|alt\|opt\|group\|critical\|else\|legend\|box\|if\|while\)\>\|' .
-      \ '^\s*ref\>[^:]*$\|' .
-      \ '^\s*[hr]\?note\>\%(\%("[^"]*" \<as\>\)\@![^:]\)*$\|' .
-      \ '^\s*title\s*$\|' .
-      \ '^\s*skinparam\>.*{\s*$\|' .
-      \ '^\s*\%(state\|class\|partition\|rectangle\|enum\|interface\|namespace\|object\)\>.*{'
 
 let s:decIndent = '^\s*\%(end\|else\|}\)'
 
@@ -37,6 +35,8 @@ function! GetPlantUMLIndent(...) abort
   let pindent = indent(pnum)
   let pline = getline(pnum)
   let cline = getline(clnum)
+
+  let s:incIndent = s:getIncIndent()
 
   if cline =~ s:decIndent
     if pline =~ s:incIndent
@@ -56,4 +56,34 @@ endfunction
 function! s:insidePlantUMLTags(lnum) abort
   call cursor(a:lnum, 1)
   return search('@startuml', 'Wbn') && search('@enduml', 'Wn')
+endfunction
+
+function! s:listSyntax(syntaxKeyword) abort
+  " Get a list of words assigned to a syntax keyword
+  " The 'syntax list <syntax keyword>' command returns
+  " a string with the keyword itself, followed by xxx,
+  " on which we can split to extract the keywords string.
+  " This string must then be split on whitespace
+  let syntaxWords = split(
+        \ execute('syntax list ' . a:syntaxKeyword),
+        \ a:syntaxKeyword . ' xxx ')[-1]
+  return split(syntaxWords)
+endfunction
+
+function! s:typeKeywordIncPattern() abort
+  " Extract keywords for plantumlTypeKeyword, returning the inc pattern
+  let syntaxWords = join(s:listSyntax('plantumlTypeKeyword'), '\\\|')
+  return '^\s*\%(' . syntaxWords . '\)\>.*{'
+endfunction
+
+function! s:getIncIndent() abort
+  " Function to determine the s:incIndent pattern
+  return
+        \ '^\s*\%(class\|object\|interface\|partition\|rectangle\|enum\|namespace\)\>.*{\s*$\|' .
+        \ '^\s*\%(loop\|alt\|opt\|group\|critical\|else\|legend\|box\|if\|while\|fork\|split\)\>\|' .
+        \ '^\s*ref\>[^:]*$\|' .
+        \ '^\s*[hr]\?note\>\%(\%("[^"]*" \<as\>\)\@![^:]\)*$\|' .
+        \ '^\s*title\s*$\|' .
+        \ '^\s*skinparam\>.*{\s*$\|' .
+        \ s:typeKeywordIncPattern()
 endfunction

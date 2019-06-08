@@ -52,13 +52,13 @@ if !exists('g:python_pep8_indent_searchpair_timeout')
 endif
 
 let s:block_rules = {
-            \ '^\s*elif\>': ['if', 'elif'],
-            \ '^\s*except\>': ['try', 'except'],
-            \ '^\s*finally\>': ['try', 'except', 'else']
-            \ }
+      \ '^\s*elif\>': [['if', 'elif'], ['else']],
+      \ '^\s*except\>': [['try', 'except'], []],
+      \ '^\s*finally\>': [['try', 'except', 'else'], []]
+      \ }
 let s:block_rules_multiple = {
-            \ '^\s*else\>': ['if', 'elif', 'for', 'try', 'except'],
-            \ }
+      \ '^\s*else\>': [['if', 'elif', 'for', 'try', 'except'], []]
+      \ }
 " Pairs to look for when searching for opening parenthesis.
 " The value is the maximum offset in lines.
 let s:paren_pairs = {'()': 50, '[]': 100, '{}': 1000}
@@ -73,13 +73,15 @@ let s:stop_statement = '^\s*\(break\|continue\|raise\|return\|pass\)\>'
 let s:skip_after_opening_paren = 'synIDattr(synID(line("."), col("."), 0), "name") ' .
             \ '=~? "\\vcomment|jedi\\S"'
 
+let s:special_chars_syn_pattern = "\\vstring|comment|^pythonbytes%(contents)=$|pythonTodo|jedi\\S"
+
 if !get(g:, 'python_pep8_indent_skip_concealed', 0) || !has('conceal')
     " Skip strings and comments. Return 1 for chars to skip.
     " jedi* refers to syntax definitions from jedi-vim for call signatures, which
     " are inserted temporarily into the buffer.
     function! s:_skip_special_chars(line, col)
         return synIDattr(synID(a:line, a:col, 0), 'name')
-                \ =~? "\\vstring|comment|^pythonbytes%(contents)=$|jedi\\S"
+              \ =~? s:special_chars_syn_pattern
     endfunction
 else
     " Also ignore anything concealed.
@@ -94,8 +96,8 @@ else
 
     function! s:_skip_special_chars(line, col)
         return synIDattr(synID(a:line, a:col, 0), 'name')
-                \ =~? "\\vstring|comment|^pythonbytes%(contents)=$|jedi\\S"
-                \ || s:is_concealed(a:line, a:col)
+              \ =~? s:special_chars_syn_pattern
+              \ || s:is_concealed(a:line, a:col)
     endfunction
 endif
 
@@ -152,15 +154,23 @@ function! s:find_start_of_multiline_statement(lnum)
 endfunction
 
 " Find possible indent(s) of the block starter that matches the current line.
-function! s:find_start_of_block(lnum, types, multiple)
+function! s:find_start_of_block(lnum, types, skip, multiple) abort
     let r = []
     let re = '\V\^\s\*\('.join(a:types, '\|').'\)\>'
+    if !empty(a:skip)
+      let re_skip = '\V\^\s\*\('.join(a:skip, '\|').'\)\>'
+    else
+      let re_skip = ''
+    endif
     let lnum = a:lnum
     let last_indent = indent(lnum) + 1
     while lnum > 0 && last_indent > 0
         let indent = indent(lnum)
         if indent < last_indent
-            if getline(lnum) =~# re
+            let line = getline(lnum)
+            if !empty(re_skip) && line =~# re_skip
+                let last_indent = indent
+            elseif line =~# re
                 if !a:multiple
                     return [indent]
                 endif
@@ -217,6 +227,11 @@ function! s:indent_like_opening_paren(lnum)
             let res = base
         else
             let res = base + s:sw()
+
+            " Special case for parenthesis.
+            if text[paren_col-1] ==# '(' && getline(a:lnum) !~# '\v\)\s*:?\s*$'
+                return res
+            endif
         endif
     else
         " Indent to match position of opening paren.
@@ -241,14 +256,16 @@ function! s:indent_like_block(lnum)
     let text = getline(a:lnum)
     for [multiple, block_rules] in [
                 \ [0, s:block_rules],
-                \ [1, s:block_rules_multiple]]
-        for [line_re, blocks] in items(block_rules)
+                \ [1, s:block_rules_multiple],
+                \ ]
+        for [line_re, blocks_ignore] in items(block_rules)
             if text !~# line_re
                 continue
             endif
 
-            let indents = s:find_start_of_block(a:lnum - 1, blocks, multiple)
-            if !len(indents)
+            let [blocks, skip] = blocks_ignore
+            let indents = s:find_start_of_block(a:lnum - 1, blocks, skip, multiple)
+            if empty(indents)
                 return -1
             endif
             if len(indents) == 1
