@@ -10,7 +10,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 120+ times faster** than the <!--Package Count-->140<!--/Package Count--> packages it consists of.
+- It **installs and updates 120+ times faster** than the <!--Package Count-->141<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -185,6 +185,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [xml](https://github.com/amadeus/vim-xml) (syntax)
 - [yaml](https://github.com/stephpy/vim-yaml) (syntax, ftplugin)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
+- [zig](https://github.com/ziglang/zig.vim) (syntax, autoload, ftplugin)
 <!--/Language Packs-->
 
 ## Updating

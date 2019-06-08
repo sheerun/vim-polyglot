@@ -293,6 +293,7 @@ PACKS="
   xls:vim-scripts/XSLT-syntax
   yaml:stephpy/vim-yaml
   yard:sheerun/vim-yardoc
+  zig:ziglang/zig.vim
 "
 
 rm -rf tmp
