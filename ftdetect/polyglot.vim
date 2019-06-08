@@ -504,6 +504,15 @@ autocmd BufNewFile,BufRead *.hx setf haxe
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'hive') == -1
+  augroup filetypedetect
+  " hive, from hive.vim in zebradil/hive.vim
+autocmd BufNewFile,BufRead *.hql set filetype=hive
+autocmd BufNewFile,BufRead *.ql set filetype=hive
+autocmd BufNewFile,BufRead *.q set filetype=hive
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'i3') == -1
   augroup filetypedetect
   " i3, from i3config.vim in mboughaba/i3config.vim
