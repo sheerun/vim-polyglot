@@ -272,6 +272,7 @@ PACKS="
   solidity:tomlion/vim-solidity
   styled-components:styled-components/vim-styled-components#main
   stylus:wavded/vim-stylus
+  svelte:evanleck/vim-svelte
   svg-indent:jasonshell/vim-svg-indent
   svg:vim-scripts/svg.vim
   swift:keith/swift.vim

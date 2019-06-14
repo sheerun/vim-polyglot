@@ -182,6 +182,9 @@ function! go#config#DocUrl() abort
   return godoc_url
 endfunction
 
+function! go#config#DocPopupWindow() abort
+  return get(g:, 'go_doc_popup_window', 0)
+endfunction
 function! go#config#DefReuseBuffer() abort
   return get(g:, 'go_def_reuse_buffer', 0)
 endfunction

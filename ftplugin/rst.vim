@@ -38,7 +38,7 @@ if exists("g:rst_style") && g:rst_style != 0
     setlocal expandtab shiftwidth=3 softtabstop=3 tabstop=8
 endif
 
-if has('patch-7.3.867')  " Introduced the TextChanged event.
+if g:rst_fold_enabled != 0 && has('patch-7.3.867')  " Introduced the TextChanged event.
   setlocal foldmethod=expr
   setlocal foldexpr=RstFold#GetRstFold()
   setlocal foldtext=RstFold#GetRstFoldText()

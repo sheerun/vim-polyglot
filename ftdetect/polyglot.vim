@@ -1313,6 +1313,13 @@ autocmd BufNewFile,BufReadPost *.stylus set filetype=stylus
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'svelte') == -1
+  augroup filetypedetect
+  " svelte, from svelte.vim in evanleck/vim-svelte
+au BufRead,BufNewFile *.svelte setfiletype svelte
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sxhkd') == -1
   augroup filetypedetect
   " sxhkd, from sxhkdrc.vim in baskerville/vim-sxhkdrc

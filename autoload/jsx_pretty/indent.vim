@@ -37,7 +37,7 @@ function! s:prev_line(lnum)
 endfunction
 
 function! s:syn_attr_jsx(synattr)
-  return a:synattr =~ "^jsx"
+  return a:synattr =~? "^jsx"
 endfunction
 
 function! s:syn_xmlish(syns)
@@ -45,21 +45,21 @@ function! s:syn_xmlish(syns)
 endfunction
 
 function! s:syn_jsx_element(syns)
-  return get(a:syns, -1) =~ 'jsxElement'
+  return get(a:syns, -1) =~? 'jsxElement'
 endfunction
 
 function! s:syn_js_comment(syns)
-  return get(a:syns, -1) =~ 'Comment$'
+  return get(a:syns, -1) =~? 'Comment$'
 endfunction
 
 function! s:syn_jsx_escapejs(syns)
-  return get(a:syns, -1) =~ '\(\(js\(Template\)\?\|javaScript\(Embed\)\?\|typescript\)Braces\|javascriptTemplateSB\|typescriptInterpolationDelimiter\)' &&
-        \ (get(a:syns, -2) =~ 'jsxEscapeJs' ||
-        \ get(a:syns, -3) =~ 'jsxEscapeJs')
+  return get(a:syns, -1) =~? '\(\(js\(Template\)\?\|javaScript\(Embed\)\?\|typescript\)Braces\|javascriptTemplateSB\|typescriptInterpolationDelimiter\)' &&
+        \ (get(a:syns, -2) =~? 'jsxEscapeJs' ||
+        \ get(a:syns, -3) =~? 'jsxEscapeJs')
 endfunction
 
 function! s:syn_jsx_attrib(syns)
-  return len(filter(copy(a:syns), 'v:val =~ "jsxAttrib"'))
+  return len(filter(copy(a:syns), 'v:val =~? "jsxAttrib"'))
 endfunction
 
 let s:start_tag = '<\s*\([-:_\.\$0-9A-Za-z]\+\|>\)'

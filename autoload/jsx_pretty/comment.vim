@@ -7,7 +7,7 @@ function! jsx_pretty#comment#update_commentstring(original)
   let syn_start = s:syn_name(line('.'), 1)
   let save_cursor = getcurpos()
 
-  if syn_start =~ '^jsx'
+  if syn_start =~? '^jsx'
     let line = getline(".")
     let start = len(matchstr(line, '^\s*'))
     let syn_name = s:syn_name(line('.'), start + 1)
@@ -16,7 +16,7 @@ function! jsx_pretty#comment#update_commentstring(original)
       let &l:commentstring = '// %s'
     elseif s:syn_contains(line('.'), col('.'), 'jsxTaggedRegion')
       let &l:commentstring = '<!-- %s -->'
-    elseif syn_name =~ '^jsxAttrib'
+    elseif syn_name =~? '^jsxAttrib'
       let &l:commentstring = '// %s'
     else
       let &l:commentstring = '{/* %s */}'
