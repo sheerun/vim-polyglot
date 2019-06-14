@@ -37,7 +37,7 @@ augroup filetypedetect
     "       (*.jl files are recognized as lisp)
     autocmd BufRead,BufNewFile *.jl    let b:undo_ftplugin = "setlocal comments< define< formatoptions< iskeyword< lisp<"
   endif
-  
+
   autocmd BufRead,BufNewFile *.jl      set filetype=julia
 
   " coffeescript
@@ -48,6 +48,8 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.litcoffee set filetype=litcoffee
   autocmd BufNewFile,BufRead *.coffee.md set filetype=litcoffee
 
+  " zephir
+  autocmd BufNewFile,BufRead *.zep set filetype=zephir
 
   " elixir
   au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
@@ -63,7 +65,7 @@ augroup filetypedetect
                                \'',
                                \'end']) |
               \ 2
-  
+
   " git
   autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
   autocmd BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitconfig
@@ -410,7 +412,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ferm') == -1
   augroup filetypedetect
   " ferm, from ferm.vim in vim-scripts/ferm.vim
-autocmd BufNewFile,BufRead ferm.conf setf ferm 
+autocmd BufNewFile,BufRead ferm.conf setf ferm
 autocmd BufNewFile,BufRead *.ferm setf ferm
   augroup end
 endif
@@ -1356,7 +1358,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'textile') == -1
 " Tim Harper (tim.theenchanter.com)
 
 " Force filetype to be textile even if already set
-" This will override the system ftplugin/changelog 
+" This will override the system ftplugin/changelog
 " set on some distros
 au BufRead,BufNewFile *.textile set filetype=textile
   augroup end
@@ -1470,4 +1472,3 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zig') == -1
 au BufRead,BufNewFile *.zig set filetype=zig
   augroup end
 endif
-
