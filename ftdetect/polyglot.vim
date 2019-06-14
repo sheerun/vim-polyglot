@@ -1471,6 +1471,13 @@ autocmd BufNewFile,BufRead *.xdc setfiletype xdc
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zephir') == -1
+  augroup filetypedetect
+  " zephir, from zephir.vim in xwsoul/vim-zephir
+autocmd BufNewFile,BufReadPost *.zep set filetype=zephir
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zig') == -1
   augroup filetypedetect
   " zig, from zig.vim in ziglang/zig.vim

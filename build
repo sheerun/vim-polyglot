@@ -298,6 +298,7 @@ PACKS="
   xls:vim-scripts/XSLT-syntax
   yaml:stephpy/vim-yaml
   yard:sheerun/vim-yardoc
+  zephir:xwsoul/vim-zephir
   zig:ziglang/zig.vim
 "
 
