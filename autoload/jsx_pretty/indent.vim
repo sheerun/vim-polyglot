@@ -124,6 +124,8 @@ function! jsx_pretty#indent#get(js_indent)
         else
           return prev_ind
         endif
+      elseif prev_line =~ '^\<return'
+        return prev_ind
       else
         return prev_ind - s:sw()
       endif
@@ -187,6 +189,13 @@ function! jsx_pretty#indent#get(js_indent)
     endif
   else
     let ind = a:js_indent()
+
+    " Issue #68
+    " return (<div>
+    " |<div>)
+    if prev_line =~ '^\<return' && line =~ '^<\s*' . s:end_tag
+      return prev_ind
+    endif 
 
     " If current syntax is not a jsx syntax group
     if s:syn_xmlish(prev_syn_eol) && line !~ '^[)\]}]'

@@ -22,7 +22,7 @@ endif
 syn include @gitcommitDiff syntax/diff.vim
 syn region gitcommitDiff start=/\%(^diff --\%(git\|cc\|combined\) \)\@=/ end=/^\%(diff --\|$\|#\)\@=/ fold contains=@gitcommitDiff
 
-syn match   gitcommitSummary	".*\%<50v" contained containedin=gitcommitFirstLine nextgroup=gitcommitOverflow contains=@Spell
+syn match   gitcommitSummary	"^.*\%<51v." contained containedin=gitcommitFirstLine nextgroup=gitcommitOverflow contains=@Spell
 syn match   gitcommitOverflow	".*" contained contains=@Spell
 syn match   gitcommitBlank	"^[^#].*" contained contains=@Spell
 
