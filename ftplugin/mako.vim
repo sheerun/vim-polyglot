@@ -13,3 +13,11 @@ let b:did_ftplugin = 1
 
 setlocal comments=:##
 setlocal commentstring=##%s
+
+if exists('loaded_matchit')
+    let b:match_ignorecase = 1
+    let b:match_words = '<:>,' .
+    \ '<\@<=[ou]l\>[^>]*\%(>\|$\):<\@<=li\>:<\@<=/[ou]l>,' .
+    \ '<\@<=dl\>[^>]*\%(>\|$\):<\@<=d[td]\>:<\@<=/dl>,' .
+    \ '<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>'
+endif
