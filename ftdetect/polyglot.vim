@@ -1113,8 +1113,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rego') == -1
 autocmd BufRead,BufNewFile *.rego set filetype=rego
 
 " Use # as a comment prefix
-setlocal comments=b:#,fb:-
-setlocal commentstring=#\ %s
+autocmd FileType rego setlocal comments=b:#,fb:-
+autocmd FileType rego setlocal commentstring=#\ %s
   augroup end
 endif
 
