@@ -34,7 +34,7 @@ hi def link gitconfigBoolean		Boolean
 hi def link gitconfigNumber		Number
 hi def link gitconfigString		String
 hi def link gitconfigDelim		Delimiter
-hi def link gitconfigEscape		Delimiter
+hi def link gitconfigEscape		Special
 hi def link gitconfigError		Error
 
 let b:current_syntax = "gitconfig"

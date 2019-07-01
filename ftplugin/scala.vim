@@ -29,8 +29,8 @@ setlocal commentstring=//\ %s
 
 setlocal shiftwidth=2 softtabstop=2 expandtab
 
-setlocal include='^\s*import'
-setlocal includeexpr='substitute(v:fname,"\\.","/","g")'
+setlocal include=^\\s*import
+setlocal includeexpr=substitute(v:fname,'\\.','/','g')
 
 setlocal path+=src/main/scala,src/test/scala
 setlocal suffixesadd=.scala

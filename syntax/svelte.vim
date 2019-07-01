@@ -48,7 +48,10 @@ syntax match svelteKeyword "#await" contained containedin=jsBlock,javascriptBloc
 syntax match svelteKeyword "/await" contained containedin=jsBlock,javascriptBlock
 syntax match svelteKeyword ":catch" contained containedin=jsBlock,javascriptBlock
 syntax match svelteKeyword ":then" contained containedin=jsBlock,javascriptBlock
+
+" Inline keywords.
 syntax match svelteKeyword "@html" contained containedin=jsBlock,javascriptBlock
+syntax match svelteKeyword "@debug" contained containedin=jsBlock,javascriptBlock
 
 " Repeat functions.
 syntax match svelteRepeat "#each" contained containedin=jsBlock,javascriptBlock

@@ -631,11 +631,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jenkins') == -1
   augroup filetypedetect
   " jenkins, from Jenkinsfile.vim in martinda/Jenkinsfile-vim-syntax
 " Jenkinsfile
-autocmd BufRead,BufNewFile Jenkinsfile set ft=Jenkinsfile
-autocmd BufRead,BufNewFile Jenkinsfile* setf Jenkinsfile
-autocmd BufRead,BufNewFile *.jenkinsfile set ft=Jenkinsfile
-autocmd BufRead,BufNewFile *.jenkinsfile setf Jenkinsfile
-autocmd BufRead,BufNewFile *.Jenkinsfile setf Jenkinsfile
+
+augroup JenkinsAUGroup
+  autocmd BufRead,BufNewFile *Jenkins* set ft=Jenkinsfile
+  autocmd BufRead,BufNewFile *jenkins* set ft=Jenkinsfile
+augroup END
   augroup end
 endif
 
@@ -1085,7 +1085,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'racket') == -1
   augroup filetypedetect
   " racket, from racket.vim in wlangstroth/vim-racket
-au BufRead,BufNewFile *.rkt,*.rktl setf racket
+au BufRead,BufNewFile *.rkt,*.rktl set filetype=racket
   augroup end
 endif
 
@@ -1348,6 +1348,8 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
   augroup filetypedetect
   " terraform, from terraform.vim in hashivim/vim-terraform
+" By default, Vim associates .tf files with TinyFugue - tell it not to.
+autocmd! filetypedetect BufRead,BufNewFile *.tf
 autocmd BufRead,BufNewFile *.tf set filetype=terraform
 autocmd BufRead,BufNewFile *.tfvars set filetype=terraform
 autocmd BufRead,BufNewFile *.tfstate set filetype=json

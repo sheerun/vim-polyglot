@@ -73,17 +73,27 @@ function! jsx_pretty#indent#get(js_indent)
   let line = substitute(getline(lnum), '^\s*\|\s*$', '', 'g')
   let current_syn = s:syn_sol(lnum)
   let current_syn_eol = s:syn_eol(lnum)
-  let prev_syn_sol = s:syn_sol(lnum - 1)
-  let prev_syn_eol = s:syn_eol(lnum - 1)
+  let prev_line_num = prevnonblank(lnum - 1)
+  let prev_syn_sol = s:syn_sol(prev_line_num)
+  let prev_syn_eol = s:syn_eol(prev_line_num)
   let prev_line = s:prev_line(lnum)
   let prev_ind = s:prev_indent(lnum)
 
   if s:syn_xmlish(current_syn)
 
+    if !s:syn_xmlish(prev_syn_sol)
+          \ && !s:syn_jsx_escapejs(prev_syn_sol)
+          \ && !s:syn_jsx_escapejs(prev_syn_eol)
+          \ && !s:syn_js_comment(prev_syn_sol)
+      if line =~ '^/\s*>' || line =~ '^<\s*' . s:end_tag
+        return prev_ind
+      else
+        return prev_ind + s:sw()
+      endif
     " {
     "   <div></div>
     " ##} <--
-    if s:syn_jsx_element(current_syn) && line =~ '}$'
+    elseif s:syn_jsx_element(current_syn) && line =~ '}$'
       let pair_line = searchpair('{', '', '}', 'b')
       return indent(pair_line)
     elseif line =~ '^-->$'
@@ -143,16 +153,6 @@ function! jsx_pretty#indent#get(js_indent)
       else
         return prev_ind
       endif
-    elseif !s:syn_xmlish(prev_syn_sol)
-      if prev_line =~ '^\<\(return\|default\|await\|yield\)'
-        if line !~ '^/\s*>' || line !~ '^<\s*' . s:end_tag
-          return prev_ind + s:sw()
-        else
-          return prev_ind
-        endif
-      else
-        return prev_ind
-      endif
     else
       return prev_ind
     endif
@@ -193,9 +193,10 @@ function! jsx_pretty#indent#get(js_indent)
     " Issue #68
     " return (<div>
     " |<div>)
-    if prev_line =~ '^\<return' && line =~ '^<\s*' . s:end_tag
+    if (line =~ '^/\s*>' || line =~ '^<\s*' . s:end_tag)
+          \ && !s:syn_xmlish(prev_syn_sol)
       return prev_ind
-    endif 
+    endif
 
     " If current syntax is not a jsx syntax group
     if s:syn_xmlish(prev_syn_eol) && line !~ '^[)\]}]'

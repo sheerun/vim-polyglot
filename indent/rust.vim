@@ -85,8 +85,17 @@ function! s:is_string_comment(lnum, col)
     endif
 endfunction
 
-function GetRustIndent(lnum)
+if exists('*shiftwidth')
+    function! s:shiftwidth()
+        return shiftwidth()
+    endfunc
+else
+    function! s:shiftwidth()
+        return &shiftwidth
+    endfunc
+endif
 
+function GetRustIndent(lnum)
     " Starting assumption: cindent (called at the end) will do it right
     " normally. We just want to fix up a few cases.
 
@@ -132,14 +141,65 @@ function GetRustIndent(lnum)
         let prevline = s:get_line_trimmed(prevlinenum)
     endwhile
 
+    " A standalone '{', '}', or 'where'
+    let l:standalone_open = line =~# '\V\^\s\*{\s\*\$'
+    let l:standalone_close = line =~# '\V\^\s\*}\s\*\$'
+    let l:standalone_where = line =~# '\V\^\s\*where\s\*\$'
+    if l:standalone_open || l:standalone_close || l:standalone_where
+        " ToDo: we can search for more items than 'fn' and 'if'.
+        let [l:found_line, l:col, l:submatch] =
+                    \ searchpos('\<\(fn\)\|\(if\)\>', 'bnWp')
+        if l:found_line !=# 0
+            " Now we count the number of '{' and '}' in between the match
+            " locations and the current line (there is probably a better
+            " way to compute this).
+            let l:i = l:found_line
+            let l:search_line = strpart(getline(l:i), l:col - 1)
+            let l:opens = 0
+            let l:closes = 0
+            while l:i < a:lnum
+                let l:search_line2 = substitute(l:search_line, '\V{', '', 'g')
+                let l:opens += strlen(l:search_line) - strlen(l:search_line2)
+                let l:search_line3 = substitute(l:search_line2, '\V}', '', 'g')
+                let l:closes += strlen(l:search_line2) - strlen(l:search_line3)
+                let l:i += 1
+                let l:search_line = getline(l:i)
+            endwhile
+            if l:standalone_open || l:standalone_where
+                if l:opens ==# l:closes
+                    return indent(l:found_line)
+                endif
+            else
+                " Expect to find just one more close than an open
+                if l:opens ==# l:closes + 1
+                    return indent(l:found_line)
+                endif
+            endif
+        endif
+    endif
+
+    " A standalone 'where' adds a shift.
+    let l:standalone_prevline_where = prevline =~# '\V\^\s\*where\s\*\$'
+    if l:standalone_prevline_where
+        return indent(prevlinenum) + 4
+    endif
+
     " Handle where clauses nicely: subsequent values should line up nicely.
     if prevline[len(prevline) - 1] ==# ","
                 \ && prevline =~# '^\s*where\s'
         return indent(prevlinenum) + 6
     endif
 
-    if prevline[len(prevline) - 1] ==# ","
-                \ && s:get_line_trimmed(a:lnum) !~# '^\s*[\[\]{}]'
+    let l:last_prevline_character = prevline[len(prevline) - 1]
+
+    " A line that ends with '.<expr>;' is probably an end of a long list
+    " of method operations.
+    if prevline =~# '\V\^\s\*.' && l:last_prevline_character ==# ';'
+        return indent(prevlinenum) - s:shiftwidth()
+    endif
+
+    if l:last_prevline_character ==# ","
+                \ && s:get_line_trimmed(a:lnum) !~# '^\s*[\[\]{})]'
                 \ && prevline !~# '^\s*fn\s'
                 \ && prevline !~# '([^()]\+,$'
                 \ && s:get_line_trimmed(a:lnum) !~# '^\s*\S\+\s*=>'

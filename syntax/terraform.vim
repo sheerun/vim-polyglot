@@ -9,6 +9,12 @@ if exists('b:current_syntax')
   finish
 endif
 
+" Identifiers are made up of alphanumeric characters, underscores, and
+" hyphens.
+if has('patch-7.4.1142')
+    syn iskeyword a-z,A-Z,48-57,_,-
+endif
+
 syn case match
 
 syn keyword terraSection connection output provider variable data terraform locals
@@ -3732,7 +3738,7 @@ syn region terraDynamicName start=/"/ end=/"/ nextgroup=terraDynamicBlock skipwh
 """ misc.
 syn match terraValueDec      "\<[0-9]\+\([kKmMgG]b\?\)\?\>"
 syn match terraValueHexaDec  "\<0x[0-9a-f]\+\([kKmMgG]b\?\)\?\>"
-syn match terraBraces        "[{}\[\]]"
+syn match terraBraces        "[\[\]]"
 
 """ skip \" in strings.
 """ we may also want to pass \\" into a function to escape quotes.
@@ -3756,6 +3762,9 @@ syn keyword terraValueNull      null
 
 """ Terraform v0.12
 syn keyword terraTodo contained TF-UPGRADE-TODO
+
+" enable block folding
+syn region terraBlock matchgroup=terraBraces start="{" end="}" fold transparent
 
 hi def link terraComment           Comment
 hi def link terraTodo              Todo
