@@ -62,7 +62,7 @@ syn keyword qmlException         try catch finally throw
 syn keyword qmlMessage           alert confirm prompt status
 syn keyword qmlGlobal            self
 syn keyword qmlDeclaration       property signal readonly
-syn keyword qmlReserved          abstract boolean byte char class const debugger enum export extends final float goto implements import interface long native package pragma private protected public short static super synchronized throws transient volatile
+syn keyword qmlReserved          abstract boolean byte char class debugger enum export extends final float goto implements import interface long native package pragma private protected public short static super synchronized throws transient volatile
 
 " List extracted in alphabatical order from: https://doc.qt.io/qt-5/qmltypes.html
 " Qt v5.13.0
