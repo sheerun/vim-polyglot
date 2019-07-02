@@ -52,7 +52,7 @@ syn keyword qmlRepeat            while for do in
 syn keyword qmlBranch            break continue
 syn keyword qmlOperator          new delete instanceof typeof
 syn keyword qmlJsType            Array Boolean Date Function Number Object String RegExp
-syn keyword qmlType              action alias bool color date double enumeration font int list point real rect size string time url variant vector3d
+syn keyword qmlType              action alias bool color date double enumeration font int list point real rect size string time url variant vector3d coordinate geocircle geopath geopolygon georectangle geoshape matrix4x4 palette quaternion vector3d vector4d
 syn keyword qmlStatement         return with
 syn keyword qmlBoolean           true false
 syn keyword qmlNull              null undefined
@@ -66,6 +66,9 @@ syn keyword qmlReserved          abstract boolean byte char class debugger enum 
 
 " List extracted in alphabatical order from: https://doc.qt.io/qt-5/qmltypes.html
 " Qt v5.13.0
+
+syn case match
+
 syn keyword qmlObjectLiteralType Abstract3DSeries
 syn keyword qmlObjectLiteralType AbstractActionInput
 syn keyword qmlObjectLiteralType AbstractAnimation
@@ -87,11 +90,9 @@ syn keyword qmlObjectLiteralType AbstractTextureImage
 syn keyword qmlObjectLiteralType Accelerometer
 syn keyword qmlObjectLiteralType AccelerometerReading
 syn keyword qmlObjectLiteralType Accessible
-syn keyword qmlObjectLiteralType Action:
+syn keyword qmlObjectLiteralType Action
 syn keyword qmlObjectLiteralType QtQuickControls
-syn keyword qmlObjectLiteralType Action:
 syn keyword qmlObjectLiteralType Qt3D
-syn keyword qmlObjectLiteralType Action:
 syn keyword qmlObjectLiteralType QtQuickControls1
 syn keyword qmlObjectLiteralType ActionGroup
 syn keyword qmlObjectLiteralType ActionInput
@@ -114,15 +115,15 @@ syn keyword qmlObjectLiteralType AngleDirection
 syn keyword qmlObjectLiteralType AnimatedImage
 syn keyword qmlObjectLiteralType AnimatedSprite
 syn keyword qmlObjectLiteralType Animation
-syn keyword qmlObjectLiteralType AnimationController:
+syn keyword qmlObjectLiteralType AnimationController
 syn keyword qmlObjectLiteralType QtQuick
-syn keyword qmlObjectLiteralType AnimationController:
+syn keyword qmlObjectLiteralType AnimationController
 syn keyword qmlObjectLiteralType Qt3D
 syn keyword qmlObjectLiteralType AnimationGroup
 syn keyword qmlObjectLiteralType Animator
-syn keyword qmlObjectLiteralType ApplicationWindow:
+syn keyword qmlObjectLiteralType ApplicationWindow
 syn keyword qmlObjectLiteralType QtQuickControls
-syn keyword qmlObjectLiteralType ApplicationWindow:
+syn keyword qmlObjectLiteralType ApplicationWindow
 syn keyword qmlObjectLiteralType QtQuickControls1
 syn keyword qmlObjectLiteralType ApplicationWindowStyle
 syn keyword qmlObjectLiteralType AreaSeries
@@ -159,7 +160,6 @@ syn keyword qmlObjectLiteralType BlitFramebuffer
 syn keyword qmlObjectLiteralType BluetoothDiscoveryModel
 syn keyword qmlObjectLiteralType BluetoothService
 syn keyword qmlObjectLiteralType BluetoothSocket
-syn keyword qmlObjectLiteralType bool
 syn keyword qmlObjectLiteralType BorderImage
 syn keyword qmlObjectLiteralType BorderImageMesh
 syn keyword qmlObjectLiteralType BoxPlotSeries
@@ -209,7 +209,6 @@ syn keyword qmlObjectLiteralType ClearBuffers
 syn keyword qmlObjectLiteralType ClipAnimator
 syn keyword qmlObjectLiteralType ClipPlane
 syn keyword qmlObjectLiteralType CloseEvent
-syn keyword qmlObjectLiteralType color
 syn keyword qmlObjectLiteralType ColorAnimation
 syn keyword qmlObjectLiteralType ColorDialog
 syn keyword qmlObjectLiteralType ColorDialogRequest
@@ -236,7 +235,6 @@ syn keyword qmlObjectLiteralType Container
 syn keyword qmlObjectLiteralType Context2D
 syn keyword qmlObjectLiteralType ContextMenuRequest
 syn keyword qmlObjectLiteralType Control
-syn keyword qmlObjectLiteralType coordinate
 syn keyword qmlObjectLiteralType CoordinateAnimation
 syn keyword qmlObjectLiteralType CuboidGeometry
 syn keyword qmlObjectLiteralType CuboidMesh
@@ -250,7 +248,6 @@ syn keyword qmlObjectLiteralType CylinderGeometry
 syn keyword qmlObjectLiteralType CylinderMesh
 
 syn keyword qmlObjectLiteralType Date
-syn keyword qmlObjectLiteralType date
 syn keyword qmlObjectLiteralType DateTimeAxis
 syn keyword qmlObjectLiteralType DelayButton
 syn keyword qmlObjectLiteralType DelayButtonStyle
@@ -275,7 +272,6 @@ syn keyword qmlObjectLiteralType Displace
 syn keyword qmlObjectLiteralType DistanceReading
 syn keyword qmlObjectLiteralType DistanceSensor
 syn keyword qmlObjectLiteralType Dithering
-syn keyword qmlObjectLiteralType double
 syn keyword qmlObjectLiteralType DoubleValidator
 syn keyword qmlObjectLiteralType Drag
 syn keyword qmlObjectLiteralType DragEvent
@@ -294,7 +290,6 @@ syn keyword qmlObjectLiteralType EnterKey
 syn keyword qmlObjectLiteralType EnterKeyAction
 syn keyword qmlObjectLiteralType Entity
 syn keyword qmlObjectLiteralType EntityLoader
-syn keyword qmlObjectLiteralType enumeration
 syn keyword qmlObjectLiteralType EnvironmentLight
 syn keyword qmlObjectLiteralType EventConnection
 syn keyword qmlObjectLiteralType EventPoint
@@ -316,7 +311,6 @@ syn keyword qmlObjectLiteralType Flipable
 syn keyword qmlObjectLiteralType Flow
 syn keyword qmlObjectLiteralType FocusScope
 syn keyword qmlObjectLiteralType FolderListModel
-syn keyword qmlObjectLiteralType font
 syn keyword qmlObjectLiteralType FontDialog
 syn keyword qmlObjectLiteralType FontLoader
 syn keyword qmlObjectLiteralType FontMetrics
@@ -336,14 +330,9 @@ syn keyword qmlObjectLiteralType GammaAdjust
 syn keyword qmlObjectLiteralType Gauge
 syn keyword qmlObjectLiteralType GaugeStyle
 syn keyword qmlObjectLiteralType GaussianBlur
-syn keyword qmlObjectLiteralType geocircle
 syn keyword qmlObjectLiteralType GeocodeModel
 syn keyword qmlObjectLiteralType Geometry
 syn keyword qmlObjectLiteralType GeometryRenderer
-syn keyword qmlObjectLiteralType geopath
-syn keyword qmlObjectLiteralType geopolygon
-syn keyword qmlObjectLiteralType georectangle
-syn keyword qmlObjectLiteralType geoshape
 syn keyword qmlObjectLiteralType GestureEvent
 syn keyword qmlObjectLiteralType Glow
 syn keyword qmlObjectLiteralType GoochMaterial
@@ -496,10 +485,8 @@ syn keyword qmlObjectLiteralType Margins
 syn keyword qmlObjectLiteralType MaskedBlur
 syn keyword qmlObjectLiteralType MaskShape
 syn keyword qmlObjectLiteralType Material
-syn keyword qmlObjectLiteralType matrix4x4
 syn keyword qmlObjectLiteralType Matrix4x4
 syn keyword qmlObjectLiteralType MediaPlayer
-syn keyword qmlObjectLiteralType mediaplayer-qml-dynamic
 syn keyword qmlObjectLiteralType MemoryBarrier
 syn keyword qmlObjectLiteralType Menu
 syn keyword qmlObjectLiteralType MenuBar
@@ -553,7 +540,6 @@ syn keyword qmlObjectLiteralType Overlay
 syn keyword qmlObjectLiteralType Package
 syn keyword qmlObjectLiteralType Page
 syn keyword qmlObjectLiteralType PageIndicator
-syn keyword qmlObjectLiteralType palette
 syn keyword qmlObjectLiteralType Pane
 syn keyword qmlObjectLiteralType ParallelAnimation
 syn keyword qmlObjectLiteralType Parameter
@@ -607,7 +593,6 @@ syn keyword qmlObjectLiteralType PlaylistItem
 syn keyword qmlObjectLiteralType PlayVariation
 syn keyword qmlObjectLiteralType Plugin
 syn keyword qmlObjectLiteralType PluginParameter
-syn keyword qmlObjectLiteralType point
 syn keyword qmlObjectLiteralType PointDirection
 syn keyword qmlObjectLiteralType PointerDevice
 syn keyword qmlObjectLiteralType PointerDeviceHandler
@@ -642,7 +627,6 @@ syn keyword qmlObjectLiteralType Qt
 syn keyword qmlObjectLiteralType QtMultimedia
 syn keyword qmlObjectLiteralType QtObject
 syn keyword qmlObjectLiteralType QtPositioning
-syn keyword qmlObjectLiteralType quaternion
 syn keyword qmlObjectLiteralType QuaternionAnimation
 syn keyword qmlObjectLiteralType QuotaRequest
 
@@ -656,8 +640,6 @@ syn keyword qmlObjectLiteralType RadioDelegate
 syn keyword qmlObjectLiteralType RangeSlider
 syn keyword qmlObjectLiteralType Ratings
 syn keyword qmlObjectLiteralType RayCaster
-syn keyword qmlObjectLiteralType real
-syn keyword qmlObjectLiteralType rect
 syn keyword qmlObjectLiteralType Rectangle
 syn keyword qmlObjectLiteralType RectangleShape
 syn keyword qmlObjectLiteralType RectangularGlow
@@ -734,7 +716,6 @@ syn keyword qmlObjectLiteralType Shortcut
 syn keyword qmlObjectLiteralType SignalSpy
 syn keyword qmlObjectLiteralType SignalTransition
 syn keyword qmlObjectLiteralType SinglePointHandler
-syn keyword qmlObjectLiteralType size
 syn keyword qmlObjectLiteralType Skeleton
 syn keyword qmlObjectLiteralType SkeletonLoader
 syn keyword qmlObjectLiteralType Slider
@@ -762,7 +743,7 @@ syn keyword qmlObjectLiteralType StackedBarSeries
 syn keyword qmlObjectLiteralType StackLayout
 syn keyword qmlObjectLiteralType StackView
 syn keyword qmlObjectLiteralType StackViewDelegate
-syn keyword qmlObjectLiteralType State:
+syn keyword qmlObjectLiteralType State
 syn keyword qmlObjectLiteralType QtQml
 syn keyword qmlObjectLiteralType State
 syn keyword qmlObjectLiteralType StateChangeScript
@@ -780,7 +761,6 @@ syn keyword qmlObjectLiteralType StencilTest
 syn keyword qmlObjectLiteralType StencilTestArguments
 syn keyword qmlObjectLiteralType Store
 syn keyword qmlObjectLiteralType String
-syn keyword qmlObjectLiteralType string
 syn keyword qmlObjectLiteralType Supplier
 syn keyword qmlObjectLiteralType Surface3D
 syn keyword qmlObjectLiteralType Surface3DSeries
@@ -864,15 +844,10 @@ syn keyword qmlObjectLiteralType User
 syn keyword qmlObjectLiteralType ValueAxis
 syn keyword qmlObjectLiteralType ValueAxis3D
 syn keyword qmlObjectLiteralType ValueAxis3DFormatter
-syn keyword qmlObjectLiteralType var
-syn keyword qmlObjectLiteralType variant
 syn keyword qmlObjectLiteralType VBarModelMapper
 syn keyword qmlObjectLiteralType VBoxPlotModelMapper
 syn keyword qmlObjectLiteralType VCandlestickModelMapper
-syn keyword qmlObjectLiteralType vector2d
-syn keyword qmlObjectLiteralType vector3d
 syn keyword qmlObjectLiteralType Vector3dAnimation
-syn keyword qmlObjectLiteralType vector4d
 syn keyword qmlObjectLiteralType VertexBlendAnimation
 syn keyword qmlObjectLiteralType Video
 syn keyword qmlObjectLiteralType VideoOutput
