@@ -51,7 +51,7 @@ augroup filetypedetect
 
   " elixir
   au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
-  au BufRead,BufNewFile *.eex call s:setf('eelixir')
+  au BufRead,BufNewFile *.eex,*.leex call s:setf('eelixir')
 
   " fish
   autocmd BufRead,BufNewFile *.fish setfiletype fish
