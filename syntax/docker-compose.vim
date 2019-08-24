@@ -14,13 +14,14 @@ endif
 
 " case sensitivity (fix #17)
 " syn case  ignore
+syntax spell notoplevel
 
 " Keywords
 syn keyword dockercomposeKeywords build context dockerfile args cap_add cap_drop
 syn keyword dockercomposeKeywords command cgroup_parent container_name devices depends_on
 syn keyword dockercomposeKeywords dns dns_search tmpfs entrypoint env_file environment
 syn keyword dockercomposeKeywords expose extends extends external_links extra_hosts
-syn keyword dockercomposeKeywords group_add image isolation labels links 
+syn keyword dockercomposeKeywords group_add image isolation labels links
 syn keyword dockercomposeKeywords log_opt net network_mode networks aliases
 syn keyword dockercomposeKeywords ipv4_address ipv6_address link_local_ips pid ports
 syn keyword dockercomposeKeywords security_opt stop_signal ulimits volumes volume_driver
@@ -69,7 +70,7 @@ syn match dockercomposeUrl /\(http\|https\|ssh\|hg\|git\)\:\/\/[a-zA-Z0-9\/\-\.]
 syn keyword dockercomposeTodo contained TODO FIXME XXX
 
 " Comments
-syn region dockercomposeComment start="#" end="\n" contains=dockercomposeTodo
+syn region dockercomposeComment start="#" end="\n" contains=dockercomposeTodo,@Spell
 
 " Highlighting
 hi link dockercomposeKeywords  Keyword

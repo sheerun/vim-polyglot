@@ -15,6 +15,8 @@ endif
 " case sensitivity (fix #17)
 " syn case  ignore
 
+syntax spell notoplevel
+
 " Keywords
 syn keyword dockerfileKeywords FROM AS MAINTAINER RUN CMD COPY
 syn keyword dockerfileKeywords EXPOSE ADD ENTRYPOINT
@@ -46,7 +48,7 @@ syn keyword dockerfileTodo contained TODO FIXME XXX
 
 " Comments
 syn region dockerfileComment start="#" end="\n" contains=dockerfileTodo
-syn region dockerfileEnvWithComment start="^\s*ENV\>" end="\n" contains=dockerfileEnv
+syn region dockerfileEnvWithComment start="^\s*ENV\>" end="\n" contains=dockerfileEnv,@Spell
 syn match dockerfileEnv contained /\<ENV\>/
 
 " Highlighting
