@@ -23,10 +23,12 @@ if version < 600
 endif
 syntax clear
 
+syntax spell notoplevel
+
 syn match yamlInline "[\[\]\{\}]"
 syn match yamlBlock "[>|]\d\?[+-]"
 
-syn region yamlComment	start="\#" end="$"
+syn region yamlComment	start="\#" end="$" contains=@Spell
 syn match yamlIndicator	"#YAML:\S\+"
 
 syn region yamlString	start="\(^\|\s\|\[\|\,\|\-\)\@<='" end="'" skip="\\'"
