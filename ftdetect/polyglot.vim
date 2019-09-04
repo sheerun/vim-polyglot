@@ -289,6 +289,15 @@ autocmd BufRead,BufNewFile *.dart set filetype=dart
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dhall') == -1
+  augroup filetypedetect
+  " dhall, from dhall.vim in vmchale/dhall-vim
+augroup dhall
+    autocmd BufNewFile,BufRead *.dhall set filetype=dhall
+augroup END
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dlang') == -1
   augroup filetypedetect
   " dlang, from d.vim in JesseKPhillips/d.vim
