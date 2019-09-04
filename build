@@ -12,7 +12,7 @@ DIRS_SYNTAX="syntax indent after/syntax after/indent"
 # shellcheck disable=SC2034
 DIRS_NOAFTER="syntax compiler indent autoload ftplugin"
 DIRS_JAVASCRIPT="${DIRS} extras"
-read -r -a DIRS_RM <<<"$DIRS_JAVASCRIPT"
+read -r -a DIRS_RM <<<"$DIRS_ALL"
 
 OUTPUT=""
 
