@@ -505,6 +505,14 @@ unlet s:cpo_save
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
+  augroup filetypedetect
+  " graphql, from graphql.vim in jparise/vim-graphql:_ALL
+" vint: -ProhibitAutocmdWithNoGroup
+au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'gradle') == -1
   augroup filetypedetect
   " gradle, from gradle.vim in tfnico/vim-gradle
