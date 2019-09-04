@@ -1,9 +1,3 @@
-function! s:setf(filetype) abort
-  if &filetype !=# a:filetype
-    let &filetype = a:filetype
-  endif
-endfunction
-
 " Enable jsx syntax by default
 if !exists('g:jsx_ext_required')
   let g:jsx_ext_required = 0
@@ -50,8 +44,9 @@ augroup filetypedetect
 
 
   " elixir
-  au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
-  au BufRead,BufNewFile *.eex call s:setf('eelixir')
+  au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
+  au BufRead,BufNewFile *.eex,*.leex set filetype=eelixir
+  au BufRead,BufNewFile mix.lock set filetype=elixir
 
   " fish
   autocmd BufRead,BufNewFile *.fish setfiletype fish
