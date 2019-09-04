@@ -2,15 +2,15 @@ if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'elixir') != -1
   finish
 endif
 
-if exists("b:current_syntax")
-  finish
+if !exists("main_syntax")
+  if exists("b:current_syntax")
+    finish
+  endif
+  let main_syntax = "elixir"
 endif
 
 let s:cpo_save = &cpo
 set cpo&vim
-
-" syncing starts 2000 lines before top line so docstrings don't screw things up
-syn sync minlines=2000
 
 syn cluster elixirNotTop contains=@elixirRegexSpecial,@elixirStringContained,@elixirDeclaration,elixirTodo,elixirArguments,elixirBlockDefinition,elixirUnusedVariable,elixirStructDelimiter
 syn cluster elixirRegexSpecial contains=elixirRegexEscape,elixirRegexCharClass,elixirRegexQuantifier,elixirRegexEscapePunctuation
@@ -112,12 +112,14 @@ syn region elixirSigil matchgroup=elixirSigilDelimiter start=+\~\a\z('''\)+ end=
 
 " LiveView Sigils surrounded with ~L"""
 syntax include @HTML syntax/html.vim
+unlet b:current_syntax
 syntax region elixirLiveViewSigil matchgroup=elixirSigilDelimiter keepend start=+\~L\z("""\)+ end=+^\s*\z1+ skip=+\\"+ contains=@HTML fold
 
 
 " Documentation
 if exists('g:elixir_use_markdown_for_docs') && g:elixir_use_markdown_for_docs
   syn include @markdown syntax/markdown.vim
+  unlet b:current_syntax
   syn cluster elixirDocStringContained contains=@markdown,@Spell,elixirInterpolation
 else
   let g:elixir_use_markdown_for_docs = 0
@@ -172,9 +174,12 @@ syn match  elixirExceptionDeclaration       "[^[:space:];#<]\+"        contained
 syn match  elixirCallbackDeclaration        "[^[:space:];#<,()\[\]]\+" contained contains=elixirFunctionDeclaration             skipwhite skipnl
 
 " ExUnit
-syn match  elixirExUnitMacro "\(^\s*\)\@<=\<\(test\|describe\|setup\|setup_all\|on_exit\|doctest\)\>"
-syn match  elixirExUnitAssert "\(^\s*\)\@<=\<\(assert\|assert_in_delta\|assert_raise\|assert_receive\|assert_received\|catch_error\)\>"
-syn match  elixirExUnitAssert "\(^\s*\)\@<=\<\(catch_exit\|catch_throw\|flunk\|refute\|refute_in_delta\|refute_receive\|refute_received\)\>"
+syn match  elixirExUnitMacro "\C\(^\s*\)\@<=\<\(test\|describe\|setup\|setup_all\|on_exit\|doctest\)\>"
+syn match  elixirExUnitAssert "\C\(^\s*\)\@<=\<\(assert\|assert_in_delta\|assert_raise\|assert_receive\|assert_received\|catch_error\)\>"
+syn match  elixirExUnitAssert "\C\(^\s*\)\@<=\<\(catch_exit\|catch_throw\|flunk\|refute\|refute_in_delta\|refute_receive\|refute_received\)\>"
+
+" syncing starts 2000 lines before top line so docstrings don't screw things up
+syn sync minlines=2000
 
 hi def link elixirBlockDefinition            Define
 hi def link elixirDefine                     Define
@@ -233,6 +238,10 @@ hi def link elixirSigilDelimiter             Delimiter
 hi def link elixirPrivateRecordDeclaration   elixirRecordDeclaration
 
 let b:current_syntax = "elixir"
+
+if main_syntax == "elixir"
+  unlet main_syntax
+endif
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

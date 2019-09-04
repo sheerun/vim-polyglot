@@ -23,9 +23,6 @@ endif
 unlet! b:did_indent
 setlocal indentexpr=
 
-" keep track of whether or not we are in a block expression for indenting
-unlet! s:in_block_expr
-
 runtime! indent/html.vim
 unlet! b:did_indent
 
@@ -87,23 +84,19 @@ function! GetHandlebarsIndent(...)
   " tag is on a separate line
 
   " indent after block {{#block
-  if prevLine =~# '\v\s*\{\{\#.*\s*'
-    let s:in_block_expr = 1
+  if prevLine =~# '\v\s*\{\{[#^].*\s*'
     let ind = ind + sw
   endif
   " but not if the block ends on the same line
   if prevLine =~# '\v\s*\{\{\#(.+)(\s+|\}\}).*\{\{\/\1'
-    let s:in_block_expr = 0
     let ind = ind - sw
   endif
   " unindent after block close {{/block}}
   if currentLine =~# '\v^\s*\{\{\/\S*\}\}\s*'
-    let s:in_block_expr = 0
     let ind = ind - sw
   endif
   " indent after component block {{a-component
   if prevLine =~# '\v\s*\{\{\w'
-    let s:in_block_expr = 0
     let ind = ind + sw
   endif
   " but not if the component block ends on the same line
@@ -111,9 +104,16 @@ function! GetHandlebarsIndent(...)
     let ind = ind - sw
   endif
   " unindent }} lines, and following lines if not inside a block expression
+  let savedPos = getpos('.')
   if currentLine =~# '\v^\s*\}\}\s*$' || (currentLine !~# '\v^\s*\{\{\/' && prevLine =~# '\v^\s*[^\{\} \t]+\}\}\s*$')
-    if !s:in_block_expr
-      let ind = ind - sw
+    let closingLnum = search('}}\s*$', 'Wbc', lnum)
+    let [openingLnum, col] = searchpairpos('{{', '', '}}', 'Wb')
+    if openingLnum > 0 && closingLnum > 0
+      if strpart(getline(openingLnum), col - 1, 3) !~ '{{[#^]'
+        let ind = ind - sw
+      endif
+    else
+      call setpos('.', savedPos)
     endif
   endif
   " unindent {{else}}

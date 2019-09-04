@@ -5,7 +5,7 @@ endif
 "
 " Support for Tagbar -- https://github.com/majutsushi/tagbar
 "
-if !exists(':Tagbar')
+if !exists(':Tagbar') || rust#tags#IsUCtags()
     finish
 endif
 

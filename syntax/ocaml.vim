@@ -33,6 +33,9 @@ endif
 " ' can be used in OCaml identifiers
 setlocal iskeyword+='
 
+" ` is part of the name of polymorphic variants
+setlocal iskeyword+=`
+
 " OCaml is case sensitive.
 syn case match
 

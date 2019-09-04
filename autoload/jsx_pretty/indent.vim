@@ -90,6 +90,9 @@ function! jsx_pretty#indent#get(js_indent)
       else
         return prev_ind + s:sw()
       endif
+    elseif !s:syn_xmlish(prev_syn_sol) && !s:syn_js_comment(prev_syn_sol) && s:syn_jsx_attrib(current_syn)
+      " For #79
+      return prev_ind + s:sw()
     " {
     "   <div></div>
     " ##} <--
@@ -176,7 +179,8 @@ function! jsx_pretty#indent#get(js_indent)
         return prev_ind + s:sw()
       endif
     endif
-  elseif s:syn_jsx_escapejs(current_syn_eol)
+  elseif line =~ '^`' && s:syn_jsx_escapejs(current_syn_eol)
+    " For `} of template syntax
     let pair_line = searchpair('{', '', '}', 'bW')
     return indent(pair_line)
   elseif line =~ '^/[/*]' " js comment in jsx tag

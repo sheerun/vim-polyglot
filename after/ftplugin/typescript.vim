@@ -25,3 +25,7 @@ augroup jsx_comment
 augroup end
 
 setlocal suffixesadd+=.tsx
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'styled-components') != -1
+  finish
+endif
+

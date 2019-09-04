@@ -158,6 +158,7 @@ syntax keyword swiftKeywords
       \ return
       \ self
       \ set
+      \ some
       \ static
       \ subscript
       \ super
@@ -186,6 +187,9 @@ syntax match swiftMultiwordKeywords "indirect enum"
 syntax region swiftEscapedReservedWord start="`" end="`" oneline
 
 syntax keyword swiftAttributes
+      \ @_exported
+      \ @_functionBuilder
+      \ @_silgen_name
       \ @assignment
       \ @autoclosure
       \ @available
@@ -193,6 +197,7 @@ syntax keyword swiftAttributes
       \ @discardableResult
       \ @escaping
       \ @exported
+      \ @frozen
       \ @IBAction
       \ @IBDesignable
       \ @IBInspectable
@@ -205,6 +210,7 @@ syntax keyword swiftAttributes
       \ @NSCopying
       \ @NSManaged
       \ @objc
+      \ @propertyWrapper
       \ @testable
       \ @UIApplicationMain
       \ @usableFromInline

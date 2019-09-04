@@ -2,54 +2,21 @@ if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'terraform') != -
   finish
 endif
 
-" Adapted from vim-hclfmt:
-" https://github.com/fatih/vim-hclfmt/blob/master/autoload/fmt.vim
 function! terraform#fmt()
   if !filereadable(expand('%:p'))
     return
   endif
   let l:curw = winsaveview()
-  let l:tmpfile = tempname() . '.tf'
-  call writefile(getline(1, '$'), l:tmpfile)
-  let output = system('terraform fmt -write ' . l:tmpfile)
-  if v:shell_error == 0
-    try | silent undojoin | catch | endtry
-    call rename(l:tmpfile, resolve(expand('%')))
-    silent edit!
-    let &syntax = &syntax
-  else
-    echo output
-    call delete(l:tmpfile)
+  " Make a fake change so that the undo point is right.
+  normal! ix
+  normal! "_x
+  silent execute '%!terraform fmt -no-color -'
+  if v:shell_error != 0
+    let output = getline(1, '$')
+    silent undo
+    echo join(output, "\n")
   endif
   call winrestview(l:curw)
-endfunction
-
-function! terraform#folds()
-  let thisline = getline(v:lnum)
-  if match(thisline, '^resource') >= 0
-    return '>1'
-  elseif match(thisline, '^provider') >= 0
-    return '>1'
-  elseif match(thisline, '^module') >= 0
-    return '>1'
-  elseif match(thisline, '^variable') >= 0
-    return '>1'
-  elseif match(thisline, '^output') >= 0
-    return '>1'
-  elseif match(thisline, '^data') >= 0
-    return '>1'
-  elseif match(thisline, '^terraform') >= 0
-    return '>1'
-  elseif match(thisline, '^locals') >= 0
-    return '>1'
-  else
-    return '='
-  endif
-endfunction
-
-function! terraform#foldText()
-  let foldsize = (v:foldend-v:foldstart)
-  return getline(v:foldstart).' ('.foldsize.' lines)'
 endfunction
 
 function! terraform#align()
@@ -77,7 +44,6 @@ function! terraform#commands(A, L, P)
   \ 'output',
   \ 'plan',
   \ 'providers',
-  \ 'push',
   \ 'refresh',
   \ 'show',
   \ 'taint',
@@ -85,9 +51,10 @@ function! terraform#commands(A, L, P)
   \ 'validate',
   \ 'version',
   \ 'workspace',
-  \ '0.12checklist',
+  \ '0.12upgrade',
   \ 'debug',
   \ 'force-unlock',
+  \ 'push',
   \ 'state'
   \ ]
 endfunction

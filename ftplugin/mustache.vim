@@ -25,6 +25,9 @@ if exists("loaded_matchit") && exists("b:match_words")
   \ . '\%({{\)\@<=/\s*\1\s*}}'
 endif
 
+" Set template for comment
+setlocal commentstring={{!--\ %s\ --}}
+
 if exists("g:mustache_abbreviations")
   inoremap <buffer> {{{ {{{}}}<left><left><left>
   inoremap <buffer> {{ {{}}<left><left>

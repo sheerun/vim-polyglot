@@ -83,6 +83,10 @@ fu! IsStyledDefinition(lnum)
 endfu
 
 if exists('&ofu')
-  let b:prevofu=&ofu
+  if &ofu
+    " Do not keep track of previous omnifunc if it was not set in the first
+    " place
+    let b:prevofu=&ofu
+  endif
   setl omnifunc=styledcomplete#CompleteSC
 endif

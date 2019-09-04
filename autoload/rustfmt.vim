@@ -246,7 +246,12 @@ function! rustfmt#PreWrite()
     if rust#GetConfigVar('rustfmt_autosave_if_config_present', 0)
         if findfile('rustfmt.toml', '.;') !=# '' || findfile('.rustfmt.toml', '.;') !=# ''
             let b:rustfmt_autosave = 1
-            let b:rustfmt_autosave_because_of_config = 1
+            let b:_rustfmt_autosave_because_of_config = 1
+        endif
+    else
+        if has_key(b:, '_rustfmt_autosave_because_of_config')
+            unlet b:_rustfmt_autosave_because_of_config
+            unlet b:rustfmt_autosave
         endif
     endif
 

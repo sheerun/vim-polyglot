@@ -26,24 +26,13 @@ if !has('patch-7.4.1142')
 endif
 
 if get(g:, 'terraform_fold_sections', 0)
-  setlocal foldmethod=expr
-  setlocal foldexpr=terraform#folds()
-  setlocal foldlevel=1
-  setlocal foldtext=terraform#foldText()
-  let b:undo_ftplugin .= ' foldmethod< foldexpr< foldlevel< foldtext<'
+  setlocal foldmethod=syntax
+  let b:undo_ftplugin .= ' foldmethod<'
 endif
 
 " Set the commentstring
-let &l:commentstring = get(g:, 'terraform_commentstring', '#%s')
+setlocal commentstring=#%s
 let b:undo_ftplugin .= ' commentstring<'
-
-" Re-map the space bar to fold and unfold
-if get(g:, 'terraform_remap_spacebar', 0)
-  nnoremap <buffer> <space> za
-  onoremap <buffer> <space> <C-C>za
-  vnoremap <buffer> <space> zf
-  let b:undo_ftplugin .= '|unmap <buffer> <space>'
-endif
 
 if get(g:, 'terraform_align', 0) && exists(':Tabularize')
   inoremap <buffer> <silent> = =<Esc>:call terraform#align()<CR>a

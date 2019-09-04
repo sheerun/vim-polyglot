@@ -18,6 +18,14 @@ unlet! b:did_indent
 let s:html_indent = &l:indentexpr
 let b:did_indent = 1
 
+if !exists('g:svelte_indent_script')
+  let g:svelte_indent_script = 1
+endif
+
+if !exists('g:svelte_indent_style')
+  let g:svelte_indent_style = 1
+endif
+
 setlocal indentexpr=GetSvelteIndent()
 setlocal indentkeys=o,O,*<Return>,<>>,{,},0),0],!^F,;,=:else,=:then,=:catch,=/if,=/each,=/await
 
@@ -44,9 +52,21 @@ function! GetSvelteIndent()
   let previous_line = getline(previous_line_number)
   let previous_line_indent = indent(previous_line_number)
 
-  " The inside of scripts an styles should be indented.
-  if previous_line =~ '^<\(script\|style\)'
-    return shiftwidth()
+  " The inside of scripts an styles should be indented unless disabled.
+  if previous_line =~ '^\s*<script'
+    if g:svelte_indent_script
+      return previous_line_indent + shiftwidth()
+    else
+      return previous_line_indent
+    endif
+  endif
+
+  if previous_line =~ '^\s*<style'
+    if g:svelte_indent_style
+      return previous_line_indent + shiftwidth()
+    else
+      return previous_line_indent
+    endif
   endif
 
   execute "let indent = " . s:html_indent
@@ -55,31 +75,6 @@ function! GetSvelteIndent()
   " and over after each style declaration.
   if searchpair('<style>', '', '</style>', 'bW') && previous_line =~ ';$' && current_line !~ '}'
     return previous_line_indent
-  endif
-
-  " "#if" or "#each"
-  if previous_line =~ '^\s*{\s*#\(if\|each\|await\)'
-    return previous_line_indent + shiftwidth()
-  endif
-
-  " ":else" or ":then"
-  if previous_line =~ '^\s*{\s*:\(else\|catch\|then\)'
-    return previous_line_indent + shiftwidth()
-  endif
-
-  " Custom element juggling for abnormal self-closing tags (<Widget />),
-  " capitalized component tags (<Widget></Widget>), and custom svelte tags
-  " (<svelte:head></svelte:head>).
-  if synID(previous_line_number, match(previous_line, '\S') + 1, 0) == hlID('htmlTag')
-        \ && synID(current_line_number, match(current_line, '\S') + 1, 0) != hlID('htmlEndTag')
-    let indents_match = indent == previous_line_indent
-    let previous_closes = previous_line =~ '/>$'
-
-    if indents_match && !previous_closes && previous_line =~ '<\(\u\|\l\+:\l\+\)'
-      return previous_line_indent + shiftwidth()
-    elseif !indents_match && previous_closes
-      return previous_line_indent
-    endif
   endif
 
   " "/await" or ":catch" or ":then"
@@ -121,6 +116,31 @@ function! GetSvelteIndent()
       " The greater line number will be closer to the cursor position because
       " we're searching backward.
       return indent(max([if_start, searchpair('{\s*#each\>', '', '{\s*\/each\>', 'bW')]))
+    endif
+  endif
+
+  " "#if" or "#each"
+  if previous_line =~ '^\s*{\s*#\(if\|each\|await\)'
+    return previous_line_indent + shiftwidth()
+  endif
+
+  " ":else" or ":then"
+  if previous_line =~ '^\s*{\s*:\(else\|catch\|then\)'
+    return previous_line_indent + shiftwidth()
+  endif
+
+  " Custom element juggling for abnormal self-closing tags (<Widget />),
+  " capitalized component tags (<Widget></Widget>), and custom svelte tags
+  " (<svelte:head></svelte:head>).
+  if synID(previous_line_number, match(previous_line, '\S') + 1, 0) == hlID('htmlTag')
+        \ && synID(current_line_number, match(current_line, '\S') + 1, 0) != hlID('htmlEndTag')
+    let indents_match = indent == previous_line_indent
+    let previous_closes = previous_line =~ '/>$'
+
+    if indents_match && !previous_closes && previous_line =~ '<\(\u\|\l\+:\l\+\)'
+      return previous_line_indent + shiftwidth()
+    elseif !indents_match && previous_closes
+      return previous_line_indent
     endif
   endif
 

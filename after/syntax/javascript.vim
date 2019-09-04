@@ -54,9 +54,7 @@ else    " build-in javascript syntax
   syntax region javaScriptEmbed matchgroup=javaScriptEmbedBraces start=+\${+ end=+}+ contained contains=@javaScriptEmbededExpr,javaScript.*
 endif
 
-" because this is autoloaded, when developing you're going to need to source
-" the autoload/jsx_pretty/*.vim file manually, or restart vim
-call jsx_pretty#syntax#highlight()
+runtime syntax/jsx_pretty.vim
 
 let b:current_syntax = 'javascript.jsx'
 
@@ -169,55 +167,16 @@ syn match styledPrefix "\<styled\>\.\k\+"
       \ transparent fold
       \ nextgroup=styledDefinition
       \ contains=cssTagName,javascriptTagRef
-      \ containedin=jsFuncBlock
+      \ containedin=jsFuncBlock,jsParen,jsObject,jsObjectValue
 syn match styledPrefix "\.\<attrs\>\s*(\%(\n\|\s\|.\)\{-})"
       \ transparent fold extend
       \ nextgroup=styledDefinition
       \ contains=jsObject,jsParen
-      \ containedin=jsFuncBlock
+      \ containedin=jsFuncBlock,jsParen,jsObject,jsObjectValue
 syn match styledPrefix "\.\<extend\>"
       \ transparent fold
       \ nextgroup=styledDefinition
-      \ containedin=jsFuncBlock
-
-" define custom API section, that contains typescript annotations
-" this is structurally similar to `jsFuncCall`, but allows type
-" annotations (delimited by brackets (e.g. "<>")) between `styled` and
-" the function call parenthesis
-syn match styledTypescriptPrefix
-      \ "\<styled\><\%(\[\|\]\|{\|}\||\|&\|:\|;\|,\|?\|'\|\"\|\k\|\s\|\n\)\+>(\%('\k\+'\|\"\k\+\"\|\k\+\))"
-      \ transparent fold
-      \ nextgroup=styledDefinition
-      \ contains=cssTagName,
-      \          typescriptBraces,typescriptOpSymbols,typescriptEndColons,
-      \          typescriptParens,typescriptStringS,@typescriptType,
-      \          typescriptType,
-      \          styledTagNameString
-syn match styledTypescriptPrefix
-      \ "\<styled\>\%((\%('\k\+'\|\"\k\+\"\|\k\+\))\|\.\k\+\)<\%(\[\|\]\|{\|}\||\|&\|:\|;\|,\|?\|'\|\"\|\k\|\s\|\n\)\+>"
-      \ transparent fold
-      \ nextgroup=styledDefinition
-      \ contains=cssTagName,
-      \          typescriptBraces,typescriptOpSymbols,typescriptEndColons,
-      \          typescriptParens,typescriptStringS,@typescriptType,
-      \          typescriptType,
-      \          styledTagNameString
-syn match styledTypescriptPrefix "\.\<attrs\>\s*(\%(\n\|\s\|.\)\{-})<\%(\[\|\]\|{\|}\||\|&\|:\|;\|,\|?\|'\|\"\|\k\|\s\|\n\)\+>"
-      \ transparent fold extend
-      \ nextgroup=styledDefinition
-      \ contains=cssTagName,
-      \          typescriptBraces,typescriptOpSymbols,typescriptEndColons,
-      \          typescriptParens,typescriptStringS,@typescriptType,
-      \          typescriptType,
-      \          styledTagNameString
-syn match styledTypescriptPrefix "\.\<extend\><\%(\[\|\]\|{\|}\||\|&\|:\|;\|,\|?\|'\|\"\|\k\|\s\|\n\)\+>"
-      \ transparent fold extend
-      \ nextgroup=styledDefinition
-      \ contains=cssTagName,
-      \          typescriptBraces,typescriptOpSymbols,typescriptEndColons,
-      \          typescriptParens,typescriptStringS,@typescriptType,
-      \          typescriptType,
-      \          styledTagNameString
+      \ containedin=jsFuncBlock,jsParen,jsObject,jsObjectValue
 
 " define emotion css prop
 " to bypass problems from top-level defined xml/js definitions, this
@@ -244,18 +203,12 @@ syn match cssError contained "{@<>"
 
 " extend javascript matches to trigger styledDefinition highlighting
 syn match jsTaggedTemplate extend
-      \ "\<css\>\|\<keyframes\>\|\<injectGlobal\>\|\<fontFace\>\|\<createGlobalStyle\>"
+      \ "\<css\>\|\.\<resolve\>\|\.\<global\>\|\<keyframes\>\|\<injectGlobal\>\|\<fontFace\>\|\<createGlobalStyle\>"
       \ nextgroup=styledDefinition
 syn match jsFuncCall "\<styled\>\s*(.\+)" transparent
       \ nextgroup=styledDefinition
 syn match jsFuncCall "\<styled\>\s*(\%('\k\+'\|\"\k\+\"\|`\k\+`\))"
       \ contains=styledTagNameString
-      \ nextgroup=styledDefinition
-syn match jsFuncCall "\<styled\>\s*(\%('\k\+'\|\"\k\+\"\|`\k\+`\))<\%(\[\|\]\|{\|}\||\|&\|:\|;\|,\|?\|'\|\"\|\k\|\s\|\n\)\+>"
-      \ contains=typescriptBraces,typescriptOpSymbols,typescriptEndColons,
-      \          typescriptParens,typescriptStringS,@typescriptType,
-      \          typescriptType,
-      \          styledTagNameString
       \ nextgroup=styledDefinition
 syn match jsFuncCall "\.\<withComponent\>\s*(\%('\k\+'\|\"\k\+\"\|`\k\+`\))"
       \ contains=styledTagNameString
@@ -279,8 +232,6 @@ syn region styledDefinition contained transparent fold extend
 syn region styledDefinitionArgument contained transparent start=+(+ end=+)+
       \ contains=styledDefinition
 
-syn cluster typescriptValue add=styledPrefix,jsFuncCall,styledTypescriptPrefix
-
 """ yajs specific extensions
 " define template tag keywords, that trigger styledDefinitions again to be
 " contained in and also do contain the `javascriptTagRef` region
@@ -294,13 +245,6 @@ syn match javascriptTagRefStyledPrefix transparent fold
 syn cluster javascriptExpression
       \ add=styledPrefix,jsFuncCall,javascriptTagRefStyledPrefix
 syn cluster javascriptAfterIdentifier add=styledPrefix,jsFuncCall
-
-""" yats specific extensions
-" extend typescriptIdentifierName to allow styledDefinitions in their
-" tagged templates
-syn match typescriptIdentifierName extend
-      \ "\<css\>\|\<keyframes\>\|\<injectGlobal\>\|\<fontFace\>\|\<createGlobalStyle\>"
-      \ nextgroup=styledDefinition
 
 " color the custom highlight elements
 hi def link cssCustomKeyFrameSelector  Constant

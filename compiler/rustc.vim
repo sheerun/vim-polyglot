@@ -25,7 +25,11 @@ endif
 if get(g:, 'rustc_makeprg_no_percent', 0)
     CompilerSet makeprg=rustc
 else
-    CompilerSet makeprg=rustc\ \%
+    if has('patch-7.4.191')
+      CompilerSet makeprg=rustc\ \%:S
+    else
+      CompilerSet makeprg=rustc\ \%
+    endif
 endif
 
 " New errorformat (after nightly 2016/08/10)
