@@ -137,7 +137,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [powershell](https://github.com/PProvost/vim-ps1) (syntax, indent, ftplugin)
 - [protobuf](https://github.com/uarun/vim-protobuf) (syntax, indent)
 - [pug](https://github.com/digitaltoad/vim-pug) (syntax, indent, ftplugin)
-- [puppet](https://github.com/voxpupuli/vim-puppet) (syntax, indent, ftplugin)
+- [puppet](https://github.com/rodjek/vim-puppet) (syntax, indent, autoload, ftplugin)
 - [purescript](https://github.com/purescript-contrib/purescript-vim) (syntax, indent, ftplugin)
 - [python-compiler](https://github.com/aliev/vim-compiler-python) (compiler, autoload)
 - [python-indent](https://github.com/Vimjas/vim-python-pep8-indent) (indent)

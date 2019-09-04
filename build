@@ -247,7 +247,7 @@ PACKS="
   powershell:PProvost/vim-ps1
   protobuf:uarun/vim-protobuf
   pug:digitaltoad/vim-pug
-  puppet:voxpupuli/vim-puppet
+  puppet:rodjek/vim-puppet
   purescript:purescript-contrib/purescript-vim
   python-compiler:aliev/vim-compiler-python
   python-indent:Vimjas/vim-python-pep8-indent

@@ -1038,7 +1038,7 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
   augroup filetypedetect
-  " puppet, from puppet.vim in voxpupuli/vim-puppet
+  " puppet, from puppet.vim in rodjek/vim-puppet
 au! BufRead,BufNewFile *.pp setfiletype puppet
 au! BufRead,BufNewFile Puppetfile setfiletype ruby
   augroup end
