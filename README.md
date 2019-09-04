@@ -145,7 +145,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [python](https://github.com/vim-python/python-syntax) (syntax)
 - [qmake](https://github.com/artoj/qmake-syntax-vim) (syntax)
 - [qml](https://github.com/peterhoeg/vim-qml) (syntax, indent, ftplugin)
-- [r-lang](https://github.com/vim-scripts/R.vim) (syntax, ftplugin)
+- [r-lang](https://github.com/vim-scripts/R.vim) (syntax)
 - [racket](https://github.com/wlangstroth/vim-racket) (syntax, indent, ftplugin)
 - [ragel](https://github.com/jneen/ragel.vim) (syntax)
 - [raml](https://github.com/IN3D/vim-raml) (syntax, ftplugin)

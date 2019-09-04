@@ -255,7 +255,7 @@ PACKS="
   python:vim-python/python-syntax
   qmake:artoj/qmake-syntax-vim
   qml:peterhoeg/vim-qml
-  r-lang:vim-scripts/R.vim
+  r-lang:vim-scripts/R.vim:_BASIC
   racket:wlangstroth/vim-racket
   ragel:jneen/ragel.vim
   raml:IN3D/vim-raml
