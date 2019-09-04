@@ -76,7 +76,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [emblem](https://github.com/yalesov/vim-emblem) (syntax, indent, ftplugin)
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent)
 - [ferm](https://github.com/vim-scripts/ferm.vim) (syntax)
-- [fish](https://github.com/dag/vim-fish) (syntax, indent, compiler, autoload, ftplugin)
+- [fish](https://github.com/georgewitteman/vim-fish) (syntax, indent, compiler, autoload, ftplugin)
 - [flatbuffers](https://github.com/dcharbon/vim-flatbuffers) (syntax)
 - [fsharp](https://github.com/fsharp/vim-fsharp) (syntax, indent)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin)
