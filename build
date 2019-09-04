@@ -6,7 +6,7 @@ DIRS="syntax indent compiler autoload ftplugin after/syntax after/indent after/f
 # shellcheck disable=SC2034
 DIRS_BASIC="syntax compiler indent after/syntax after/indent"
 # shellcheck disable=SC2034
-DIRS_ALL="syntax indent compiler autoload ftplugin after"
+DIRS_ALL="syntax indent compiler autoload ftplugin after extras"
 # shellcheck disable=SC2034
 DIRS_SYNTAX="syntax indent after/syntax after/indent"
 # shellcheck disable=SC2034
@@ -127,7 +127,11 @@ copy_file() {
   touch "$file_in_dst"
 
   # Use comma instead of / to handle cases like c/c++
-  sed -e "s,%%PACK%%,${package_name}," -e "/%%CONTENT%%/{r ${file_in_tmp}" -e "d;}" plugin_guard.vim.template >> "$file_in_dst"
+  if [[ "${package_name}" == "jsx" ]]; then
+    sed -e "s,%%PACK%%,${package_name}," -e "/%%CONTENT%%/{r ${file_in_tmp}" -e "d;}" plugin_guard_jsx.vim.template >> "$file_in_dst"
+  else
+    sed -e "s,%%PACK%%,${package_name}," -e "/%%CONTENT%%/{r ${file_in_tmp}" -e "d;}" plugin_guard.vim.template >> "$file_in_dst"
+  fi
 }
 
 update_readme() {
