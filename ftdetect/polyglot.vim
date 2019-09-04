@@ -560,6 +560,13 @@ autocmd BufNewFile,BufRead Appfile set filetype=hcl
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'helm') == -1
+  augroup filetypedetect
+  " helm, from helm.vim in towolf/vim-helm
+autocmd BufRead,BufNewFile */templates/*.yaml,*/templates/*.tpl set ft=helm
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'hive') == -1
   augroup filetypedetect
   " hive, from hive.vim in zebradil/hive.vim

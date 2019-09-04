@@ -10,7 +10,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 120+ times faster** than the <!--Package Count-->144<!--/Package Count--> packages it consists of.
+- It **installs and updates 120+ times faster** than the <!--Package Count-->145<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -93,6 +93,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [haskell](https://github.com/neovimhaskell/haskell-vim) (syntax, indent, ftplugin)
 - [haxe](https://github.com/yaymukund/vim-haxe) (syntax)
 - [hcl](https://github.com/b4b4r07/vim-hcl) (syntax, indent, ftplugin)
+- [helm](https://github.com/towolf/vim-helm) (syntax)
 - [hive](https://github.com/zebradil/hive.vim) (syntax, ftplugin)
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)
 - [i3](https://github.com/mboughaba/i3config.vim) (syntax, ftplugin)
