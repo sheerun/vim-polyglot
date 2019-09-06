@@ -12,9 +12,9 @@ if exists("b:current_syntax")
 endif
 let b:current_syntax = "zig"
 
-syn keyword zigStorage const var extern packed export pub noalias inline comptime nakedcc stdcallcc volatile allowzero align linksection threadlocal
+syn keyword zigStorage const var extern packed export pub noalias inline noinline comptime nakedcc stdcallcc volatile allowzero align linksection threadlocal
 syn keyword zigStructure struct enum union error
-syn keyword zigStatement break return continue asm defer errdefer unreachable try catch async await suspend resume
+syn keyword zigStatement break return continue asm defer errdefer unreachable try catch async noasync await suspend resume
 syn keyword zigConditional if else switch and or orelse
 syn keyword zigRepeat while for
 
@@ -41,7 +41,7 @@ syn match zigBuiltinFn "\v\@(frameAddress|import|inlineCall|newStackCall|asyncCa
 syn match zigBuiltinFn "\v\@(maxValue|memberCount|memberName|memberType)>"
 syn match zigBuiltinFn "\v\@(memcpy|memset|minValue|mod|mulWithOverflow)>"
 syn match zigBuiltinFn "\v\@(noInlineCall|bitOffsetOf|byteOffsetOf|OpaqueType|panic|ptrCast)>"
-syn match zigBuiltinFn "\v\@(ptrToInt|rem|returnAddress|setCold)>"
+syn match zigBuiltinFn "\v\@(ptrToInt|rem|returnAddress|setCold|Type)>"
 syn match zigBuiltinFn "\v\@(setRuntimeSafety|setEvalBranchQuota|setFloatMode)>"
 syn match zigBuiltinFn "\v\@(setGlobalLinkage|setGlobalSection|shlExact|This|hasDecl|hasField)>"
 syn match zigBuiltinFn "\v\@(shlWithOverflow|shrExact|sizeOf|sqrt|byteSwap|subWithOverflow|intCast|floatCast|intToFloat|floatToInt|boolToInt|errSetCast)>"

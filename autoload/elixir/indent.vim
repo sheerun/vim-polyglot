@@ -25,6 +25,7 @@ function! elixir#indent#indent(lnum)
 
   let handlers = [
         \'top_of_file',
+        \'starts_with_string_continuation',
         \'following_trailing_binary_operator',
         \'starts_with_pipe',
         \'starts_with_binary_operator',
@@ -35,9 +36,14 @@ function! elixir#indent#indent(lnum)
         \]
   for handler in handlers
     call s:debug('testing handler elixir#indent#handle_'.handler)
-    let context = {'lnum': lnum, 'text': text, 'prev_nb_lnum': prev_nb_lnum, 'prev_nb_text': prev_nb_text}
+    let context = {'lnum': lnum, 'text': text, 'first_nb_char_idx': match(text, '\w'), 'prev_nb_lnum': prev_nb_lnum, 'prev_nb_text': prev_nb_text}
     let indent = function('elixir#indent#handle_'.handler)(context)
-    if indent != -1
+    if indent == -2
+      " Keep indent the same
+      call s:debug('line '.lnum.': elixir#indent#handle_'.handler.' returned -2; returning indent of -1')
+      call cursor(curs_lnum, curs_col)
+      return -1
+    elseif indent != -1
       call s:debug('line '.lnum.': elixir#indent#handle_'.handler.' returned '.indent)
       call cursor(curs_lnum, curs_col)
       return indent
@@ -102,7 +108,11 @@ endfunction
 " Returns 0 or 1 based on whether or not the given line number and column
 " number pair is a string or comment
 function! s:is_string_or_comment(line, col)
-  return synIDattr(synID(a:line, a:col, 1), "name") =~ '\%(String\|Comment\)'
+  return s:syntax_name(a:line, a:col) =~ '\%(String\|Comment\)'
+endfunction
+
+function! s:syntax_name(line, col)
+  return synIDattr(synID(a:line, a:col, 1), "name")
 endfunction
 
 " Skip expression for searchpair. Returns 0 or 1 based on whether the value
@@ -153,6 +163,14 @@ endfunction
 function! elixir#indent#handle_top_of_file(context)
   if a:context.prev_nb_lnum == 0
     return 0
+  else
+    return -1
+  end
+endfunction
+
+function! elixir#indent#handle_starts_with_string_continuation(context)
+  if s:syntax_name(a:context.lnum, a:context.first_nb_char_idx) =~ '\(String\|Comment\)$'
+    return -2
   else
     return -1
   end

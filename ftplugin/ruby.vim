@@ -90,7 +90,7 @@ endfunction
 
 function! s:build_path(path) abort
   let path = join(map(copy(a:path), 'v:val ==# "." ? "" : v:val'), ',')
-  if &g:path !~# '\v^\.%(,/%(usr|emx)/include)=,,$'
+  if &g:path !~# '\v^%(\.,)=%(/%(usr|emx)/include,)=,$'
     let path = substitute(&g:path,',,$',',','') . ',' . path
   endif
   return path
