@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ruby') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
 " Vim filetype plugin
 " Language:		eRuby
 " Maintainer:		Tim Pope <vimNOSPAM@tpope.org>
@@ -133,3 +130,4 @@ function! ErubyAtCursor() abort
 endfunction
 
 " vim: nowrap sw=2 sts=2 ts=8:
+endif

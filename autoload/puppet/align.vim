@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'puppet') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 function! puppet#align#IndentLevel(lnum)
     return indent(a:lnum) / &shiftwidth
 endfunction
@@ -70,3 +67,4 @@ function! puppet#align#AlignHashrockets(...) abort
         endif
     endfor
 endfunction
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax keyword typescriptBOM containedin=typescriptIdentifierName AbortController
 syntax keyword typescriptBOM containedin=typescriptIdentifierName AbstractWorker AnalyserNode
 syntax keyword typescriptBOM containedin=typescriptIdentifierName App Apps ArrayBuffer
@@ -250,4 +247,5 @@ syntax keyword typescriptBOM containedin=typescriptIdentifierName WorkerLocation
 syntax keyword typescriptBOM containedin=typescriptIdentifierName XDomainRequest XMLDocument
 syntax keyword typescriptBOM containedin=typescriptIdentifierName XMLHttpRequestEventTarget
 if exists("did_typescript_hilink") | HiLink typescriptBOM Structure
+endif
 endif

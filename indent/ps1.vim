@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'powershell') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') == -1
 " Vim indent file
 " Language:           Windows PowerShell
 " Maintainer:         Peter Provost <peter@provost.org>
@@ -22,3 +19,4 @@ inoremap <buffer> # X#
 
 let b:undo_indent = "setl si<"
 
+endif

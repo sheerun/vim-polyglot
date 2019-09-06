@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'elm') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
 " plugin for Elm (http://elm-lang.org/)
 
 if exists('b:did_ftplugin')
@@ -111,3 +108,4 @@ let &l:path =
 setlocal includeexpr=GetElmFilename(v:fname)
 setlocal include=^\\s*import\\s\\+
 setlocal suffixesadd=.elm
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'jinja') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jinja') == -1
 " Vim indent file
 " Language:	Jinja HTML template
 " Maintainer:	Evan Hammer <evan@evanhammer.com>
@@ -82,3 +79,4 @@ function! GetDjangoIndent(...)
 
     return ind
 endfunction
+endif

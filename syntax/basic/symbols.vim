@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 " + - ^ ~
 syntax match typescriptUnaryOp /[+\-~!]/
  \ nextgroup=@typescriptValue
@@ -40,3 +37,4 @@ syntax match   typescriptBinaryOp contained /-\(-\|=\)\?/ nextgroup=@typescriptV
 syntax match typescriptBinaryOp contained /\*\*=\?/ nextgroup=@typescriptValue
 
 syntax cluster typescriptSymbols               contains=typescriptBinaryOp,typescriptKeywordOp,typescriptTernary,typescriptAssign,typescriptCastKeyword
+endif

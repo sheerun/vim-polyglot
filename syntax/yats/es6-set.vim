@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Set WeakSet
 syntax keyword typescriptES6SetProp contained size
 syntax cluster props add=typescriptES6SetProp
@@ -11,4 +8,5 @@ syntax keyword typescriptES6SetMethod contained add clear delete entries forEach
 syntax keyword typescriptES6SetMethod contained values nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptES6SetMethod
 if exists("did_typescript_hilink") | HiLink typescriptES6SetMethod Keyword
+endif
 endif

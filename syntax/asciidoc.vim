@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'asciidoc') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'asciidoc') == -1
 " Vim syntax file
 " Language:     AsciiDoc
 " Author:       Stuart Rackham <srackham@gmail.com> (inspired by Felix
@@ -185,3 +182,4 @@ hi def link asciidocURL Macro
 let b:current_syntax = "asciidoc"
 
 " vim: wrap et sw=2 sts=2:
+endif

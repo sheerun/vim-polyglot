@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'haskell') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
 " indentation for haskell
 "
 " author: raichoo (raichoo@googlemail.com)
@@ -511,3 +508,4 @@ function! GetHaskellIndent()
 
   return -1
 endfunction
+endif

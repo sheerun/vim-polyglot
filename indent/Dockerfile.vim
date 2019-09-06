@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'dockerfile') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
 if exists('b:did_indent') | finish | endif
 let b:did_indent = 1
 
@@ -25,3 +22,4 @@ endfunction
 
 
 set indentexpr=DockerfileIndent(v:lnum)
+endif

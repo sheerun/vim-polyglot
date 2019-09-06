@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'zig') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zig') == -1
 " Adapted from fatih/vim-go: autoload/go/fmt.vim
 "
 " Copyright 2011 The Go Authors. All rights reserved.
@@ -168,3 +165,4 @@ function! zig#fmt#ToggleFmtAutoSave() abort
 endfunction
 
 " vim: sw=2 ts=2 et
+endif

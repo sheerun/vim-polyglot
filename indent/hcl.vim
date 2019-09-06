@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'hcl') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'hcl') == -1
 if exists('b:did_indent')
   finish
 endif
@@ -13,3 +10,4 @@ setlocal cindent
 
 " don't de-indent comments (cindent treats them like preprocessor directives)
 setlocal cinkeys-=0#
+endif

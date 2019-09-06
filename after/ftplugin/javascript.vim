@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'javascript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
 " Vim filetype plugin file
 " Language:     JavaScript
 " Maintainer:   vim-javascript community
@@ -14,10 +11,8 @@ if exists('b:undo_ftplugin')
 else
   let b:undo_ftplugin = 'setlocal iskeyword< suffixesadd<'
 endif
-if exists('g:polyglot_disabled') && (index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
-  finish
 endif
-
+if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim ftplugin file
 "
@@ -49,10 +44,8 @@ augroup jsx_comment
 augroup end
 
 setlocal suffixesadd+=.jsx
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'styled-components') != -1
-  finish
 endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'styled-components') == -1
 " Vim filetype plugin file
 " Language:   styled-components (js/ts)
 " Maintainer: Karl Fleischmann <fleischmann.karl@gmail.com>
@@ -89,4 +82,5 @@ if exists('&ofu')
     let b:prevofu=&ofu
   endif
   setl omnifunc=styledcomplete#CompleteSC
+endif
 endif

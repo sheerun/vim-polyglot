@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'julia') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
 function! julia#set_syntax_version(jvers)
   if &filetype != "julia"
     echo "Not a Julia file"
@@ -185,4 +182,5 @@ function! julia#gotodefinition()
     return
 endfunction
 
+endif
 endif

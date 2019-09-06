@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'json5') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json5') == -1
 " Modified from the original taken from https://github.com/gutenye/json5.vim
 
 " Syntax setup
@@ -69,3 +66,4 @@ if !exists('b:current_syntax')
   let b:current_syntax = 'json5'
 endif
 
+endif

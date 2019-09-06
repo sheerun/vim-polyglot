@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'meson') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'meson') == -1
 " Vim syntax file
 " Language:	Meson
 " Maintainer:	Nirbheek Chauhan <nirbheek.chauhan@gmail.com>
@@ -166,3 +163,4 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim:set sw=2 sts=2 ts=8 noet:
+endif

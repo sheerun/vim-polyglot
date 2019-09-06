@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'octave') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'octave') == -1
 " Vim syntax file
 " Language:             Octave
 " Maintainer:           Rik <rik@nomad.inbox5.com>
@@ -616,3 +613,4 @@ endif
 let b:current_syntax = "octave"
 
 "EOF	vim: ts=8 noet tw=100 sw=8 sts=0
+endif

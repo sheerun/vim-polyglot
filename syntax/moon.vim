@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'moonscript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'moonscript') == -1
 " Language:    MoonScript
 " Maintainer:  leafo <leafot@gmail.com>
 " Based On:    CoffeeScript by Mick Koch <kchmck@gmail.com>
@@ -318,4 +315,5 @@ syn cluster moonAll contains=moonStatement,moonRepeat,moonConditional,
 
 if !exists('b:current_syntax')
   let b:current_syntax = 'moon'
+endif
 endif

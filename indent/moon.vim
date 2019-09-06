@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'moonscript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'moonscript') == -1
 " Language:    MoonScript
 " Maintainer:  leafo <leafot@gmail.com>
 " Based On:    CoffeeScript by Mick Koch <kchmck@gmail.com>
@@ -325,3 +322,4 @@ function! GetMoonIndent(curlinenum)
 
   return indent
 endfunction
+endif

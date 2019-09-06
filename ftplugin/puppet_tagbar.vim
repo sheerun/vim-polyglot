@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'puppet') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 " Puppet set up for Tagbar plugin
 " (https://github.com/majutsushi/tagbar).
 
@@ -46,3 +43,4 @@ endif
 
 let g:tagbar_type_puppet.deffile = puppet#ctags#OptionFile()
 
+endif

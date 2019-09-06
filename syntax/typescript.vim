@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 " Vim syntax file
 " Language:     TypeScript
 " Maintainer:   Herrington Darkholme
@@ -33,4 +30,5 @@ runtime syntax/common.vim
 let b:current_syntax = "typescript"
 if main_syntax == 'typescript'
   unlet main_syntax
+endif
 endif

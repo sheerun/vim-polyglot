@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 " Save the current JavaScript indentexpr.
 let b:tsx_ts_indentexpr = &indentexpr
 
@@ -112,3 +109,4 @@ fu! GetTsxIndent()
 
   return ind
 endfu
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'idris') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'idris') == -1
 " indentation for idris (idris-lang.org)
 "
 " Based on haskell indentation by motemen <motemen@gmail.com>
@@ -146,3 +143,4 @@ function! GetIdrisIndent()
 
   return match(prevline, '\S')
 endfunction
+endif

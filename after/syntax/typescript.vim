@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && (index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim syntax file
 "
@@ -48,10 +45,8 @@ let b:current_syntax = 'typescript.tsx'
 
 let &cpo = s:jsx_cpo
 unlet s:jsx_cpo
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'styled-components') != -1
-  finish
 endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'styled-components') == -1
 runtime! syntax/javascript.vim
 
 " define custom API section, that contains typescript annotations
@@ -114,3 +109,4 @@ syn cluster typescriptValue add=styledPrefix,jsFuncCall,styledTypescriptPrefix
 syn match typescriptIdentifierName extend
       \ "\<css\>\|\<keyframes\>\|\<injectGlobal\>\|\<fontFace\>\|\<createGlobalStyle\>"
       \ nextgroup=styledDefinition
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax keyword typescriptDOMDocProp contained activeElement body cookie defaultView
 syntax keyword typescriptDOMDocProp contained designMode dir domain embeds forms head
 syntax keyword typescriptDOMDocProp contained images lastModified links location plugins
@@ -33,4 +30,5 @@ syntax keyword typescriptDOMDocMethod contained queryCommandSupported querySelec
 syntax keyword typescriptDOMDocMethod contained querySelectorAll write writeln nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptDOMDocMethod
 if exists("did_typescript_hilink") | HiLink typescriptDOMDocMethod Keyword
+endif
 endif

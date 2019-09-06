@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'latex') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'latex') == -1
 " LaTeX Box mappings
 
 if exists("g:LatexBox_no_mappings")
@@ -108,3 +105,4 @@ vnoremap <buffer> <silent> [[ :<c-u>call <SID>LatexBoxNextSection(0,1,1)<CR>
 " }}}
 
 " vim:fdm=marker:ff=unix:noet:ts=4:sw=4
+endif

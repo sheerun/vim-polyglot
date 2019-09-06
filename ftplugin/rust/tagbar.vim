@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'rust') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
 "
 " Support for Tagbar -- https://github.com/majutsushi/tagbar
 "
@@ -42,3 +39,4 @@ unlet s:save_cpo
 
 
 " vim: set et sw=4 sts=4 ts=8:
+endif

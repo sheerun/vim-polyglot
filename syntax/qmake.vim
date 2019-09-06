@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'qmake') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qmake') == -1
 " qmake project syntax file
 " Language:     qmake project
 " Maintainer:   Arto Jonsson <ajonsson@kapsi.fi>
@@ -301,3 +298,4 @@ hi def link qmakeQtConfiguration PreProc
 hi def link qmakeScope Conditional
 
 let b:current_syntax = "qmake"
+endif

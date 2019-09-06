@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'xdc') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'xdc') == -1
 " Vim syntax file
 " Language:     XDC - Xilinx Design Constraints
 " Author:       Amal Khailtash <amal.khailtash@gmail.com>
@@ -195,3 +192,4 @@ highligh default link xdcFlags                                Special
 let b:current_syntax = "xdc"
 
 " vim: fileformat=unix tabstop=2 shiftwidth=2 expandtab
+endif

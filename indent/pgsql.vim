@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'pgsql') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pgsql') == -1
 " Vim indent file
 " Language:    SQL
 " Author:  David Fishburn <dfishburn dot vim at gmail dot com>
@@ -391,3 +388,4 @@ endfunction
 let &cpo= s:keepcpo
 unlet s:keepcpo
 " vim: ts=4 fdm=marker sw=4
+endif

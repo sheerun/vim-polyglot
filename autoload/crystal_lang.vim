@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'crystal') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -342,3 +339,4 @@ endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+endif

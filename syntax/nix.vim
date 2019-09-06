@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'nix') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nix') == -1
 " Vim syntax file
 " Language:    Nix
 " Maintainer:  Daiderd Jordan <daiderd@gmail.com>
@@ -199,3 +196,4 @@ hi def link nixWithExprKeyword           Keyword
 syn sync fromstart
 
 let b:current_syntax = "nix"
+endif

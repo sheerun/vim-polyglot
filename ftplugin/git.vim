@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'git') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Vim filetype plugin
 " Language:	generic git output
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -43,3 +40,4 @@ endif
 
 setlocal includeexpr=substitute(v:fname,'^[^/]\\+/','','')
 let b:undo_ftplugin = "setl keywordprg< path< includeexpr<"
+endif

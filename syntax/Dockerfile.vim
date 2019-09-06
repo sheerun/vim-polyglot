@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'dockerfile') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
 " Vim syntax file
 " Language: Dockerfile
 " Maintainer: Eugene Kalinin
@@ -61,3 +58,4 @@ hi link dockerfileTodo      Todo
 hi link bashStatement       Function
 
 let b:current_syntax = "dockerfile"
+endif

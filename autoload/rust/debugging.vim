@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'rust') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
 " For debugging, inspired by https://github.com/w0rp/rust/blob/master/autoload/rust/debugging.vim
 
 let s:global_variable_list = [
@@ -105,3 +102,4 @@ function! rust#debugging#InfoToFile(filename) abort
 endfunction
 
 " vim: set et sw=4 sts=4 ts=8:
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'reason') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'reason') == -1
 " Vim syntax file for editing merlin project files
 if exists("b:current_syntax")
   finish
@@ -15,3 +12,4 @@ hi link merlinComment Comment
 
 let b:current_syntax = "merlin"
 
+endif

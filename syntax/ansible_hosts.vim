@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ansible') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
 " Vim syntax file
 " Language: Ansible hosts files
 " Maintainer: Dave Honneffer <pearofducks@gmail.com>
@@ -33,3 +30,4 @@ if exists("g:ansible_attribute_highlight")
 endif
 
 let b:current_syntax = "ansible_hosts"
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax keyword typescriptAsyncFuncKeyword      async
   \ nextgroup=typescriptFuncKeyword,typescriptArrowFuncDef
   \ skipwhite
@@ -69,3 +66,4 @@ syntax region typescriptParamImpl matchgroup=typescriptParens
   \ contains=typescriptDecorator,@typescriptParameterList,@typescriptComments
   \ nextgroup=typescriptReturnAnnotation,typescriptBlock
   \ contained skipwhite skipnl
+endif

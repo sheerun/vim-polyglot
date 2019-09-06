@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'autohotkey') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'autohotkey') == -1
 " Vim indent file
 " Language:   AutoHotkey
 " Maintainer: Hirotoshi Namikawa <hnamikaw1@gmail.com>
@@ -221,3 +218,4 @@ function! GetAutoHotkeyIndent()
 endfunction
 
 let b:did_indent = 1
+endif

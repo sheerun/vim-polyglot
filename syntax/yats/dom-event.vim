@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax keyword typescriptDOMEventTargetMethod contained addEventListener removeEventListener nextgroup=typescriptEventFuncCallArg
 syntax keyword typescriptDOMEventTargetMethod contained dispatchEvent waitUntil nextgroup=typescriptEventFuncCallArg
 syntax cluster props add=typescriptDOMEventTargetMethod
@@ -64,4 +61,5 @@ syntax keyword typescriptDOMEventMethod contained initEvent preventDefault stopI
 syntax keyword typescriptDOMEventMethod contained stopPropagation respondWith default nextgroup=typescriptEventFuncCallArg
 syntax cluster props add=typescriptDOMEventMethod
 if exists("did_typescript_hilink") | HiLink typescriptDOMEventMethod Keyword
+endif
 endif

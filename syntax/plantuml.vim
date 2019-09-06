@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'plantuml') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -1
 scriptencoding utf-8
 " Vim syntax file
 " Language:     PlantUML
@@ -398,3 +395,4 @@ highlight default link plantumlStereotype Type
 
 let &cpoptions=s:cpo_orig
 unlet s:cpo_orig
+endif

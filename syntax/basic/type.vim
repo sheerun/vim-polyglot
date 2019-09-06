@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 " Types
 syntax match typescriptOptionalMark /?/ contained
 
@@ -189,3 +186,4 @@ syntax region typescriptAliasDeclaration matchgroup=typescriptUnion
 syntax keyword typescriptReadonlyArrayKeyword readonly
   \ nextgroup=@typescriptPrimaryType
   \ skipwhite
+endif

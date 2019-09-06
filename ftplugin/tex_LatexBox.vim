@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'latex') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'latex') == -1
 " LaTeX Box plugin for Vim
 " Maintainer: David Munger
 " Email: mungerd@gmail.com
@@ -35,3 +32,4 @@ if !exists('b:LatexBox_loaded')
 endif
 
 " vim:fdm=marker:ff=unix:noet:ts=4:sw=4
+endif

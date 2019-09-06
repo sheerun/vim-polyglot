@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ion') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ion') == -1
 if v:version < 600
   syntax clear
 elseif exists('b:current_syntax')
@@ -85,3 +82,4 @@ hi def link ionProcess PreProc
 hi def link ionComment Comment
 hi def link ionOperator Operator
 hi def link ionFlag Boolean
+endif

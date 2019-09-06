@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'python-compiler') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python-compiler') == -1
 " Sometimes Python issues debugging messages
 " which don't belong to a call stack context
 " this function filters these messages
@@ -19,3 +16,4 @@ function! python#utils#fix_qflist() " {{{
     call setqflist(l:traceback)
   endif
 endfunction " }}}
+endif

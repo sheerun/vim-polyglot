@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'cryptol') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cryptol') == -1
 " Copyright © 2013 Edward O'Callaghan. All Rights Reserved.
 
 "setlocal foldmethod=indent
@@ -48,3 +45,4 @@ function! GetPotionFold(lnum)
         return '>' . next_indent
     endif
 endfunction
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'rspec') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rspec') == -1
 "
 " An rspec syntax file
 " Originally from http://www.vim.org/scripts/script.php?script_id=2286
@@ -34,3 +31,4 @@ syntax keyword rspecMessageExpectation advise any_args any_number_of_times anyth
 highlight link rspecMessageExpectation Function
 
 let b:current_syntax = 'rspec'
+endif

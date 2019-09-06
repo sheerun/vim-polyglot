@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 "don't add typescriptMembers to nextgroup, let outer scope match it
 " so we won't match abstract method outside abstract class
 syntax keyword typescriptAbstract              abstract
@@ -67,3 +64,4 @@ syntax region typescriptInterfaceTypeArguments matchgroup=typescriptTypeBrackets
   \ contained skipwhite
 
 syntax match typescriptInterfaceComma /,/ contained nextgroup=typescriptInterfaceHeritage skipwhite skipnl
+endif

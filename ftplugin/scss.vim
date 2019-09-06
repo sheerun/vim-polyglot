@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'scss') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scss') == -1
 if exists('b:did_indent') && b:did_indent
   " be kind. allow users to override this. Does it work?
   finish
@@ -15,3 +12,4 @@ setlocal formatoptions+=ro
 
 " SCSS comments are either /* */ or //
 setlocal comments=s1:/*,mb:*,ex:*/,://
+endif

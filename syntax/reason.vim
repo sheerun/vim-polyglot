@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'reason') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'reason') == -1
 " Vim syntax file
 " Language:     Reason (Forked from Rust)
 " Maintainer:   (Jordan - for Reason changes) Patrick Walton <pcwalton@mozilla.com>
@@ -252,3 +249,4 @@ syn sync minlines=200
 syn sync maxlines=500
 
 let b:current_syntax = "rust"
+endif

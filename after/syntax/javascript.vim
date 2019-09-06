@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && (index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim syntax file
 "
@@ -60,10 +57,8 @@ let b:current_syntax = 'javascript.jsx'
 
 let &cpo = s:jsx_cpo
 unlet s:jsx_cpo
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'styled-components') != -1
-  finish
 endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'styled-components') == -1
 " Vim syntax file
 " Language:   styled-components (js/ts)
 " Maintainer: Karl Fleischmann <fleischmann.karl@gmail.com>
@@ -258,4 +253,5 @@ hi def link styledXmlRegion        String
 
 if exists("s:current_syntax")
   let b:current_syntax=s:current_syntax
+endif
 endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'livescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'livescript') == -1
 " Language:    LiveScript
 " Maintainer:  George Zahariev
 " URL:         http://github.com/gkz/vim-ls
@@ -206,3 +203,4 @@ command! -range=% -bar -nargs=* -complete=customlist,s:LiveScriptCompileComplete
 \        LiveScriptCompile call s:LiveScriptCompile(<line1>, <line2>, <q-args>)
 " Run some LiveScript.
 command! -range=% -bar LiveScriptRun <line1>,<line2>:w !lsc -sp
+endif

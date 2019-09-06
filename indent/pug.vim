@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'pug') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pug') == -1
 " Vim indent file
 " Language: Pug
 " Maintainer: Joshua Borton
@@ -72,3 +69,4 @@ function! GetPugIndent()
 endfunction
 
 " vim:set sw=2:
+endif

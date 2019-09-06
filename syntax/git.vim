@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'git') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Vim syntax file
 " Language:	generic git output
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -82,3 +79,4 @@ hi def link gitDiffAdded         diffAdded
 hi def link gitDiffRemoved       diffRemoved
 
 let b:current_syntax = "git"
+endif

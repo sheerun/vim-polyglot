@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'html5') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
 " Vim syntax file
 " Language:	    HTML5 New Stuff
 " Maintainer:	othree <othree@gmail.com>
@@ -51,3 +48,4 @@ syn keyword javascriptDomElemAttrs indeterminate
 
 " select https://w3c.github.io/selection-api/#extensions-to-globaleventhandlers
 syn keyword javascriptDomElemAttrs onselectstart onselectchange
+endif

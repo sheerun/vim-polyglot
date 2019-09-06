@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'groovy-indent') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'groovy-indent') == -1
 " Vim indent file
 " Language:	Groovy
 " Maintainer:	Toby Allsopp <toby.allsopp@peace.com> (resigned)
@@ -165,3 +162,4 @@ function GetGroovyIndent()
 endfunction
 
 " vi: sw=2 et
+endif

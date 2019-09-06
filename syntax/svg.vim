@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'svg') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'svg') == -1
 " Vim syntax file
 " Language:	SVG
 " Filenames:	*.svg
@@ -147,3 +144,4 @@ if main_syntax == 'svg'
 endif
 
 " vim: ts=8
+endif

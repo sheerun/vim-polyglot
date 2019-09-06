@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'kotlin') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
 " Vim syntax file
 " Language: Kotlin
 " Maintainer: Alexander Udalov
@@ -114,3 +111,4 @@ hi def link ktExclExcl Special
 hi def link ktArrow Structure
 
 let b:current_syntax = 'kotlin'
+endif

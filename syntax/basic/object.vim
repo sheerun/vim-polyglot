@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax region  typescriptObjectLiteral         matchgroup=typescriptBraces
   \ start=/{/ end=/}/
   \ contains=@typescriptComments,typescriptObjectLabel,typescriptStringProperty,typescriptComputedPropertyName
@@ -30,3 +27,4 @@ syntax match typescriptRestOrSpread /\.\.\./ contained
 syntax match typescriptObjectSpread /\.\.\./ contained containedin=typescriptObjectLiteral,typescriptArray nextgroup=@typescriptValue
 
 syntax match typescriptObjectColon contained /:/ nextgroup=@typescriptValue skipwhite skipempty
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'pony') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pony') == -1
 " Vim plugin file
 " Language:     Pony
 " Maintainer:   Jak Wings
@@ -534,3 +531,4 @@ endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+endif

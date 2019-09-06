@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Function Boolean
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Error EvalError
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName InternalError
@@ -32,4 +29,5 @@ syntax keyword typescriptGlobalMethod containedin=typescriptIdentifierName encod
 syntax keyword typescriptGlobalMethod containedin=typescriptIdentifierName encodeURIComponent nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptGlobalMethod
 if exists("did_typescript_hilink") | HiLink typescriptGlobalMethod Structure
+endif
 endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'puppet') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 "
 " Simple format using puppet's l:indents and align hashrockets function
 function! puppet#format#Format() abort
@@ -59,3 +56,4 @@ function! puppet#format#Fallback(start_lnum, end_lnum) abort
 
 endfunction
 
+endif

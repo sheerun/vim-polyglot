@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'graphql') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
 " Vim indent file
 " Language: GraphQL
 " Maintainer: Jon Parise <jon@indelible.org>
@@ -79,3 +76,4 @@ endfunction
 
 let &cpoptions = s:cpo_save
 unlet s:cpo_save
+endif

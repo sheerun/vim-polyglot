@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'git') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Vim filetype plugin
 " Language:	git commit file
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -68,3 +65,4 @@ function! s:gitdiffcached(bang,gitdir,...)
   nnoremap <buffer> <silent> q :q<CR>
   setlocal buftype=nowrite nobuflisted noswapfile nomodifiable filetype=git
 endfunction
+endif

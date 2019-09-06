@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'graphql') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
 if exists('b:current_syntax')
   let s:current_syntax = b:current_syntax
   unlet b:current_syntax
@@ -25,3 +22,4 @@ hi def link graphqlTemplateExpression jsTemplateExpression
 
 syn cluster jsExpression add=graphqlTaggedTemplate
 syn cluster graphqlTaggedTemplate add=graphqlTemplateString
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'vifm') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
 " common functions for vifm command-line editing buffer filetype plugins
 " Maintainer:  xaizek <xaizek@posteo.net>
 " Last Change: August 18, 2013
@@ -16,3 +13,4 @@ function! vifm#edit#Init()
     " Start buffer editing in insert mode
     startinsert
 endfunction
+endif

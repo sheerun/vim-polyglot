@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 if !exists("main_syntax")
   if exists("b:current_syntax") && b:current_syntax != 'typescript'
     finish
@@ -141,4 +138,5 @@ highlight def link tsxCloseString Identifier
 let b:current_syntax = "typescript.tsx"
 if main_syntax == 'typescript.tsx'
   unlet main_syntax
+endif
 endif

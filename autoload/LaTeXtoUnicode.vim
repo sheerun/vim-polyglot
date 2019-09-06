@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'julia') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Support for LaTex-to-Unicode conversion as in the Julia REPL "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -652,3 +649,4 @@ function! LaTeXtoUnicode#Toggle()
   endif
   return
 endfunction
+endif

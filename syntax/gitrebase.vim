@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'git') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Vim syntax file
 " Language:	git rebase --interactive
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -46,3 +43,4 @@ hi def link gitrebaseComment        Comment
 hi def link gitrebaseSquashError    Error
 
 let b:current_syntax = "gitrebase"
+endif

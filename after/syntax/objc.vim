@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'objc') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'objc') == -1
 " ARC type modifiers
 syn keyword objcTypeModifier __bridge __bridge_retained __bridge_transfer __autoreleasing __strong __weak __unsafe_unretained
 
@@ -21,3 +18,4 @@ syn match objcDirective "@property\|@synthesize\|@dynamic\|@package"
 
 " Highlight property attributes as if they were type modifiers
 hi def link objcPropertyAttribute objcTypeModifier
+endif

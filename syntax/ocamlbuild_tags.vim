@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ocaml') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
 if exists("b:current_syntax")
   finish
 endif
@@ -42,3 +39,4 @@ hi! link ocamlbuild_tagsComment Comment
 hi link ocamlbuild_tagsFindlibPkg Identifier
 
 let b:current_syntax = "ocamlbuild_tags"
+endif

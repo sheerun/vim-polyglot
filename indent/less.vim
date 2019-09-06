@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'less') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'less') == -1
 " Vim indent file
 " Language:            LessCSS
 " Maintainer:        Leonard Ehrenfried <leonard.ehrenfried@web.de>
@@ -11,4 +8,4 @@ if exists("b:did_indent")
   finish
 endif
 
-runtime! indent/css.vim
+runtime! indent/css.vimendif

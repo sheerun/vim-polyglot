@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'tmux') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
 " Vim filetype plugin file
 " Language: tmux(1) configuration file
 " URL: https://github.com/ericpruitt/tmux.vim/
@@ -14,3 +11,4 @@ endif
 let b:did_ftplugin = 1
 
 setlocal commentstring=#\ %s
+endif

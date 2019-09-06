@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ocaml') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
 if exists("b:did_ftplugin")
   finish
 endif
@@ -14,3 +11,4 @@ setl commentstring=;\ %s
 setl comments=:;
 
 setl iskeyword+=#,?,.,/
+endif

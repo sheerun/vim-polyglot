@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'emblem') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emblem') == -1
 " Language:    emblem
 " Maintainer:  Yulij Andreevich Lesov <yalesov@gmail.com>
 " URL:         http://github.com/yalesov/vim-emblem
@@ -19,3 +16,4 @@ setlocal smartindent
 setlocal formatoptions=q
 setlocal comments=:/
 setlocal commentstring=/\ %s
+endif

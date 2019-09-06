@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'vcl') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vcl') == -1
 " Vim syntax file
 " Filename:     vcl.vim
 " Language:     Varnish configuation Language, http://www.varnish-cache.org/wiki/VCL
@@ -108,3 +105,4 @@ hi link vclModes            Operator
 hi link vclOption           Identifier
 hi link vclNumber           Number
 hi link vclNumberTime       Number
+endif

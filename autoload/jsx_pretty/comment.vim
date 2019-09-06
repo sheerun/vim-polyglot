@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && (index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
 function! jsx_pretty#comment#update_commentstring(original)
   let syn_current = s:syn_name(line('.'), col('.'))
   let syn_start = s:syn_name(line('.'), 1)
@@ -39,3 +36,4 @@ function! s:syn_contains(lnum, cnum, syn_name)
   let syn_names = map(stack, 'synIDattr(v:val, "name")')
   return index(syn_names, a:syn_name) >= 0
 endfunction
+endif

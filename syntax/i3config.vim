@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'i3') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'i3') == -1
 " Vim syntax file
 " Language: i3 config file
 " Maintainer: Mohamed Boughaba <mohamed dot bgb at gmail dot com>
@@ -252,3 +249,4 @@ hi! def link i3ConfigVariable                        Statement
 hi! def link i3ConfigArbitraryCommand                Type
 
 let b:current_syntax = "i3config"
+endif

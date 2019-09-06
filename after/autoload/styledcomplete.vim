@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'styled-components') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'styled-components') == -1
 " Vim completion script
 " Language:   styled-components (js/ts)
 " Maintainer: Karl Fleischmann <fleischmann.karl@gmail.com>
@@ -19,3 +16,4 @@ fun! styledcomplete#CompleteSC(findstart, base)
     return s:funcref(a:findstart, a:base)
   endif
 endfun
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax keyword typescriptXHRGlobal containedin=typescriptIdentifierName XMLHttpRequest
 if exists("did_typescript_hilink") | HiLink typescriptXHRGlobal Structure
 endif
@@ -15,4 +12,5 @@ syntax keyword typescriptXHRMethod contained abort getAllResponseHeaders getResp
 syntax keyword typescriptXHRMethod contained open overrideMimeType send setRequestHeader nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptXHRMethod
 if exists("did_typescript_hilink") | HiLink typescriptXHRMethod Keyword
+endif
 endif

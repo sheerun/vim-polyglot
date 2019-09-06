@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'zig') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zig') == -1
 " Vim syntax file
 " Language: Zig
 " Maintainer: Andrew Kelley
@@ -105,3 +102,4 @@ hi def link zigStructure Structure
 hi def link zigStatement Statement
 hi def link zigConditional Conditional
 hi def link zigRepeat Repeat
+endif

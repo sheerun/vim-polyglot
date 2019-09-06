@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'mathematica') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mathematica') == -1
 "Vim filetype plugin
 " Language: Mathematica
 " Maintainer: R. Menon <rsmenon@icloud.com>
@@ -61,3 +58,4 @@ unlet s:cpo_save
 "}
 
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
+endif

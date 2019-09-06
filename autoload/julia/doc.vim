@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'julia') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
 " path to the julia binary to communicate with
 if has('win32') || has('win64')
   if exists('g:julia#doc#juliapath')
@@ -244,3 +241,4 @@ function! s:likely(str) abort
   let output = systemlist(cmd)
   return split(matchstr(output[0], '\C^search: \zs.*'))
 endfunction
+endif

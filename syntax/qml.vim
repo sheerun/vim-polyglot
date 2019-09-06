@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'qml') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
 " Vim syntax file
 " Language:     QML
 " Maintainer:   Peter Hoeg <peter@hoeg.com>
@@ -136,4 +133,5 @@ endif
 let b:current_syntax = "qml"
 if main_syntax == 'qml'
   unlet main_syntax
+endif
 endif

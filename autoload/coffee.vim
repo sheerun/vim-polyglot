@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'coffee-script') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
 " Language:    CoffeeScript
 " Maintainer:  Mick Koch <mick@kochm.co>
 " URL:         http://github.com/kchmck/vim-coffee-script
@@ -56,3 +53,4 @@ function! coffee#CoffeeSetUpErrorFormat()
                          \%f:%l:%c:\ error:\ %m,
                          \%-G%.%#
 endfunction
+endif

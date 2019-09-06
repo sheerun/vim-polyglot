@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'stylus') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'stylus') == -1
 " Vim syntax file
 " Language:	CSS3
 " Maintainer:	Hsiaoming Yang <lepture@me.com>
@@ -378,3 +375,4 @@ hi def link stylusIdChar                Special
 let b:current_syntax = "stylus"
 
 " vim:set sw=2:
+endif

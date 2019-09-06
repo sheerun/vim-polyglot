@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'git') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Vim filetype plugin
 " Language:	git rebase --interactive
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -47,3 +44,4 @@ endif
 nnoremap <buffer> <expr> K col('.') < 7 && expand('<Lt>cword>') =~ '\X' && getline('.') =~ '^\w\+\s\+\x\+\>' ? 'wK' : 'K'
 
 let b:undo_ftplugin = b:undo_ftplugin . "|nunmap <buffer> K"
+endif

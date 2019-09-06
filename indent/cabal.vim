@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'haskell') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haskell') == -1
 " indentation for cabal
 "
 " author: raichoo (raichoo@googlemail.com)
@@ -33,3 +30,4 @@ function! GetCabalIndent()
     return match(l:prevline, '\S')
   endif
 endfunction
+endif

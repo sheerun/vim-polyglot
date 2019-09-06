@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'ocaml') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
 " Vim syntax file
 " Language:	OMakefile
 
@@ -130,3 +127,4 @@ hi def link omakeRuleOption Type
 
 let b:current_syntax = "omake"
 " vim: ts=8
+endif

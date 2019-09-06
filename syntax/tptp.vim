@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'tptp') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tptp') == -1
 " Vim syntax file
 " Language:		TPTP
 " Filename extensions:	*.p (collides with Pascal/Progress),
@@ -150,3 +147,4 @@ end
 let b:current_syntax = "tptp"
 
 " vim: ts=8 sw=8
+endif

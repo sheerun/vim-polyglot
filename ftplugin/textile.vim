@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'textile') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'textile') == -1
 " textile.vim
 "
 " Tim Harper (tim.theenchanter.com)
@@ -61,3 +58,4 @@ function! TextileRenderBufferToTab()
   set syntax=html
 endfunction
 
+endif

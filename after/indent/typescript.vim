@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && (index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim indent file
 "
@@ -32,8 +29,7 @@ endfunction
 
 let &cpo = s:keepcpo
 unlet s:keepcpo
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'styled-components') != -1
-  finish
 endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'styled-components') == -1
 runtime! indent/javascript.vim
+endif

@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'latex') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'latex') == -1
 " LaTeX indent file (part of LaTeX Box)
 " Maintainer: David Munger (mungerd@gmail.com)
 
@@ -138,3 +135,4 @@ if v:version > 703 || (v:version == 703 && has('patch598'))
 endif
 
 " vim:fdm=marker:ff=unix:noet:ts=4:sw=4
+endif

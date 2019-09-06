@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'typescript') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Object nextgroup=typescriptGlobalObjectDot,typescriptFuncCallArg
 syntax match   typescriptGlobalObjectDot /\./ contained nextgroup=typescriptObjectStaticMethod,typescriptProp
 syntax keyword typescriptObjectStaticMethod contained create defineProperties defineProperty nextgroup=typescriptFuncCallArg
@@ -18,4 +15,5 @@ syntax keyword typescriptObjectMethod contained toLocaleString toString valueOf 
 syntax keyword typescriptObjectMethod contained setPrototypeOf nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptObjectMethod
 if exists("did_typescript_hilink") | HiLink typescriptObjectMethod Keyword
+endif
 endif

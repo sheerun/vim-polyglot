@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'pony') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pony') == -1
 " Vim indent file
 " Language:     Pony
 " Maintainer:   Jak Wings
@@ -39,3 +36,4 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 let b:did_indent = 1
+endif

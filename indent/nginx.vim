@@ -1,7 +1,4 @@
-if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'nginx') != -1
-  finish
-endif
-
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nginx') == -1
 if exists("b:did_indent")
     finish
 endif
@@ -13,3 +10,4 @@ setlocal indentexpr=
 setlocal cindent
 " Just make sure that the comments are not reset as defs would be.
 setlocal cinkeys-=0#
+endif
