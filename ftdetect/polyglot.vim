@@ -1425,11 +1425,15 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
   augroup filetypedetect
-  " typescript, from typescript.vim in leafgarland/typescript-vim
-" use `set filetype` to override default filetype=xml for *.ts files
-autocmd BufNewFile,BufRead *.ts  set filetype=typescript
-" use `setfiletype` to not override any other plugins like ianks/vim-tsx
-autocmd BufNewFile,BufRead *.tsx setfiletype typescript
+  " typescript, from tsx.vim in HerringtonDarkholme/yats.vim
+autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+  augroup filetypedetect
+  " typescript, from typescript.vim in HerringtonDarkholme/yats.vim
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
   augroup end
 endif
 

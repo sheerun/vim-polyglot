@@ -292,7 +292,7 @@ PACKS="
   toml:cespare/vim-toml
   tptp:c-cube/vim-tptp
   twig:lumiliet/vim-twig
-  typescript:leafgarland/typescript-vim
+  typescript:HerringtonDarkholme/yats.vim
   vala:arrufat/vala.vim
   vbnet:vim-scripts/vbnet.vim
   vcl:smerrill/vcl-vim-plugin
