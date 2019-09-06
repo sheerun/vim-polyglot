@@ -222,7 +222,7 @@ PACKS="
   json5:GutenYe/json5.vim
   json:elzr/vim-json
   jst:briancollins/vim-jst
-  jsx:MaxMEllon/vim-jsx-pretty
+  jsx:MaxMEllon/vim-jsx-pretty:_ALL
   julia:JuliaEditorSupport/julia-vim
   kotlin:udalov/kotlin-vim
   latex:LaTeX-Box-Team/LaTeX-Box
