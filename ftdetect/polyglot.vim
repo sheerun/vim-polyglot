@@ -80,10 +80,6 @@ augroup filetypedetect
   "jinja
   autocmd BufNewFile,BufRead *.jinja2,*.j2,*.jinja,*.nunjucks,*.nunjs,*.njk set ft=jinja
 augroup END
-
-augroup filetypedetect
-  autocmd BufNewFile,BufReadPost *.tsx setlocal filetype=typescript.tsx
-augroup END
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'acpiasl') == -1
   augroup filetypedetect
   " acpiasl, from asl.vim in martinlroth/vim-acpi-asl
