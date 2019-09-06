@@ -276,7 +276,6 @@ PACKS="
   slime:slime-lang/vim-slime-syntax
   smt2:bohlender/vim-smt2
   solidity:tomlion/vim-solidity
-  styled-components:styled-components/vim-styled-components#main:_ALL
   stylus:wavded/vim-stylus
   svelte:evanleck/vim-svelte
   svg-indent:jasonshell/vim-svg-indent

@@ -23,5 +23,3 @@ augroup end
 
 setlocal suffixesadd+=.tsx
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'styled-components') == -1
-endif
