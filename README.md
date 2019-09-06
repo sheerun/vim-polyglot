@@ -173,7 +173,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [terraform](https://github.com/hashivim/vim-terraform) (syntax, indent, autoload, ftplugin)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax)
-- [tmux](https://github.com/ericpruitt/tmux.vim) ()
+- [tmux](https://github.com/ericpruitt/tmux.vim) (syntax, ftplugin)
 - [tomdoc](https://github.com/wellbredgrapefruit/tomdoc.vim) (syntax)
 - [toml](https://github.com/cespare/vim-toml) (syntax, ftplugin)
 - [tptp](https://github.com/c-cube/vim-tptp) (syntax)

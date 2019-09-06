@@ -287,7 +287,7 @@ PACKS="
   terraform:hashivim/vim-terraform
   textile:timcharper/textile.vim
   thrift:solarnz/thrift.vim
-  tmux:ericpruitt/tmux.vim
+  tmux:ericpruitt/tmux.vim:_ALL:/vim/
   tomdoc:wellbredgrapefruit/tomdoc.vim
   toml:cespare/vim-toml
   tptp:c-cube/vim-tptp

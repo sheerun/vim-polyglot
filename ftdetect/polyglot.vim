@@ -1390,6 +1390,18 @@ au BufNewFile,BufRead *.thrift setlocal filetype=thrift
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
+  augroup filetypedetect
+  " tmux, from tmux.vim in ericpruitt/tmux.vim:_ALL:/vim/
+" Language: tmux(1) configuration file
+" URL: https://github.com/ericpruitt/tmux.vim/
+" Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
+" Last Changed: 2017 Mar 10
+
+autocmd BufNewFile,BufRead {.,}tmux.conf setfiletype tmux
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
   augroup filetypedetect
   " toml, from toml.vim in cespare/vim-toml
