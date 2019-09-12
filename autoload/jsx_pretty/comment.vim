@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') 
 function! jsx_pretty#comment#update_commentstring(original)
   let syn_current = s:syn_name(line('.'), col('.'))
   let syn_start = s:syn_name(line('.'), 1)
-  let save_cursor = getcurpos()
+  let save_view = winsaveview()
 
   if syn_start =~? '^jsx'
     let line = getline(".")
@@ -23,7 +23,7 @@ function! jsx_pretty#comment#update_commentstring(original)
   endif
 
   " Restore the cursor position
-  call setpos('.', save_cursor)
+  call winrestview(save_view)
 endfunction
 
 function! s:syn_name(lnum, cnum)
