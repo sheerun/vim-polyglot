@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scala') == -1
+
 "
 " Support for Tagbar -- https://github.com/majutsushi/tagbar
 "
@@ -30,4 +31,5 @@ let g:tagbar_type_scala = {
 if get(g:, 'scala_use_builtin_tagbar_defs', 1)
   let g:tagbar_type_scala.deffile = expand('<sfile>:p:h:h:h') . '/ctags/scala.ctags'
 endif
+
 endif

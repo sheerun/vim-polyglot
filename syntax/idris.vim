@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'idris') == -1
+
 " syntax highlighting for idris (idris-lang.org)
 "
 " Heavily modified version of the haskell syntax
@@ -88,4 +89,5 @@ highlight def link idrisChar String
 highlight def link idrisBacktick Operator
 
 let b:current_syntax = "idris"
+
 endif

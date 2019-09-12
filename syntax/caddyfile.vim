@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'caddyfile') == -1
+
 " Language: Caddyfile
 " Author:   Josh Glendenning <josh@isobit.io>
 
@@ -28,4 +29,5 @@ hi link caddyString String
 hi link caddyComment Comment
 
 let b:current_syntax = "caddyfile"
+
 endif

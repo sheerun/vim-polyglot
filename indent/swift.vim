@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'swift') == -1
+
 " File: swift.vim
 " Author: Keith Smiley
 " Description: The indent file for Swift
@@ -293,4 +294,5 @@ endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
 endif

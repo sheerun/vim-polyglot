@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
+
 if exists("b:did_ftplugin")
   finish
 else
@@ -8,4 +9,5 @@ endif
 setlocal comments=:# commentstring=#\ %s formatoptions-=t formatoptions-=c
 
 let b:undo_ftplugin = "setl comments< commentstring< formatoptions<"
+
 endif

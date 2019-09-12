@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'hive') == -1
+
 " Vim syntax file
 " Language: HIVE Query Language
 " Maintainer: German Lashevich <german.lashevich@gmail.com>
@@ -134,4 +135,5 @@ hi link hiveVar Special
 let b:current_syntax = "hive"
 
 " vim: ts=4
+
 endif

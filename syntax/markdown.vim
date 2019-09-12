@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'markdown') == -1
+
 " Vim syntax file
 " Language:	Markdown
 " Maintainer:	Ben Williams <benw@plasticboy.com>
@@ -183,4 +184,5 @@ let b:current_syntax = "mkd"
 
 delcommand HtmlHiLink
 " vim: ts=8
+
 endif

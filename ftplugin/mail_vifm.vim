@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
+
 " Mail file type extension to pick files for attachments via vifm
 " Maintainer:  xaizek <xaizek@posteo.net>
 " Last Change: January 02, 2018
@@ -63,4 +64,5 @@ endfunction
 nnoremap <buffer> <silent> <localleader>a :call <sid>AddMailAttachments()<cr>
 
 " vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab cinoptions-=(0 :
+
 endif

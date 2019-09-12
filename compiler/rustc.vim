@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
+
 " Vim compiler file
 " Compiler:         Rust Compiler
 " Maintainer:       Chris Morgan <me@chrismorgan.info>
@@ -56,4 +57,5 @@ unlet s:save_cpo
 " vint: +ProhibitAbbreviationOption
 
 " vim: set et sw=4 sts=4 ts=8:
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pug') == -1
+
 " Vim filetype plugin
 " Language: Pug
 " Maintainer: Joshua Borton
@@ -56,4 +57,5 @@ let b:undo_ftplugin = "setl cms< com< "
 let &cpo = s:save_cpo
 
 " vim:set sw=2:
+
 endif

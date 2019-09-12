@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
+
 " Vim syntax file
 " Language:     JavaScript
 " Maintainer:   vim-javascript community
@@ -392,4 +393,5 @@ let b:current_syntax = "javascript"
 if main_syntax == 'javascript'
   unlet main_syntax
 endif
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 "Syntax in the JavaScript code
 
 " String
@@ -42,4 +43,5 @@ syntax match typescriptNumber /\d[0-9_]*\.\d[0-9_]*\|\d[0-9_]*\|\.\d[0-9]*/
   \ nextgroup=typescriptExponent,@typescriptSymbols skipwhite skipempty
 syntax match typescriptExponent /[eE][+-]\=\d[0-9]*\>/
   \ nextgroup=@typescriptSymbols skipwhite skipempty contained
+
 endif

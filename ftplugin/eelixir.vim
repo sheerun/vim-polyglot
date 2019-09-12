@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
+
 if exists("b:did_ftplugin")
   finish
 endif
@@ -106,4 +107,5 @@ let b:undo_ftplugin = "setl cms< " .
       \ " | unlet! b:browsefilter b:match_words | " . s:undo_ftplugin
 
 let &cpo = s:save_cpo
+
 endif

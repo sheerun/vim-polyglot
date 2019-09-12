@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+
 " Vim syntax file
 " Language:     S-expressions as used in Sexplib
 " Filenames:    *.sexp
@@ -87,4 +88,5 @@ endif
 let b:current_syntax = "sexplib"
 
 " vim: ts=8
+
 endif

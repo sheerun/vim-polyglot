@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'arduino') == -1
+
 " Vim syntax file
 " Language:    Arduino
 " Maintainer:  Sudar <sudar@sudarmuthu.com>
@@ -165,4 +166,5 @@ hi def link arduinoType Type
 hi def link arduinoConstant Constant
 hi def link arduinoFunc Function
 hi def link arduinoIdentifier Identifier
+
 endif

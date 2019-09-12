@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
+
 " Vim syntax file
 " Language:	git config file
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -35,4 +36,5 @@ hi def link gitconfigEscape		Special
 hi def link gitconfigError		Error
 
 let b:current_syntax = "gitconfig"
+
 endif

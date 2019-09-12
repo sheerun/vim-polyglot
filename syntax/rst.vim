@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rst') == -1
+
 " Vim syntax file
 " Language: reStructuredText documentation format
 " Maintainer: Marshall Ward <marshall.ward@gmail.com>
@@ -289,4 +290,5 @@ let b:current_syntax = "rst"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
 endif

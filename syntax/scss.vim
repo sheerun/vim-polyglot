@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scss') == -1
+
 " Vim syntax file
 " Language:    SCSS (Sassy CSS)
 " Author:      Daniel Hofstetter (daniel.hofstetter@42dh.com)
@@ -222,4 +223,5 @@ let b:current_syntax = "scss"
 if main_syntax == 'scss'
   unlet main_syntax
 endif
+
 endif

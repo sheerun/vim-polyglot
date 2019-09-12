@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'opencl') == -1
+
 " Only load this indent file when no other was loaded.
 if exists("b:did_indent")
   finish
@@ -9,4 +10,5 @@ if version > 600
 endif
 
 let b:did_indent = 1
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 runtime syntax/yats/typescript.vim
 runtime syntax/yats/es6-number.vim
 runtime syntax/yats/es6-string.vim
@@ -45,4 +46,5 @@ runtime syntax/yats/css.vim
 let typescript_props = 1
 
 runtime syntax/yats/event.vim
+
 endif

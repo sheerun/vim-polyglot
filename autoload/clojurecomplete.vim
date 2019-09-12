@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'clojure') == -1
+
 " Vim completion script
 " Language:     Clojure
 " Maintainer:   Sung Pae <self@sungpae.com>
@@ -21,4 +22,5 @@ function! clojurecomplete#Complete(findstart, base)
 endfunction
 
 " vim:sts=8:sw=8:ts=8:noet
+
 endif

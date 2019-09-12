@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
+
 " Vim filetype plugin file
 " Language: qml
 " Last change: 2014 Feb 8
@@ -36,4 +37,5 @@ setlocal formatoptions+=croql
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
+
 endif

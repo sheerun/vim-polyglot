@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
+
 " Vim indent file
 " Language:     QML
 " Author:       Robert Kieffer
@@ -58,4 +59,5 @@ function! GetJsIndent()
 
   return ind
 endfunction
+
 endif

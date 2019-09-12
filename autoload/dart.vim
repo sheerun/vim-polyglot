@@ -1,5 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
 
+
 function! s:error(text) abort
   echohl Error
   echomsg printf('[dart-vim-plugin] %s', a:text)
@@ -183,4 +184,5 @@ function! dart#setModifiable() abort
     setlocal nomodifiable
   endif
 endfunction
+
 endif

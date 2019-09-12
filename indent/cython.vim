@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python-indent') == -1
+
 " PEP8 compatible Python indent file
 " Language:         Python
 " Maintainer:       Daniel Hahler <https://daniel.hahler.de/>
@@ -453,4 +454,5 @@ function! GetPythonPEPIndent(lnum)
 
     return s:indent_like_previous_line(a:lnum)
 endfunction
+
 endif

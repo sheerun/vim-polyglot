@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dhall') == -1
+
 if exists('b:dhall_ftplugin')
 	finish
 endif
@@ -34,4 +35,5 @@ endif
 augroup dhall
     au BufNewFile,BufRead *.dhall setl shiftwidth=2
 augroup END
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -1
+
 scriptencoding utf-8
 " Vim filetype plugin file
 " Language:     PlantUML
@@ -43,4 +44,5 @@ let b:endwise_syngroups = 'plantumlKeyword'
 
 let &cpoptions = s:cpo_save
 unlet s:cpo_save
+
 endif

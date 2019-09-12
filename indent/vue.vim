@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vue') == -1
+
 " Vim indent file
 " Language: Vue.js
 " Maintainer: Eduardo San Martin Morote
@@ -63,4 +64,5 @@ function! GetVueIndent()
 
   return indent
 endfunction
+
 endif

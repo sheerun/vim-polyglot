@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
+
 " vifm syntax file
 " Maintainer:  xaizek <xaizek@posteo.net>
 " Last Change: July 12, 2019
@@ -480,4 +481,5 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim: set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab cinoptions-=(0 :
+
 endif

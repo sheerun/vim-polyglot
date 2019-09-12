@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
+
 " Forked from Larry Gilbert's syntax file
 " github.com/L2G/vim-syntax-terraform
 
@@ -4283,4 +4284,5 @@ hi def link terraCollectionType    Type
 hi def link terraValueNull         Constant
 
 let b:current_syntax = 'terraform'
+
 endif

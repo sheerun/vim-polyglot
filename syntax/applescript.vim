@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'applescript') == -1
+
 " Vim syntax file
 " Language:    AppleScript
 " Maintainer:  Jim Eberle <jim.eberle@fastnlight.com>
@@ -243,5 +244,6 @@ syn keyword scptTodo contained TODO FIXME XXX
 hi def link scptTodo Todo
 
 let b:current_syntax = "applescript"
+
 
 endif

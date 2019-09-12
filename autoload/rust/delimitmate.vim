@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
+
 let s:delimitMate_extra_excluded_regions = ',rustLifetimeCandidate,rustGenericLifetimeCandidate'
 
 " For this buffer, when delimitMate issues the `User delimitMate_map`
@@ -42,5 +43,6 @@ function! rust#delimitmate#onUnmap() abort
 endfunction
 
 " vim: set et sw=4 sts=4 ts=8:
+
 
 endif

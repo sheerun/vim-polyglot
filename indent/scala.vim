@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scala') == -1
+
 " Vim indent file
 " Language         : Scala (http://scala-lang.org/)
 " Original Author  : Stefan Matthias Aust
@@ -605,4 +606,5 @@ endfunction
 
 " vim:set sw=2 sts=2 ts=8 et:
 " vim600:fdm=marker fdl=1 fdc=0:
+
 endif

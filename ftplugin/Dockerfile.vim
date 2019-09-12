@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
+
 " Define comment string
 setlocal commentstring=#\ %s
 
@@ -32,4 +33,5 @@ inoreabbr <silent> <buffer> workdir <C-R>=DockerfileReplaceInstruction("workdir"
 inoreabbr <silent> <buffer> arg <C-R>=DockerfileReplaceInstruction("arg", "ARG")<CR>
 inoreabbr <silent> <buffer> onbuild <C-R>=DockerfileReplaceInstruction("onbuild", "ONBUILD")<CR>
 inoreabbr <silent> <buffer> stopsignal <C-R>=DockerfileReplaceInstruction("stopsignal", "STOPSIGNAL")<CR>
+
 endif

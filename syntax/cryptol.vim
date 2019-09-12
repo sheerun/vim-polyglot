@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cryptol') == -1
+
 " Vim syntax file
 " Language:	Cryptol
 " Maintainer:	Fergus Henderson
@@ -112,4 +113,5 @@ endif
 let b:current_syntax = "cryptol"
 
 " Options for vi: ts=8 sw=2 sts=2 nowrap noexpandtab ft=vim
+
 endif

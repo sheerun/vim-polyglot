@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'thrift') == -1
+
 " Vim syntax file
 " Language: Thrift
 " Maintainer: Martin Smith <martin@facebook.com>
@@ -96,5 +97,6 @@ if version >= 508 || !exists("did_thrift_syn_inits")
 endif
 
 let b:current_syntax = "thrift"
+
 
 endif

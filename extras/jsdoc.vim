@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
+
 "" syntax coloring for javadoc comments (HTML)
 syntax region jsComment    matchgroup=jsComment start="/\*\s*"  end="\*/" contains=jsDocTags,jsCommentTodo,jsCvsTag,@jsHtml,@Spell fold
 
@@ -38,4 +39,5 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink jsDocParam             Label
   delcommand HiLink
 endif
+
 endif

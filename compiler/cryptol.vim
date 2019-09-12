@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cryptol') == -1
+
 " Vim compiler file
 " Compiler:         Cryptol version 1.8.19-academic Compiler
 " Maintainer:       Edward O'Callaghan <victoredwardocallaghan AT gmail DOT com>
@@ -19,4 +20,5 @@ CompilerSet errorformat&     " use the default 'errorformat'
 
 " "%<" means the current file name without extension.
 CompilerSet makeprg=cryptol\ -o\ %<\ %
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
+
 " indentation for Elm (http://elm-lang.org/)
 
 " Only load this indent file when no other was loaded.
@@ -110,4 +111,5 @@ function! GetElmIndent()
 
 	return l:ind
 endfunc
+
 endif

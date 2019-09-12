@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'idris') == -1
+
 " Vim syntax file
 " Language:    Literate Idris
 " Maintainer:  Idris Hackers (https://github.com/idris-hackers/idris-vim)
@@ -21,4 +22,5 @@ syntax match  lidrisBirdTrack "^>" contained
 hi def link   lidrisBirdTrack Comment
 
 let b:current_syntax = "lidris"
+
 endif

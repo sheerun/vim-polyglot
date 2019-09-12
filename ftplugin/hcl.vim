@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'hcl') == -1
+
 " File: ftplugin/hcl.vim
 " Author: BABAROT <b4b4r07@gmail.com>
 " Description: FileType Plugin for HCL
@@ -36,4 +37,5 @@ let &cpo = s:save_cpo
 unlet s:save_cpo
 
 " vim: set et sw=4 ts=4:
+
 endif

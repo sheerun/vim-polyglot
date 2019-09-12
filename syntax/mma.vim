@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mathematica') == -1
+
 " Vim syntax file
 " Language:     Mathematica
 " Maintainer:   Voldikss <dyzplus@gmail.com>
@@ -1359,4 +1360,5 @@ let b:current_syntax = "mma"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
 endif

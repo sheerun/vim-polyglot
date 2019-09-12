@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
+
 syntax region  jsFlowDefinition     contained                        start=/:/    end=/\%(\s*[,=;)\n]\)\@=/ contains=@jsFlowCluster containedin=jsParen
 syntax region  jsFlowArgumentDef    contained                        start=/:/    end=/\%(\s*[,)]\|=>\@!\)\@=/ contains=@jsFlowCluster
 syntax region  jsFlowArray          contained matchgroup=jsFlowNoise start=/\[/   end=/\]/        contains=@jsFlowCluster,jsComment fold
@@ -108,4 +109,5 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink jsFlowObjectFuncName     jsObjectFuncName
   delcommand HiLink
 endif
+
 endif

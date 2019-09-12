@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'lilypond') == -1
+
 " LilyPond compiler file
 " Language:     LilyPond
 " Maintainer:   Heikki Junes <hjunes@cc.hut.fi>
@@ -18,4 +19,5 @@ setlocal makeprg=lilypond\ $*
 " (how to see multiple-line error messages?)
 setlocal errorformat=%f:%l:%c:\ %m,%f:%l:\ %m,In\ file\ included\ from\ %f:%l:,\^I\^Ifrom\ %f:%l%m
 "
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
+
 " Syntax highlighting for jasmine specs (used by http://github.com/thomd/vim-jasmine).
 
 " if b:current_syntax is defined, some other syntax files, earlier in 'runtimepath' was already loaded
@@ -83,4 +84,5 @@ hi def link jasmineSpecial Special
 hi def link jasmineSpy Special
 hi def link jasmineSpyMatcher Statement
 hi def link jasmineSuite Statement
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptDOMStorage contained sessionStorage localStorage
 if exists("did_typescript_hilink") | HiLink typescriptDOMStorage Keyword
 endif
@@ -11,4 +12,5 @@ syntax keyword typescriptDOMStorageMethod contained clear nextgroup=typescriptFu
 syntax cluster props add=typescriptDOMStorageMethod
 if exists("did_typescript_hilink") | HiLink typescriptDOMStorageMethod Keyword
 endif
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'latex') == -1
+
 " LatexBox_GetMainFileName: gets the name of the main file being compiled. {{{
 " Description:  returns the full path name of the main file.
 "               This function checks for the existence of a .latexmain file
@@ -61,4 +62,5 @@ function! LatexBox_GetMainFileName(...)
 	"       certain platforms.
 	return lheadfile
 endfunction
+
 endif

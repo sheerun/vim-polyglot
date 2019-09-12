@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
+
 " Vim indent file
 " Language:         Vala
 " Author:           Adrià Arrufat <adria.arrufat@protonmail.ch>
@@ -82,4 +83,5 @@ function GetValaIndent(lnum)
 	" Fall back on cindent, which does it mostly right
 	return cindent(a:lnum)
 endfunction
+
 endif

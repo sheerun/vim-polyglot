@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 " Vim indent file
 " Language: TypeScript
 " Acknowledgement: Based off of vim-ruby maintained by Nikolai Weibull http://vim-ruby.rubyforge.org
@@ -500,4 +501,5 @@ function! Fixedgq(lnum, count)
 
     return 0
 endfunction
+
 endif

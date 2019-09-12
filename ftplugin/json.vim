@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
+
 " Vim syntax file
 " Language:	JSON
 " Maintainer:	Eli Parra <eli@elzr.com> https://github.com/elzr/vim-json
@@ -37,4 +38,5 @@ if has('conceal')
 	"maybe g:vim_json_syntax_conceal could be settable to 0,1,2 to map
 	"directly to vim's conceallevels? unsure if anyone cares
 endif
+
 endif

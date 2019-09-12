@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Blob BlobBuilder
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName File FileReader
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName FileReaderSync
@@ -36,4 +37,5 @@ endif
 syntax keyword typescriptURLStaticMethod contained createObjectURL revokeObjectURL nextgroup=typescriptFuncCallArg
 if exists("did_typescript_hilink") | HiLink typescriptURLStaticMethod Keyword
 endif
+
 endif

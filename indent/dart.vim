@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
+
 if exists('b:did_indent')
   finish
 endif
@@ -34,4 +35,5 @@ function! DartIndent()
 
   return indentTo
 endfunction
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dlang') == -1
+
 if &filetype == "ddoc"
     "ddoc file type
     " Quit when a syntax file was already loaded
@@ -81,4 +82,5 @@ elseif &filetype == "d"
     hi! def link ddocIdentifierNestedDecl  Macro
     hi! def link ddocKeyword               Macro
 endif
+
 endif

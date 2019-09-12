@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dlang') == -1
+
 " Vim syntax file for DUB configurations."
 "
 " Language:     SDLang (dub config)
@@ -89,4 +90,5 @@ hi def link dsdlStatement            Statement
 hi def link dsdlAttribute            Tag
 
 let b:current_syntax = "dsdl"
+
 endif

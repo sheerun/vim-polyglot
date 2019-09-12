@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'powershell') == -1
+
 " Vim syntax file
 " Language:           Windows PowerShell
 " Maintainer:         Peter Provost <peter@provost.org>
@@ -184,4 +185,5 @@ if version >= 508 || !exists("did_ps1_syn_inits")
 endif
 
 let b:current_syntax = "ps1"
+
 endif

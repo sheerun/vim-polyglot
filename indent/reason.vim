@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'reason') == -1
+
 " Vim indent file
 " Language:         Reason (adapted from Rust)
 " Author:           Chris Morgan <me@chrismorgan.info> (Modifications by Jordan W)
@@ -216,4 +217,5 @@ function GetReasonIndent(lnum)
 	" Fall back on cindent, which does it mostly right
 	return cindent(a:lnum)
 endfunction
+
 endif

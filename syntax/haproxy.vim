@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haproxy') == -1
+
 " Vim syntax file
 " Language:    HAproxy
 " Maintainer:  Dan Reif
@@ -355,4 +356,5 @@ delcommand HiLink
 
 let b:current_syntax = "haproxy"
 " vim: ts=8
+
 endif

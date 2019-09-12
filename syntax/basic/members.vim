@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptConstructor           contained constructor
   \ nextgroup=@typescriptCallSignature
   \ skipwhite skipempty
@@ -45,4 +46,5 @@ syntax region  typescriptComputedMember   contained matchgroup=typescriptPropert
   \ contains=@typescriptValue,typescriptMember,typescriptMappedIn
   \ nextgroup=@memberNextGroup
   \ skipwhite skipempty
+
 endif

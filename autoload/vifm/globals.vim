@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
+
 " common functions for vifm plugin related to globals
 " Maintainer:  xaizek <xaizek@posteo.net>
 " Last Change: November 03, 2018
@@ -30,4 +31,5 @@ function! vifm#globals#Init()
         let g:vifm_embed_term = has('gui_running')
     endif
 endfunction
+
 endif

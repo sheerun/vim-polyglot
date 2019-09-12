@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ragel') == -1
+
 " Vim syntax file
 "
 " Language: Ragel
@@ -163,4 +164,5 @@ hi link caseLabelKeyword Keyword
 hi link beginRL Type
  
 let b:current_syntax = "ragel"
+
 endif

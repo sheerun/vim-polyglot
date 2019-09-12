@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 " Define the default highlighting.
 " For version 5.8 and later: only when an item doesn't have highlighting yet
 let did_typescript_hilink = 1
@@ -160,4 +161,5 @@ if exists("did_typescript_hilink")
   delcommand HiLink
   unlet did_typescript_hilink
 endif
+
 endif

@@ -1,5 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 
+
 if !exists('s:ctags_type')
   let s:ctags_type = 0
 endif
@@ -34,5 +35,6 @@ function! puppet#ctags#Type()
 
   return s:ctags_type
 endfunction
+
 
 endif

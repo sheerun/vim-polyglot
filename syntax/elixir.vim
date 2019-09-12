@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
+
 if !exists("main_syntax")
   if exists("b:current_syntax")
     finish
@@ -242,4 +243,5 @@ endif
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
 endif

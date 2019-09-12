@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nix') == -1
+
 " Vim filetype plugin
 " Language:    Nix
 " Maintainer:  Daiderd Jordan <daiderd@gmail.com>
@@ -20,4 +21,5 @@ if get(g:, 'nix_recommended_style', 1)
     \ softtabstop=2
     \ expandtab 
 endif
+
 endif

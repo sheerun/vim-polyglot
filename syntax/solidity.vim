@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'solidity') == -1
+
 " Vim syntax file
 " Language:     Solidity
 " Maintainer:   Tomlion (qycpublic@gmail.com)
@@ -147,4 +148,5 @@ syn region  solComment           start="/\*"  end="\*/" contains=solCommentTodo,
 hi def link solCommentTodo       Comment
 hi def link solLineComment       Comment
 hi def link solComment           Comment
+
 endif

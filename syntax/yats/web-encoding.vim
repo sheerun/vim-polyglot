@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptEncodingGlobal containedin=typescriptIdentifierName TextEncoder
 syntax keyword typescriptEncodingGlobal containedin=typescriptIdentifierName TextDecoder
 if exists("did_typescript_hilink") | HiLink typescriptEncodingGlobal Structure
@@ -11,4 +12,5 @@ syntax keyword typescriptEncodingMethod contained encode decode nextgroup=typesc
 syntax cluster props add=typescriptEncodingMethod
 if exists("did_typescript_hilink") | HiLink typescriptEncodingMethod Keyword
 endif
+
 endif

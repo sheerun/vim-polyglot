@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'latex') == -1
+
 " {{{1 Settings
 setlocal buftype=nofile
 setlocal bufhidden=wipe
@@ -201,4 +202,5 @@ nnoremap <buffer> <silent> <Esc>OD h
 " }}}1
 
 " vim:fdm=marker:ff=unix:et:ts=4:sw=4
+
 endif

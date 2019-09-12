@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zig') == -1
+
 " Adapted from fatih/vim-go: autoload/go/list.vim
 "
 " Copyright 2011 The Go Authors. All rights reserved.
@@ -157,4 +158,5 @@ function! zig#list#Type(for) abort
 endfunction
 
 " vim: sw=2 ts=2 et
+
 endif

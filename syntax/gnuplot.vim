@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'gnuplot') == -1
+
 " Vim syntax file
 " Language:	gnuplot 4.7.0
 " Maintainer:	Andrew Rasmussen andyras@users.sourceforge.net
@@ -553,4 +554,5 @@ endif
 let b:current_syntax = "gnuplot"
 
 " vim: ts=8
+
 endif

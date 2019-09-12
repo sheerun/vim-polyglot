@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Map WeakMap
 syntax keyword typescriptES6MapProp contained size
 syntax cluster props add=typescriptES6MapProp
@@ -9,4 +10,5 @@ syntax keyword typescriptES6MapMethod contained keys set values nextgroup=typesc
 syntax cluster props add=typescriptES6MapMethod
 if exists("did_typescript_hilink") | HiLink typescriptES6MapMethod Keyword
 endif
+
 endif

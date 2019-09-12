@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
+
 " Language:      TT2 embedded with Javascript
 " Maintainer:    Andy Lester <andy@petdance.com>
 " Author:        Yates, Peter <pd.yates@gmail.com>
@@ -19,4 +20,5 @@ unlet b:current_syntax
 syn cluster javascriptPreProc add=@tt2_top_cluster
 
 let b:current_syntax = "tt2js"
+
 endif

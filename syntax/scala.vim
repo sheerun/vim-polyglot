@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scala') == -1
+
 " Vim syntax file
 " Language:             Scala
 " Maintainer:           Derek Wyatt
@@ -230,4 +231,5 @@ if main_syntax ==# 'scala'
 endif
 
 " vim:set sw=2 sts=2 ts=8 et:
+
 endif

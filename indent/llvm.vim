@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'llvm') == -1
+
 " Vim indent file
 " Language:   llvm
 " Maintainer: The LLVM team, http://llvm.org/
@@ -71,4 +72,5 @@ function! GetLLVMIndent()
 
   return ind
 endfunction
+
 endif

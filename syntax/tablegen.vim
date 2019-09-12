@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'llvm') == -1
+
 " Vim syntax file
 " Language:   TableGen
 " Maintainer: The LLVM team, http://llvm.org/
@@ -53,4 +54,5 @@ if version >= 508 || !exists("did_c_syn_inits")
 endif
 
 let b:current_syntax = "tablegen"
+
 endif

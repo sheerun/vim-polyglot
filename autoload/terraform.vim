@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
+
 function! terraform#fmt()
   if !filereadable(expand('%:p'))
     return
@@ -55,4 +56,5 @@ function! terraform#commands(A, L, P)
   \ 'state'
   \ ]
 endfunction
+
 endif

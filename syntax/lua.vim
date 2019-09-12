@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'lua') == -1
+
 " Vim syntax file
 " Language: Lua
 " URL: https://github.com/tbastos/vim-lua
@@ -246,4 +247,5 @@ let b:current_syntax = "lua"
 if main_syntax == 'lua'
   unlet main_syntax
 endif
+
 endif

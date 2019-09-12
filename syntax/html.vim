@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
+
 " Vim syntax file
 " Language:     HTML (version 5.1)
 "               SVG (SVG 1.1 Second Edition)
@@ -189,8 +190,10 @@ syn keyword htmlArg contained scriptlevel scriptminsize scriptsize scriptsizemul
 syn keyword htmlArg contained stretchy subscriptshift superscriptshift symmetric thickmathspace thinmathspace type valign verythickmathspace verythinmathspace
 syn keyword htmlArg contained veryverythickmathspace veryverythinmathspace voffset width xref
 
+
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jinja') == -1
+
 " Vim syntax file
 " Language:	HTML (version 5)
 " Maintainer:	Rodrigo Machado <rcmachado@gmail.com>
@@ -281,4 +284,5 @@ syn match  htmlArg contained "\<aria-\(dropeffect\|grabbed\)\>"
 " Relationship Attributes
 syn match  htmlArg contained "\<aria-\(activedescendant\|controls\|describedby\|flowto\|\)\>"
 syn match  htmlArg contained "\<aria-\(labelledby\|owns\|posinset\|setsize\|\)\>"
+
 endif

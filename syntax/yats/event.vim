@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptAnimationEvent contained animationend animationiteration
 syntax keyword typescriptAnimationEvent contained animationstart beginEvent endEvent
 syntax keyword typescriptAnimationEvent contained repeatEvent
@@ -158,4 +159,5 @@ syntax keyword typescriptServiceWorkerEvent contained install activate fetch
 syntax cluster events add=typescriptServiceWorkerEvent
 if exists("did_typescript_hilink") | HiLink typescriptServiceWorkerEvent Title
 endif
+
 endif

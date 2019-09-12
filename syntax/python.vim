@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python') == -1
+
 " For version 5.x: Clear all syntax items
 " For versions greater than 6.x: Quit when a syntax file was already loaded
 if v:version < 600
@@ -492,4 +493,5 @@ if v:version >= 508 || !exists('did_python_syn_inits')
 endif
 
 let b:current_syntax = 'python'
+
 endif

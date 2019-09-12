@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
+
 " Vim syntax file for julia document view
 scriptencoding utf-8
 
@@ -64,4 +65,5 @@ highlight default link juliadocAdmonitionsType Todo
 highlight default link juliadocAdmonitionsTitle Title
 
 let b:current_syntax = "juliadoc"
+
 endif

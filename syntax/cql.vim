@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cql') == -1
+
 " Vim syntax file
 " Language:     cql
 " Maintainer:   Eric Lubow <eric@lubow.org
@@ -129,5 +130,6 @@ if version >= 508 || !exists("did_cql_syn_inits")
 endif
 
 let b:current_syntax = "cql"
+
 
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
+
 " Language:    Sexplib
 " Maintainer:  Markus Mottl        <markus.mottl@gmail.com>
 " URL:         http://www.ocaml.info/vim/ftplugin/sexplib.vim
@@ -13,4 +14,5 @@ let b:did_ftplugin=1
 " Comment string
 setl commentstring=;\ %s
 setl comments=:;
+
 endif

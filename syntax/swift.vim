@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'swift') == -1
+
 " File: swift.vim
 " Author: Keith Smiley
 " Description: Runtime files for Swift
@@ -303,4 +304,5 @@ highlight default link swiftLineDirective PreProc
 syn sync minlines=100
 
 let b:current_syntax = "swift"
+
 endif

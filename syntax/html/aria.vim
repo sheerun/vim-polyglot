@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
+
 " Vim syntax file
 " Language:     WAI-ARIA
 " Maintainer:  	othree <othree@gmail.com>
@@ -73,5 +74,6 @@ syn match    htmlArg contained "\<aria-\%(\|labelledby\|owns\|posinset\|setsize\
 " 1.1
 syn match    htmlArg contained "\<aria-\%(\|colcount\|colindex\|colspan\)\>"
 syn match    htmlArg contained "\<aria-\%(\|rowcount\|rowindex\|rowspan\)\>"
+
 
 endif

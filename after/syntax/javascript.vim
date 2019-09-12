@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim syntax file
 "
@@ -57,4 +58,5 @@ let b:current_syntax = 'javascript.jsx'
 
 let &cpo = s:jsx_cpo
 unlet s:jsx_cpo
+
 endif

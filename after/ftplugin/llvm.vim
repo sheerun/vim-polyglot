@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'llvm') == -1
+
 " Copyright (c) 2018 rhysd
 "
 " Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -472,4 +473,5 @@ endfunction
 if !exists(':LLI')
     command! -buffer -nargs=? -bar -complete=file LLI call <SID>run_lli(<f-args>)
 endif
+
 endif

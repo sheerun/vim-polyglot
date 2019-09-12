@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 "Import
 syntax keyword typescriptImport                from as import
 syntax keyword typescriptExport                export
@@ -90,4 +91,5 @@ syntax cluster typescriptAmbients contains=
   \ typescriptAbstract,
   \ typescriptEnumKeyword,typescriptEnum,
   \ typescriptModule
+
 endif

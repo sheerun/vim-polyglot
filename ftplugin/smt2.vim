@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'smt2') == -1
+
 setlocal iskeyword+=-,:,#,',$
 
 " If no command for invoking a solver is specified in ~/.vimrc, test if either
@@ -24,4 +25,5 @@ nnoremap <silent> <buffer> <localleader>v :call smt2#PrintSolverVersion()<cr>
 
 " Comment String
 setlocal commentstring=;%s
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'handlebars') == -1
+
 " Mustache & Handlebars syntax
 " Language:	Mustache, Handlebars
 " Maintainer:	Juvenn Woo <machese@gmail.com>
@@ -105,4 +106,5 @@ syn region mustacheScriptTemplate start=+<script [^>]*type *=[^>]*text/\(mustach
 
 let b:current_syntax = "mustache"
 delcommand HtmlHiLink
+
 endif

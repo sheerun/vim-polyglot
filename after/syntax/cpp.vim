@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c++11') == -1
+
 " Vim syntax file
 " Language: C++ Additions
 " Maintainer: Jon Haggblad <jon@haeggblad.com>
@@ -2100,4 +2101,5 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppRawDelimiter    Delimiter
   delcommand HiLink
 endif
+
 endif

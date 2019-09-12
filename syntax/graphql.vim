@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
+
 " Vim syntax file
 " Language: GraphQL
 " Maintainer: Jon Parise <jon@indelible.org>
@@ -63,4 +64,5 @@ hi def link graphqlVariable         Identifier
 syn sync minlines=500
 
 let b:current_syntax = 'graphql'
+
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
+
 if !exists("g:elixir_indent_max_lookbehind")
   let g:elixir_indent_max_lookbehind = 30
 endif
@@ -360,4 +361,5 @@ function! elixir#indent#handle_inside_generic_block(context)
     return -1
   endif
 endfunction
+
 endif

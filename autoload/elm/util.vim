@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
+
 " IsWin returns 1 if current OS is Windows or 0 otherwise
 fun! elm#util#IsWin() abort
   let l:win = ['win16', 'win32', 'win32unix', 'win64', 'win95']
@@ -179,4 +180,5 @@ function! s:error(msg)
 	echohl NONE
 	let v:errmsg = a:msg
 endfunction
+
 endif

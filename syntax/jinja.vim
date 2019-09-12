@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jinja') == -1
+
 " jinja syntax file
 " Language: Jinja HTML template
 " Maintainer: Hsiaoming Yang <lepture@me.com>
@@ -85,4 +86,5 @@ hi def link jinjaComBlock Comment
 hi def link jinjaTodo Todo
 
 let b:current_syntax = "jinja"
+
 endif

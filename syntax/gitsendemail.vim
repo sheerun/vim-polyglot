@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
+
 " Vim syntax file
 " Language:	git send-email message
 " Maintainer:	Tim Pope
@@ -22,4 +23,5 @@ syn match   gitsendemailComment "^GIT:.*"
 hi def link gitsendemailComment Comment
 
 let b:current_syntax = "gitsendemail"
+
 endif

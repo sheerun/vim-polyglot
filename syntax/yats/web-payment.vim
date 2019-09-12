@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName PaymentRequest
 syntax keyword typescriptPaymentMethod contained show abort canMakePayment nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptPaymentMethod
@@ -32,4 +33,5 @@ syntax keyword typescriptPaymentShippingOptionProp contained id label amount sel
 syntax cluster props add=typescriptPaymentShippingOptionProp
 if exists("did_typescript_hilink") | HiLink typescriptPaymentShippingOptionProp Keyword
 endif
+
 endif

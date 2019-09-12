@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Date nextgroup=typescriptGlobalDateDot,typescriptFuncCallArg
 syntax match   typescriptGlobalDateDot /\./ contained nextgroup=typescriptDateStaticMethod,typescriptProp
 syntax keyword typescriptDateStaticMethod contained UTC now parse nextgroup=typescriptFuncCallArg
@@ -21,4 +22,5 @@ syntax keyword typescriptDateMethod contained valueOf nextgroup=typescriptFuncCa
 syntax cluster props add=typescriptDateMethod
 if exists("did_typescript_hilink") | HiLink typescriptDateMethod Keyword
 endif
+
 endif

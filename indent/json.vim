@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json') == -1
+
 " Vim indent file
 " Language:		JSON
 " Mantainer:		Eli Parra <eli@elzr.com> https://github.com/elzr/vim-json
@@ -175,5 +176,6 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim:set sw=2 sts=2 ts=8 noet:
+
 
 endif

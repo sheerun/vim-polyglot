@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName String nextgroup=typescriptGlobalStringDot,typescriptFuncCallArg
 syntax match   typescriptGlobalStringDot /\./ contained nextgroup=typescriptStringStaticMethod,typescriptProp
 syntax keyword typescriptStringStaticMethod contained fromCharCode fromCodePoint raw nextgroup=typescriptFuncCallArg
@@ -15,4 +16,5 @@ syntax keyword typescriptStringMethod contained valueOf nextgroup=typescriptFunc
 syntax cluster props add=typescriptStringMethod
 if exists("did_typescript_hilink") | HiLink typescriptStringMethod Keyword
 endif
+
 endif

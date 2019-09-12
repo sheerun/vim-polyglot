@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cmake') == -1
+
 " Vim indent file
 " Language:     CMake (ft=cmake)
 " Author:       Andy Cedilnik <andy.cedilnik@kitware.com>
@@ -88,4 +89,5 @@ endfun
 
 let &cpo = s:keepcpo
 unlet s:keepcpo
+
 endif

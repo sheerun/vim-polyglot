@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'csv') == -1
+
 " Filetype plugin for editing CSV files. "{{{1
 " Author:  Christian Brabandt <cb@256bit.org>
 " Version: 0.31
@@ -3186,4 +3187,5 @@ endfun
 
 " Vim Modeline " {{{2
 " vim: set foldmethod=marker et sw=0 sts=-1 ts=4:
+
 endif

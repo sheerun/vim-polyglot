@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
+
 " Language: tmux(1) configuration file
 " Version: 2.9a (git-0d64531f)
 " URL: https://github.com/ericpruitt/tmux.vim/
@@ -113,4 +114,5 @@ syn keyword tmuxCommands
 
 let &cpo = s:original_cpo
 unlet! s:original_cpo s:bg s:i
+
 endif

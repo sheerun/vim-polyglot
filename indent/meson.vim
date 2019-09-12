@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'meson') == -1
+
 " Vim indent file
 " Language:		Meson
 " Maintainer:		Nirbheek Chauhan <nirbheek.chauhan@gmail.com>
@@ -178,4 +179,5 @@ let &cpo = s:keepcpo
 unlet s:keepcpo
 
 " vim:sw=2
+
 endif

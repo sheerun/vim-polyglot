@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json5') == -1
+
 " Modified from the original taken from https://github.com/gutenye/json5.vim
 
 " Syntax setup
@@ -65,5 +66,6 @@ hi def link json5NumError           Error
 if !exists('b:current_syntax')
   let b:current_syntax = 'json5'
 endif
+
 
 endif

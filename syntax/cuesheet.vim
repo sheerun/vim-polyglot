@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cue') == -1
+
 " Language:    Cue sheet
 " Maintainer:  Matěj Grabovský
 " URL:         http://github.com/mgrabovsky
@@ -25,4 +26,5 @@ syn match Number /\<\d\+\%(:\d\{2}\)\{2}\>/
 let b:current_syntax='cuesheet'
 
 " vim: nowrap sw=2 sts=2 ts=8:
+
 endif

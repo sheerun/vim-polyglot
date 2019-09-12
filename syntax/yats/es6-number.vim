@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Number nextgroup=typescriptGlobalNumberDot,typescriptFuncCallArg
 syntax match   typescriptGlobalNumberDot /\./ contained nextgroup=typescriptNumberStaticProp,typescriptNumberStaticMethod,typescriptProp
 syntax keyword typescriptNumberStaticProp contained EPSILON MAX_SAFE_INTEGER MAX_VALUE
@@ -15,4 +16,5 @@ syntax keyword typescriptNumberMethod contained toPrecision toSource toString va
 syntax cluster props add=typescriptNumberMethod
 if exists("did_typescript_hilink") | HiLink typescriptNumberMethod Keyword
 endif
+
 endif

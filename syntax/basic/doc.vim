@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 "Syntax coloring for Node.js shebang line
 syntax match   shellbang "^#!.*node\>"
 syntax match   shellbang "^#!.*iojs\>"
@@ -82,4 +83,5 @@ if main_syntax == "typescript"
 endif
 
 syntax case match
+
 endif

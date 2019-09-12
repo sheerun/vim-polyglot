@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
+
 " Vim syntax file
 " Language: Ansible YAML/Jinja templates
 " Maintainer: Dave Honneffer <pearofducks@gmail.com>
@@ -103,4 +104,5 @@ else
 endif
 
 let b:current_syntax = "ansible"
+
 endif

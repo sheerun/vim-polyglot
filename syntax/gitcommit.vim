@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
+
 " Vim syntax file
 " Language:	git commit file
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
@@ -90,4 +91,5 @@ hi def link gitcommitArrow		gitcommitComment
 hi def link gitcommitBlank		Error
 
 let b:current_syntax = "gitcommit"
+
 endif

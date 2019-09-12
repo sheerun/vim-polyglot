@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
+
 if exists('b:did_indent')
   finish
 endif
@@ -20,5 +21,6 @@ function GetLitCoffeeIndent()
     return -1
   endif
 endfunc
+
 
 endif

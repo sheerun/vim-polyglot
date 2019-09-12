@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Math nextgroup=typescriptGlobalMathDot,typescriptFuncCallArg
 syntax match   typescriptGlobalMathDot /\./ contained nextgroup=typescriptMathStaticProp,typescriptMathStaticMethod,typescriptProp
 syntax keyword typescriptMathStaticProp contained E LN10 LN2 LOG10E LOG2E PI SQRT1_2
@@ -13,4 +14,5 @@ syntax keyword typescriptMathStaticMethod contained min pow random round sign si
 syntax keyword typescriptMathStaticMethod contained sinh sqrt tan tanh trunc nextgroup=typescriptFuncCallArg
 if exists("did_typescript_hilink") | HiLink typescriptMathStaticMethod Keyword
 endif
+
 endif

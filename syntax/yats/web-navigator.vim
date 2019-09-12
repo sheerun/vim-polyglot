@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax keyword typescriptBOMNavigatorProp contained battery buildID connection cookieEnabled
 syntax keyword typescriptBOMNavigatorProp contained doNotTrack maxTouchPoints oscpu
 syntax keyword typescriptBOMNavigatorProp contained productSub push serviceWorker
@@ -19,4 +20,5 @@ syntax keyword typescriptServiceWorkerMethod contained register nextgroup=typesc
 syntax cluster props add=typescriptServiceWorkerMethod
 if exists("did_typescript_hilink") | HiLink typescriptServiceWorkerMethod Keyword
 endif
+
 endif

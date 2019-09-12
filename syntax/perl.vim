@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
+
 " Vim syntax file
 " Language:      Perl 5
 " Maintainer:    vim-perl <vim-perl@googlegroups.com>
@@ -581,4 +582,5 @@ unlet s:cpo_save
 
 " XXX Change to sts=4:sw=4
 " vim:ts=8:sts=2:sw=2:expandtab:ft=vim
+
 endif

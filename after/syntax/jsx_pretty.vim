@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
+
 let s:highlight_close_tag = get(g:, 'vim_jsx_pretty_highlight_close_tag', 0)
 
 " <tag id="sample">
@@ -210,5 +211,6 @@ if s:vim_jsx_pretty_colorful_config == 1
   highlight def link jsArrowFuncArgs Type
   highlight def link jsFuncArgs Type
 endif
+
 
 endif

@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'coffee-script') == -1
+
 " Language:    CoffeeScript
 " Maintainer:  Mick Koch <mick@kochm.co>
 " URL:         http://github.com/kchmck/vim-coffee-script
@@ -404,4 +405,5 @@ command! -buffer -range=% -bar -nargs=* CoffeeRun
 \        call s:CoffeeRun(<line1>, <line2>, <q-args>)
 command! -buffer -range=% -bang -bar -nargs=* CoffeeLint
 \        call s:CoffeeLint(<line1>, <line2>, <q-bang>, <q-args>)
+
 endif

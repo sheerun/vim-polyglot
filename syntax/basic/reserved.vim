@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
+
 syntax cluster typescriptStrings               contains=typescriptProp,typescriptString,typescriptTemplate,@typescriptComments,typescriptDocComment,typescriptRegexpString,typescriptPropertyName
 
 syntax cluster typescriptNoReserved contains=
@@ -30,4 +31,5 @@ syntax keyword typescriptReserved containedin=ALLBUT,@typescriptNoReserved volat
 syntax keyword typescriptReserved containedin=ALLBUT,@typescriptNoReserved class
 syntax keyword typescriptReserved containedin=ALLBUT,@typescriptNoReserved var
 syntax keyword typescriptReserved containedin=ALLBUT,@typescriptNoReserved function
+
 endif

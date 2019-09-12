@@ -1,5 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mdx') == -1
 
+
 " based on mxw/vim-jsx
 
 if exists('b:current_syntax')
@@ -40,4 +41,5 @@ syn cluster jsExpression add=jsxRegion
 
 " Allow jsxRegion to contain reserved words.
 syn cluster javascriptNoReserved add=jsxRegion
+
 endif

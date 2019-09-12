@@ -1,4 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
+
 " Language:     Rust
 " Description:  Vim ftplugin for Rust
 " Maintainer:   Chris Morgan <me@chrismorgan.info>
@@ -200,4 +201,5 @@ unlet s:save_cpo
 " vint: +ProhibitAbbreviationOption
 
 " vim: set et sw=4 sts=4 ts=8:
+
 endif
