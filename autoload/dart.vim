@@ -28,61 +28,56 @@ function! s:clearQfList(reason) abort
 endfunction
 
 function! dart#fmt(q_args) abort
-  if executable('dartfmt')
-    let buffer_content = join(getline(1, '$'), "\n")
-    let args = '--stdin-name '.expand('%').' '.a:q_args
-    let joined_lines = system(printf('dartfmt %s', args), buffer_content)
-    if buffer_content ==# joined_lines[:-2]
-      call s:clearQfList('dartfmt')
-      return
-    endif
-    if 0 == v:shell_error
-      let win_view = winsaveview()
-      let lines = split(joined_lines, "\n")
-      silent keepjumps call setline(1, lines)
-      if line('$') > len(lines)
-        silent keepjumps execute string(len(lines)+1).',$ delete'
-      endif
-      call winrestview(win_view)
-      call s:clearQfList('dartfmt')
-    else
-      let errors = split(joined_lines, "\n")[2:]
-      let error_format = '%Aline %l\, column %c of %f: %m,%C%.%#'
-      call s:cexpr(error_format, errors, 'dartfmt')
-    endif
-  else
-    call s:error('cannot execute binary file: dartfmt')
+  let cmd = s:FindDartFmt()
+  if type(cmd) != type('') | return | endif
+  let buffer_content = getline(1, '$')
+  let args = '--stdin-name '.expand('%').' '.a:q_args
+  let lines = systemlist(printf('%s %s', cmd, args), join(buffer_content, "\n"))
+  " TODO(https://github.com/dart-lang/sdk/issues/38507) - Remove once the
+  " tool no longer emits this line on SDK upgrades.
+  if lines[-1] ==# 'Isolate creation failed'
+    let lines = lines[:-2]
   endif
+  if buffer_content == lines
+    call s:clearQfList('dartfmt')
+    return
+  endif
+  if 0 == v:shell_error
+    let win_view = winsaveview()
+    silent keepjumps call setline(1, lines)
+    if line('$') > len(lines)
+      silent keepjumps execute string(len(lines)+1).',$ delete'
+    endif
+    call winrestview(win_view)
+    call s:clearQfList('dartfmt')
+  else
+    let errors = lines[2:]
+    let error_format = '%Aline %l\, column %c of %f: %m,%C%.%#'
+    call s:cexpr(error_format, errors, 'dartfmt')
+  endif
+endfunction
+
+function! s:FindDartFmt() abort
+  if executable('dartfmt') | return 'dartfmt' | endif
+  if executable('flutter')
+    let l:flutter_cmd = resolve(exepath('flutter'))
+    let l:bin = fnamemodify(l:flutter_cmd, ':h')
+    let l:dartfmt = l:bin.'/cache/dart-sdk/bin/dartfmt'
+    if executable(l:dartfmt) | return l:dartfmt | endif
+  endif
+  call s:error('Cannot find a `dartfmt` command')
 endfunction
 
 function! dart#analyzer(q_args) abort
-  if executable('dartanalyzer')
-    let path = expand('%:p:gs:\:/:')
-    if filereadable(path)
-      let command = printf('dartanalyzer %s %s', a:q_args, shellescape(path))
-      let lines = systemlist(command)
-      call s:cexpr('%m (%f\, line %l\, col %c)', lines, 'dartanalyzer')
-    else
-      call s:error(printf('cannot read a file: "%s"', path))
-    endif
-  else
-    call s:error('cannot execute binary file: dartanalyzer')
-  endif
+  call s:error('DartAnalyzer support has been removed. '.
+      \'If this broke your workflow please comment on '.
+      \'https://github.com/dart-lang/dart-vim-plugin/issues/89')
 endfunction
 
 function! dart#tojs(q_args) abort
-  if executable('dart2js')
-    let path = expand('%:p:gs:\:/:')
-    if filereadable(path)
-      let command = printf('dart2js %s %s', a:q_args, shellescape(path))
-      let lines = systemlist(command)
-      call s:cexpr('%m (%f\, line %l\, col %c)', lines, 'dart2js')
-    else
-      call s:error(printf('cannot read a file: "%s"', path))
-    endif
-  else
-    call s:error('cannot execute binary file: dartanalyzer')
-  endif
+  call s:error('Dart2JS support has been removed. '.
+      \'If this broke your workflow please comment on '.
+      \'https://github.com/dart-lang/dart-vim-plugin/issues/89')
 endfunction
 
 " Finds the path to `uri`.

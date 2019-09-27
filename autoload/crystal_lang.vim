@@ -77,10 +77,17 @@ function! crystal_lang#entrypoint_for(file_path) abort
         return a:file_path
     endif
 
+    let required_spec_path = get(b:, 'crystal_required_spec_path', get(g:, 'crystal_required_spec_path', ''))
+    if required_spec_path !=# ''
+      let require_spec_str = './' . required_spec_path
+    else
+      let require_spec_str = './spec/**'
+    endif
+
     let temp_name = root_dir . '/__vim-crystal-temporary-entrypoint-' . fnamemodify(a:file_path, ':t')
     let contents = [
                 \   'require "spec"',
-                \   'require "./spec/**"',
+                \   'require "' . require_spec_str . '"',
                 \   printf('require "./%s"', fnamemodify(a:file_path, ':p')[strlen(root_dir)+1 : ])
                 \ ]
 

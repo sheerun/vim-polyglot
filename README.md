@@ -168,7 +168,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [svg](https://github.com/vim-scripts/svg.vim) (syntax)
 - [swift](https://github.com/keith/swift.vim) (syntax, indent, ftplugin)
 - [sxhkd](https://github.com/baskerville/vim-sxhkdrc) (syntax)
-- [systemd](https://github.com/wgwoods/vim-systemd-syntax) (syntax)
+- [systemd](https://github.com/wgwoods/vim-systemd-syntax) (syntax, ftplugin)
 - [terraform](https://github.com/hashivim/vim-terraform) (syntax, indent, autoload, ftplugin)
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax)

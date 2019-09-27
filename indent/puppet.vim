@@ -14,7 +14,10 @@ let b:did_indent = 1
 setlocal autoindent smartindent
 setlocal indentexpr=GetPuppetIndent()
 setlocal indentkeys+=0],0)
-setlocal formatexpr=puppet#format#Format()
+
+let b:undo_indent = "
+    \ setlocal autoindent< smartindent< indentexpr< indentkeys<
+    \"
 
 if exists("*GetPuppetIndent")
     finish

@@ -276,6 +276,15 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
   augroup filetypedetect
   " dart, from dart.vim in dart-lang/dart-vim-plugin
 autocmd BufRead,BufNewFile *.dart set filetype=dart
+
+function! s:DetectShebang()
+  if did_filetype() | return | endif
+  if getline(1) == '#!/usr/bin/env dart'
+    setlocal filetype=dart
+  endif
+endfunction
+
+autocmd BufRead * call s:DetectShebang()
   augroup end
 endif
 
@@ -1047,6 +1056,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
   augroup filetypedetect
   " puppet, from puppet.vim in rodjek/vim-puppet
 au! BufRead,BufNewFile *.pp setfiletype puppet
+au! BufRead,BufNewFile *.epp setfiletype embeddedpuppet
 au! BufRead,BufNewFile Puppetfile setfiletype ruby
   augroup end
 endif

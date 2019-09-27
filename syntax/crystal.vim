@@ -121,7 +121,7 @@ syn match crystalPredefinedConstant "\%(\%(\.\@<!\.\)\@<!\|::\)\_s*\zs\%(crystal
 
 " Normal Regular Expression
 syn region crystalRegexp matchgroup=crystalRegexpDelimiter start="\%(\%(^\|\<\%(and\|or\|while\|until\|unless\|if\|elsif\|ifdef\|when\|not\|then\|else\)\|[;\~=!|&(,[<>?:*+-]\)\s*\)\@<=/" end="/[iomxneus]*" skip="\\\\\|\\/" contains=@crystalRegexpSpecial fold
-syn region crystalRegexp matchgroup=crystalRegexpDelimiter start="\%(\h\k*\s\+\)\@<=/[ \t=]\@!" end="/[iomxneus]*" skip="\\\\\|\\/" contains=@crystalRegexpSpecial fold
+syn region crystalRegexp matchgroup=crystalRegexpDelimiter start="\%(\h\k*\s\+\)\@<=/[ \t=/]\@!" end="/[iomxneus]*" skip="\\\\\|\\/" contains=@crystalRegexpSpecial fold
 
 " Generalized Regular Expression
 syn region crystalRegexp matchgroup=crystalRegexpDelimiter start="%r\z([~`!@#$%^&*_\-+=|\:;"',.? /]\)" end="\z1[iomxneus]*" skip="\\\\\|\\\z1" contains=@crystalRegexpSpecial fold

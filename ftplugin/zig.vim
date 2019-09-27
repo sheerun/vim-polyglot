@@ -7,9 +7,9 @@ endif
 
 let b:did_ftplugin = 1
 
-set expandtab
-set tabstop=4
-set shiftwidth=4
+setlocal expandtab
+setlocal tabstop=4
+setlocal shiftwidth=4
 
 setlocal suffixesadd=.zig
 setlocal commentstring=//\ %s

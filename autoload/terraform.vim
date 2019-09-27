@@ -1,5 +1,8 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'terraform') == -1
 
+" Ensure no conflict with arguments from the environment
+let $TF_CLI_ARGS_fmt=''
+
 function! terraform#fmt()
   if !filereadable(expand('%:p'))
     return

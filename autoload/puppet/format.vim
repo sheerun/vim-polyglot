@@ -5,9 +5,16 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 function! puppet#format#Format() abort
   let l:start_lnum = v:lnum
   let l:end_lnum = v:lnum + v:count - 1
-  call puppet#format#Indention(l:start_lnum, l:end_lnum)
-  call puppet#format#Hashrocket(l:start_lnum, l:end_lnum)
+  " Don't modify indentation or alignment if called by textwidth. We'll only
+  " let the fallback function do its thing in this case so that textwidth
+  " still performs the expected feature.
+  if mode() !~# '[iR]'
+    call puppet#format#Indention(l:start_lnum, l:end_lnum)
+    call puppet#format#Hashrocket(l:start_lnum, l:end_lnum)
+  endif
   call puppet#format#Fallback(l:start_lnum, l:end_lnum)
+  " explicitly avoid falling back to default formatting
+  return 0
 endfunction
 
 ""
@@ -37,10 +44,16 @@ endfunction
 " lines which exeed &widthline are formated
 "
 function! puppet#format#Fallback(start_lnum, end_lnum) abort
+  " We shouldn't wrap lines based on textwidth if it is disabled
+  if &textwidth == 0
+    return
+  endif
+
   " I'm using it to check if autoformat expand range
   let l:eof_lnum = line('$')
   let l:lnum = a:start_lnum
   let l:end_lnum = a:end_lnum
+
   while l:lnum <= l:end_lnum
     if strlen(getline(l:lnum)) > &textwidth
       call cursor(l:lnum)
