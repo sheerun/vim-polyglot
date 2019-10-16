@@ -129,7 +129,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [nix](https://github.com/LnL7/vim-nix) (syntax, indent, compiler, ftplugin)
 - [objc](https://github.com/b4winckler/vim-objc) (ftplugin, syntax, indent)
 - [ocaml](https://github.com/rgrinberg/vim-ocaml) (syntax, indent, compiler, ftplugin)
-- [octave](https://github.com/vim-scripts/octave.vim--) (syntax)
+- [octave](https://github.com/McSinyx/vim-octave) (syntax, indent)
 - [opencl](https://github.com/petRUShka/vim-opencl) (syntax, indent, ftplugin)
 - [perl](https://github.com/vim-perl/vim-perl) (syntax, indent, ftplugin)
 - [pgsql](https://github.com/lifepillar/pgsql.vim) (syntax, indent)

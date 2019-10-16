@@ -243,7 +243,7 @@ PACKS="
   nix:LnL7/vim-nix
   objc:b4winckler/vim-objc
   ocaml:rgrinberg/vim-ocaml
-  octave:vim-scripts/octave.vim--
+  octave:McSinyx/vim-octave
   opencl:petRUShka/vim-opencl
   perl:vim-perl/vim-perl
   pgsql:lifepillar/pgsql.vim
