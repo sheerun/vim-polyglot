@@ -47,7 +47,7 @@ endif
 let s:cpo_save = &cpoptions
 set cpoptions&vim
 
-command! -nargs=+ -complete=customlist,terraform#commands -buffer Terraform execute '!terraform '.<q-args>. ' -no-color'
+command! -nargs=+ -complete=custom,terraform#commands -buffer Terraform execute '!terraform '.<q-args>. ' -no-color'
 command! -nargs=0 -buffer TerraformFmt call terraform#fmt()
 let b:undo_ftplugin .= '|delcommand Terraform|delcommand TerraformFmt'
 

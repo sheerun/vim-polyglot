@@ -34,7 +34,7 @@ endfunction
 set path+=./node_modules/**,node_modules/**
 set include=import\_s.\\zs[^'\"]*\\ze
 set includeexpr=TsIncludeExpr(v:fname)
-set suffixesadd=.ts
+set suffixesadd+=.ts
 
 "
 " TagBar

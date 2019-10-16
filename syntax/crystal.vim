@@ -290,7 +290,7 @@ if !exists('g:crystal_no_special_methods')
   syn match   crystalInclude   "\<include\>[?!]\@!" display
   syn keyword crystalInclude   extend require
   syn keyword crystalKeyword   caller typeof pointerof sizeof instance_sizeof
-  syn match   crystalRecord    "\<record\>[?!]\@!" display
+  syn match   crystalRecord    "\<record\%(\s\+\u\w*\)\@=" display
 endif
 
 " Macro

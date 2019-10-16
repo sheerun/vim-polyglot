@@ -20,7 +20,7 @@ let b:current_syntax = 'plantuml'
 
 syntax sync minlines=100
 
-syntax match plantumlPreProc /\%(\%(^@start\|^@end\)\%(dot\|mindmap\|uml\|salt\|wbs\)\)\|!\%(define\|definelong\|else\|enddefinelong\|endif\|exit\|if\|ifdef\|ifndef\|include\|pragma\|undef\)\s*.*/ contains=plantumlDir
+syntax match plantumlPreProc /\%(\%(^@start\|^@end\)\%(dot\|mindmap\|uml\|salt\|wbs\|gantt\)\)\|!\%(define\|definelong\|else\|enddefinelong\|endif\|exit\|if\|ifdef\|ifndef\|include\|pragma\|undef\|gantt\)\s*.*/ contains=plantumlDir
 syntax region plantumlDir start=/\s\+/ms=s+1 end=/$/ contained
 
 " type
@@ -34,12 +34,16 @@ syntax keyword plantumlClassKeyword class interface
 " Exclude 'top to bottom direction'
 syntax keyword plantumlKeyword accross activate again allow_mixing allowmixing also alt as autonumber bottom
 syntax keyword plantumlKeyword box break caption center create critical deactivate destroy down else elseif end
-syntax keyword plantumlKeyword endif endwhile footbox footer fork group header hide hnote if is kill left
+syntax keyword plantumlKeyword endif endwhile footbox footer fork group header hide hnote if is kill left in at are to the and
 syntax keyword plantumlKeyword legend link loop mainframe namespace newpage note of on opt order over package
 syntax keyword plantumlKeyword page par partition ref repeat return right rnote rotate show skin skinparam
 syntax keyword plantumlKeyword start stop title top up while
 " Not in 'java - jar plantuml.jar - language' output
 syntax keyword plantumlKeyword then detach split sprite
+" gantt
+syntax keyword plantumlTypeKeyword project monday tuesday wednesday thursday friday saturday sunday
+syntax keyword plantumlKeyword starts ends start end closed day after colored lasts happens
+
 
 syntax keyword plantumlCommentTODO XXX TODO FIXME NOTE contained
 syntax match plantumlColor /#[0-9A-Fa-f]\{6\}\>/
@@ -136,6 +140,7 @@ syntax region plantumlText oneline matchgroup=plantumlSequenceDelay start=/^\.\{
 " Usecase diagram
 syntax match plantumlUsecaseActor /:.\{-1,}:/ contains=plantumlSpecialString
 
+
 " Mindmap diagram
 let s:mindmapHilightLinks = [
       \ 'WarningMsg', 'Directory', 'Special', 'MoreMsg', 'Statement', 'Title',
@@ -143,18 +148,20 @@ let s:mindmapHilightLinks = [
       \ 'Function', 'Todo'
       \  ]
 
-syntax match plantumlMindmap1 /^[-+*][_<>]\?/ contained
-
 let i = 1
 let contained = []
 while i < len(s:mindmapHilightLinks)
-  execute "syntax match plantumlMindmap" . i . " /^\\%(\\s\\|[-+*]\\)\\{" . (i - 1) . "}[-+*][_<>]\\?/ contained"
-  execute "highlight default link plantumlMindmap" . i . " " . s:mindmapHilightLinks[i - 1]
-  call add(contained, "plantumlMindmap" . i)
+  execute 'syntax match plantumlMindmap' . i . ' /^\([-+*]\)\1\{' . (i - 1) . '}_\?\s\+/ contained'
+  execute 'syntax match plantumlMindmap' . i . ' /^\s\{' . (i - 1) . '}\*_\?\s\+/ contained'
+  execute 'highlight default link plantumlMindmap' . i . ' ' . s:mindmapHilightLinks[i - 1]
+  call add(contained, 'plantumlMindmap' . i)
   let i = i + 1
 endwhile
 
-execute "syntax region plantumlMindmap oneline start=/^\\s*[-+*]_\\?/ end=/$/ contains=" . join(contained, ',')
+execute 'syntax region plantumlMindmap oneline start=/^\([-+*]\)\1*_\?\s/ end=/$/ contains=' . join(contained, ',')
+" Markdown syntax
+execute 'syntax region plantumlMindmap oneline start=/^\s*\*_\?\s/ end=/$/ contains=' . join(contained, ',')
+
 
 " Skinparam keywords
 syntax case ignore

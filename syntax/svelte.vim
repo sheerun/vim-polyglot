@@ -8,8 +8,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'svelte') == -1
 " URL:        https://github.com/evanleck/vim-svelte
 "
 " Like vim-jsx, this depends on the pangloss/vim-javascript syntax package (and
-" is tested against it exclusively). If you're using vim-polyglot (like I am),
-" then you're all set.
+" is tested against it exclusively). If you're using vim-polyglot, then you're
+" all set.
 
 if exists("b:current_syntax")
   finish
@@ -26,13 +26,14 @@ syntax match htmlTagName contained "\<[a-zA-Z:\.]*\>"
 " "bind:something", etc.
 syntax match svelteKeyword "\<[a-z]\+:[a-zA-Z|]\+=" contained containedin=htmlTag
 
+" Mixed-case attributes are likely props.
+syntax match svelteKeyword "\<[a-z]\+:[a-zA-Z|]\+=" contained containedin=htmlTag
+
 " The "slot" attribute has special meaning.
 syntax keyword svelteKeyword slot contained containedin=htmlTag
 
 " According to vim-jsx, you can let jsBlock take care of ending the region.
 "   https://github.com/mxw/vim-jsx/blob/master/after/syntax/jsx.vim
-"
-" ALLBUT,htmlSpecialTagName keeps Vim from marking CSS regions as jsBlock.
 syntax region svelteExpression start="{" end="" contains=jsBlock,javascriptBlock containedin=htmlString,htmlTag,htmlArg,htmlValue,htmlH1,htmlH2,htmlH3,htmlH4,htmlH5,htmlH6,htmlHead,htmlTitle,htmlBoldItalicUnderline,htmlUnderlineBold,htmlUnderlineItalicBold,htmlUnderlineBoldItalic,htmlItalicUnderline,htmlItalicBold,htmlItalicBoldUnderline,htmlItalicUnderlineBold,htmlLink,htmlLeadingSpace,htmlBold,htmlBoldUnderline,htmlBoldItalic,htmlBoldUnderlineItalic,htmlUnderline,htmlUnderlineItalic,htmlItalic,htmlStrike,javaScript
 
 " Block conditionals.

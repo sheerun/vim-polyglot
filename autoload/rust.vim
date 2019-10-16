@@ -398,10 +398,19 @@ function! s:RmDir(path)
         echoerr 'Attempted to delete empty path'
         return 0
     elseif a:path ==# '/' || a:path ==# $HOME
-        echoerr 'Attempted to delete protected path: ' . a:path
+        let l:path = expand(a:path)
+        if l:path ==# '/' || l:path ==# $HOME
+            echoerr 'Attempted to delete protected path: ' . a:path
+            return 0
+        endif
+    endif
+
+    if !isdirectory(a:path)
         return 0
     endif
-    return system("rm -rf " . shellescape(a:path))
+
+    " delete() returns 0 when removing file successfully
+    return delete(a:path, 'rf') == 0
 endfunction
 
 " Executes {cmd} with the cwd set to {pwd}, without changing Vim's cwd.

@@ -8,7 +8,8 @@ let s:checked_ctags = 0
 
 function! rust#tags#IsUCtags() abort
     if s:checked_ctags == 0
-        if system('ctags --version') =~? 'universal ctags'
+        let l:ctags_bin = get(g:, 'tagbar_ctags_bin', 'ctags')
+        if system(l:ctags_bin.' --version') =~? 'universal ctags'
             let s:ctags_is_uctags = 1
         endif
         let s:checked_ctags = 1

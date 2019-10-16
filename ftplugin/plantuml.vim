@@ -37,10 +37,10 @@ endif
 
 setlocal comments=s1:/',mb:',ex:'/,:' commentstring=/'%s'/ formatoptions-=t formatoptions+=croql
 
-let b:endwise_addition = '\=index(["note","legend"], submatch(0))!=-1 ? "end " . submatch(0) : "end"'
-let b:endwise_words = 'loop,group,alt,note,legend'
-let b:endwise_pattern = '^\s*\zs\<\(loop\|group\|alt\|note\ze[^:]*$\|legend\)\>.*$'
-let b:endwise_syngroups = 'plantumlKeyword'
+let b:endwise_addition = '\=index(["dot","mindmap","uml","salt","wbs"], submatch(0))!=-1 ? "@end" . submatch(0) : index(["note","legend"], submatch(0))!=-1 ? "end " . submatch(0) : "end"'
+let b:endwise_words = 'loop,group,alt,note,legend,startdot,startmindmap,startuml,startsalt,startwbs'
+let b:endwise_pattern = '^\s*\zs\(loop\|group\|alt\|note\ze[^:]*$\|legend\|@start\zs\(dot\|mindmap\|uml\|salt\|wbs\)\)\>.*$'
+let b:endwise_syngroups = 'plantumlKeyword,plantumlPreProc'
 
 let &cpoptions = s:cpo_save
 unlet s:cpo_save
