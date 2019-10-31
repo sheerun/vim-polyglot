@@ -204,7 +204,7 @@ Please make sure you have `syntax on` in your `.vimrc`, otherwise syntax files a
 Individual language packs can be disabled by setting `g:polyglot_disabled` as follows:
 
 ```viml
-" ~/.vimrc
+" ~/.vimrc, declare this variable before polyglot is loaded
 let g:polyglot_disabled = ['css']
 ```
 
