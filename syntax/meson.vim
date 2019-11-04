@@ -2,6 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'meson') == -1
 
 " Vim syntax file
 " Language:	Meson
+" License:	VIM License
 " Maintainer:	Nirbheek Chauhan <nirbheek.chauhan@gmail.com>
 " Last Change:	2016 Dec 7
 " Credits:	Zvezdan Petkovic <zpetkovic@acm.org>

@@ -30,6 +30,7 @@ syn match tmuxNumber            /\<\d\+\>/             display
 syn match tmuxFlags             /\s-\a\+/              display
 syn match tmuxVariable          /\w\+=/                display
 syn match tmuxVariableExpansion /\${\=\w\+}\=/         display
+syn match tmuxControl           /%\(if\|elif\|else\|endif\)/
 
 syn region tmuxComment start=/#/ skip=/\\\@<!\\$/ end=/$/ contains=tmuxTodo
 
@@ -45,6 +46,7 @@ hi def link tmuxFormatString      Identifier
 hi def link tmuxAction            Boolean
 hi def link tmuxBoolean           Boolean
 hi def link tmuxCommands          Keyword
+hi def link tmuxControl           Keyword
 hi def link tmuxComment           Comment
 hi def link tmuxKey               Special
 hi def link tmuxNumber            Number

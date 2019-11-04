@@ -20,7 +20,7 @@ syn match sdErr contained /\s*\S\+/ nextgroup=sdErr
 
 " environment args and format strings
 syn match sdEnvArg    contained /\$\i\+\|\${\i\+}/
-syn match sdFormatStr contained /%[inpINPfcrRt]/ containedin=ALLBUT,sdComment,sdErr
+syn match sdFormatStr contained /%[bCEfhHiIjJLmnNpPsStTgGuUvV%]/ containedin=ALLBUT,sdComment,sdErr
 
 " common data types
 syn match sdUInt     contained nextgroup=sdErr /\d\+/

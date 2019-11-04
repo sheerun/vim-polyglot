@@ -9,6 +9,10 @@ if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') 
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+if get(g:, 'vim_jsx_pretty_disable_tsx', 0)
+  finish
+endif
+
 if exists('b:did_indent')
   let s:did_indent = b:did_indent
   unlet b:did_indent

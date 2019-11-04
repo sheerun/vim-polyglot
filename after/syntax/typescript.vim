@@ -9,6 +9,10 @@ if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') 
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+if get(g:, 'vim_jsx_pretty_disable_tsx', 0)
+  finish
+endif
+
 let s:jsx_cpo = &cpo
 set cpo&vim
 

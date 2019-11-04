@@ -152,7 +152,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [raml](https://github.com/IN3D/vim-raml) (syntax, ftplugin)
 - [reason](https://github.com/reasonml-editor/vim-reason-plus) (syntax, indent)
 - [rspec](https://github.com/sheerun/rspec.vim) (syntax)
-- [rst](https://github.com/marshallward/vim-restructuredtext) (syntax, autoload, ftplugin)
+- [rst](https://github.com/marshallward/vim-restructuredtext) (syntax, indent, autoload, ftplugin)
 - [ruby](https://github.com/vim-ruby/vim-ruby) (syntax, indent, compiler, autoload, ftplugin)
 - [rust](https://github.com/rust-lang/rust.vim) (syntax, indent, compiler, autoload, ftplugin)
 - [sbt](https://github.com/derekwyatt/vim-sbt) (syntax)

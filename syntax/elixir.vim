@@ -52,7 +52,7 @@ syn keyword elixirBoolean true false nil
 syn match elixirVariable '@[a-z]\w*'
 syn match elixirVariable '&\d\+'
 
-syn keyword elixirPseudoVariable __FILE__ __DIR__ __MODULE__ __ENV__ __CALLER__
+syn keyword elixirPseudoVariable __FILE__ __DIR__ __MODULE__ __ENV__ __CALLER__ __STACKTRACE__
 
 syn match elixirNumber '\<-\?\d\(_\?\d\)*\(\.[^[:space:][:digit:]]\@!\(_\?\d\)*\)\?\([eE][-+]\?\d\(_\?\d\)*\)\?\>'
 syn match elixirNumber '\<-\?0[xX][0-9A-Fa-f]\+\>'

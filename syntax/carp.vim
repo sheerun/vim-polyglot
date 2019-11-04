@@ -33,9 +33,7 @@ syn keyword carpSyntax relative-include not-on-windows load-and-use
 syn keyword carpSyntax deftest
 syn match carpSyntax "\vc(a|d){1,4}r"
 
-syn keyword carpFunc Int Float Double Bool String Char Array Fn Ref Long λ
-syn keyword carpFunc Maybe Map Result Set Pair
-syn keyword carpFunc Pattern
+syn keyword carpFunc λ
 syn keyword carpFunc not or and + - * / = /= >= <= > < inc dec
 syn keyword carpFunc println print get-line from-string mod random
 syn keyword carpFunc random-between str mask delete append length duplicate
@@ -76,6 +74,8 @@ syn keyword carpFunc assert-op assert-equal assert-not-equal assert-true
 syn keyword carpFunc assert-false assert-exit print-test-results with-test
 syn keyword carpFunc dir-from-path file-from-path
 
+syn match carpFunc "[A-Z]\w\+"
+
 syn match carpSymbol ,\k+,  contained
 syn match carpTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE)/ containedin=carpComment,carpString
 
@@ -105,8 +105,8 @@ syn region carpPattern start=/\%(\\\)\@<!\#"/ skip=/\\[\\"]/ end=/"/
 syn cluster carpNormal          add=carpError,carpStruc,carpString,carpPattern
 syn cluster carpQuotedOrNormal  add=carpString
 
-syn match carpNumber    "\<[-+]\?\(\d\+\|\d\+#*\.\|\d*\.\d\+\)#*\(/\d\+#*\)\?[lf]\?\>" contains=carpContainedNumberError
-syn match carpNumber    "\<[-+]\?\d\+/\d\+[lf]\?\>" contains=carpContainedNumberError
+syn match carpNumber    "\<[-+]\?\(\d\+\|\d\+#*\.\|\d*\.\d\+\)#*\(/\d\+#*\)\?[lfb]\?\>" contains=carpContainedNumberError
+syn match carpNumber    "\<[-+]\?\d\+/\d\+[lfb]\?\>" contains=carpContainedNumberError
 
 
 syn keyword carpBoolean  true false
