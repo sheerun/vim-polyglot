@@ -11,7 +11,7 @@ endif
 let current_compiler = "cryptol"
 
 if exists(":CompilerSet") != 2
-   command = -nargs =* CompilerSet setlocal <args>
+   command -nargs=* CompilerSet setlocal <args>
 endif
 
 " TODO: Work out errorformat for the Cryptol compiler, see
