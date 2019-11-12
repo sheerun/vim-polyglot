@@ -24,22 +24,28 @@ syntax match plantumlPreProc /\%(\%(^@start\|^@end\)\%(dot\|mindmap\|uml\|salt\|
 syntax region plantumlDir start=/\s\+/ms=s+1 end=/$/ contained
 
 " type
+" From 'java - jar plantuml.jar - language' results {{{
 syntax keyword plantumlTypeKeyword abstract actor agent archimate artifact boundary card cloud component control
-syntax keyword plantumlTypeKeyword database diamond entity enum file folder frame node object robust concise package participant
-syntax keyword plantumlTypeKeyword queue rectangle stack state storage usecase
+syntax keyword plantumlTypeKeyword database detach diamond entity enum file folder frame node object package
+syntax keyword plantumlTypeKeyword participant queue rectangle stack state storage usecase
 " class and interface are defined as plantumlClassKeyword
 syntax keyword plantumlClassKeyword class interface
+"}}}
+" Not in 'java - jar plantuml.jar - language' results
+syntax keyword plantumlTypeKeyword concise robust
 
 " keyword
-" Exclude 'top to bottom direction'
+" From 'java - jar plantuml.jar - language' results {{{
+" Since "syntax keyword" can handle only words, "top to bottom direction" is excluded.
 syntax keyword plantumlKeyword accross activate again allow_mixing allowmixing also alt as autonumber bottom
 syntax keyword plantumlKeyword box break caption center create critical deactivate destroy down else elseif end
 syntax keyword plantumlKeyword endif endwhile footbox footer fork group header hide hnote if is kill left in at are to the and
-syntax keyword plantumlKeyword legend endlegend link loop mainframe namespace newpage note of on opt order over package
+syntax keyword plantumlKeyword legend link loop mainframe namespace newpage note of on opt order over package
 syntax keyword plantumlKeyword page par partition ref repeat return right rnote rotate show skin skinparam
 syntax keyword plantumlKeyword start stop title top up while
-" Not in 'java - jar plantuml.jar - language' output
-syntax keyword plantumlKeyword then detach split sprite
+"}}}
+" Not in 'java - jar plantuml.jar - language' results
+syntax keyword plantumlKeyword endlegend split sprite then
 " gantt
 syntax keyword plantumlTypeKeyword project monday tuesday wednesday thursday friday saturday sunday
 syntax keyword plantumlKeyword starts ends start end closed day after colored lasts happens

@@ -22,34 +22,31 @@ if exists('s:current_syntax')
   let b:current_syntax = s:current_syntax
 endif
 
-if hlexists("jsNoise")    " pangloss/vim-javascript
+if hlexists("jsDebugger") || hlexists("jsNoise")    " yuezk/vim-js or pangloss/vim-javascript
   syntax cluster jsExpression add=jsxRegion
 elseif hlexists("javascriptOpSymbols")    " othree/yajs.vim
   " refine the javascript line comment
   syntax region javascriptLineComment start=+//+ end=/$/ contains=@Spell,javascriptCommentTodo extend keepend
   syntax cluster javascriptValue add=jsxRegion
   syntax cluster javascriptNoReserved add=jsxElement,jsxTag
-
-  " add support to arrow function which returns a tagged template string, e.g.
-  " () => html`<div></div>`
-  syntax cluster afterArrowFunc add=javascriptTagRef
 else    " build-in javascript syntax
   " refine the javascript line comment
   syntax region javaScriptLineComment start=+//+ end=/$/ contains=@Spell,javascriptCommentTodo extend keepend
+
+  " refine the template string syntax
+  syntax region javaScriptEmbed matchgroup=javaScriptEmbedBraces start=+\${+ end=+}+ contained contains=@javaScriptEmbededExpr
+
   " add a javaScriptBlock group for build-in syntax
-  syntax region javaScriptBlockBuildIn
-        \ contained
+  syntax region javaScriptBlock
         \ matchgroup=javaScriptBraces
         \ start="{"
         \ end="}"
+        \ contained
         \ extend
-        \ contains=javaScriptBlockBuildIn,@javaScriptEmbededExpr,javaScript.*
+        \ contains=javaScriptBlock,@javaScriptEmbededExpr,javaScript.*
         \ fold
-  syntax cluster javaScriptEmbededExpr add=jsxRegion
 
-  " refine the template string syntax
-  syntax region javaScriptStringT start=+`+ skip=+\\\\\|\\`+ end=+`+ contains=javaScriptSpecial,javaScriptEmbed,@htmlPreproc extend
-  syntax region javaScriptEmbed matchgroup=javaScriptEmbedBraces start=+\${+ end=+}+ contained contains=@javaScriptEmbededExpr,javaScript.*
+  syntax cluster javaScriptEmbededExpr add=jsxRegion,javaScript.*
 endif
 
 runtime syntax/jsx_pretty.vim

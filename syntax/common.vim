@@ -155,6 +155,7 @@ if exists("did_typescript_hilink")
   HiLink typescriptTypeReference         Identifier
   HiLink typescriptConstructor           Keyword
   HiLink typescriptDecorator             Special
+  HiLink typescriptAssertType            Keyword
 
   highlight link typeScript             NONE
 

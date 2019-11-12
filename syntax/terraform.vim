@@ -15,9 +15,6 @@ endif
 
 syn case match
 
-syn keyword terraSection connection output provider variable data terraform locals
-syn keyword terraValueBool true false on off yes no
-
 """ data
 syn keyword terraDataTypeBI
           \ aci_access_port_block
@@ -4443,39 +4440,38 @@ syn keyword terraResourceTypeBI
           \ yandex_vpc_subnet
 """ end resources
 
+syn keyword terraSection connection output variable terraform locals
+syn keyword terraValueBool true false on off yes no
+
 syn keyword terraTodo         contained TODO FIXME XXX BUG
 syn cluster terraCommentGroup contains=terraTodo
 syn region  terraComment      start="/\*" end="\*/" contains=@terraCommentGroup,@Spell
 syn region  terraComment      start="#" end="$" contains=@terraCommentGroup,@Spell
 syn region  terraComment      start="//" end="$" contains=@terraCommentGroup,@Spell
 
-syn match  terraResource        /\<resource\>/ nextgroup=terraResourceTypeStr skipwhite
-syn region terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceTypeBI
-                              \ nextgroup=terraResourceName skipwhite
-syn region terraResourceName    start=/"/ end=/"/
-                              \ nextgroup=terraResourceBlock skipwhite
+syn keyword terraResource        resource nextgroup=terraResourceTypeStr skipwhite
+syn region  terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceTypeBI nextgroup=terraResourceName skipwhite
+syn region  terraResourceName    start=/"/ end=/"/ nextgroup=terraResourceBlock skipwhite
 
-syn match  terraData        /\<data\>/ nextgroup=terraDataTypeStr skipwhite
-syn region terraDataTypeStr start=/"/ end=/"/ contains=terraDataTypeBI
-                              \ nextgroup=terraDataName skipwhite
-syn region terraDataName    start=/"/ end=/"/
-                              \ nextgroup=terraDataBlock skipwhite
+syn keyword terraData        data nextgroup=terraDataTypeStr skipwhite
+syn region  terraDataTypeStr start=/"/ end=/"/ contains=terraDataTypeBI nextgroup=terraDataName skipwhite
+syn region  terraDataName    start=/"/ end=/"/ nextgroup=terraDataBlock skipwhite
 
 """ provider
-syn match  terraProvider      /\<provider\>/ nextgroup=terraProviderName skipwhite
-syn region terraProviderName  start=/"/ end=/"/ nextgroup=terraProviderBlock skipwhite
+syn keyword terraProvider     provider nextgroup=terraProviderName skipwhite
+syn region  terraProviderName start=/"/ end=/"/ nextgroup=terraProviderBlock skipwhite
 
 """ provisioner
-syn match  terraProvisioner     /\<provisioner\>/ nextgroup=terraProvisionerName skipwhite
-syn region terraProvisionerName start=/"/ end=/"/ nextgroup=terraProvisionerBlock skipwhite
+syn keyword terraProvisioner     provisioner nextgroup=terraProvisionerName skipwhite
+syn region  terraProvisionerName start=/"/ end=/"/ nextgroup=terraProvisionerBlock skipwhite
 
 """ module
-syn match  terraModule     /\<module\>/ nextgroup=terraModuleName skipwhite
-syn region terraModuleName start=/"/ end=/"/ nextgroup=terraModuleBlock skipwhite
+syn keyword terraModule     module nextgroup=terraModuleName skipwhite
+syn region  terraModuleName start=/"/ end=/"/ nextgroup=terraModuleBlock skipwhite
 
 """ dynamic (HCL2)
-syn match  terraDynamic     /\<dynamic\>/ nextgroup=terraDynamicName skipwhite
-syn region terraDynamicName start=/"/ end=/"/ nextgroup=terraDynamicBlock skipwhite
+syn keyword terraDynamic     dynamic nextgroup=terraDynamicName skipwhite
+syn region  terraDynamicName start=/"/ end=/"/ nextgroup=terraDynamicBlock skipwhite
 
 """ misc.
 syn match terraValueDec      "\<[0-9]\+\([kKmMgG]b\?\)\?\>"
