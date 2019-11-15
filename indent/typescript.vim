@@ -67,8 +67,8 @@ let s:var_stmt = '^\s*var'
 let s:comma_first = '^\s*,'
 let s:comma_last = ',\s*$'
 
-let s:ternary = '^\s\+[?|:]'
-let s:ternary_q = '^\s\+?'
+let s:ternary = '^\s\+[?:]'
+let s:ternary_q = '^\s\+?[.?]\@!'
 
 " 2. Auxiliary Functions {{{1
 " ======================

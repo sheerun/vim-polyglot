@@ -37,6 +37,19 @@ if exists('g:cpp_member_variable_highlight') && g:cpp_member_variable_highlight
 endif
 
 " -----------------------------------------------------------------------------
+"  Highlight POSIX functions.
+" -----------------------------------------------------------------------------
+if exists('g:cpp_posix_standard') && g:cpp_posix_standard
+	syn keyword cPOSIXFunction 	socket accept bind connect getsockname
+	syn keyword cPOSIXFunction 	listen recv recvfrom recvmsg
+	syn keyword cPOSIXFunction 	send sendto sendmsg setsockopt socketpair
+	syn keyword cPOSIXFunction 	htonl htons ntohl ntohs
+	syn keyword cPOSIXFunction 	inet_ntop inet_pton getaddrinfo
+	syn keyword cPOSIXFunction 	poll select pselect
+	hi def link cPOSIXFunction Function
+endif
+
+" -----------------------------------------------------------------------------
 "  Source: aftersyntaxc.vim
 " -----------------------------------------------------------------------------
 

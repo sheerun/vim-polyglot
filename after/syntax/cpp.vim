@@ -633,21 +633,19 @@ syntax keyword cppSTLios unitbuf
 syntax keyword cppSTLios uppercase
 "syntax keyword cppSTLios ws
 syntax keyword cppSTLiterator back_insert_iterator
-syntax keyword cppSTLiterator bidirectional_iterator
 syntax keyword cppSTLiterator const_iterator
 syntax keyword cppSTLiterator const_reverse_iterator
-syntax keyword cppSTLiterator forward_iterator
 syntax keyword cppSTLiterator front_insert_iterator
-syntax keyword cppSTLiterator input_iterator
 syntax keyword cppSTLiterator insert_iterator
 syntax keyword cppSTLiterator istreambuf_iterator
 syntax keyword cppSTLiterator istream_iterator
+syntax keyword cppSTLiterator ostreambuf_iterator
+syntax keyword cppSTLiterator ostream_iterator
 syntax keyword cppSTLiterator iterator
 syntax keyword cppSTLiterator ostream_iterator
 syntax keyword cppSTLiterator output_iterator
-syntax keyword cppSTLiterator random_access_iterator
 syntax keyword cppSTLiterator raw_storage_iterator
-syntax keyword cppSTLiterator reverse_bidirectional_iterator
+syntax keyword cppSTLiterator move_iterator
 syntax keyword cppSTLiterator reverse_iterator
 syntax keyword cppSTLiterator_tag bidirectional_iterator_tag
 syntax keyword cppSTLiterator_tag forward_iterator_tag
@@ -1593,6 +1591,8 @@ endif " C++14
 
 
 if !exists("cpp_no_cpp17")
+    syntax keyword cppSTLnamespace pmr
+
     " algorithm
     syntax keyword cppSTLfunction clamp
     syntax keyword cppSTLfunction for_each_n
@@ -1985,87 +1985,278 @@ endif " C++17
 
 
 if !exists("cpp_no_cpp20")
-    " type_traits
-    syntax keyword cppSTLtype remove_cvref remove_cvref_t
     syntax keyword cppType char8_t
     syntax keyword cppStatement co_yield co_return co_await
     syntax keyword cppStorageClass consteval
+    syntax keyword cppSTLnamespace ranges
+
+    " algorithm
+    syntax keyword cppSTLfunction shift_left
+    syntax keyword cppSTLfunction shift_right
+    syntax keyword cppSTLfunction lexicographical_compare_three_way
+
+    " bit
+    syntax keyword cppSTLcast bit_cast
+    syntax keyword cppSTLfunction ispow2
+    syntax keyword cppSTLfunction ceil2
+    syntax keyword cppSTLfunction floor2
+    syntax keyword cppSTLfunction log2p1
+    syntax keyword cppSTLfunction rotl
+    syntax keyword cppSTLfunction rotr
+    syntax keyword cppSTLfunction countl_zero
+    syntax keyword cppSTLfunction countl_one
+    syntax keyword cppSTLfunction countr_zero
+    syntax keyword cppSTLfunction countr_one
+    syntax keyword cppSTLfunction popcount
+    syntax keyword cppSTLtype endian
+
+    " compare
+    syntax keyword cppSTLtype weak_equality
+    syntax keyword cppSTLtype strong_equality
+    syntax keyword cppSTLtype partial_ordering
+    syntax keyword cppSTLtype weak_ordering
+    syntax keyword cppSTLtype strong_ordering
+    syntax keyword cppSTLtype common_comparison_category
+    syntax keyword cppSTLtype compare_three_way_result
+    syntax keyword cppSTLtype compare_three_way
+    syntax keyword cppSTLtype strong_order
+    syntax keyword cppSTLtype weak_order
+    syntax keyword cppSTLtype parital_order
+    syntax keyword cppSTLtype compare_strong_order_fallback
+    syntax keyword cppSTLtype compare_weak_order_fallback
+    syntax keyword cppSTLtype compare_parital_order_fallback
+    syntax keyword cppSTLfunction is_eq
+    syntax keyword cppSTLfunction is_neq
+    syntax keyword cppSTLfunction is_lt
+    syntax keyword cppSTLfunction is_lteq
+    syntax keyword cppSTLfunction is_gt
+    syntax keyword cppSTLfunction is_gteq
+
+    " format
+    syntax keyword cppSTLtype formatter
+    syntax keyword cppSTLtype basic_format_parse_context
+    syntax keyword cppSTLtype format_parse_context
+    syntax keyword cppSTLtype wformat_parse_context
+    syntax keyword cppSTLtype basic_format_context
+    syntax keyword cppSTLtype format_context
+    syntax keyword cppSTLtype wformat_context
+    syntax keyword cppSTLtype basic_format_arg
+    syntax keyword cppSTLtype basic_format_args
+    syntax keyword cppSTLtype format_args
+    syntax keyword cppSTLtype wformat_args
+    syntax keyword cppSTLtype format_args_t
+    syntax keyword cppSTLtype format_error
+    syntax keyword cppSTLfuntion format
+    syntax keyword cppSTLfuntion format_to
+    syntax keyword cppSTLfuntion format_to_n
+    syntax keyword cppSTLfuntion formatted_size
+    syntax keyword cppSTLfuntion vformat
+    syntax keyword cppSTLfuntion vformat_to
+    syntax keyword cppSTLfuntion visit_format_arg
+    syntax keyword cppSTLfuntion make_format_args
+    syntax keyword cppSTLfuntion make_wformat_args
+
+    " iterator
+    syntax keyword cppSTLtype default_sentinel_t unreachable_sentinel_t
+    syntax keyword cppSTLiterator common_iterator
+    syntax keyword cppSTLiterator counted_iterator
+    syntax keyword cppSTLiterator_tag contiguous_iterator_tag
+
+    " memory
+    syntax keyword cppSTLfunction to_address
+    syntax keyword cppSTLfunction assume_aligned
+    syntax keyword cppSTLfunction make_unique_default_init
+    syntax keyword cppSTLfunction allocate_shared_default_init
+
+    " source_location
+    syntax keyword cppSTLtype source_location
+
+    " span
+    syntax keyword cppSTLtype span
+    syntax keyword cppSTLfunction as_bytes
+    syntax keyword cppSTLfunction as_writable_bytes
+    syntax keyword cppSTLconstant dynamic_extent
+
+    " syncstream
+    syntax keyword cppSTLtype basic_syncbuf
+    syntax keyword cppSTLtype basic_osyncstream
+    syntax keyword cppSTLtype syncbuf
+    syntax keyword cppSTLtype wsyncbuf
+    syntax keyword cppSTLtype osyncstream
+    syntax keyword cppSTLtype wosyncstream
+
+    " type_traits
+    syntax keyword cppSTLtype remove_cvref remove_cvref_t
+    syntax keyword cppSTLtype common_reference common_reference_t
+    syntax keyword cppSTLfunction is_constant_evaluated
+    syntax keyword cppSTLfunction is_pointer_interconvertible
+    syntax keyword cppSTLfunction is_corresponding_member
+    syntax keyword cppSTLtype is_nothrow_convertible
+    syntax keyword cppSTLbool is_nothrow_convertible_v
+    syntax keyword cppSTLtype is_layout_compatible
+    syntax keyword cppSTLbool is_layout_compatible_v
+    syntax keyword cppSTLtype is_bounded_array
+    syntax keyword cppSTLbool is_bounded_array_v
+    syntax keyword cppSTLtype is_unbounded_array
+    syntax keyword cppSTLbool is_unbounded_array_v
+    syntax keyword cppSTLtype is_pointer_interconvertible_base_of
+    syntax keyword cppSTLbool is_pointer_interconvertible_base_of_v
+    syntax keyword cppSTLtype has_strong_structural_equality
+    syntax keyword cppSTLbool has_strong_structural_equality_v
+
+    " version
+    " TODO
 endif
 
 
-if exists('g:cpp_concepts_highlight') && g:cpp_concepts_highlight
+if exists('g:cpp_concepts_highlight')
     syntax keyword cppStatement concept
     syntax keyword cppStorageClass requires
-    syntax keyword cppSTLtype DefaultConstructible
-    syntax keyword cppSTLtype MoveConstructible
-    syntax keyword cppSTLtype CopyConstructible
-    syntax keyword cppSTLtype MoveAssignable
-    syntax keyword cppSTLtype CopyAssignable
-    syntax keyword cppSTLtype Destructible
-    syntax keyword cppSTLtype TriviallyCopyable
-    syntax keyword cppSTLtype TrivialType
-    syntax keyword cppSTLtype StandardLayoutType
-    syntax keyword cppSTLtype PODType
-    syntax keyword cppSTLtype EqualityComparable
-    syntax keyword cppSTLtype LessThanComparable
-    syntax keyword cppSTLtype Swappable
-    syntax keyword cppSTLtype ValueSwappable
-    syntax keyword cppSTLtype NullablePointer
-    syntax keyword cppSTLtype Hash
-    syntax keyword cppSTLtype Allocator
-    syntax keyword cppSTLtype FunctionObject
-    syntax keyword cppSTLtype Callable
-    syntax keyword cppSTLtype Predicate
-    syntax keyword cppSTLtype BinaryPredicate
-    syntax keyword cppSTLtype Compare
-    syntax keyword cppSTLtype Container
-    syntax keyword cppSTLtype ReversibleContainer
-    syntax keyword cppSTLtype AllocatorAwareContainer
-    syntax keyword cppSTLtype SequenceContainer
-    syntax keyword cppSTLtype ContiguousContainer
-    syntax keyword cppSTLtype AssociativeContainer
-    syntax keyword cppSTLtype UnorderedAssociativeContainer
-    syntax keyword cppSTLtype DefaultInsertable
-    syntax keyword cppSTLtype CopyInsertable
-    syntax keyword cppSTLtype CopyInsertable
-    syntax keyword cppSTLtype MoveInsertable
-    syntax keyword cppSTLtype EmplaceConstructible
-    syntax keyword cppSTLtype Erasable
-    syntax keyword cppSTLtype Iterator
-    syntax keyword cppSTLtype InputIterator
-    syntax keyword cppSTLtype OutputIterator
-    syntax keyword cppSTLtype ForwardIterator
-    syntax keyword cppSTLtype BidirectionalIterator
-    syntax keyword cppSTLtype RandomAccessIterator
-    syntax keyword cppSTLtype ContiguousIterator
-    syntax keyword cppSTLtype UnformattedInputFunction
-    syntax keyword cppSTLtype FormattedInputFunction
-    syntax keyword cppSTLtype UnformattedOutputFunction
-    syntax keyword cppSTLtype FormattedOutputFunction
-    syntax keyword cppSTLtype SeedSequence
-    syntax keyword cppSTLtype UniformRandomBitGenerator
-    syntax keyword cppSTLtype RandomNumberEngine
-    syntax keyword cppSTLtype RandomNumberEngineAdaptor
-    syntax keyword cppSTLtype RandomNumberDistribution
-    syntax keyword cppSTLtype BasicLockable
-    syntax keyword cppSTLtype Lockable
-    syntax keyword cppSTLtype TimedLockable
-    syntax keyword cppSTLtype Mutex
-    syntax keyword cppSTLtype TimedMutex
-    syntax keyword cppSTLtype SharedMutex
-    syntax keyword cppSTLtype SharedTimedMutex
-    syntax keyword cppSTLtype UnaryTypeTrait
-    syntax keyword cppSTLtype BinaryTypeTrait
-    syntax keyword cppSTLtype TransformationTrait
-    syntax keyword cppSTLtype Clock
-    syntax keyword cppSTLtype TrivialClock
-    syntax keyword cppSTLtype CharTraits
-    syntax keyword cppSTLtype pos_type
-    syntax keyword cppSTLtype off_type
-    syntax keyword cppSTLtype BitmaskType
-    syntax keyword cppSTLtype NumericType
-    syntax keyword cppSTLtype RegexTraits
-    syntax keyword cppSTLtype LiteralType
+
+    if g:cpp_concepts_highlight == 1
+        syntax keyword cppSTLconcept DefaultConstructible
+        syntax keyword cppSTLconcept MoveConstructible
+        syntax keyword cppSTLconcept CopyConstructible
+        syntax keyword cppSTLconcept MoveAssignable
+        syntax keyword cppSTLconcept CopyAssignable
+        syntax keyword cppSTLconcept Destructible
+        syntax keyword cppSTLconcept TriviallyCopyable
+        syntax keyword cppSTLconcept TrivialType
+        syntax keyword cppSTLconcept StandardLayoutType
+        syntax keyword cppSTLconcept PODType
+        syntax keyword cppSTLconcept EqualityComparable
+        syntax keyword cppSTLconcept LessThanComparable
+        syntax keyword cppSTLconcept Swappable
+        syntax keyword cppSTLconcept ValueSwappable
+        syntax keyword cppSTLconcept NullablePointer
+        syntax keyword cppSTLconcept Hash
+        syntax keyword cppSTLconcept Allocator
+        syntax keyword cppSTLconcept FunctionObject
+        syntax keyword cppSTLconcept Callable
+        syntax keyword cppSTLconcept Predicate
+        syntax keyword cppSTLconcept BinaryPredicate
+        syntax keyword cppSTLconcept Compare
+        syntax keyword cppSTLconcept Container
+        syntax keyword cppSTLconcept ReversibleContainer
+        syntax keyword cppSTLconcept AllocatorAwareContainer
+        syntax keyword cppSTLconcept SequenceContainer
+        syntax keyword cppSTLconcept ContiguousContainer
+        syntax keyword cppSTLconcept AssociativeContainer
+        syntax keyword cppSTLconcept UnorderedAssociativeContainer
+        syntax keyword cppSTLconcept DefaultInsertable
+        syntax keyword cppSTLconcept CopyInsertable
+        syntax keyword cppSTLconcept CopyInsertable
+        syntax keyword cppSTLconcept MoveInsertable
+        syntax keyword cppSTLconcept EmplaceConstructible
+        syntax keyword cppSTLconcept Erasable
+        syntax keyword cppSTLconcept Iterator
+        syntax keyword cppSTLconcept InputIterator
+        syntax keyword cppSTLconcept OutputIterator
+        syntax keyword cppSTLconcept ForwardIterator
+        syntax keyword cppSTLconcept BidirectionalIterator
+        syntax keyword cppSTLconcept RandomAccessIterator
+        syntax keyword cppSTLconcept ContiguousIterator
+        syntax keyword cppSTLconcept UnformattedInputFunction
+        syntax keyword cppSTLconcept FormattedInputFunction
+        syntax keyword cppSTLconcept UnformattedOutputFunction
+        syntax keyword cppSTLconcept FormattedOutputFunction
+        syntax keyword cppSTLconcept SeedSequence
+        syntax keyword cppSTLconcept UniformRandomBitGenerator
+        syntax keyword cppSTLconcept RandomNumberEngine
+        syntax keyword cppSTLconcept RandomNumberEngineAdaptor
+        syntax keyword cppSTLconcept RandomNumberDistribution
+        syntax keyword cppSTLconcept BasicLockable
+        syntax keyword cppSTLconcept Lockable
+        syntax keyword cppSTLconcept TimedLockable
+        syntax keyword cppSTLconcept Mutex
+        syntax keyword cppSTLconcept TimedMutex
+        syntax keyword cppSTLconcept SharedMutex
+        syntax keyword cppSTLconcept SharedTimedMutex
+        syntax keyword cppSTLconcept UnaryTypeTrait
+        syntax keyword cppSTLconcept BinaryTypeTrait
+        syntax keyword cppSTLconcept TransformationTrait
+        syntax keyword cppSTLconcept Clock
+        syntax keyword cppSTLconcept TrivialClock
+        syntax keyword cppSTLconcept CharTraits
+        syntax keyword cppSTLconcept pos_type
+        syntax keyword cppSTLconcept off_type
+        syntax keyword cppSTLconcept BitmaskType
+        syntax keyword cppSTLconcept NumericType
+        syntax keyword cppSTLconcept RegexTraits
+        syntax keyword cppSTLconcept LiteralType
+  elseif g:cpp_concepts_highlight == 2
+        syntax keyword cppSTLconcept same_as
+        syntax keyword cppSTLconcept derived_from
+        syntax keyword cppSTLconcept convertible_to
+        syntax keyword cppSTLconcept common_reference_with
+        syntax keyword cppSTLconcept common_with
+        syntax keyword cppSTLconcept integral
+        syntax keyword cppSTLconcept signed_integral
+        syntax keyword cppSTLconcept unsigned_integral
+        syntax keyword cppSTLconcept assignable_from
+        syntax keyword cppSTLconcept swappable
+        syntax keyword cppSTLconcept swappable_with
+        syntax keyword cppSTLconcept destructible
+        syntax keyword cppSTLconcept constructible_from
+        syntax keyword cppSTLconcept default_constructible
+        syntax keyword cppSTLconcept move_constructible
+        syntax keyword cppSTLconcept copy_constructible
+        syntax keyword cppSTLconcept boolean
+        syntax keyword cppSTLconcept equality_comparable
+        syntax keyword cppSTLconcept equality_comparable_with
+        syntax keyword cppSTLconcept totally_ordered
+        syntax keyword cppSTLconcept totally_ordered_with
+        syntax keyword cppSTLconcept movable
+        syntax keyword cppSTLconcept copyable
+        syntax keyword cppSTLconcept semiregular
+        syntax keyword cppSTLconcept regular
+        syntax keyword cppSTLconcept invocable
+        syntax keyword cppSTLconcept regular_invocable
+        syntax keyword cppSTLconcept predicate
+        syntax keyword cppSTLconcept relation
+        syntax keyword cppSTLconcept strict_weak_order
+        syntax keyword cppSTLconcept readable
+        syntax keyword cppSTLconcept writable
+        syntax keyword cppSTLconcept weakly_incrementable
+        syntax keyword cppSTLconcept incrementable
+        syntax keyword cppSTLconcept input_or_output_iterator
+        syntax keyword cppSTLconcept sentinal_for
+        syntax keyword cppSTLconcept sized_sentinal_for
+        syntax keyword cppSTLconcept input_iterator
+        syntax keyword cppSTLconcept output_iterator
+        syntax keyword cppSTLconcept forward_iterator
+        syntax keyword cppSTLconcept bidirectional_iterator
+        syntax keyword cppSTLconcept random_access_iterator
+        syntax keyword cppSTLconcept input_iterator
+        syntax keyword cppSTLconcept output_iterator
+        syntax keyword cppSTLconcept bidirectional_iterator
+        syntax keyword cppSTLconcept random_access_iterator
+        syntax keyword cppSTLconcept contiguous_iterator
+        syntax keyword cppSTLconcept indirectly_unary_invocable
+        syntax keyword cppSTLconcept indirectly_regular_unary_invocable
+        syntax keyword cppSTLconcept indirect_unary_predicate
+        syntax keyword cppSTLconcept indirect_relation
+        syntax keyword cppSTLconcept indirect_strict_weak_order
+        syntax keyword cppSTLconcept indirectly_movable
+        syntax keyword cppSTLconcept indirectly_movable_storable
+        syntax keyword cppSTLconcept indirectly_copyable
+        syntax keyword cppSTLconcept indirectly_copyable_storable
+        syntax keyword cppSTLconcept indirectly_swappable
+        syntax keyword cppSTLconcept indirectly_comparable
+        syntax keyword cppSTLconcept permutable
+        syntax keyword cppSTLconcept mergeable
+        syntax keyword cppSTLconcept sortable
+        syntax keyword cppSTLconcept range
+        syntax keyword cppSTLconcept sized_range
+        syntax keyword cppSTLconcept output_range
+        syntax keyword cppSTLconcept input_range
+        syntax keyword cppSTLconcept bidirectional_range
+        syntax keyword cppSTLconcept random_access_range
+        syntax keyword cppSTLconcept contiguous_range
+        syntax keyword cppSTLconcept common_range
+        syntax keyword cppSTLconcept viewable_range
+        syntax keyword cppSTLconcept uniform_random_bit_generator
+  endif
 endif " C++ concepts
 
 
@@ -2095,6 +2286,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppSTLiterator     Typedef
   HiLink cppSTLiterator_tag Typedef
   HiLink cppSTLenum         Typedef
+  HiLink cppSTLconcept      Typedef
   HiLink cppSTLios          Function
   HiLink cppSTLcast         Statement " be consistent with official syntax
   HiLink cppRawString       String

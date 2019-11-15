@@ -34,7 +34,7 @@ syn match gitDiffRemoved "\[-.*-\]" contained containedin=gitDiff
 syn match  gitKeyword /^\%(object\|type\|tag\|commit\|tree\|parent\|encoding\)\>/ contained containedin=gitHead nextgroup=gitHash,gitType skipwhite
 syn match  gitKeyword /^\%(tag\>\|ref:\)/ contained containedin=gitHead nextgroup=gitReference skipwhite
 syn match  gitKeyword /^Merge:/  contained containedin=gitHead nextgroup=gitHashAbbrev skipwhite
-syn match  gitMode    /^\d\{6\}/ contained containedin=gitHead nextgroup=gitType,gitHash skipwhite
+syn match  gitMode    /^\d\{6\}\>/ contained containedin=gitHead nextgroup=gitType,gitHash skipwhite
 syn match  gitIdentityKeyword /^\%(author\|committer\|tagger\)\>/ contained containedin=gitHead nextgroup=gitIdentity skipwhite
 syn match  gitIdentityHeader /^\%(Author\|Commit\|Tagger\):/ contained containedin=gitHead nextgroup=gitIdentity skipwhite
 syn match  gitDateHeader /^\%(AuthorDate\|CommitDate\|Date\):/ contained containedin=gitHead nextgroup=gitDate skipwhite
