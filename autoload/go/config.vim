@@ -172,6 +172,10 @@ function! go#config#EchoCommandInfo() abort
   return get(g:, 'go_echo_command_info', 1)
 endfunction
 
+function! go#config#GoplsEnabled() abort
+  return get(g:, 'go_gopls_enabled', 1)
+endfunction
+
 function! go#config#DocUrl() abort
   let godoc_url = get(g:, 'go_doc_url', 'https://godoc.org')
   if godoc_url isnot 'https://godoc.org'
