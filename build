@@ -233,7 +233,7 @@ PACKS="
   log:MTDL9/vim-log-highlighting
   lua:tbastos/vim-lua
   mako:sophacles/vim-bundle-mako
-  markdown:plasticboy/vim-markdown:_SYNTAX
+  markdown:plasticboy/vim-markdown
   mathematica:voldikss/vim-mma
   mdx:jxnblk/vim-mdx-js
   meson:mesonbuild/meson:_ALL:/data/syntax-highlighting/vim/

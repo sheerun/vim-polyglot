@@ -781,7 +781,7 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'markdown') == -1
   augroup filetypedetect
-  " markdown, from markdown.vim in plasticboy/vim-markdown:_SYNTAX
+  " markdown, from markdown.vim in plasticboy/vim-markdown
 if !has('patch-7.4.480')
     " Before this patch, vim used modula2 for .md.
     au! filetypedetect BufRead,BufNewFile *.md
