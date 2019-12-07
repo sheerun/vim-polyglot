@@ -2,8 +2,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') ==
 
 syntax region  typescriptObjectLiteral         matchgroup=typescriptBraces
   \ start=/{/ end=/}/
-  \ contains=@typescriptComments,typescriptObjectLabel,typescriptStringProperty,typescriptComputedPropertyName
+  \ contains=@typescriptComments,typescriptObjectLabel,typescriptStringProperty,typescriptComputedPropertyName,typescriptObjectAsyncKeyword
   \ fold contained
+
+syntax keyword typescriptObjectAsyncKeyword async contained
 
 syntax match   typescriptObjectLabel  contained /\k\+\_s*/
   \ nextgroup=typescriptObjectColon,@typescriptCallImpl

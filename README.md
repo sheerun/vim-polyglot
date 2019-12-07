@@ -178,7 +178,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [tptp](https://github.com/c-cube/vim-tptp) (syntax)
 - [twig](https://github.com/lumiliet/vim-twig) (syntax, indent, ftplugin)
 - [typescript](https://github.com/HerringtonDarkholme/yats.vim) (syntax, indent, compiler, ftplugin)
-- [vala](https://github.com/arrufat/vala.vim) (syntax, indent)
+- [vala](https://github.com/arrufat/vala.vim) (syntax, indent, ftplugin)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [vcl](https://github.com/smerrill/vcl-vim-plugin) (syntax)
 - [vifm](https://github.com/vifm/vifm.vim) (syntax, autoload, ftplugin)

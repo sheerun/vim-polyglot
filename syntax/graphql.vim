@@ -35,7 +35,7 @@ syn match graphqlDirective  "\<@\h\w*\>"   display
 syn match graphqlVariable   "\<\$\h\w*\>"  display
 syn match graphqlName       "\<\h\w*\>"    display
 syn match graphqlType       "\<_*\u\w*\>"  display
-syn match graphqlConstant   "\<[A-Z_]\+\>" display
+syn match graphqlConstant   "\<[_A-Z][_A-Z0-9]*\>" display
 
 syn keyword graphqlMetaFields __schema __type __typename
 

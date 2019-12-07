@@ -4830,10 +4830,9 @@ syn keyword terraSection connection output variable terraform locals
 syn keyword terraValueBool true false on off yes no
 
 syn keyword terraTodo         contained TODO FIXME XXX BUG
-syn cluster terraCommentGroup contains=terraTodo
-syn region  terraComment      start="/\*" end="\*/" contains=@terraCommentGroup,@Spell
-syn region  terraComment      start="#" end="$" contains=@terraCommentGroup,@Spell
-syn region  terraComment      start="//" end="$" contains=@terraCommentGroup,@Spell
+syn region  terraComment      start="/\*" end="\*/" contains=terraTodo,@Spell
+syn region  terraComment      start="#" end="$" contains=terraTodo,@Spell
+syn region  terraComment      start="//" end="$" contains=terraTodo,@Spell
 
 syn keyword terraResource        resource nextgroup=terraResourceTypeStr skipwhite
 syn region  terraResourceTypeStr start=/"/ end=/"/ contains=terraResourceTypeBI nextgroup=terraResourceName skipwhite
@@ -4867,13 +4866,11 @@ syn match terraBraces        "[\[\]]"
 """ skip \" in strings.
 """ we may also want to pass \\" into a function to escape quotes.
 syn region terraValueString   start=/"/ skip=/\\\+"/ end=/"/ contains=terraStringInterp
-syn region terraStringInterp  matchgroup=terraBrackets start=/\${/ end=/}/ contains=terraValueFunction,terraValueVarSubscript,terraStringInterp contained
+syn region terraStringInterp  matchgroup=terraBraces start=/\${/ end=/}/ contained contains=ALL
 syn region terraHereDocText   start=/<<-\?\z([a-z0-9A-Z]\+\)/ end=/^\s*\z1/ contains=terraStringInterp
+
 "" TODO match keywords here, not a-z+
-syn region terraValueFunction matchgroup=terraBrackets start=/[a-z]\+(/ end=/)/ contains=terraValueString,terraValueFunction,terraValueVarSubscript contained
-" User variables or module outputs can be lists or maps, and accessed with
-" var.map["foo"]
-syn region terraValueVarSubscript start=/\(\<var\|\<module\)\.[a-z0-9_-]\+\[/ end=/\]/ contains=terraValueString,terraValueFunction,terraValueVarSubscript contained
+syn match terraValueFunction "[a-z]\+(\@="
 
 """ HCL2
 syn keyword terraContent        content
@@ -4892,7 +4889,6 @@ syn region terraBlock matchgroup=terraBraces start="{" end="}" fold transparent
 
 hi def link terraComment           Comment
 hi def link terraTodo              Todo
-hi def link terraBrackets          Operator
 hi def link terraProvider          Structure
 hi def link terraBraces            Delimiter
 hi def link terraProviderName      String
@@ -4905,7 +4901,6 @@ hi def link terraDataName          String
 hi def link terraDataTypeBI        Tag
 hi def link terraDataTypeStr       String
 hi def link terraSection           Structure
-hi def link terraStringInterp      Identifier
 hi def link terraValueBool         Boolean
 hi def link terraValueDec          Number
 hi def link terraValueHexaDec      Number
@@ -4915,8 +4910,7 @@ hi def link terraProvisioner       Structure
 hi def link terraProvisionerName   String
 hi def link terraModule            Structure
 hi def link terraModuleName        String
-hi def link terraValueFunction     Identifier
-hi def link terraValueVarSubscript Identifier
+hi def link terraValueFunction     Function
 hi def link terraDynamic           Structure
 hi def link terraDynamicName       String
 hi def link terraContent           Structure

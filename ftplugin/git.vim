@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Vim filetype plugin
 " Language:	generic git output
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
-" Last Change:	2013 May 30
+" Last Change:	2016 Aug 29
 
 " Only do this when not done yet for this buffer
 if (exists("b:did_ftplugin"))

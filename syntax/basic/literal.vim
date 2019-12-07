@@ -16,7 +16,7 @@ syntax region  typescriptString
   \ contains=typescriptSpecial,@Spell
   \ extend
 
-syntax match   typescriptSpecial            contained "\v\\%(x\x\x|u%(\x{4}|\{\x{4,5}})|c\u|.)"
+syntax match   typescriptSpecial            contained "\v\\%(x\x\x|u%(\x{4}|\{\x{1,6}})|c\u|.)"
 
 " From vim runtime
 " <https://github.com/vim/vim/blob/master/runtime/syntax/javascript.vim#L48>
@@ -24,7 +24,7 @@ syntax region  typescriptRegexpString          start=+/[^/*]+me=e-1 skip=+\\\\\|
 
 syntax region  typescriptTemplate
   \ start=/`/  skip=/\\\\\|\\`\|\n/  end=/`\|$/
-  \ contains=typescriptTemplateSubstitution
+  \ contains=typescriptTemplateSubstitution,typescriptSpecial,@Spell
   \ nextgroup=@typescriptSymbols
   \ skipwhite skipempty
 

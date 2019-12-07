@@ -3,13 +3,17 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') ==
 " Types
 syntax match typescriptOptionalMark /?/ contained
 
+syntax cluster typescriptTypeParameterCluster contains=
+  \ typescriptTypeParameter,
+  \ typescriptGenericDefault
+
 syntax region typescriptTypeParameters matchgroup=typescriptTypeBrackets
   \ start=/</ end=/>/
-  \ contains=typescriptTypeParameter
+  \ contains=@typescriptTypeParameterCluster
   \ contained
 
 syntax match typescriptTypeParameter /\K\k*/
-  \ nextgroup=typescriptConstraint,typescriptGenericDefault
+  \ nextgroup=typescriptConstraint
   \ contained skipwhite skipnl
 
 syntax keyword typescriptConstraint extends

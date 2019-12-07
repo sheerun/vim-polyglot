@@ -30,6 +30,12 @@ endif
 " refine the typescript line comment
 syntax region typescriptLineComment start=+//+ end=/$/ contains=@Spell,typescriptCommentTodo,typescriptRef extend keepend
 
+for syntax_name in ['tsxRegion', 'tsxFragment']
+  if hlexists(syntax_name)
+    exe 'syntax clear ' . syntax_name
+  endif
+endfor
+
 if !hlexists('typescriptTypeCast')
   " add a typescriptBlock group for typescript
   syntax region typescriptBlock

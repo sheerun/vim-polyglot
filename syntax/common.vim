@@ -111,6 +111,7 @@ if exists("did_typescript_hilink")
   HiLink typescriptMethodAccessor       Operator
 
   HiLink typescriptAsyncFuncKeyword     Keyword
+  HiLink typescriptObjectAsyncKeyword   Keyword
   HiLink typescriptAsyncFor             Keyword
   HiLink typescriptFuncKeyword          Keyword
   HiLink typescriptAsyncFunc            Keyword

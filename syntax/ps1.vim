@@ -175,7 +175,7 @@ if version >= 508 || !exists("did_ps1_syn_inits")
 	HiLink ps1Comment Comment
 	HiLink ps1CommentTodo Todo
 	HiLink ps1CommentDoc Tag
-	HiLink ps1CDocParam Todo
+	HiLink ps1CDocParam Identifier
 	HiLink ps1Operator Operator
 	HiLink ps1Repeat Repeat
 	HiLink ps1RepeatAndCmdlet Repeat

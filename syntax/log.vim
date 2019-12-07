@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'log') == -1
 " Vim syntax file
 " Language:         Generic log file
 " Maintainer:       MTDL9 <https://github.com/MTDL9>
-" Latest Revision:  2019-04-16
+" Latest Revision:  2019-11-24
 
 if exists('b:current_syntax')
   finish
@@ -52,8 +52,8 @@ syn match logDate '\(\(Mon\|Tue\|Wed\|Thu\|Fri\|Sat\|Sun\) \)\?\(Jan\|Feb\|Mar\|
 syn match logTime '\d\{2}:\d\{2}:\d\{2}\(\.\d\{2,6}\)\?\(\s\?[-+]\d\{2,4}\|Z\)\?\>' nextgroup=logTimeZone,logSysColumns skipwhite
 
 " Follows logTime, matches UTC or PDT 2019 or 2019 EDT
-syn match logTimeZone '\(UTC\|PDT\|EDT\|GMT\|EST\|KST\)\( \d\{4}\)\?' contained
-syn match logTimeZone '\d\{4} \(UTC\|PDT\|EDT\|GMT\|EST\|KST\)' contained
+syn match logTimeZone '[A-Z]\{2,5}\>\( \d\{4}\)\?' contained
+syn match logTimeZone '\d\{4} [A-Z]\{2,5}\>' contained
 
 
 " Entities
@@ -66,7 +66,7 @@ syn match logIPV4       '\<\d\{1,3}\(\.\d\{1,3}\)\{3}\>'
 syn match logIPV6       '\<\x\{1,4}\(:\x\{1,4}\)\{7}\>'
 syn match logMacAddress '\<\x\{2}\(:\x\{2}\)\{5}'
 syn match logFilePath   '\<\w:\\[^\n|,; ()'"\]{}]\+'
-syn match logFilePath   '\/\w[^\n|,; ()'"\]{}]\+'
+syn match logFilePath   '[^a-zA-Z0-9"']\@<=\/\w[^\n|,; ()'"\]{}]\+'
 
 
 " Syslog Columns

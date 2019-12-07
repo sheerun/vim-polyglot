@@ -26,7 +26,7 @@ if exists('s:did_indent')
 endif
 
 setlocal indentexpr=GetJsxIndent()
-setlocal indentkeys=0{,0},0),0],0?,0\*,0\,,!^F,:,<:>,o,O,e,<>>,=*/
+setlocal indentkeys=0.,0{,0},0),0],0?,0\*,0\,,!^F,:,<:>,o,O,e,<>>,=*/
 
 function! GetJsxIndent()
   return jsx_pretty#indent#get(function('GetTypescriptIndent'))

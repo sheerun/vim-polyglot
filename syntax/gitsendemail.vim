@@ -4,7 +4,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Language:	git send-email message
 " Maintainer:	Tim Pope
 " Filenames:	.gitsendemail.*
-" Last Change:	2010 May 21
+" Last Change:	2016 Aug 29
 
 if exists("b:current_syntax")
   finish

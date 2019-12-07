@@ -29,7 +29,7 @@ endif
 
 syn case ignore
 
-syn cluster qmlExpr              contains=qmlStringD,qmlString,SqmlCharacter,qmlNumber,qmlObjectLiteralType,qmlBoolean,qmlType,qmlJsType,qmlNull,qmlGlobal,qmlFunction
+syn cluster qmlExpr              contains=qmlStringD,qmlStringS,SqmlCharacter,qmlNumber,qmlObjectLiteralType,qmlBoolean,qmlType,qmlJsType,qmlNull,qmlGlobal,qmlFunction
 syn keyword qmlCommentTodo       TODO FIXME XXX TBD contained
 syn match   qmlLineComment       "\/\/.*" contains=@Spell,qmlCommentTodo
 syn match   qmlCommentSkip       "^[ \t]*\*\($\|[ \t]\+\)"

@@ -1476,7 +1476,6 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
   augroup filetypedetect
   " vala, from vala.vim in arrufat/vala.vim
-autocmd BufRead *.vala,*.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala,*.vapi,*.valadoc setfiletype vala
   augroup end
 endif

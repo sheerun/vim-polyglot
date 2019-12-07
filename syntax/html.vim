@@ -33,7 +33,7 @@ syn keyword htmlTagName contained article aside audio canvas command
 syn keyword htmlTagName contained datalist details dialog embed figcaption figure footer
 syn keyword htmlTagName contained header hgroup keygen main mark meter menu menuitem nav output
 syn keyword htmlTagName contained progress ruby rt rp rb rtc section source summary time track video data
-syn keyword htmlTagName contained template content shadow
+syn keyword htmlTagName contained template content shadow slot
 syn keyword htmlTagName contained wbr bdi
 syn keyword htmlTagName contained picture
 
