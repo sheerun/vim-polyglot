@@ -1473,6 +1473,14 @@ autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'v') == -1
+  augroup filetypedetect
+  " v, from vlang.vim in ollykel/v-vim
+au BufNewFile,BufRead *.v set filetype=vlang
+au BufNewFile,BufRead *.v set syntax=vlang
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
   augroup filetypedetect
   " vala, from vala.vim in arrufat/vala.vim
