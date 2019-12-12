@@ -1,3 +1,15 @@
+if !exists('g:markdown_enable_spell_checking')
+  let g:markdown_enable_spell_checking = 0
+end
+
+if !exists('g:markdown_enable_input_abbreviations')
+  let g:markdown_enable_input_abbreviations = 0
+end
+
+if !exists('g:markdown_enable_mappings')
+  let g:markdown_enable_mappings = 0
+end
+
 " Enable jsx syntax by default
 if !exists('g:jsx_ext_required')
   let g:jsx_ext_required = 0
