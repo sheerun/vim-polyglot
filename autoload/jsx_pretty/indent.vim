@@ -70,9 +70,9 @@ function s:is_jsx_element(syntax)
   return a:syntax =~? 'jsxElement'
 endfunction
 
-" Whether the specified syntax group is the jsxEscapeJs
-function s:is_jsx_escape(syntax)
-  return a:syntax =~? 'jsxEscapeJs'
+" Whether the specified syntax group is the jsxExpressionBlock
+function s:is_jsx_expression(syntax)
+  return a:syntax =~? 'jsxExpressionBlock'
 endfunction
 
 " Whether the specified syntax group is the jsxBraces
@@ -191,7 +191,7 @@ endfunction
 " - jsxRegion
 " - jsxTaggedRegion
 " - jsxElement
-" - jsxEscapeJs
+" - jsxExpressionBlock
 " - Other
 function s:syntax_context(lnum)
   let start_col = s:start_col(a:lnum)
@@ -201,9 +201,9 @@ function s:syntax_context(lnum)
   let i = 0
 
   for syntax_name in reversed
-    " If the current line is jsxEscapeJs and not starts with jsxBraces
-    if s:is_jsx_escape(syntax_name)
-      return 'jsxEscapeJs'
+    " If the current line is jsxExpressionBlock and not starts with jsxBraces
+    if s:is_jsx_expression(syntax_name)
+      return 'jsxExpressionBlock'
     endif
 
     if s:is_jsx_region(syntax_name)
@@ -287,7 +287,7 @@ function! jsx_pretty#indent#get(js_indent)
     endif
 
     return s:jsx_indent_element(v:lnum)
-  elseif syntax_context == 'jsxEscapeJs'
+  elseif syntax_context == 'jsxExpressionBlock'
     let prev_lnum = s:prev_lnum(v:lnum)
     let prev_line = s:trim(getline(prev_lnum))
 

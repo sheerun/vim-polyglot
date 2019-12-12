@@ -122,7 +122,7 @@ fu! csv#Init(start, end, ...) "{{{3
     " Enable vartabs for tab delimited files
     if b:delimiter=="\t" && has("vartabs")&& !exists("b:csv_fixed_width_cols")
         if get(b:, 'col_width', []) ==# []
-            call csv#CalculateColumnWidth('')
+            call csv#CalculateColumnWidth(line('$'))
         endif
         let &l:vts=join(b:col_width, ',')
         let g:csv_no_conceal=1
@@ -574,7 +574,7 @@ fu! csv#MaxColumns(...) "{{{3
         return len(b:csv_fixed_width_cols)
     endif
 endfu
-fu! csv#ColWidth(colnr, ...) "{{{3
+fu! csv#ColWidth(colnr, row, silent) "{{{3
     " if a:1 is given, specifies the row, for which to calculate the width
     "
     " Return the width of a column
@@ -586,14 +586,13 @@ fu! csv#ColWidth(colnr, ...) "{{{3
     if !exists("b:csv_fixed_width_cols")
         if !exists("b:csv_list")
             " only check first 10000 lines, to be faster
-            let last = line('$')
-            if exists("a:1") && !empty(a:1)
-                let last = a:1
-            endif
+            let last = a:row
             if !get(b:, 'csv_arrange_use_all_rows', 0)
                 if last > 10000
                     let last = 10000
-                    call csv#Warn('File too large, only checking the first 10000 rows for the width')
+                    if !a:silent
+                        call csv#Warn('File too large, only checking the first 10000 rows for the width')
+                    endif
                 endif
             endif
             let b:csv_list=getline(skipfirst+1,last)
@@ -750,7 +749,7 @@ fu! csv#UnArrangeCol(match) "{{{3
     " Strip leading white space, also trims empty recordcsv#
     return substitute(a:match, '\%(^ \+\)\|\%( \+\ze'.b:delimiter. '\?$\)', '', 'g')
 endfu
-fu! csv#CalculateColumnWidth(row) "{{{3
+fu! csv#CalculateColumnWidth(row, silent) "{{{3
     " Internal function, not called from external,
     " does not work with fixed width columns
     " row for the row for which to calculate the width
@@ -763,7 +762,7 @@ fu! csv#CalculateColumnWidth(row) "{{{3
         endif
         let s:max_cols=csv#MaxColumns(line('.'))
         for i in range(1,s:max_cols)
-            call add(b:col_width, csv#ColWidth(i, a:row))
+            call add(b:col_width, csv#ColWidth(i, a:row, a:silent))
         endfor
     catch /csv:no_col/
         call csv#Warn("Error: getting Column numbers, aborting!")
@@ -1053,7 +1052,7 @@ fu! csv#MoveCol(forward, line, ...) "{{{3
     let maxcol=csv#MaxColumns(line('.'))
     let cpos=getpos('.')[2]
     if !exists("b:csv_fixed_width_cols")
-        let curwidth=CSVWidth()
+        let curwidth=CSVWidth(1)
         call search(b:col, 'bc', line('.'))
     endif
     let spos=getpos('.')[2]
@@ -1146,7 +1145,7 @@ fu! csv#MoveCol(forward, line, ...) "{{{3
         " leave the column (if the next column is shorter)
         if !exists("b:csv_fixed_width_cols")
             let a    = getpos('.')
-            if CSVWidth() == curwidth
+            if CSVWidth(1) == curwidth
                 let a[2]+= cpos-spos
             endif
         else
@@ -1159,7 +1158,7 @@ fu! csv#MoveCol(forward, line, ...) "{{{3
         " Move to the correct screen column
         if !exists("b:csv_fixed_width_cols")
             let a    = getpos('.')
-            if CSVWidth() == curwidth
+            if CSVWidth(1) == curwidth
                 let a[2]+= cpos-spos
             endif
         else
@@ -1835,7 +1834,7 @@ fu! csv#ProcessFieldValue(field) "{{{3
 
         if a == b:delimiter
             try
-                let a=repeat(' ', csv#ColWidth(col))
+                let a=repeat(' ', csv#ColWidth(col, line('$'), 1))
             catch
                 " no-op
             endtry
@@ -2134,7 +2133,7 @@ fu! csv#NewRecord(line1, line2, count) "{{{3
         if !exists("b:col_width")
             " Best guess width
             if exists("b:csv_fixed_width_cols")
-                let record .= printf("%*s", csv#ColWidth(item),
+                let record .= printf("%*s", csv#ColWidth(item, line('$'), 1),
                             \ b:delimiter)
             else
                 let record .= printf("%20s", b:delimiter)
@@ -3145,7 +3144,9 @@ fu! CSVCount(col, fmt, first, last, ...) "{{{3
     unlet! s:additional['distinct']
     return (empty(result) ? 0 : result)
 endfu
-fu! CSVWidth() "{{{3
+fu! CSVWidth(...) "{{{3
+    " do not output any warning
+    let silent = get(a:000, 0, 1)
     " does not work with fixed width columns
     if exists("b:csv_fixed_width_cols")
         let c = getline(1,'$')
@@ -3164,7 +3165,7 @@ fu! CSVWidth() "{{{3
         " Add width for last column
         call add(width, max-y+1)
     else
-        call csv#CalculateColumnWidth('')
+        call csv#CalculateColumnWidth(line('$'), silent)
         let width=map(copy(b:col_width), 'v:val-1')
     endif
     return width

@@ -20,7 +20,7 @@ syntax region jsxTag
       \ matchgroup=NONE
       \ end=+\%(/\_s*>\)\@=+
       \ contained
-      \ contains=jsxOpenTag,jsxAttrib,jsxEscapeJs,jsxSpreadOperator,jsComment,@javascriptComments,javaScriptLineComment,javaScriptComment,typescriptLineComment,typescriptComment
+      \ contains=jsxOpenTag,jsxAttrib,jsxExpressionBlock,jsxSpreadOperator,jsComment,@javascriptComments,javaScriptLineComment,javaScriptComment,typescriptLineComment,typescriptComment
       \ keepend
       \ extend
       \ skipwhite
@@ -39,7 +39,7 @@ syntax region jsxElement
       \ start=+<\_s*\%(>\|\${\|\z(\<[-:._$A-Za-z0-9]\+\>\)\)+
       \ end=+/\_s*>+
       \ end=+<\_s*/\_s*\z1\_s*>+
-      \ contains=jsxElement,jsxTag,jsxEscapeJs,jsxComment,jsxCloseTag,@Spell
+      \ contains=jsxElement,jsxTag,jsxExpressionBlock,jsxComment,jsxCloseTag,@Spell
       \ keepend
       \ extend
       \ contained
@@ -66,7 +66,7 @@ exe 'syntax region jsxOpenTag
 
 " <tag key={this.props.key}>
 "          ~~~~~~~~~~~~~~~~
-syntax region jsxEscapeJs
+syntax region jsxExpressionBlock
       \ matchgroup=jsxBraces
       \ start=+{+
       \ end=+}+
@@ -84,7 +84,7 @@ syntax match jsxNamespace +:+ contained
 
 " <tag id="sample">
 "        ~
-syntax match jsxEqual +=+ contained skipwhite skipempty nextgroup=jsxString,jsxEscapeJs,jsxRegion
+syntax match jsxEqual +=+ contained skipwhite skipempty nextgroup=jsxString,jsxExpressionBlock,jsxRegion
 
 " <tag />
 "      ~~
@@ -154,10 +154,10 @@ if s:enable_tagged_jsx
         \ end=+`+
         \ extend
         \ contained
-        \ contains=jsxElement,jsxEscapeJs
+        \ contains=jsxElement,jsxExpressionBlock
         \ transparent
 
-  syntax region jsxEscapeJs
+  syntax region jsxExpressionBlock
         \ matchgroup=jsxBraces
         \ start=+\${+
         \ end=+}+
@@ -171,14 +171,14 @@ if s:enable_tagged_jsx
         \ matchgroup=NONE
         \ end=+}\@1<=+
         \ contained
-        \ contains=jsxEscapeJs
+        \ contains=jsxExpressionBlock
         \ skipwhite
         \ skipempty
         \ nextgroup=jsxAttrib,jsxSpreadOperator
 
   syntax keyword jsxAttribKeyword class contained
 
-  syntax match jsxSpreadOperator +\.\.\.+ contained nextgroup=jsxEscapeJs skipwhite
+  syntax match jsxSpreadOperator +\.\.\.+ contained nextgroup=jsxExpressionBlock skipwhite
 
   syntax match jsxCloseTag +<//>+ contained
 

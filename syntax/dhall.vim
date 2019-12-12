@@ -39,6 +39,7 @@ syntax region dhallString start=+''+ end=+''+ contains=@Spell,dhallInterpolation
 syntax region dhallString start=+"+ end=+"+ contains=dhallInterpolation,dhallEsc
 syntax region dhallString start=+"/+ end=+"+ contains=dhallInterpolation,dhallEsc
 syntax keyword dhallBool True False
+syntax match dhallHash "sha256:[a-f0-9]+"
 
 highlight link dhallSingleSpecial Special
 highlight link dhallIndex Special
@@ -60,6 +61,7 @@ highlight link dhallType Structure
 highlight link dhallParens Special
 highlight link dhallComment Comment
 highlight link dhallMultilineComment Comment
+highlight link dhallHash Keyword
 
 let b:current_syntax = 'dhall'
 

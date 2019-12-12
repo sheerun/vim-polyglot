@@ -66,6 +66,7 @@ let s:syng_strcom = s:syng_stringdoc + [
       \ 'PercentStringDelimiter',
       \ 'PercentSymbolDelimiter',
       \ 'Regexp',
+      \ 'RegexpCharClass',
       \ 'RegexpDelimiter',
       \ 'RegexpEscape',
       \ 'StringDelimiter',
