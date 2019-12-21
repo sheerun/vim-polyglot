@@ -182,6 +182,7 @@ PACKS="
   cucumber:tpope/vim-cucumber
   cue:mgrabovsky/vim-cuesheet
   dart:dart-lang/dart-vim-plugin
+  dbml:jidn/vim-dbml
   dhall:vmchale/dhall-vim
   dlang:JesseKPhillips/d.vim
   dockerfile:ekalinin/Dockerfile.vim
