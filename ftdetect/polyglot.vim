@@ -1519,7 +1519,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vm') == -1
   augroup filetypedetect
   " vm, from velocity.vim in lepture/vim-velocity
-au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
+au BufRead,BufNewFile *.vm,*.vtl set ft=velocity syntax=velocity
   augroup end
 endif
 
