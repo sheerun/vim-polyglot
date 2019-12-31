@@ -7,6 +7,9 @@ if exists('b:current_syntax')
   finish
 endif
 
+let s:cpo_save = &cpo
+set cpo&vim
+
 " Identifiers are made up of alphanumeric characters, underscores, and
 " hyphens.
 if has('patch-7.4.1142')
@@ -4863,9 +4866,8 @@ syn match terraValueDec      "\<[0-9]\+\([kKmMgG]b\?\)\?\>"
 syn match terraValueHexaDec  "\<0x[0-9a-f]\+\([kKmMgG]b\?\)\?\>"
 syn match terraBraces        "[\[\]]"
 
-""" skip \" in strings.
-""" we may also want to pass \\" into a function to escape quotes.
-syn region terraValueString   start=/"/ skip=/\\\+"/ end=/"/ contains=terraStringInterp
+""" skip \" and \\ in strings.
+syn region terraValueString   start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=terraStringInterp
 syn region terraStringInterp  matchgroup=terraBraces start=/\${/ end=/}/ contained contains=ALL
 syn region terraHereDocText   start=/<<-\?\z([a-z0-9A-Z]\+\)/ end=/^\s*\z1/ contains=terraStringInterp
 
@@ -4922,5 +4924,8 @@ hi def link terraCollectionType    Type
 hi def link terraValueNull         Constant
 
 let b:current_syntax = 'terraform'
+
+let &cpo = s:cpo_save
+unlet s:cpo_save
 
 endif

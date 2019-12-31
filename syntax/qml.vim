@@ -1,5 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'qml') == -1
 
+
 " Vim syntax file
 " Language:     QML
 " Maintainer:   Peter Hoeg <peter@hoeg.com>
@@ -29,7 +30,7 @@ endif
 
 syn case ignore
 
-syn cluster qmlExpr              contains=qmlStringD,qmlStringS,SqmlCharacter,qmlNumber,qmlObjectLiteralType,qmlBoolean,qmlType,qmlJsType,qmlNull,qmlGlobal,qmlFunction
+syn cluster qmlExpr              contains=qmlStringD,qmlStringS,qmlStringT,SqmlCharacter,qmlNumber,qmlObjectLiteralType,qmlBoolean,qmlType,qmlJsType,qmlNull,qmlGlobal,qmlFunction,qmlArrowFunction
 syn keyword qmlCommentTodo       TODO FIXME XXX TBD contained
 syn match   qmlLineComment       "\/\/.*" contains=@Spell,qmlCommentTodo
 syn match   qmlCommentSkip       "^[ \t]*\*\($\|[ \t]\+\)"
@@ -37,6 +38,9 @@ syn region  qmlComment           start="/\*"  end="\*/" contains=@Spell,qmlComme
 syn match   qmlSpecial           "\\\d\d\d\|\\."
 syn region  qmlStringD           start=+"+  skip=+\\\\\|\\"\|\\$+  end=+"+  keepend  contains=qmlSpecial,@htmlPreproc,@Spell
 syn region  qmlStringS           start=+'+  skip=+\\\\\|\\'\|\\$+  end=+'+  keepend  contains=qmlSpecial,@htmlPreproc,@Spell
+syn region  qmlStringT           start=+`+  skip=+\\\\\|\\`\|\\$+  end=+`+  keepend  contains=qmlTemplateExpr,qmlSpecial,@htmlPreproc,@Spell
+
+syntax region  qmlTemplateExpr contained  matchgroup=qmlBraces start=+${+ end=+}+  keepend  contains=@qmlExpr
 
 syn match   qmlCharacter         "'\\.'"
 syn match   qmlNumber            "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
@@ -54,7 +58,7 @@ syn keyword qmlType              action alias bool color date double enumeration
 syn keyword qmlStatement         return with
 syn keyword qmlBoolean           true false
 syn keyword qmlNull              null undefined
-syn keyword qmlIdentifier        arguments this var
+syn keyword qmlIdentifier        arguments this var let
 syn keyword qmlLabel             case default
 syn keyword qmlException         try catch finally throw
 syn keyword qmlMessage           alert confirm prompt status
@@ -72,9 +76,10 @@ if get(g:, 'qml_fold', 0)
   setlocal foldmethod=syntax
   setlocal foldtext=getline(v:foldstart)
 else
-  syn keyword qmlFunction function
-  syn match   qmlBraces   "[{}\[\]]"
-  syn match   qmlParens   "[()]"
+  syn keyword qmlFunction         function
+  syn match   qmlArrowFunction    "=>"
+  syn match   qmlBraces           "[{}\[\]]"
+  syn match   qmlParens           "[()]"
 endif
 
 syn sync fromstart
@@ -100,6 +105,7 @@ if version >= 508 || !exists("did_qml_syn_inits")
   HiLink qmlSpecial           Special
   HiLink qmlStringS           String
   HiLink qmlStringD           String
+  HiLink qmlStringT           String
   HiLink qmlCharacter         Character
   HiLink qmlNumber            Number
   HiLink qmlConditional       Conditional
@@ -111,6 +117,7 @@ if version >= 508 || !exists("did_qml_syn_inits")
   HiLink qmlObjectLiteralType Type
   HiLink qmlStatement         Statement
   HiLink qmlFunction          Function
+  HiLink qmlArrowFunction     Function
   HiLink qmlBraces            Function
   HiLink qmlError             Error
   HiLink qmlNull              Keyword

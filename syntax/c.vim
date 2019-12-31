@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'c/c++') == -1
 " Vim syntax file
 " Language:	C
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last Change:	2016 Nov 18
+" Last Change:	2019 Nov 29
 
 " Quit when a (custom) syntax file was already loaded
 if exists("b:current_syntax")
@@ -14,6 +14,14 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 let s:ft = matchstr(&ft, '^\([^.]\)\+')
+
+" Optional embedded Autodoc parsing
+" To enable it add: let g:c_autodoc = 1
+" to your .vimrc
+if exists("c_autodoc")
+  syn include @cAutodoc <sfile>:p:h/autodoc.vim
+  unlet b:current_syntax
+endif
 
 " A bunch of useful C keywords
 syn keyword	cStatement	goto break return continue asm
@@ -131,7 +139,7 @@ if exists("c_no_curly_error")
     syn match	cParenError	display ")"
     syn match	cErrInParen	display contained "^^<%\|^%>"
   else
-    syn region	cParen		transparent start='(' end=')' end='}'me=s-1 contains=ALLBUT,cBlock,@cParenGroup,cCppParen,@cStringGroup,@Spell
+    syn region	cParen		transparent start='(' end=')' contains=ALLBUT,cBlock,@cParenGroup,cCppParen,@cStringGroup,@Spell
     " cCppParen: same as cParen but ends at end-of-line; used in cDefine
     syn region	cCppParen	transparent start='(' skip='\\$' excludenl end=')' end='$' contained contains=ALLBUT,@cParenGroup,cParen,cString,@Spell
     syn match	cParenError	display ")"
@@ -214,7 +222,7 @@ if exists("c_comment_strings")
   syn match	cCommentSkip	contained "^\s*\*\($\|\s\+\)"
   syn region cCommentString	contained start=+L\=\\\@<!"+ skip=+\\\\\|\\"+ end=+"+ end=+\*/+me=s-1 contains=cSpecial,cCommentSkip
   syn region cComment2String	contained start=+L\=\\\@<!"+ skip=+\\\\\|\\"+ end=+"+ end="$" contains=cSpecial
-  syn region  cCommentL	start="//" skip="\\$" end="$" keepend contains=@cCommentGroup,cComment2String,cCharacter,cNumbersCom,cSpaceError,@Spell
+  syn region  cCommentL	start="//" skip="\\$" end="$" keepend contains=@cCommentGroup,cComment2String,cCharacter,cNumbersCom,cSpaceError,cWrongComTail,@Spell
   if exists("c_no_comment_fold")
     " Use "extend" here to have preprocessor lines not terminate halfway a
     " comment.
@@ -233,6 +241,7 @@ endif
 " keep a // comment separately, it terminates a preproc. conditional
 syn match	cCommentError	display "\*/"
 syn match	cCommentStartError display "/\*"me=e-1 contained
+syn match	cWrongComTail	display "\*/"
 
 syn keyword	cOperator	sizeof
 if exists("c_gnu")
@@ -282,6 +291,22 @@ if !exists("c_no_c11")
   syn keyword	cOperator	_Static_assert static_assert
   syn keyword	cStorageClass	_Thread_local thread_local
   syn keyword   cType		char16_t char32_t
+  " C11 atomics (take down the shield wall!)
+  syn keyword	cType		atomic_bool atomic_char atomic_schar atomic_uchar
+  syn keyword	Ctype		atomic_short atomic_ushort atomic_int atomic_uint
+  syn keyword	cType		atomic_long atomic_ulong atomic_llong atomic_ullong
+  syn keyword	cType		atomic_char16_t atomic_char32_t atomic_wchar_t
+  syn keyword	cType		atomic_int_least8_t atomic_uint_least8_t
+  syn keyword	cType		atomic_int_least16_t atomic_uint_least16_t
+  syn keyword	cType		atomic_int_least32_t atomic_uint_least32_t
+  syn keyword	cType		atomic_int_least64_t atomic_uint_least64_t
+  syn keyword	cType		atomic_int_fast8_t atomic_uint_fast8_t
+  syn keyword	cType		atomic_int_fast16_t atomic_uint_fast16_t
+  syn keyword	cType		atomic_int_fast32_t atomic_uint_fast32_t
+  syn keyword	cType		atomic_int_fast64_t atomic_uint_fast64_t
+  syn keyword	cType		atomic_intptr_t atomic_uintptr_t
+  syn keyword	cType		atomic_size_t atomic_ptrdiff_t
+  syn keyword	cType		atomic_intmax_t atomic_uintmax_t
 endif
 
 if !exists("c_no_ansi") || exists("c_ansi_constants") || exists("c_gnu")
@@ -313,44 +338,32 @@ if !exists("c_no_ansi") || exists("c_ansi_constants") || exists("c_gnu")
     syn keyword cConstant PTRDIFF_MIN PTRDIFF_MAX SIG_ATOMIC_MIN SIG_ATOMIC_MAX
     syn keyword cConstant SIZE_MAX WCHAR_MIN WCHAR_MAX WINT_MIN WINT_MAX
   endif
-  syn keyword cConstant FLT_RADIX FLT_ROUNDS
-  syn keyword cConstant FLT_DIG FLT_MANT_DIG FLT_EPSILON
-  syn keyword cConstant DBL_DIG DBL_MANT_DIG DBL_EPSILON
-  syn keyword cConstant LDBL_DIG LDBL_MANT_DIG LDBL_EPSILON
-  syn keyword cConstant FLT_MIN FLT_MAX FLT_MIN_EXP FLT_MAX_EXP
-  syn keyword cConstant FLT_MIN_10_EXP FLT_MAX_10_EXP
-  syn keyword cConstant DBL_MIN DBL_MAX DBL_MIN_EXP DBL_MAX_EXP
-  syn keyword cConstant DBL_MIN_10_EXP DBL_MAX_10_EXP
-  syn keyword cConstant LDBL_MIN LDBL_MAX LDBL_MIN_EXP LDBL_MAX_EXP
-  syn keyword cConstant LDBL_MIN_10_EXP LDBL_MAX_10_EXP
-  syn keyword cConstant HUGE_VAL CLOCKS_PER_SEC NULL
-  syn keyword cConstant LC_ALL LC_COLLATE LC_CTYPE LC_MONETARY
-  syn keyword cConstant LC_NUMERIC LC_TIME
-  syn keyword cConstant SIG_DFL SIG_ERR SIG_IGN
-  syn keyword cConstant SIGABRT SIGFPE SIGILL SIGHUP SIGINT SIGSEGV SIGTERM
+  syn keyword cConstant FLT_RADIX FLT_ROUNDS FLT_DIG FLT_MANT_DIG FLT_EPSILON DBL_DIG DBL_MANT_DIG DBL_EPSILON
+  syn keyword cConstant LDBL_DIG LDBL_MANT_DIG LDBL_EPSILON FLT_MIN FLT_MAX FLT_MIN_EXP FLT_MAX_EXP FLT_MIN_10_EXP FLT_MAX_10_EXP
+  syn keyword cConstant DBL_MIN DBL_MAX DBL_MIN_EXP DBL_MAX_EXP DBL_MIN_10_EXP DBL_MAX_10_EXP LDBL_MIN LDBL_MAX LDBL_MIN_EXP LDBL_MAX_EXP
+  syn keyword cConstant LDBL_MIN_10_EXP LDBL_MAX_10_EXP HUGE_VAL CLOCKS_PER_SEC NULL LC_ALL LC_COLLATE LC_CTYPE LC_MONETARY
+  syn keyword cConstant LC_NUMERIC LC_TIME SIG_DFL SIG_ERR SIG_IGN SIGABRT SIGFPE SIGILL SIGHUP SIGINT SIGSEGV SIGTERM
   " Add POSIX signals as well...
-  syn keyword cConstant SIGABRT SIGALRM SIGCHLD SIGCONT SIGFPE SIGHUP
-  syn keyword cConstant SIGILL SIGINT SIGKILL SIGPIPE SIGQUIT SIGSEGV
-  syn keyword cConstant SIGSTOP SIGTERM SIGTRAP SIGTSTP SIGTTIN SIGTTOU
-  syn keyword cConstant SIGUSR1 SIGUSR2
-  syn keyword cConstant _IOFBF _IOLBF _IONBF BUFSIZ EOF WEOF
-  syn keyword cConstant FOPEN_MAX FILENAME_MAX L_tmpnam
-  syn keyword cConstant SEEK_CUR SEEK_END SEEK_SET
-  syn keyword cConstant TMP_MAX stderr stdin stdout
-  syn keyword cConstant EXIT_FAILURE EXIT_SUCCESS RAND_MAX
+  syn keyword cConstant SIGABRT SIGALRM SIGCHLD SIGCONT SIGFPE SIGHUP SIGILL SIGINT SIGKILL SIGPIPE SIGQUIT SIGSEGV
+  syn keyword cConstant SIGSTOP SIGTERM SIGTRAP SIGTSTP SIGTTIN SIGTTOU SIGUSR1 SIGUSR2
+  syn keyword cConstant _IOFBF _IOLBF _IONBF BUFSIZ EOF WEOF FOPEN_MAX FILENAME_MAX L_tmpnam
+  syn keyword cConstant SEEK_CUR SEEK_END SEEK_SET TMP_MAX stderr stdin stdout EXIT_FAILURE EXIT_SUCCESS RAND_MAX
   " POSIX 2001
-  syn keyword cConstant SIGBUS SIGPOLL SIGPROF SIGSYS SIGURG
-  syn keyword cConstant SIGVTALRM SIGXCPU SIGXFSZ
+  syn keyword cConstant SIGBUS SIGPOLL SIGPROF SIGSYS SIGURG SIGVTALRM SIGXCPU SIGXFSZ
   " non-POSIX signals
   syn keyword cConstant SIGWINCH SIGINFO
-  " Add POSIX errors as well
-  syn keyword cConstant E2BIG EACCES EAGAIN EBADF EBADMSG EBUSY
-  syn keyword cConstant ECANCELED ECHILD EDEADLK EDOM EEXIST EFAULT
-  syn keyword cConstant EFBIG EILSEQ EINPROGRESS EINTR EINVAL EIO EISDIR
-  syn keyword cConstant EMFILE EMLINK EMSGSIZE ENAMETOOLONG ENFILE ENODEV
-  syn keyword cConstant ENOENT ENOEXEC ENOLCK ENOMEM ENOSPC ENOSYS
-  syn keyword cConstant ENOTDIR ENOTEMPTY ENOTSUP ENOTTY ENXIO EPERM
-  syn keyword cConstant EPIPE ERANGE EROFS ESPIPE ESRCH ETIMEDOUT EXDEV
+  " Add POSIX errors as well.  List comes from:
+  " http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html
+  syn keyword cConstant E2BIG EACCES EADDRINUSE EADDRNOTAVAIL EAFNOSUPPORT EAGAIN EALREADY EBADF
+  syn keyword cConstant EBADMSG EBUSY ECANCELED ECHILD ECONNABORTED ECONNREFUSED ECONNRESET EDEADLK
+  syn keyword cConstant EDESTADDRREQ EDOM EDQUOT EEXIST EFAULT EFBIG EHOSTUNREACH EIDRM EILSEQ
+  syn keyword cConstant EINPROGRESS EINTR EINVAL EIO EISCONN EISDIR ELOOP EMFILE EMLINK EMSGSIZE
+  syn keyword cConstant EMULTIHOP ENAMETOOLONG ENETDOWN ENETRESET ENETUNREACH ENFILE ENOBUFS ENODATA
+  syn keyword cConstant ENODEV ENOENT ENOEXEC ENOLCK ENOLINK ENOMEM ENOMSG ENOPROTOOPT ENOSPC ENOSR
+  syn keyword cConstant ENOSTR ENOSYS ENOTBLK ENOTCONN ENOTDIR ENOTEMPTY ENOTRECOVERABLE ENOTSOCK ENOTSUP
+  syn keyword cConstant ENOTTY ENXIO EOPNOTSUPP EOVERFLOW EOWNERDEAD EPERM EPIPE EPROTO
+  syn keyword cConstant EPROTONOSUPPORT EPROTOTYPE ERANGE EROFS ESPIPE ESRCH ESTALE ETIME ETIMEDOUT
+  syn keyword cConstant ETXTBSY EWOULDBLOCK EXDEV
   " math.h
   syn keyword cConstant M_E M_LOG2E M_LOG10E M_LN2 M_LN10 M_PI M_PI_2 M_PI_4
   syn keyword cConstant M_1_PI M_2_PI M_2_SQRTPI M_SQRT2 M_SQRT1_2
@@ -371,17 +384,17 @@ if !exists("c_no_if0")
   else
     syn region	cCppOutIf2	contained matchgroup=cCppOutWrapper start="0\+" end="^\s*\(%:\|#\)\s*\(else\>\|elif\s\+\(0\+\s*\($\|//\|/\*\|&\)\)\@!\|endif\>\)"me=s-1 contains=cSpaceError,cCppOutSkip,@Spell
   endif
-  syn region	cCppOutElse	contained matchgroup=cCppOutWrapper start="^\s*\zs\(%:\|#\)\s*\(else\|elif\)" end="^\s*\zs\(%:\|#\)\s*endif\>"me=s-1 contains=TOP,cPreCondit
+  syn region	cCppOutElse	contained matchgroup=cCppOutWrapper start="^\s*\(%:\|#\)\s*\(else\|elif\)" end="^\s*\(%:\|#\)\s*endif\>"me=s-1 contains=TOP,cPreCondit
   syn region	cCppInWrapper	start="^\s*\zs\(%:\|#\)\s*if\s\+0*[1-9]\d*\s*\($\|//\|/\*\||\)" end=".\@=\|$" contains=cCppInIf,cCppInElse fold
-  syn region	cCppInIf	contained matchgroup=cCppInWrapper start="\d\+" end="^\s*\zs\(%:\|#\)\s*endif\>" contains=TOP,cPreCondit
+  syn region	cCppInIf	contained matchgroup=cCppInWrapper start="\d\+" end="^\s*\(%:\|#\)\s*endif\>" contains=TOP,cPreCondit
   if !exists("c_no_if0_fold")
-    syn region	cCppInElse	contained start="^\s*\zs\(%:\|#\)\s*\(else\>\|elif\s\+\(0*[1-9]\d*\s*\($\|//\|/\*\||\)\)\@!\)" end=".\@=\|$" containedin=cCppInIf contains=cCppInElse2 fold
+    syn region	cCppInElse	contained start="^\s*\(%:\|#\)\s*\(else\>\|elif\s\+\(0*[1-9]\d*\s*\($\|//\|/\*\||\)\)\@!\)" end=".\@=\|$" containedin=cCppInIf contains=cCppInElse2 fold
   else
-    syn region	cCppInElse	contained start="^\s*\zs\(%:\|#\)\s*\(else\>\|elif\s\+\(0*[1-9]\d*\s*\($\|//\|/\*\||\)\)\@!\)" end=".\@=\|$" containedin=cCppInIf contains=cCppInElse2
+    syn region	cCppInElse	contained start="^\s*\(%:\|#\)\s*\(else\>\|elif\s\+\(0*[1-9]\d*\s*\($\|//\|/\*\||\)\)\@!\)" end=".\@=\|$" containedin=cCppInIf contains=cCppInElse2
   endif
-  syn region	cCppInElse2	contained matchgroup=cCppInWrapper start="^\s*\zs\(%:\|#\)\s*\(else\|elif\)\([^/]\|/[^/*]\)*" end="^\s*\zs\(%:\|#\)\s*endif\>"me=s-1 contains=cSpaceError,cCppOutSkip,@Spell
-  syn region	cCppOutSkip	contained start="^\s*\zs\(%:\|#\)\s*\(if\>\|ifdef\>\|ifndef\>\)" skip="\\$" end="^\s*\zs\(%:\|#\)\s*endif\>" contains=cSpaceError,cCppOutSkip
-  syn region	cCppInSkip	contained matchgroup=cCppInWrapper start="^\s*\zs\(%:\|#\)\s*\(if\s\+\(\d\+\s*\($\|//\|/\*\||\|&\)\)\@!\|ifdef\>\|ifndef\>\)" skip="\\$" end="^\s*\zs\(%:\|#\)\s*endif\>" containedin=cCppOutElse,cCppInIf,cCppInSkip contains=TOP,cPreProc
+  syn region	cCppInElse2	contained matchgroup=cCppInWrapper start="^\s*\(%:\|#\)\s*\(else\|elif\)\([^/]\|/[^/*]\)*" end="^\s*\(%:\|#\)\s*endif\>"me=s-1 contains=cSpaceError,cCppOutSkip,@Spell
+  syn region	cCppOutSkip	contained start="^\s*\(%:\|#\)\s*\(if\>\|ifdef\>\|ifndef\>\)" skip="\\$" end="^\s*\(%:\|#\)\s*endif\>" contains=cSpaceError,cCppOutSkip
+  syn region	cCppInSkip	contained matchgroup=cCppInWrapper start="^\s*\(%:\|#\)\s*\(if\s\+\(\d\+\s*\($\|//\|/\*\||\|&\)\)\@!\|ifdef\>\|ifndef\>\)" skip="\\$" end="^\s*\(%:\|#\)\s*endif\>" containedin=cCppOutElse,cCppInIf,cCppInSkip contains=TOP,cPreProc
 endif
 syn region	cIncluded	display contained start=+"+ skip=+\\\\\|\\"+ end=+"+
 syn match	cIncluded	display contained "<[^>]*>"
@@ -390,6 +403,13 @@ syn match	cInclude	display "^\s*\zs\(%:\|#\)\s*include\>\s*["<]" contains=cInclu
 syn cluster	cPreProcGroup	contains=cPreCondit,cIncluded,cInclude,cDefine,cErrInParen,cErrInBracket,cUserLabel,cSpecial,cOctalZero,cCppOutWrapper,cCppInWrapper,@cCppOutInGroup,cFormat,cNumber,cFloat,cOctal,cOctalError,cNumbersCom,cString,cCommentSkip,cCommentString,cComment2String,@cCommentGroup,cCommentStartError,cParen,cBracket,cMulti,cBadBlock
 syn region	cDefine		start="^\s*\zs\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell
 syn region	cPreProc	start="^\s*\zs\(%:\|#\)\s*\(pragma\>\|line\>\|warning\>\|warn\>\|error\>\)" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell
+
+" Optional embedded Autodoc parsing
+if exists("c_autodoc")
+  syn match cAutodocReal display contained "\%(//\|[/ \t\v]\*\|^\*\)\@2<=!.*" contains=@cAutodoc containedin=cComment,cCommentL
+  syn cluster cCommentGroup add=cAutodocReal
+  syn cluster cPreProcGroup add=cAutodocReal
+endif
 
 " Highlight User Labels
 syn cluster	cMultiGroup	contains=cIncluded,cSpecial,cCommentSkip,cCommentString,cComment2String,@cCommentGroup,cCommentStartError,cUserCont,cUserLabel,cBitField,cOctalZero,cCppOutWrapper,cCppInWrapper,@cCppOutInGroup,cFormat,cNumber,cFloat,cOctal,cOctalError,cNumbersCom,cCppParen,cCppBracket,cCppString
@@ -452,6 +472,7 @@ hi def link cErrInBracket	cError
 hi def link cCommentError	cError
 hi def link cCommentStartError	cError
 hi def link cSpaceError		cError
+hi def link cWrongComTail	cError
 hi def link cSpecialError	cError
 hi def link cCurlyError		cError
 hi def link cOperator		Operator
