@@ -119,7 +119,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [log](https://github.com/MTDL9/vim-log-highlighting) (syntax)
 - [lua](https://github.com/tbastos/vim-lua) (syntax, indent)
 - [mako](https://github.com/sophacles/vim-bundle-mako) (syntax, indent, ftplugin)
-- [markdown](https://github.com/gabrielelana/vim-markdown) (syntax, autoload, ftplugin)
+- [markdown](https://github.com/plasticboy/vim-markdown) (syntax, indent, ftplugin)
 - [mathematica](https://github.com/voldikss/vim-mma) (syntax, ftplugin)
 - [mdx](https://github.com/jxnblk/vim-mdx-js) (syntax)
 - [meson](https://github.com/mesonbuild/meson) (syntax, indent, ftplugin)
