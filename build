@@ -306,7 +306,7 @@ PACKS="
   yard:sheerun/vim-yardoc
   zephir:xwsoul/vim-zephir
   zig:ziglang/zig.vim
-  zplugin:zinit-zsh/zplugin-vim-syntax
+  zinit:zinit-zsh/zplugin-vim-syntax
 "
 
 rm -rf tmp
