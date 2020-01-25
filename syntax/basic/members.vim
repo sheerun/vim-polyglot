@@ -7,7 +7,7 @@ syntax keyword typescriptConstructor           contained constructor
 
 syntax cluster memberNextGroup contains=typescriptMemberOptionality,typescriptTypeAnnotation,@typescriptCallSignature
 
-syntax match typescriptMember /\K\k*/
+syntax match typescriptMember /#\?\K\k*/
   \ nextgroup=@memberNextGroup
   \ contained skipwhite
 

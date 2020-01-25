@@ -40,7 +40,7 @@ syntax match   typescriptArrowFuncDef          contained /\K\k*\s*=>/
   \ skipwhite skipempty
 
 " TODO: optimize this pattern
-syntax region   typescriptArrowFuncDef          contained start=/(\_[^)]*):/ end=/=>/
+syntax region   typescriptArrowFuncDef          contained start=/(\_[^(^)]*):/ end=/=>/
   \ contains=typescriptArrowFuncArg,typescriptArrowFunc,typescriptTypeAnnotation
   \ nextgroup=@typescriptExpression,typescriptBlock
   \ skipwhite skipempty keepend

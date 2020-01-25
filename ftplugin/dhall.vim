@@ -34,14 +34,16 @@ endif
 
 function! DhallFormat()
     let cursor = getpos('.')
-    exec 'silent %!dhall format'
+    exec 'normal! gg'
+    exec 'silent !dhall format --inplace ' . expand('%')
+    exec 'e'
     call setpos('.', cursor)
 endfunction
 
 if exists('g:dhall_format')
     if g:dhall_format == 1
         augroup dhall
-            au BufWritePre *.dhall call DhallFormat()
+            au BufWritePost *.dhall call DhallFormat()
         augroup END
     endif
 endif

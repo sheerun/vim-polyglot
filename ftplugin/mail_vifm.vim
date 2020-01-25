@@ -54,7 +54,7 @@ function! s:HandleRunResults(exitcode, listf)
 
 	if filereadable(a:listf) && l:insert_pos != 0
 		for line in readfile(a:listf)
-			call append(l:insert_pos, 'Attach: '.line)
+			call append(l:insert_pos, 'Attach: '.escape(line, " "))
 			let l:insert_pos += 1
 		endfor
 	endif

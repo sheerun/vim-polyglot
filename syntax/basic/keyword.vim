@@ -1,8 +1,17 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 "Import
-syntax keyword typescriptImport                from as import
+syntax keyword typescriptImport                from as
+syntax keyword typescriptImport                import
+  \ nextgroup=typescriptImportType
+  \ skipwhite
+syntax keyword typescriptImportType            type
+  \ contained
 syntax keyword typescriptExport                export
+  \ nextgroup=typescriptExportType
+  \ skipwhite
+syntax match typescriptExportType              /\<type\s*{\@=/
+  \ contained skipwhite skipempty skipnl
 syntax keyword typescriptModule                namespace module
 
 "this
