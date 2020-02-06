@@ -208,6 +208,7 @@ PACKS="
   groovy:vim-scripts/groovy.vim
   groovy-indent:vim-scripts/groovyindent-unix
   haml:sheerun/vim-haml
+  hamlc:hiukkanen/vim-hamlc
   handlebars:mustache/vim-mustache-handlebars
   haproxy:CH-DanReif/haproxy.vim
   haskell:neovimhaskell/haskell-vim
