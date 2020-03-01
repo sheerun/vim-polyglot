@@ -5451,8 +5451,8 @@ syn region terraValueString   start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=terraS
 syn region terraStringInterp  matchgroup=terraBraces start=/\${/ end=/}/ contained contains=ALL
 syn region terraHereDocText   start=/<<-\?\z([a-z0-9A-Z]\+\)/ end=/^\s*\z1/ contains=terraStringInterp
 
-"" TODO match keywords here, not a-z+
-syn match terraValueFunction "[a-z]\+(\@="
+"" Functions.
+syn match terraValueFunction "[a-z0-9]\+(\@="
 
 """ HCL2
 syn keyword terraContent        content

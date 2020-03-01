@@ -219,7 +219,6 @@ PACKS="
   i3:mboughaba/i3config.vim
   idris:idris-hackers/idris-vim
   ion:vmchale/ion-vim
-  jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax
   jinja:lepture/vim-jinja

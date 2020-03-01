@@ -660,13 +660,6 @@ autocmd BufNewFile,BufRead,StdinReadPost *
   augroup end
 endif
 
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jasmine') == -1
-  augroup filetypedetect
-  " jasmine, from jasmine.vim in glanotte/vim-jasmine
-autocmd BufNewFile,BufRead *Spec.js,*_spec.js set filetype=jasmine.javascript syntax=jasmine
-  augroup end
-endif
-
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
   augroup filetypedetect
   " javascript, from flow.vim in pangloss/vim-javascript:_JAVASCRIPT
