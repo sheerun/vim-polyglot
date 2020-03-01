@@ -91,6 +91,9 @@ augroup filetypedetect
 
   "jinja
   autocmd BufNewFile,BufRead *.jinja2,*.j2,*.jinja,*.nunjucks,*.nunjs,*.njk set ft=jinja
+
+  "jsx
+  au BufNewFile,BufRead *.jsx     setf javascriptreact
 augroup END
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'acpiasl') == -1
   augroup filetypedetect
