@@ -268,7 +268,7 @@ PACKS="
   ragel:jneen/ragel.vim
   raml:IN3D/vim-raml
   reason:reasonml-editor/vim-reason-plus
-  rspec:sheerun/rspec.vim
+  rspec:keith/rspec.vim
   rst:marshallward/vim-restructuredtext
   ruby:vim-ruby/vim-ruby
   rust:rust-lang/rust.vim
