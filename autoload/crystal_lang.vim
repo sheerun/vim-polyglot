@@ -7,6 +7,8 @@ let s:V = vital#crystal#new()
 let s:P = s:V.import('Process')
 let s:C = s:V.import('ColorEcho')
 
+let s:IS_WINDOWS = has('win32')
+
 if exists('*json_decode')
     function! s:decode_json(text) abort
         return json_decode(a:text)
@@ -299,29 +301,47 @@ function! crystal_lang#run_current_spec(...) abort
 endfunction
 
 function! crystal_lang#format_string(code, ...) abort
+    if s:IS_WINDOWS
+        let redirect = '2> nul'
+    else
+        let redirect = '2>/dev/null'
+    endif
     let cmd = printf(
-            \   '%s tool format --no-color %s -',
+            \   '%s tool format --no-color %s - %s',
             \   g:crystal_compiler_command,
-            \   get(a:, 1, '')
+            \   get(a:, 1, ''),
+            \   redirect,
             \ )
     let output = s:P.system(cmd, a:code)
     if s:P.get_last_status()
-        throw 'vim-crystal: Error on formatting: ' . output
+        throw 'vim-crystal: Error on formatting with command: ' . cmd
     endif
     return output
 endfunction
 
 " crystal_lang#format(option_str [, on_save])
 function! crystal_lang#format(option_str, ...) abort
-    if !executable(g:crystal_compiler_command)
-        " Finish command silently
-        return
-    endif
-
     let on_save = a:0 > 0 ? a:1 : 0
 
+    if !executable(g:crystal_compiler_command)
+        if on_save
+            " Finish command silently on save
+            return
+        else
+            throw 'vim-crystal: Command for formatting is not executable: ' . g:crystal_compiler_command
+        endif
+    endif
+
     let before = join(getline(1, '$'), "\n")
-    let formatted = crystal_lang#format_string(before, a:option_str)
+    try
+        let formatted = crystal_lang#format_string(before, a:option_str)
+    catch /^vim-crystal: /
+        echohl ErrorMsg
+        echomsg v:exception . ': Your code was not formatted. Exception was thrown at ' . v:throwpoint
+        echohl None
+        return
+    endtry
+
     if !on_save
         let after = substitute(formatted, '\n$', '', '')
         if before ==# after

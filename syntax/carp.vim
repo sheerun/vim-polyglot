@@ -39,7 +39,7 @@ syn keyword carpFunc println print get-line from-string mod random
 syn keyword carpFunc random-between str mask delete append length duplicate
 syn keyword carpFunc cstr chars from-chars to-int from-int sin cos sqrt acos
 syn keyword carpFunc atan2 exit time seed-random for cond floor abs sort-with
-syn keyword carpFunc subarray prefix-array suffix-array reverse sum min max
+syn keyword carpFunc slice prefix suffix reverse sum min max
 syn keyword carpFunc first last reduce format zero read-file bit-shift-left
 syn keyword carpFunc bit-shift-right bit-and bit-or bit-xor bit-not safe-add
 syn keyword carpFunc safe-sub safe-mul even? odd? cmp allocate repeat-indexed
@@ -47,8 +47,8 @@ syn keyword carpFunc sanitize-addresses memory-balance reset-memory-balance!
 syn keyword carpFunc log-memory-balance! memory-logged assert-balanced trace
 syn keyword carpFunc assert
 syn keyword carpFunc pi e swap! update! char-at tail head split-by words lines
-syn keyword carpFunc pad-left pad-right count-char empty? random-sized substring
-syn keyword carpFunc prefix-string suffix-string starts-with? ends-with?
+syn keyword carpFunc pad-left pad-right count-char empty? random-sized
+syn keyword carpFunc starts-with? ends-with?
 syn keyword carpFunc string-join free sleep-seconds sleep-micros substitute
 syn keyword carpFunc neg to-float match matches? find global-match match-str
 syn keyword carpFunc from-float tan asin atan cosh sinh tanh exp frexp ldexp
@@ -111,7 +111,7 @@ syn match carpNumber    "\<[-+]\?\d\+/\d\+[lfb]\?\>" contains=carpContainedNumbe
 
 syn keyword carpBoolean  true false
 
-syn match carpChar    "\<\\.\w\@!"
+syn match carpChar    "\\\(\(newline\)\|\(space\)\|\(tab\)\|\(.\)\)"
 
 syn region carpQuoted matchgroup=Delimiter start="['`]" end=![ \t()\[\]";]!me=e-1 contains=@carpQuotedStuff,@carpQuotedOrNormal
 syn region carpQuoted matchgroup=Delimiter start="['`](" matchgroup=Delimiter end=")" contains=@carpQuotedStuff,@carpQuotedOrNormal

@@ -1,18 +1,10 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mathematica') == -1
 
-" Vim syntax file
-" Language:     Mathematica
-" Maintainer:   Voldikss <dyzplus@gmail.com>
-" Last Change:  2019 Jan 23 by Voldikss
-" Source:       https://github.com/voldikss/vim-mma/syntax/mma.vim
-" Credits:
-"   Arnoud Buzing: https://github.com/arnoudbuzing
-"   Rsmenon: https://github.com/rsmenon
+"Vim syntax file
+" Language: Mathematica
+" Maintainer: R. Menon <rsmenon@icloud.com>
+" Last Change: Feb 25, 2013
 
-" TODO:
-"   Box Forms
-
-" quit when a syntax file was already loaded
 if exists("b:current_syntax")
     finish
 endif

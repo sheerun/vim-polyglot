@@ -7,9 +7,6 @@ set cpoptions&vim
 let $TF_CLI_ARGS_fmt=''
 
 function! terraform#fmt()
-  if !filereadable(expand('%:p'))
-    return
-  endif
   let l:curw = winsaveview()
   " Make a fake change so that the undo point is right.
   normal! ix

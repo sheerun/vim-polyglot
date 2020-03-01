@@ -59,16 +59,24 @@ syn match ps1Constant +\$^+
 syn keyword ps1Keyword class define from using var
 
 " Function declarations
-syn keyword ps1Keyword function nextgroup=ps1FunctionDeclaration skipwhite
-syn keyword ps1Keyword filter nextgroup=ps1FunctionDeclaration skipwhite
-syn keyword ps1Keyword workflow nextgroup=ps1FunctionDeclaration skipwhite
-syn keyword ps1Keyword configuration nextgroup=ps1FunctionDeclaration skipwhite
-syn keyword ps1Keyword class nextgroup=ps1FunctionDeclaration skipwhite
-syn keyword ps1Keyword enum nextgroup=ps1FunctionDeclaration skipwhite
-syn match ps1FunctionDeclaration /\w\+\(-\w\+\)*/ contained
+syn keyword ps1Keyword function nextgroup=ps1Function skipwhite
+syn keyword ps1Keyword filter nextgroup=ps1Function skipwhite
+syn keyword ps1Keyword workflow nextgroup=ps1Function skipwhite
+syn keyword ps1Keyword configuration nextgroup=ps1Function skipwhite
+syn keyword ps1Keyword class nextgroup=ps1Function skipwhite
+syn keyword ps1Keyword enum nextgroup=ps1Function skipwhite
 
-" Function invocations
-syn match ps1FunctionInvocation /\w\+\(-\w\+\)\+/
+" Function declarations and invocations
+syn match ps1Cmdlet /\v(add|clear|close|copy|enter|exit|find|format|get|hide|join|lock|move|new|open|optimize|pop|push|redo|remove|rename|reset|search|select|Set|show|skip|split|step|switch|undo|unlock|watch)(-\w+)+/ contained
+syn match ps1Cmdlet /\v(connect|disconnect|read|receive|send|write)(-\w+)+/ contained
+syn match ps1Cmdlet /\v(backup|checkpoint|compare|compress|convert|convertfrom|convertto|dismount|edit|expand|export|group|import|initialize|limit|merge|mount|out|publish|restore|save|sync|unpublish|update)(-\w+)+/ contained
+syn match ps1Cmdlet /\v(debug|measure|ping|repair|resolve|test|trace)(-\w+)+/ contained
+syn match ps1Cmdlet /\v(approve|assert|build|complete|confirm|deny|deploy|disable|enable|install|invoke|register|request|restart|resume|start|stop|submit|suspend|uninstall|unregister|wait)(-\w+)+/ contained
+syn match ps1Cmdlet /\v(block|grant|protect|revoke|unblock|unprotect)(-\w+)+/ contained
+syn match ps1Cmdlet /\v(use)(-\w+)+/ contained
+
+" Other functions
+syn match ps1Function /\w\+\(-\w\+\)\+/ contains=ps1Cmdlet
 
 " Type declarations
 syn match ps1Type /\[[a-z_][a-z0-9_.,\[\]]\+\]/
@@ -164,8 +172,8 @@ if version >= 508 || !exists("did_ps1_syn_inits")
 	HiLink ps1Escape SpecialChar
 	HiLink ps1InterpolationDelimiter Delimiter
 	HiLink ps1Conditional Conditional
-	HiLink ps1FunctionDeclaration Function
-	HiLink ps1FunctionInvocation Function
+	HiLink ps1Cmdlet Function
+	HiLink ps1Function Identifier
 	HiLink ps1Variable Identifier
 	HiLink ps1Boolean Boolean
 	HiLink ps1Constant Constant

@@ -78,7 +78,7 @@ function! s:is_string_comment(lnum, col)
 	if has('syntax_items')
 		for id in synstack(a:lnum, a:col)
 			let synname = synIDattr(id, "name")
-			if synname == "rustString" || synname =~ "^rustComment"
+			if synname == "reasonString" || synname =~ "^reasonComment"
 				return 1
 			endif
 		endfor
@@ -97,7 +97,7 @@ function GetReasonIndent(lnum)
 
 	if has('syntax_items')
 		let synname = synIDattr(synID(a:lnum, 1, 1), "name")
-		if synname == "rustString"
+		if synname == "reasonString"
 			" If the start of the line is in a string, don't change the indent
 			return -1
 		elseif synname =~ '\(Comment\|Todo\)'

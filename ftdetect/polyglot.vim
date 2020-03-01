@@ -831,8 +831,10 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mathematica') == -1
   augroup filetypedetect
   " mathematica, from mma.vim in voldikss/vim-mma
-autocmd BufNewFile,BufRead *.wl set filetype=mma
-autocmd BufNewFile,BufRead *.wls set filetype=mma
+autocmd BufNewFile,BufRead *.wl  setfiletype mma
+autocmd BufNewFile,BufRead *.wls setfiletype mma
+autocmd BufNewFile,BufRead *.nb  setfiletype mma
+autocmd BufNewFile,BufRead *.m   setfiletype mma
   augroup end
 endif
 
@@ -913,7 +915,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
   augroup filetypedetect
   " ocaml, from dune.vim in rgrinberg/vim-ocaml
-au BufRead,BufNewFile jbuild,dune,dune-project set ft=dune
+au BufRead,BufNewFile jbuild,dune,dune-project,dune-workspace set ft=dune
   augroup end
 endif
 

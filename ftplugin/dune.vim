@@ -11,6 +11,4 @@ set lisp
 setl commentstring=;\ %s
 setl comments=:;
 
-setl iskeyword+=#,?,.,/
-
 endif
