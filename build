@@ -267,6 +267,7 @@ PACKS="
   racket:wlangstroth/vim-racket
   ragel:jneen/ragel.vim
   raml:IN3D/vim-raml
+  razor:adamclerk/vim-razor
   reason:reasonml-editor/vim-reason-plus
   rspec:keith/rspec.vim
   rst:marshallward/vim-restructuredtext

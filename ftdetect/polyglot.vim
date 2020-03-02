@@ -1174,6 +1174,13 @@ au BufRead,BufNewFile *.raml set ft=raml
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'razor') == -1
+  augroup filetypedetect
+  " razor, from razor.vim in adamclerk/vim-razor
+autocmd BufNewFile,BufRead *.cshtml setf razor
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'reason') == -1
   augroup filetypedetect
   " reason, from reason.vim in reasonml-editor/vim-reason-plus

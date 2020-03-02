@@ -10,7 +10,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 120+ times faster** than the <!--Package Count-->146<!--/Package Count--> packages it consists of.
+- It **installs and updates 120+ times faster** than the <!--Package Count-->147<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -149,6 +149,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [racket](https://github.com/wlangstroth/vim-racket) (syntax, indent, ftplugin)
 - [ragel](https://github.com/jneen/ragel.vim) (syntax)
 - [raml](https://github.com/IN3D/vim-raml) (syntax, ftplugin)
+- [razor](https://github.com/adamclerk/vim-razor) (syntax, indent, ftplugin)
 - [reason](https://github.com/reasonml-editor/vim-reason-plus) (syntax, indent)
 - [rspec](https://github.com/keith/rspec.vim) (syntax)
 - [rst](https://github.com/marshallward/vim-restructuredtext) (syntax, indent, autoload, ftplugin)
