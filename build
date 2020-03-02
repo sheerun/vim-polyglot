@@ -2,7 +2,7 @@
 
 set -E
 
-DIRS="syntax indent compiler autoload ftplugin after/syntax after/indent after/ftplugin"
+DIRS="syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin"
 # shellcheck disable=SC2034
 DIRS_BASIC="syntax compiler indent after/syntax after/indent"
 # shellcheck disable=SC2034
@@ -105,7 +105,7 @@ EOF
 }
 
 copy_dir() {
-  find "$1/$2" \( -name '*.vim' -o -name '*.vital' \) -print0 | while read -r -d $'\0' file; do
+  find "$1/$2" \( -name '*.vim' -o -name '*.vital' -o -name '*.ctags' \) -print0 | while read -r -d $'\0' file; do
     copy_file "$1" "$file" "$3"
   done
 }
