@@ -561,8 +561,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haml') == -1
   augroup filetypedetect
   " haml, from haml.vim in sheerun/vim-haml
-autocmd BufNewFile,BufRead *.sass setf sass
-autocmd BufNewFile,BufRead *.scss setf scss
+autocmd BufNewFile,BufRead *.haml,*.hamlbars,*.hamlc setf haml
   augroup end
 endif
 
