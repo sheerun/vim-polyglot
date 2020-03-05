@@ -1,0 +1,39 @@
+autoUpdate:
+  enabled: false
+  schedule: ""
+cluster:
+  clusterName: ""
+  environmentGitOwner: ""
+  environmentGitPublic: true
+  project: ""
+  azure: {}
+  provider: gke
+  zone: ""
+gitops: true
+environments:
+  - key: dev
+  - key: staging
+  - key: production
+ingress:
+  domain: ""
+  externalDNS: false
+  tls:
+    email: ""
+    enabled: false
+    production: false
+kaniko: true
+secretStorage: vault
+storage:
+  logs:
+    enabled: true
+    url: ""
+  reports:
+    enabled: true
+    url: ""
+  repository:
+    enabled: true
+    url: ""
+versionStream:
+  ref: 2.0.1192+cjxd.7
+  url: https://github.com/cloudbees/cloudbees-jenkins-x-versions.git
+webhook: prow

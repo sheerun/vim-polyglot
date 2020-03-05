@@ -77,7 +77,7 @@ syntax region  typescriptDocLinkTag            contained matchgroup=typescriptDo
 
 syntax cluster typescriptDocs                  contains=typescriptDocParamType,typescriptDocNamedParamType,typescriptDocParam
 
-if main_syntax == "typescript"
+if exists("main_syntax") && main_syntax == "typescript"
   syntax sync clear
   syntax sync ccomment typescriptComment minlines=200
 endif

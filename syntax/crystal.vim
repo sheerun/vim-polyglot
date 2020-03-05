@@ -12,6 +12,11 @@ if exists('b:current_syntax')
   finish
 endif
 
+" Adding `@-@` should fix a wide variety of false positives related to
+" instance/class variables with keywords in their name, like @def and
+" @class
+syn iskeyword @,48-57,_,192-255,@-@
+
 " eCrystal Config
 if exists('g:main_syntax') && g:main_syntax ==# 'ecrystal'
   let b:crystal_no_expensive = 1
@@ -259,7 +264,7 @@ syn cluster crystalDeclaration contains=crystalAliasDeclaration,crystalAliasDecl
 " Keywords
 " Note: the following keywords have already been defined:
 " begin case class def do end for if module unless until while
-syn match crystalControl        "\<\%(break\|in\|next\|rescue\|return\)\>[?!]\@!"
+syn match crystalControl        "\<\%(break\|next\|rescue\|return\)\>[?!]\@!"
 syn match crystalOperator       "\<defined?" display
 syn match crystalKeyword        "\<\%(super\|previous_def\|yield\|of\|with\|uninitialized\|union\)\>[?!]\@!"
 syn match crystalBoolean        "\<\%(true\|false\)\>[?!]\@!"
@@ -310,16 +315,12 @@ if !exists('b:crystal_no_expensive') && !exists('g:crystal_no_expensive')
   syn match crystalExceptional       "\<\%(\%(\%(;\|^\)\s*\)\@<=rescue\|else\|ensure\)\>[?!]\@!" contained containedin=crystalBlockExpression
   syn match crystalMethodExceptional "\<\%(\%(\%(;\|^\)\s*\)\@<=rescue\|else\|ensure\)\>[?!]\@!" contained containedin=crystalMethodBlock
 
-  " statements with optional 'do'
-  syn region crystalOptionalDoLine matchgroup=crystalRepeat start="\<for\>[?!]\@!" start="\%(\%(^\|\.\.\.\=\|[{:,;([<>~\*/%&^|+-]\|\%(\<[_[:lower:]][_[:alnum:]]*\)\@<![!=?]\)\s*\)\@<=\<\%(until\|while\)\>" matchgroup=crystalOptionalDo end="\%(\<do\>\)" end="\ze\%(;\|$\)" oneline contains=ALLBUT,@crystalNotTop
-
-  SynFold 'for' syn region crystalRepeatExpression start="\<for\>[?!]\@!" start="\%(\%(^\|\.\.\.\=\|[{:,;([<>~\*/%&^|+-]\|\%(\<[_[:lower:]][_[:alnum:]]*\)\@<![!=?]\)\s*\)\@<=\<\%(until\|while\)\>" matchgroup=crystalRepeat end="\<end\>" contains=ALLBUT,@crystalNotTop nextgroup=crystalOptionalDoLine
+  SynFold 'macro' syn region crystalMacroBlock matchgroup=crystalMacroRegion start="\z(\\\=\){%\s*\%(\%(if\|for\|begin\)\>.*\|.*\<do\>\)\s*%}" end="\z1{%\s*end\s*%}" transparent contains=TOP
 
   if !exists('g:crystal_minlines')
     let g:crystal_minlines = 500
   endif
   exec 'syn sync minlines=' . g:crystal_minlines
-
 else
   " Non-expensive mode
   syn match crystalControl "\<def\>[?!]\@!"    nextgroup=crystalMethodDeclaration skipwhite skipnl
@@ -330,7 +331,7 @@ else
   syn match crystalControl "\<lib\>[?!]\@!"    nextgroup=crystalLibDeclaration skipwhite skipnl
   syn match crystalControl "\<macro\>[?!]\@!"  nextgroup=crystalMacroDeclaration skipwhite skipnl
   syn match crystalControl "\<enum\>[?!]\@!"   nextgroup=crystalEnumDeclaration skipwhite skipnl
-  syn match crystalControl "\<\%(case\|begin\|do\|for\|if\|ifdef\|unless\|while\|until\|else\|elsif\|ensure\|then\|when\|end\)\>[?!]\@!"
+  syn match crystalControl "\<\%(case\|begin\|do\|if\|ifdef\|unless\|while\|until\|else\|elsif\|ensure\|then\|when\|end\)\>[?!]\@!"
   syn match crystalKeyword "\<\%(alias\|undef\)\>[?!]\@!"
 endif
 
@@ -357,8 +358,20 @@ endif
 
 " Macro
 " Note: This definition must be put after crystalNestedCurlyBraces to give higher priority
-syn region crystalMacroRegion matchgroup=crystalMacroDelim start="\\\={%" end="%}" oneline display contains=ALLBUT,@crystalNotTop containedin=ALL
-syn region crystalMacroRegion matchgroup=crystalMacroDelim start="\\\={{" end="}}" oneline display contains=ALLBUT,@crystalNotTop containedin=ALL
+syn region crystalMacroRegion matchgroup=crystalMacroDelim start="\\\={%" end="%}" oneline display contains=TOP,@crystalExpensive containedin=ALL
+syn region crystalMacroRegion matchgroup=crystalMacroDelim start="\\\={{" end="}}" oneline display contains=TOP,@crystalExpensive containedin=ALL
+
+" Cluster for Expensive Mode groups that can't appear inside macro
+" regions
+syn cluster crystalExpensive contains=
+      \ crystalMethodBlock,crystalBlock,crystalDoBlock,crystalBlockExpression,crystalCaseExpression,
+      \ crystalSelectExpression,crystalConditionalExpression
+
+" Some keywords will have to be redefined for them to be highlighted
+" properly
+syn keyword crystalMacroKeyword contained containedin=crystalMacroRegion
+      \ if else elsif end for in begin do
+syn cluster crystalNotTop add=crystalMacroKeyword
 
 " Comments and Documentation
 syn match   crystalSharpBang "\%^#!.*" display
@@ -395,7 +408,6 @@ hi def link crystalConditionalModifier crystalConditional
 hi def link crystalExceptional         crystalConditional
 hi def link crystalRepeat              Repeat
 hi def link crystalRepeatModifier      crystalRepeat
-hi def link crystalOptionalDo          crystalRepeat
 hi def link crystalControl             Statement
 hi def link crystalInclude             Include
 hi def link crystalRecord              Statement
@@ -452,6 +464,7 @@ hi def link crystalRegexpComment        Comment
 hi def link crystalRegexp               crystalString
 hi def link crystalMacro                PreProc
 hi def link crystalMacroDelim           crystalMacro
+hi def link crystalMacroKeyword         crystalKeyword
 hi def link crystalLinkAttr             crystalMacro
 hi def link crystalError                Error
 hi def link crystalInvalidVariable      crystalError

@@ -32,7 +32,7 @@ set cpo&vim
 
 " Regex of syntax group names that are or delimit strings/symbols or are comments.
 let s:syng_strcom = '\<crystal\%(Regexp\|RegexpDelimiter\|RegexpEscape' .
-      \ '\|Symbol\|String\|StringDelimiter\|StringEscape\|ASCIICode' .
+      \ '\|Symbol\|String\|StringDelimiter\|StringEscape\|CharLiteral\|ASCIICode' .
       \ '\|Interpolation\|InterpolationDelimiter\|NoInterpolation\|Comment\|Documentation\)\>'
 
 " Regex of syntax group names that are strings.
