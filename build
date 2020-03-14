@@ -270,6 +270,7 @@ PACKS="
   rspec:keith/rspec.vim
   rst:marshallward/vim-restructuredtext
   ruby:vim-ruby/vim-ruby
+  rust-syntax:arzg/vim-rust-syntax-ext
   rust:rust-lang/rust.vim
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
