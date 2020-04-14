@@ -25,6 +25,8 @@ if exists('s:did_indent')
   let b:did_indent = s:did_indent
 endif
 
+runtime! indent/typescript.vim
+
 setlocal indentexpr=GetJsxIndent()
 setlocal indentkeys=0.,0{,0},0),0],0?,0\*,0\,,!^F,:,<:>,o,O,e,<>>,=*/
 

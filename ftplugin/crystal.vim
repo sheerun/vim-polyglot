@@ -5,6 +5,11 @@ if exists('b:did_ftplugin')
 endif
 let b:did_ftplugin = 1
 
+" This file is loaded on 'ecrystal' filetype
+if &filetype !=# 'crystal'
+  finish
+endif
+
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -74,6 +79,11 @@ endif
 
 if &l:ofu ==# ''
   setlocal omnifunc=crystal_lang#complete
+endif
+
+if exists('AutoPairsLoaded')
+  let b:AutoPairs = { '{%': '%}' }
+  call extend(b:AutoPairs, g:AutoPairs, 'force')
 endif
 
 let &cpo = s:save_cpo

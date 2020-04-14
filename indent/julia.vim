@@ -316,11 +316,17 @@ function GetJuliaIndent()
     " Second scenario: some multiline bracketed expression was closed in the
     " previous line. But since we know we are still in a bracketed expression,
     " we need to find the line where the bracket was open
-    elseif last_closed_bracket != -1 " && exists("loaded_matchit")
-      " we use the % command to skip back (this is buggy without matchit, and
-      " is potentially a disaster if % got remapped)
+    elseif last_closed_bracket != -1
+      " we use the % command to skip back (tries to ues matchit if possible,
+      " otherwise resorts to vim's default, which is buggy but better than
+      " nothing)
       call cursor(lnum, last_closed_bracket)
-      normal %
+      let percmap = maparg("%", "n") 
+      if exists("g:loaded_matchit") && percmap =~# 'Match\%(it\|_wrapper\)'
+        normal %
+      else
+        normal! %
+      end
       if line(".") == lnum
         " something wrong here, give up
         let ind = indent(lnum)

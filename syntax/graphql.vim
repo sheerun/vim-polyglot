@@ -1,6 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
 
-" Copyright (c) 2016-2019 Jon Parise <jon@indelible.org>
+" Copyright (c) 2016-2020 Jon Parise <jon@indelible.org>
 "
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to
@@ -24,7 +24,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
 " Maintainer: Jon Parise <jon@indelible.org>
 
 if exists('b:current_syntax')
-    finish
+  finish
 endif
 
 syn case match

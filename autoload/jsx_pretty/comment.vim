@@ -1,20 +1,20 @@
 if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
 
 function! jsx_pretty#comment#update_commentstring(original)
-  let syn_current = s:syn_name(line('.'), col('.'))
-  let syn_start = s:syn_name(line('.'), 1)
+  let line = getline(".")
+  let col = col('.')
+  if line !~# '^\s*$' && line[: col - 1] =~# '^\s*$'    " skip indent
+    let col = indent('.') + 1
+  endif
+  let syn_start = s:syn_name(line('.'), col)
   let save_cursor = getcurpos()
 
   if syn_start =~? '^jsx'
-    let line = getline(".")
-    let start = len(matchstr(line, '^\s*'))
-    let syn_name = s:syn_name(line('.'), start + 1)
-
     if line =~ '^\s*//'
       let &l:commentstring = '// %s'
-    elseif s:syn_contains(line('.'), col('.'), 'jsxTaggedRegion')
+    elseif s:syn_contains(line('.'), col, 'jsxTaggedRegion')
       let &l:commentstring = '<!-- %s -->'
-    elseif syn_name =~? '^jsxAttrib'
+    elseif syn_start =~? '^jsxAttrib'
       let &l:commentstring = '// %s'
     else
       let &l:commentstring = '{/* %s */}'

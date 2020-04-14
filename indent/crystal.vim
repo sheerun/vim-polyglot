@@ -6,431 +6,78 @@ if exists('b:did_indent')
 endif
 let b:did_indent = 1
 
-if !exists('g:crystal_indent_access_modifier_style')
-  " Possible values: "normal", "indent", "outdent"
-  let g:crystal_indent_access_modifier_style = 'normal'
-endif
-
 setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetCrystalIndent(v:lnum)
 setlocal indentkeys=0{,0},0),0],!^F,o,O,e,:,.
-setlocal indentkeys+==end,=else,=elsif,=when,=ensure,=rescue,==begin,==end
+setlocal indentkeys+==end,=else,=elsif,=when,=ensure,=rescue
 setlocal indentkeys+==private,=protected
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 " Only define the function once.
 if exists('*GetCrystalIndent')
   finish
 endif
 
-let s:cpo_save = &cpo
-set cpo&vim
+" Return the value of a single shift-width
+if exists('*shiftwidth')
+  let s:sw = function('shiftwidth')
+else
+  function s:sw()
+    return &shiftwidth
+  endfunction
+endif
 
-" 1. Variables {{{1
-" ============
-
-" Regex of syntax group names that are or delimit strings/symbols or are comments.
-let s:syng_strcom = '\<crystal\%(Regexp\|RegexpDelimiter\|RegexpEscape' .
-      \ '\|Symbol\|String\|StringDelimiter\|StringEscape\|CharLiteral\|ASCIICode' .
-      \ '\|Interpolation\|InterpolationDelimiter\|NoInterpolation\|Comment\|Documentation\)\>'
-
-" Regex of syntax group names that are strings.
-let s:syng_string =
-      \ '\<crystal\%(String\|Interpolation\|NoInterpolation\|StringEscape\)\>'
-
-" Regex of syntax group names that are strings or documentation.
-let s:syng_stringdoc =
-      \'\<crystal\%(String\|Interpolation\|NoInterpolation\|StringEscape\|Documentation\)\>'
-
-" Expression used to check whether we should skip a match with searchpair().
-let s:skip_expr =
-      \ "synIDattr(synID(line('.'),col('.'),1),'name') =~ '".s:syng_strcom."'"
-
-" Regex used for words that, at the start of a line, add a level of indent.
-let s:crystal_indent_keywords =
-      \ '^\s*\zs\<\%(\%(\%(private\|protected\)\s\+\)\=\%(abstract\s\+\)\=\%(class\|struct\)' .
-      \ '\|if\|for\|while\|until\|else\|elsif\|case\|when\|unless\|begin\|ensure\|rescue\|union' .
-      \ '\|\%(private\|protected\)\=\s*\%(def\|class\|struct\|module\|macro\|lib\|enum\)\):\@!\>' .
-      \ '\|\%([=,*/%+-]\|<<\|>>\|:\s\)\s*\zs' .
-      \ '\<\%(if\|for\|while\|until\|case\|unless\|begin\):\@!\>' .
-      \ '\|{%\s*\<\%(if\|for\|while\|until\|case\|unless\|begin\|else\|elsif\|when\)'
-
-" Regex used for words that, at the start of a line, remove a level of indent.
-let s:crystal_deindent_keywords =
-      \ '^\s*\zs\<\%(ensure\|else\|rescue\|elsif\|when\|end\):\@!\>' .
-      \ '\|{%\s*\<\%(ensure\|else\|rescue\|elsif\|when\|end\)\>'
-
-" Regex that defines the start-match for the 'end' keyword.
-" TODO: the do here should be restricted somewhat (only at end of line)?
-let s:end_start_regex =
-      \ '{%\s*\<\%(if\|for\|while\|until\|unless\|begin\)\>\|' .
-      \ '\C\%(^\s*\|[=,*/%+\-|;{]\|<<\|>>\|:\s\)\s*\zs' .
-      \ '\<\%(\%(\%(private\|protected\)\s\+\)\=\%(abstract\s\+\)\=\%(class\|struct\)' .
-      \ '\|if\|for\|while\|until\|case\|unless\|begin\|union' .
-      \ '\|\%(private\|protected\)\=\s*\%(def\|lib\|enum\|macro\|module\)\):\@!\>' .
-      \ '\|\%(^\|[^.:@$]\)\@<=\<do:\@!\>'
-
-" Regex that defines the middle-match for the 'end' keyword.
-let s:end_middle_regex =
-      \ '{%\s*\<\%(ensure\|else\|when\|elsif\)\>\s*%}\|' .
-      \ '\<\%(ensure\|else\|\%(\%(^\|;\)\s*\)\@<=\<rescue:\@!\>\|when\|elsif\):\@!\>'
-
-" Regex that defines the end-match for the 'end' keyword.
-let s:end_end_regex = '\%(^\|[^.:@$]\)\@<=\<end:\@!\>\|{%\s*\<\%(end\)\>'
-
-" Expression used for searchpair() call for finding match for 'end' keyword.
-let s:end_skip_expr = s:skip_expr .
-      \ ' || (expand("<cword>") == "do"' .
-      \ ' && getline(".") =~ "^\\s*\\<\\(while\\|until\\|for\\):\\@!\\>")'
-
-" Regex that defines continuation lines, not including (, {, or [.
-let s:non_bracket_continuation_regex = '\%([\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)\s*\%(#.*\)\=$'
-
-" Regex that defines continuation lines.
-let s:continuation_regex =
-      \ '\%(%\@<![({[\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)\s*\%(#.*\)\=$'
-
-" Regex that defines continuable keywords
-let s:continuable_regex =
-      \ '\C\%(^\s*\|[=,*/%+\-|;{]\|<<\|>>\|:\s\)\s*\zs' .
-      \ '\<\%(if\|for\|while\|until\|unless\):\@!\>'
-
-" Regex that defines bracket continuations
-let s:bracket_continuation_regex = '%\@<!\%([({[]\)\s*\%(#.*\)\=$'
-
-" Regex that defines end of bracket continuation followed by another continuation
-let s:bracket_switch_continuation_regex = '^\([^(]\+\zs).\+\)\+'.s:continuation_regex
-
-" Regex that defines the first part of a splat pattern
-let s:splat_regex = '[[,(]\s*\*\s*\%(#.*\)\=$'
-
-" Regex that defines blocks.
-"
-" Note that there's a slight problem with this regex and s:continuation_regex.
-" Code like this will be matched by both:
-"
-"   method_call do |(a, b)|
-"
-" The reason is that the pipe matches a hanging "|" operator.
-"
-let s:block_regex =
-      \ '\%(\<do:\@!\>\|%\@<!{\)\s*\%(|\s*(*\s*\%([*@&]\=\h\w*,\=\s*\)\%(,\s*(*\s*[*@&]\=\h\w*\s*)*\s*\)*|\)\=\s*\%(#.*\)\=$'
-
-let s:block_continuation_regex = '^\s*[^])}\t ].*'.s:block_regex
-
-" Regex that describes a leading operator (only a method call's dot for now)
-let s:leading_operator_regex = '^\s*[.]'
-
-" Regex that describes all indent access modifiers
-let s:access_modifier_regex = '\C^\s*\%(protected\|private\)\s*\%(#.*\)\=$'
-
-" 2. Auxiliary Functions {{{1
-" ======================
-
-" Check if the character at lnum:col is inside a string, comment, or is ascii.
-function s:IsInStringOrComment(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~# s:syng_strcom
-endfunction
-
-" Check if the character at lnum:col is inside a string.
-function s:IsInString(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~# s:syng_string
-endfunction
-
-" Check if the character at lnum:col is inside a string or documentation.
-function s:IsInStringOrDocumentation(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~# s:syng_stringdoc
-endfunction
-
-" Check if the character at lnum:col is inside a string delimiter
-function s:IsInStringDelimiter(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') ==# 'crystalStringDelimiter'
-endfunction
-
-" Find line above 'lnum' that isn't empty, in a comment, or in a string.
-function s:PrevNonBlankNonString(lnum)
-  let in_block = 0
-  let lnum = prevnonblank(a:lnum)
-  while lnum > 0
-    " Go in and out of blocks comments as necessary.
-    " If the line isn't empty (with opt. comment) or in a string, end search.
-    let line = getline(lnum)
-    if line =~# '^=begin'
-      if in_block
-        let in_block = 0
-      else
-        break
-      endif
-    elseif !in_block && line =~# '^=end'
-      let in_block = 1
-    elseif !in_block && line !~# '^\s*#.*$' && !(s:IsInStringOrComment(lnum, 1)
-          \ && s:IsInStringOrComment(lnum, strlen(line)))
-      break
-    endif
-    let lnum = prevnonblank(lnum - 1)
-  endwhile
-  return lnum
-endfunction
-
-" Find line above 'lnum' that started the continuation 'lnum' may be part of.
-function s:GetMSL(lnum)
-  " Start on the line we're at and use its indent.
-  let msl = a:lnum
-  let msl_body = getline(msl)
-  let lnum = s:PrevNonBlankNonString(a:lnum - 1)
-  while lnum > 0
-    " If we have a continuation line, or we're in a string, use line as MSL.
-    " Otherwise, terminate search as we have found our MSL already.
-    let line = getline(lnum)
-
-    if s:Match(msl, s:leading_operator_regex)
-      " If the current line starts with a leading operator, keep its indent
-      " and keep looking for an MSL.
-      let msl = lnum
-    elseif s:Match(lnum, s:splat_regex)
-      " If the above line looks like the "*" of a splat, use the current one's
-      " indentation.
-      "
-      " Example:
-      "   Hash[*
-      "     method_call do
-      "       something
-      "
-      return msl
-    elseif s:Match(lnum, s:non_bracket_continuation_regex) &&
-          \ s:Match(msl, s:non_bracket_continuation_regex)
-      " If the current line is a non-bracket continuation and so is the
-      " previous one, keep its indent and continue looking for an MSL.
-      "
-      " Example:
-      "   method_call one,
-      "     two,
-      "     three
-      "
-      let msl = lnum
-    elseif s:Match(lnum, s:non_bracket_continuation_regex) &&
-          \ (s:Match(msl, s:bracket_continuation_regex) || s:Match(msl, s:block_continuation_regex))
-      " If the current line is a bracket continuation or a block-starter, but
-      " the previous is a non-bracket one, respect the previous' indentation,
-      " and stop here.
-      "
-      " Example:
-      "   method_call one,
-      "     two {
-      "     three
-      "
-      return lnum
-    elseif s:Match(lnum, s:bracket_continuation_regex) &&
-          \ (s:Match(msl, s:bracket_continuation_regex) || s:Match(msl, s:block_continuation_regex))
-      " If both lines are bracket continuations (the current may also be a
-      " block-starter), use the current one's and stop here
-      "
-      " Example:
-      "   method_call(
-      "     other_method_call(
-      "       foo
-      return msl
-    elseif s:Match(lnum, s:block_regex) &&
-          \ !s:Match(msl, s:continuation_regex) &&
-          \ !s:Match(msl, s:block_continuation_regex)
-      " If the previous line is a block-starter and the current one is
-      " mostly ordinary, use the current one as the MSL.
-      "
-      " Example:
-      "   method_call do
-      "     something
-      "     something_else
-      return msl
-    else
-      let col = match(line, s:continuation_regex) + 1
-      if (col > 0 && !s:IsInStringOrComment(lnum, col))
-            \ || s:IsInString(lnum, strlen(line))
-        let msl = lnum
-      else
-        break
-      endif
-    endif
-
-    let msl_body = getline(msl)
-    let lnum = s:PrevNonBlankNonString(lnum - 1)
-  endwhile
-  return msl
-endfunction
-
-" Check if line 'lnum' has more opening brackets than closing ones.
-function s:ExtraBrackets(lnum)
-  let opening = {'parentheses': [], 'braces': [], 'brackets': []}
-  let closing = {'parentheses': [], 'braces': [], 'brackets': []}
-
-  let line = getline(a:lnum)
-  let pos  = match(line, '[][(){}]', 0)
-
-  " Save any encountered opening brackets, and remove them once a matching
-  " closing one has been found. If a closing bracket shows up that doesn't
-  " close anything, save it for later.
-  while pos != -1
-    if !s:IsInStringOrComment(a:lnum, pos + 1)
-      if line[pos] ==# '('
-        call add(opening.parentheses, {'type': '(', 'pos': pos})
-      elseif line[pos] ==# ')'
-        if empty(opening.parentheses)
-          call add(closing.parentheses, {'type': ')', 'pos': pos})
-        else
-          let opening.parentheses = opening.parentheses[0:-2]
-        endif
-      elseif line[pos] ==# '{'
-        call add(opening.braces, {'type': '{', 'pos': pos})
-      elseif line[pos] ==# '}'
-        if empty(opening.braces)
-          call add(closing.braces, {'type': '}', 'pos': pos})
-        else
-          let opening.braces = opening.braces[0:-2]
-        endif
-      elseif line[pos] ==# '['
-        call add(opening.brackets, {'type': '[', 'pos': pos})
-      elseif line[pos] ==# ']'
-        if empty(opening.brackets)
-          call add(closing.brackets, {'type': ']', 'pos': pos})
-        else
-          let opening.brackets = opening.brackets[0:-2]
-        endif
-      endif
-    endif
-
-    let pos = match(line, '[][(){}]', pos + 1)
-  endwhile
-
-  " Find the rightmost brackets, since they're the ones that are important in
-  " both opening and closing cases
-  let rightmost_opening = {'type': '(', 'pos': -1}
-  let rightmost_closing = {'type': ')', 'pos': -1}
-
-  for opening in opening.parentheses + opening.braces + opening.brackets
-    if opening.pos > rightmost_opening.pos
-      let rightmost_opening = opening
-    endif
-  endfor
-
-  for closing in closing.parentheses + closing.braces + closing.brackets
-    if closing.pos > rightmost_closing.pos
-      let rightmost_closing = closing
-    endif
-  endfor
-
-  return [rightmost_opening, rightmost_closing]
-endfunction
-
-function s:Match(lnum, regex)
-  let line   = getline(a:lnum)
-  let offset = match(line, '\C'.a:regex)
-  let col    = offset + 1
-
-  while offset > -1 && s:IsInStringOrComment(a:lnum, col)
-    let offset = match(line, '\C'.a:regex, offset + 1)
-    let col = offset + 1
-  endwhile
-
-  if offset > -1
-    return col
-  else
-    return 0
-  endif
-endfunction
-
-" Locates the containing class/module's definition line, ignoring nested classes
-" along the way.
-"
-function! s:FindContainingClass()
-  let saved_position = getpos('.')
-
-  while searchpair(s:end_start_regex, s:end_middle_regex, s:end_end_regex, 'bW',
-        \ s:end_skip_expr) > 0
-    if expand('<cword>') =~# '\<class\|module\>'
-      let found_lnum = line('.')
-      call setpos('.', saved_position)
-      return found_lnum
-    endif
-  endwhile
-
-  call setpos('.', saved_position)
-  return 0
-endfunction
-
-" 3. GetCrystalIndent Function {{{1
+" GetCrystalIndent Function {{{1
 " =========================
 
 function GetCrystalIndent(...)
-  " 3.1. Setup {{{2
-  " ----------
-
-  " The value of a single shift-width
-  if exists('*shiftwidth')
-    let sw = shiftwidth()
-  else
-    let sw = &sw
-  endif
+  " Setup {{{2
+  " -----
 
   " For the current line, use the first argument if given, else v:lnum
   let clnum = a:0 ? a:1 : v:lnum
 
-  " Set up variables for restoring position in file.  Could use clnum here.
-  let vcol = col('.')
+  " Set up variables for restoring position in file
+  let vcol = col(clnum)
 
-  " 3.2. Work on the current line {{{2
-  " -----------------------------
+  " Work on the current line {{{2
+  " ------------------------
 
   " Get the current line.
   let line = getline(clnum)
   let ind = -1
 
-  " If this line is an access modifier keyword, align according to the closest
-  " class declaration.
-  if g:crystal_indent_access_modifier_style ==? 'indent'
-    if s:Match(clnum, s:access_modifier_regex)
-      let class_line = s:FindContainingClass()
-      if class_line > 0
-        return indent(class_line) + sw
-      endif
-    endif
-  elseif g:crystal_indent_access_modifier_style ==? 'outdent'
-    if s:Match(clnum, s:access_modifier_regex)
-      let class_line = s:FindContainingClass()
-      if class_line > 0
-        return indent(class_line)
-      endif
-    endif
-  endif
-
   " If we got a closing bracket on an empty line, find its match and indent
   " according to it.  For parentheses we indent to its column - 1, for the
   " others we indent to the containing line's MSL's level.  Return -1 if fail.
   let col = matchend(line, '^\s*[]})]')
-  if col > 0 && !s:IsInStringOrComment(clnum, col)
+  if col > 0 && !crystal#indent#IsInStringOrComment(clnum, col)
     call cursor(clnum, col)
     let bs = strpart('(){}[]', stridx(')}]', line[col - 1]) * 2, 2)
-    if searchpair(escape(bs[0], '\['), '', bs[1], 'bW', s:skip_expr) > 0
+    if searchpair(escape(bs[0], '\['), '', bs[1], 'bW', g:crystal#indent#skip_expr)
       if line[col-1] ==# ')' && col('.') != col('$') - 1
         let ind = virtcol('.') - 1
       else
-        let ind = indent(s:GetMSL(line('.')))
+        let ind = indent(crystal#indent#GetMSL(line('.')))
       endif
     endif
     return ind
   endif
 
-  " If we have a =begin or =end set indent to first column.
-  if match(line, '^\s*\%(=begin\|=end\)$') != -1
-    return 0
-  endif
-
   " If we have a deindenting keyword, find its match and indent to its level.
   " TODO: this is messy
-  if s:Match(clnum, s:crystal_deindent_keywords)
+  if crystal#indent#Match(clnum, g:crystal#indent#crystal_deindent_keywords)
     call cursor(clnum, 1)
-    if searchpair(s:end_start_regex, s:end_middle_regex, s:end_end_regex, 'bW',
-          \ s:end_skip_expr) > 0
-      let msl  = s:GetMSL(line('.'))
+    if searchpair(
+          \ g:crystal#indent#end_start_regex,
+          \ g:crystal#indent#end_middle_regex,
+          \ g:crystal#indent#end_end_regex,
+          \ 'bW', g:crystal#indent#skip_expr)
+      let msl  = crystal#indent#GetMSL(line('.'))
       let line = getline(line('.'))
 
       if strpart(line, 0, col('.') - 1) =~# '=\s*$' &&
@@ -449,29 +96,29 @@ function GetCrystalIndent(...)
     return ind
   endif
 
-  " If we are in a multi-line string or line-comment, don't do anything to it.
-  if s:IsInStringOrDocumentation(clnum, matchend(line, '^\s*') + 1)
+  " If we are in a multi-line string, don't do anything to it.
+  if crystal#indent#IsInString(clnum, matchend(line, '^\s*') + 1)
     return indent('.')
   endif
 
   " If we are at the closing delimiter of a "<<" heredoc-style string, set the
   " indent to 0.
   if line =~# '^\k\+\s*$'
-        \ && s:IsInStringDelimiter(clnum, 1)
-        \ && search('\V<<'.line, 'nbW') > 0
+        \ && crystal#indent#IsInStringDelimiter(clnum, 1)
+        \ && search('\V<<'.line, 'nbW')
     return 0
   endif
 
   " If the current line starts with a leading operator, add a level of indent.
-  if s:Match(clnum, s:leading_operator_regex)
-    return indent(s:GetMSL(clnum)) + sw
+  if crystal#indent#Match(clnum, g:crystal#indent#leading_operator_regex)
+    return indent(crystal#indent#GetMSL(clnum)) + s:sw()
   endif
 
-  " 3.3. Work on the previous line. {{{2
-  " -------------------------------
+  " Work on the previous line. {{{2
+  " --------------------------
 
   " Find a non-blank, non-multi-line string line above the current line.
-  let lnum = s:PrevNonBlankNonString(clnum - 1)
+  let lnum = crystal#indent#PrevNonBlankNonString(clnum - 1)
 
   " If the line is empty and inside a string, use the previous line.
   if line =~# '^\s*$' && lnum != prevnonblank(clnum - 1)
@@ -487,33 +134,34 @@ function GetCrystalIndent(...)
   let line = getline(lnum)
   let ind = indent(lnum)
 
-  if s:Match(lnum, s:continuable_regex) && s:Match(lnum, s:continuation_regex)
-    return indent(s:GetMSL(lnum)) + sw + sw
+  if crystal#indent#Match(lnum, g:crystal#indent#continuable_regex) &&
+        \ crystal#indent#Match(lnum, g:crystal#indent#continuation_regex)
+    return indent(crystal#indent#GetMSL(lnum)) + s:sw() * 2
   endif
 
   " If the previous line ended with a block opening, add a level of indent.
-  if s:Match(lnum, s:block_regex)
-    let msl = s:GetMSL(lnum)
+  if crystal#indent#Match(lnum, g:crystal#indent#block_regex)
+    let msl = crystal#indent#GetMSL(lnum)
 
     if getline(msl) =~# '=\s*\(#.*\)\=$'
       " in the case of assignment to the msl, align to the starting line,
       " not to the msl
-      let ind = indent(lnum) + sw
+      let ind = indent(lnum) + s:sw()
     else
-      let ind = indent(msl) + sw
+      let ind = indent(msl) + s:sw()
     endif
     return ind
   endif
 
   " If the previous line started with a leading operator, use its MSL's level
   " of indent
-  if s:Match(lnum, s:leading_operator_regex)
-    return indent(s:GetMSL(lnum))
+  if crystal#indent#Match(lnum, g:crystal#indent#leading_operator_regex)
+    return indent(crystal#indent#GetMSL(lnum))
   endif
 
   " If the previous line ended with the "*" of a splat, add a level of indent
-  if line =~ s:splat_regex
-    return indent(lnum) + sw
+  if line =~ g:crystal#indent#splat_regex
+    return indent(lnum) + s:sw()
   endif
 
   " If the previous line contained unclosed opening brackets and we are still
@@ -523,25 +171,25 @@ function GetCrystalIndent(...)
   " If it contained hanging closing brackets, find the rightmost one, find its
   " match and indent according to that.
   if line =~# '[[({]' || line =~# '[])}]\s*\%(#.*\)\=$'
-    let [opening, closing] = s:ExtraBrackets(lnum)
+    let [opening, closing] = crystal#indent#ExtraBrackets(lnum)
 
     if opening.pos != -1
-      if opening.type ==# '(' && searchpair('(', '', ')', 'bW', s:skip_expr) > 0
+      if opening.type ==# '(' && searchpair('(', '', ')', 'bW', g:crystal#indent#skip_expr)
         if col('.') + 1 == col('$')
-          return ind + sw
+          return ind + s:sw()
         else
           return virtcol('.')
         endif
       else
         let nonspace = matchend(line, '\S', opening.pos + 1) - 1
-        return nonspace > 0 ? nonspace : ind + sw
+        return nonspace > 0 ? nonspace : ind + s:sw()
       endif
     elseif closing.pos != -1
       call cursor(lnum, closing.pos + 1)
       normal! %
 
-      if s:Match(line('.'), s:crystal_indent_keywords)
-        return indent('.') + sw
+      if crystal#indent#Match(line('.'), g:crystal#indent#crystal_indent_keywords)
+        return indent('.') + s:sw()
       else
         return indent('.')
       endif
@@ -552,14 +200,18 @@ function GetCrystalIndent(...)
 
   " If the previous line ended with an "end", match that "end"s beginning's
   " indent.
-  let col = s:Match(lnum, '\%(^\|[^.:@$]\)\<end\>\s*\%(#.*\)\=$')
-  if col > 0
+  let col = crystal#indent#Match(lnum, g:crystal#indent#end_end_regex)
+  if col
     call cursor(lnum, col)
-    if searchpair(s:end_start_regex, '', s:end_end_regex, 'bW',
-          \ s:end_skip_expr) > 0
+    if searchpair(
+          \ g:crystal#indent#end_start_regex,
+          \ g:crystal#indent#end_middle_regex,
+          \ g:crystal#indent#end_end_regex,
+          \ 'bW',
+          \ g:crystal#indent#skip_expr)
       let n = line('.')
       let ind = indent('.')
-      let msl = s:GetMSL(n)
+      let msl = crystal#indent#GetMSL(n)
       if msl != n
         let ind = indent(msl)
       end
@@ -567,34 +219,35 @@ function GetCrystalIndent(...)
     endif
   end
 
-  let col = s:Match(lnum, s:crystal_indent_keywords)
-  if col > 0
+  let col = crystal#indent#Match(lnum, g:crystal#indent#crystal_indent_keywords)
+  if col
     call cursor(lnum, col)
-    let ind = virtcol('.') - 1 + sw
+    let ind = virtcol('.') - 1 + s:sw()
     " TODO: make this better (we need to count them) (or, if a searchpair
     " fails, we know that something is lacking an end and thus we indent a
     " level
-    if s:Match(lnum, s:end_end_regex)
+    if crystal#indent#Match(lnum, g:crystal#indent#end_end_regex)
       let ind = indent('.')
     endif
     return ind
   endif
 
-  " 3.4. Work on the MSL line. {{{2
-  " --------------------------
+  " Work on the MSL line. {{{2
+  " ---------------------
 
   " Set up variables to use and search for MSL to the previous line.
   let p_lnum = lnum
-  let lnum = s:GetMSL(lnum)
+  let lnum = crystal#indent#GetMSL(lnum)
 
   " If the previous line wasn't a MSL.
   if p_lnum != lnum
     " If previous line ends bracket and begins non-bracket continuation decrease indent by 1.
-    if s:Match(p_lnum, s:bracket_switch_continuation_regex)
+    if crystal#indent#Match(p_lnum, g:crystal#indent#bracket_switch_continuation_regex)
       return ind - 1
     " If previous line is a continuation return its indent.
-    " TODO: the || s:IsInString() thing worries me a bit.
-    elseif s:Match(p_lnum, s:non_bracket_continuation_regex) || s:IsInString(p_lnum,strlen(line))
+    " TODO: the || crystal#indent#IsInString() thing worries me a bit.
+    elseif crystal#indent#Match(p_lnum, g:crystal#indent#non_bracket_continuation_regex) ||
+          \ crystal#indent#IsInString(p_lnum,strlen(line))
       return ind
     endif
   endif
@@ -606,19 +259,21 @@ function GetCrystalIndent(...)
   " If the MSL line had an indenting keyword in it, add a level of indent.
   " TODO: this does not take into account contrived things such as
   " module Foo; class Bar; end
-  if s:Match(lnum, s:crystal_indent_keywords)
-    let ind = msl_ind + sw
-    if s:Match(lnum, s:end_end_regex)
-      let ind = ind - sw
+  if crystal#indent#Match(lnum, g:crystal#indent#crystal_indent_keywords)
+    let ind = msl_ind + s:sw()
+    if crystal#indent#Match(lnum, g:crystal#indent#end_end_regex)
+      let ind = ind - s:sw()
     endif
     return ind
   endif
 
-  " If the previous line ended with [*+/.,-=], but wasn't a block ending or a
-  " closing bracket, indent one extra level.
-  if s:Match(lnum, s:non_bracket_continuation_regex) && !s:Match(lnum, '^\s*\([\])}]\|end\)')
+  " If the previous line ended with an operator -- but wasn't a block
+  " ending, closing bracket, or type declaration -- indent one extra
+  " level.
+  if crystal#indent#Match(lnum, g:crystal#indent#non_bracket_continuation_regex) &&
+        \ !crystal#indent#Match(lnum, '^\s*\([\])}]\|end\)')
     if lnum == p_lnum
-      let ind = msl_ind + sw
+      let ind = msl_ind + s:sw()
     else
       let ind = msl_ind
     endif

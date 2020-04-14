@@ -69,9 +69,9 @@ syn match i3ConfigModifier /\w\++\w\+\(\(+\w\+\)\+\)\?/ contained contains=i3Con
 syn match i3ConfigNumber /\s\d\+/ contained
 syn match i3ConfigUnit /\sp\(pt\|x\)/ contained
 syn match i3ConfigUnitOr /\sor/ contained
-syn keyword i3ConfigBindKeyword bindsym bindcode exec gaps contained
+syn keyword i3ConfigBindKeyword bindsym bindcode exec gaps border contained
 syn match i3ConfigBindArgument /--\w\+\(\(-\w\+\)\+\)\?\s/ contained
-syn match i3ConfigBind /^\s*\(bindsym\|bindcode\)\s\+.*$/ contains=i3ConfigVariable,i3ConfigBindKeyword,i3ConfigVariableAndModifier,i3ConfigNumber,i3ConfigUnit,i3ConfigUnitOr,i3ConfigBindArgument,i3ConfigModifier,i3ConfigAction,i3ConfigString,i3ConfigGapStyleKeyword
+syn match i3ConfigBind /^\s*\(bindsym\|bindcode\)\s\+.*$/ contains=i3ConfigVariable,i3ConfigBindKeyword,i3ConfigVariableAndModifier,i3ConfigNumber,i3ConfigUnit,i3ConfigUnitOr,i3ConfigBindArgument,i3ConfigModifier,i3ConfigAction,i3ConfigString,i3ConfigGapStyleKeyword,i3ConfigBorderStyleKeyword
 
 " Floating
 syn keyword i3ConfigSizeSpecial x contained
@@ -90,7 +90,7 @@ syn match i3ConfigLayout /^\s*workspace_layout\s\+\(default\|stacking\|tabbed\)\
 
 " Border style
 syn keyword i3ConfigBorderStyleKeyword none normal pixel contained
-syn match i3ConfigBorderStyle /^\s*\(new_window\|new_float\|default_border\|default_floating_border\)\s\+\(none\|\(normal\|pixel\)\(\s\+\d\+\)\?\)\s\?$/ contains=i3ConfigBorderStyleKeyword,i3ConfigNumber
+syn match i3ConfigBorderStyle /^\s*\(new_window\|new_float\|default_border\|default_floating_border\)\s\+\(none\|\(normal\|pixel\)\(\s\+\d\+\)\?\(\s\+\$\w\+\(\(-\w\+\)\+\)\?\(\s\|+\)\?\)\?\)\s\?$/ contains=i3ConfigBorderStyleKeyword,i3ConfigNumber,i3ConfigVariable
 
 " Hide borders and edges
 syn keyword i3ConfigEdgeKeyword none vertical horizontal both smart smart_no_gaps contained

@@ -20,11 +20,11 @@ if exists("loaded_matchup")
   let b:match_skip = 's:comment\|string'
 endif
 
-let b:original_commentstring = &l:commentstring
+let b:jsx_pretty_old_cms = &l:commentstring
 
 augroup jsx_comment
   autocmd! CursorMoved <buffer>
-  autocmd CursorMoved <buffer> call jsx_pretty#comment#update_commentstring(b:original_commentstring)
+  autocmd CursorMoved <buffer> call jsx_pretty#comment#update_commentstring(b:jsx_pretty_old_cms)
 augroup end
 
 setlocal suffixesadd+=.tsx

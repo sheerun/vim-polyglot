@@ -7,7 +7,6 @@ setlocal foldexpr=fish#Fold()
 setlocal formatoptions+=ron1
 setlocal formatoptions-=t
 setlocal include=\\v^\\s*\\.>
-setlocal iskeyword=@,48-57,-,_,.,/
 setlocal suffixesadd^=.fish
 
 " Use the 'j' format option when available.

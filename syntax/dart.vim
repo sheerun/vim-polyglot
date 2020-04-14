@@ -5,14 +5,14 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
 " for details. All rights reserved. Use of this source code is governed by a
 " BSD-style license that can be found in the LICENSE file.
 
-if !exists("g:main_syntax")
-  if version < 600
+if !exists('g:main_syntax')
+  if v:version < 600
     syntax clear
-  elseif exists("b:current_syntax")
+  elseif exists('b:current_syntax')
     finish
   endif
   let g:main_syntax = 'dart'
-  syntax region dartFold start="{" end="}" transparent fold
+  syntax region dartFold start='{' end='}' transparent fold
 endif
 
 " Ensure long multiline strings are highlighted.
@@ -25,7 +25,7 @@ syntax keyword dartConditional    if else switch
 syntax keyword dartRepeat         do while for
 syntax keyword dartBoolean        true false
 syntax keyword dartConstant       null
-syntax keyword dartTypedef        this super class typedef enum mixin
+syntax keyword dartTypedef        this super class typedef enum mixin extension
 syntax keyword dartOperator       new is as in
 syntax match   dartOperator       "+=\=\|-=\=\|*=\=\|/=\=\|%=\=\|\~/=\=\|<<=\=\|>>=\=\|[<>]=\=\|===\=\|\!==\=\|&=\=\|\^=\=\||=\=\|||\|&&\|\[\]=\=\|=>\|!\|\~\|?\|:"
 syntax keyword dartCoreType       void var dynamic
@@ -42,9 +42,9 @@ syntax match   dartUserLabelRef   "\k\+" contained
 syntax region  dartLabelRegion   transparent matchgroup=dartLabel start="\<case\>" matchgroup=NONE end=":"
 syntax keyword dartLabel         default
 
-syntax match   dartLibrary       "^\(import\|export\)\>" nextgroup=dartUri skipwhite
-syntax region  dartUri           contained start=+r\=\z(["']\)+ end=+\z1+ nextgroup=dartCombinators skipwhite
-syntax region  dartCombinators   contained start="" end=";" contains=dartCombinator
+syntax match   dartLibrary       "^\(import\|export\)\>" nextgroup=dartUri skipwhite skipnl
+syntax region  dartUri           contained start=+r\=\z(["']\)+ end=+\z1+ nextgroup=dartCombinators skipwhite skipnl
+syntax region  dartCombinators   contained start="" end=";" contains=dartCombinator,dartComment,dartLineComment
 syntax keyword dartCombinator    contained show hide deferred as
 syntax match   dartLibrary       "^\(library\|part of\|part\)\>"
 
@@ -136,8 +136,8 @@ highlight default link dartUserType        dartType
 highlight default link dartType            Type
 highlight default link dartFunction        Function
 
-let b:current_syntax = "dart"
-let b:spell_options = "contained"
+let b:current_syntax = 'dart'
+let b:spell_options = 'contained'
 
 if g:main_syntax is# 'dart'
   unlet g:main_syntax

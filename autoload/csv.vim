@@ -69,6 +69,10 @@ fu! csv#Init(start, end, ...) "{{{3
     else
         let b:csv_cmt = split(g:csv_comment, '%s')
     endif
+    " Make sure it is a list with 2 chars
+    if b:csv_cmt == []
+        let b:csv_cmt = ["", ""]
+    endif
 
     if empty(b:delimiter) && !exists("b:csv_fixed_width")
         call csv#Warn("No delimiter found. See :h csv-delimiter to set it manually!")

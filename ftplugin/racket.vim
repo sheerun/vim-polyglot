@@ -55,8 +55,6 @@ endfunction
 
 vnoremap <buffer> K :call <SID>Racket_visual_doc()<cr>
 
-nnoremap <buffer> <f9> :!racket -t %<cr>
-
 "setl commentstring=;;%s
 setl commentstring=#\|\ %s\ \|#
 

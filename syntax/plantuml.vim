@@ -39,16 +39,16 @@ syntax keyword plantumlTypeKeyword concise robust
 " Since "syntax keyword" can handle only words, "top to bottom direction" is excluded.
 syntax keyword plantumlKeyword accross activate again allow_mixing allowmixing also alt as autonumber bottom
 syntax keyword plantumlKeyword box break caption center create critical deactivate destroy down else elseif end
-syntax keyword plantumlKeyword endif endwhile footbox footer fork group header hide hnote if is kill left in at are to the and
+syntax keyword plantumlKeyword endif endwhile footbox footer fork group header hide hnote if is kill left
 syntax keyword plantumlKeyword legend link loop mainframe namespace newpage note of on opt order over package
 syntax keyword plantumlKeyword page par partition ref repeat return right rnote rotate show skin skinparam
-syntax keyword plantumlKeyword start stop title top up while
+syntax keyword plantumlKeyword split start stereotype stop title top up while
 "}}}
 " Not in 'java - jar plantuml.jar - language' results
-syntax keyword plantumlKeyword endlegend split sprite then
+syntax keyword plantumlKeyword endlegend sprite then
 " gantt
 syntax keyword plantumlTypeKeyword project monday tuesday wednesday thursday friday saturday sunday
-syntax keyword plantumlKeyword starts ends start end closed day after colored lasts happens
+syntax keyword plantumlKeyword starts ends start end closed day after colored lasts happens in at are to the and
 
 
 syntax keyword plantumlCommentTODO XXX TODO FIXME NOTE contained
@@ -278,7 +278,7 @@ syntax keyword plantumlSkinparamKeyword ParticipantStereotypeFontName Participan
 syntax keyword plantumlSkinparamKeyword ParticipantStereotypeFontStyle PartitionBackgroundColor PartitionBorderColor
 syntax keyword plantumlSkinparamKeyword PartitionBorderThickness PartitionFontColor PartitionFontName PartitionFontSize
 syntax keyword plantumlSkinparamKeyword PartitionFontStyle PathHoverColor QueueBackgroundColor QueueBorderColor
-syntax keyword plantumlSkinparamKeyword QueueFontColor QueueFontName QueueFontSize QueueFontStyle
+syntax keyword plantumlSkinparamKeyword QueueBorderThickness QueueFontColor QueueFontName QueueFontSize QueueFontStyle
 syntax keyword plantumlSkinparamKeyword QueueStereotypeFontColor QueueStereotypeFontName QueueStereotypeFontSize
 syntax keyword plantumlSkinparamKeyword QueueStereotypeFontStyle Ranksep RectangleBackgroundColor RectangleBorderColor
 syntax keyword plantumlSkinparamKeyword RectangleBorderThickness RectangleFontColor RectangleFontName RectangleFontSize
@@ -310,9 +310,8 @@ syntax keyword plantumlSkinparamKeyword SequenceReferenceBorderThickness Sequenc
 syntax keyword plantumlSkinparamKeyword SequenceReferenceFontName SequenceReferenceFontSize SequenceReferenceFontStyle
 syntax keyword plantumlSkinparamKeyword SequenceReferenceHeaderBackgroundColor SequenceStereotypeFontColor
 syntax keyword plantumlSkinparamKeyword SequenceStereotypeFontName SequenceStereotypeFontSize
-syntax keyword plantumlSkinparamKeyword SequenceStereotypeFontStyle SequenceTitleFontColor SequenceTitleFontName
-syntax keyword plantumlSkinparamKeyword SequenceTitleFontSize SequenceTitleFontStyle Shadowing StackBackgroundColor
-syntax keyword plantumlSkinparamKeyword StackBorderColor StackFontColor StackFontName StackFontSize StackFontStyle
+syntax keyword plantumlSkinparamKeyword SequenceStereotypeFontStyle Shadowing StackBackgroundColor StackBorderColor
+syntax keyword plantumlSkinparamKeyword StackFontColor StackFontName StackFontSize StackFontStyle
 syntax keyword plantumlSkinparamKeyword StackStereotypeFontColor StackStereotypeFontName StackStereotypeFontSize
 syntax keyword plantumlSkinparamKeyword StackStereotypeFontStyle StateAttributeFontColor StateAttributeFontName
 syntax keyword plantumlSkinparamKeyword StateAttributeFontSize StateAttributeFontStyle StateBackgroundColor

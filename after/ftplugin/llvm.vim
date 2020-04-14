@@ -57,7 +57,7 @@ function! s:is_section_delim(line, func_delim) abort
         return 0
     endif
     let kind = sec[0]
-    return kind == s:KIND_BLOCK_PREC || kind == s:KIND_BLOCK_FOLLOW || kind == func_delim
+    return kind == s:KIND_BLOCK_PREC || kind == s:KIND_BLOCK_FOLLOW || kind == a:func_delim
 endfunction
 
 function! s:next_section(stop_func_begin) abort
@@ -85,11 +85,16 @@ function! s:prev_section(stop_func_begin) abort
     endwhile
 endfunction
 
+nnoremap <buffer><Plug>(llvm-next-section-begin) :<C-u>call <SID>next_section(1)<CR>
+nnoremap <buffer><Plug>(llvm-prev-section-begin) :<C-u>call <SID>prev_section(1)<CR>
+nnoremap <buffer><Plug>(llvm-next-section-end) :<C-u>call <SID>next_section(0)<CR>
+nnoremap <buffer><Plug>(llvm-prev-section-end) :<C-u>call <SID>prev_section(0)<CR>
+
 if !g:llvm_ext_no_mapping
-    nnoremap <buffer><silent>]] :<C-u>call <SID>next_section(1)<CR>
-    nnoremap <buffer><silent>[[ :<C-u>call <SID>prev_section(1)<CR>
-    nnoremap <buffer><silent>][ :<C-u>call <SID>next_section(0)<CR>
-    nnoremap <buffer><silent>[] :<C-u>call <SID>prev_section(0)<CR>
+    nmap <buffer><silent>]] <Plug>(llvm-next-section-begin)
+    nmap <buffer><silent>[[ <Plug>(llvm-prev-section-begin)
+    nmap <buffer><silent>][ <Plug>(llvm-next-section-end)
+    nmap <buffer><silent>[] <Plug>(llvm-prev-section-end)
 endif
 
 function! s:function_range_at(linum) abort
@@ -222,9 +227,12 @@ function! s:move_to_following_block() abort
     endtry
 endfunction
 
+nnoremap <buffer><Plug>(llvm-move-block-prev) :<C-u>call <SID>move_to_pred_block()<CR>
+nnoremap <buffer><Plug>(llvm-move-block-next) :<C-u>call <SID>move_to_following_block()<CR>
+
 if !g:llvm_ext_no_mapping
-    nnoremap <buffer><silent>[b :<C-u>call <SID>move_to_pred_block()<CR>
-    nnoremap <buffer><silent>]b :<C-u>call <SID>move_to_following_block()<CR>
+    nmap <buffer><silent>[b <Plug>(llvm-move-block-prev)
+    nmap <buffer><silent>]b <Plug>(llvm-move-block-next)
 endif
 
 function! s:get_func_identifiers(line) abort
@@ -438,8 +446,10 @@ function! s:goto_definition() abort
     echom "No definition for '" . ident . "' found"
 endfunction
 
+nnoremap <buffer><Plug>(llvm-goto-definition) :<C-u>call <SID>goto_definition()<CR>
+
 if !g:llvm_ext_no_mapping
-    nnoremap <buffer><silent>K :<C-u>call <SID>goto_definition()<CR>
+    nmap <buffer><silent>K <Plug>(llvm-goto-definition)
 endif
 
 function! s:run_lli(...) abort

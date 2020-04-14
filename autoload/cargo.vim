@@ -102,6 +102,22 @@ function! cargo#bench(args)
     call cargo#cmd("bench " . a:args)
 endfunction
 
+function! cargo#update(args)
+    call cargo#cmd("update " . a:args)
+endfunction
+
+function! cargo#search(args)
+    call cargo#cmd("search " . a:args)
+endfunction
+
+function! cargo#publish(args)
+    call cargo#cmd("publish " . a:args)
+endfunction
+
+function! cargo#install(args)
+    call cargo#cmd("install " . a:args)
+endfunction
+
 function! cargo#runtarget(args)
     let l:filename = expand('%:p')
     let l:read_manifest = system('cargo read-manifest')

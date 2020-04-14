@@ -161,7 +161,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [smt2](https://github.com/bohlender/vim-smt2) (syntax, autoload, ftplugin)
 - [solidity](https://github.com/tomlion/vim-solidity) (syntax, indent, ftplugin)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin)
-- [svelte](https://github.com/evanleck/vim-svelte) (syntax, indent)
+- [svelte](https://github.com/evanleck/vim-svelte) (syntax, indent, ftplugin)
 - [svg-indent](https://github.com/jasonshell/vim-svg-indent) (indent)
 - [svg](https://github.com/vim-scripts/svg.vim) (syntax)
 - [swift](https://github.com/keith/swift.vim) (syntax, indent, compiler, ftplugin, ctags)

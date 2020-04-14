@@ -38,7 +38,8 @@ syn keyword racketSyntax define define-values define-syntax define-syntaxes
 syn keyword racketSyntax define-for-syntax define-require-syntax define-provide-syntax
 syn keyword racketSyntax define-syntax-rule
 syn keyword racketSyntax define-record-type
-syn keyword racketSyntax begin begin0 begin-for-syntax
+syn keyword racketSyntax begin begin0
+syn keyword racketSyntax begin-for-syntax
 syn keyword racketSyntax when unless
 syn keyword racketSyntax set! set!-values
 syn keyword racketSyntax for for/list for/vector for/hash for/hasheq for/hasheqv

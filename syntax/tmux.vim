@@ -1,7 +1,7 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
 
 " Language: tmux(1) configuration file
-" Version: 3.0 (git-48cbbb87)
+" Version: 3.1 (git-f986539e)
 " URL: https://github.com/ericpruitt/tmux.vim/
 " Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
 " License: 2-Clause BSD (http://opensource.org/licenses/BSD-2-Clause)
@@ -39,7 +39,7 @@ syn region tmuxString start=+'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end='$' 
 
 " TODO: Figure out how escaping works inside of #(...) and #{...} blocks.
 syn region tmuxFormatString start=/#[#DFhHIPSTW]/ end=// contained keepend
-syn region tmuxFormatString start=/#{/ skip=/#{.\{-}}/ end=/}/ contained keepend
+syn region tmuxFormatString start=/#{/ skip=/#{.\{-}}/ end=/}/ keepend
 syn region tmuxFormatString start=/#(/ skip=/#(.\{-})/ end=/)/ contained keepend
 
 hi def link tmuxFormatString      Identifier
@@ -94,25 +94,26 @@ syn keyword tmuxCommands
 \ attach attach-session bind bind-key break-pane breakp capture-pane
 \ capturep choose-buffer choose-client choose-tree clear-history clearhist
 \ clock-mode command-prompt confirm confirm-before copy-mode detach
-\ detach-client display display-menu display-message display-panes displayp
-\ find-window findw if if-shell join-pane joinp kill-pane kill-server
-\ kill-session kill-window killp has-session has killw link-window linkw
-\ list-buffers list-clients list-commands list-keys list-panes list-sessions
-\ list-windows load-buffer loadb lock lock-client lock-server lock-session
-\ lockc last-pane lastp locks ls last-window last lsb lsc delete-buffer
-\ deleteb lscm lsk lsp lsw menu move-pane move-window movep movew new
-\ new-session new-window neww next next-layout next-window nextl
-\ paste-buffer pasteb pipe-pane pipep prev previous-layout previous-window
-\ prevl refresh refresh-client rename rename-session rename-window renamew
-\ resize-pane resize-window resizep resizew respawn-pane respawn-window
-\ respawnp respawnw rotate-window rotatew run run-shell save-buffer saveb
-\ select-layout select-pane select-window selectl selectp selectw send
-\ send-keys send-prefix set set-buffer set-environment set-hook set-option
-\ set-window-option setb setenv setw show show-buffer show-environment
-\ show-hooks show-messages show-options show-window-options showb showenv
-\ showmsgs showw source source-file split-window splitw start start-server
-\ suspend-client suspendc swap-pane swap-window swapp swapw switch-client
-\ switchc unbind unbind-key unlink-window unlinkw wait wait-for
+\ detach-client display display-menu display-message display-panes
+\ display-popup displayp find-window findw if if-shell join-pane joinp
+\ kill-pane kill-server kill-session kill-window killp has-session has killw
+\ link-window linkw list-buffers list-clients list-commands list-keys
+\ list-panes list-sessions list-windows load-buffer loadb lock lock-client
+\ lock-server lock-session lockc last-pane lastp locks ls last-window last
+\ lsb lsc delete-buffer deleteb lscm lsk lsp lsw menu move-pane move-window
+\ movep movew new new-session new-window neww next next-layout next-window
+\ nextl paste-buffer pasteb pipe-pane pipep popup prev previous-layout
+\ previous-window prevl refresh refresh-client rename rename-session
+\ rename-window renamew resize-pane resize-window resizep resizew
+\ respawn-pane respawn-window respawnp respawnw rotate-window rotatew run
+\ run-shell save-buffer saveb select-layout select-pane select-window
+\ selectl selectp selectw send send-keys send-prefix set set-buffer
+\ set-environment set-hook set-option set-window-option setb setenv setw
+\ show show-buffer show-environment show-hooks show-messages show-options
+\ show-window-options showb showenv showmsgs showw source source-file
+\ split-window splitw start start-server suspend-client suspendc swap-pane
+\ swap-window swapp swapw switch-client switchc unbind unbind-key
+\ unlink-window unlinkw wait wait-for
 
 let &cpo = s:original_cpo
 unlet! s:original_cpo s:bg s:i

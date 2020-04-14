@@ -12,7 +12,7 @@ setlocal indentexpr=DartIndent()
 
 let b:undo_indent = 'setl cin< cino<'
 
-if exists("*DartIndent")
+if exists('*DartIndent')
   finish
 endif
 

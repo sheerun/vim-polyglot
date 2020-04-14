@@ -10,6 +10,10 @@ if exists("loaded_matchit") && !exists('b:tsx_match_words')
     \ : b:tsx_match_words
 endif
 
+" Comment formatting
+setlocal comments=s1:/*,mb:*,ex:*/,://
+setlocal formatoptions-=t formatoptions+=croql
+
 set suffixesadd+=.tsx
 
 endif

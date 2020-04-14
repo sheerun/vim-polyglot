@@ -5,9 +5,9 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ocaml') == -1
 " Maintainer:  Markus Mottl <markus.mottl@gmail.com>
 " URL:         http://www.ocaml.info/vim/compiler/ocaml.vim
 " Last Change:
+"              2020 Mar 28 - Improved error format (Thomas Leonard)
 "              2017 Nov 26 - Improved error format (Markus Mottl)
 "              2013 Aug 27 - Added a new OCaml error format (Markus Mottl)
-"              2013 Jun 30 - Initial version (Marc Weber)
 "
 " Marc Weber's comments:
 " Setting makeprg doesn't make sense, because there is ocamlc, ocamlopt,
@@ -33,6 +33,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 CompilerSet errorformat =
+      \%EFile\ \"%f\"\\,\ lines\ %*\\d-%l\\,\ characters\ %c-%*\\d:,
       \%EFile\ \"%f\"\\,\ line\ %l\\,\ characters\ %c-%*\\d:,
       \%EFile\ \"%f\"\\,\ line\ %l\\,\ characters\ %c-%*\\d\ %.%#,
       \%EFile\ \"%f\"\\,\ line\ %l\\,\ character\ %c:%m,

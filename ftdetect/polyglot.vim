@@ -111,7 +111,7 @@ function! s:isAnsible()
   let filename = expand("%:t")
   if filepath =~ '\v/(tasks|roles|handlers)/.*\.ya?ml$' | return 1 | en
   if filepath =~ '\v/(group|host)_vars/' | return 1 | en
-  if filename =~ '\v(playbook|site|main|local)\.ya?ml$' | return 1 | en
+  if filename =~ '\v(playbook|site|main|local|requirements)\.ya?ml$' | return 1 | en
 
   let shebang = getline(1)
   if shebang =~# '^#!.*/bin/env\s\+ansible-playbook\>' | return 1 | en
@@ -260,7 +260,14 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
 " vint: -ProhibitAutocmdWithNoGroup
 autocmd BufNewFile,BufReadPost *.cr setlocal filetype=crystal
 autocmd BufNewFile,BufReadPost Projectfile setlocal filetype=crystal
-autocmd BufNewFile,BufReadPost *.ecr setlocal filetype=eruby
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
+  augroup filetypedetect
+  " crystal, from ecrystal.vim in rhysd/vim-crystal
+" vint: -ProhibitAutocmdWithNoGroup
+autocmd BufNewFile,BufReadPost *.ecr setlocal filetype=ecrystal
   augroup end
 endif
 
@@ -290,16 +297,18 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dart') == -1
   augroup filetypedetect
   " dart, from dart.vim in dart-lang/dart-vim-plugin
-autocmd BufRead,BufNewFile *.dart set filetype=dart
+augroup dart-vim-plugin-ftdetec
+  autocmd!
+  autocmd BufRead,BufNewFile *.dart set filetype=dart
+  autocmd BufRead * call s:DetectShebang()
+augroup END
 
 function! s:DetectShebang()
   if did_filetype() | return | endif
-  if getline(1) == '#!/usr/bin/env dart'
+  if getline(1) ==# '#!/usr/bin/env dart'
     setlocal filetype=dart
   endif
 endfunction
-
-autocmd BufRead * call s:DetectShebang()
   augroup end
 endif
 
@@ -522,7 +531,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
   augroup filetypedetect
   " graphql, from graphql.vim in jparise/vim-graphql:_ALL
-" Copyright (c) 2016-2019 Jon Parise <jon@indelible.org>
+" Copyright (c) 2016-2020 Jon Parise <jon@indelible.org>
 "
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to
