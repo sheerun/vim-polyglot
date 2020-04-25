@@ -72,7 +72,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [dlang](https://github.com/JesseKPhillips/d.vim) (syntax, indent)
 - [dockerfile](https://github.com/ekalinin/Dockerfile.vim) (syntax, indent, ftplugin)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, autoload, ftplugin)
-- [elm](https://github.com/ElmCast/elm-vim) (syntax, indent, autoload, ftplugin)
+- [elm](https://github.com/andys8/vim-elm-syntax) (syntax, indent)
 - [emberscript](https://github.com/yalesov/vim-ember-script) (syntax, indent, ftplugin)
 - [emblem](https://github.com/yalesov/vim-emblem) (syntax, indent, ftplugin)
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent)

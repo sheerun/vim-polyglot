@@ -190,7 +190,7 @@ PACKS="
   dlang:JesseKPhillips/d.vim
   dockerfile:ekalinin/Dockerfile.vim
   elixir:elixir-lang/vim-elixir
-  elm:ElmCast/elm-vim
+  elm:andys8/vim-elm-syntax
   emberscript:yalesov/vim-ember-script
   emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime

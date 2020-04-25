@@ -382,8 +382,8 @@ endif
 
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
   augroup filetypedetect
-  " elm, from elm.vim in ElmCast/elm-vim
-" detection for Elm (http://elm-lang.org/)
+  " elm, from elm.vim in andys8/vim-elm-syntax
+" detection for Elm (https://elm-lang.org)
 
 au BufRead,BufNewFile *.elm set filetype=elm
   augroup end

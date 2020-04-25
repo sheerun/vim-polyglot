@@ -1,6 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elm') == -1
 
-" indentation for Elm (http://elm-lang.org/)
+" indentation for Elm (https://elm-lang.org/)
 
 " Only load this indent file when no other was loaded.
 if exists('b:did_indent')
@@ -17,6 +17,7 @@ setlocal nosmartindent
 
 " Comment formatting
 setlocal comments=s1fl:{-,mb:\ ,ex:-},:--
+setlocal commentstring=--\ %s
 
 " Only define the function once.
 if exists('*GetElmIndent')
@@ -83,7 +84,7 @@ function! GetElmIndent()
 
 	" Align bindings with the parent in.
 	elseif l:lline =~# '^\s*in\>'
-		return l:ind + 4
+		return l:ind
 
 	endif
 
