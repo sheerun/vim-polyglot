@@ -1,6 +1,6 @@
 ![vim-polyglot](https://i.imgur.com/9RxQK6k.png)
 
-[![Build Status][travis-img-url]][travis-url] [![Maintenance](https://img.shields.io/maintenance/yes/2019.svg?maxAge=2592000)]()
+[![Build Status][travis-img-url]][travis-url] [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000)]()
 
 [travis-img-url]: https://travis-ci.org/sheerun/vim-polyglot.svg
 [travis-url]: https://travis-ci.org/sheerun/vim-polyglot
