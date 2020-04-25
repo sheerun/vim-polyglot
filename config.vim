@@ -1,40 +1,46 @@
-if !exists('g:markdown_enable_spell_checking')
-  let g:markdown_enable_spell_checking = 0
-end
+function! s:SetDefault(name, value)
+  if !exists(a:name)
+    let {a:name} = a:value
+  endif
+endfunction
 
-if !exists('g:markdown_enable_input_abbreviations')
-  let g:markdown_enable_input_abbreviations = 0
-end
-
-if !exists('g:markdown_enable_mappings')
-  let g:markdown_enable_mappings = 0
-end
+call s:SetDefault('g:markdown_enable_spell_checking', 0)
+call s:SetDefault('g:markdown_enable_input_abbreviations', 0)
+call s:SetDefault('g:markdown_enable_mappings', 0)
 
 " Enable jsx syntax by default
-if !exists('g:jsx_ext_required')
-  let g:jsx_ext_required = 0
-endif
+call s:SetDefault('g:jsx_ext_required', 0)
 
 " Make csv loading faster
-if !exists('g:csv_start')
-  let g:csv_start = 1
-endif
-if !exists('g:csv_end')
-  let g:csv_end = 2
-endif
+call s:SetDefault('g:csv_start', 1)
+call s:SetDefault('g:csv_end', 2)
 
 " Disable json concealing by default
-if !exists('g:vim_json_syntax_conceal')
-  let g:vim_json_syntax_conceal = 0
-endif
+call s:SetDefault('g:vim_json_syntax_conceal', 0)
 
-let g:filetype_euphoria = 'elixir'
+call s:SetDefault('g:filetype_euphoria', 'elixir')
+
+call s:SetDefault('g:python_highlight_builtins', 1)
+call s:SetDefault('g:python_highlight_builtin_objs', 1)
+call s:SetDefault('g:python_highlight_builtin_types', 1)
+call s:SetDefault('g:python_highlight_builtin_funcs', 1)
+call s:SetDefault('g:python_highlight_builtin_funcs_kwarg', 1)
+call s:SetDefault('g:python_highlight_exceptions', 1)
+call s:SetDefault('g:python_highlight_string_formatting', 1)
+call s:SetDefault('g:python_highlight_string_format', 1)
+call s:SetDefault('g:python_highlight_string_templates', 1)
+call s:SetDefault('g:python_highlight_indent_errors', 1)
+call s:SetDefault('g:python_highlight_space_errors', 1)
+call s:SetDefault('g:python_highlight_doctests', 1)
+call s:SetDefault('g:python_highlight_func_calls', 1)
+call s:SetDefault('g:python_highlight_class_vars', 1)
+call s:SetDefault('g:python_highlight_operators', 1)
+call s:SetDefault('g:python_highlight_file_headers_as_comments', 1)
+call s:SetDefault('g:python_slow_sync', 1)
 
 augroup filetypedetect
   autocmd BufNewFile,BufReadPost *.vb setlocal filetype=vbnet
 augroup END
-
-let g:python_highlight_all = 1
 
 augroup filetypedetect
   if v:version < 704
