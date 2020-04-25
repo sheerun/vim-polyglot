@@ -79,7 +79,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [ferm](https://github.com/vim-scripts/ferm.vim) (syntax)
 - [fish](https://github.com/georgewitteman/vim-fish) (syntax, indent, compiler, autoload, ftplugin)
 - [flatbuffers](https://github.com/dcharbon/vim-flatbuffers) (syntax)
-- [fsharp](https://github.com/fsharp/vim-fsharp) (syntax, indent)
+- [fsharp](https://github.com/ionide/Ionide-vim) (syntax, indent)
 - [gdscript](https://github.com/calviken/vim-gdscript3) (syntax, indent, ftplugin)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin)
 - [glsl](https://github.com/tikhomirov/vim-glsl) (syntax, indent)

@@ -197,7 +197,7 @@ PACKS="
   ferm:vim-scripts/ferm.vim
   fish:georgewitteman/vim-fish
   flatbuffers:dcharbon/vim-flatbuffers
-  fsharp:fsharp/vim-fsharp:_BASIC
+  fsharp:ionide/Ionide-vim:_BASIC
   gdscript:calviken/vim-gdscript3
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl:_NOAFTER

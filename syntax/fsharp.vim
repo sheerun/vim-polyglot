@@ -30,6 +30,7 @@ syn keyword  fsharpScript contained install_printer remove_printer requirethread
 syn keyword  fsharpScript contained trace untrace untrace_all print_depth
 syn keyword  fsharpScript contained print_length define undef if elif else endif
 syn keyword  fsharpScript contained line error warning light nowarn
+syn keyword  fsharpScript contained I load r time
 
 
 " comments
@@ -42,8 +43,9 @@ syn region   fsharpDoubleBacktick start="``" end="``" keepend oneline
 
 
 " symbol names
-syn match fsharpSymbol "\%(let\|use\|mutable\|rec\|and\|private\)\@<=!\=\s\+\zs\w\+\ze\s*[^=:]*[=:]"
-syn match fsharpSymbol "\%(member\)\@<=\s\+\w\+\.\zs\w\+"
+syn match fsharpSymbol "\%(let\|use\|mutable\|rec\|and\|inline\|public\|private\|internal\|static\|member\|override\)\@<=!\=\s\+\(\w\+\.\)\=\zs\w\+\ze"
+"syn match fsharpSymbol "\%(let\|use\|mutable\|rec\|and\|private\)\@<=!\=\s\+\zs\w\+\ze\s*[^=:]*[=:]"
+"syn match fsharpSymbol "\%(member\)\@<=\s\+\w\+\.\zs\w\+"
 
 
 " types
@@ -84,11 +86,16 @@ syn keyword fsharpKeyword    process pure return seq tailcall trait
 
 " additional operator keywords (Microsoft.FSharp.Core.Operators)
 syn keyword fsharpKeyword    box hash sizeof typeof typedefof unbox ref fst snd
-syn keyword fsharpKeyword    stdin stdout stderr
+syn keyword fsharpKeyword    stdin stdout stderr id compare incr decr defaultArg
+syn keyword fsharpKeyword    exit ignore lock using
+
+" extra operator keywords (Microsoft.FSharp.Core.ExtraTopLevelOperators)
+syn keyword fsharpKeyword    array2D dict set
 
 " math operators (Microsoft.FSharp.Core.Operators)
 syn keyword fsharpKeyword    abs acos asin atan atan2 ceil cos cosh exp floor log
-syn keyword fsharpKeyword    log10 pown round sign sin sinh sqrt tan tanh
+syn keyword fsharpKeyword    log10 pown round sign sin sinh sqrt tan tanh truncate
+syn keyword fsharpKeyword    infinity infinityf nan nanf
 
 syn keyword fsharpOCaml      asr land lor lsl lsr lxor mod sig
 
@@ -100,8 +107,8 @@ endif
 syn keyword fsharpOpen       open
 
 " exceptions
-syn keyword fsharpException  try failwith failwithf finally invalid_arg raise
-syn keyword fsharpException  rethrow
+syn keyword fsharpException  try failwith failwithf finally invalidArg invalidOp Failure raise
+syn keyword fsharpException  rethrow nullArg reraise
 
 " modifiers
 syn keyword fsharpModifier   abstract const extern internal override private
@@ -111,17 +118,20 @@ syn keyword fsharpModifier   volatile
 " constants
 syn keyword fsharpConstant   null
 syn keyword fsharpBoolean    false true
+syn keyword fsharpSourceBuiltin __LINE__ __SOURCE_DIRECTORY__ __SOURCE_FILE__
 
 " types
 syn keyword  fsharpType      array bool byte char decimal double enum exn float
-syn keyword  fsharpType      float32 int int16 int32 int64 lazy_t list nativeint
+syn keyword  fsharpType      float32 int int16 int32 int64 list nativeint
 syn keyword  fsharpType      obj option sbyte single string uint uint32 uint64
-syn keyword  fsharpType      uint16 unativeint unit
+syn keyword  fsharpType      uint16 unativeint unit int8 uint8 bigint
+
+syn keyword  fsharpType      inref outref byref nativeptr
 
 " core classes
 syn match    fsharpCore      "\u\a*\." transparent contains=fsharpCoreClass
 
-syn keyword  fsharpCoreClass Array Async Directory File List Option Path Map Set contained
+syn keyword  fsharpCoreClass Array Async Directory File List Option Path Map Set Lazy contained
 syn keyword  fsharpCoreClass String Seq Tuple contained
 
 syn keyword fsharpCoreMethod printf printfn sprintf eprintf eprintfn fprintf
@@ -182,7 +192,7 @@ syn match    fsharpFloat         "\<-\=\d\(_\|\d\)*\.\(_\|\d\)*\([eE][-+]\=\d\(_
 syn match    fsharpFloat         "\<\d\+\.\d*"
 
 " modules
-syn match    fsharpModule     "\%#=1\%(\<open\s\+\)\@<=[a-zA-Z.]\+"
+syn match    fsharpModule     "\%#=1\%(\<open\s\+\)\@<=[a-zA-Z0-9.]\+"
 
 " attributes
 syn region   fsharpAttrib matchgroup=fsharpAttribute start="\[<" end=">]"
@@ -212,7 +222,6 @@ if version >= 508 || !exists("did_fs_syntax_inits")
     HiLink fsharpDoubleBacktick    String
 
     HiLink fsharpOpen              Include
-    HiLink fsharpModPath           Include
     HiLink fsharpScript            Include
     HiLink fsharpPreCondit         Include
 
@@ -232,6 +241,7 @@ if version >= 508 || !exists("did_fs_syntax_inits")
 
     HiLink fsharpBoolean           Boolean
     HiLink fsharpConstant          Constant
+    HiLink fsharpSourceBuiltin     Constant
     HiLink fsharpCharacter         Character
     HiLink fsharpNumber            Number
     HiLink fsharpFloat             Float
@@ -246,7 +256,6 @@ if version >= 508 || !exists("did_fs_syntax_inits")
     HiLink fsharpLabel             Identifier
     HiLink fsharpOption            Identifier
     HiLink fsharpTypeName          Identifier
-    HiLink fsharpModule            Identifier
 
     HiLink fsharpType              Type
 
