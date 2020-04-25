@@ -206,6 +206,17 @@ autocmd BufNewFile,BufRead *.blade.php set filetype=blade
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'brewfile') == -1
+  augroup filetypedetect
+  " brewfile, from brewfile.vim in bfontaine/Brewfile.vim
+" Vim filetype plugin
+" Language:  Brewfile
+" Mantainer: Baptiste Fontaine <b@ptistefontaine.fr>
+" URL:       https://github.com/bfontaine/Brewfile.vim
+au BufNewFile,BufRead Brewfile,.Brewfile set filetype=ruby syntax=brewfile
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'caddyfile') == -1
   augroup filetypedetect
   " caddyfile, from caddyfile.vim in isobit/vim-caddyfile

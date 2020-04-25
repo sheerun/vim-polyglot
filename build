@@ -171,6 +171,7 @@ PACKS="
   asciidoc:asciidoc/vim-asciidoc
   autohotkey:hnamikaw/vim-autohotkey
   blade:jwalton512/vim-blade
+  brewfile:bfontaine/Brewfile.vim
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/vim-cpp
   caddyfile:isobit/vim-caddyfile
