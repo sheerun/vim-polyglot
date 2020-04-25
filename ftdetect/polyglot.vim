@@ -461,6 +461,20 @@ autocmd BufNewFile,BufRead *.fs,*.fsi,*.fsx set filetype=fsharp
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'gdscript') == -1
+  augroup filetypedetect
+  " gdscript, from gdscript3.vim in calviken/vim-gdscript3
+autocmd BufRead,BufNewFile *.gd set filetype=gdscript3
+  augroup end
+endif
+
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'gdscript') == -1
+  augroup filetypedetect
+  " gdscript, from gsl.vim in calviken/vim-gdscript3
+autocmd BufRead,BufNewFile *.shader set filetype=gsl
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'glsl') == -1
   augroup filetypedetect
   " glsl, from glsl.vim in tikhomirov/vim-glsl:_NOAFTER
