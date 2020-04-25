@@ -109,7 +109,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [jsx](https://github.com/MaxMEllon/vim-jsx-pretty) (autoload, after)
 - [julia](https://github.com/JuliaEditorSupport/julia-vim) (syntax, indent, autoload, ftplugin)
 - [kotlin](https://github.com/udalov/kotlin-vim) (syntax, indent, ftplugin)
-- [latex](https://github.com/LaTeX-Box-Team/LaTeX-Box) (syntax, indent, ftplugin)
+- [latex](https://github.com/lervag/vimtex) (indent, compiler, autoload, ftplugin, syntax)
 - [less](https://github.com/groenewege/vim-less) (syntax, indent, ftplugin)
 - [lilypond](https://github.com/anowlcalledjosh/vim-lilypond) (syntax, indent, compiler, ftplugin)
 - [livescript](https://github.com/gkz/vim-ls) (syntax, indent, compiler, ftplugin)
