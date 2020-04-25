@@ -33,7 +33,7 @@ if exists("loaded_matchit")
 
   " note: begin_keywords must contain all blocks, in order
   " for nested-structures-skipping to work properly
-  " note: 'mutable struct' and 'strcut' are defined separately because
+  " note: 'mutable struct' and 'struct' are defined separately because
   " using \? puts the cursor on 'struct' instead of 'mutable' for some reason
   let b:julia_begin_keywords = '\%(\%(\.\s*\)\@<!\|\%(@\s*.\s*\)\@<=\)\<\%(function\|macro\|begin\|mutable\s\+struct\|\%(mutable\s\+\)\@<!struct\|\%(abstract\|primitive\)\s\+type\|let\|do\|\%(bare\)\?module\|quote\|if\|for\|while\|try\)\>'
   " note: the following regex not only recognizes macros, but also local/global keywords.

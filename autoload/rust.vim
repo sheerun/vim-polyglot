@@ -502,13 +502,13 @@ function! s:SearchTestFunctionNameUnderCursor() abort
     " Search the end of test function (closing brace) to ensure that the
     " cursor position is within function definition
     if maparg('<Plug>(MatchitNormalForward)') ==# ''
-        normal! %
+        keepjumps normal! %
     else
         " Prefer matchit.vim official plugin to native % since the plugin
         " provides better behavior than original % (#391)
         " To load the plugin, run:
         "   :packadd matchit
-        execute 'normal' "\<Plug>(MatchitNormalForward)"
+        execute 'keepjumps' 'normal' "\<Plug>(MatchitNormalForward)"
     endif
     if line('.') < cursor_line
         return ''

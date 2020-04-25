@@ -42,7 +42,7 @@ function GetCrystalIndent(...)
   let clnum = a:0 ? a:1 : v:lnum
 
   " Set up variables for restoring position in file
-  let vcol = col(clnum)
+  let vcol = col('.')
 
   " Work on the current line {{{2
   " ------------------------
@@ -170,7 +170,7 @@ function GetCrystalIndent(...)
   "
   " If it contained hanging closing brackets, find the rightmost one, find its
   " match and indent according to that.
-  if line =~# '[[({]' || line =~# '[])}]\s*\%(#.*\)\=$'
+  if line =~# '[[({]' || line =~# '[])]\s*\%(#.*\)\=$'
     let [opening, closing] = crystal#indent#ExtraBrackets(lnum)
 
     if opening.pos != -1
@@ -186,7 +186,7 @@ function GetCrystalIndent(...)
       endif
     elseif closing.pos != -1
       call cursor(lnum, closing.pos + 1)
-      normal! %
+      keepjumps normal! %
 
       if crystal#indent#Match(line('.'), g:crystal#indent#crystal_indent_keywords)
         return indent('.') + s:sw()

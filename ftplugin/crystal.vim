@@ -39,11 +39,11 @@ setlocal suffixesadd=.cr
 
 " Set format for quickfix window
 setlocal errorformat=
-  \%ESyntax\ error\ in\ line\ %l:\ %m,
-  \%ESyntax\ error\ in\ %f:%l:\ %m,
-  \%EError\ in\ %f:%l:\ %m,
-  \%C%p^,
-  \%-C%.%#
+      \%ESyntax\ error\ in\ line\ %l:\ %m,
+      \%ESyntax\ error\ in\ %f:%l:\ %m,
+      \%EError\ in\ %f:%l:\ %m,
+      \%C%p^,
+      \%-C%.%#
 
 let g:crystal_compiler_command = get(g:, 'crystal_compiler_command', 'crystal')
 let g:crystal_auto_format = get(g:, 'crystal_auto_format', 0)
@@ -89,6 +89,6 @@ endif
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: nowrap sw=2 sts=2 ts=8:
+" vim: sw=2 sts=2 et:
 
 endif

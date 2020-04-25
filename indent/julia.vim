@@ -370,23 +370,13 @@ function GetJuliaIndent()
 
   " Analyse the reference line
   let [num_open_blocks, num_closed_blocks] = GetJuliaNestingStruct(lnum, st, lim)
-
-  " Increase indentation for each newly opened block
-  " in the reference line
-  while num_open_blocks > 0
-    let ind += &sw
-    let num_open_blocks -= 1
-  endwhile
+  " Increase indentation for each newly opened block in the reference line
+  let ind += shiftwidth() * num_open_blocks
 
   " Analyse the current line
   let [num_open_blocks, num_closed_blocks] = GetJuliaNestingStruct(v:lnum)
-
-  " Decrease indentation for each closed block
-  " in the current line
-  while num_closed_blocks > 0
-    let ind -= &sw
-    let num_closed_blocks -= 1
-  endwhile
+  " Decrease indentation for each closed block in the current line
+  let ind -= shiftwidth() * num_closed_blocks
 
   return ind
 endfunction

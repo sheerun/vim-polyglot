@@ -31,6 +31,11 @@ lockvar g:crystal#indent#sol
 let g:crystal#indent#eol = '\s*\%(%}\)\=\ze\s*\%(#.*\)\=$'
 lockvar g:crystal#indent#eol
 
+" Regex that defines blocks.
+let g:crystal#indent#block_regex =
+      \ '\%(\<do\>\|%\@1<!{\)\s*\%(|[^|]*|\)\='.g:crystal#indent#eol
+lockvar g:crystal#indent#block_regex
+
 " Regex that defines the start-match for the 'end' keyword.
 " NOTE: This *should* properly match the 'do' only at the end of the
 " line
@@ -43,7 +48,7 @@ let g:crystal#indent#end_start_regex =
       \ '\<\%(if\|unless\|while\|until\|case\|begin\|for\|union\)\>' .
       \ '\)' .
       \ '\|' .
-      \ '.\{-}\zs\<do\s*\%(|.*|\)\='.g:crystal#indent#eol
+      \ g:crystal#indent#block_regex
 lockvar g:crystal#indent#end_start_regex
 
 " Regex that defines the middle-match for the 'end' keyword.
@@ -80,13 +85,15 @@ lockvar g:crystal#indent#crystal_type_declaration
 " Regex that defines continuation lines, not including (, {, or [.
 let g:crystal#indent#non_bracket_continuation_regex =
       \ '\%(' .
-      \ '[\\.,:/%+\-=~<>|&^]' .
+      \ '[\\.,:/%+\-=~<>&^]' .
+      \ '\|' .
+      \ '\%(\%(\<do\>\|%\@1<!{\)\s*|[^|]*\)\@<!|' .
       \ '\|' .
       \ '\W?' .
       \ '\|' .
       \ '\<\%(if\|unless\)\>' .
       \ '\|' .
-      \ '\%('.g:crystal#indent#sol.g:crystal#indent#crystal_type_declaration.'\h\k*\)\@<!\*' .
+      \ '\%('.g:crystal#indent#crystal_type_declaration.'\h\k*\)\@<!\*' .
       \ '\)' .
       \ g:crystal#indent#eol
 lockvar g:crystal#indent#non_bracket_continuation_regex
@@ -116,19 +123,6 @@ lockvar g:crystal#indent#continuable_regex
 " Regex that defines the first part of a splat pattern
 let g:crystal#indent#splat_regex = '[[,(]\s*\*\s*\%(#.*\)\=$'
 lockvar g:crystal#indent#splat_regex
-
-" Regex that defines blocks.
-"
-" Note that there's a slight problem with this regex and crystal#indent#continuation_regex.
-" Code like this will be matched by both:
-"
-"   method_call do |(a, b)|
-"
-" The reason is that the pipe matches a hanging "|" operator.
-"
-let g:crystal#indent#block_regex =
-      \ '\%(\<do:\@!\>\|%\@1<!{\)\s*\%(|\s*(*\s*\%([*@&]\=\h\w*,\=\s*\)\%(,\s*(*\s*[*@&]\=\h\w*\s*)*\s*\)*|\)\=\s*\%(%}\)\=\s*\%(#.*\)\=$'
-lockvar g:crystal#indent#block_regex
 
 let g:crystal#indent#block_continuation_regex = '^\s*[^])}\t ].*'.g:crystal#indent#block_regex
 lockvar g:crystal#indent#block_continuation_regex
@@ -367,5 +361,7 @@ function! crystal#indent#FindContainingClass() abort
   call setpos('.', saved_position)
   return 0
 endfunction
+
+" vim: sw=2 sts=2 et:
 
 endif
