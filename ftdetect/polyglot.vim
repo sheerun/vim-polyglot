@@ -1639,6 +1639,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zig') == -1
   augroup filetypedetect
   " zig, from zig.vim in ziglang/zig.vim
 au BufRead,BufNewFile *.zig set filetype=zig
+au BufRead,BufNewFile *.zir set filetype=zir
   augroup end
 endif
 
