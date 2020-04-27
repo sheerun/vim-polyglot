@@ -475,7 +475,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fsharp') == -1
   " fsharp, from fsharp.vim in ionide/Ionide-vim:_BASIC
 " F#, fsharp
 autocmd BufNewFile,BufRead *.fs,*.fsi,*.fsx set filetype=fsharp
-autocmd BufNewFile,BufRead *.fsproj         set filetype=fsharp_project
   augroup end
 endif
 
