@@ -1232,17 +1232,6 @@ au BufNewFile,BufRead .merlin       set ft=merlin
   augroup end
 endif
 
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rego') == -1
-  augroup filetypedetect
-  " rego, from rego.vim in tsandall/vim-rego
-autocmd BufRead,BufNewFile *.rego set filetype=rego
-
-" Use # as a comment prefix
-setlocal comments=b:#,fb:-
-setlocal commentstring=#\ %s
-  augroup end
-endif
-
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
   augroup filetypedetect
   " ruby, from ruby.vim in vim-ruby/vim-ruby
