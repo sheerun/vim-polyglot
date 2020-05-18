@@ -46,6 +46,7 @@ syn match nixInvalidStringEscape /''\\[^nrt]/ contained
 
 syn region nixSimpleString matchgroup=nixStringDelimiter start=+"+ skip=+\\"+ end=+"+ contains=nixInterpolation,nixSimpleStringSpecial,nixInvalidSimpleStringEscape
 syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ end=+''+ contains=nixInterpolation,nixStringSpecial,nixInvalidStringEscape
+syn region nixFencedString matchgroup=nixCodeStart start=+/\*\s*[0-9A-Za-z_+-]*\s*\*/\s*''+ skip=+''['$\\]+ matchgroup=nixCodeEnd end=+''+ keepend extend contains=nixInterpolation,nixStringSpecial,nixInvalidStringEscape
 
 syn match nixFunctionCall "[a-zA-Z_][a-zA-Z0-9_'-]*"
 
@@ -161,6 +162,8 @@ hi def link nixAttribute                 Identifier
 hi def link nixAttributeDot              Operator
 hi def link nixBoolean                   Boolean
 hi def link nixBuiltin                   Special
+hi def link nixCodeEnd                   Delimiter
+hi def link nixCodeStart                 Delimiter
 hi def link nixComment                   Comment
 hi def link nixConditional               Conditional
 hi def link nixHomePath                  Include
@@ -185,6 +188,7 @@ hi def link nixSimpleFunctionArgument    Identifier
 hi def link nixSimpleString              String
 hi def link nixSimpleStringSpecial       SpecialChar
 hi def link nixString                    String
+hi def link nixFencedString              String
 hi def link nixStringDelimiter           Delimiter
 hi def link nixStringSpecial             Special
 hi def link nixTodo                      Todo
