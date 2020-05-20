@@ -37,8 +37,6 @@ download() {
 extract() {
   echo
 
-  cat config.vim >> tmp/polyglot.vim
-
   for pack in $1; do
     name="$(cut -d ':' -f 1 <<<"$pack")"
     path="$(cut -d ':' -f 2 <<<"$pack")"
@@ -66,31 +64,7 @@ extract() {
     fi
 
     output "${subdirs##, })"$'\n'
-
-    if (echo "julia coffee-script elixir fish git plantuml scala swift jinja fsharp" | grep -qF "$name"); then
-      echo "Skipping ftdetect installation of $name" >&2
-      continue
-    fi
-
-    ftdetect=("${dir}${subtree:-/}ftdetect"/*)
-    if [ "$ftdetect" ] && [ "$ftdetect" != "${dir}${subtree:-/}ftdetect/*" ]; then
-      IFS=$'\n' ftdetect=($(sort -V <<< "${ftdetect[*]}")); unset IFS
-      for f in "${ftdetect[@]}"; do
-        cat <<EOF >> tmp/polyglot.vim
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '${pack%%:*}') == -1
-  augroup filetypedetect
-  " ${pack%%:*}, from ${f##*/ftdetect/} in ${pack#*:}
-$(cat "${f}")
-  augroup end
-endif
-
-EOF
-      done
-    fi
-
   done
-
-  mv tmp/polyglot.vim ftdetect/
 
   for pack in $1; do
     name="$(cut -d ':' -f 1 <<<"$pack")"
