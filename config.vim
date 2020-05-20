@@ -100,4 +100,7 @@ augroup filetypedetect
 
   "jsx
   au BufNewFile,BufRead *.jsx     setf javascriptreact
+
+  "fsharp
+  autocmd BufNewFile,BufRead *.fs,*.fsi,*.fsx set filetype=fsharp
 augroup END

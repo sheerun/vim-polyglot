@@ -67,7 +67,7 @@ extract() {
 
     output "${subdirs##, })"$'\n'
 
-    if (echo "julia coffee-script elixir fish git plantuml scala swift jinja" | grep -qF "$name"); then
+    if (echo "julia coffee-script elixir fish git plantuml scala swift jinja fsharp" | grep -qF "$name"); then
       echo "Skipping ftdetect installation of $name" >&2
       continue
     fi
