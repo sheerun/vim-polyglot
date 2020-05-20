@@ -85,6 +85,7 @@ au BufNewFile,BufRead *.swift set ft=swift
 
 "jinja
 au BufNewFile,BufRead *.jinja2,*.j2,*.jinja,*.nunjucks,*.nunjs,*.njk set ft=jinja
+au BufNewFile,BufRead *.html.jinja2,*.html.j2,*.html.jinja,*.htm.jinja2,*.htm.j2,*.htm.jinja set ft=jinja.html
 
 "jsx
 au BufNewFile,BufRead *.jsx set ft=javascriptreact
