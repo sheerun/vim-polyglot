@@ -426,10 +426,10 @@ au BufNewFile,BufRead *.psc1 set ft=xml
 au BufNewFile,BufRead *.proto set ft=proto
 
 " pug, from pug.vim in digitaltoad/vim-pug
-au BufNewFile,BufReadPost *.pug set ft=pug
+au BufNewFile,BufRead *.pug set ft=pug
 
 " Jade
-au BufNewFile,BufReadPost *.jade set ft=pug
+au BufNewFile,BufRead *.jade set ft=pug
 
 " puppet, from puppet.vim in rodjek/vim-puppet
 au BufNewFile,BufRead *.pp set ft=puppet
@@ -452,7 +452,7 @@ au BufNewFile,BufRead *.qml set ft=qml
 au BufNewFile,BufRead *.rkt,*.rktl set ft=racket
 
 " raku, from raku.vim in Raku/vim-raku
-au BufNewFile,BufWritePost,BufReadPost *.pm6,*.p6,*.t6,*.pod6,*.raku,*.rakumod,*.rakudoc,*.rakutest set ft=raku
+au BufNewFile,BufRead *.pm6,*.p6,*.t6,*.pod6,*.raku,*.rakumod,*.rakudoc,*.rakutest set ft=raku
 
 " raml, from raml.vim in IN3D/vim-raml
 au BufNewFile,BufRead *.raml set ft=raml
@@ -518,8 +518,8 @@ au BufNewFile,BufRead *.sol setf solidity
 
 " stylus, from stylus.vim in wavded/vim-stylus
 " Stylus
-au BufNewFile,BufReadPost *.styl set ft=stylus
-au BufNewFile,BufReadPost *.stylus set ft=stylus
+au BufNewFile,BufRead *.styl set ft=stylus
+au BufNewFile,BufRead *.stylus set ft=stylus
 
 " svelte, from svelte.vim in evanleck/vim-svelte
 au BufNewFile,BufRead *.svelte set ft=svelte
@@ -601,11 +601,14 @@ au BufNewFile,BufRead *.vue,*.wpy setf vue
 au BufNewFile,BufRead *.xdc set ft=xdc
 
 " zephir, from zephir.vim in xwsoul/vim-zephir
-au BufNewFile,BufReadPost *.zep set ft=zephir
+au BufNewFile,BufRead *.zep set ft=zephir
 
 " zig, from zig.vim in ziglang/zig.vim
 au BufNewFile,BufRead *.zig set ft=zig
 au BufNewFile,BufRead *.zir set ft=zir
+
+" ledger
+au BufNewFile,BufRead *.ldg,*.ledger,*.journal set ft=ledger
 
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
