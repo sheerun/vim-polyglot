@@ -1,9 +1,11 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rst') == -1
 
 " Vim indent file
-" Language:             reStructuredText Documentation Format
-" Previous Maintainer:  Nikolai Weibull <now@bitwi.se>
-" Latest Revision:      2011-08-03
+" Vim reST indent file
+" Language: reStructuredText Documentation Format
+" Maintainer: Marshall Ward <marshall.ward@gmail.com>
+" Previous Maintainer: Nikolai Weibull <now@bitwi.se>
+" Latest Revision: 2020-03-31
 
 if exists("b:did_indent")
   finish

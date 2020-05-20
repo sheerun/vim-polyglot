@@ -2346,7 +2346,7 @@ fu! csv#ColumnWidth()
 endfu
 
 fu! csv#Map(map, name, definition, ...) "{{{3
-    let keyname = substitute(a:name, '[<>]', '', 'g')
+    let keyname = substitute(substitute(a:name, '[<>]', '', 'g'), '-', '_', 'g')
     let expr = (exists("a:1") && a:1 == 'expr'  ? '<expr>' : '')
     if !get(g:, "csv_nomap_". tolower(keyname), 0)
         " All mappings are buffer local

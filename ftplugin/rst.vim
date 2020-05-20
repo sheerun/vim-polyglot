@@ -5,7 +5,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rst') == -1
 " Maintainer: Marshall Ward <marshall.ward@gmail.com>
 " Original Maintainer: Nikolai Weibull <now@bitwi.se>
 " Website: https://github.com/marshallward/vim-restructuredtext
-" Latest Revision: 2018-12-29
+" Latest Revision: 2020-03-31
 
 if exists("b:did_ftplugin")
     finish

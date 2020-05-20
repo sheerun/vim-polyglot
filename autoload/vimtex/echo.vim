@@ -66,7 +66,7 @@ function! s:choose_dict(dict, prompt) abort " {{{1
     return values(a:dict)[0]
   endif
 
-  while v:true
+  while 1
     redraw!
     if !empty(a:prompt)
       echohl VimtexMsg
@@ -93,7 +93,7 @@ endfunction
 function! s:choose_list(list, prompt) abort " {{{1
   if len(a:list) == 1 | return a:list[0] | endif
 
-  while v:true
+  while 1
     redraw!
     if !empty(a:prompt)
       echohl VimtexMsg

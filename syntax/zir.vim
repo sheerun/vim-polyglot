@@ -14,7 +14,7 @@ syn region zirCommentLine start=";" end="$" contains=zirTodo,@Spell
 
 syn region zirBlock start="{" end="}" transparent fold
 
-syn keyword zirKeyword primitive fntype int str as ptrtoint fieldptr deref asm unreachable export
+syn keyword zirKeyword primitive fntype int str as ptrtoint fieldptr deref asm unreachable export ref
 
 syn keyword zirTodo contained TODO
 
@@ -48,7 +48,7 @@ hi def link zirHexNumber Constant
 hi def link zirOctNumber Constant
 hi def link zirBinNumber Constant
 
-hi def link zirGlobal Ignore
+hi def link zirGlobal Identifier
 hi def link zirLocal  Identifier
 
 endif

@@ -247,6 +247,7 @@ function! vimtex#init_options() abort " {{{1
         \   ],
         \ }
         \})
+  call s:init_option('vimtex_syntax_autoload_packages', ['amsmath'])
 
   call s:init_option('vimtex_texcount_custom_arg', '')
 
@@ -257,7 +258,10 @@ function! vimtex#init_options() abort " {{{1
   call s:init_option('vimtex_toc_enabled', 1)
   call s:init_option('vimtex_toc_custom_matchers', [])
   call s:init_option('vimtex_toc_show_preamble', 1)
-  call s:init_option('vimtex_toc_todo_keywords', ['TODO', 'FIXME'])
+  call s:init_option('vimtex_toc_todo_labels', {
+        \ 'TODO': 'TODO: ',
+        \ 'FIXME': 'FIXME: '
+        \})
   call s:init_option('vimtex_toc_config', {
         \ 'name' : 'Table of contents (vimtex)',
         \ 'mode' : 1,
@@ -324,6 +328,7 @@ function! vimtex#init_options() abort " {{{1
   call s:init_option('vimtex_view_skim_activate', 0)
   call s:init_option('vimtex_view_skim_reading_bar', 1)
   call s:init_option('vimtex_view_zathura_options', '')
+  call s:init_option('vimtex_view_zathura_check_libsynctex', 1)
 endfunction
 
 " }}}1
@@ -332,18 +337,11 @@ function! vimtex#check_plugin_clash() abort " {{{1
 
   let l:latexbox = !empty(filter(copy(l:scriptnames), "v:val =~# 'latex-box'"))
   if l:latexbox
-    let l:polyglot = !empty(filter(copy(l:scriptnames), "v:val =~# 'polyglot'"))
     call vimtex#log#warning([
           \ 'Conflicting plugin detected: LaTeX-Box',
           \ 'vimtex does not work as expected when LaTeX-Box is installed!',
           \ 'Please disable or remove it to use vimtex!',
           \])
-    if l:polyglot
-      call vimtex#log#warning([
-            \ 'LaTeX-Box is included with vim-polyglot and may be disabled with:',
-            \ 'let g:polyglot_disabled = [''latex'']',
-            \])
-    endif
   endif
 endfunction
 

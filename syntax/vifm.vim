@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
 
 " vifm syntax file
 " Maintainer:  xaizek <xaizek@posteo.net>
-" Last Change: March 7, 2020
+" Last Change: May 17, 2020
 " Inspired By: Vim syntax file by Dr. Charles E. Campbell, Jr.
 
 if exists('b:current_syntax')
@@ -146,9 +146,9 @@ syntax keyword vifmOption contained aproposprg autochpos caseoptions cdpath cd
 		\ numberwidth nuw previewprg quickview relativenumber rnu rulerformat ruf
 		\ runexec scrollbind scb scrolloff so sort sortgroups sortorder sortnumbers
 		\ shell sh shellflagcmd shcf shortmess shm showtabline stal sizefmt slowfs
-		\ smartcase scs statusline stl suggestoptions syncregs syscalls tabscope
-		\ tabstop timefmt timeoutlen title tm trash trashdir ts tuioptions to
-		\ undolevels ul vicmd viewcolumns vifminfo vimhelp vixcmd wildmenu wmnu
+		\ smartcase scs statusline stl suggestoptions syncregs syscalls tablabel
+		\ tabscope tabstop timefmt timeoutlen title tm trash trashdir ts tuioptions
+		\ to undolevels ul vicmd viewcolumns vifminfo vimhelp vixcmd wildmenu wmnu
 		\ wildstyle wordchars wrap wrapscan ws
 
 " Disabled boolean options

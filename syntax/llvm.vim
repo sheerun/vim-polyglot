@@ -84,6 +84,7 @@ syn keyword llvmKeyword
       \ externally_initialized
       \ extern_weak
       \ fastcc
+      \ tailcc
       \ filter
       \ from
       \ gc
@@ -91,6 +92,7 @@ syn keyword llvmKeyword
       \ hhvmcc
       \ hhvm_ccc
       \ hidden
+      \ immarg
       \ initialexec
       \ inlinehint
       \ inreg

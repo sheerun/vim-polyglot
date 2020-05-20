@@ -69,8 +69,7 @@ syn keyword   rustObsoleteExternMod mod contained nextgroup=rustIdentifier skipw
 syn match     rustIdentifier  contains=rustIdentifierPrime "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
 syn match     rustFuncName    "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
 
-syn region rustMacroRepeat matchgroup=rustMacroRepeatDelimiters start="$(" end=")" contains=TOP nextgroup=rustMacroRepeatCount
-syn match rustMacroRepeatCount ".\?[*+]" contained
+syn region rustMacroRepeat matchgroup=rustMacroRepeatDelimiters start="$(" end="),\=[*+]" contains=TOP
 syn match rustMacroVariable "$\w\+"
 
 " Reserved (but not yet used) keywords {{{2
@@ -280,7 +279,6 @@ hi def link rustIdentifierPrime rustIdentifier
 hi def link rustTrait           rustType
 hi def link rustDeriveTrait     rustTrait
 
-hi def link rustMacroRepeatCount   rustMacroRepeatDelimiters
 hi def link rustMacroRepeatDelimiters   Macro
 hi def link rustMacroVariable Define
 hi def link rustSigil         StorageClass

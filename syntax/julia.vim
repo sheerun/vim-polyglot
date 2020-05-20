@@ -275,7 +275,7 @@ syntax region  juliatextString		matchgroup=juliaStringDelim start=+\<text\z("\("
 syntax region  juliahtmlString		matchgroup=juliaStringDelim start=+\<html\z("\(""\)\?\)+ skip=+\%(\\\\\)*\\"+ end=+\z1+ contains=@juliaSpecialCharsRaw
 syntax region  juliaint128String	matchgroup=juliaStringDelim start=+\<u\?int128\z("\(""\)\?\)+ skip=+\%(\\\\\)*\\"+ end=+\z1+ contains=@juliaSpecialCharsRaw
 
-syntax region  juliaDocString		matchgroup=juliaStringDelim start=+^"""+ skip=+\%(\\\\\)*\\"+ end=+"""+ contains=@juliaStringVars,@juliaSpecialChars,@juliaSpellcheckDocStrings
+syntax region  juliaDocString		matchgroup=juliaDocStringDelim start=+^"""+ skip=+\%(\\\\\)*\\"+ end=+"""+ contains=@juliaStringVars,@juliaSpecialChars,@juliaSpellcheckDocStrings
 
 exec 'syntax region  juliaPrintfMacro		contained transparent start="@s\?printf(" end=")\@'.s:d(1).'<=" contains=juliaMacro,juliaPrintfParBlock'
 syntax region  juliaPrintfMacro		contained transparent start="@s\?printf\s\+" end="\ze\%([])};#]\|$\|\<for\>\)" contains=@juliaExprsPrintf,juliaMacro,juliaSymbolS,juliaQuotedParBlockS
@@ -416,22 +416,23 @@ hi def link juliaComplexUnit		Constant
 hi def link juliaChar			Character
 
 hi def link juliaString			String
-hi def link juliaStringPrefixed		String
-hi def link juliabString		String
-hi def link juliasString		String
-hi def link juliavString		String
-hi def link juliarString		String
-hi def link juliaipString		String
-hi def link juliabigString		String
-hi def link juliaMIMEString		String
-hi def link juliarawString		String
-hi def link juliatestString		String
-hi def link juliahtmlString		String
-hi def link juliaint128String		String
-hi def link juliaPrintfString		String
-hi def link juliaShellString		String
-hi def link juliaDocString		String
-hi def link juliaStringDelim		String
+hi def link juliaStringPrefixed		juliaString
+hi def link juliabString		juliaString
+hi def link juliasString		juliaString
+hi def link juliavString		juliaString
+hi def link juliarString		juliaString
+hi def link juliaipString		juliaString
+hi def link juliabigString		juliaString
+hi def link juliaMIMEString		juliaString
+hi def link juliarawString		juliaString
+hi def link juliatestString		juliaString
+hi def link juliahtmlString		juliaString
+hi def link juliaint128String		juliaString
+hi def link juliaPrintfString		juliaString
+hi def link juliaShellString		juliaString
+hi def link juliaDocString		juliaString
+hi def link juliaStringDelim		juliaString
+hi def link juliaDocStringDelim		juliaDocString
 hi def link juliaStringVarsPla		Identifier
 hi def link juliaStringVarDelim		Identifier
 

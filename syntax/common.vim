@@ -98,7 +98,6 @@ if exists("did_typescript_hilink")
   HiLink typescriptType                 Type
   HiLink typescriptNull                 Boolean
   HiLink typescriptNumber               Number
-  HiLink typescriptExponent             Number
   HiLink typescriptBoolean              Boolean
   HiLink typescriptObjectLabel          typescriptLabel
   HiLink typescriptLabel                Label
