@@ -266,6 +266,7 @@ PACKS="
   r-lang:vim-scripts/R.vim:_BASIC
   racket:wlangstroth/vim-racket
   ragel:jneen/ragel.vim
+  raku:Raku/vim-raku
   raml:IN3D/vim-raml
   razor:adamclerk/vim-razor
   reason:reasonml-editor/vim-reason-plus

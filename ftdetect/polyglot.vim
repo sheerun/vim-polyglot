@@ -1201,6 +1201,27 @@ au BufRead,BufNewFile *.rkt,*.rktl call RacketDetectHashLang()
   augroup end
 endif
 
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'raku') == -1
+  augroup filetypedetect
+  " raku, from raku.vim in Raku/vim-raku
+" whenever a named file is created, writen or read,
+" set raku filetype if the extension is one of those:
+" https://github.com/Raku/problem-solving/blob/master/solutions/language/Path-to-Raku.md#extensions
+
+autocmd BufNewFile,BufWritePost,BufReadPost
+\ *.pm6,*.p6,*.t6,*.pod6,*.raku,*.rakumod,*.rakudoc,*.rakutest
+\ set filetype=raku
+
+" whenever a named file is written or read,
+" set raku filetype if there is a shebang with raku in it
+
+autocmd BufWritePost,BufReadPost *
+\ if getline(1) =~ '^#!.*raku' |
+\    setf raku |
+\ endif
+  augroup end
+endif
+
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'raml') == -1
   augroup filetypedetect
   " raml, from raml.vim in IN3D/vim-raml
