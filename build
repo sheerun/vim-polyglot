@@ -202,7 +202,6 @@ PACKS="
   jsx:MaxMEllon/vim-jsx-pretty:_ALL
   julia:JuliaEditorSupport/julia-vim
   kotlin:udalov/kotlin-vim
-  latex:lervag/vimtex
   less:groenewege/vim-less:_NOAFTER
   lilypond:anowlcalledjosh/vim-lilypond
   livescript:gkz/vim-ls
