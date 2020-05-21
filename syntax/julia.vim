@@ -124,7 +124,7 @@ syntax region  juliaCurBraBlock		matchgroup=juliaParDelim start="{" end="}" cont
 
 " This is really ugly. It would be better to mask most keywords when a dot is
 " found, introducing some kind of dot-environment
-let s:nodot = '\%(\.\)\@'.s:d(1).'1<!'
+let s:nodot = '\%(\.\)\@'.s:d(1).'<!'
 
 exec 'syntax match   juliaKeyword		display "'.s:nodot.'\<\%(return\|local\|global\|import\%(all\)\?\|export\|using\|const\|where\)\>"'
 syntax match   juliaInfixKeyword	display "\%(=\s*\)\@<!\<\%(in\|isa\)\>\S\@!\%(\s*=\)\@!"

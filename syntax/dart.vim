@@ -30,13 +30,13 @@ syntax keyword dartOperator       new is as in
 syntax match   dartOperator       "+=\=\|-=\=\|*=\=\|/=\=\|%=\=\|\~/=\=\|<<=\=\|>>=\=\|[<>]=\=\|===\=\|\!==\=\|&=\=\|\^=\=\||=\=\|||\|&&\|\[\]=\=\|=>\|!\|\~\|?\|:"
 syntax keyword dartCoreType       void var dynamic
 syntax keyword dartStatement      return
-syntax keyword dartStorageClass   static abstract final const factory
+syntax keyword dartStorageClass   static abstract final const factory late
 syntax keyword dartExceptions     throw rethrow try on catch finally
 syntax keyword dartAssert         assert
 syntax keyword dartClassDecl      extends with implements
 syntax keyword dartBranch         break continue nextgroup=dartUserLabelRef skipwhite
 syntax keyword dartKeyword        get set operator call external async await
-    \ yield sync native covariant
+    \ yield sync native covariant required
 syntax match   dartUserLabelRef   "\k\+" contained
 
 syntax region  dartLabelRegion   transparent matchgroup=dartLabel start="\<case\>" matchgroup=NONE end=":"
