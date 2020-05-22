@@ -191,6 +191,7 @@ PACKS="
   hive:zebradil/hive.vim
   html5:othree/html5.vim
   i3:mboughaba/i3config.vim
+  icalenadr:chutzpah/icalendar.vim
   idris:idris-hackers/idris-vim
   ion:vmchale/ion-vim
   javascript:pangloss/vim-javascript:_JAVASCRIPT
