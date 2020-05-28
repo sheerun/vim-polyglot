@@ -276,6 +276,10 @@ if index(g:polyglot_disabled, 'i3') == -1
   au BufNewFile,BufRead .i3.config,i3.config,*.i3config,*.i3.config set ft=i3config
 endif
 
+if index(g:polyglot_disabled, 'icalendar') == -1
+  au BufNewFile,BufRead *.ics set ft=icalendar
+endif
+
 if index(g:polyglot_disabled, 'idris') == -1
   au BufNewFile,BufRead *.idr set ft=idris
   au BufNewFile,BufRead idris-response set ft=idris
