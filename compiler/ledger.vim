@@ -17,6 +17,10 @@ if exists(':CompilerSet') != 2
   command -nargs=* CompilerSet setlocal <args>
 endif
 
+if !exists('g:ledger_main')
+  let g:ledger_main = '%'
+endif
+
 if !g:ledger_is_hledger
 	" Capture Ledger errors (%-C ignores all lines between "While parsing..." and "Error:..."):
 	CompilerSet errorformat=%EWhile\ parsing\ file\ \"%f\"\\,\ line\ %l:,%ZError:\ %m,%-C%.%#
@@ -24,9 +28,9 @@ if !g:ledger_is_hledger
 	CompilerSet errorformat+=%tarning:\ \"%f\"\\,\ line\ %l:\ %m
 	" Skip all other lines:
 	CompilerSet errorformat+=%-G%.%#
-	exe 'CompilerSet makeprg='.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ %\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ source\ %'
+	exe 'CompilerSet makeprg='.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . shellescape(expand(g:ledger_main)) . '\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ source\ ' . shellescape(expand(g:ledger_main))
 else
-	exe 'CompilerSet makeprg=('.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ %\ print\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ >\ /dev/null)'
+	exe 'CompilerSet makeprg=('.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . shellescape(expand(g:ledger_main)) . '\ print\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ >\ /dev/null)'
 endif
 
 endif

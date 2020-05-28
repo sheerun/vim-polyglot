@@ -835,7 +835,7 @@ function! s:ErlangCalcIndent2(lnum, stack)
         endif
 
       elseif stack == ['prev_term_plus']
-        if token =~# '[a-zA-Z_@]' ||
+        if token =~# '[a-zA-Z_@#]' ||
          \ token ==# '<string>' || token ==# '<string_start>' ||
          \ token ==# '<quoted_atom>' || token ==# '<quoted_atom_start>'
           call s:Log('    previous token found: curr_vcol + plus = ' .

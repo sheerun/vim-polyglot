@@ -40,7 +40,8 @@ let s:cposet=&cpoptions
 set cpo&vim
 
 " Comment string
-setlocal comments=
+setlocal comments=sr:(*\ ,mb:\ ,ex:*)
+setlocal comments^=sr:(**,mb:\ \ ,ex:*)
 setlocal commentstring=(*%s*)
 
 " Add mappings, unless the user didn't want this.

@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vifm') == -1
 
 " vifm syntax file
 " Maintainer:  xaizek <xaizek@posteo.net>
-" Last Change: May 17, 2020
+" Last Change: May 26, 2020
 " Inspired By: Vim syntax file by Dr. Charles E. Campbell, Jr.
 
 if exists('b:current_syntax')
@@ -89,7 +89,7 @@ syntax case ignore
 syntax keyword vifmHiGroups contained WildMenu Border Win CmdLine CurrLine
 		\ OtherLine Directory Link Socket Device Executable Selected BrokenLink
 		\ TopLine TopLineSel StatusLine JobLine SuggestBox Fifo ErrorMsg CmpMismatch
-		\ AuxWin OtherWin TabLine TabLineSel
+		\ AuxWin OtherWin TabLine TabLineSel HardLink
 		\ User1 User2 User3 User4 User5 User6 User7 User8 User9
 syntax keyword vifmHiStyles contained
 		\ bold underline reverse inverse standout italic none
