@@ -173,7 +173,7 @@ PACKS="
   fish:georgewitteman/vim-fish
   flatbuffers:dcharbon/vim-flatbuffers
   fsharp:ionide/Ionide-vim:_BASIC
-  gdscript:calviken/vim-gdscript3
+  gdscript:calviken/vim-gdscript3:_SYNTAX
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl:_NOAFTER
   gmpl:maelvalais/gmpl.vim
