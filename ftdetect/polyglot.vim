@@ -640,6 +640,7 @@ if index(g:polyglot_disabled, 'twig') == -1
 endif
 
 if index(g:polyglot_disabled, 'typescript') == -1
+  au BufNewFile,BufRead *.ts set ft=typescript
   au BufNewFile,BufRead *.tsx set ft=typescriptreact
 endif
 
