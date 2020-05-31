@@ -1,11 +1,6 @@
-language: ruby
-rvm:
-  - 2.6
-sudo: false
+language: bash
 addons:
   apt:
     packages:
       - vim-gtk
-before_script:
-  - "./build"
-script: xvfb-run bundle exec rspec --format=documentation
+script: xvfb-run ./test

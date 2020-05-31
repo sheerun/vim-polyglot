@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+vim -N --startuptime /dev/stdout -u <(
+  echo "filetype plugin indent on"
+  echo "syntax enable"
+  echo "let &rtp='$PWD,'.&rtp"
+  cat ftdetect/polyglot.vim | grep -E 'set ft=[a-z-]+' -o | sort | uniq | awk -F '=' '{ print $2 }' | while read ft; do
+    echo "try"
+    echo "  enew"
+    echo "  set ft=$ft"
+    echo "catch"
+    echo "  echo v:exception"
+    echo "  exec ':cq!'"
+    echo "endtry"
+  done
+  echo "exec ':q!'"
+)
