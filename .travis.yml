@@ -1,6 +1,6 @@
-language: bash
-addons:
-  apt:
-    packages:
-      - vim
+language: vim
+before_script:
+  - sudo add-apt-repository ppa:jonathonf/vim -y
+  - sudo apt-get install -y vim
+  - vim --version
 script: ./test
