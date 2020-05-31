@@ -3,4 +3,4 @@ addons:
   apt:
     packages:
       - vim-gtk
-script: xvfb-run ./test
+script: ./test

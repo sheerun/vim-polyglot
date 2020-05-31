@@ -1,7 +1,0 @@
-.gitignore export-ignore
-.gitattributes export-ignore
-README.md export-ignore
-/spec export-ignore
-Gemfile export-ignore
-Gemfile.lock export-ignore
-.travis.yml export-ignore
