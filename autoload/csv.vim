@@ -267,7 +267,7 @@ fu! csv#GetPat(colnr, maxcolnr, pat, allowmore) "{{{3
             " Allow space in front of the pattern, so that it works correctly
             " even if :Arrange Col has been used #100
             return '^' . csv#GetColPat(a:colnr - 1,0) .
-                \ '\s*\zs' . a:pat . '\ze' . (a:allowmore ? '' : '$')
+                \ '.*\zs' . a:pat . '\ze' . (a:allowmore ? '' : '$')
         else
             return '\%' . b:csv_fixed_width_cols[-1] .
                 \ 'c\zs' . a:pat . '\ze' . (a:allowmore ? '' : '$')
@@ -504,7 +504,7 @@ fu! csv#WColumn(...) "{{{3
     " Return on which column the cursor is
     let _cur = getpos('.')
     if !exists("b:csv_fixed_width_cols")
-        if line('.') > 1 && mode('') != 'n'
+        if line('.') > 1 && mode('') != 'n' && empty(getline('.')[0:col('.')-1])
             " in insert mode, get line from above, just in case the current
             " line is empty
             let line = getline(line('.')-1)

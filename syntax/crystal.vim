@@ -1,7 +1,9 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
 
 " Language: Crystal
-" Maintainer: rhysd <https://rhysd.github.io>
+" Maintainer:
+"   rhysd <https://rhysd.github.io>
+"   Jeffrey Crochet <jlcrochet@pm.me>
 "
 " Based on Ruby syntax highlight
 " which was made by Mirko Nasato and Doug Kearns
