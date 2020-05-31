@@ -252,6 +252,7 @@ PACKS="
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
   scss:cakebaker/scss-syntax.vim
+  sh:arzg/vim-sh
   slim:slim-template/vim-slim
   slime:slime-lang/vim-slime-syntax
   smt2:bohlender/vim-smt2
