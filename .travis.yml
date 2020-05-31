@@ -2,5 +2,5 @@ language: bash
 addons:
   apt:
     packages:
-      - vim-gtk
+      - vim
 script: ./test
