@@ -1,6 +1,7 @@
 language: vim
 before_script:
   - sudo add-apt-repository ppa:jonathonf/vim -y
+  - sudo apt-get update -q
   - sudo apt-get install -y vim
   - vim --version
 script: ./test
