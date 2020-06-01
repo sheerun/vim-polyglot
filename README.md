@@ -16,7 +16,7 @@ A collection of language packs for Vim.
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
 - Each build is tested by automated vimrunner script on CI. See `spec` directory.
 
-\*To be completely honest, concatenated `ftdetect` script takes up to `17ms` to load.
+\*To be completely honest, optimized `ftdetect` script takes up to `19ms` to load.
 
 ## Installation
 
