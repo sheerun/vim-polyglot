@@ -25,6 +25,8 @@ let b:julia_vim_loaded = 1
 
 let b:undo_ftplugin = "setlocal include< suffixesadd< comments< commentstring<"
       \ . " define< fo< shiftwidth< expandtab< indentexpr< indentkeys< cinoptions< omnifunc<"
+      \ . " | unlet! b:commentary_format"
+      \ . " | unlet! b:smartcomment_force_linemode"
       \ . " | unlet! b:julia_vim_loaded"
 
 " MatchIt plugin support
@@ -93,6 +95,10 @@ if exists("loaded_matchit")
   endif
 
 endif
+
+" Some plugin-specific tweaks for commenting
+let b:commentary_format = "# %s"           " for tpope/vim-commentary
+let b:smartcomment_force_linemode = 1      " for carlobaldassi/vim-smartcomment
 
 if has("gui_win32")
   let b:browsefilter = "Julia Source Files (*.jl)\t*.jl\n"

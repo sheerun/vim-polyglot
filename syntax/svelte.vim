@@ -86,6 +86,7 @@ function! s:enabled(language)
   endif
 endfunction
 
+" Default tag definitions.
 let s:languages = [
       \ { 'name': 'less', 'tag': 'style' },
       \ { 'name': 'scss', 'tag': 'style' },
@@ -94,12 +95,17 @@ let s:languages = [
       \ { 'name': 'typescript', 'tag': 'script' },
       \ ]
 
+" Add global tag definitions to our defaults.
+if exists('g:svelte_preprocessor_tags') && type('g:svelte_preprocessor_tags') == v:t_list
+  let s:languages += g:svelte_preprocessor_tags
+endif
+
 for s:language in s:languages
   let s:attr = '\(lang\|type\)=\("\|''\)[^\2]*' . s:language.name . '[^\2]*\2'
   let s:start = '<' . s:language.tag . '\>\_[^>]*' . s:attr . '\_[^>]*>'
 
   if s:enabled(s:language.name)
-    execute 'syntax include @' . s:language.name . ' syntax/' . s:language.name . '.vim'
+    execute 'syntax include @' . s:language.name . ' syntax/' . get(s:language, 'as', s:language.name) . '.vim'
     unlet! b:current_syntax
 
     execute 'syntax region svelte_' . s:language.name

@@ -84,7 +84,7 @@ syn match ps1Type /\[[a-z_][a-z0-9_.,\[\]]\+\]/
 " Variable references
 syn match ps1ScopeModifier /\(global:\|local:\|private:\|script:\)/ contained
 syn match ps1Variable /\$\w\+\(:\w\+\)\?/ contains=ps1ScopeModifier
-syn match ps1Variable /\${\w\+\(:\w\+\)\?}/ contains=ps1ScopeModifier
+syn match ps1Variable /\${\w\+\(:\?[[:alnum:]_()]\+\)\?}/ contains=ps1ScopeModifier
 
 " Operators
 syn keyword ps1Operator -eq -ne -ge -gt -lt -le -like -notlike -match -notmatch -replace -split -contains -notcontains
