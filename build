@@ -273,6 +273,7 @@ PACKS="
   tptp:c-cube/vim-tptp
   twig:lumiliet/vim-twig
   typescript:HerringtonDarkholme/yats.vim
+  unison:unisonweb/unison#trunk:_ALL:/editor-support/vim/
   v:ollykel/v-vim
   vala:arrufat/vala.vim
   vbnet:vim-scripts/vbnet.vim
