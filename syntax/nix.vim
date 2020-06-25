@@ -109,7 +109,7 @@ syn region nixFunctionArgument start="{\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)
 syn region nixFunctionArgument start="{\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*}\%(\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*@\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*[a-zA-Z_][a-zA-Z0-9_'-]*\)\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*:" end="}" contains=nixComment nextgroup=nixArgOperator
 
 "                                                               vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-syn match nixSimpleFunctionArgument "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*:/\@!"
+syn match nixSimpleFunctionArgument "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%(\s\|#.\{-\}\n\|\n\|/\*\_.\{-\}\*/\)*:\([\n ]\)\@="
 
 syn region nixList matchgroup=nixListBracket start="\[" end="\]" contains=@nixExpr
 
@@ -149,7 +149,7 @@ syn keyword nixNamespacedBuiltin contained
       \ removeAttrs replaceStrings scopedImport seq sort split splitVersion
       \ storeDir storePath stringLength sub substring tail throw toFile toJSON
       \ toPath toString toXML trace tryEval typeOf unsafeDiscardOutputDependency
-      \ unsafeDiscardStringContext unsafeGetAttrPos valueSize
+      \ unsafeDiscardStringContext unsafeGetAttrPos valueSize fromTOML
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 

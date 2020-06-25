@@ -1507,10 +1507,10 @@ fu! csv#AvgColumn(list) "{{{3
         endfor
         if has("float")
             let b:csv_result = printf("%.2f", sum/cnt)
-            return b:csv_result
+            return str2float(b:csv_result)
         else
             let b:csv_result = printf("%s", sum/cnt)
-            return sum/cnt
+            return b:csv_result + 0
         endif
     endif
 endfu
@@ -1543,7 +1543,7 @@ fu! csv#VarianceColumn(list, is_population) "{{{3
             let cnt = cnt-1
         endif
         if has("float")
-            let b:csv_result = printf("%.2f", sum/cnt)
+            let b:csv_result = printf("%." . get(b:, 'csv_accuracy', get(g:, 'csv_accuracy', 2)) . "f", sum/cnt)
             return b:csv_result
         else
             let b:csv_result = printf("%s", sum/cnt)
@@ -2263,7 +2263,7 @@ fu! csv#CommandDefinitions() "{{{3
         \ ':echo csv#EvalColumn(<q-args>, "csv#SmplStdDevColumn", <line1>,<line2>)',
         \ '-nargs=? -range=% -complete=custom,csv#SortComplete')
     call csv#LocalCmd("PopStdCol",
-        \ ':echo csv#EvalColumn(<q-args>, "csv#SmplStdDevColumn", <line1>,<line2>)',
+        \ ':echo csv#EvalColumn(<q-args>, "csv#PopStdDevColumn", <line1>,<line2>)',
         \ '-nargs=? -range=% -complete=custom,csv#SortComplete')
     call csv#LocalCmd("UnArrangeColumn",
         \':call csv#PrepUnArrangeCol(<line1>, <line2>)',

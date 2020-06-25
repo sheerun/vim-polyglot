@@ -51,7 +51,7 @@ endif
 	syn keyword arduinoFunc Wire1
 "}}}
 "C:/Program Files (x86)/Arduino\lib\keywords.txt{{{
-	syn keyword arduinoConstant HIGH LOW INPUT INPUT_PULLUP OUTPUT DEC BIN HEX OCT PI
+	syn keyword arduinoConstant HIGH LOW INPUT INPUT_PULLUP INPUT_PULLDOWN OUTPUT DEC BIN HEX OCT PI
 	syn keyword arduinoConstant HALF_PI TWO_PI LSBFIRST MSBFIRST CHANGE FALLING RISING DEFAULT EXTERNAL INTERNAL
 	syn keyword arduinoConstant INTERNAL1V1 INTERNAL2V56
 	syn keyword arduinoType boolean break byte case char class const continue default do

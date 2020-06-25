@@ -16,4 +16,9 @@ setlocal suffixesadd=.zir
 setlocal commentstring=//\ %s
 setlocal makeprg=zig\ build
 
+if (has("comments"))
+    set comments=:///,://,:\\\\
+    set formatoptions=tcqor
+endif
+
 endif

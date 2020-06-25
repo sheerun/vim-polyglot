@@ -194,7 +194,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [yaml](https://github.com/stephpy/vim-yaml) (syntax, ftplugin)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
 - [zephir](https://github.com/xwsoul/vim-zephir) (syntax)
-- [zig](https://github.com/ziglang/zig.vim) (syntax, autoload, ftplugin)
+- [zig](https://github.com/ziglang/zig.vim) (syntax, indent, autoload, ftplugin)
 - [zinit](https://github.com/zinit-zsh/zplugin-vim-syntax) (syntax)
 <!--/Language Packs-->
 

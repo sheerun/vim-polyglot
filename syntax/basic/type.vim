@@ -158,6 +158,7 @@ syntax match typescriptTypeAnnotation /:/
 syntax cluster typescriptParameterList contains=
   \ typescriptTypeAnnotation,
   \ typescriptAccessibilityModifier,
+  \ typescriptReadonlyModifier,
   \ typescriptOptionalMark,
   \ typescriptRestOrSpread,
   \ typescriptFuncComma,

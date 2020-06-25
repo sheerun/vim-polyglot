@@ -26,7 +26,7 @@ syn match sdFormatStr contained /%[bCEfhHiIjJLmnNpPsStTgGuUvV%]/ containedin=ALL
 syn match sdUInt     contained nextgroup=sdErr /\d\+/
 syn match sdInt      contained nextgroup=sdErr /-\=\d\+/
 syn match sdOctal    contained nextgroup=sdErr /0\o\{3,4}/
-" sdDuration: see systemd.time(7)
+" sdDuration, sdCalendar: see systemd.time(7)
 syn match sdDuration contained nextgroup=sdErr /\d\+/
 syn match sdDuration contained nextgroup=sdErr /\%(\d\+\s*\%(usec\|msec\|seconds\=\|minutes\=\|hours\=\|days\=\|weeks\=\|months\=\|years\=\|us\|ms\|sec\|min\|hr\|[smhdwMy]\)\s*\)\+/
 syn match sdDatasize contained nextgroup=sdErr /\d\+[KMGT]/
@@ -34,6 +34,29 @@ syn match sdFilename contained nextgroup=sdErr /\/\S*/
 syn match sdPercent  contained nextgroup=sdErr /\d\+%/
 syn keyword sdBool   contained nextgroup=sdErr 1 yes true on 0 no false off
 syn match sdUnitName contained /\S\+\.\(automount\|mount\|swap\|socket\|service\|target\|path\|timer\|device\|slice\|scope\)\_s/
+
+" type identifiers used in `systemd --dump-config`, from most to least common:
+" 189 OTHER
+" 179 BOOLEAN
+" 136 LIMIT
+"  46 CONDITION
+"  36 WEIGHT
+"  30 MODE
+"  27 PATH
+"  25 PATH [...]
+"  24 SECONDS, STRING
+"  20 SIGNAL
+"  15 UNIT [...]
+"  12 BANDWIDTH, DEVICEWEIGHT, SHARES, UNSIGNED
+"  11 PATH [ARGUMENT [...]]
+"   8 BOUNDINGSET, LEVEL, OUTPUT, PATH[:PATH[:OPTIONS]] [...], SOCKET [...]
+"   6 ACTION, DEVICE, DEVICELATENCY, POLICY, SLICE, TIMER
+"   5 KILLMODE
+"   4 ARCHS, CPUAFFINITY, CPUSCHEDPOLICY, CPUSCHEDPRIO, ENVIRON, ERRNO, FACILITY, FAMILIES, FILE, INPUT, IOCLASS, IOPRIORITY, LABEL, MOUNTFLAG [...], NAMESPACES, NANOSECONDS, NICE, NOTSUPPORTED, OOMSCOREADJUST, PERSONALITY, SECUREBITS, SYSCALLS
+"   3 INTEGER, SIZE, STATUS
+"   2 LONG, UNIT
+"   1 ACCESS, NETWORKINTERFACE, SERVICE, SERVICERESTART, SERVICETYPE, SOCKETBIND, SOCKETS, TOS, URL
+
 
 " .include
 syn match sdInclude /^.include/ nextgroup=sdFilename
@@ -48,48 +71,76 @@ syn region sdUnitBlock matchgroup=sdHeader start=/^\[Unit\]/ end=/^\[/me=e-2 con
 syn match sdUnitKey contained /^Description=/
 syn match sdUnitKey contained /^Documentation=/ nextgroup=sdDocURI
 syn match sdUnitKey contained /^SourcePath=/ nextgroup=sdFilename,sdErr
-syn match sdUnitKey contained /^\%(Requires\|RequiresOverridable\|Requisite\|RequisiteOverridable\|Wants\|Binds\=To\|PartOf\|Conflicts\|Before\|After\|OnFailure\|Names|PropagatesReloadTo\|ReloadPropagatedFrom\)=/ nextgroup=sdUnitList
+syn match sdUnitKey contained /^\%(Requires\|RequiresOverridable\|Requisite\|RequisiteOverridable\|Wants\|Binds\=To\|PartOf\|Conflicts\|Before\|After\|OnFailure\|Names\|Propagates\=ReloadTo\|ReloadPropagatedFrom\|PropagateReloadFrom\|JoinsNamespaceOf\)=/ nextgroup=sdUnitList
 syn match sdUnitKey contained /^\%(OnFailureIsolate\|IgnoreOnIsolate\|IgnoreOnSnapshot\|StopWhenUnneeded\|RefuseManualStart\|RefuseManualStop\|AllowIsolate\|DefaultDependencies\)=/ nextgroup=sdBool,sdErr
 syn match sdUnitKey contained /^OnFailureJobMode=/ nextgroup=sdFailJobMode,sdErr
 syn match sdUnitKey contained /^\%(StartLimitInterval\|StartLimitIntervalSec\|JobTimeoutSec\)=/ nextgroup=sdDuration,sdErr
 syn match sdUnitKey contained /^\%(StartLimitAction\|JobTimeoutAction\)=/ nextgroup=sdLimitAction,sdErr
+syn match sdUnitKey contained /^StartLimitBurst=/ nextgroup=sdUInt,sdErr
+syn match sdUnitKey contained /^\%(FailureAction\|SuccessAction\)=/ nextgroup=sdLimitAction,sdFailAction,sdErr
+syn match sdUnitKey contained /^\%(FailureAction\|SuccessAction\)ExitStatus=/ nextgroup=sdExitStatus,sdErr
 syn match sdUnitKey contained /^\%(RebootArgument\|JobTimeoutRebootArgument\)=/
-" ConditionXXX. Note that they all have an optional '|' after the '='.
-syn match sdUnitKey contained /^Condition\(PathExists\|PathExistsGlob\|PathIsDirectory\|PathIsMountPoint\|PathIsReadWrite\|PathIsSymbolicLink\|DirectoryNotEmpty\|FileNotEmpty\|FileIsExecutable\)=|\=!\=/ contains=sdConditionFlag nextgroup=sdFilename,sdErr
-syn match sdUnitKey contained /^ConditionVirtualization=|\=!\=/ contains=sdConditionFlag nextgroup=sdVirtType,sdErr
-syn match sdUnitKey contained /^ConditionSecurity=|\=!\=/ contains=sdConditionFlag nextgroup=sdSecurityType,sdErr
-syn match sdUnitKey contained /^ConditionCapability=|\=!\=/ contains=sdConditionFlag nextgroup=sdAnyCapName,sdErr
-syn match sdUnitKey contained /^Condition\%(KernelCommandLine\|Host\)=|\=!\=/ contains=sdConditionFlag
-syn match sdUnitKey contained /^Condition\%(ACPower\|Null\|FirstBoot\)=|\=/ contains=sdConditionFlag nextgroup=sdBool,sdErr
-syn match sdUnitKey contained /^ConditionNeedsUpdate=|\=!\=/ contains=sdConditionFlag nextgroup=sdCondUpdateDir,sdErr
+syn match sdUnitKey contained /^RequiresMountsFor=/ nextgroup=sdFileList,sdErr
+" TODO: JobRunningTimeoutSec
+" ConditionXXX/AssertXXX. Note that they all have an optional '|' after the '='.
+syn match sdUnitKey contained /^\%(Condition\|Assert\)\(PathExists\|PathExistsGlob\|PathIsDirectory\|PathIsMountPoint\|PathIsReadWrite\|PathIsSymbolicLink\|DirectoryNotEmpty\|FileNotEmpty\|FileIsExecutable\)=|\=!\=/ contains=sdConditionFlag nextgroup=sdFilename,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)Virtualization=|\=!\=/ contains=sdConditionFlag nextgroup=sdVirtType,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)Security=|\=!\=/ contains=sdConditionFlag nextgroup=sdSecurityType,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)Capability=|\=!\=/ contains=sdConditionFlag nextgroup=sdAnyCapName,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)\%(KernelCommandLine\|Host\)=|\=!\=/ contains=sdConditionFlag
+syn match sdUnitKey contained /^\%(Condition\|Assert\)\%(ACPower\|Null\|FirstBoot\)=|\=/ contains=sdConditionFlag nextgroup=sdBool,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)NeedsUpdate=|\=!\=/ contains=sdConditionFlag nextgroup=sdCondUpdateDir,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)Architecture=|\=!\=/ contains=sdConditionFlag nextgroup=sdArch,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)User=|\=/ contains=sdConditionFlag nextgroup=sdUser,sdCondUser,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)Group=|\=/ contains=sdConditionFlag nextgroup=sdUser,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)ControlGroupController=|\=/ contains=sdConditionFlag nextgroup=sdController,sdErr
+syn match sdUnitKey contained /^\%(Condition\|Assert\)KernelVersion=|\=/ contains=sdConditionFlag nextgroup=sdKernelVersion,sdErr
 
 " extra bits
 syn match sdUnitList       contained /.*/ contains=sdUnitName,sdErr
 syn match sdConditionFlag  contained /[!|]/
 syn match sdCondUpdateDir  contained nextgroup=sdErr /\%(\/etc\|\/var\)/
-syn keyword sdVirtType     contained nextgroup=sdErr vm container qemu kvm vmware microsoft oracle xen bochs chroot openvz lxc lxc-libvirt systemd-nspawn
-syn keyword sdSecurityType contained nextgroup=sdErr selinux
+syn keyword sdVirtType     contained nextgroup=sdErr vm container qemu kvm zvm vmware microsoft oracle xen bochs uml bhyve qnx openvz openvz lxc lxc-libvirt systemd-nspawn docker podman rkt wsl acrn private-users
+syn keyword sdSecurityType contained nextgroup=sdErr selinux apparmor tomoyo ima smack audit uefi-secureboot
 syn keyword sdFailJobMode  contained nextgroup=sdErr fail replace replace-irreversibly
 syn keyword sdLimitAction  contained nextgroup=sdErr none reboot reboot-force reboot-immediate poweroff poweroff-force poweroff-immediate
+syn keyword sdFailAction   contained nextgroup=sdErr exit exit-force
+syn keyword sdArch         contained nextgroup=sdErr x86 x86_64 ppc ppc-le ppc64 ppc64-le ia64 parisc parisc64 s390 s390x sparc sparc64 mips mips-le mips64 mips64-le alpha arm arm-be arm64 arm64-be sh sh64 m68k tilegx cris arc arc-be native
+syn keyword sdController   contained cpu cpuacct io blkio memory devices pids nextgroup=sdController,sdErr
+syn match sdCondUser       contained /@system/
+syn match sdUser           contained nextgroup=sdErr /\d\+\|[A-Za-z_][A-Za-z0-9_-]*/
+syn match sdExitStatus     contained nextgroup=sdErr /\d\|\d\d\|[01]\d\d\|2[0-4]\d\|25[0-5]/
 syn match sdDocUri         contained /\%(https\=:\/\/\|file:\|info:\|man:\)\S\+\s*/ nextgroup=sdDocUri,sdErr
 
 " [Install] {{{1
 " see systemd.unit(5)
 syn region sdInstallBlock matchgroup=sdHeader start=/^\[Install\]/ end=/^\[/me=e-2 contains=sdInstallKey
 syn match sdInstallKey contained /^\%(WantedBy\|Alias\|Also\|RequiredBy\)=/ nextgroup=sdUnitList
+syn match sdInstallKey contained /^DefaultInstance=/ nextgroup=sdInstance
+" TODO: sdInstance - what's valid there? probably [^@/]\+, but that's a guess
 
 " Execution options common to [Service|Socket|Mount|Swap] {{{1
 " see systemd.exec(5)
-syn match sdExecKey contained /^Exec\%(Start\%(Pre\|Post\|\)\|Reload\|Stop\|StopPost\)=/ nextgroup=sdExecFlag,sdExecFile,sdErr
-syn match sdExecKey contained /^\%(WorkingDirectory\|RootDirectory\|TTYPath\)=/ nextgroup=sdFilename,sdErr
+syn match sdExecKey contained /^Exec\%(Start\%(Pre\|Post\|\)\|Reload\|Stop\|StopPost\|Condition\)=/ nextgroup=sdExecFlag,sdExecFile,sdErr
+syn match sdExecKey contained /^\%(WorkingDirectory\|RootDirectory\|TTYPath\|RootImage\)=/ nextgroup=sdFilename,sdErr
+syn match sdExecKey contained /^\%(Runtime\|State\|Cache\|Logs\|Configuration\)Directory=/ nextgroup=sdFilename,sdErr
+syn match sdExecKey contained /^\%(Runtime\|State\|Cache\|Logs\|Configuration\)DirectoryMode=/ nextgroup=sdOctal,sdErr
+syn match sdExecKey contained /^User=/ nextgroup=sdUser,sdErr
+syn match sdExecKey contained /^Group=/ nextgroup=sdUser,sdErr
+" TODO: NUMAPolicy, NUMAMask
+" TODO: Pass/UnsetEnvironment
+" TODO: StandardInput\%(Text\|Data\)
+" TODO: Generally everything from 'WorkingDirectory' on down
 " TODO: handle some of these better
 " FIXME: some of these have moved to Resource Control
 " CPUAffinity is: list of uint
 " BlockIOWeight is: uint\|filename uint
 " BlockIO\%(Read\|Write\)Bandwidth is: filename datasize
-syn match sdExecKey contained /^\%(User\|Group\|SupplementaryGroups\|CPUAffinity\|SyslogIdentifier\|PAMName\|TCPWrapName\|ControlGroup\|ControlGroupAttribute\|UtmpIdentifier\)=/
+syn match sdExecKey contained /^\%(SupplementaryGroups\|CPUAffinity\|SyslogIdentifier\|PAMName\|TCPWrapName\|ControlGroup\|ControlGroupAttribute\|UtmpIdentifier\)=/
 syn match sdExecKey contained /^Limit\%(CPU\|FSIZE\|DATA\|STACK\|CORE\|RSS\|NOFILE\|AS\|NPROC\|MEMLOCK\|LOCKS\|SIGPENDING\|MSGQUEUE\|NICE\|RTPRIO\|RTTIME\)=/ nextgroup=sdRlimit
-syn match sdExecKey contained /^\%(CPUSchedulingResetOnFork\|TTYReset\|TTYVHangup\|TTYVTDisallocate\|SyslogLevelPrefix\|ControlGroupModify\|PrivateTmp\|PrivateNetwork\|PrivateDevices\)=/ nextgroup=sdBool,sdErr
+syn match sdExecKey contained /^\%(CPUSchedulingResetOnFork\|TTYReset\|TTYVHangup\|TTYVTDisallocate\|SyslogLevelPrefix\|ControlGroupModify\|DynamicUser\|RemoveIPC\|NoNewPrivileges\|RestrictRealtime\|RestrictSUIDSGID\|LockPersonality\|MountAPIVFS\)=/ nextgroup=sdBool,sdErr
+syn match sdExecKey contained /^Private\%(Tmp\|Network\|Devices\|Users\|Mounts\)=/ nextgroup=sdBool,sdErr
+syn match sdExecKey contained /^Protect\%(KernelTunables\|KernelModules\|KernelLogs\|Clock\|ControlGroups\|Hostname\)=/ nextgroup=sdBool,sdErr
 syn match sdExecKey contained /^\%(Nice\|OOMScoreAdjust\)=/ nextgroup=sdInt,sdErr
 syn match sdExecKey contained /^\%(CPUSchedulingPriority\|TimerSlackNSec\)=/ nextgroup=sdUInt,sdErr
 syn match sdExecKey contained /^\%(ReadWrite\|ReadOnly\|Inaccessible\)Directories=/ nextgroup=sdFileList
@@ -162,7 +213,7 @@ syn match   sdKillMode    contained nextgroup=sdErr /\%(control-group\|process\|
 " Resource Control options for [Service|Socket|Mount|Swap|Slice|Scope] {{{1
 " see systemd.resource-control(5)
 syn match sdResCtlKey contained /^Slice=/ nextgroup=sdSliceName,sdErr
-syn match sdResCtlKey contained /^\%(CPUAccounting\|MemoryAccounting\|IOAccounting\|BlockIOAccounting\|TasksAccounting\|Delegate\)=/ nextgroup=sdBool,sdErr
+syn match sdResCtlKey contained /^\%(CPUAccounting\|MemoryAccounting\|IOAccounting\|BlockIOAccounting\|TasksAccounting\|IPAccounting\|Delegate\)=/ nextgroup=sdBool,sdErr
 syn match sdResCtlKey contained /^\%(CPUQuota\)=/ nextgroup=sdPercent,sdErr
 syn match sdResCtlKey contained /^\%(CPUShares\|StartupCPUShares\)=/ nextgroup=sdUInt,sdErr
 syn match sdResCtlKey contained /^MemoryLow=/ nextgroup=sdDatasize,sdPercent,sdErr
@@ -185,12 +236,18 @@ syn region sdServiceBlock matchgroup=sdHeader start=/^\[Service\]/ end=/^\[/me=e
 syn match sdServiceKey contained /^BusName=/
 syn match sdServiceKey contained /^\%(RemainAfterExit\|GuessMainPID\|PermissionsStartOnly\|RootDirectoryStartOnly\|NonBlocking\|ControlGroupModify\)=/ nextgroup=sdBool,sdErr
 syn match sdServiceKey contained /^\%(SysVStartPriority\|FsckPassNo\)=/ nextgroup=sdUInt,sdErr
-syn match sdServiceKey contained /^\%(Restart\|Timeout\|TimeoutStart\|TimeoutStop\|Watchdog\|RuntimeMax\)Sec=/ nextgroup=sdDuration,sdErr
+syn match sdServiceKey contained /^\%(Restart\|Timeout\|TimeoutStart\|TimeoutStop\|TimeoutAbort\|Watchdog\|RuntimeMax\)Sec=/ nextgroup=sdDuration,sdErr
 syn match sdServiceKey contained /^Sockets=/ nextgroup=sdUnitList
 syn match sdServiceKey contained /^PIDFile=/ nextgroup=sdFilename,sdErr
 syn match sdServiceKey contained /^Type=/ nextgroup=sdServiceType,sdErr
 syn match sdServiceKey contained /^Restart=/ nextgroup=sdRestartType,sdErr
 syn match sdServiceKey contained /^NotifyAccess=/ nextgroup=sdNotifyType,sdErr
+syn match sdServiceKey contained /^StartLimitInterval=/ nextgroup=sdDuration,sdErr
+syn match sdServiceKey contained /^StartLimitAction=/ nextgroup=sdLimitAction,sdErr
+syn match sdServiceKey contained /^StartLimitBurst=/ nextgroup=sdUInt,sdErr
+syn match sdServiceKey contained /^FailureAction=/ nextgroup=sdLimitAction,sdFailAction,sdErr
+syn match sdServiceKey contained /^\%(RestartPrevent\|RestartForce\|Success\)ExitStatus=/ nextgroup=sdExitStatus,sdErr
+syn match sdServiceKey contained /^RebootArgument=/
 syn keyword sdServiceType contained nextgroup=sdErr simple forking dbus oneshot notify idle
 syn keyword sdRestartType contained nextgroup=sdErr no on-success on-failure on-abort always
 syn keyword sdNotifyType  contained nextgroup=sdErr none main all
@@ -201,7 +258,7 @@ syn match sdSocketKey contained /^Listen\%(Stream\|Datagram\|SequentialPacket\|F
 syn match sdSocketKey contained /^Listen\%(FIFO\|Special\)=/ nextgroup=sdFilename,sdErr
 syn match sdSocketKey contained /^\%(Socket\|Directory\)Mode=/ nextgroup=sdOctal,sdErr
 syn match sdSocketKey contained /^\%(Backlog\|MaxConnections\|Priority\|ReceiveBuffer\|SendBuffer\|IPTTL\|Mark\|PipeSize\|MessageQueueMaxMessages\|MessageQueueMessageSize\)=/ nextgroup=sdUInt,sdErr
-syn match sdSocketKey contained /^\%(Accept\|KeepAlive\|FreeBind\|Transparent\|Broadcast\|Writable\|NoDelay\)=/ nextgroup=sdBool,sdErr
+syn match sdSocketKey contained /^\%(Accept\|KeepAlive\|FreeBind\|Transparent\|Broadcast\|Writable\|NoDelay\|PassCredentials\|PassSecurity\|ReusePort\|RemoveOnStop\|SELinuxContextFromNet\)=/ nextgroup=sdBool,sdErr
 syn match sdSocketKey contained /^BindToDevice=/
 syn match sdSocketKey contained /^Service=/ nextgroup=sdUnitList
 syn match sdSocketKey contained /^BindIPv6Only=/ nextgroup=sdBindIPv6,sdErr
@@ -216,7 +273,8 @@ syn keyword sdTCPCongest contained nextgroup=sdErr westwood veno cubic lp
 syn region sdTimerBlock matchgroup=sdHeader start=/^\[Timer\]/ end=/^\[/me=e-2 contains=sdTimerKey
 syn match sdTimerKey contained /^On\%(Active\|Boot\|Startup\|UnitActive\|UnitInactive\)Sec=/ nextgroup=sdDuration,sdErr
 syn match sdTimerKey contained /^\%(Accuracy\|RandomizedDelay\)Sec=/ nextgroup=sdDuration,sdErr
-syn match sdTimerKey contained /^\%(Persistent\|WakeSystem\|RemainAfterElapse\)=/ nextgroup=sdBool,sdErr
+syn match sdTimerKey contained /^\%(Persistent\|WakeSystem\|RemainAfterElapse\|OnClockChange\|OnTimezoneChange\)=/ nextgroup=sdBool,sdErr
+syn match sdTimerKey contained /^OnCalendar=/ nextgroup=sdCalendar
 syn match sdTimerKey contained /^Unit=/ nextgroup=sdUnitList
 " TODO: sdCalendar
 
@@ -227,7 +285,7 @@ syn match sdAutomountKey contained /^DirectoryMode=/ nextgroup=sdOctal,sdErr
 
 " [Mount]
 syn region sdMountBlock matchgroup=sdHeader start=/^\[Mount\]/ end=/^\[/me=e-2 contains=sdMountKey,sdAutomountKey,sdExecKey,sdKillKey,sdResCtlKey
-syn match sdMountKey contained /^SloppyOptions=/ nextgroup=sdBool,sdErr
+syn match sdMountKey contained /^\%(SloppyOptions\|LazyUnmount\|ForceUnmount\)=/ nextgroup=sdBool,sdErr
 syn match sdMountKey contained /^\%(What\|Type\|Options\)=/
 
 " [Swap]
