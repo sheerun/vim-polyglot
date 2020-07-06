@@ -549,7 +549,7 @@ endif
 " Declared after ruby so that the more general *.rb
 " doesn't override
 if index(g:polyglot_disabled, 'rspec') == -1
-  au BufNewFile,BufRead *_spec.rb set ft=rspec
+  au BufNewFile,BufRead *_spec.rb set ft=ruby syntax=rspec
 endif
 
 if index(g:polyglot_disabled, 'rust') == -1
