@@ -1,8 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
 
-let s:save_cpo = &cpo
-set cpo&vim
-
 let s:V = vital#crystal#new()
 let s:P = s:V.import('Process')
 let s:C = s:V.import('ColorEcho')
@@ -364,9 +361,6 @@ endfunction
 function! crystal_lang#expand(file, pos, ...) abort
   return crystal_lang#tool('expand', a:file, a:pos, get(a:, 1, ''))
 endfunction
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: sw=2 sts=2 et:
 

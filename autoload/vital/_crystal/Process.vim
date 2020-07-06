@@ -15,9 +15,6 @@ delfunction s:_SID
 " FIXME: This module name should be Vital.System ?
 " But the name has been already taken.
 
-let s:save_cpo = &cpo
-set cpo&vim
-
 
 " FIXME: Unfortunately, can't use s:_vital_loaded() for this purpose.
 " Because these variables are used when this script file is loaded.
@@ -168,9 +165,6 @@ else
   endfunction
 endif
 
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim:set et ts=2 sts=2 sw=2 tw=0:
 

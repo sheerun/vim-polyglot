@@ -16,10 +16,12 @@ syntax match   typescriptBinaryOp contained /===\?/ nextgroup=@typescriptValue s
 syntax match   typescriptBinaryOp contained />\(>>=\|>>\|>=\|>\|=\)\?/ nextgroup=@typescriptValue skipwhite skipempty
 " 4: <<=, <<, <=, <
 syntax match   typescriptBinaryOp contained /<\(<=\|<\|=\)\?/ nextgroup=@typescriptValue skipwhite skipempty
-" 3: ||, |=, |
-syntax match   typescriptBinaryOp contained /|\(|\|=\)\?/ nextgroup=@typescriptValue skipwhite skipempty
-" 3: &&, &=, &
-syntax match   typescriptBinaryOp contained /&\(&\|=\)\?/ nextgroup=@typescriptValue skipwhite skipempty
+" 3: ||, |=, |, ||=
+syntax match   typescriptBinaryOp contained /||\?=\?/ nextgroup=@typescriptValue skipwhite skipempty
+" 4: &&, &=, &, &&=
+syntax match   typescriptBinaryOp contained /&&\?=\?/ nextgroup=@typescriptValue skipwhite skipempty
+" 2: ??, ??=
+syntax match   typescriptBinaryOp contained /??=\?/ nextgroup=@typescriptValue skipwhite skipempty
 " 2: *=, *
 syntax match   typescriptBinaryOp contained /\*=\?/ nextgroup=@typescriptValue skipwhite skipempty
 " 2: %=, %

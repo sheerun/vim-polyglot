@@ -94,9 +94,12 @@ syntax cluster typescriptTypeMember contains=
   \ typescriptIndexSignature,
   \ @typescriptMembers
 
+syntax match typescriptTupleLable /\K\k*?\?:/
+    \ contained
+
 syntax region typescriptTupleType matchgroup=typescriptBraces
   \ start=/\[/ end=/\]/
-  \ contains=@typescriptType,@typescriptComments
+  \ contains=@typescriptType,@typescriptComments,typescriptRestOrSpread,typescriptTupleLable
   \ contained skipwhite
 
 syntax cluster typescriptTypeOperator

@@ -101,6 +101,7 @@ if exists("did_typescript_hilink")
   HiLink typescriptBoolean              Boolean
   HiLink typescriptObjectLabel          typescriptLabel
   HiLink typescriptLabel                Label
+  HiLink typescriptTupleLable           Label
   HiLink typescriptStringProperty       String
   HiLink typescriptImport               Special
   HiLink typescriptImportType           Special

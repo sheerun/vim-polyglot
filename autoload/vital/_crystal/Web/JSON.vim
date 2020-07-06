@@ -9,8 +9,6 @@ endfunction
 execute join(['function! vital#_crystal#Web#JSON#import() abort', printf("return map({'decode': '', '_vital_depends': '', '_vital_created': '', 'encode': '', '_vital_loaded': ''}, \"vital#_crystal#function('<SNR>%s_' . v:key)\")", s:_SID()), 'endfunction'], "\n")
 delfunction s:_SID
 " ___vital___
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! s:_true() abort
   return 1
@@ -173,9 +171,6 @@ function! s:_encode_dict(val, settings) abort
   endif
 endfunction
 " @vimlint(EVL102, 0, l:ns)
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim:set et ts=2 sts=2 sw=2 tw=0:
 

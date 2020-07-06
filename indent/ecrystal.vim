@@ -71,8 +71,7 @@ let s:ecr_control_open = '<%%\@!-\=[=#]\@!'
 let s:ecr_comment_open = '<%%\@!-\=#'
 
 let s:ecr_indent_regex =
-      \ '\<\%(if\|unless\|else\|elsif\|case\|for\|when\|while\|until\|begin\|do\|rescue\|ensure\|' .
-      \ 'class\|module\|struct\|lib\|enum\|union\)\>'
+      \ '\<\%(if\|unless\|else\|elsif\|case\|when\|while\|until\|begin\|do\|rescue\|ensure\|\)\>'
 
 let s:ecr_dedent_regex =
       \ '\<\%(end\|else\|elsif\|when\|rescue\|ensure\)\>'

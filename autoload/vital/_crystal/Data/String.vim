@@ -11,9 +11,6 @@ delfunction s:_SID
 " ___vital___
 " Utilities for string.
 
-let s:save_cpo = &cpo
-set cpo&vim
-
 function! s:_vital_loaded(V) abort
   let s:V = a:V
   let s:L = s:V.import('Data.List')
@@ -624,8 +621,6 @@ function! s:split_posix_text(text, ...) abort
   return split(text, newline, 1)
 endfunction
 
-let &cpo = s:save_cpo
-unlet s:save_cpo
 " vim:set et ts=2 sts=2 sw=2 tw=0:
 
 endif

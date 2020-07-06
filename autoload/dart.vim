@@ -27,12 +27,16 @@ function! s:clearQfList(reason) abort
   endif
 endfunction
 
-function! dart#fmt(q_args) abort
-  let cmd = s:FindDartFmt()
-  if type(cmd) != type('') | return | endif
+function! dart#fmt(...) abort
+  let l:dartfmt = s:FindDartFmt()
+  if type(l:dartfmt) != type('') | return | endif
   let buffer_content = getline(1, '$')
-  let args = '--stdin-name '.expand('%').' '.a:q_args
-  let lines = systemlist(printf('%s %s', cmd, args), join(buffer_content, "\n"))
+  let l:cmd = [l:dartfmt, '--stdin-name', shellescape(expand('%'))]
+  if exists('g:dartfmt_options')
+    call extend(l:cmd, g:dartfmt_options)
+  endif
+  call extend(l:cmd, a:000)
+  let lines = systemlist(join(l:cmd), join(buffer_content, "\n"))
   " TODO(https://github.com/dart-lang/sdk/issues/38507) - Remove once the
   " tool no longer emits this line on SDK upgrades.
   if lines[-1] ==# 'Isolate creation failed'
