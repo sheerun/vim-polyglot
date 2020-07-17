@@ -248,7 +248,7 @@ syn match sdServiceKey contained /^StartLimitBurst=/ nextgroup=sdUInt,sdErr
 syn match sdServiceKey contained /^FailureAction=/ nextgroup=sdLimitAction,sdFailAction,sdErr
 syn match sdServiceKey contained /^\%(RestartPrevent\|RestartForce\|Success\)ExitStatus=/ nextgroup=sdExitStatus,sdErr
 syn match sdServiceKey contained /^RebootArgument=/
-syn keyword sdServiceType contained nextgroup=sdErr simple forking dbus oneshot notify idle
+syn keyword sdServiceType contained nextgroup=sdErr simple exec forking dbus oneshot notify idle
 syn keyword sdRestartType contained nextgroup=sdErr no on-success on-failure on-abort always
 syn keyword sdNotifyType  contained nextgroup=sdErr none main all
 
