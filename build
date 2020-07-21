@@ -221,6 +221,7 @@ PACKS="
   jinja:lepture/vim-jinja
   json5:GutenYe/json5.vim
   json:elzr/vim-json
+  jsonnet:google/vim-jsonnet
   jst:briancollins/vim-jst
   jsx:MaxMEllon/vim-jsx-pretty:_ALL
   julia:JuliaEditorSupport/julia-vim
