@@ -243,7 +243,7 @@ PACKS="
   ragel:jneen/ragel.vim
   raku:Raku/vim-raku
   raml:IN3D/vim-raml
-  razor:adamclerk/vim-razor
+  razor:jlcrochet/vim-razor
   reason:reasonml-editor/vim-reason-plus
   rspec:keith/rspec.vim
   rst:marshallward/vim-restructuredtext
