@@ -131,6 +131,7 @@ let attributes_value = {
     \ 'label': ['Text', ''],
     \ 'lang': ['Lang Tag', ''],
     \ 'list': ['ID', ''],
+    \ 'loading': ['eager/lazy', ''],
     \ 'loop': ['Bool', ''],
     \ 'low': ['Number', ''],
     \ 'manifest': ['URL', ''],
@@ -588,11 +589,11 @@ let g:xmldata_html5 = {
 \ ],
 \ 'iframe': [
     \ [],
-    \ extend(copy(global_attributes), {'src': [], 'srcdoc': [], 'name': [], 'width': [], 'height': [], 'sandbox': ['allow-same-origin', 'allow-forms', 'allow-scripts'], 'seamless': ['seamless', ''], 'referrerpolicy': referrerpolicy, 'allowfullscreen': [], 'allowpaymentrequest': [], 'allowpresentation': [], 'allowusermedia': []})
+    \ extend(copy(global_attributes), {'src': [], 'srcdoc': [], 'name': [], 'width': [], 'height': [], 'sandbox': ['allow-same-origin', 'allow-forms', 'allow-scripts'], 'seamless': ['seamless', ''], 'referrerpolicy': referrerpolicy, 'allowfullscreen': [], 'allowpaymentrequest': [], 'allowpresentation': [], 'allowusermedia': [], 'loading': ['eager', 'lazy']})
 \ ],
 \ 'img': [
     \ [],
-    \ extend(copy(global_attributes), {'src': [], 'alt': [], 'height': [], 'width': [], 'decoding': ['async', 'sync', 'auto'], 'usemap': [], 'ismap': ['ismap', ''], 'referrerpolicy': referrerpolicy, 'crossorigin': ['anonymous', 'use-credentials']})
+    \ extend(copy(global_attributes), {'src': [], 'alt': [], 'height': [], 'width': [], 'decoding': ['async', 'sync', 'auto'], 'usemap': [], 'ismap': ['ismap', ''], 'referrerpolicy': referrerpolicy, 'crossorigin': ['anonymous', 'use-credentials'], 'loading': ['eager', 'lazy']})
 \ ],
 \ 'input': [
     \ [],

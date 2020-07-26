@@ -270,6 +270,12 @@ function IsInBrackets(lnum, c)
   return len(stack) > 0
 endfunction
 
+function IsInDocString(lnum)
+  let stack = map(synstack(a:lnum, 1), 'synIDattr(v:val, "name")')
+  call filter(stack, 'v:val =~# "\\<juliaDocString\\>"')
+  return len(stack) > 0
+endfunction
+
 " Auxiliary function to find a line which does not start in the middle of a
 " multiline bracketed expression, to be used as reference for block
 " indentation.
@@ -290,6 +296,11 @@ function LastBlockIndent(lnum)
 endfunction
 
 function GetJuliaIndent()
+  " Do not alter doctrings indentation
+  if IsInDocString(v:lnum)
+    return -1
+  endif
+
   " Find a non-blank line above the current line.
   let lnum = prevnonblank(v:lnum - 1)
 

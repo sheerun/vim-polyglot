@@ -1956,8 +1956,12 @@ fu! csv#CheckHeaderLine() "{{{3
 endfu
 fu! csv#AnalyzeColumn(...) "{{{3
     let maxcolnr = csv#MaxColumns()
-    if len(a:000) == 1
+    let topn = 5
+    if len(a:000) > 0
         let colnr = a:1
+        if len(a:000) == 2
+            let topn = a:2
+        endif
     else
         let colnr = csv#WColumn()
     endif
@@ -1985,8 +1989,8 @@ fu! csv#AnalyzeColumn(...) "{{{3
     let max_items = reverse(sort(values(res), s:csv_numeric_sort ? 'n' : 'csv#CSVSortValues'))
     " What about the minimum 5 items?
     let count_items = keys(res)
-    if len(max_items) > 5
-        call remove(max_items, 5, -1)
+    if len(max_items) > topn
+        call remove(max_items, topn, -1)
         call map(max_items, 'printf(''\V%s\m'', escape(v:val, ''\\''))')
         call filter(res, 'v:val =~ ''^''.join(max_items, ''\|'').''$''')
     endif
@@ -2311,8 +2315,8 @@ fu! csv#CommandDefinitions() "{{{3
         \ '-bang -nargs=? -range=%')
     call csv#LocalCmd("Filters", ':call csv#OutputFilters(<bang>0)',
         \ '-nargs=0 -bang')
-    call csv#LocalCmd("Analyze", ':call csv#AnalyzeColumn(<args>)',
-        \ '-nargs=?')
+    call csv#LocalCmd("Analyze", ':call csv#AnalyzeColumn(<f-args>)',
+        \ '-nargs=*' )
     call csv#LocalCmd("VertFold", ':call csv#Vertfold(<bang>0,<q-args>)',
         \ '-bang -nargs=? -range=% -complete=custom,csv#SortComplete')
     call csv#LocalCmd("CSVFixed", ':call csv#InitCSVFixedWidth()', '')

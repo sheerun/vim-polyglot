@@ -4,7 +4,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
 " Language:	git commit file
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
 " Filenames:	*.git/COMMIT_EDITMSG
-" Last Change:	2016 Aug 29
+" Last Change:	2019 Dec 05
 
 if exists("b:current_syntax")
   finish
@@ -32,6 +32,7 @@ else
   syn match gitcommitComment	"^#.*"
 endif
 
+syn match   gitcommitHash	"\<\x\{40,}\>" contains=@NoSpell display
 syn match   gitcommitHead	"^\%(#   .*\n\)\+#$" contained transparent
 syn match   gitcommitOnBranch	"\%(^# \)\@<=On branch" contained containedin=gitcommitComment nextgroup=gitcommitBranch skipwhite
 syn match   gitcommitOnBranch	"\%(^# \)\@<=Your branch .\{-\} '" contained containedin=gitcommitComment nextgroup=gitcommitBranch skipwhite
@@ -69,6 +70,7 @@ hi def link gitcommitUntracked		gitcommitComment
 hi def link gitcommitDiscarded		gitcommitComment
 hi def link gitcommitSelected		gitcommitComment
 hi def link gitcommitUnmerged		gitcommitComment
+hi def link gitcommitHash		Identifier
 hi def link gitcommitOnBranch		Comment
 hi def link gitcommitBranch		Special
 hi def link gitcommitNoBranch		gitCommitBranch

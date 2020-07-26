@@ -10,7 +10,7 @@ if exists("b:current_syntax")
 endif
 let b:current_syntax = "zig"
 
-syn keyword zigStorage const var extern packed export pub noalias inline noinline comptime callconv volatile allowzero align linksection threadlocal
+syn keyword zigStorage const var extern packed export pub noalias inline noinline comptime callconv volatile allowzero align linksection threadlocal anytype
 syn keyword zigStructure struct enum union error
 syn keyword zigStatement break return continue asm defer errdefer unreachable try catch async nosuspend await suspend resume
 syn keyword zigConditional if else switch and or orelse
@@ -26,8 +26,8 @@ syn keyword zigBoolean true false
 
 syn match zigType "\v<[iu][1-9]\d*>"
 
-syn match zigOperator display "\%(+%\?\|-%\?\|/\|*%\?\|=\|\^\|&\|?\||\|!\|>\|<\|%\|<<%\?\|>>\)=\?"
-syn match zigArrowCharacter display "->"
+syn match zigOperator display "\V\[-+/*=^&?|!><%~]"
+syn match zigArrowCharacter display "\V->"
 
 syn match zigBuiltinFn "\v\@(addWithOverflow|as|atomicLoad|atomicStore|bitCast|breakpoint)>"
 syn match zigBuiltinFn "\v\@(alignCast|alignOf|cDefine|cImport|cInclude)>"

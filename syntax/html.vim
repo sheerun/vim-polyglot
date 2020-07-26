@@ -131,6 +131,8 @@ syn keyword htmlArg contained prefetch
 syn keyword htmlArg contained decoding
 " https://w3c.github.io/selection-api/#extensions-to-globaleventhandlers
 syn keyword htmlArg contained onselectstart onselectionchange
+" https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/loading
+syn keyword htmlArg contained loading
 
 " Custom Data Attributes
 " http://w3c.github.io/html/single-page.html#embedding-custom-non-visible-data-with-the-data-attributes

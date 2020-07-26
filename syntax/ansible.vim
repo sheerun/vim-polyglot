@@ -103,6 +103,13 @@ else
   highlight default link ansible_with_keywords Statement
 endif
 
+execute 'syn keyword ansible_with_keywords loop containedin='.s:yamlKey.' contained'
+if exists("g:ansible_with_keywords_highlight")
+  execute 'highlight link ansible_with_keywords '.g:ansible_with_keywords_highlight
+else
+  highlight default link ansible_with_keywords Statement
+endif
+
 let b:current_syntax = "ansible"
 
 endif

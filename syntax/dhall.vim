@@ -6,7 +6,7 @@ if exists('b:current_syntax')
     finish
 endif
 
-syntax match dhallInterpolation "\v\$\{([^\}]|\\n)*\}"
+syntax match dhallInterpolation "\v\$\{([^\}]|\n)*\}"
 syntax keyword dhallTodo TODO FIXME
 syntax match dhallBrackets "[<>|]"
 syntax match dhallOperator "+\|*\|#"

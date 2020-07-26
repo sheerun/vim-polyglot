@@ -28,7 +28,7 @@ endif
 
 if !exists('g:ruby_indent_block_style')
   " Possible values: "expression", "do"
-  let g:ruby_indent_block_style = 'expression'
+  let g:ruby_indent_block_style = 'do'
 endif
 
 setlocal nosmartindent
