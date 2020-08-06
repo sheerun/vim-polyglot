@@ -291,6 +291,8 @@ PACKS="
   zinit:zinit-zsh/zplugin-vim-syntax
 "
 
+python3 build.py
+
 rm -rf tmp
 rm -rf "${DIRS_RM[@]}"
 mkdir tmp
