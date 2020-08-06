@@ -43,7 +43,8 @@ syn match slimTag           "\w\+[><]*"         contained contains=htmlTagName n
 syn match slimIdChar        "#{\@!"        contained nextgroup=slimId
 syn match slimId            "\%(\w\|-\)\+" contained nextgroup=@slimComponent
 syn match slimClassChar     "\."           contained nextgroup=slimClass
-syn match slimClass         "\%(\w\|-\|\/\d+\|:\(\w\|-\)\+\)\+" contained nextgroup=@slimComponent
+syn match slimClass         "\%(\w\|-\|\/\|:\(\w\|-\)\+\)\+" contained nextgroup=@slimComponent
+
 syn match slimInlineTagChar "\s*:\s*"      contained nextgroup=slimTag,slimClassChar,slimIdChar
 
 syn region slimWrappedAttrs matchgroup=slimWrappedAttrsDelimiter start="\s*{\s*" skip="}\s*\""  end="\s*}\s*"  contained contains=slimAttr nextgroup=slimRuby

@@ -74,6 +74,7 @@ if exists("did_typescript_hilink")
   HiLink typescriptStringMember         String
   HiLink typescriptTemplate             String
   HiLink typescriptEventString          String
+  HiLink typescriptDestructureString    String
   HiLink typescriptASCII                Special
   HiLink typescriptTemplateSB           Label
   HiLink typescriptRegexpString         String
@@ -87,6 +88,7 @@ if exists("did_typescript_hilink")
   HiLink typescriptBranch               Conditional
   HiLink typescriptIdentifier           Structure
   HiLink typescriptVariable             Identifier
+  HiLink typescriptDestructureVariable  PreProc
   HiLink typescriptEnumKeyword          Identifier
   HiLink typescriptRepeat               Repeat
   HiLink typescriptForOperator          Repeat
@@ -100,6 +102,7 @@ if exists("did_typescript_hilink")
   HiLink typescriptNumber               Number
   HiLink typescriptBoolean              Boolean
   HiLink typescriptObjectLabel          typescriptLabel
+  HiLink typescriptDestructureLabel     Function
   HiLink typescriptLabel                Label
   HiLink typescriptTupleLable           Label
   HiLink typescriptStringProperty       String

@@ -31,6 +31,8 @@ let s:close_patt = '\C\%(\<\%(end\|until\)\>\|)\|}\)'
 let s:anon_func_start = '\S\+\s*[({].*\<function\s*(.*)\s*$'
 let s:anon_func_end = '\<end\%(\s*[)}]\)\+'
 
+let s:chained_func_call = "^\\v\\s*[:.]\\w+[({\"']"
+
 " Expression used to check whether we should skip a match with searchpair().
 let s:skip_expr = "synIDattr(synID(line('.'),col('.'),1),'name') =~# 'luaComment\\|luaString'"
 
@@ -98,6 +100,16 @@ function GetLuaIndent()
   let num_cur_closed_parens = searchpair('(', '', ')', 'mr', s:skip_expr, v:lnum)
   if num_cur_closed_parens > 0 && contents_cur !~# s:anon_func_end
     let i += 1
+  endif
+
+  " if the current line chains a function call to previous unchained line
+  if contents_prev !~# s:chained_func_call && contents_cur =~# s:chained_func_call
+    let i += 1
+  endif
+
+  " if the current line chains a function call to previous unchained line
+  if contents_prev =~# s:chained_func_call && contents_cur !~# s:chained_func_call
+    let i -= 1
   endif
 
   " special case: call(with, {anon = function() -- should indent only once

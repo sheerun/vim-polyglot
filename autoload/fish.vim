@@ -1,25 +1,43 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fish') == -1
 
 function! fish#Indent()
-    let l:shiftwidth = shiftwidth()
     let l:prevlnum = prevnonblank(v:lnum - 1)
     if l:prevlnum ==# 0
         return 0
     endif
-    let l:indent = 0
     let l:prevline = getline(l:prevlnum)
-    if l:prevline =~# '\v^\s*switch>'
-        return indent(l:prevlnum) + l:shiftwidth
-    elseif l:prevline =~# '\v^\s*%(begin|if|else|while|for|function|case)>'
-        let l:indent = l:shiftwidth
-    endif
     let l:line = getline(v:lnum)
-    if l:line =~# '\v^\s*end>'
-        return indent(l:prevlnum) - (l:indent ==# 0 ? l:shiftwidth : l:indent)
-    elseif l:line =~# '\v^\s*%(case|else)>'
-        return indent(l:prevlnum) - l:shiftwidth
+    let l:shiftwidth = shiftwidth()
+    let l:previndent = indent(l:prevlnum)
+    let l:indent = l:previndent
+    if l:prevline =~# '\v^\s*%(begin|if|else|while|for|function|switch|case)>'
+        let l:indent += l:shiftwidth
     endif
-    return indent(l:prevlnum) + l:indent
+    if l:line =~# '\v^\s*end>'
+        let l:indent -= l:shiftwidth
+        " If we're inside a case, dedent twice because it ends the switch.
+        if l:prevline =~# '\v^\s*case>'
+            " Previous line starts the case.
+            let l:indent -= l:shiftwidth
+        else
+            " Scan back to a dedented line to find whether we're in a case.
+            let l:i = l:prevlnum
+            while l:i >= 1 && indent(l:i) >= l:previndent
+                let l:i = prevnonblank(l:i - 1)
+            endwhile
+            if indent(l:i) < l:previndent && getline(l:i) =~# '\v^\s*case>'
+                let l:indent -= l:shiftwidth
+            endif
+        endif
+    elseif l:line =~# '\v^\s*else>'
+        let l:indent -= l:shiftwidth
+    elseif l:prevline !~# '\v^\s*switch>' && l:line =~# '\v^\s*case>'
+        let l:indent -= l:shiftwidth
+    endif
+    if l:indent < 0
+        return 0
+    endif
+    return l:indent
 endfunction
 
 function! fish#Format()

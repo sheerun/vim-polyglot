@@ -109,11 +109,15 @@ syntax match   juliaSemicolon		display ";"
 syntax match   juliaComma		display ","
 syntax match   juliaColon		display ":"
 
+" This is really ugly. It would be better to mask most keywords when a dot is
+" found, introducing some kind of dot-environment
+let s:nodot = '\%(\.\)\@'.s:d(1).'<!'
+
 syntax match   juliaErrorPar		display "[])}]"
-syntax match   juliaErrorEnd		display "\<end\>"
-syntax match   juliaErrorElse		display "\<\%(else\|elseif\)\>"
-syntax match   juliaErrorCatch		display "\<catch\>"
-syntax match   juliaErrorFinally	display "\<finally\>"
+exec 'syntax match   juliaErrorEnd	display "'.s:nodot.'\<end\>"'
+exec 'syntax match   juliaErrorElse	display "'.s:nodot.'\<\%(else\|elseif\)\>"'
+exec 'syntax match   juliaErrorCatch	display "'.s:nodot.'\<catch\>"'
+exec 'syntax match   juliaErrorFinally	display "'.s:nodot.'\<finally\>"'
 syntax match   juliaErrorSemicol	display contained ";"
 
 syntax region  juliaParBlock		matchgroup=juliaParDelim start="(" end=")" contains=@juliaExpressions,juliaComprehensionFor
@@ -121,10 +125,6 @@ syntax region  juliaParBlockInRange	matchgroup=juliaParDelim contained start="("
 syntax region  juliaSqBraIdxBlock	matchgroup=juliaParDelim start="\[" end="\]" contains=@juliaExpressions,juliaParBlockInRange,juliaRangeKeyword,juliaComprehensionFor,juliaSymbolS,juliaQuotedParBlockS,juliaQuotedQMarkParS
 exec 'syntax region  juliaSqBraBlock	matchgroup=juliaParDelim start="\%(^\|\s\|' . s:operators . '\)\@'.s:d(3).'<=\[" end="\]" contains=@juliaExpressions,juliaComprehensionFor,juliaSymbolS,juliaQuotedParBlockS,juliaQuotedQMarkParS'
 syntax region  juliaCurBraBlock		matchgroup=juliaParDelim start="{" end="}" contains=@juliaExpressions
-
-" This is really ugly. It would be better to mask most keywords when a dot is
-" found, introducing some kind of dot-environment
-let s:nodot = '\%(\.\)\@'.s:d(1).'<!'
 
 exec 'syntax match   juliaKeyword		display "'.s:nodot.'\<\%(return\|local\|global\|import\%(all\)\?\|export\|using\|const\|where\)\>"'
 syntax match   juliaInfixKeyword	display "\%(=\s*\)\@<!\<\%(in\|isa\)\>\S\@!\%(\s*=\)\@!"

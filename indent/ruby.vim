@@ -31,6 +31,11 @@ if !exists('g:ruby_indent_block_style')
   let g:ruby_indent_block_style = 'do'
 endif
 
+if !exists('g:ruby_indent_hanging_elements')
+  " Non-zero means hanging indents are enabled, zero means disabled
+  let g:ruby_indent_hanging_elements = 1
+endif
+
 setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.
@@ -323,7 +328,11 @@ function! s:ClosingBracketOnEmptyLine(cline_info) abort
 
     if searchpair(escape(bracket_pair[0], '\['), '', bracket_pair[1], 'bW', s:skip_expr) > 0
       if closing_bracket == ')' && col('.') != col('$') - 1
-        let ind = virtcol('.') - 1
+        if g:ruby_indent_hanging_elements
+          let ind = virtcol('.') - 1
+        else
+          let ind = indent(line('.'))
+        end
       elseif g:ruby_indent_block_style == 'do'
         let ind = indent(line('.'))
       else " g:ruby_indent_block_style == 'expression'
@@ -548,7 +557,9 @@ function! s:AfterUnbalancedBracket(pline_info) abort
     let [opening, closing] = s:ExtraBrackets(info.plnum)
 
     if opening.pos != -1
-      if opening.type == '(' && searchpair('(', '', ')', 'bW', s:skip_expr) > 0
+      if !g:ruby_indent_hanging_elements
+        return indent(info.plnum) + info.sw
+      elseif opening.type == '(' && searchpair('(', '', ')', 'bW', s:skip_expr) > 0
         if col('.') + 1 == col('$')
           return indent(info.plnum) + info.sw
         else
