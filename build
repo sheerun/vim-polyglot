@@ -258,7 +258,7 @@ PACKS="
   smt2:bohlender/vim-smt2
   solidity:tomlion/vim-solidity
   stylus:wavded/vim-stylus
-  svelte:evanleck/vim-svelte
+  svelte:evanleck/vim-svelte#main
   svg-indent:jasonshell/vim-svg-indent
   svg:vim-scripts/svg.vim
   swift:keith/swift.vim

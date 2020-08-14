@@ -117,7 +117,7 @@ lockvar g:crystal#indent#end_start_regex
 " Regex that defines the middle-match for the 'end' keyword.
 let g:crystal#indent#end_middle_regex =
       \ g:crystal#indent#sol .
-      \ '\<\%(else\|elsif\|when\|rescue\|ensure\)\>'
+      \ '\<\%(else\|elsif\|when\|in\|rescue\|ensure\)\>'
 lockvar g:crystal#indent#end_middle_regex
 
 " Regex that defines the end-match for the 'end' keyword.

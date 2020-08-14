@@ -15,7 +15,7 @@ setlocal nosmartindent
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetCrystalIndent(v:lnum)
 setlocal indentkeys=0{,0},0),0],!^F,o,O,e,.
-setlocal indentkeys+==end,=else,=elsif,=when,=ensure,=rescue
+setlocal indentkeys+==end,=else,=elsif,=when,=in,=ensure,=rescue
 
 " Only define the function once.
 if exists('*GetCrystalIndent')

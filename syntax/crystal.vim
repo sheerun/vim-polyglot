@@ -183,7 +183,7 @@ syn match crystalPredefinedConstant "\%(\%(\.\@1<!\.\)\@2<!\|::\)\_s*\zs\%(STDER
 syn match crystalPredefinedConstant "\%(\%(\.\@1<!\.\)\@2<!\|::\)\_s*\zs\%(crystal_\%(VERSION\|RELEASE_DATE\|PLATFORM\|PATCHLEVEL\|REVISION\|DESCRIPTION\|COPYRIGHT\|ENGINE\)\)\>\%(\s*(\)\@!"
 
 " Normal Regular Expression
-SynFold '/' syn region crystalRegexp matchgroup=crystalRegexpDelimiter start="\%(\%(^\|\<\%(and\|or\|while\|until\|unless\|if\|elsif\|ifdef\|when\|not\|then\|else\)\|[;\~=!|&(,[<>?:*+-]\)\s*\)\@<=/" end="/[imx]*" skip="\\\\\|\\/" contains=@crystalRegexpSpecial
+SynFold '/' syn region crystalRegexp matchgroup=crystalRegexpDelimiter start="\%(\%(^\|\<\%(and\|or\|while\|until\|unless\|if\|elsif\|ifdef\|when\|in\|not\|then\|else\)\|[;\~=!|&(,[<>?:*+-]\)\s*\)\@<=/" end="/[imx]*" skip="\\\\\|\\/" contains=@crystalRegexpSpecial
 SynFold '/' syn region crystalRegexp matchgroup=crystalRegexpDelimiter start="\%(\h\k*\s\+\)\@<=/[ \t=/]\@!" end="/[imx]*" skip="\\\\\|\\/" contains=@crystalRegexpSpecial
 
 " Generalized Regular Expression
@@ -315,7 +315,7 @@ if !exists('b:crystal_no_expensive') && !exists('g:crystal_no_expensive')
   SynFold 'select' syn region crystalSelectExpression      matchgroup=crystalConditional start="\<select\>"            end="\<end\>" contains=TOP
   SynFold 'if'     syn region crystalConditionalExpression matchgroup=crystalConditional start="\%(\%(^\|\.\.\.\=\|[{:,;([<>~\*/%&^|+=-]\|\%(\<[_[:lower:]][_[:alnum:]]*\)\@<![?!]\)\s*\)\@<=\%(if\|ifdef\|unless\)\>" end="\%(\%(\%(\.\@1<!\.\)\|::\)\s*\)\@<!\<end\>" contains=TOP
 
-  syn match crystalConditional "\<\%(then\|else\|when\)\>[?!]\@!" contained containedin=crystalCaseExpression
+  syn match crystalConditional "\<\%(then\|else\|when\|in\)\>[?!]\@!" contained containedin=crystalCaseExpression
   syn match crystalConditional "\<\%(when\|else\)\>[?!]\@!" contained containedin=crystalSelectExpression
   syn match crystalConditional "\<\%(then\|else\|elsif\)\>[?!]\@!" contained containedin=crystalConditionalExpression
 
@@ -339,7 +339,7 @@ else
   syn match crystalControl "\<macro\>[?!]\@!"      nextgroup=crystalMacroDeclaration skipwhite skipnl
   syn match crystalControl "\<enum\>[?!]\@!"       nextgroup=crystalEnumDeclaration skipwhite skipnl
   syn match crystalControl "\<annotation\>[?!]\@!" nextgroup=crystalAnnotationDeclaration skipwhite skipnl
-  syn match crystalControl "\<\%(case\|begin\|do\|if\|ifdef\|unless\|while\|until\|else\|elsif\|ensure\|then\|when\|end\)\>[?!]\@!"
+  syn match crystalControl "\<\%(case\|begin\|do\|if\|ifdef\|unless\|while\|until\|else\|elsif\|ensure\|then\|when\|in\|end\)\>[?!]\@!"
   syn match crystalKeyword "\<\%(alias\|undef\)\>[?!]\@!"
 endif
 
@@ -402,7 +402,7 @@ SynFold '#' syn region crystalMultilineComment start="\%(\%(^\s*#.*\n\)\@<!\%(^\
 syn match crystalKeywordAsMethod "\%(\%(\.\@1<!\.\)\|::\)\_s*\%(alias\|begin\|break\|case\|class\|def\|defined\|do\|else\|select\)\>" transparent contains=NONE
 syn match crystalKeywordAsMethod "\%(\%(\.\@1<!\.\)\|::\)\_s*\%(elsif\|end\|ensure\|false\|for\|if\|ifdef\|in\|module\|next\|nil\)\>" transparent contains=NONE
 syn match crystalKeywordAsMethod "\%(\%(\.\@1<!\.\)\|::\)\_s*\%(rescue\|return\|self\|super\|previous_def\|then\|true\)\>" transparent contains=NONE
-syn match crystalKeywordAsMethod "\%(\%(\.\@1<!\.\)\|::\)\_s*\%(undef\|unless\|until\|when\|while\|yield\|with\|__FILE__\|__LINE__\)\>" transparent contains=NONE
+syn match crystalKeywordAsMethod "\%(\%(\.\@1<!\.\)\|::\)\_s*\%(undef\|unless\|until\|when\|in\|while\|yield\|with\|__FILE__\|__LINE__\)\>" transparent contains=NONE
 
 syn match crystalKeywordAsMethod "\<\%(alias\|begin\|case\|class\|def\|do\|end\)[?!]" transparent contains=NONE
 syn match crystalKeywordAsMethod "\<\%(if\|ifdef\|module\|undef\|unless\|until\|while\)[?!]" transparent contains=NONE
