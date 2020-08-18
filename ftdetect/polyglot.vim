@@ -1142,6 +1142,11 @@ if index(g:polyglot_disabled, 'zig') == -1
   au BufNewFile,BufRead *.zir set ft=zir
 endif
 
+if index(g:polyglot_disabled, 'jsonnet') == -1
+  au BufNewFile,BufRead *.jsonnet set ft=jsonnet
+  au BufNewFile,BufRead *.libsonnet set ft=jsonnet
+endif
+
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
 unlet s:cpo_save

@@ -253,6 +253,7 @@ language("Vue", extra_extensions=[".wpy"])
 language("XDC", extensions=[".xdc"])
 language("Zig", extra_extensions=[".zir"])
 language("Zir", extensions=[".zir"], polyglot="zig", filetype="zir")
+language("Jsonnet")
 
 lines.append('" restore Vi compatibility settings')
 lines.append('let &cpo = s:cpo_save')
