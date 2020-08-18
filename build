@@ -163,7 +163,7 @@ PACKS="
   cucumber:tpope/vim-cucumber
   cue:mgrabovsky/vim-cuesheet
   dart:dart-lang/dart-vim-plugin
-  dhall:sheerun/dhall-vim
+  dhall:vmchale/dhall-vim
   dlang:JesseKPhillips/d.vim
   dockerfile:ekalinin/Dockerfile.vim
   elixir:elixir-lang/vim-elixir
@@ -201,6 +201,7 @@ PACKS="
   jinja:lepture/vim-jinja
   json5:GutenYe/json5.vim
   json:elzr/vim-json
+  jsonnet:google/vim-jsonnet
   jst:briancollins/vim-jst
   jsx:MaxMEllon/vim-jsx-pretty:_ALL
   julia:JuliaEditorSupport/julia-vim

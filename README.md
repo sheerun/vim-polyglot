@@ -10,7 +10,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 120+ times faster** than the <!--Package Count-->152<!--/Package Count--> packages it consists of.
+- It **installs and updates 120+ times faster** than the <!--Package Count-->153<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -69,7 +69,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin)
 - [cue](https://github.com/mgrabovsky/vim-cuesheet) (syntax)
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin)
-- [dhall](https://github.com/sheerun/dhall-vim) (syntax, ftplugin)
+- [dhall](https://github.com/vmchale/dhall-vim) (syntax, ftplugin)
 - [dlang](https://github.com/JesseKPhillips/d.vim) (syntax, indent)
 - [dockerfile](https://github.com/ekalinin/Dockerfile.vim) (syntax, indent, ftplugin)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, autoload, ftplugin)
@@ -107,6 +107,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [jinja](https://github.com/lepture/vim-jinja) (syntax, indent)
 - [json5](https://github.com/GutenYe/json5.vim) (syntax)
 - [json](https://github.com/elzr/vim-json) (syntax, indent, ftplugin)
+- [jsonnet](https://github.com/google/vim-jsonnet) (syntax, autoload, ftplugin)
 - [jst](https://github.com/briancollins/vim-jst) (syntax, indent)
 - [jsx](https://github.com/MaxMEllon/vim-jsx-pretty) (autoload, after)
 - [julia](https://github.com/JuliaEditorSupport/julia-vim) (syntax, indent, autoload, ftplugin)
