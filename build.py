@@ -256,6 +256,7 @@ language("Zir", extensions=[".zir"], polyglot="zig", filetype="zir")
 language("Jsonnet")
 language("Fennel", extensions=[".fnl"])
 language("mcfunction")
+language("JSONiq", extra_filenames=[".jqrc"], filetype="jq", polyglot="jq")
 
 lines.append('" restore Vi compatibility settings')
 lines.append('let &cpo = s:cpo_save')

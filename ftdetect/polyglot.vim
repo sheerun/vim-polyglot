@@ -1155,6 +1155,11 @@ if index(g:polyglot_disabled, 'mcfunction') == -1
   au BufNewFile,BufRead *.mcfunction set ft=mcfunction
 endif
 
+if index(g:polyglot_disabled, 'jq') == -1
+  au BufNewFile,BufRead *.jq set ft=jq
+  au BufNewFile,BufRead {.,}jqrc set ft=jq
+endif
+
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
 unlet s:cpo_save

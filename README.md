@@ -10,7 +10,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 120+ times faster** than the <!--Package Count-->155<!--/Package Count--> packages it consists of.
+- It **installs and updates 120+ times faster** than the <!--Package Count-->156<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -106,6 +106,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, compiler, ftplugin, extras)
 - [jenkins](https://github.com/martinda/Jenkinsfile-vim-syntax) (syntax, indent)
 - [jinja](https://github.com/lepture/vim-jinja) (syntax, indent)
+- [jq](https://github.com/vito-c/jq.vim) (syntax, ftplugin)
 - [json5](https://github.com/GutenYe/json5.vim) (syntax)
 - [json](https://github.com/elzr/vim-json) (syntax, indent, ftplugin)
 - [jsonnet](https://github.com/google/vim-jsonnet) (syntax, autoload, ftplugin)

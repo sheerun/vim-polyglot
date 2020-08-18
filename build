@@ -200,6 +200,7 @@ PACKS="
   javascript:pangloss/vim-javascript:_JAVASCRIPT
   jenkins:martinda/Jenkinsfile-vim-syntax
   jinja:lepture/vim-jinja
+  jq:vito-c/jq.vim
   json5:GutenYe/json5.vim
   json:elzr/vim-json
   jsonnet:google/vim-jsonnet
