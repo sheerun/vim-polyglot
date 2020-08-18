@@ -182,7 +182,7 @@ PACKS="
   graphql:jparise/vim-graphql:_ALL
   gradle:tfnico/vim-gradle
   haml:sheerun/vim-haml
-  handlebars:mustache/vim-mustache-handlebars
+  handlebars:sheerun/vim-mustache-handlebars
   haproxy:CH-DanReif/haproxy.vim
   haskell:neovimhaskell/haskell-vim
   haxe:yaymukund/vim-haxe
