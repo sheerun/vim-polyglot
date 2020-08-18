@@ -171,6 +171,7 @@ PACKS="
   emberscript:yalesov/vim-ember-script
   emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
+  fennel:bakpakin/fennel.vim
   ferm:vim-scripts/ferm.vim
   fish:georgewitteman/vim-fish
   flatbuffers:dcharbon/vim-flatbuffers

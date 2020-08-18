@@ -1147,6 +1147,10 @@ if index(g:polyglot_disabled, 'jsonnet') == -1
   au BufNewFile,BufRead *.libsonnet set ft=jsonnet
 endif
 
+if index(g:polyglot_disabled, 'fennel') == -1
+  au BufNewFile,BufRead *.fnl set ft=fennel
+endif
+
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
 unlet s:cpo_save
