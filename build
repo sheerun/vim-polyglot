@@ -163,7 +163,7 @@ PACKS="
   cucumber:tpope/vim-cucumber
   cue:mgrabovsky/vim-cuesheet
   dart:dart-lang/dart-vim-plugin
-  dhall:vmchale/dhall-vim
+  dhall:sheerun/dhall-vim
   dlang:JesseKPhillips/d.vim
   dockerfile:ekalinin/Dockerfile.vim
   elixir:elixir-lang/vim-elixir

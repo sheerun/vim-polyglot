@@ -9,13 +9,9 @@ setlocal commentstring=--\ %s
 
 set smarttab
 
-autocmd! dhall
-
 if exists('g:dhall_use_ctags')
     if g:dhall_use_ctags == 1
-        augroup dhall
-            autocmd BufWritePost *.dhall silent !ctags -R .
-        augroup END
+        autocmd BufWritePost *.dhall silent !ctags -R .
     endif
 endif
 
@@ -28,9 +24,7 @@ endfunction
 
 if exists('g:dhall_strip_whitespace')
     if g:dhall_strip_whitespace == 1
-        augroup dhall
-            au BufWritePre *.dhall silent! call StripTrailingWhitespace()
-        augroup END
+        au BufWritePre *.dhall silent! call StripTrailingWhitespace()
     endif
 endif
 
@@ -44,14 +38,10 @@ endfunction
 
 if exists('g:dhall_format')
     if g:dhall_format == 1
-        augroup dhall
-            au BufWritePost *.dhall call DhallFormat()
-        augroup END
+        au BufWritePost *.dhall call DhallFormat()
     endif
 endif
 
-augroup dhall
-    au BufNewFile,BufRead *.dhall setl shiftwidth=2
-augroup END
+au BufNewFile,BufRead *.dhall setl shiftwidth=2
 
 endif

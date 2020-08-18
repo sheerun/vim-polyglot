@@ -69,7 +69,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [cucumber](https://github.com/tpope/vim-cucumber) (syntax, indent, compiler, ftplugin)
 - [cue](https://github.com/mgrabovsky/vim-cuesheet) (syntax)
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (syntax, indent, autoload, ftplugin)
-- [dhall](https://github.com/vmchale/dhall-vim) (syntax, ftplugin)
+- [dhall](https://github.com/sheerun/dhall-vim) (syntax, ftplugin)
 - [dlang](https://github.com/JesseKPhillips/d.vim) (syntax, indent)
 - [dockerfile](https://github.com/ekalinin/Dockerfile.vim) (syntax, indent, ftplugin)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, autoload, ftplugin)
