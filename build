@@ -102,14 +102,16 @@ copy_file() {
   fi
 
   mkdir -p "${file_path}"
-  touch "$file_in_dst"
 
-  # Use comma instead of / to handle cases like c/c++
-  if [[ "${package_name}" == "jsx" ]]; then
-    sed -e "s,%%PACK%%,${package_name}," -e "/%%CONTENT%%/{r ${file_in_tmp}" -e "d;}" plugin_guard_jsx.vim.template >> "$file_in_dst"
-  else
-    sed -e "s,%%PACK%%,${package_name}," -e "/%%CONTENT%%/{r ${file_in_tmp}" -e "d;}" plugin_guard.vim.template >> "$file_in_dst"
-  fi
+  (
+    if [[ "${package_name}" == "jsx" ]]; then
+      printf "if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)\n\n"
+    else
+      printf "if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '$package_name') == -1\n\n"
+    fi
+    cat "$file_in_tmp"
+    printf "\nendif\n"
+  ) >> "$file_in_dst"
 }
 
 update_readme() {
