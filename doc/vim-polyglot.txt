@@ -1,0 +1,25 @@
+*vim-polyglot*  Vim Polyglot
+
+===============================================================================
+                                                    *vim-polyglot-introduction*
+Introduction ~
+
+Vim Polyglot is a solid language pack for vim. No configuration needed.
+
+Please make sure you have `syntax on` in your `.vimrc`
+
+
+===============================================================================
+DISABLING LANGUAGE PACKS                                *vim-polyglot-disabled*
+
+
+Individual language packs can be disabled by setting `g:polyglot_disabled`:
+
+>
+    " ~/.vimrc, declare this variable before polyglot is loaded let
+    g:polyglot_disabled = ['css']
+<
+
+Note that disabling languages won't make in general your vim startup any faster
+/ slower (only for specific file type). Vim-polyglot is selection of language
+plugins that are loaded only on demand.
