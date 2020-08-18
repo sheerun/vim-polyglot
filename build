@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -E
+set -eo pipefail
 
 DIRS="syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin"
 # shellcheck disable=SC2034
@@ -28,7 +28,7 @@ download() {
     repo="$(awk -F\# '{print $1}' <<<"$path")"
     branch="$(awk -F\# '{print $2}' <<<"$path")"
     rm -rf "$dir"
-    (mkdir -p "$dir" && curl --silent -L "https://codeload.github.com/$repo/tar.gz/${branch:-master}" | tar -zx -C "$dir" --strip 1 && printf '.') &
+    (mkdir -p "$dir" && curl --silent -fL "https://codeload.github.com/$repo/tar.gz/${branch:-master}" | tar -zx -C "$dir" --strip 1 && printf '.' || echo "Failed to download: $repo") &
   done
 
   wait
@@ -294,11 +294,11 @@ PACKS="
 python3 build.py
 
 rm -rf tmp
-rm -rf "${DIRS_RM[@]}"
 mkdir tmp
 
 printf "Downloading packs..."
 download "$(sed '/^#/d' <<<"$PACKS")"
+rm -rf "${DIRS_RM[@]}"
 extract "$(sed '/^#/d' <<<"$PACKS")"
 update_readme
 
