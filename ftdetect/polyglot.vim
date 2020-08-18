@@ -267,12 +267,6 @@ if index(g:polyglot_disabled, 'flatbuffers') == -1
   au BufNewFile,BufRead *.fbs set ft=fbs
 endif
 
-if index(g:polyglot_disabled, 'fsharp') == -1
-  au BufNewFile,BufRead *.fs set ft=fsharp
-  au BufNewFile,BufRead *.fsi set ft=fsharp
-  au BufNewFile,BufRead *.fsx set ft=fsharp
-endif
-
 if index(g:polyglot_disabled, 'gdscript') == -1
   au BufNewFile,BufRead *.gd set ft=gdscript3
 endif
@@ -299,6 +293,12 @@ if index(g:polyglot_disabled, 'glsl') == -1
   au BufNewFile,BufRead *.vrx set ft=glsl
   au BufNewFile,BufRead *.vsh set ft=glsl
   au BufNewFile,BufRead *.vshader set ft=glsl
+endif
+
+if index(g:polyglot_disabled, 'fsharp') == -1
+  au BufNewFile,BufRead *.fs set ft=fsharp
+  au BufNewFile,BufRead *.fsi set ft=fsharp
+  au BufNewFile,BufRead *.fsx set ft=fsharp
 endif
 
 if index(g:polyglot_disabled, 'git') == -1
