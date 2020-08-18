@@ -90,7 +90,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [gradle](https://github.com/tfnico/vim-gradle) (compiler)
 - [graphql](https://github.com/jparise/vim-graphql) (syntax, indent, autoload, ftplugin, after)
 - [haml](https://github.com/sheerun/vim-haml) (syntax, indent, compiler, ftplugin)
-- [handlebars](https://github.com/mustache/vim-mustache-handlebars) (syntax, indent, ftplugin)
+- [handlebars](https://github.com/sheerun/vim-mustache-handlebars) (syntax, indent, ftplugin)
 - [haproxy](https://github.com/CH-DanReif/haproxy.vim) (syntax)
 - [haskell](https://github.com/neovimhaskell/haskell-vim) (syntax, indent, ftplugin)
 - [haxe](https://github.com/yaymukund/vim-haxe) (syntax)
