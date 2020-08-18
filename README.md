@@ -10,7 +10,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 120+ times faster** than the <!--Package Count-->154<!--/Package Count--> packages it consists of.
+- It **installs and updates 120+ times faster** than the <!--Package Count-->155<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -167,6 +167,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [slime](https://github.com/slime-lang/vim-slime-syntax) (syntax, indent)
 - [smt2](https://github.com/bohlender/vim-smt2) (syntax, autoload, ftplugin)
 - [solidity](https://github.com/tomlion/vim-solidity) (syntax, indent, ftplugin)
+- [sql](https://github.com/shmup/vim-sql-syntax) (syntax)
 - [stylus](https://github.com/wavded/vim-stylus) (syntax, indent, ftplugin)
 - [svelte](https://github.com/evanleck/vim-svelte#main) (syntax, indent, ftplugin)
 - [svg-indent](https://github.com/jasonshell/vim-svg-indent) (indent)

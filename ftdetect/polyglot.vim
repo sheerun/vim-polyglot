@@ -1151,6 +1151,10 @@ if index(g:polyglot_disabled, 'fennel') == -1
   au BufNewFile,BufRead *.fnl set ft=fennel
 endif
 
+if index(g:polyglot_disabled, 'mcfunction') == -1
+  au BufNewFile,BufRead *.mcfunction set ft=mcfunction
+endif
+
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
 unlet s:cpo_save
