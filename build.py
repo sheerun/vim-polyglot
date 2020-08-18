@@ -257,6 +257,7 @@ language("Jsonnet")
 language("Fennel", extensions=[".fnl"])
 language("mcfunction")
 language("JSONiq", extra_filenames=[".jqrc"], filetype="jq", polyglot="jq")
+language("Requirements", extensions=[".pip"], filenames=["*requirements.{txt,in}", "*require.{txt,in}", "constraints.{txt,in}"])
 
 lines.append('" restore Vi compatibility settings')
 lines.append('let &cpo = s:cpo_save')

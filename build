@@ -250,6 +250,7 @@ PACKS="
   raml:IN3D/vim-raml
   razor:adamclerk/vim-razor
   reason:reasonml-editor/vim-reason-plus
+  requirements:raimon49/requirements.txt.vim
   rspec:keith/rspec.vim
   rst:marshallward/vim-restructuredtext
   ruby:vim-ruby/vim-ruby

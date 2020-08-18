@@ -1160,6 +1160,13 @@ if index(g:polyglot_disabled, 'jq') == -1
   au BufNewFile,BufRead {.,}jqrc set ft=jq
 endif
 
+if index(g:polyglot_disabled, 'requirements') == -1
+  au BufNewFile,BufRead *.pip set ft=requirements
+  au BufNewFile,BufRead *require.{txt,in} set ft=requirements
+  au BufNewFile,BufRead *requirements.{txt,in} set ft=requirements
+  au BufNewFile,BufRead constraints.{txt,in} set ft=requirements
+endif
+
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
 unlet s:cpo_save
