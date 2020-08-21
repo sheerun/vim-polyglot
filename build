@@ -1,312 +1,838 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
 
-set -eo pipefail
+require 'open-uri'
+require 'open3'
+require 'yaml'
+require 'fileutils'
 
-DIRS="syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin"
-# shellcheck disable=SC2034
-DIRS_BASIC="syntax compiler indent after/syntax after/indent"
-# shellcheck disable=SC2034
-DIRS_ALL="syntax indent compiler autoload ftplugin after extras ctags"
-# shellcheck disable=SC2034
-DIRS_SYNTAX="syntax indent after/syntax after/indent"
-# shellcheck disable=SC2034
-DIRS_NOAFTER="syntax compiler indent autoload ftplugin"
-DIRS_JAVASCRIPT="${DIRS} extras"
-read -r -a DIRS_RM <<<"$DIRS_ALL"
+Dir.chdir(__dir__)
 
-OUTPUT=""
+BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 
-output() {
-  OUTPUT="$OUTPUT$1"
-  echo -n "$1"
+DIRS = {
+  default: %w(syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin),
+  all: %w(syntax indent compiler autoload ftplugin after extras ctags),
+  basic: %w(syntax compiler indent after/syntax after/indent),
+  syntax: %w(syntax indent after/syntax after/indent),
+  noafter: %w(syntax compiler indent autoload ftplugin),
+  javascript: %w(syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin extras),
+  go: %w(autoload/go/config.vim syntax compiler indent after/syntax after/indent)
 }
 
-download() {
-  for pack in $1; do
-    path="$(cut -d ':' -f 2 <<<"$pack")"
-    dir="tmp/$(cut -d '/' -f 2 <<<"$path")"
-    repo="$(awk -F\# '{print $1}' <<<"$path")"
-    branch="$(awk -F\# '{print $2}' <<<"$path")"
-    rm -rf "$dir"
-    (mkdir -p "$dir" && curl --silent -fL "https://codeload.github.com/$repo/tar.gz/${branch:-master}" | tar -zx -C "$dir" --strip 1 && printf '.' || echo "Failed to download: $repo") &
-  done
+PACKAGES = [
+  {
+    name: "acpiasl",
+    remote: "martinlroth/vim-acpi-asl",
+  },
+  {
+    name: "ansible",
+    remote: "pearofducks/ansible-vim",
+  },
+  {
+    name: "apiblueprint",
+    remote: "sheerun/apiblueprint.vim",
+  },
+  {
+    name: "applescript",
+    remote: "mityu/vim-applescript",
+    dirs: DIRS[:syntax]
+  },
+  {
+    name: "arduino",
+    remote: "sudar/vim-arduino-syntax",
+  },
+  {
+    name: "asciidoc",
+    remote: "asciidoc/vim-asciidoc",
+  },
+  {
+    name: "autohotkey",
+    remote: "hnamikaw/vim-autohotkey",
+  },
+  {
+    name: "blade",
+    remote: "jwalton512/vim-blade",
+  },
+  {
+    name: "brewfile",
+    remote: "bfontaine/Brewfile.vim",
+  },
+  {
+    name: "c++11",
+    remote: "octol/vim-cpp-enhanced-highlight",
+  },
+  {
+    name: "c/c++",
+    remote: "vim-jp/vim-cpp",
+  },
+  {
+    name: "caddyfile",
+    remote: "isobit/vim-caddyfile",
+  },
+  {
+    name: "carp",
+    remote: "hellerve/carp-vim",
+  },
+  {
+    name: "cjsx",
+    remote: "mtscout6/vim-cjsx",
+  },
+  {
+    name: "clojure",
+    remote: "guns/vim-clojure-static",
+  },
+  {
+    name: "cmake",
+    remote: "pboettch/vim-cmake-syntax",
+  },
+  {
+    name: "coffee-script",
+    remote: "kchmck/vim-coffee-script",
+    dirs: DIRS[:noafter]
+  },
+  {
+    name: "cql",
+    remote: "elubow/cql-vim",
+  },
+  {
+    name: "cryptol",
+    remote: "victoredwardocallaghan/cryptol.vim",
+  },
+  {
+    name: "crystal",
+    remote: "rhysd/vim-crystal",
+  },
+  {
+    name: "csv",
+    remote: "chrisbra/csv.vim",
+  },
+  {
+    name: "cucumber",
+    remote: "tpope/vim-cucumber",
+  },
+  {
+    name: "cue",
+    remote: "mgrabovsky/vim-cuesheet",
+  },
+  {
+    name: "dart",
+    remote: "dart-lang/dart-vim-plugin",
+  },
+  {
+    name: "dhall",
+    remote: "vmchale/dhall-vim",
+  },
+  {
+    name: "dlang",
+    remote: "JesseKPhillips/d.vim",
+  },
+  {
+    name: "dockerfile",
+    remote: "ekalinin/Dockerfile.vim",
+  },
+  {
+    name: "elixir",
+    remote: "elixir-lang/vim-elixir",
+  },
+  {
+    name: "elm",
+    remote: "andys8/vim-elm-syntax",
+  },
+  {
+    name: "emberscript",
+    remote: "yalesov/vim-ember-script",
+  },
+  {
+    name: "emblem",
+    remote: "yalesov/vim-emblem",
+  },
+  {
+    name: "erlang",
+    remote: "vim-erlang/vim-erlang-runtime",
+  },
+  {
+    name: "fennel",
+    remote: "bakpakin/fennel.vim",
+  },
+  {
+    name: "ferm",
+    remote: "vim-scripts/ferm.vim",
+  },
+  {
+    name: "fish",
+    remote: "georgewitteman/vim-fish",
+  },
+  {
+    name: "flatbuffers",
+    remote: "dcharbon/vim-flatbuffers",
+  },
+  {
+    name: "fsharp",
+    remote: "ionide/Ionide-vim",
+    dirs: DIRS[:basic]
+  },
+  {
+    name: "gdscript",
+    remote: "calviken/vim-gdscript3",
+    dirs: DIRS[:syntax]
+  },
+  {
+    name: "git",
+    remote: "tpope/vim-git",
+  },
+  {
+    name: "glsl",
+    remote: "tikhomirov/vim-glsl",
+    dirs: DIRS[:noafter]
+  },
+  {
+    name: "gmpl",
+    remote: "maelvalais/gmpl.vim",
+  },
+  {
+    name: "gnuplot",
+    remote: "vim-scripts/gnuplot-syntax-highlighting",
+  },
+  {
+    name: "go",
+    remote: "fatih/vim-go",
+    dirs: DIRS[:go]
+  },
+  {
+    name: "graphql",
+    remote: "jparise/vim-graphql",
+    dirs: DIRS[:all]
+  },
+  {
+    name: "gradle",
+    remote: "tfnico/vim-gradle",
+  },
+  {
+    name: "haml",
+    remote: "sheerun/vim-haml",
+  },
+  {
+    name: "handlebars",
+    remote: "sheerun/vim-mustache-handlebars",
+  },
+  {
+    name: "haproxy",
+    remote: "CH-DanReif/haproxy.vim",
+  },
+  {
+    name: "haskell",
+    remote: "neovimhaskell/haskell-vim",
+  },
+  {
+    name: "haxe",
+    remote: "yaymukund/vim-haxe",
+  },
+  {
+    name: "hcl",
+    remote: "b4b4r07/vim-hcl",
+  },
+  {
+    name: "helm",
+    remote: "towolf/vim-helm",
+  },
+  {
+    name: "hive",
+    remote: "zebradil/hive.vim",
+  },
+  {
+    name: "html5",
+    remote: "othree/html5.vim",
+  },
+  {
+    name: "i3",
+    remote: "mboughaba/i3config.vim",
+  },
+  {
+    name: "icalenadr",
+    remote: "chutzpah/icalendar.vim",
+  },
+  {
+    name: "idris",
+    remote: "idris-hackers/idris-vim",
+  },
+  {
+    name: "ion",
+    remote: "vmchale/ion-vim",
+  },
+  {
+    name: "javascript",
+    remote: "pangloss/vim-javascript",
+    dirs: DIRS[:javascript]
+  },
+  {
+    name: "jenkins",
+    remote: "martinda/Jenkinsfile-vim-syntax",
+  },
+  {
+    name: "jinja",
+    remote: "lepture/vim-jinja",
+  },
+  {
+    name: "jq",
+    remote: "vito-c/jq.vim",
+  },
+  {
+    name: "json5",
+    remote: "GutenYe/json5.vim",
+  },
+  {
+    name: "json",
+    remote: "elzr/vim-json",
+  },
+  {
+    name: "jsonnet",
+    remote: "google/vim-jsonnet",
+  },
+  {
+    name: "jst",
+    remote: "briancollins/vim-jst",
+  },
+  {
+    name: "jsx",
+    remote: "MaxMEllon/vim-jsx-pretty",
+    dirs: DIRS[:all]
+  },
+  {
+    name: "julia",
+    remote: "JuliaEditorSupport/julia-vim",
+  },
+  {
+    name: "kotlin",
+    remote: "udalov/kotlin-vim",
+  },
+  {
+    name: "ledger",
+    remote: "ledger/vim-ledger",
+    dirs: DIRS[:basic]
+  },
+  {
+    name: "less",
+    remote: "groenewege/vim-less",
+    dirs: DIRS[:noafter]
+  },
+  {
+    name: "lilypond",
+    remote: "anowlcalledjosh/vim-lilypond",
+  },
+  {
+    name: "livescript",
+    remote: "gkz/vim-ls",
+  },
+  {
+    name: "llvm",
+    remote: "rhysd/vim-llvm",
+  },
+  {
+    name: "log",
+    remote: "MTDL9/vim-log-highlighting",
+  },
+  {
+    name: "lua",
+    remote: "tbastos/vim-lua",
+  },
+  {
+    name: "mako",
+    remote: "sophacles/vim-bundle-mako",
+  },
+  {
+    name: "markdown",
+    remote: "plasticboy/vim-markdown",
+    dirs: DIRS[:noafter]
+  },
+  {
+    name: "mathematica",
+    remote: "voldikss/vim-mma",
+  },
+  {
+    name: "mdx",
+    remote: "jxnblk/vim-mdx-js",
+  },
+  {
+    name: "meson",
+    remote: "mesonbuild/meson:data/syntax-highlighting/vim",
+    dirs: DIRS[:all]
+  },
+  {
+    name: "moonscript",
+    remote: "leafo/moonscript-vim",
+  },
+  {
+    name: "nginx",
+    remote: "chr4/nginx.vim",
+  },
+  {
+    name: "nim",
+    remote: "zah/nim.vim",
+    dirs: DIRS[:basic]
+  },
+  {
+    name: "nix",
+    remote: "LnL7/vim-nix",
+  },
+  {
+    name: "objc",
+    remote: "b4winckler/vim-objc",
+  },
+  {
+    name: "ocaml",
+    remote: "rgrinberg/vim-ocaml",
+  },
+  {
+    name: "octave",
+    remote: "McSinyx/vim-octave",
+  },
+  {
+    name: "opencl",
+    remote: "petRUShka/vim-opencl",
+  },
+  {
+    name: "perl",
+    remote: "vim-perl/vim-perl",
+  },
+  {
+    name: "pgsql",
+    remote: "lifepillar/pgsql.vim",
+  },
+  {
+    name: "php",
+    remote: "StanAngeloff/php.vim",
+  },
+  {
+    name: "plantuml",
+    remote: "aklt/plantuml-syntax",
+  },
+  {
+    name: "pony",
+    remote: "jakwings/vim-pony",
+  },
+  {
+    name: "powershell",
+    remote: "PProvost/vim-ps1",
+  },
+  {
+    name: "protobuf",
+    remote: "uarun/vim-protobuf",
+  },
+  {
+    name: "pug",
+    remote: "digitaltoad/vim-pug",
+  },
+  {
+    name: "puppet",
+    remote: "rodjek/vim-puppet",
+  },
+  {
+    name: "purescript",
+    remote: "purescript-contrib/purescript-vim",
+  },
+  {
+    name: "python-compiler",
+    remote: "aliev/vim-compiler-python",
+  },
+  {
+    name: "python-indent",
+    remote: "Vimjas/vim-python-pep8-indent",
+  },
+  {
+    name: "python",
+    remote: "vim-python/python-syntax",
+  },
+  {
+    name: "qmake",
+    remote: "artoj/qmake-syntax-vim",
+  },
+  {
+    name: "qml",
+    remote: "peterhoeg/vim-qml",
+  },
+  {
+    name: "r-lang",
+    remote: "vim-scripts/R.vim",
+    dirs: DIRS[:basic]
+  },
+  {
+    name: "racket",
+    remote: "wlangstroth/vim-racket",
+  },
+  {
+    name: "ragel",
+    remote: "jneen/ragel.vim",
+  },
+  {
+    name: "raku",
+    remote: "Raku/vim-raku",
+  },
+  {
+    name: "raml",
+    remote: "IN3D/vim-raml",
+  },
+  {
+    name: "razor",
+    remote: "adamclerk/vim-razor",
+  },
+  {
+    name: "reason",
+    remote: "reasonml-editor/vim-reason-plus",
+  },
+  {
+    name: "requirements",
+    remote: "raimon49/requirements.txt.vim",
+  },
+  {
+    name: "rspec",
+    remote: "keith/rspec.vim",
+  },
+  {
+    name: "rst",
+    remote: "marshallward/vim-restructuredtext",
+  },
+  {
+    name: "ruby",
+    remote: "vim-ruby/vim-ruby",
+  },
+  {
+    name: "rust",
+    remote: "rust-lang/rust.vim",
+  },
+  {
+    name: "sbt",
+    remote: "derekwyatt/vim-sbt",
+  },
+  {
+    name: "scala",
+    remote: "derekwyatt/vim-scala",
+  },
+  {
+    name: "scss",
+    remote: "cakebaker/scss-syntax.vim",
+  },
+  {
+    name: "sh",
+    remote: "arzg/vim-sh",
+  },
+  {
+    name: "slim",
+    remote: "slim-template/vim-slim",
+  },
+  {
+    name: "slime",
+    remote: "slime-lang/vim-slime-syntax",
+  },
+  {
+    name: "smt2",
+    remote: "bohlender/vim-smt2",
+  },
+  {
+    name: "solidity",
+    remote: "tomlion/vim-solidity",
+  },
+  {
+    name: "sql",
+    remote: "shmup/vim-sql-syntax",
+  },
+  {
+    name: "stylus",
+    remote: "wavded/vim-stylus",
+  },
+  {
+    name: "svelte",
+    remote: "evanleck/vim-svelte@main",
+  },
+  {
+    name: "svg-indent",
+    remote: "jasonshell/vim-svg-indent",
+  },
+  {
+    name: "svg",
+    remote: "vim-scripts/svg.vim",
+  },
+  {
+    name: "swift",
+    remote: "keith/swift.vim",
+  },
+  {
+    name: "sxhkd",
+    remote: "baskerville/vim-sxhkdrc",
+  },
+  {
+    name: "systemd",
+    remote: "wgwoods/vim-systemd-syntax",
+  },
+  {
+    name: "terraform",
+    remote: "hashivim/vim-terraform",
+  },
+  {
+    name: "textile",
+    remote: "timcharper/textile.vim",
+  },
+  {
+    name: "thrift",
+    remote: "solarnz/thrift.vim",
+  },
+  {
+    name: "tmux",
+    remote: "ericpruitt/tmux.vim:vim",
+    dirs: DIRS[:all]
+  },
+  {
+    name: "tomdoc",
+    remote: "wellbredgrapefruit/tomdoc.vim",
+  },
+  {
+    name: "toml",
+    remote: "cespare/vim-toml",
+  },
+  {
+    name: "tptp",
+    remote: "c-cube/vim-tptp",
+  },
+  {
+    name: "twig",
+    remote: "lumiliet/vim-twig",
+  },
+  {
+    name: "typescript",
+    remote: "HerringtonDarkholme/yats.vim",
+  },
+  {
+    name: "unison",
+    remote: "unisonweb/unison@trunk:editor-support/vim",
+    dirs: DIRS[:all]
+  },
+  {
+    name: "v",
+    remote: "ollykel/v-vim",
+  },
+  {
+    name: "vala",
+    remote: "arrufat/vala.vim",
+  },
+  {
+    name: "vbnet",
+    remote: "vim-scripts/vbnet.vim",
+  },
+  {
+    name: "vcl",
+    remote: "smerrill/vcl-vim-plugin",
+  },
+  {
+    name: "vifm",
+    remote: "vifm/vifm.vim",
+  },
+  {
+    name: "vm",
+    remote: "lepture/vim-velocity",
+  },
+  {
+    name: "vue",
+    remote: "posva/vim-vue",
+  },
+  {
+    name: "xdc",
+    remote: "amal-khailtash/vim-xdc-syntax",
+  },
+  {
+    name: "xml",
+    remote: "amadeus/vim-xml",
+  },
+  {
+    name: "xls",
+    remote: "vim-scripts/XSLT-syntax",
+  },
+  {
+    name: "yaml",
+    remote: "stephpy/vim-yaml",
+  },
+  {
+    name: "yard",
+    remote: "sheerun/vim-yardoc",
+  },
+  {
+    name: "zephir",
+    remote: "xwsoul/vim-zephir",
+  },
+  {
+    name: "zig",
+    remote: "ziglang/zig.vim",
+  },
+  {
+    name: "zinit",
+    remote: "zinit-zsh/zplugin-vim-syntax",
+  }
+]
 
-  wait
-}
+def parallel(*procs)
+  threads = procs.map { |p| Thread.new { method(p).call } }
+  threads.map(&:join).map(&:value)
+end
 
-extract() {
-  echo
+def read_strings(data, keys, print=false)
+  if data.is_a?(Hash)
+    data.flat_map do |key, val|
+      read_strings(val, keys, keys.include?(key))
+    end
+  elsif data.is_a?(Array)
+    data.flat_map { |d| read_strings(d, keys, print) }
+  elsif data.is_a?(String)
+    print ? [data] : []
+  else
+    []
+  end
+end
 
-  for pack in $1; do
-    name="$(cut -d ':' -f 1 <<<"$pack")"
-    path="$(cut -d ':' -f 2 <<<"$pack")"
-    dir="tmp/$(cut -d '/' -f 2 <<<"$path")"
-    directories="DIRS$(cut -d ':' -f 3 <<<"$pack")"
-    subtree="$(cut -d ':' -f 4 <<<"$pack")"
-    output "- [$name](https://github.com/$path) ("
+def transform_with(data, keys, transfrom=false, &block)
+  if data.is_a?(Hash)
+    Hash[data.map do |key, val|
+      [key, transform_with(val, keys, keys.include?(key), &block)]
+    end]
+  elsif data.is_a?(Array)
+    data.map { |d| transform_with(d, keys, transfrom, &block) }
+  elsif data.is_a?(String)
+    transfrom ? yield(data) : data
+  else
+    data
+  end
+end
 
-    subdirs=""
-    for subdir in ${!directories}; do
-      if [ -d "${dir}${subtree:-/}${subdir}" ]; then
-        base="$(basename "$subdir")"
-        if [[ "$subdirs" != *"$base"* ]]; then
-          subdirs="$subdirs, $base"
-        fi
+def each_hash(data, &block)
+  if data.is_a?(Hash)
+    yield data
+    data.each do |key, val|
+      each_hash(val, &block)
+    end
+  elsif data.is_a?(Array)
+    data.map { |d| each_hash(d, &block) }
+  end
+end
 
-        copy_dir "${dir}${subtree}" "$subdir" "$name"
-      fi
-    done
+def patterns_to_vim_patterns(patterns)
+  stdin, stdout, stderr = Open3.popen3('vim', '-V', '--clean', '/dev/stdin', '-es', '-c', "echo expand('%:p:h') | source #{__dir__}/eregex.vim", '-c', "for line in range(0, line('$')) | call setline(line, ExtendedRegex2VimRegex(getline(line))) | endfor", '-c', ':wq! /dev/stdout', chdir: __dir__)
+  stdin.write(patterns.join("\n"))
+  stdin.close
+  stdout.readlines
+end
 
-    # syntax for go.vim depends on autoload for go.vim, but we exclude the
-    # autoload always and the ftplugin because it's too complex.  FML.
-    if [ "${pack%%:*}" = "go" ]; then
-      copy_file "${dir}${subtree}" "${dir}${subtree}/autoload/go/config.vim" "${name}"
-    fi
+def transform_patterns(data)
+  patterns = read_strings(data, ["pattern", "patterns"])
+  patterns_mapping = Hash[patterns.zip(patterns_to_vim_patterns(patterns))]
+  transform_with(data, ["pattern", "patterns"]) { |a| patterns_mapping[a] }
+end
 
-    output "${subdirs##, })"$'\n'
-  done
+def load_heuristics
+  url = "#{BASE_URL}/lib/linguist/heuristics.yml"
+  data = URI.open(url) { |io| YAML.load(io.read) }
+  each_hash(data["disambiguations"]) do |h|
+    if h.has_key?("named_pattern")
+      h["pattern"] = data["named_patterns"].fetch(h["named_pattern"])
+      h.delete("named_pattern")
+    end
+  end
+  transform_patterns(data["disambiguations"])
+end
 
-  for pack in $1; do
-    name="$(cut -d ':' -f 1 <<<"$pack")"
-    path="$(cut -d ':' -f 2 <<<"$pack")"
-    dir="tmp/$(cut -d '/' -f 2 <<<"$path")"
-    subtree="$(cut -d ':' -f 4 <<<"$pack")"
+def load_languages
+  url = "#{BASE_URL}/lib/linguist/languages.yml"
+  data = URI.open(url) { |io| YAML.load(io.read) }
+end
 
-    if [ -d "$dir${subtree:-/}plugin" ]; then
-      echo "Possible error (plugin directory exists): $path" >&2
-    fi
-  done
-}
+# heuristics, languages = parallel(:load_heuristics, :load_languages)
 
-copy_dir() {
-  find "$1/$2" \( -name '*.vim' -o -name '*.vital' -o -name '*.ctags' \) -print0 | while read -r -d $'\0' file; do
-    copy_file "$1" "$file" "$3"
-  done
-}
+def parse_remote(remote)
+  match = remote.match(/(?<repo>[^@:]+)(?:@(?<branch>[^:]+))?(?::(?<path>.*))?/)
+  [match[:repo], match[:branch] || "master", match[:path]]
+end
 
-copy_file() {
-  ## $1 is the build dir (e.g. tmp/vim-go)
-  ## $2 is the full file path, as returned by `find` (e.g. tmp/vim-go/indent/go.vim)
-  ## $3 is the name of the package (so that we can detect if it's disabled at runtime)
-  local tmp_dir="$1"
-  local file_in_tmp="$2"
-  local file_basename="${2##*/}"
-  local file_path="${file_in_tmp##$tmp_dir/}" # Just this file's (full) path
-  file_path="${file_path%/*}"                # Minus the actual name of the file
-  local file_in_dst="${file_path}/${file_basename}" # Could also be ${file_in_tmp##$tmp_dir/}
-  local package_name="$3"
+def copy_file(package, src, dest)
+  return unless [".vim", ".ctags", ".vital"].include?(File.extname(src))
+  FileUtils.mkdir_p(File.dirname(dest))
+  open(src, "r") do |input|
+    open(dest, "a+") do |output|
+      if package[:name] == "jsx"
+        output << "if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)\n\n"
+      else
+        output << "if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '#{package[:name]}') == -1\n\n"
+      end
+      IO.copy_stream(input, output)
+      output << "\nendif\n"
+    end
+  end
+end
 
-  if [ "${file_in_tmp##$tmp_dir/}" != "${file_in_dst}" ]; then
-    echo "Failure in logic in build script; '${file_in_tmp##$tmp_dir/}' != '${file_in_dst}'.  Bailing." >&2
-    exit 1
-  fi
+def download
+  FileUtils.rm_rf('tmp')
 
-  mkdir -p "${file_path}"
+  PACKAGES.map do |package|
+    Thread.new do
+      repo, branch, path = parse_remote(package[:remote])
+      dir = "tmp/" + repo.split('/')[1]
+      FileUtils.mkdir_p(dir)
+      url = "https://codeload.github.com/#{repo}/tar.gz/#{branch}"
+      `curl --silent -fL #{url} | tar -zx -C "#{dir}" --strip 1`
+      progress
+    end
+  end.map(&:join)
+end
 
-  (
-    if [[ "${package_name}" == "jsx" ]]; then
-      printf "if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)\n\n"
-    else
-      printf "if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '$package_name') == -1\n\n"
-    fi
-    cat "$file_in_tmp"
-    printf "\nendif\n"
-  ) >> "$file_in_dst"
-}
+$i = 0
+LYRICS = "Never gonna give you up.  Never gonna let you down.  Never gonna run around and desert you.  Never gonna make you cry.  Never gonna say goodbye. Never gonna tell a lie and hurt you....."
 
-update_readme() {
-  local tf of
-  tf="$(mktemp)"
-  of="$(mktemp)"
-  LC_ALL=C sort <<<"$OUTPUT" | grep -vxE '[[:space:]]*' > "$of"
+$mutex = Mutex.new
+def progress
+  $mutex.synchronize do
+    $stdout.write(LYRICS[$i] || ".")
+    $i += 1
+  end
+end
 
-  awk 'suppress == 0 {
-      gsub(/<!--Package Count-->[^<]*<!--\/Package Count-->/,
-           "<!--Package Count-->'"$(awk 'END {print NR}' "$of")"'<!--/Package Count-->");
-      print;
-    }
-    /<!--Language Packs-->/ {
-      suppress = 1;
-      while ( ( getline line < "'"$of"'" ) > 0 ) {
-        print line;
-      }
-    }
-    /<!--\/Language Packs-->/ {
-      suppress = 0;
-      print;
-    }' "README.md" >"$tf"
-  mv "$tf" "README.md"
-}
+def extract
+  FileUtils.rm_rf(DIRS[:all])
 
-PACKS="
-  acpiasl:martinlroth/vim-acpi-asl
-  ansible:pearofducks/ansible-vim
-  apiblueprint:sheerun/apiblueprint.vim
-  applescript:mityu/vim-applescript:_SYNTAX
-  arduino:sudar/vim-arduino-syntax
-  asciidoc:asciidoc/vim-asciidoc
-  autohotkey:hnamikaw/vim-autohotkey
-  blade:jwalton512/vim-blade
-  brewfile:bfontaine/Brewfile.vim
-  c++11:octol/vim-cpp-enhanced-highlight
-  c/c++:vim-jp/vim-cpp
-  caddyfile:isobit/vim-caddyfile
-  carp:hellerve/carp-vim
-  cjsx:mtscout6/vim-cjsx
-  clojure:guns/vim-clojure-static
-  cmake:pboettch/vim-cmake-syntax
-  coffee-script:kchmck/vim-coffee-script:_NOAFTER
-  cql:elubow/cql-vim
-  cryptol:victoredwardocallaghan/cryptol.vim
-  crystal:rhysd/vim-crystal
-  csv:chrisbra/csv.vim
-  cucumber:tpope/vim-cucumber
-  cue:mgrabovsky/vim-cuesheet
-  dart:dart-lang/dart-vim-plugin
-  dhall:vmchale/dhall-vim
-  dlang:JesseKPhillips/d.vim
-  dockerfile:ekalinin/Dockerfile.vim
-  elixir:elixir-lang/vim-elixir
-  elm:andys8/vim-elm-syntax
-  emberscript:yalesov/vim-ember-script
-  emblem:yalesov/vim-emblem
-  erlang:vim-erlang/vim-erlang-runtime
-  fennel:bakpakin/fennel.vim
-  ferm:vim-scripts/ferm.vim
-  fish:georgewitteman/vim-fish
-  flatbuffers:dcharbon/vim-flatbuffers
-  fsharp:ionide/Ionide-vim:_BASIC
-  gdscript:calviken/vim-gdscript3:_SYNTAX
-  git:tpope/vim-git
-  glsl:tikhomirov/vim-glsl:_NOAFTER
-  gmpl:maelvalais/gmpl.vim
-  gnuplot:vim-scripts/gnuplot-syntax-highlighting
-  go:fatih/vim-go:_BASIC
-  graphql:jparise/vim-graphql:_ALL
-  gradle:tfnico/vim-gradle
-  haml:sheerun/vim-haml
-  handlebars:sheerun/vim-mustache-handlebars
-  haproxy:CH-DanReif/haproxy.vim
-  haskell:neovimhaskell/haskell-vim
-  haxe:yaymukund/vim-haxe
-  hcl:b4b4r07/vim-hcl
-  helm:towolf/vim-helm
-  hive:zebradil/hive.vim
-  html5:othree/html5.vim
-  i3:mboughaba/i3config.vim
-  icalenadr:chutzpah/icalendar.vim
-  idris:idris-hackers/idris-vim
-  ion:vmchale/ion-vim
-  javascript:pangloss/vim-javascript:_JAVASCRIPT
-  jenkins:martinda/Jenkinsfile-vim-syntax
-  jinja:lepture/vim-jinja
-  jq:vito-c/jq.vim
-  json5:GutenYe/json5.vim
-  json:elzr/vim-json
-  jsonnet:google/vim-jsonnet
-  jst:briancollins/vim-jst
-  jsx:MaxMEllon/vim-jsx-pretty:_ALL
-  julia:JuliaEditorSupport/julia-vim
-  kotlin:udalov/kotlin-vim
-  ledger:ledger/vim-ledger:_BASIC
-  less:groenewege/vim-less:_NOAFTER
-  lilypond:anowlcalledjosh/vim-lilypond
-  livescript:gkz/vim-ls
-  llvm:rhysd/vim-llvm
-  log:MTDL9/vim-log-highlighting
-  lua:tbastos/vim-lua
-  mako:sophacles/vim-bundle-mako
-  markdown:plasticboy/vim-markdown:_NOAFTER
-  mathematica:voldikss/vim-mma
-  mdx:jxnblk/vim-mdx-js
-  meson:mesonbuild/meson:_ALL:/data/syntax-highlighting/vim/
-  moonscript:leafo/moonscript-vim
-  nginx:chr4/nginx.vim
-  nim:zah/nim.vim:_BASIC
-  nix:LnL7/vim-nix
-  objc:b4winckler/vim-objc
-  ocaml:rgrinberg/vim-ocaml
-  octave:McSinyx/vim-octave
-  opencl:petRUShka/vim-opencl
-  perl:vim-perl/vim-perl
-  pgsql:lifepillar/pgsql.vim
-  php:StanAngeloff/php.vim
-  plantuml:aklt/plantuml-syntax
-  pony:jakwings/vim-pony
-  powershell:PProvost/vim-ps1
-  protobuf:uarun/vim-protobuf
-  pug:digitaltoad/vim-pug
-  puppet:rodjek/vim-puppet
-  purescript:purescript-contrib/purescript-vim
-  python-compiler:aliev/vim-compiler-python
-  python-indent:Vimjas/vim-python-pep8-indent
-  python:vim-python/python-syntax
-  qmake:artoj/qmake-syntax-vim
-  qml:peterhoeg/vim-qml
-  r-lang:vim-scripts/R.vim:_BASIC
-  racket:wlangstroth/vim-racket
-  ragel:jneen/ragel.vim
-  raku:Raku/vim-raku
-  raml:IN3D/vim-raml
-  razor:adamclerk/vim-razor
-  reason:reasonml-editor/vim-reason-plus
-  requirements:raimon49/requirements.txt.vim
-  rspec:keith/rspec.vim
-  rst:marshallward/vim-restructuredtext
-  ruby:vim-ruby/vim-ruby
-  rust:rust-lang/rust.vim
-  sbt:derekwyatt/vim-sbt
-  scala:derekwyatt/vim-scala
-  scss:cakebaker/scss-syntax.vim
-  sh:arzg/vim-sh
-  slim:slim-template/vim-slim
-  slime:slime-lang/vim-slime-syntax
-  smt2:bohlender/vim-smt2
-  solidity:tomlion/vim-solidity
-  sql:shmup/vim-sql-syntax
-  stylus:wavded/vim-stylus
-  svelte:evanleck/vim-svelte#main
-  svg-indent:jasonshell/vim-svg-indent
-  svg:vim-scripts/svg.vim
-  swift:keith/swift.vim
-  sxhkd:baskerville/vim-sxhkdrc
-  systemd:wgwoods/vim-systemd-syntax
-  terraform:hashivim/vim-terraform
-  textile:timcharper/textile.vim
-  thrift:solarnz/thrift.vim
-  tmux:ericpruitt/tmux.vim:_ALL:/vim/
-  tomdoc:wellbredgrapefruit/tomdoc.vim
-  toml:cespare/vim-toml
-  tptp:c-cube/vim-tptp
-  twig:lumiliet/vim-twig
-  typescript:HerringtonDarkholme/yats.vim
-  unison:unisonweb/unison#trunk:_ALL:/editor-support/vim/
-  v:ollykel/v-vim
-  vala:arrufat/vala.vim
-  vbnet:vim-scripts/vbnet.vim
-  vcl:smerrill/vcl-vim-plugin
-  vifm:vifm/vifm.vim
-  vm:lepture/vim-velocity
-  vue:posva/vim-vue
-  xdc:amal-khailtash/vim-xdc-syntax
-  xml:amadeus/vim-xml
-  xls:vim-scripts/XSLT-syntax
-  yaml:stephpy/vim-yaml
-  yard:sheerun/vim-yardoc
-  zephir:xwsoul/vim-zephir
-  zig:ziglang/zig.vim
-  zinit:zinit-zsh/zplugin-vim-syntax
-"
+  output = []
+  PACKAGES.map do |package|
+    repo, branch, path = parse_remote(package[:remote])
+    dir = "tmp/" + repo.split('/')[1]
+    subdirs = []
+    for subdir in package.fetch(:dirs, DIRS[:default])
+      subtree = "#{dir}/#{path ? path + "/" : ""}"
+      subpath = "#{subtree}#{subdir}"
+      if FileTest.directory?(subpath)
+        Dir.glob("#{subdir}/**/*", base: subtree).each do |p|
+          next unless File.file?("#{subtree}/#{p}")
+          copy_file(package, "#{subtree}/#{p}", p)
+        end
 
-python3 build.py
+        subdirs << subdir.split("/").last
+      elsif File.exist?(subpath)
+        copy_file(package, subpath, subdir)
+      end
+    end
 
-rm -rf tmp
-mkdir tmp
+    output << "- [#{package[:name]}](https://github.com/#{repo}) (#{subdirs.uniq.join(", ")})"
+    progress
+  end
 
-printf "Downloading packs..."
-download "$(sed '/^#/d' <<<"$PACKS")"
-rm -rf "${DIRS_RM[@]}"
-extract "$(sed '/^#/d' <<<"$PACKS")"
-update_readme
+  readme = File.read('README.md')
 
-rm -rf tmp
+  readme.gsub!(
+    %r{(?<=<!--Package Count-->).*?(?=<!--/Package Count-->)},
+    output.size.to_s
+  )
+
+  readme.gsub!(
+    %r{(?<=<!--Language Packs-->).*?(?=<!--/Language Packs-->)}m,
+    "\n" + output.sort.join("\n") + "\n"
+  )
+
+  File.write('README.md', readme)
+end
+
+download
+extract
+puts(" Bye! Have a wonderful time!")
+FileUtils.rm_rf("tmp")
