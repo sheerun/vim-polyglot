@@ -38,7 +38,8 @@ nnoremap <buffer><Plug>(crystal-spec-run-current)   :<C-u>CrystalSpecRunCurrent<
 nnoremap <buffer><Plug>(crystal-format)             :<C-u>CrystalFormat<CR>
 
 augroup plugin-ft-crystal
-  autocmd BufWritePre <buffer> if g:crystal_auto_format | call crystal_lang#format('', 1) | endif
+  autocmd!
+  autocmd BufWritePre <buffer> if g:crystal_auto_format && &filetype ==# 'crystal' | call crystal_lang#format('', 1) | endif
 augroup END
 
 if get(g:, 'crystal_define_mappings', 1)
