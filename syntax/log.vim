@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'log') == -1
 " Vim syntax file
 " Language:         Generic log file
 " Maintainer:       MTDL9 <https://github.com/MTDL9>
-" Latest Revision:  2019-11-24
+" Latest Revision:  2020-08-23
 
 if exists('b:current_syntax')
   finish
@@ -15,7 +15,7 @@ set cpoptions&vim
 
 " Operators
 "---------------------------------------------------------------------------
-syn match logOperator display '[;,\?\:\.\<=\>\~\/\@\&\!$\%\&\+\-\|\^(){}\*#]'
+syn match logOperator display '[;,\?\:\.\<=\>\~\/\@\!$\%&\+\-\|\^(){}\*#]'
 syn match logBrackets display '[\[\]]'
 syn match logEmptyLines display '-\{3,}'
 syn match logEmptyLines display '\*\{3,}'
@@ -87,7 +87,7 @@ syn match logXmlAttribute    contained "\(\n\|\s\)\(\(\w\|-\)\+:\)\?\(\w\|-\)\+\
 syn match logXmlNamespace    contained "\(\w\|-\)\+:" contains=logOperator
 syn region logXmlComment     start=/<!--/ end=/-->/
 syn match logXmlCData        /<!\[CDATA\[.*\]\]>/
-syn match logXmlEntity       /\&\w\+;/
+syn match logXmlEntity       /&#\?\w\+;/
 
 
 " Levels

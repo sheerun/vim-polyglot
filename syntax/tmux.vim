@@ -1,7 +1,7 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
 
 " Language: tmux(1) configuration file
-" Version: before-OpenBSD-lock (git-53c84fd4)
+" Version: 3.1b (git-769ae106)
 " URL: https://github.com/ericpruitt/tmux.vim/
 " Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
 " License: 2-Clause BSD (http://opensource.org/licenses/BSD-2-Clause)
@@ -32,10 +32,10 @@ syn match tmuxVariable          /\w\+=/                display
 syn match tmuxVariableExpansion /\${\=\w\+}\=/         display
 syn match tmuxControl           /%\(if\|elif\|else\|endif\)/
 
-syn region tmuxComment start=/#/ skip=/\\\@<!\\$/ end=/$/ contains=tmuxTodo
+syn region tmuxComment start=/#/ skip=/\\\@<!\\$/ end=/$/ contains=tmuxTodo,@Spell
 
-syn region tmuxString start=+"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=tmuxFormatString
-syn region tmuxString start=+'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end='$' contains=tmuxFormatString
+syn region tmuxString start=+"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=tmuxFormatString,@Spell
+syn region tmuxString start=+'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end='$' contains=tmuxFormatString,@Spell
 
 " TODO: Figure out how escaping works inside of #(...) and #{...} blocks.
 syn region tmuxFormatString start=/#[#DFhHIPSTW]/ end=// contained keepend
