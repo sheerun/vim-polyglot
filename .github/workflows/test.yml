@@ -16,6 +16,6 @@ jobs:
         sudo apt-get update -q
         sudo apt-get install -y vim
         vim --version
-        ls -la
+    - uses: actions/checkout@v2
     - name: Run Tests
       run: scripts/test
