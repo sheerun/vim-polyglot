@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'xls') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'xsl') == -1
 
 " Vim syntax file
 " Language:	XSLT 1.0

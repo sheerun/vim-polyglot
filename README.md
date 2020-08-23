@@ -10,7 +10,7 @@ A collection of language packs for Vim.
 > One to rule them all, one to find them, one to bring them all and in the darkness bind them.
 
 - It **won't affect your startup time**, as scripts are loaded only on demand\*.
-- It **installs and updates 120+ times faster** than the <!--Package Count-->157<!--/Package Count--> packages it consists of.
+- It **installs and updates 120+ times faster** than the <!--Package Count-->156<!--/Package Count--> packages it consists of.
 - Solid syntax and indentation support (other features skipped). Only the best language packs.
 - All unnecessary files are ignored (like enormous documentation from php support).
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
@@ -181,7 +181,6 @@ If you need full functionality of any plugin, please use it directly with your p
 - [textile](https://github.com/timcharper/textile.vim) (syntax, ftplugin)
 - [thrift](https://github.com/solarnz/thrift.vim) (syntax)
 - [tmux](https://github.com/ericpruitt/tmux.vim) (syntax, ftplugin)
-- [tomdoc](https://github.com/wellbredgrapefruit/tomdoc.vim) (syntax)
 - [toml](https://github.com/cespare/vim-toml) (syntax, ftplugin)
 - [tptp](https://github.com/c-cube/vim-tptp) (syntax)
 - [twig](https://github.com/lumiliet/vim-twig) (syntax, indent, ftplugin)
@@ -195,8 +194,8 @@ If you need full functionality of any plugin, please use it directly with your p
 - [vifm](https://github.com/vifm/vifm.vim) (syntax, autoload, ftplugin)
 - [vue](https://github.com/posva/vim-vue) (syntax, indent, ftplugin)
 - [xdc](https://github.com/amal-khailtash/vim-xdc-syntax) (syntax)
-- [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
 - [xml](https://github.com/amadeus/vim-xml) (syntax)
+- [xsl](https://github.com/vim-scripts/XSLT-syntax) (syntax)
 - [yaml](https://github.com/stephpy/vim-yaml) (syntax, ftplugin)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)
 - [zephir](https://github.com/xwsoul/vim-zephir) (syntax)
