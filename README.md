@@ -1,6 +1,6 @@
 ![vim-polyglot](https://i.imgur.com/9RxQK6k.png)
 
-![Vim Polyglot CI](https://github.com/sheerun/vim-polyglot/workflows/Vim%20Polyglot%20CI/badge.svg) [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000)]()
+![build](https://github.com/sheerun/vim-polyglot/workflows/Vim%20Polyglot%20CI/badge.svg) [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000)]()
 
 A collection of language packs for Vim.
 
