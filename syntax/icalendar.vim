@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'icalenadr') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'icalendar') == -1
 
 " Vim syntax file
 " Language:      icalendar <http://www.ietf.org/rfc/rfc2445.txt>

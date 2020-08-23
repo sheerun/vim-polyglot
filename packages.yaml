@@ -1,0 +1,1069 @@
+---
+name: acpiasl
+remote: martinlroth/vim-acpi-asl
+filetypes:
+- name: asl
+  linguist: ASL
+---
+name: ansible
+remote: pearofducks/ansible-vim
+---
+name: apiblueprint
+remote: sheerun/apiblueprint.vim
+filetypes:
+- name: apiblueprint
+  linguist: API Blueprint
+---
+name: applescript
+remote: mityu/vim-applescript
+dirs: :syntax
+filetypes:
+- name: applescript
+  linguist: AppleScript
+---
+name: arduino
+remote: sudar/vim-arduino-syntax
+filetypes:
+- name: arduino
+  linguist: Processing
+  extra_extensions:
+  - ino
+---
+name: asciidoc
+remote: asciidoc/vim-asciidoc
+filetypes:
+- name: asciidoc
+  linguist: AsciiDoc
+---
+name: autohotkey
+remote: hnamikaw/vim-autohotkey
+---
+name: blade
+remote: jwalton512/vim-blade
+filetypes:
+- name: blade
+  linguist: Blade
+---
+name: brewfile
+remote: bfontaine/Brewfile.vim
+---
+name: c++11
+remote: octol/vim-cpp-enhanced-highlight
+---
+name: c/c++
+remote: vim-jp/vim-cpp
+---
+name: caddyfile
+remote: isobit/vim-caddyfile
+filetypes:
+- name: caddyfile
+  linguist: Caddyfile
+---
+name: carp
+remote: hellerve/carp-vim
+filetypes:
+- name: carp
+  linguist: Carp
+---
+name: cjsx
+remote: mtscout6/vim-cjsx
+---
+name: clojure
+remote: guns/vim-clojure-static
+filetypes:
+- name: clojure
+  linguist: Clojure
+---
+name: cmake
+remote: pboettch/vim-cmake-syntax
+---
+name: coffee-script
+remote: kchmck/vim-coffee-script
+dirs: :noafter
+filetypes:
+- name: coffee
+  linguist: CoffeeScript
+  extra_extensions:
+  - coffeekup
+  - ck
+- name: litcoffee
+  linguist: Literate CoffeeScript
+  extra_extensions:
+  - coffee.md
+---
+name: cql
+remote: elubow/cql-vim
+filetypes:
+- name: cql
+  linguist: CQL
+---
+name: cryptol
+remote: victoredwardocallaghan/cryptol.vim
+filetypes:
+- name: cryptol
+  linguist: Cryptol
+---
+name: crystal
+remote: rhysd/vim-crystal
+filetypes:
+- name: crystal
+  linguist: Crystal
+  extra_filenames:
+  - Projectfile
+- name: ecrystal
+  linguist: HTML+ECR
+---
+name: csv
+remote: chrisbra/csv.vim
+filetypes:
+- name: csv
+  linguist: CSV
+  extra_extensions:
+  - tsv
+  - dat
+  - tab
+---
+name: cucumber
+remote: tpope/vim-cucumber
+filetypes:
+- name: cucumber
+  linguist: Gherkin
+  extra_extensions:
+  - story
+---
+name: cue
+remote: mgrabovsky/vim-cuesheet
+filetypes:
+- name: cuesheet
+  linguist: Cue
+---
+name: dart
+remote: dart-lang/dart-vim-plugin
+filetypes:
+- name: dart
+  linguist: Dart
+---
+name: dhall
+remote: vmchale/dhall-vim
+filetypes:
+- name: dhall
+  linguist: Dhall
+---
+name: dlang
+remote: JesseKPhillips/d.vim
+filetypes:
+- name: d
+  linguist: D
+- name: dcov
+  linguist: D
+- name: dd
+  linguist: D
+- name: ddoc
+  linguist: D
+- name: dsdl
+  linguist: D
+---
+name: dockerfile
+remote: ekalinin/Dockerfile.vim
+filetypes:
+- name: Dockerfile
+  linguist: Dockerfile
+  extra_extensions:
+  - dock
+  - Dockerfile
+  extra_filenames:
+  - dockerfile
+  - Dockerfile*
+- name: yaml.docker-compose
+  linguist: Dockerfile
+---
+name: elixir
+remote: elixir-lang/vim-elixir
+filetypes:
+- name: elixir
+  linguist: Elixir
+- name: elixir
+  linguist: HTML+EEX
+  extra_extensions:
+  - leex
+---
+name: elm
+remote: andys8/vim-elm-syntax
+filetypes:
+- name: elm
+  linguist: Elm
+---
+name: emberscript
+remote: yalesov/vim-ember-script
+filetypes:
+- name: ember-script
+  linguist: EmberScript
+---
+name: emblem
+remote: yalesov/vim-emblem
+filetypes:
+- name: emblem
+  linguist: Emblem
+---
+name: erlang
+remote: vim-erlang/vim-erlang-runtime
+filetypes:
+- name: erlang
+  linguist: Erlang
+  extra_extensions:
+  - app
+  - yaws
+---
+name: fennel
+remote: bakpakin/fennel.vim
+filetypes:
+- name: fennel
+  linguist: Fennel
+---
+name: ferm
+remote: vim-scripts/ferm.vim
+filetypes:
+- name: ferm
+  linguist: Ferm
+---
+name: fish
+remote: georgewitteman/vim-fish
+filetypes:
+- name: fish
+  linguist: fish
+---
+name: flatbuffers
+remote: dcharbon/vim-flatbuffers
+filetypes:
+- name: fbs
+  linguist: Flatbuffers
+---
+name: fsharp
+remote: ionide/Ionide-vim
+dirs: :basic
+filetypes:
+- name: fsharp
+  linguist: F#
+---
+name: gdscript
+remote: calviken/vim-gdscript3
+dirs: :syntax
+filetypes:
+- name: gdscript3
+  linguist: GDScript
+---
+name: git
+remote: tpope/vim-git
+filetypes:
+- name: gitconfig
+  linguist: Git Config
+  extra_filenames:
+  - "*.git/config"
+  - "*/.config/git/config"
+  - "*.git/modules/**/config"
+  - gitconfig
+- name: gitrebase
+  linguist: Git Rebase
+- name: gitsendemail
+  linguist: Git Send Email
+- name: gitcommit
+  linguist: Git Commit
+---
+name: glsl
+remote: tikhomirov/vim-glsl
+dirs: :noafter
+filetypes:
+- name: glsl
+  linguist: GLSL
+  extra_extensions:
+  - comp
+---
+name: gmpl
+remote: maelvalais/gmpl.vim
+filetypes:
+- name: gmpl
+  linguist: Gnu MathProg
+---
+name: gnuplot
+remote: vim-scripts/gnuplot-syntax-highlighting
+---
+name: go
+remote: fatih/vim-go
+dirs: :go
+filetypes:
+- name: go
+  linguist: Go
+- name: gomod
+  linguist: Go Mod
+- name: gohtmltmpl
+  linguist: Go Template
+---
+name: graphql
+remote: jparise/vim-graphql
+dirs: :all
+filetypes:
+- name: graphql
+  linguist: GraphQL
+---
+name: gradle
+remote: tfnico/vim-gradle
+filetypes:
+- name: groovy
+  linguist: Gradle
+---
+name: haml
+remote: sheerun/vim-haml
+filetypes:
+- name: haml
+  linguist: Haml
+  extra_extensions:
+  - hamlc
+  - hamlbars
+---
+name: handlebars
+remote: sheerun/vim-mustache-handlebars
+filetypes:
+- name: mustache
+  linguist: Handlebars
+  extra_extensions:
+  - hulk
+  - hjs
+  - mustache
+  - njk
+---
+name: haproxy
+remote: CH-DanReif/haproxy.vim
+filetypes:
+- name: haproxy
+  linguist: HAProxy
+---
+name: haskell
+remote: neovimhaskell/haskell-vim
+filetypes:
+- name: haskell
+  linguist: Haskell
+  extra_extensions:
+  - bpk
+  - hsig
+---
+name: haxe
+remote: yaymukund/vim-haxe
+filetypes:
+- name: haxe
+  linguist: Haxe
+---
+name: hcl
+remote: b4b4r07/vim-hcl
+filetypes:
+- name: hcl
+  linguist: HCL
+  extra_extensions:
+  - nomad
+  extra_filenames:
+  - Appfile
+---
+name: helm
+remote: towolf/vim-helm
+filetypes:
+- name: helm
+  linguist: Helm
+  extra_filenames:
+  - "*/templates/*.yaml"
+  - "*/templates/*.tpl"
+---
+name: hive
+remote: zebradil/hive.vim
+filetypes:
+- name: hive
+  linguist: HiveQL
+- name: hive
+  linguist: HiveQL
+---
+name: html5
+remote: othree/html5.vim
+---
+name: i3
+remote: mboughaba/i3config.vim
+filetypes:
+- name: i3config
+  linguist: I3
+---
+name: icalendar
+remote: chutzpah/icalendar.vim
+filetypes:
+- name: icalendar
+  linguist: iCalendar
+---
+name: idris
+remote: idris-hackers/idris-vim
+filetypes:
+- name: idris
+  linguist: Idris
+  extra_filenames:
+  - idris-response
+---
+name: ion
+remote: vmchale/ion-vim
+filetypes:
+- name: ion
+  linguist: Ion
+---
+name: javascript
+remote: pangloss/vim-javascript
+dirs: :javascript
+filetypes:
+- name: javascript
+  linguist: JavaScript
+- name: flow
+  linguist: Flow
+---
+name: jenkins
+remote: martinda/Jenkinsfile-vim-syntax
+filetypes:
+- name: Jenkinsfile
+  linguist: Jenkinsfile
+---
+name: jinja
+remote: lepture/vim-jinja
+filetypes:
+- name: jinja.html
+  linguist: HTML+Django
+  extra_extensions:
+  - j2
+  ignored_extensions:
+  - mustache
+  - njk
+---
+name: jq
+remote: vito-c/jq.vim
+filetypes:
+- name: jq
+  linguist: JSONiq
+  extra_filenames:
+  - ".jqrc"
+---
+name: json5
+remote: GutenYe/json5.vim
+filetypes:
+- name: json5
+  linguist: JSON5
+---
+name: json
+remote: elzr/vim-json
+filetypes:
+- name: json
+  linguist: JSON
+  extra_extensions:
+  - jsonp
+  - template
+---
+name: jsonnet
+remote: google/vim-jsonnet
+filetypes:
+- name: jsonnet
+  linguist: Jsonnet
+---
+name: jst
+remote: briancollins/vim-jst
+filetypes:
+- name: jst
+  linguist: EJS
+  extra_extensions:
+  - jst
+  - djs
+  - hamljs
+  - ect
+---
+name: jsx
+remote: MaxMEllon/vim-jsx-pretty
+dirs: :all
+filetypes:
+- name: javascriptreact
+  linguist: JSX
+---
+name: julia
+remote: JuliaEditorSupport/julia-vim
+filetypes:
+- name: julia
+  linguist: Julia
+---
+name: kotlin
+remote: udalov/kotlin-vim
+filetypes:
+- name: kotlin
+  linguist: Kotlin
+---
+name: ledger
+remote: ledger/vim-ledger
+dirs: :basic
+filetypes:
+- name: ledger
+  linguist: Ledger
+---
+name: less
+remote: groenewege/vim-less
+dirs: :noafter
+filetypes:
+- name: less
+  linguist: Less
+---
+name: lilypond
+remote: anowlcalledjosh/vim-lilypond
+filetypes:
+- name: lilypond
+  linguist: LilyPond
+---
+name: livescript
+remote: gkz/vim-ls
+filetypes:
+- name: livescript
+  linguist: LiveScript
+---
+name: llvm
+remote: rhysd/vim-llvm
+filetypes:
+- name: llvm
+  linguist: LLVM
+- name: tablegen
+  linguist: Tablegen
+---
+name: log
+remote: MTDL9/vim-log-highlighting
+filetypes:
+- name: log
+  linguist: Log
+---
+name: lua
+remote: tbastos/vim-lua
+---
+name: mako
+remote: sophacles/vim-bundle-mako
+filetypes:
+- name: mako
+  linguist: Mako
+  outer_filetype: let b:mako_outer_lang = &filetype
+---
+name: markdown
+remote: plasticboy/vim-markdown
+dirs: :noafter
+filetypes:
+- name: markdown
+  linguist: Markdown
+  ignored_extensions:
+  - mdx
+---
+name: mathematica
+remote: voldikss/vim-mma
+filetypes:
+- name: mma
+  linguist: Mathematica
+---
+name: mdx
+remote: jxnblk/vim-mdx-js
+filetypes:
+- name: markdown.mdx
+  linguist: Mdx
+---
+name: meson
+remote: mesonbuild/meson:data/syntax-highlighting/vim
+dirs: :all
+filetypes:
+- name: meson
+  linguist: Meson
+- name: dosini
+  linguist: Dosini
+---
+name: moonscript
+remote: leafo/moonscript-vim
+filetypes:
+- name: moon
+  linguist: MoonScript
+---
+name: nginx
+remote: chr4/nginx.vim
+filetypes:
+- name: nginx
+  linguist: Nginx
+  extra_extensions:
+  - nginx
+  extra_filenames:
+  - "*/etc/nginx/*"
+  - "*/usr/local/nginx/conf/*"
+  - "*/nginx/*.conf"
+  - "nginx*.conf"
+  - "*nginx.conf"
+---
+name: nim
+remote: zah/nim.vim
+dirs: :basic
+filetypes:
+- name: nim
+  linguist: Nim
+---
+name: nix
+remote: LnL7/vim-nix
+filetypes:
+- name: nix
+  linguist: Nix
+---
+name: objc
+remote: b4winckler/vim-objc
+---
+name: ocaml
+remote: rgrinberg/vim-ocaml
+filetypes:
+- name: ocaml
+  linguist: OCaml
+  extra_extensions:
+  - mlt
+  - mlp
+  - mlip
+  - mli.cppo
+  - ml.cppo
+- name: omake
+  linguist: OMake
+- name: opam
+  linguist: OPam
+- name: oasis
+  linguist: Oasis
+---
+name: octave
+remote: McSinyx/vim-octave
+---
+name: opencl
+remote: petRUShka/vim-opencl
+filetypes:
+- name: opencl
+  linguist: OpenCL
+---
+name: perl
+remote: vim-perl/vim-perl
+filetypes:
+- name: perl
+  linguist: Perl
+---
+name: pgsql
+remote: lifepillar/pgsql.vim
+filetypes:
+- name: sql
+  linguist: PLpgSQL
+  ignored_extensions:
+  - sql
+  custom_set: let b:sql_type_override='pgsql' | set ft=sql
+---
+name: php
+remote: StanAngeloff/php.vim
+---
+name: plantuml
+remote: aklt/plantuml-syntax
+filetypes:
+- name: plantuml
+  linguist: PlantUML
+  extra_extensions:
+  - uml
+  - pu
+---
+name: pony
+remote: jakwings/vim-pony
+filetypes:
+- name: pony
+  linguist: Pony
+---
+name: powershell
+remote: PProvost/vim-ps1
+filetypes:
+- name: powershell
+  linguist: PowerShell
+  extra_extensions:
+  - pssc
+- name: ps1xml
+  linguist: Ps1XML
+---
+name: protobuf
+remote: uarun/vim-protobuf
+filetypes:
+- name: proto
+  linguist: Protocol Buffer
+---
+name: pug
+remote: digitaltoad/vim-pug
+filetypes:
+- name: pug
+  linguist: Pug
+---
+name: puppet
+remote: rodjek/vim-puppet
+filetypes:
+- name: puppet
+  linguist: Puppet
+- name: embeddedpuppet
+  linguist: Embedded Puppet
+---
+name: purescript
+remote: purescript-contrib/purescript-vim
+filetypes:
+- name: purescript
+  linguist: PureScript
+---
+name: python-compiler
+remote: aliev/vim-compiler-python
+---
+name: python-indent
+remote: Vimjas/vim-python-pep8-indent
+---
+name: python
+remote: vim-python/python-syntax
+---
+name: qmake
+remote: artoj/qmake-syntax-vim
+filetypes:
+- name: qmake
+  linguist: QMake
+---
+name: qml
+remote: peterhoeg/vim-qml
+filetypes:
+- name: qml
+  linguist: QML
+---
+name: r-lang
+remote: vim-scripts/R.vim
+dirs: :basic
+---
+name: racket
+remote: wlangstroth/vim-racket
+filetypes:
+- name: racket
+  linguist: Racket
+---
+name: ragel
+remote: jneen/ragel.vim
+---
+name: raku
+remote: Raku/vim-raku
+filetypes:
+- name: raku
+  linguist: Raku
+  extra_extensions:
+  - rakudoc
+  - rakutest
+  - raku
+  - rakumod
+  - pod6
+  - t6
+---
+name: raml
+remote: IN3D/vim-raml
+filetypes:
+- name: raml
+  linguist: RAML
+---
+name: razor
+remote: adamclerk/vim-razor
+filetypes:
+- name: razor
+  linguist: HTML+Razor
+- name: merlin
+  linguist: Merlin
+---
+name: reason
+remote: reasonml-editor/vim-reason-plus
+filetypes:
+- name: reason
+  linguist: Reason
+---
+name: requirements
+remote: raimon49/requirements.txt.vim
+filetypes:
+- name: requirements
+  linguist: Requirements
+---
+name: rspec
+remote: keith/rspec.vim
+filetypes:
+- name: ruby
+  linguist: RSpec
+  syntax: rspec
+---
+name: rst
+remote: marshallward/vim-restructuredtext
+---
+name: ruby
+remote: vim-ruby/vim-ruby
+filetypes:
+- name: ruby
+  linguist: Ruby
+  extra_extensions:
+  - rxml
+  - rjs
+  - rant
+  - axlsx
+  - cap
+  - opal
+  extra_filenames:
+  - Rantfile
+  - ".autotest"
+  - Cheffile
+  - KitchenSink
+  - Routefile
+- name: eruby
+  linguist: HTML+ERB
+  extra_extensions:
+  - rhtml
+---
+name: rust
+remote: rust-lang/rust.vim
+filetypes:
+- name: rust
+  linguist: Rust
+---
+name: sbt
+remote: derekwyatt/vim-sbt
+---
+name: scala
+remote: derekwyatt/vim-scala
+filetypes:
+- name: scala
+  linguist: Scala
+  ignored_extensions:
+  - sbt
+- name: sbt.scala
+  linguist: Scala SBT
+---
+name: scss
+remote: cakebaker/scss-syntax.vim
+filetypes:
+- name: scss
+  linguist: SCSS
+---
+name: sh
+remote: arzg/vim-sh
+---
+name: slim
+remote: slim-template/vim-slim
+filetypes:
+- name: slim
+  linguist: Slim
+---
+name: slime
+remote: slime-lang/vim-slime-syntax
+filetypes:
+- name: slime
+  linguist: Slime
+---
+name: smt2
+remote: bohlender/vim-smt2
+filetypes:
+- name: smt2
+  linguist: SMT
+---
+name: solidity
+remote: tomlion/vim-solidity
+filetypes:
+- name: solidity
+  linguist: Solidity
+  extra_extensions:
+  - sol
+---
+name: sql
+remote: shmup/vim-sql-syntax
+---
+name: stylus
+remote: wavded/vim-stylus
+filetypes:
+- name: stylus
+  linguist: Stylus
+  extra_extensions:
+  - stylus
+---
+name: svelte
+remote: evanleck/vim-svelte@main
+filetypes:
+- name: svelte
+  linguist: Svelte
+---
+name: svg-indent
+remote: jasonshell/vim-svg-indent
+---
+name: svg
+remote: vim-scripts/svg.vim
+---
+name: swift
+remote: keith/swift.vim
+filetypes:
+- name: swift
+  linguist: Swift
+---
+name: sxhkd
+remote: baskerville/vim-sxhkdrc
+filetypes:
+- name: sxhkdrc
+  linguist: Sxhkd
+---
+name: systemd
+remote: wgwoods/vim-systemd-syntax
+filetypes:
+- name: systemd
+  linguist: Systemd
+---
+name: terraform
+remote: hashivim/vim-terraform
+filetypes:
+- name: terraform
+  linguist: HCL
+---
+name: textile
+remote: timcharper/textile.vim
+filetypes:
+- name: textile
+  linguist: Textile
+---
+name: thrift
+remote: solarnz/thrift.vim
+filetypes:
+- name: thrift
+  linguist: Thrift
+---
+name: tmux
+remote: ericpruitt/tmux.vim:vim
+dirs: :all
+filetypes:
+- name: tmux
+  linguist: Tmux
+---
+name: tomdoc
+remote: wellbredgrapefruit/tomdoc.vim
+---
+name: toml
+remote: cespare/vim-toml
+filetypes:
+- name: toml
+  linguist: TOML
+  extra_filenames:
+  - Pipfile
+  - "*/.cargo/config"
+  - "*/.cargo/credentials"
+---
+name: tptp
+remote: c-cube/vim-tptp
+filetypes:
+- name: tptp
+  linguist: TPTP
+---
+name: twig
+remote: lumiliet/vim-twig
+filetypes:
+- name: html.twig
+  linguist: Twig
+  ignored_extensions:
+  - xml.twig
+- name: xml.twig
+  linguist: Twig XML
+---
+name: typescript
+remote: HerringtonDarkholme/yats.vim
+filetypes:
+- name: typescript
+  linguist: TypeScript
+- name: typescriptreact
+  linguist: TSX
+---
+name: unison
+remote: unisonweb/unison@trunk:editor-support/vim
+dirs: :all
+---
+name: v
+remote: ollykel/v-vim
+filetypes:
+- name: v
+  linguist: V
+---
+name: vala
+remote: arrufat/vala.vim
+filetypes:
+- name: vala
+  linguist: Vala
+  extra_extensions:
+  - valadoc
+---
+name: vbnet
+remote: vim-scripts/vbnet.vim
+filetypes:
+- name: vbnet
+  linguist: Visual Basic .NET
+---
+name: vcl
+remote: smerrill/vcl-vim-plugin
+filetypes:
+- name: vcl
+  linguist: VCL
+---
+name: vifm
+remote: vifm/vifm.vim
+filetypes:
+- name: vifm
+  linguist: Vifm
+- name: vifm-rename
+  linguist: Vifm Rename
+---
+name: velocity
+remote: lepture/vim-velocity
+filetypes:
+- name: velocity
+  linguist: Velocity
+---
+name: vue
+remote: posva/vim-vue
+filetypes:
+- name: vue
+  linguist: Vue
+  extra_extensions:
+  - wpy
+---
+name: xdc
+remote: amal-khailtash/vim-xdc-syntax
+filetypes:
+- name: xdc
+  linguist: XDC
+---
+name: xml
+remote: amadeus/vim-xml
+filetypes:
+- name: xml
+  linguist: XML
+  extra_extensions:
+  - cdxml
+  ignored_extensions:
+  - ts
+  - tsx
+---
+name: xls
+remote: vim-scripts/XSLT-syntax
+---
+name: yaml
+remote: stephpy/vim-yaml
+filetypes:
+- name: yaml
+  linguist: YAML
+  extra_filenames:
+  - fish_history
+  - fish_read_history
+---
+name: yard
+remote: sheerun/vim-yardoc
+---
+name: zephir
+remote: xwsoul/vim-zephir
+---
+name: zig
+remote: ziglang/zig.vim
+filetypes:
+- name: zig
+  linguist: Zig
+  extra_extensions:
+  - zir
+- name: zir
+  linguist: Zir
+---
+name: zinit
+remote: zinit-zsh/zplugin-vim-syntax

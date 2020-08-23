@@ -100,7 +100,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [hive](https://github.com/zebradil/hive.vim) (syntax, ftplugin)
 - [html5](https://github.com/othree/html5.vim) (syntax, indent, autoload, ftplugin)
 - [i3](https://github.com/mboughaba/i3config.vim) (syntax, ftplugin)
-- [icalenadr](https://github.com/chutzpah/icalendar.vim) (syntax)
+- [icalendar](https://github.com/chutzpah/icalendar.vim) (syntax)
 - [idris](https://github.com/idris-hackers/idris-vim) (syntax, indent, ftplugin)
 - [ion](https://github.com/vmchale/ion-vim) (syntax, ftplugin)
 - [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, compiler, ftplugin, extras)
@@ -191,8 +191,8 @@ If you need full functionality of any plugin, please use it directly with your p
 - [vala](https://github.com/arrufat/vala.vim) (syntax, indent, ftplugin)
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [vcl](https://github.com/smerrill/vcl-vim-plugin) (syntax)
+- [velocity](https://github.com/lepture/vim-velocity) (syntax, indent)
 - [vifm](https://github.com/vifm/vifm.vim) (syntax, autoload, ftplugin)
-- [vm](https://github.com/lepture/vim-velocity) (syntax, indent)
 - [vue](https://github.com/posva/vim-vue) (syntax, indent, ftplugin)
 - [xdc](https://github.com/amal-khailtash/vim-xdc-syntax) (syntax)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
@@ -225,13 +225,8 @@ Note that disabling languages won't make in general your vim startup any faster 
 
 Language packs are periodically updated using automated `build` script.
 
-Feel free to add your language, and send pull-request.  In your pull request, please include:
-1. How you chose the particular repo from which to pull support for this language.
-2. An updated https://github.com/sheerun/vim-polyglot/blob/master/build .
-3. If at all possible, absolutely nothing else (in particular, please don't run `build` and include that in your PR).
-
-The easier it is to validate that the new language won't do anything wacky, the faster it'll be merged.  In particular, languages that utilize global plugins (loaded for every filetype), or plugins with dangerous features (like `call` based on the contents of a file being edited), will never be merged, as they will be slow or dangerous, respectively.
+Feel free to add your language to `packages.yaml`, and send pull-request. Please don't run `./build` and include that in your PR, send just changes to `packages.yaml` and `build` script if really necessary.
 
 ## License
 
-See linked repositories for detailed license information.
+See linked repositories for detailed license information. This repository is MIT-licensed.
