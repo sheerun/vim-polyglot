@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: rhysd/action-setup-vim@v1
     - name: Test
-      run: scripts/test
+      run: ./scripts/test
