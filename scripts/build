@@ -5,7 +5,7 @@ require 'open3'
 require 'yaml'
 require 'fileutils'
 
-Dir.chdir(__dir__)
+Dir.chdir(File.dirname(__dir__))
 
 PACKAGES = YAML.load_stream(File.read('packages.yaml'))
 
@@ -66,7 +66,7 @@ def each_hash(data, &block)
 end
 
 def patterns_to_vim_patterns(patterns)
-  stdin, stdout, stderr = Open3.popen3('vim', '-V', '--clean', '/dev/stdin', '-es', '-c', "echo expand('%:p:h') | source #{__dir__}/eregex.vim", '-c', "for line in range(0, line('$')) | call setline(line, ExtendedRegex2VimRegex(getline(line))) | endfor", '-c', ':wq! /dev/stdout', chdir: __dir__)
+  stdin, stdout, stderr = Open3.popen3('vim', '-V', '--clean', '/dev/stdin', '-es', '-c', "echo expand('%:p:h') | source #{__dir__}/scripts/eregex.vim", '-c', "for line in range(0, line('$')) | call setline(line, ExtendedRegex2VimRegex(getline(line))) | endfor", '-c', ':wq! /dev/stdout', chdir: __dir__)
   stdin.write(patterns.join("\n"))
   stdin.close
   stdout.readlines

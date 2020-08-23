@@ -38,7 +38,7 @@ mkdir -p ~/.vim/pack/default/start
 git clone https://github.com/sheerun/vim-polyglot ~/.vim/pack/default/start/vim-polyglot
 ```
 
-NOTE: Not all features of listed language packs are available. We strip them from functionality slowing vim startup in general (for example we ignore `plugins` folder that is loaded regardless of file type, use `ftplugin` instead).
+NOTE: Not all features of individual language packs are available. We strip them from functionality slowing vim startup (for example we ignore `plugins` folder that is loaded regardless of file type, instead we prefer `ftplugin` which is loaded lazily).
 
 If you need full functionality of any plugin, please use it directly with your plugin manager.
 
@@ -205,7 +205,7 @@ If you need full functionality of any plugin, please use it directly with your p
 
 ## Updating
 
-You can either wait for new patch release with updates or run the `./build` script by yourself.
+You can either wait for new patch release with updates or run the `scripts/build` script by yourself.
 
 ## Troubleshooting
 
@@ -218,13 +218,13 @@ Individual language packs can be disabled by setting `g:polyglot_disabled` as fo
 let g:polyglot_disabled = ['css']
 ```
 
-Note that disabling languages won't make in general your vim startup any faster / slower (only for specific file type). Vim-polyglot is selection of language plugins that are loaded only on demand.
+Please note that disabling a language won't make in your vim startup any faster / slower (only for specific this specific filetype). All plugins are loaded lazily, on demand.
 
 ## Contributing
 
-Language packs are periodically updated using automated `build` script.
+Language packs are periodically updated using automated `scripts/build` script.
 
-Feel free to add your language to `packages.yaml`, and send pull-request. Please don't run `./build` and include that in your PR, send just changes to `packages.yaml` and `build` script if really necessary.
+Feel free to add your language to `packages.yaml`, and send pull-request. Please don't run `scripts/build` and include that in your PR, send just changes to `packages.yaml` and `build` script if really necessary. You can run `scripts/test` to run rough tests.
 
 ## License
 
