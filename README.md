@@ -1,9 +1,6 @@
 ![vim-polyglot](https://i.imgur.com/9RxQK6k.png)
 
-[![Build Status][travis-img-url]][travis-url] [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000)]()
-
-[travis-img-url]: https://travis-ci.org/sheerun/vim-polyglot.svg
-[travis-url]: https://travis-ci.org/sheerun/vim-polyglot
+![Vim Polyglot CI](https://github.com/sheerun/vim-polyglot/workflows/Vim%20Polyglot%20CI/badge.svg) [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000)]()
 
 A collection of language packs for Vim.
 
@@ -16,7 +13,7 @@ A collection of language packs for Vim.
 - No support for esoteric languages, only most popular ones (modern too, like `slim`).
 - Each build is tested by automated vimrunner script on CI. See `spec` directory.
 
-\*To be completely honest, optimized `ftdetect` script takes up to `19ms` to load.
+\*To be completely honest, optimized `ftdetect` script takes around `19ms` to load.
 
 ## Installation
 
