@@ -1,0 +1,15 @@
+name: Vim Polyglot CI
+
+on: 
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 0' # weekly
+
+jobs:
+  test:
+    runs-on: ubuntu-latest 
+    steps:
+    - uses: rhysd/action-setup-vim@v1
+    - name: Test
+      run: scripts/test

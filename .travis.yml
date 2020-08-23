@@ -4,4 +4,4 @@ before_script:
   - sudo apt-get update -q
   - sudo apt-get install -y vim
   - vim --version
-script: ./test
+script: scripts/test
