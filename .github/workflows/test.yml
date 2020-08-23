@@ -10,6 +10,12 @@ jobs:
   test:
     runs-on: ubuntu-latest 
     steps:
-    - uses: rhysd/action-setup-vim@v1
-    - name: Test
-      run: ./scripts/test
+    - name: Install Vim
+      run: |
+        sudo add-apt-repository ppa:jonathonf/vim -y
+        sudo apt-get update -q
+        sudo apt-get install -y vim
+        vim --version
+        ls -la
+    - name: Run Tests
+      run: scripts/test
