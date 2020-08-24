@@ -40,12 +40,6 @@ filetypes:
 - name: autohotkey
   linguist: AutoHotkey
 ---
-name: blade
-remote: jwalton512/vim-blade
-filetypes:
-- name: blade
-  linguist: Blade
----
 name: c/c++
 remote: vim-jp/vim-cpp
 filetypes:
@@ -750,6 +744,13 @@ remote: StanAngeloff/php.vim
 filetypes:
 - name: php
   linguist: PHP
+# Needs to be after .php (can be .blade.php)
+---
+name: blade
+remote: jwalton512/vim-blade
+filetypes:
+- name: blade
+  linguist: Blade
 ---
 name: plantuml
 remote: aklt/plantuml-syntax

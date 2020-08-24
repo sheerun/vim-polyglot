@@ -78,11 +78,6 @@ if index(g:polyglot_disabled, 'autohotkey') == -1
   au BufNewFile,BufRead *.ahkl set ft=autohotkey
 endif
 
-if index(g:polyglot_disabled, 'blade') == -1
-  au BufNewFile,BufRead *.blade set ft=blade
-  au BufNewFile,BufRead *.blade.php set ft=blade
-endif
-
 if index(g:polyglot_disabled, 'c/c++') == -1
   au BufNewFile,BufRead *.c set ft=c
   au BufNewFile,BufRead *.cats set ft=c
@@ -735,6 +730,11 @@ if index(g:polyglot_disabled, 'php') == -1
   au BufNewFile,BufRead {.,}php_cs set ft=php
   au BufNewFile,BufRead {.,}php_cs.dist set ft=php
   au BufNewFile,BufRead Phakefile set ft=php
+endif
+
+if index(g:polyglot_disabled, 'blade') == -1
+  au BufNewFile,BufRead *.blade set ft=blade
+  au BufNewFile,BufRead *.blade.php set ft=blade
 endif
 
 if index(g:polyglot_disabled, 'plantuml') == -1
