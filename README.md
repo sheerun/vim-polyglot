@@ -203,18 +203,19 @@ If you need full functionality of any plugin, please use it directly with your p
 
 ## Updating
 
-You can either wait for new patch release with updates or run the `scripts/build` script by yourself.
+You can either wait for new patch release with updates or run `make` by yourself.
 
 ## Troubleshooting
 
-Please make sure you have `syntax on` in your `.vimrc`, otherwise syntax files are not loaded at all.
+Please make sure you have `syntax on` in your `.vimrc` (or use something like [sheerun/vimrc](https://github.com/sheerun/vimrc))
 
 Individual language packs can be disabled by setting `g:polyglot_disabled` as follows:
 
 ```viml
-" ~/.vimrc, declare this variable before polyglot is loaded
 let g:polyglot_disabled = ['css']
 ```
+
+*Please declare this variable before polyglot is loaded (at the top of .vimrc)*
 
 Please note that disabling a language won't make in your vim startup any faster / slower (only for specific this specific filetype). All plugins are loaded lazily, on demand.
 
@@ -222,7 +223,7 @@ Please note that disabling a language won't make in your vim startup any faster 
 
 Language packs are periodically updated using automated `scripts/build` script.
 
-Feel free to add your language to `packages.yaml`, and send pull-request. Please don't run `scripts/build` and include that in your PR, send just changes to `packages.yaml` and `build` script if really necessary. You can run `scripts/test` to run rough tests.
+Feel free to add your language to `packages.yaml`, and send pull-request. Please don't run `make` and include that in your PR, send just changes to `packages.yaml` and build scripts if really necessary. You can run `make test` to run rough tests.
 
 ## License
 
