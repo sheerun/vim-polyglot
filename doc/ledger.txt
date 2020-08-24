@@ -1,0 +1,443 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ledger') == -1
+
+*ledger.txt* Plugin for the ledger filetype.
+
+
+                                                  *ledger* *ledger-plugin*
+
+Contents:
+
+        Commands............|ledger-invoking|
+        Source................|ledger-source|
+        Usage..................|ledger-usage|
+        Tips....................|ledger-tips|
+        Reports..............|ledger-reports|
+        Settings............|ledger-settings|
+        Completion........|ledger-completion|
+        License..............|ledger-license|
+
+
+==============================================================================
+USAGE                                                           *ledger-usage*
+
+Copy each file to the corresponding directory in your ~/.vim directory or
+install using Pathogen.
+
+You can also use a modeline like this in every ledger file:
+
+    vim:filetype=ledger
+
+==============================================================================
+TIPS                                                             *ledger-tips*
+
+Tips and useful commands
+
+* vim-ledger can do syntax-sensitive folding when you set `foldmethod=syntax`
+  in the |modeline| of your ledger file. This way transactions can shrink down
+  to just one line.
+
+* Try account-completion (as explained below). If you use YouCompleteMe, you
+  should disable it for Ledger files. Put this in your .vimrc:
+
+        if exists('g:ycm_filetype_blacklist')
+          call extend(g:ycm_filetype_blacklist, { 'ledger': 1 })
+        endif
+
+* You may use `:make` for syntax checking. It may be convenient to define a
+  mapping for the following command:
+
+	:silent make | redraw! | cwindow
+
+  It is recommended to set the value of `g:ledger_extra_options` (see below)
+  as follows:
+
+        let g:ledger_extra_options = '--pedantic --explicit --check-payees'
+
+  to catch most potential problems in your source file.
+
+* Remap vim paragraph motion to move by transaction.
+
+  In vim, the "{" and "}" keystrokes move the cursor up and down by whole
+  paragraphs. They can be redefined in ledger files to move by transaction
+  instead. Add these lines to .vimrc:
+
+        au FileType ledger noremap { ?^\d<CR>
+        au FileType ledger noremap } /^\d<CR>
+
+  The default definitions already work in ledger files that separate
+  transactions with blank lines.
+
+* `:call ledger#transaction_date_set(line('.'), "auxiliary")`
+
+  will set today's date as the auxiliary date of the current transaction. You
+  can use also "primary" or "unshift" in place of "auxiliary". When you pass
+  "unshift" the old primary date will be set as the auxiliary date and today's
+  date will be set as the new primary date.
+  To use a different date pass a date measured in seconds since 1st Jan 1970
+  as the third argument.
+
+* `:call ledger#transaction_state_set(line('.'), '*')`
+
+  sets the state of the current transaction to '*'. You can use this in custom
+  mappings.
+
+* `:call ledger#transaction_state_toggle(line('.'), ' *?!')`
+
+  will toggle through the provided transaction states. You can map this to
+  double-clicking for example:
+
+        noremap <silent><buffer> <2-LeftMouse>\
+        :call ledger#transaction_state_toggle(line('.'), ' *?!')<CR>
+
+* `:LedgerAlign`
+
+  moves the amount expression of a posting so that the decimal separator is
+  aligned at the column specified by g:ledger_align_at. If an amount has no
+  decimal point, the imaginary decimal point to the right of the least
+  significant digit will align. The command acts on a range, with the default
+  being the current line.
+
+  The decimal separator can be set using `g:ledger_decimal_sep`. The default
+  value of `g:ledger_decimal_sep` is `'.'`.
+
+  See below for the recommended mappings.
+
+* `:call ledger#align_amount_at_cursor()`
+
+  aligns the amount under the cursor and append/prepend the default currency.
+  The default currency can be set using `g:ledger_default_commodity`. Whether
+  the commodity should be inserted before the amount or appended to it can be
+  configured with the boolean flag `g:ledger_commodity_before` (the default
+  value is 1). A separator between the commodity and the amount may be set
+  using `g:ledger_commodity_sep`.
+
+  See below for the recommended mappings.
+
+* `:call ledger#autocomplete_and_align()`
+
+  when the cursor is on a number or immediately after it, invokes
+  `ledger#align_amount_at_cursor()` to align it and add the default currency;
+  otherwise, performs autocompletion. If you define the following mappings in
+  your `.vimrc` then you may perform both autocompletion and alignment using
+  the <Tab> key:
+
+        au FileType ledger inoremap <silent> <Tab> \
+        <C-r>=ledger#autocomplete_and_align()<CR>
+        au FileType ledger vnoremap <silent> <Tab> :LedgerAlign<CR>
+
+  Alternatively, you may create a file `.vim/after/ftplugin/ledger.vim`
+  containing the following definitions:
+
+        inoremap <silent> <buffer> <Tab> \
+        <C-r>=ledger#autocomplete_and_align()<CR>
+        vnoremap <silent> <buffer> <Tab> :LedgerAlign<CR>
+
+  Now, you may type `asset:check<Tab><Space>123.45<Tab>`, and have the
+  account name autocompleted and `$123.45` properly aligned (assuming your
+  default commodity is set to `'$'`). Or you may press <Tab> in Visual mode
+  to align a number of transactions at once.
+
+* `:call ledger#entry()`
+
+  enters a new transaction based on the text in the current line.
+  The text in the current line is replaced by the new transaction.
+  This is a front end to `ledger entry`.
+
+==============================================================================
+REPORTS                                                      *ledger-reports*
+
+* `:Ledger`
+
+  Executes an arbitrary Ledger command and sends the output to a new buffer.
+  For example:
+
+        :Ledger bal ^assets ^liab
+
+  Errors are displayed in a quickfix window. The command offers account and
+  payee autocompletion (by pressing <Tab>): every name starting with `@` is
+  autocompleted as a payee; any other name is autocompleted as an account.
+
+  In a report buffer or in the quickfix window, you may press <Tab> to switch
+  back to your source file, and you may press `q` to dismiss the current window.
+
+  There are three highlight groups that are used to color the report:
+
+  * `LedgerNumber`
+
+    This is used to color nonnegative numbers.
+
+  * `LedgerNegativeNumber`
+
+    This is used to color negative numbers.
+
+  * `LedgerImproperPerc`
+
+    This is used to color improper percentages.
+
+* `:Balance`
+
+  Show the pending and cleared balance of a given account below the status
+  line. For example:
+
+	:Balance checking:savings
+
+  The command offers payee and account autocompletion (see `:Ledger`). The
+  account argument is optional: if no argument is given, the first account
+  name found in the current line is used.
+
+  Two highlight groups can be used to customize the colors of the line:
+
+  * `LedgerCleared`
+
+    This is used to color the cleared balance.
+
+  * `LedgerPending`
+
+    This is used to color the pending balance.
+
+* `:Register`
+
+  Opens an arbitrary register report in the quickfix window. For example:
+
+	:Register groceries -p 'this month'
+
+  The command offers account and payee autocompletion (see |:Ledger|). You
+  may use the standard quickfix commands to jump from an entry in the register
+  report to the corresponding location in the source file. If you use GUI Vim
+  or if your terminal has support for the mouse (e.g., iTerm2, or even
+  Terminal.app in OS X 10.11 or later), you may also double-click on a line
+  number in the quickfix window to jump to the corresponding posting.
+
+  It is strongly recommended that you add mappings for common quickfix
+  commands like `:cprev` and `:cnext`, or that you use T. Pope's Unimpaired
+  plugin.
+
+* :`Reconcile`
+
+  Reconcile an account. For example:
+
+	:Reconcile checking
+
+  After you press Enter, you will be asked to enter a target amount (use
+  Vim's syntax for numbers, not your ledger's format). For example, for a
+  checking account, the target amount may be the balance of your latest bank
+  statement. The list of uncleared postings appears in the quickfix window.
+  The current balance of the account, together with the difference between the
+  target amount and the cleared balance, is shown at the bottom of the screen.
+  You may use standard quickfix commands to navigate through the postings. You
+  may use |ledger#transaction_state_set()| to update a transaction's state.
+  Every time you save your file, the balance and the difference from the
+  target amount are updated at the bottom of the screen. The goal, of course,
+  is to get such difference to zero. You may press `<C-l>` to refresh the
+  Reconcile buffer. To finish reconciling an account, simply close the
+  quickfix window.
+
+  There is a highlight group to customize the color of the difference from
+  target:
+
+  * `LedgerTarget`
+
+    This is used to color the difference between the target amount and the
+    cleared balance.
+
+==============================================================================
+SETTINGS                                                     *ledger-settings*
+
+Configuration
+
+Include the following let-statements somewhere in your `.vimrc` to modify the
+behaviour of the ledger filetype.
+
+* Path to the `ledger` executable:
+
+	let g:ledger_bin = 'ledger'
+
+* Additional default options for the `ledger` executable:
+
+	let g:ledger_extra_options = ''
+
+* To use a custom external system command to generate a list of account names
+  for completion, set the following. If g:ledger_bin is set, this will default
+  to running that command with arguments to parse the current file using the
+  accounts subcommand (works with ledger or hledger), otherwise it will parse
+  the postings in the current file itself.
+
+	let g:ledger_accounts_cmd = 'your_command args'
+
+* To use a custom external system command to generate a list of descriptions
+  for completion, set the following. If g:ledger_bin is set, this will default
+  to running that command with arguments to parse the current file using the
+  descriptions subcommand (works with ledger or hledger), otherwise it will
+  parse the transactions in the current file itself.
+
+	let g:ledger_descriptions_cmd = 'your_command args'
+
+* Number of columns that will be used to display the foldtext. Set this when
+  you think that the amount is too far off to the right.
+
+        let g:ledger_maxwidth = 80
+
+* String that will be used to fill the space between account name and amount in
+  the foldtext. Set this to get some kind of lines or visual aid.
+
+        let g:ledger_fillstring = '    -'
+
+* If you want the account completion to be sorted by level of detail/depth
+  instead of alphabetical, include the following line:
+
+        let g:ledger_detailed_first = 1
+
+* By default vim will fold ledger transactions, leaving surrounding blank lines
+  unfolded. You can use 'g:ledger_fold_blanks' to hide blank lines following a
+  transaction.
+
+        let g:ledger_fold_blanks = 0
+
+  A value of 0 will disable folding of blank lines, 1 will allow folding of a
+  single blank line between transactions; any larger value will enable folding
+  unconditionally.
+
+  Note that only lines containing no trailing spaces are considered for
+  folding. You can take advantage of this to disable this feature on a
+  case-by-case basis.
+
+* Decimal separator:
+
+        let g:ledger_decimal_sep = '.'
+
+* Specify at which column decimal separators should be aligned:
+
+        let g:ledger_align_at = 60
+
+* Default commodity used by `ledger#align_amount_at_cursor()`:
+
+        let g:ledger_default_commodity = ''
+
+* Flag that tells whether the commodity should be prepended or appended to the
+  amount:
+
+        let g:ledger_commodity_before = 1
+
+* String to be put between the commodity and the amount:
+
+        let g:ledger_commodity_sep = ''
+
+* Flag that enable the spelling of the amount:
+
+        let g:ledger_commodity_spell = 1
+
+* Format of transaction date:
+
+        let g:ledger_date_format = '%Y/%m/%d'
+
+* The file to be used to generate reports:
+
+        let g:ledger_main = '%'
+
+  The default is to use the current file.
+
+* Position of a report buffer:
+
+        let g:ledger_winpos = 'B'
+
+  Use `b` for bottom, `t` for top, `l` for left, `r` for right. Use uppercase letters
+  if you want the window to always occupy the full width or height.
+
+* Format of quickfix register reports (see |:Register|):
+
+	let g:ledger_qf_register_format = \
+        '%(date) %-50(payee) %-30(account) %15(amount) %15(total)\n'
+
+  The format is specified using the standard Ledger syntax for --format.
+
+* Format of the reconcile quickfix window (see |:Reconcile|):
+
+	let g:ledger_qf_reconcile_format = \
+        '%(date) %-4(code) %-50(payee) %-30(account) %15(amount)\n'
+
+  The format is specified using the standard Ledger syntax for --format.
+
+* Flag that tells whether a location list or a quickfix list should be used:
+
+	let g:ledger_use_location_list = 0
+
+  The default is to use the quickfix window. Set to 1 to use a location list.
+
+* Position of the quickfix/location list:
+
+	let g:ledger_qf_vertical = 0
+
+  Set to 1 to open the quickfix window in a vertical split.
+
+* Size of the quickfix window:
+
+	let g:ledger_qf_size = 10
+
+  This is the number of lines of a horizontal quickfix window, or the number
+  of columns of a vertical quickfix window.
+
+* Flag to show or hide filenames in the quickfix window:
+
+	let g:ledger_qf_hide_file = 1
+
+  Filenames in the quickfix window are hidden by default. Set this to 1 is
+  you want filenames to be visible.
+
+* Text of the output of the |:Balance| command:
+
+	let g:ledger_cleared_string = 'Cleared: '
+	let g:ledger_pending_string = 'Cleared or pending: '
+	let g:ledger_target_string = 'Difference from target: '
+
+==============================================================================
+COMPLETION                                                 *ledger-completion*
+
+Omni completion is currently implemented for account names only.
+
+### Accounts
+
+Account names are matched by the start of every sub-level. When you
+insert an account name like this:
+
+    Asse<C-X><C-O>
+
+You will get a list of top-level accounts that start like this.
+
+Go ahead and try something like:
+
+    As:Ban:Che<C-X><C-O>
+
+When you have an account like this, 'Assets:Bank:Checking' should show up.
+
+When you want to complete on a virtual transaction, it's currently best
+to keep the cursor in front of the closing bracket. Of course you can
+insert the closing bracket after calling the completion, too.
+
+==============================================================================
+LICENSE                                                       *ledger-license*
+
+https://github.com/ledger/vim-ledger
+
+Copyright 2019 Caleb Maclennan
+Copyright 2009–2017 Johann Klähn
+Copyright 2009 Stefan Karrmann
+Copyright 2005 Wolfgang Oertl
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, either version 2 of the License, or (at your
+option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program. If not, see <https://www.gnu.org/licenses/>.
+
+
+vim:ts=8 sw=8 noexpandtab tw=78 ft=help:
+
+
+endif

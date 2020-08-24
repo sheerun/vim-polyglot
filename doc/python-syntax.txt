@@ -1,0 +1,124 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python') == -1
+
+*python-syntax.txt* Python syntax highlighting
+
+==============================================================================
+Introduction                         *python-syntax* *ft-python-syntax* *python.vim*
+
+This is an enhanced version of the original Vim 6.1 Python syntax highlighting
+`python.vim` by Neil Schemenauer.
+
+Features
+--------
+
+* Enhanced highlighting for:
+  * Strings
+  * Special symbols inside strings
+  * Numeric constants
+* Added support for:
+  * Python 3
+  * Numbers with underscores
+  * String %-formatting and f-strings
+  * Magic comments: source code encoding and shebangs
+  * New exceptions and builtins
+  * Doctests
+  * `@decorator` syntax
+  * Class variables such as `self` and `cls`
+  * Operators
+* Highlighting of the following errors:
+  * Invalid symbols in source file
+  * Invalid numeric constants
+  * Invalid %-formatting inside strings
+  * Invalid variable names
+  * Invalid operators
+  * Mixing spaces and tabs
+  * Trailing spaces (Enabled with `g:python_highlight_space_errors`)
+* Commands for easy switching between versions
+
+Folding is done by the plugin SimpylFold
+(https://github.com/tmhedberg/SimpylFold).
+
+==============================================================================
+Configuration                                      *python-syntax-configuration*
+
+Option variables
+----------------
+
+Set variable to `1` to enable or `0` to disable.
+
+For example to enable all syntax highlighting features you can add the
+following command to your `~/.config/nvim/init.vim` or `~/.vimrc`: >
+
+    let g:python_highlight_all = 1
+<
+
+`g:python_version_2` (default `0`)
+    Python 2 mode
+
+`b:python_version_2` (default `0`)
+    Python 2 mode (buffer local)
+
+`g:python_highlight_builtins` (default `0`)
+    Highlight builtin objects, types, and functions
+
+`g:python_highlight_builtin_objs` (default `0`)
+    Highlight builtin objects only
+
+`g:python_highlight_builtin_types` (default `0`)
+    Highlight builtin types only
+
+`g:python_highlight_builtin_funcs` (default `0`)
+    Highlight builtin functions only
+
+`g:python_highlight_builtin_funcs_kwarg` (default `1`)
+    Highlight builtin functions when used as kwarg
+
+`g:python_highlight_exceptions` (default `0`)
+    Highlight standard exceptions
+
+`g:python_highlight_string_formatting` (default `0`)
+    Highlight `%` string formatting
+
+`g:python_highlight_string_format` (default `0`)
+    Highlight syntax of `str.format` syntax
+
+`g:python_highlight_string_templates` (default `0`)
+    Highlight syntax of `string.Template`
+
+`g:python_highlight_indent_errors` (default `0`)
+    Highlight indentation errors
+
+`g:python_highlight_space_errors` (default `0`)
+    Highlight trailing spaces
+
+`g:python_highlight_doctests` (default `0`)
+    Highlight doc-tests
+
+`g:python_highlight_func_calls` (default `0`)
+    Highlight functions calls
+
+`g:python_highlight_class_vars` (default `0`)
+    Highlight class variables `self` and `cls`
+
+`g:python_highlight_operators` (default `0`)
+    Highlight all operators
+
+`g:python_highlight_all` (default `0`)
+    Enable all highlight options above, except for previously set.
+
+`g:python_highlight_file_headers_as_comments` (default `0`)
+    Highlight shebang and coding headers as comments
+
+`g:python_slow_sync` (default `1`)
+    Disable for slow machines
+
+Commands
+--------
+
+`Python2Syntax`
+    Switch to Python 2
+
+`Python3Syntax`
+    Switch to Python 3
+
+endif

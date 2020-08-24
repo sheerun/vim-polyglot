@@ -1,0 +1,158 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'idris') == -1
+
+*idris-vim.txt*   Last change 2014 April 24
+===============================================================================
+===============================================================================
+   @@@@ @@@@@@@@  @@@@@@@@  @@@@  @@@@@@          @@     @@ @@@@ @@     @@
+    @@  @@     @@ @@     @@  @@  @@    @@         @@     @@  @@  @@@   @@@
+    @@  @@     @@ @@     @@  @@  @@               @@     @@  @@  @@@@ @@@@
+    @@  @@     @@ @@@@@@@@   @@   @@@@@@  @@@@@@@ @@     @@  @@  @@ @@@ @@
+    @@  @@     @@ @@   @@    @@        @@          @@   @@   @@  @@     @@
+    @@  @@     @@ @@    @@   @@  @@    @@           @@ @@    @@  @@     @@
+   @@@@ @@@@@@@@  @@     @@ @@@@  @@@@@@             @@@    @@@@ @@     @@
+===============================================================================
+CONTENTS                                                   *idris-vim-contents*
+
+  1. Features:                                   |idris-vim-features|
+  2. Requirements:                               |idris-vim-requirements|
+  3. Functions:                                  |idris-vim-functions|
+  4. Troubleshooting                             |idris-vim-troubleshooting|
+  5. Examples:                                   |idris-vim-examples|
+  6. Information:                                |idris-vim-information|
+
+===============================================================================
+FEATURES                                                   *idris-vim-features*
+
+  * Syntax Highlighting
+  * Indentation
+  * Unicode Concealing
+  * Syntax Checking (via Syntastic(https://github.com/scrooloose/syntastic))
+  * Interactive Editing via the REPL
+
+===============================================================================
+REQUIREMENTS                                           *idris-vim-requirements*
+
+  * Idris (http://www.idris-lang.org/)
+
+  OPTIONAL:
+
+    * Syntastic(https://github.com/scrooloose/syntastic) for syntax checking
+    * Vimshell(https://github.com/Shougo/vimshell.vim) for a REPL
+
+===============================================================================
+FUNCTIONS                                                 *idris-vim-functions*
+
+All of the functions in idris-vim are essentially just calls back to the REPL,
+so documentation for each of them is also available there.
+
+IdrisDocumentation                                           *IdrisDocumentation*
+  Shows internal documentation of the primitive under the cursor.
+
+  Mapped to '<LocalLeader>_h' by default.
+
+IdrisResponseWin                                              *IdrisResponseWin*
+  This opens an idris response window in a new pane.
+
+  Mapped to '<LocalLeader>_i' by default.
+
+IdrisShowType                                                    *IdrisShowType*
+  This shows the type of the name under the cursor (or, if the cursor happens
+  to be over a metavariable, a bit more information about its context).
+
+  Mapped to '<LocalLeader>_t' by default.
+
+IdrisReload                                                        *IdrisReload*
+  This reloads the file and type-checks the file in the current buffer.
+
+  Mapped to '<LocalLeader>_r' by default.
+
+IdrisEval                                                            *IdrisEval*
+  This prompts for an expression and then evaluates it in the REPL, then
+  returns the result.
+
+  Mapped to '<LocalLeader>_e' by default.
+
+IdrisCaseSplit                                                 *IdrisCaseSplit*
+  When the cursor is over a variable in a pattern match clause or case
+  expression, this splits the variable into all well-typed patterns.
+
+  Mapped to '<LocalLeader>_c' by default
+
+IdrisAddClause                                                 *IdrisAddClause*
+  When the cursor is at a type declaration this creates a new clause for that
+  signature.
+
+  By default mapped to '<LocalLeader>_d' for an ordinary top-level definition,
+  '<LocalLeader>_b' for a typeclass instance definition, and
+  '<LocalLeader>_md' to add a pattern-matching proof clause.
+
+IdrisAddMissing:                                               *IdrisAddMissing*
+  When the cursor is over a function, this adds all clauses necessary to make
+  that function cover all inputs.  This also eliminates clauses which would
+  lead to unification errors from appearing.
+
+  Mapped to '<LocalLeader>_m' by default
+
+IdrisRefine:                                                      *IdrisRefine*
+  Refines the item the cursor is over (applies the name and fills in any
+  arguments which can be filled in via unification)
+
+  Mapped to '<LocalLeader>_f' by default
+
+IdrisProofSearch:                                             *IdrisProofSearch*
+  This attempts to find a value for the metavariable it was called on by
+  looking at the rest of the code.  It can also be called with hints, which
+  are functions that can apply to help solve for the metavariable.
+
+  Mapped to '<LocalLeader>_o' without hints and '<LocalLeader>p' with hints by
+  default
+
+IdrisMakeWith:                                                   *IdrisMakeWith*
+  When the cursor is over a pattern clause and this is called, it creates a
+  new with clause.
+
+  Mapped to '<LocalLeader>_w' by default
+
+IdrisMakeLemma:                                                   *IdrisMakeLemma*
+  When the cursor is over a metavariable and this is called, it creates a new
+  top-level definition to solve the metavariable.
+
+  Mapped to '<LocalLeader>_l' by default
+
+===============================================================================
+TROUBLESHOOTING                                      *idris-vim-troubleshooting*
+
+If this isn't working for you, make sure that:
+
+  * There is an Idris REPL running
+  * For syntax checking, you have syntastic installed
+  * The plugins mappings exists and don't conflict with anything else installed
+    (You can use ':map' to check. There should be mappings similar to
+    '\h * :call IdrisShowDoc()'.)
+  * Vim recognizes you're in an idris file (you can use ':verb set ft' to check)
+
+If none of this works, check to issue tracker on github and if nothing is
+there create an issue with a detailed description of the problem.
+
+===============================================================================
+EXAMPLES                                                    *idris-vim-examples*
+
+Some excellent tutorials/examples for interactive editing using the above
+functions can be found at:
+  http://edwinb.wordpress.com/2013/10/28/interactive-idris-editing-with-vim/
+and
+  http://www.scribd.com/doc/214031954/60/Interactive-Editing-in-Vim
+
+===============================================================================
+INFORMATION                                              *idris-vim-information*
+
+Author: edwinb
+Repo: https://github.com/idris-hackers/idris-vim
+
+Documentation by japesinator
+
+===============================================================================
+===============================================================================
+" vim:ft=help:et:ts=2:sw=2:sts=2:norl:
+
+endif

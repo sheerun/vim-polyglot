@@ -14,7 +14,7 @@ PACKAGES = YAML.load_stream(File.read('packages.yaml'))
 BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 
 DIRS = {
-  default: %w(syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin),
+  default: %w(syntax indent doc compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin),
   all: %w(syntax indent compiler autoload ftplugin after extras ctags),
   syntax: %w(syntax indent after/syntax after/indent)
 }
@@ -99,7 +99,7 @@ def parse_remote(remote)
 end
 
 def copy_file(package, src, dest)
-  return unless [".vim", ".ctags", ".vital"].include?(File.extname(src))
+  return unless [".vim", ".ctags", ".vital", ".txt"].include?(File.extname(src))
   FileUtils.mkdir_p(File.dirname(dest))
   name = package.fetch("name")
 

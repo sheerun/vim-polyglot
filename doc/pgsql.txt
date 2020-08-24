@@ -1,0 +1,143 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pgsql') == -1
+
+*pgsql.txt*	Syntax highlighting for PostgreSQL files
+					    _                             ~
+					   | |                            ~
+		     ____   ____  ___  ____| |                            ~
+		    |  _ \ / _  |/___)/ _  | |                            ~
+		    | |_| ( (_| |___ | |_| | |                            ~
+		    |  __/ \___ (___/ \__  |\_)                           ~
+		    |_|   (_____|        |_|                              ~
+
+		The best PostgreSQL plugin for Vim!
+
+Author:  Lifepillar <https://github.com/lifepillar>
+License: Public Domain
+
+==============================================================================
+CONTENTS					*pgsql-contents*
+
+    1.  Syntax highlighting ................... |pgsql-syntax|
+    2.  Customization ......................... |pgsql-customization|
+    3.  Autocompletion ........................ |pgsql-autocompletion|
+    4.  Contributing .......................... |pgsql-contributing|
+    5.  Credits ............................... |pgsql-credits|
+
+==============================================================================
+Syntax highlighting				*pgsql-syntax*
+
+Files with a .`pgsql` suffix are highlighted out of the box. If you want to
+highlight `.sql` files using this plugin by default, add this to your `.vimrc`
+(see |ft_sql.txt| for more details):
+>
+	let g:sql_type_default = 'pgsql'
+<
+Alternatively, after loading a `.sql` file use this command:
+>
+	SQLSetType pgsql.vim
+<
+To set the file type in new buffers use:
+>
+	let b:sql_type_override='pgsql' | set ft=sql
+<
+Identifiers starting with an underscore are highlighted as variables. It is
+recommended to adopt the convention of prefixing function parameters and local
+variables with `_`.
+
+Code between `$pgsql$`, `$body$`, or `$$` pairs is interpreted as PL/pgSQL and
+highlighted accordingly (the delimiters are case-insensitive). If you prefer
+to use `$$` to highlight strings instead, you may set |g:pgsql_dollar_strings|
+to 1.
+
+Text enclosed between `$anyword$` pairs, where `anyword` is any non-empty
+sequence of word characters different from those with a special meaning (such
+as `$pgsql$`) is treated as a multi-line string.
+
+Finally, the plugin supports syntax highlighting of arbitrary languages within
+procedure and function blocks. This feature needs to be configured: see
+|g:pgsql_pl|.
+
+==============================================================================
+Customization					*pgsql-customization*
+
+						*'g:pgsql_backslash_quote'*
+Set to 1 to recognize `\'` as an escape sequence in all strings. By default,
+`\'` is treated as an escape sequence only in "escape" strings constants,
+i.e., strings enclosed in `E''`.
+>
+	let g:pgsql_backslash_quote = 0
+<
+						*'g:pgsql_disabled_extensions'*
+Support for the most common PostgreSQL extensions is enabled by default. Set
+this to a List of names of extensions whose keywords you do not want to be
+highlighted.
+>
+	let g:pgsql_disabled_extensions = []
+<
+						*'g:pgsql_dollar_strings'*
+Set to 1 if you want double-dollar enclosed text highlighted as a SQL string.
+By default, text quoted with `$$` is highlighted as PL/pgSQL.
+>
+	let g:pgsql_dollar_strings = 0
+<
+						*'g:pgsql_pl'*
+						*'b:pgsql_pl'*
+A List of the filetypes that should be highlighted inside the body of
+user-defined functions and procedures.
+>
+	let g:pgsql_pl = []
+<
+For example, to use PL/Python and PL/R, you should define:
+>
+	let g:pgsql_pl = ['python', 'r']
+<
+Then, code between `$python$` pairs will be highlighted as Python, and code
+between `$r$` pairs will be highlighted as R.
+
+The buffer-local version of this setting can be used to override the global
+setting in a single buffer.
+
+Note: changes to any of these variables take effect after the SQL filetype is
+reloaded.
+
+==============================================================================
+Autocompletion					*pgsql-autocompletion*
+
+This plugin just defines a new dialect for Vim's SQL plugin. As such, it
+inherits the static and dynamic completion methods already offered by Vim (see
+|sql-completion|). So, for example, by default you may use `<C-c>f` to
+complete function names, `<C-c>T` to complete types, and so on. See
+|ft_sql.txt| for thorough documentation about SQL support in Vim.
+
+As far as I know, YouCompleteMe does not support SQL. If you use YouCompleteMe
+you may want to disable it for SQL buffers. Add this to
+`.vim/after/ftplugin/sql.vim`:
+>
+	if exists('g:ycm_filetype_blacklist')
+	    call extend(g:ycm_filetype_blacklist, { 'sql': 1 })
+	endif
+<
+Of course, I recommend using my own MUcomplete plugin over YCM ;)
+
+==============================================================================
+Contributing					*pgsql-contributing*
+
+For bug reports and feature requests please use:
+
+    https://github.com/lifepillar/pgsql.vim/issues
+
+Pull requests are welcome, too!
+
+==============================================================================
+Credits						*pgsql-credits*
+
+This plugin was originally a fork of space::tekk's
+
+	https://github.com/spacetekk/pgsql.vim
+
+and completely rewritten.
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
+
+
+endif

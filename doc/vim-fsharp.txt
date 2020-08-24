@@ -1,0 +1,210 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fsharp') == -1
+
+*vim-fsharp.txt* F# support for Vim
+*FSharp* *F#* *fsharp* *vim-fsharp*
+===============================================================================
+#                                                                             #
+#               ███████╗███████╗██╗  ██╗ █████╗ ██████╗ ██████╗               #
+#               ██╔════╝██╔════╝██║  ██║██╔══██╗██╔══██╗██╔══██╗              #
+#               █████╗  ███████╗███████║███████║██████╔╝██████╔╝              #
+#               ██╔══╝  ╚════██║██╔══██║██╔══██║██╔══██╗██╔═══╝               #
+#               ██║     ███████║██║  ██║██║  ██║██║  ██║██║                   #
+#               ╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝                   #
+#                                                                             #
+===============================================================================
+CONTENTS                                                      *fsharp-contents*
+
+    1. Dependencies.................................|fsharp-dependencies|
+    2. Usage........................................|fsharp-usage|
+    3. Options......................................|fsharp-options|
+    4. Commands.....................................|fsharp-commands|
+    5. Mappings.....................................|fsharp-mappings|
+    6. Credits......................................|fsharp-credits|
+
+===============================================================================
+DEPENDENCIES                                              *fsharp-dependencies*
+
+Required:~
+    - Vim 7.3 or higher with Python 2 or 3 support
+    - Mono OR .NET Framework
+    - F#
+
+Optional:~
+    - Syntastic plugin (for syntax and type checking)
+    NOTE: Must be enabled (see |'g:syntastic_fsharp_checkers'|)
+
+===============================================================================
+USAGE                                                            *fsharp-usage*
+
+Syntax highlighting and linting will trigger upon opening a `*.fs`, `*.fsi`,
+or `*.fsx` file. Using omni completion will begin the fsautocomplete process.
+
+Suggestion: Install a completer such as NeoComplete or SuperTab
+
+===============================================================================
+OPTIONS                                                        *fsharp-options*
+
+                                                *'g:syntastic_fsharp_checkers'*
+Use this option to enable syntastic integration >
+    let g:syntastic_fsharp_checkers=['syntax']
+<
+                                        *'g:fsharp_only_check_errors_on_write'*
+Use this option to disable "on the fly" syntax checking >
+    let g:fsharp_only_check_errors_on_write = 1
+<
+                                                      *'g:fsharpbinding_debug'*
+Use this option to enable debug-mode and inspect fsautocomplete behavior: >
+    let g:fsharpbinding_debug = 1
+<
+This will create two log files `log.txt` and `log2.txt` in your temporary folder
+(i.e. `/tmp/`)
+
+                                                       *'g:fsharp_xbuild_path'*
+Use this option set the msbuild/xbuild path >
+    let g:fsharp_xbuild_path = "/path/to/xbuild/or/msbuild"
+<
+
+                                                       *'g:fsharp_test_runner'*
+Use this option to point to a suitable test runner (such as nunit-console.exe) >
+    let g:fsharp_test_runner = "/path/to/test/runner"
+<
+
+                                               *'g:fsharp_completion_helptext'*
+Use this option to disable helptext during auto completion. Turn off if
+completion is too slow >
+    let g:fsharp_completion_helptext = 0
+<
+
+                                                          *'g:fsharp_map_keys'*
+Use this option to disable default bindings >
+    let g:fsharp_map_keys = 0
+<
+
+                                                        *'g:fsharp_map_prefix'*
+Use this option to override the default prefix of `<leader>` >
+    let g:fsharp_map_prefix = 'cp'
+<
+Set to `cp` in this example
+
+                                                   *'g:fsharp_map_fsisendline'*
+Use this option to override the default mapping to send the current line to
+fsharp interactive >
+    let g:fsharp_map_fsisendline = 'p'
+<
+Set to `p` in this example
+
+                                                    *'g:fsharp_map_fsisendsel'*
+Use this option to override the default mapping to send the current selection
+to fsharp interactive >
+    let g:fsharp_map_fsisendsel = 'p'
+<
+Set to `p` in this example
+
+                                                      *'g:fsharp_map_gotodecl'*
+Use this option to override the default mapping to go to declaration in the
+current window >
+    let g:fsharp_map_gotodecl = 'g'
+<
+Set to `g` in this example
+
+                                                *'g:fsharp_map_gobackfromdecl'*
+Use this option to override the default mapping to go back to where go to
+declaration was triggered >
+    let g:fsharp_map_gobackfromdecl = 'b'
+<
+Set to `b` in this example
+
+                                                      *'g:fsharp_map_fsiinput'*
+Override the default mapping to evaluate an fsharp expression in the fsi >
+    let g:fsharp_map_fsiinput = 'i'
+<
+
+===============================================================================
+COMMANDS                                                      *fsharp-commands*
+
+General commands:~
+                                                                        *:make*
+:make
+    Calls xbuild on the fsproj for the current file (if any).
+
+                                                          *:FSharpParseProject*
+:FSharpParseProject
+    Reparses all the project files and dependencies (this is done automatically
+    when opening a .fs or .fsi file).
+
+                                                          *:FSharpBuildProject*
+:FSharpBuildProject
+    Calls xbuild on the fsproj for the current file (if any). Can also take a
+    path to the proj file to build.
+
+                                                            *:FSharpRunProject*
+:FSharpRunProject
+    Runs the project for the current file (if any).
+
+                                                              *:FSharpRunTests*
+:FSharpRunTests
+    If `g:fsharp_test_runner` is set it will build the current project and run
+    any tests. (Currently only tested with nunit-console.exe)
+
+                                                        *:FSharpToggleHelptext*
+:FSharpToggleHelptext
+    toggles g:fsharp_completion_helptext. (See below for details)
+
+FSharp interaction commands:~
+
+                                                                     `:FsiEval`
+:FsiEval
+    Evaluates an fsharp expression in the fsi
+
+                                                               `:FsiEvalBuffer`
+:FsiEvalBuffer
+    Evaluates the entire buffer in the fsi
+
+                                                                    `:FsiReset`
+:FsiReset
+    Resets the current fsharp interactive
+
+                                                                     `:FsiRead`
+:FsiRead
+    Outputs any lines written by the fsi but not yet output as vim messages
+
+                                                                    `:FsiClear`
+:FsiClear
+    Deletes all text from the fsi output buffer but doesn't reset the fsi
+    session.
+
+                                                                     `:FsiShow`
+:FsiShow
+    Opens the _fsi-out_ buffer in a split window
+
+===============================================================================
+MAPPINGS                                                      *fsharp-mappings*
+
+General:~
+
+    <leader>t
+        Echoes the type of the expression currently pointed to by the cursor
+    <leader>d
+        Go to declaration in current window
+    <leader>s
+        Takes you back from where go to declaration was triggered. Experimental
+
+FSharp Interactive:~
+    <A-CR>      OR
+    <leader>i
+        Send either the current selection or the current line to the fsharp
+        interactive and echoes the output the first line of the output. All
+        output will be written to the fsi-out buffer.
+
+===============================================================================
+CREDITS                                                        *fsharp-credits*
+
+Syntax and indent files by kongo2002 <github.com/kongo2002>:
+ http://github.com/kongo2002/fsharp-vim
+
+Adapted from Tim Robinson <github.com/timrobinson>:
+ http://github.com/timrobinson/fsharp-vim
+>
+===============================================================================
+
+endif
