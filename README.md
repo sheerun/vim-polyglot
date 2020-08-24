@@ -59,7 +59,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [cjsx](https://github.com/mtscout6/vim-cjsx) (syntax, ftplugin)
 - [clojure](https://github.com/guns/vim-clojure-static) (syntax, indent, autoload, ftplugin)
 - [cmake](https://github.com/pboettch/vim-cmake-syntax) (syntax, indent)
-- [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, compiler, indent, autoload, ftplugin)
+- [coffee-script](https://github.com/kchmck/vim-coffee-script) (syntax, indent, compiler, autoload, ftplugin)
 - [cql](https://github.com/elubow/cql-vim) (syntax)
 - [cryptol](https://github.com/victoredwardocallaghan/cryptol.vim) (syntax, compiler, ftplugin)
 - [crystal](https://github.com/rhysd/vim-crystal) (syntax, indent, autoload, ftplugin)

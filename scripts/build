@@ -5,6 +5,7 @@ require 'open3'
 require 'yaml'
 require 'fileutils'
 require 'set'
+require 'json'
 
 Dir.chdir(File.dirname(__dir__))
 
@@ -15,8 +16,7 @@ BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 DIRS = {
   default: %w(syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin),
   all: %w(syntax indent compiler autoload ftplugin after extras ctags),
-  syntax: %w(syntax indent after/syntax after/indent),
-  noafter: %w(syntax compiler indent autoload ftplugin)
+  syntax: %w(syntax indent after/syntax after/indent)
 }
 
 def parallel(*procs)
@@ -156,7 +156,10 @@ def extract
     dir = "tmp/" + repo.split('/')[1]
     subdirs = []
     dirs = DIRS.fetch(package.fetch("dirs", "default").to_sym)
-    dirs -= package.fetch("ignored_dirs", [])
+    ignored_dirs = package.fetch("ignored_dirs", [])
+    if ignored_dirs.size > 0
+      dirs = dirs.reject { |d| ignored_dirs.any? { |id| d.start_with?(id) } }
+    end
     dirs |= package.fetch("extra_dirs", [])
     for subdir in dirs
       subtree = "#{dir}/#{path ? path + "/" : ""}"

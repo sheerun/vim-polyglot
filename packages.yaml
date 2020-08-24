@@ -81,7 +81,9 @@ filetypes:
 ---
 name: coffee-script
 remote: kchmck/vim-coffee-script
-dirs: :noafter
+ignored_dirs:
+# Don't slow down html and haml files
+- after
 filetypes:
 - name: coffee
   linguist: CoffeeScript
@@ -300,7 +302,9 @@ filetypes:
 ---
 name: glsl
 remote: tikhomirov/vim-glsl
-dirs: :noafter
+ignored_dirs:
+# don't slow down html and haml files
+- after
 filetypes:
 - name: glsl
   linguist: GLSL
@@ -558,7 +562,9 @@ filetypes:
 ---
 name: less
 remote: groenewege/vim-less
-dirs: :noafter
+ignored_dirs:
+# We don't want to slow down .html files
+- after
 filetypes:
 - name: less
   linguist: Less
@@ -614,7 +620,9 @@ filetypes:
 ---
 name: markdown
 remote: plasticboy/vim-markdown
-dirs: :noafter
+ignored_dirs:
+# Disable slow folding config
+- after
 filetypes:
 - name: markdown
   linguist: Markdown
