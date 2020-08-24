@@ -447,7 +447,12 @@ filetypes:
 ---
 name: javascript
 remote: pangloss/vim-javascript
-dirs: :javascript
+ignored_dirs:
+# we don't want eslint compiler, see #521
+- compiler
+extra_dirs:
+# Used by ftplugins there
+- extras
 filetypes:
 - name: javascript
   linguist: JavaScript

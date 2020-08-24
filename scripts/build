@@ -158,7 +158,10 @@ def extract
     repo, branch, path = parse_remote(package["remote"])
     dir = "tmp/" + repo.split('/')[1]
     subdirs = []
-    for subdir in DIRS.fetch(package.fetch("dirs", "default").to_sym)
+    dirs = DIRS.fetch(package.fetch("dirs", "default").to_sym)
+    dirs -= package.fetch("ignored_dirs", [])
+    dirs |= package.fetch("extra_dirs", [])
+    for subdir in dirs
       subtree = "#{dir}/#{path ? path + "/" : ""}"
       subpath = "#{subtree}#{subdir}"
       if FileTest.directory?(subpath)
@@ -307,8 +310,8 @@ def generate_ftdetect
   File.write('ftdetect/polyglot.vim', output)
 end
 
-# download
-# extract
+download
+extract
 generate_ftdetect
-# puts(" Bye! Have a wonderful time!")
-# FileUtils.rm_rf("tmp")
+puts(" Bye! Have a wonderful time!")
+FileUtils.rm_rf("tmp")

@@ -100,7 +100,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [icalendar](https://github.com/chutzpah/icalendar.vim) (syntax)
 - [idris](https://github.com/idris-hackers/idris-vim) (syntax, indent, ftplugin)
 - [ion](https://github.com/vmchale/ion-vim) (syntax, ftplugin)
-- [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, compiler, ftplugin, extras)
+- [javascript](https://github.com/pangloss/vim-javascript) (syntax, indent, ftplugin, extras)
 - [jenkins](https://github.com/martinda/Jenkinsfile-vim-syntax) (syntax, indent)
 - [jinja](https://github.com/lepture/vim-jinja) (syntax, indent)
 - [jq](https://github.com/vito-c/jq.vim) (syntax, ftplugin)
