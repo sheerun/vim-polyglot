@@ -262,7 +262,8 @@ filetypes:
 ---
 name: fsharp
 remote: ionide/Ionide-vim
-dirs: :basic
+ignored_dirs:
+- ftplugin
 filetypes:
 - name: fsharp
   linguist: F#
@@ -321,7 +322,11 @@ filetypes:
 ---
 name: go
 remote: fatih/vim-go
-dirs: :go
+ignored_dirs:
+- autoload
+- ftplugin
+extra_dirs:
+- autoload/go/config.vim
 filetypes:
 - name: go
   linguist: Go
@@ -542,7 +547,8 @@ filetypes:
 ---
 name: ledger
 remote: ledger/vim-ledger
-dirs: :basic
+ignored_dirs:
+- ftplugin
 filetypes:
 - name: ledger
   extensions:
@@ -655,7 +661,8 @@ filetypes:
 ---
 name: nim
 remote: zah/nim.vim
-dirs: :basic
+ignored_dirs:
+- ftplugin
 filetypes:
 - name: nim
   linguist: Nim
@@ -851,7 +858,8 @@ filetypes:
 ---
 name: r-lang
 remote: vim-scripts/R.vim
-dirs: :basic
+ignored_dirs:
+- ftplugin
 filetypes:
 - name: r
   linguist: R

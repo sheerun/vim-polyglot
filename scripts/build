@@ -15,11 +15,8 @@ BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 DIRS = {
   default: %w(syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin),
   all: %w(syntax indent compiler autoload ftplugin after extras ctags),
-  basic: %w(syntax compiler indent after/syntax after/indent),
   syntax: %w(syntax indent after/syntax after/indent),
-  noafter: %w(syntax compiler indent autoload ftplugin),
-  javascript: %w(syntax indent compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin extras),
-  go: %w(autoload/go/config.vim syntax compiler indent after/syntax after/indent)
+  noafter: %w(syntax compiler indent autoload ftplugin)
 }
 
 def parallel(*procs)
