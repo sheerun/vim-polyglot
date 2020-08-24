@@ -4,6 +4,7 @@ require 'open-uri'
 require 'open3'
 require 'yaml'
 require 'fileutils'
+require 'set'
 
 Dir.chdir(File.dirname(__dir__))
 
@@ -247,6 +248,10 @@ def generate_ftdetect
 
   EOS
 
+  ambiguous_extensions = languages.flat_map { |_, v| v["extensions"] || [] }
+    .group_by(&:itself).transform_values(&:count)
+    .select { |a, b| b > 1 }.keys.map { |a| a[1..] }.to_set
+
   for package in PACKAGES
     name = package.fetch("name")
     output << if name == "jsx"
@@ -264,9 +269,9 @@ def generate_ftdetect
       linguist = filetype["linguist"] ? languages.fetch(filetype["linguist"]) : {}
       extensions = filetype["extensions"] || linguist.fetch("extensions", []).map { |e| e[1..] }
       extensions = (extensions | filetype.fetch("extra_extensions", [])) - filetype.fetch("ignored_extensions", [])
+
       filenames = filetype["filenames"] || linguist.fetch("filenames", [])
       filenames = (filenames | filetype.fetch("extra_filenames", [])) - filetype.fetch("ignored_filenames", [])
-
 
       for extension in extensions.sort
         outer_filetype = filetype["outer_filetype"]
@@ -274,7 +279,12 @@ def generate_ftdetect
           output << "  au BufNewFile *.*.#{extension} execute \"do BufNewFile filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}"
           output << "  au BufReadPre *.*#{extension} execute \"do BufRead filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}"
         end
-        output << "  au BufNewFile,BufRead *.#{extension} #{set_command}\n"
+
+        if ambiguous_extensions.include?(extension)
+          output << "  au BufNewFile,BufRead *.#{extension} setf #{filetype["name"]}\n"
+        else
+          output << "  au BufNewFile,BufRead *.#{extension} #{set_command}\n"
+        end
       end
 
       for filename in filenames.sort
@@ -297,8 +307,8 @@ def generate_ftdetect
   File.write('ftdetect/polyglot.vim', output)
 end
 
-download
-extract
+# download
+# extract
 generate_ftdetect
-puts(" Bye! Have a wonderful time!")
-FileUtils.rm_rf("tmp")
+# puts(" Bye! Have a wonderful time!")
+# FileUtils.rm_rf("tmp")
