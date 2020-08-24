@@ -1139,13 +1139,6 @@ if index(g:polyglot_disabled, 'vcl') == -1
   au BufNewFile,BufRead *.vcl set ft=vcl
 endif
 
-if index(g:polyglot_disabled, 'vifm') == -1
-  au BufNewFile,BufRead *.vifm set ft=vifm
-  au BufNewFile,BufRead *vifm/colors/* set ft=vifm
-  au BufNewFile,BufRead vifmrc set ft=vifm
-  au BufNewFile,BufRead vifm.rename* set ft=vifm-rename
-endif
-
 if index(g:polyglot_disabled, 'velocity') == -1
   au BufNewFile,BufRead *.vm set ft=velocity
 endif

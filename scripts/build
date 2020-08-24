@@ -310,8 +310,34 @@ def generate_ftdetect
   File.write('ftdetect/polyglot.vim', output)
 end
 
+def generate_tests
+  output = <<~EOS
+    function! TestFiletype(filetype)
+      try
+        enew
+        exec 'set ft=' . a:filetype
+      catch
+        echo 'Error loading filetype ' . a:filetype  . ':'
+        echo v:exception
+        echo v:throwpoint
+        exec ':cq!'
+      endtry
+    endfunction
+
+  EOS
+
+  for package in PACKAGES
+    for filetype in package.fetch("filetypes", [])
+      output << "call TestFiletype('#{filetype["name"]}')\n"
+    end
+  end
+
+  File.write('scripts/test_filetypes.vim', output)
+end
+
 download
 extract
 generate_ftdetect
+generate_tests
 puts(" Bye! Have a wonderful time!")
 FileUtils.rm_rf("tmp")

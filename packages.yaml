@@ -1215,19 +1215,6 @@ filetypes:
 - name: vcl
   linguist: VCL
 ---
-name: vifm
-remote: vifm/vifm.vim
-filetypes:
-- name: vifm
-  extensions:
-  - vifm
-  filenames:
-  - vifmrc
-  - '*vifm/colors/*'
-- name: vifm-rename
-  filenames:
-  - 'vifm.rename*'
----
 name: velocity
 remote: lepture/vim-velocity
 filetypes:
