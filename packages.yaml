@@ -1271,11 +1271,11 @@ filetypes:
   - asl
   - dsl
   filenames:
-  - playbook.ya?ml
-  - site.ya?ml
-  - main.ya?ml
-  - local.ya?ml
-  - requirements.ya?ml
+  - "playbook.y{a,}ml"
+  - "site.y{a,}ml"
+  - "main.y{a,}ml"
+  - "local.y{a,}ml"
+  - "requirements.y{a,}ml"
   - 'group_vars/*'
   - 'host_vars/*'
   - 'tasks.*.ya?ml'
