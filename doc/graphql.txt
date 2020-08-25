@@ -1,0 +1,55 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
+
+*graphql.txt* GraphQL plug-in for Vim                                *graphql*
+
+CONTENTS                                                    *graphql-contents*
+
+1. Introduction         |graphql-intro|
+2. JavaScript Support   |graphql-javascript|
+3. TypeScript Support   |graphql-typescript|
+
+
+INTRODUCTION                                                   *graphql-intro*
+
+This plugin provides GraphQL (http://graphql.org/) file detection, syntax
+highlighting, and indentation.
+
+
+JAVASCRIPT                                                *graphql-javascript*
+
+GraphQL syntax support in ES2015 template literals is provided. It works "out
+of the box" with Vim 8.2's JavaScript support. The extended syntax provided by
+the vim-javascript (https://github.com/pangloss/vim-javascript) plugin is also
+supported.
+
+                                                  *graphql-javascript-options*
+
+                                                   *g:graphql_javascript_tags*
+|g:graphql_javascript_tags|                                    list of strings
+
+  Default: `["gql", "graphql", "Relay.QL"]`
+
+  This variable lists the ES2015 template tag names that will be recognized as
+  containing GraphQL template literal strings.
+
+
+TYPESCRIPT                                                *graphql-typescript*
+
+Like |graphql-javascript|, GraphQL syntax support in ES2015 template literals
+is provided. It also works "out of the box" with Vim 8.2's TypeScript support,
+which is based on the yats (https://github.com/HerringtonDarkholme/yats.vim)
+plugin. For older versions, you can install yats directly.
+
+TypeScript syntax support also uses |graphql-javascript-options| to customize
+the list of recognized template tag names.
+
+REASONML                                                    *graphql-reasonml*
+
+GraphQL syntax support inside of ReasonML template strings using graphql-ppx
+is available when vim-reasonml (https://github.com/jordwalke/vim-reasonml) is
+also installed.
+
+------------------------------------------------------------------------------
+vim:tw=78:ft=help:norl:
+
+endif

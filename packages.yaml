@@ -88,11 +88,12 @@ filetypes:
 - name: coffee
   linguist: CoffeeScript
   extra_extensions:
+  # 17 results: https://github.com/search?q=extension%3Acoffeekup+html&type=Code
   - coffeekup
-  - ck
 - name: litcoffee
   linguist: Literate CoffeeScript
   extra_extensions:
+# ? results: https://github.com/search?q=extension%3Acoffee.md+require&type=Code (probably search is broken)
   - coffee.md
 ---
 name: cjsx
@@ -127,7 +128,6 @@ filetypes:
   linguist: CSV
   extra_extensions:
   - tsv
-  - dat
   - tab
 ---
 name: cucumber
@@ -136,6 +136,7 @@ filetypes:
 - name: cucumber
   linguist: Gherkin
   extra_extensions:
+  # https://github.com/search?q=extension%3Astory+when&type=Code
   - story
 ---
 name: cue
@@ -526,8 +527,6 @@ filetypes:
   linguist: EJS
   extra_extensions:
   - jst
-  - djs
-  - hamljs
   - ect
 ---
 name: jsx

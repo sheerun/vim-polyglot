@@ -136,7 +136,6 @@ if index(g:polyglot_disabled, 'coffee-script') == -1
   au BufNewFile,BufRead *._coffee set ft=coffee
   au BufNewFile,BufRead *.cake setf coffee
   au BufNewFile,BufRead *.cjsx set ft=coffee
-  au BufNewFile,BufRead *.ck set ft=coffee
   au BufNewFile,BufRead *.coffee set ft=coffee
   au BufNewFile,BufRead *.coffeekup set ft=coffee
   au BufNewFile,BufRead *.iced set ft=coffee
@@ -163,7 +162,6 @@ endif
 
 if index(g:polyglot_disabled, 'csv') == -1
   au BufNewFile,BufRead *.csv set ft=csv
-  au BufNewFile,BufRead *.dat set ft=csv
   au BufNewFile,BufRead *.tab set ft=csv
   au BufNewFile,BufRead *.tsv set ft=csv
 endif
@@ -501,10 +499,8 @@ if index(g:polyglot_disabled, 'jsonnet') == -1
 endif
 
 if index(g:polyglot_disabled, 'jst') == -1
-  au BufNewFile,BufRead *.djs set ft=jst
   au BufNewFile,BufRead *.ect set ft=jst
   au BufNewFile,BufRead *.ejs set ft=jst
-  au BufNewFile,BufRead *.hamljs set ft=jst
   au BufNewFile,BufRead *.jst set ft=jst
 endif
 
@@ -982,6 +978,7 @@ if index(g:polyglot_disabled, 'sh') == -1
   au BufNewFile,BufRead *.bats set ft=sh
   au BufNewFile,BufRead *.cgi setf sh
   au BufNewFile,BufRead *.command set ft=sh
+  au BufNewFile,BufRead *.env set ft=sh
   au BufNewFile,BufRead *.fcgi setf sh
   au BufNewFile,BufRead *.ksh set ft=sh
   au BufNewFile,BufRead *.sh set ft=sh
@@ -994,6 +991,9 @@ if index(g:polyglot_disabled, 'sh') == -1
   au BufNewFile,BufRead {.,}bash_profile set ft=sh
   au BufNewFile,BufRead {.,}bashrc set ft=sh
   au BufNewFile,BufRead {.,}cshrc set ft=sh
+  au BufNewFile,BufRead {.,}env set ft=sh
+  au BufNewFile,BufRead {.,}env.example set ft=sh
+  au BufNewFile,BufRead {.,}flaskenv set ft=sh
   au BufNewFile,BufRead {.,}login set ft=sh
   au BufNewFile,BufRead {.,}profile set ft=sh
   au BufNewFile,BufRead 9fs set ft=sh

@@ -15,7 +15,7 @@ BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 
 DIRS = {
   default: %w(syntax indent doc compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin),
-  all: %w(syntax indent compiler autoload ftplugin after extras ctags),
+  all: %w(syntax indent compiler autoload ftplugin after extras ctags doc),
   syntax: %w(syntax indent after/syntax after/indent)
 }
 
