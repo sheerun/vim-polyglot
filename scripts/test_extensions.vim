@@ -12,3 +12,5 @@ endfunction
 call TestExtension('blade', 'test.blade.php', '')
 call TestExtension('yaml.ansible', 'playbook.yml', '')
 call TestExtension('yaml.ansible', 'host_vars/foobar', '')
+call TestExtension('yaml.ansible', 'handlers.foo.yaml', '')
+call TestExtension('yaml.ansible', 'requirements.yaml', '')

@@ -1289,15 +1289,15 @@ if index(g:polyglot_disabled, 'ansible') == -1
   au BufNewFile,BufRead *.asl set ft=yaml.ansible
   au BufNewFile,BufRead *.dsl set ft=yaml.ansible
   au BufNewFile,BufRead group_vars/* set ft=yaml.ansible
-  au BufNewFile,BufRead handlers.*.ya?ml set ft=yaml.ansible
+  au BufNewFile,BufRead handlers.*.y{a,}ml set ft=yaml.ansible
   au BufNewFile,BufRead host_vars/* set ft=yaml.ansible
   au BufNewFile,BufRead local.y{a,}ml set ft=yaml.ansible
   au BufNewFile,BufRead main.y{a,}ml set ft=yaml.ansible
   au BufNewFile,BufRead playbook.y{a,}ml set ft=yaml.ansible
   au BufNewFile,BufRead requirements.y{a,}ml set ft=yaml.ansible
-  au BufNewFile,BufRead roles.*.ya?ml set ft=yaml.ansible
+  au BufNewFile,BufRead roles.*.y{a,}ml set ft=yaml.ansible
   au BufNewFile,BufRead site.y{a,}ml set ft=yaml.ansible
-  au BufNewFile,BufRead tasks.*.ya?ml set ft=yaml.ansible
+  au BufNewFile,BufRead tasks.*.y{a,}ml set ft=yaml.ansible
 endif
 
 if index(g:polyglot_disabled, 'helm') == -1

@@ -1276,11 +1276,11 @@ filetypes:
   - "main.y{a,}ml"
   - "local.y{a,}ml"
   - "requirements.y{a,}ml"
+  - 'tasks.*.y{a,}ml'
+  - 'roles.*.y{a,}ml'
+  - 'handlers.*.y{a,}ml'
   - 'group_vars/*'
   - 'host_vars/*'
-  - 'tasks.*.ya?ml'
-  - 'roles.*.ya?ml'
-  - 'handlers.*.ya?ml'
 # Helm needs to be after YAML
 ---
 name: helm
