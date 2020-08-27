@@ -432,10 +432,9 @@ def detect_filetypes
   }]
 end
 
-# download
-# extract
+download
+extract
 generate_ftdetect
-# generate_tests
-# puts(" Bye! Have a wonderful time!")
-# FileUtils.rm_rf("tmp")
-#puts(comma_expanson("*.clj,*.cljs,*.edn,*.cljx,*.cljc,{build,profile}.boot"))
+generate_tests
+puts(" Bye! Have a wonderful time!")
+FileUtils.rm_rf("tmp")
