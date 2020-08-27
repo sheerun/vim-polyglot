@@ -97,7 +97,6 @@ if index(g:polyglot_disabled, 'c/c++') == -1
   au BufNewFile,BufRead *.inl set ft=cpp
   au BufNewFile,BufRead *.ino set ft=cpp
   au BufNewFile,BufRead *.ipp set ft=cpp
-  au BufNewFile,BufRead *.re setf cpp
   au BufNewFile,BufRead *.tcc set ft=cpp
   au BufNewFile,BufRead *.tpp set ft=cpp
 endif
@@ -652,6 +651,7 @@ if index(g:polyglot_disabled, 'ocaml') == -1
   au BufNewFile,BufRead *.mlp set ft=ocaml
   au BufNewFile,BufRead *.mlt set ft=ocaml
   au BufNewFile,BufRead *.mly set ft=ocaml
+  au BufNewFile,BufRead {.,}ocamlinit set ft=ocaml
   au BufNewFile,BufRead *.om set ft=omake
   au BufNewFile,BufRead OMakefile set ft=omake
   au BufNewFile,BufRead OMakeroot set ft=omake
@@ -660,6 +660,14 @@ if index(g:polyglot_disabled, 'ocaml') == -1
   au BufNewFile,BufRead *.opam.template set ft=opam
   au BufNewFile,BufRead opam set ft=opam
   au BufNewFile,BufRead _oasis set ft=oasis
+  au BufNewFile,BufRead dune set ft=dune
+  au BufNewFile,BufRead dune-project set ft=dune
+  au BufNewFile,BufRead dune-workspace set ft=dune
+  au BufNewFile,BufRead jbuild set ft=dune
+  au BufNewFile,BufRead _tags set ft=ocamlbuild_tags
+  au BufNewFile,BufRead *.ocp set ft=ocpbuild
+  au BufNewFile,BufRead *.root set ft=ocpbuildroot
+  au BufNewFile,BufRead *.sexp set ft=sexplib
 endif
 
 if index(g:polyglot_disabled, 'octave') == -1

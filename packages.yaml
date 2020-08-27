@@ -47,6 +47,9 @@ filetypes:
   linguist: C
 - name: cpp
   linguist: C++
+  ignored_extensions:
+  # conflicts with more popular reason, remove after heuristics work
+  - re
 ---
 name: c++11
 remote: octol/vim-cpp-enhanced-highlight
@@ -697,6 +700,8 @@ filetypes:
   - mlip
   - mli.cppo
   - ml.cppo
+  extra_filenames:
+  - .ocamlinit
 - name: omake
   extensions:
   - om
@@ -713,6 +718,24 @@ filetypes:
 - name: oasis
   filenames:
   - _oasis
+- name: dune
+  filenames:
+  - jbuild
+  - dune
+  - dune-project
+  - dune-workspace
+- name: ocamlbuild_tags
+  filenames:
+  - _tags
+- name: ocpbuild
+  extensions:
+  - ocp
+- name: ocpbuildroot
+  extensions:
+  - root
+- name: sexplib
+  extensions:
+  - sexp
 ---
 name: octave
 remote: McSinyx/vim-octave
