@@ -75,6 +75,11 @@ remote: guns/vim-clojure-static
 filetypes:
 - name: clojure
   linguist: Clojure
+  extra_extensions:
+  - edn
+  extra_filenames:
+  - build.boot
+  - profile.boot
 ---
 name: cmake
 remote: pboettch/vim-cmake-syntax
@@ -93,6 +98,14 @@ filetypes:
   extra_extensions:
   # 17 results: https://github.com/search?q=extension%3Acoffeekup+html&type=Code
   - coffeekup
+  ignored_extensions:
+  # Used by C#
+  - csx
+  # Used by Chuck
+  - ck
+  ignored_filenames:
+  # Probably mistake
+  - '*Cakefile'
 - name: litcoffee
   linguist: Literate CoffeeScript
   extra_extensions:
@@ -132,6 +145,9 @@ filetypes:
   extra_extensions:
   - tsv
   - tab
+  ignored_extensions:
+  # This is definitely not csv-only, maybe re-enable when heuristics done
+  - dat
 ---
 name: cucumber
 remote: tpope/vim-cucumber
@@ -198,13 +214,17 @@ filetypes:
   filenames:
   - 'docker-compose*.yaml'
   - 'docker-compose*.yml'
+  ignored_filenames:
+  # Probably mistakes?
+  - 'docker-compose*.yaml*'
+  - 'docker-compose*.yml*'
 ---
 name: elixir
 remote: elixir-lang/vim-elixir
 filetypes:
 - name: elixir
   linguist: Elixir
-- name: elixir
+- name: eelixir
   linguist: HTML+EEX
   extra_extensions:
   - leex
@@ -227,6 +247,8 @@ filetypes:
 - name: emblem
   extensions:
   - emblem
+  extra_extensions:
+  - em
 ---
 name: erlang
 remote: vim-erlang/vim-erlang-runtime
@@ -290,7 +312,7 @@ filetypes:
   - "*.git/config"
   - "*/.config/git/config"
   - "*.git/modules/**/config"
-  - gitconfig
+  - '.gitmodules'
 - name: gitrebase
   filenames:
   - git-rebase-todo
@@ -299,10 +321,7 @@ filetypes:
   - ".gitsendemail.*"
 - name: gitcommit
   filenames:
-  - COMMIT_EDIT_MSG
-  - TAG_EDIT_MSG
-  - MERGE_MSG
-  - MSG
+  - '*.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG'
 ---
 name: glsl
 remote: tikhomirov/vim-glsl
@@ -377,12 +396,17 @@ filetypes:
   - hjs
   - mustache
   - njk
+  - hogan
+  - hdbs
+  - hb
 ---
 name: haproxy
 remote: CH-DanReif/haproxy.vim
 filetypes:
 - name: haproxy
   linguist: HAProxy
+  extra_filenames:
+  - 'haproxy*.c*'
 ---
 name: haskell
 remote: neovimhaskell/haskell-vim
@@ -408,14 +432,18 @@ filetypes:
   - nomad
   extra_filenames:
   - Appfile
+  ignored_extensions:
+  # handled by vim-terraform
+  - tf
+  - tfvars
 ---
 name: hive
 remote: zebradil/hive.vim
 filetypes:
 - name: hive
   linguist: HiveQL
-- name: hive
-  linguist: HiveQL
+  extra_extensions:
+  - ql
 ---
 name: html5
 remote: othree/html5.vim
@@ -430,6 +458,8 @@ filetypes:
   filenames:
   - i3.config
   - i3config
+  - .i3.config
+  - .i3config
   extensions:
   - i3.config
   - i3config
@@ -481,6 +511,7 @@ filetypes:
   - jenkinsfile
   - Jenkinsfile
   filenames:
+  - Jenkinsfile
   - Jenkinsfile*
 ---
 name: jinja
@@ -501,6 +532,8 @@ filetypes:
   linguist: JSONiq
   extra_filenames:
   - ".jqrc"
+  ignored_filenames:
+  - ".jqrc*"
 ---
 name: json5
 remote: GutenYe/json5.vim
@@ -531,6 +564,10 @@ filetypes:
   extra_extensions:
   - jst
   - ect
+  ignored_extensions:
+  # I haven't found reference to them
+  - djs
+  - hamljs
 ---
 name: jsx
 remote: MaxMEllon/vim-jsx-pretty
@@ -619,6 +656,8 @@ remote: voldikss/vim-mma
 filetypes:
 - name: mma
   linguist: Mathematica
+  extra_extensions:
+  - wls
 ---
 name: markdown
 remote: plasticboy/vim-markdown
@@ -631,6 +670,7 @@ filetypes:
   ignored_extensions:
   # Handled by mdx extension
   - mdx
+  - '{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx}'
 ---
 name: mdx
 remote: jxnblk/vim-mdx-js
@@ -708,7 +748,7 @@ filetypes:
   filenames:
   - OMakefile
   - OMakeroot
-  - Omakeroot.in
+  - OMakeroot.in
 - name: opam
   extensions:
   - opam
@@ -764,6 +804,8 @@ filetypes:
   ignored_extensions:
   # Handled by cql plugin
   - cql
+  # Handled by pgsql plugin
+  - pgsql
 ---
 name: pgsql
 remote: lifepillar/pgsql.vim
@@ -852,6 +894,8 @@ remote: vim-python/python-syntax
 filetypes:
 - name: python
   linguist: Python
+  ignored_filenames:
+  - 'lit.*cfg'
 ---
 name: python-indent
 remote: Vimjas/vim-python-pep8-indent
@@ -873,6 +917,10 @@ filetypes:
   - '*requirements.{txt,in}'
   - '*require.{txt,in}'
   - 'constraints.{txt,in}'
+  ignored_extensions:
+  # Probaly a bug in plugin
+  - txt
+  - in
 ---
 name: qmake
 remote: artoj/qmake-syntax-vim
@@ -970,9 +1018,18 @@ filetypes:
   - Cheffile
   - KitchenSink
   - Routefile
+  - .Guardfile
+  - .Brewfile
+  - vagrantfile
+  - .simplecov
+  - '[Rr]akefile*'
   ignored_filenames:
   # Handled by brewfile extension
   - Brewfile
+  - rakefile
+  - routefile
+  - thorfile
+  - rantfile
 - name: eruby
   linguist: HTML+ERB
   extra_extensions:
@@ -1123,6 +1180,8 @@ filetypes:
 - name: sxhkdrc
   extensions:
   - sxhkdrc
+  filenames:
+  - sxhkdrc
 ---
 name: systemd
 remote: wgwoods/vim-systemd-syntax
@@ -1190,6 +1249,9 @@ filetypes:
   linguist: Twig
   ignored_extensions:
   - xml.twig
+  ignored_extensions:
+  # already covered by .twig
+  - html.twig
 - name: xml.twig
   extensions:
   - xml.twig
@@ -1284,15 +1346,14 @@ filetypes:
   extra_filenames:
   - fish_history
   - fish_read_history
+  ignored_filenames:
+  - '~/.config/fish/fish_{read_,}history'
 # Ansible needs to be after YAML
 ---
 name: ansible
 remote: pearofducks/ansible-vim
 filetypes:
 - name: yaml.ansible
-  extensions:
-  - asl
-  - dsl
   filenames:
   - "playbook.y{a,}ml"
   - "site.y{a,}ml"
