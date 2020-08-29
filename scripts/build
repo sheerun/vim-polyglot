@@ -297,7 +297,7 @@ def generate_ftdetect
         outer_filetype = filetype["outer_filetype"]
         if outer_filetype
           output << "  au BufNewFile *.*.#{extension} execute \"do BufNewFile filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
-          output << "  au BufReadPre *.*#{extension} execute \"do BufRead filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
+          output << "  au BufReadPre *.*.#{extension} execute \"do BufRead filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
         end
 
         if ambiguous_extensions.include?(extension)
