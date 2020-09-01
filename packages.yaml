@@ -1276,6 +1276,7 @@ filetypes:
 ---
 name: reason
 remote: reasonml-editor/vim-reason-plus
+after: c/c++
 filetypes:
 - name: reason
   linguist: Reason

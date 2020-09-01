@@ -202,9 +202,17 @@ def indent(str, amount)
 end
 
 def pattern_to_condition(rule)
+  if rule.has_key?("or")
+    return rule["or"].map { |p| pattern_to_condition(p) }.join(" || ")
+  end
+
+  if rule.has_key?("or")
+    return rule["and"].map { |p| pattern_to_condition(p) }.join(" && ")
+  end
+
   operator = (rule["negative"] ? "!" : "=") + "~" + (rule["ignore_case"] ? "?" : "#")
 
-  "line #{operator} '#{rule["pattern"]}'"
+  return "line #{operator} '#{rule["pattern"]}'"
 end
 
 def rules_to_code(rules)
@@ -250,10 +258,10 @@ def rule_to_code(rule)
     return rule["rules"].map { |r| indent(rule_to_code(r), 0) }.join("\n")
   end
 
-  if rule.has_key?("pattern")
+  if rule.has_key?("pattern") || rule.has_key?("or") || rule.has_key?("and")
     return <<~EOS
       if #{pattern_to_condition(rule)}
-      #{indent(rule_to_code(except(rule, "pattern", "ignore_case", "negative")), 2)}
+      #{indent(rule_to_code(except(rule, "pattern", "or", "and", "ignore_case", "negative")), 2)}
       endif
     EOS
   end

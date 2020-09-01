@@ -218,6 +218,11 @@ if !has_key(s:disabled_packages, 'awk')
   au BufNewFile,BufRead *.awk setf awk
 endif
 
+if !has_key(s:disabled_packages, 'reason')
+  au BufNewFile,BufRead *.rei setf reason
+  au! BufNewFile,BufRead *.re call polyglot#DetectReFiletype()
+endif
+
 if !has_key(s:disabled_packages, 'c/c++')
   au BufNewFile,BufRead *.c setf c
   au BufNewFile,BufRead *.cats setf c
@@ -237,9 +242,9 @@ if !has_key(s:disabled_packages, 'c/c++')
   au BufNewFile,BufRead *.inl setf cpp
   au BufNewFile,BufRead *.ino setf cpp
   au BufNewFile,BufRead *.ipp setf cpp
-  au BufNewFile,BufRead *.re setf cpp
   au BufNewFile,BufRead *.tcc setf cpp
   au BufNewFile,BufRead *.tpp setf cpp
+  au! BufNewFile,BufRead *.re call polyglot#DetectReFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'caddyfile')
@@ -1043,11 +1048,6 @@ endif
 if !has_key(s:disabled_packages, 'razor')
   au BufNewFile,BufRead *.cshtml setf razor
   au BufNewFile,BufRead *.razor setf razor
-endif
-
-if !has_key(s:disabled_packages, 'reason')
-  au BufNewFile,BufRead *.re setf reason
-  au BufNewFile,BufRead *.rei setf reason
 endif
 
 if !has_key(s:disabled_packages, 'rst')

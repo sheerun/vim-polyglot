@@ -55,3 +55,11 @@ rules:
     filetype: glsl
 - override: "g:filetype_fs"
 - filetype: forth
+---
+extensions: [re]
+rules:
+- lines: 50
+  rules:
+  - pattern: '^\s*#(?:(?:if|ifdef|define|pragma)\s+\w|\s*include\s+[<"]|template\s*<)'
+    filetype: cpp
+  - filetype: reason

@@ -207,3 +207,10 @@ call TestExtension('fsharp', 'fsharp.fs', "let myInt = 5")
 call TestExtension('glsl', 'glsl.fs', "//#version 120\nvoid main() {}")
 let g:filetype_fs = 'fizfuz'
 call TestExtension('fizfuz', 'fizfuz.fs', '')
+
+" .re extension
+call TestExtension('reason', 'empty.re', '')
+call TestExtension('cpp', 'cpp.re', '#include "config.h"')
+call TestExtension('cpp', 'cpp2.re', '#ifdef HAVE_CONFIG_H')
+call TestExtension('cpp', 'cpp3.re', '#define YYCTYPE unsigned char')
+call TestExtension('reason', 'react.re', 'ReasonReact.Router.push("");')

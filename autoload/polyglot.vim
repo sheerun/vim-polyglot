@@ -202,6 +202,16 @@ func! polyglot#DetectFsFiletype()
   setf forth | return
 endfunc
 
+func! polyglot#DetectReFiletype()
+  for lnum in range(1, min([line("$"), 50]))
+    let line = getline(lnum)
+    if line =~# '^\s*#\%(\%(if\|ifdef\|define\|pragma\)\s\+\w\|\s*include\s\+[<"]\|template\s*<\)'
+      setf cpp | return
+    endif
+    setf reason | return
+  endfor
+endfunc
+
 " Restore 'cpoptions'
 let &cpo = s:cpo_save
 unlet s:cpo_save
