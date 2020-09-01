@@ -716,6 +716,39 @@ def detect_filetypes
   }]
 end
 
+def generate_plugins(packages)
+  FileUtils.mkdir_p('autoload/polyglot')
+
+  output = "let s:globs = {\n"
+
+  patterns = Hash.new { |h, k| h[k] = [] }
+
+  for package in packages
+    for filetype in package["filetypes"]
+      extensions = (filetype["extensions"] || []).map { |e| "*.#{e}" }
+      files = (filetype["filenames"] || []).reject { |e| e.match(/\*\*|\//) }
+      patterns[filetype["name"]].concat(extensions)
+      patterns[filetype["name"]].concat(files)
+    end
+  end
+
+  for filetype in patterns.keys.sort
+    output << "  \\ '#{filetype}': '{#{patterns[filetype].uniq.join(",")},}',\n"
+  end
+  output << "  \\}\n\n"
+
+
+  output << <<~EOS
+    func! sleuth#GlobForFiletype(type)
+      return get(s:globs, a:type, '')
+    endfunc
+  EOS
+
+
+  File.write('autoload/sleuth.vim', output)
+end
+
+
 if __FILE__ == $0
   if !ENV["DEV"]
     FileUtils.rm_rf("tmp")
@@ -725,6 +758,7 @@ if __FILE__ == $0
   download(packages)
   extract(packages)
   generate_ftdetect(packages, heuristics)
+  generate_plugins(packages)
   generate_tests(packages)
   puts(" Bye! Have a wonderful time!")
 
