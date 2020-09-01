@@ -1,4 +1,81 @@
 ---
+name: 8th
+remote: vim/vim:runtime
+glob: '**/8th.vim'
+filetypes:
+- name: 8th
+  extensions:
+  - 8th
+---
+name: a2ps
+remote: vim/vim:runtime
+glob: '**/a2ps.vim'
+after:
+- haproxy
+filetypes:
+- name: a2ps
+  filenames:
+  - '*/etc/a2ps.cfg'
+  - '*/etc/a2ps/*.cfg'
+  - a2psrc
+  - .a2psrc
+---
+name: a65
+remote: vim/vim:runtime
+glob: '**/a65.vim'
+filetypes:
+- name: a65
+  extensions:
+  - a65
+---
+name: aap
+remote: vim/vim:runtime
+glob: '**/aap.vim'
+filetypes:
+- name: aap
+  extensions:
+  - aap
+---
+name: abap
+remote: vim/vim:runtime
+glob: '**/abap.vim'
+filetypes:
+- name: abap
+  extensions:
+  - abap
+---
+name: abaqus
+remote: vim/vim:runtime
+glob: '**/abaqus.vim'
+filetypes:
+- name: abaqus
+  extensions:
+  - inp
+---
+name: abc
+remote: vim/vim:runtime
+glob: '**/abc.vim'
+filetypes:
+- name: abc
+  extensions:
+  - abc
+---
+name: abel
+remote: vim/vim:runtime
+glob: '**/abel.vim'
+filetypes:
+- name: abel
+  extensions:
+  - abl
+---
+name: acedb
+remote: vim/vim:runtime
+glob: '**/acedb.vim'
+filetypes:
+- name: acedb
+  extensions:
+  - wrm
+---
 name: acpiasl
 remote: martinlroth/vim-acpi-asl
 filetypes:
@@ -6,6 +83,78 @@ filetypes:
   extensions:
   - asl
   - dsl
+---
+name: ada
+remote: vim/vim:runtime
+glob: '**/ada.vim'
+filetypes:
+- name: ada
+  extensions:
+  - adb
+  - ads
+  - ada
+  - gpr
+---
+name: ahdl
+remote: vim/vim:runtime
+glob: '**/ahdl.vim'
+filetypes:
+- name: ahdl
+  extensions:
+  - tdf
+---
+name: aidl
+remote: vim/vim:runtime
+glob: '**/aidl.vim'
+filetypes:
+- name: aidl
+  extensions:
+  - aidl
+---
+name: alsaconf
+remote: vim/vim:runtime
+glob: '**/alsaconf.vim'
+filetypes:
+- name: alsaconf
+  filenames:
+  - .asoundrc
+  - '*/usr/share/alsa/alsa.conf'
+  - '*/etc/asound.conf'
+---
+name: aml
+remote: vim/vim:runtime
+glob: '**/aml.vim'
+filetypes:
+- name: aml
+  extensions:
+  - aml
+---
+name: ampl
+remote: vim/vim:runtime
+glob: '**/ampl.vim'
+filetypes:
+- name: ampl
+  extensions:
+  - run
+---
+name: ant
+remote: vim/vim:runtime
+glob: '**/ant.vim'
+after: xml
+filetypes:
+- name: ant
+  filenames:
+  - build.xml
+---
+name: apache
+remote: vim/vim:runtime
+glob: '**/apache.vim'
+filetypes:
+- name: apache
+  filenames:
+  - .htaccess
+  - '*/etc/httpd/*.conf'
+  - '*/etc/apache2/sites-*/*.com'
 ---
 name: apiblueprint
 remote: sheerun/apiblueprint.vim
@@ -15,18 +164,48 @@ filetypes:
 ---
 name: applescript
 remote: mityu/vim-applescript
-dirs: :syntax
+dirs:
+- syntax
+- indent
 filetypes:
 - name: applescript
   linguist: AppleScript
 ---
+name: aptconf
+remote: vim/vim:runtime
+glob: '**/aptconf.vim'
+filetypes:
+- name: aptconf
+  filenames:
+  - apt.conf
+  - '*/.aptitude/config'
+  - '*/etc/apt/apt.conf.d/{[-_[:alnum:]]\+,[-_.[:alnum:]]\+.conf}'
+---
+name: arch
+remote: vim/vim:runtime
+glob: '**/arch.vim'
+filetypes:
+- name: arch
+  filenames:
+  - .arch-inventory
+  - =tagging-method
+---
 name: arduino
 remote: sudar/vim-arduino-syntax
+after: c/c++
 filetypes:
 - name: arduino
   linguist: Processing
   extra_extensions:
   - ino
+---
+name: art
+remote: vim/vim:runtime
+glob: '**/art.vim'
+filetypes:
+- name: art
+  extensions:
+  - art
 ---
 name: asciidoc
 remote: asciidoc/vim-asciidoc
@@ -40,6 +219,79 @@ filetypes:
 - name: autohotkey
   linguist: AutoHotkey
 ---
+name: automake
+remote: vim/vim:runtime
+glob: '**/automake.vim'
+after: elf
+filetypes:
+- name: automake
+  filenames:
+  - '[Mm]akefile.am'
+  - GNUmakefile.am
+---
+name: asn
+remote: vim/vim:runtime
+glob: '**/asn.vim'
+filetypes:
+- name: asn
+  extensions:
+  - asn
+  - asn1
+---
+name: aspvbs
+remote: vim/vim:runtime
+globs:
+- '**/aspvbs.vim'
+dependencies:
+filetypes:
+- name: aspvbs
+  extensions:
+  - asa
+  - asp
+---
+name: aspperl
+remote: vim/vim:runtime
+globs:
+- '**/aspperl.vim'
+dependencies:
+filetypes:
+- name: aspperl
+  extensions:
+  - asp
+---
+name: atlas
+remote: vim/vim:runtime
+glob: '**/atlas.vim'
+filetypes:
+- name: atlas
+  extensions:
+  - atl
+  - as
+---
+name: autoit
+remote: vim/vim:runtime
+glob: '**/autoit.vim'
+filetypes:
+- name: autoit
+  extensions:
+  - au3
+---
+name: ave
+remote: vim/vim:runtime
+glob: '**/ave.vim'
+filetypes:
+- name: ave
+  extensions:
+  - ave
+---
+name: awk
+remote: vim/vim:runtime
+glob: '**/awk.vim'
+filetypes:
+- name: awk
+  extensions:
+  - awk
+---
 name: c/c++
 remote: vim-jp/vim-cpp
 filetypes:
@@ -50,11 +302,6 @@ filetypes:
   ignored_extensions:
   # conflicts with more popular reason, remove after heuristics work
   - re
----
-name: c++11
-remote: octol/vim-cpp-enhanced-highlight
-# It just adds after files for c / c++
-filetypes: []
 ---
 name: caddyfile
 remote: isobit/vim-caddyfile
@@ -183,19 +430,15 @@ filetypes:
 - name: d
   linguist: D
 - name: dcov
-  linguist: D
   extensions:
   - lst
 - name: dd
-  linguist: D
   extensions:
   - dd
 - name: ddoc
-  linguist: D
   extensions:
   - ddoc
 - name: dsdl
-  linguist: D
   extensions:
   - sdl
 ---
@@ -218,6 +461,14 @@ filetypes:
   # Probably mistakes?
   - 'docker-compose*.yaml*'
   - 'docker-compose*.yml*'
+---
+name: elf
+remote: vim/vim:runtime
+glob: '**/elf.vim'
+filetypes:
+- name: elf
+  extensions:
+  - am
 ---
 name: elixir
 remote: elixir-lang/vim-elixir
@@ -247,8 +498,7 @@ filetypes:
 - name: emblem
   extensions:
   - emblem
-  extra_extensions:
-  - em
+  - em 
 ---
 name: erlang
 remote: vim-erlang/vim-erlang-runtime
@@ -288,17 +538,30 @@ filetypes:
   extensions:
   - fbs
 ---
+name: forth
+remote: vim/vim:runtime
+glob: '**/forth.vim'
+filetypes:
+- name: forth
+  extensions:
+  - fs
+  - ft
+  - fth
+---
 name: fsharp
 remote: ionide/Ionide-vim
 ignored_dirs:
 - ftplugin
+after: glsl
 filetypes:
 - name: fsharp
   linguist: F#
 ---
 name: gdscript
 remote: calviken/vim-gdscript3
-dirs: :syntax
+dirs:
+- syntax
+- indent
 filetypes:
 - name: gdscript3
   linguist: GDScript
@@ -366,7 +629,6 @@ filetypes:
 ---
 name: graphql
 remote: jparise/vim-graphql
-dirs: :all
 filetypes:
 - name: graphql
   linguist: GraphQL
@@ -376,6 +638,17 @@ remote: tfnico/vim-gradle
 filetypes:
 - name: groovy
   linguist: Gradle
+---
+name: grub
+remote: vim/vim:runtime
+glob: '**/grub.vim'
+after: dlang
+filetypes:
+- name: grub
+  filenames:
+  - '*/boot/grub/menu.lst'
+  - '*/boot/grub/grub.conf'
+  - '*/etc/grub.conf'
 ---
 name: haml
 remote: sheerun/vim-haml
@@ -493,9 +766,6 @@ remote: pangloss/vim-javascript
 ignored_dirs:
 # we don't want eslint compiler, see #521
 - compiler
-extra_dirs:
-# Used by ftplugins there
-- extras
 filetypes:
 - name: javascript
   linguist: JavaScript
@@ -571,7 +841,6 @@ filetypes:
 ---
 name: jsx
 remote: MaxMEllon/vim-jsx-pretty
-dirs: :all
 filetypes:
 - name: javascriptreact
   linguist: JSX
@@ -635,14 +904,26 @@ filetypes:
 - name: log
   extensions:
   - log
+  - LOG
   filenames:
   - '*_log'
+  - '*_LOG'
 ---
 name: lua
 remote: tbastos/vim-lua
 filetypes:
 - name: lua
   linguist: Lua
+---
+name: m4
+remote: vim/vim:runtime
+glob: '**/m4.vim'
+filetypes:
+  - name: m4
+    linguist: M4
+    extra_extensions:
+    # Autotest .at files are actually m4
+    - at
 ---
 name: mako
 remote: sophacles/vim-bundle-mako
@@ -681,7 +962,6 @@ filetypes:
 ---
 name: meson
 remote: mesonbuild/meson:data/syntax-highlighting/vim
-dirs: :all
 filetypes:
 - name: meson
   linguist: Meson
@@ -694,6 +974,14 @@ remote: leafo/moonscript-vim
 filetypes:
 - name: moon
   linguist: MoonScript
+---
+name: murphi
+remote: vim/vim:runtime
+glob: '**/murphi.vim'
+filetypes:
+- name: murphi
+  extensions:
+  - m
 ---
 name: nginx
 remote: chr4/nginx.vim
@@ -779,10 +1067,12 @@ filetypes:
 ---
 name: octave
 remote: McSinyx/vim-octave
+after: mathematica
 filetypes:
 - name: octave
   extensions:
   - oct
+  - m
 ---
 name: opencl
 remote: petRUShka/vim-opencl
@@ -832,6 +1122,7 @@ filetypes:
 ---
 name: blade
 remote: jwalton512/vim-blade
+after: php
 filetypes:
 - name: blade
   linguist: Blade
@@ -853,8 +1144,9 @@ filetypes:
 ---
 name: powershell
 remote: PProvost/vim-ps1
+after: xml
 filetypes:
-- name: powershell
+- name: ps1
   linguist: PowerShell
   extra_extensions:
   - pssc
@@ -1217,7 +1509,6 @@ filetypes:
 ---
 name: tmux
 remote: ericpruitt/tmux.vim:vim
-dirs: :all
 filetypes:
 - name: tmux
   filenames:
@@ -1266,7 +1557,6 @@ filetypes:
 ---
 name: unison
 remote: unisonweb/unison@trunk:editor-support/vim
-dirs: :all
 filetypes:
 - name: unison
   extensions:
@@ -1305,6 +1595,14 @@ filetypes:
 - name: velocity
   extensions:
   - vm
+---
+name: vmasm
+remote: vim/vim:runtime
+glob: '**/vmasm.vim'
+filetypes:
+- name: vmasm
+  extensions:
+  - mar
 ---
 name: vue
 remote: posva/vim-vue
@@ -1352,6 +1650,7 @@ filetypes:
 ---
 name: ansible
 remote: pearofducks/ansible-vim
+after: yaml
 filetypes:
 - name: yaml.ansible
   filenames:
@@ -1375,6 +1674,14 @@ filetypes:
   - "*/templates/*.yaml"
   - "*/templates/*.tpl"
 ---
+name: help
+remote: vim/vim:runtime
+glob: '**/help.vim'
+filetypes:
+- name: help
+  filenames:
+  - '$VIMRUNTIME/doc/*.txt'
+---
 name: zephir
 remote: xwsoul/vim-zephir
 filetypes:
@@ -1384,10 +1691,18 @@ filetypes:
 name: zig
 remote: ziglang/zig.vim
 filetypes:
+- name: zir
+  extensions:
+  - zir
 - name: zig
   linguist: Zig
   extra_extensions:
   - zir
-- name: zir
+---
+name: trasys
+remote: vim/vim:runtime
+glob: '**/trasys.vim'
+filetypes:
+- name: trasys
   extensions:
-  - zir
+  - inp

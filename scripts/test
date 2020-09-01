@@ -2,12 +2,10 @@
 
 set -e
 
-vim --clean -N --cmd "
-  filetype plugin indent on
-  syntax enable
+vim --clean -N -u <(echo "
   let &rtp='$PWD,'.&rtp
-  source ftdetect/polyglot.vim
+  let g:polyglot_test = 1
   source scripts/test_extensions.vim
-  source scripts/test_filetypes.vim
-  exec ':q!'
-"
+  \"source scripts/test_filetypes.vim
+  qa!
+")

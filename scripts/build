@@ -6,18 +6,82 @@ require 'yaml'
 require 'fileutils'
 require 'set'
 require 'json'
+require 'tsort'
 
 Dir.chdir(File.dirname(__dir__))
 
-PACKAGES = YAML.load_stream(File.read('packages.yaml'))
-
 BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 
-DIRS = {
-  default: %w(syntax indent doc compiler autoload ftplugin ctags after/syntax after/indent after/ftplugin),
-  all: %w(syntax indent compiler autoload ftplugin after extras ctags doc),
-  syntax: %w(syntax indent after/syntax after/indent)
-}
+def camelize(str)
+  str.split(/[-_\.]/).map { |a| a.capitalize }.join("")
+end
+
+def except(hash, *keys)
+  h = hash.dup
+  keys.each { |k| h.delete(k) }
+  h
+end
+
+def load_data()
+  packages = Hash[YAML.load_stream(File.read('packages.yaml'))
+    .group_by { |a| a.fetch("name") }
+    .map { |a, b| [a, b.first] }]
+
+  deps = Hash.new { |h, k| h[k] = [] }
+
+  for package in packages.values
+    for name in [package.fetch("after", [])].flatten
+      packages[name] or raise "#{package["name"]} depends on unknown package: #{name}"
+      deps[name] << package["name"]
+    end
+  end
+
+  each_node = lambda {|&b| packages.keys.each(&b) }
+  each_child = lambda {|n, &b| deps[n].each(&b) }
+
+  languages = load_languages
+
+  # Reason can have ocaml as interpreter but let's not depend on it...
+  languages["Reason"]["interpreters"] -= ["ocaml"]
+
+  packages = TSort.tsort(each_node, each_child).map { |a| packages[a] }
+
+  for package in packages
+    for filetype in package["filetypes"]
+      if filetype["linguist"]
+        if filetype["extensions"]
+          raise "#{package["name"]} #{filetype["name"]}: extensions can't be set when linguist is defined"
+        end
+
+        if filetype["filenames"]
+          raise "#{package["name"]} #{filetype["name"]}: filenames can't be set when linguist is defined"
+        end
+
+        linguist = languages.fetch(filetype["linguist"])
+
+        filetype["extensions"] = (linguist["extensions"] || []).map { |e| e[1..-1] } |
+          filetype.fetch("extra_extensions", []) -
+          filetype.fetch("ignored_extensions", []).uniq
+
+        filetype["filenames"] = (linguist["filenames"] || []) |
+          filetype.fetch("extra_filenames", []) -
+          filetype.fetch("ignored_filenames", []).uniq
+        
+        filetype["interpreters"] = (linguist["interpreters"] || []) |
+          filetype.fetch("extra_interpreters", []) -
+          filetype.fetch("ignored_interpreters", []).uniq
+      else
+        filetype["extensions"] ||= []
+        filetype["filenames"] ||= []
+        filetype["interpreters"] ||= []
+      end
+    end
+  end
+
+  heuristics = YAML.load_stream(File.read('heuristics.yaml'))
+
+  [packages, transform_patterns(heuristics)]
+end
 
 def parallel(*procs)
   threads = procs.map { |p| Thread.new { method(p).call } }
@@ -38,17 +102,12 @@ def read_strings(data, keys, print=false)
   end
 end
 
-def transform_with(data, keys, transfrom=false, &block)
-  if data.is_a?(Hash)
-    Hash[data.map do |key, val|
-      [key, transform_with(val, keys, keys.include?(key), &block)]
-    end]
-  elsif data.is_a?(Array)
-    data.map { |d| transform_with(d, keys, transfrom, &block) }
-  elsif data.is_a?(String)
-    transfrom ? yield(data) : data
-  else
-    data
+def patterns_to_vim_patterns(patterns)
+  stdin, stdout, stderr = Open3.popen3('vim', '-V', '--clean', '/dev/stdin', '-es', '-c', "echo expand('%:p:h') | source #{__dir__}/eregex.vim", '-c', "for line in range(0, line('$')) | call setline(line, ExtendedRegex2VimRegex(getline(line))) | endfor", '-c', ':wq! /dev/stdout', chdir: __dir__)
+  stdin.write(patterns.join("\n"))
+  stdin.close
+  stdout.readlines.map(&:chomp).map do |r|
+    r.gsub('\b', '\(\<\|\>\)')
   end
 end
 
@@ -63,29 +122,21 @@ def each_hash(data, &block)
   end
 end
 
-def patterns_to_vim_patterns(patterns)
-  stdin, stdout, stderr = Open3.popen3('vim', '-V', '--clean', '/dev/stdin', '-es', '-c', "echo expand('%:p:h') | source #{__dir__}/scripts/eregex.vim", '-c', "for line in range(0, line('$')) | call setline(line, ExtendedRegex2VimRegex(getline(line))) | endfor", '-c', ':wq! /dev/stdout', chdir: __dir__)
-  stdin.write(patterns.join("\n"))
-  stdin.close
-  stdout.readlines
-end
 
-def transform_patterns(data)
-  patterns = read_strings(data, ["pattern", "patterns"])
-  patterns_mapping = Hash[patterns.zip(patterns_to_vim_patterns(patterns))]
-  transform_with(data, ["pattern", "patterns"]) { |a| patterns_mapping[a] }
-end
-
-def load_heuristics
-  url = "#{BASE_URL}/lib/linguist/heuristics.yml"
-  data = URI.open(url) { |io| YAML.load(io.read) }
-  each_hash(data["disambiguations"]) do |h|
-    if h.has_key?("named_pattern")
-      h["pattern"] = data["named_patterns"].fetch(h["named_pattern"])
-      h.delete("named_pattern")
+def transform_patterns(heuristics)
+  patterns = []
+  each_hash(heuristics) do |h|
+    if h.has_key?("pattern")
+      patterns << h["pattern"]
     end
   end
-  transform_patterns(data["disambiguations"])
+  patterns_mapping = Hash[patterns.zip(patterns_to_vim_patterns(patterns))]
+  each_hash(heuristics) do |h|
+    if h.has_key?("pattern")
+      h["pattern"] = patterns_mapping.fetch(h["pattern"])
+    end
+  end
+  heuristics
 end
 
 def load_languages
@@ -99,7 +150,6 @@ def parse_remote(remote)
 end
 
 def copy_file(package, src, dest)
-  return unless [".vim", ".ctags", ".vital", ".txt"].include?(File.extname(src))
   FileUtils.mkdir_p(File.dirname(dest))
   name = package.fetch("name")
 
@@ -116,17 +166,17 @@ def copy_file(package, src, dest)
   end
 end
 
-def download
-  FileUtils.rm_rf('tmp')
-
-  PACKAGES.each_slice(20) do |batch|
-    batch.map do |package|
+def download(packages)
+  packages.map { |p| p["remote"] or raise "No remote for: " + p["name"] }.uniq.each_slice(20) do |remotes|
+    remotes.map do |remote|
       Thread.new do
-        repo, branch, path = parse_remote(package.fetch("remote"))
-        dir = "tmp/" + repo.split('/')[1]
-        FileUtils.mkdir_p(dir)
-        url = "https://codeload.github.com/#{repo}/tar.gz/#{branch}"
-        `curl --silent -fL #{url} | tar -zx -C "#{dir}" --strip 1`
+        repo, branch, path = parse_remote(remote)
+        dir = "tmp/" + repo
+        unless File.exist?(dir)
+          FileUtils.mkdir_p(dir)
+          url = "https://codeload.github.com/#{repo}/tar.gz/#{branch}"
+          `curl --silent -fL #{url} | tar -zx -C "#{dir}" --strip 1`
+        end
         progress
       end
     end.map(&:join)
@@ -147,15 +197,116 @@ def progress
   end
 end
 
-def extract
-  FileUtils.rm_rf(DIRS[:all])
+def indent(str, amount)
+  str.gsub(/^(?!$)/, " " * amount).gsub(/\s+$/, "").gsub(/^ +\n/, "")
+end
+
+def pattern_to_condition(rule)
+  operator = (rule["negative"] ? "!" : "=") + "~" + (rule["ignore_case"] ? "?" : "#")
+
+  "line #{operator} '#{rule["pattern"]}'"
+end
+
+def rules_to_code(rules)
+  output = ""
+
+  vars = []
+  each_hash(rules) do |h|
+    if h.has_key?("set")
+      vars << h["set"]
+    end
+  end
+
+
+  if vars.size > 0
+    output << vars.uniq.sort.map do |var|
+      "let #{var} = 0"
+    end.join("\n") + "\n"
+  end
+
+  output << rule_to_code(rules)
+end
+
+def rule_to_code(rule)
+  if rule.has_key?("lines")
+    if rule["lines"] == 1
+      return <<~EOS
+        let line = getline(1)
+
+        #{indent(rule_to_code(except(rule, "lines")), 0)}
+      EOS
+    else
+      return <<~EOS
+        for lnum in range(1, min([line("$"), #{rule["lines"]}]))
+          let line = getline(lnum)
+
+        #{indent(rule_to_code(except(rule, "lines")), 2)}
+        endfor
+      EOS
+    end
+  end
+
+  if rule.has_key?("rules")
+    return rule["rules"].map { |r| indent(rule_to_code(r), 0) }.join("\n")
+  end
+
+  if rule.has_key?("pattern")
+    return <<~EOS
+      if #{pattern_to_condition(rule)}
+      #{indent(rule_to_code(except(rule, "pattern", "ignore_case", "negative")), 2)}
+      endif
+    EOS
+  end
+
+  if rule.has_key?("if_set")
+    return <<~EOS
+      if #{rule["negative"] ? "!" : ""}#{rule["if_set"]}
+      #{indent(rule_to_code(except(rule, "if_set", "negative")), 2)}
+      endif
+    EOS
+  end
+
+  if rule.has_key?("set")
+    return <<~EOS
+      let #{rule["set"]} = 1
+      #{indent(rule_to_code(except(rule, "set")), 0)}
+    EOS
+  end
+
+  if (rule.keys - ["filetype", "override", "set"]).size > 0
+    raise "Unknown rule: #{JSON.generate(rule)}"
+  end
+  
+  if rule.has_key?("override")
+    return <<~EOS
+      if exists("#{rule["override"]}")
+        exe "setf " . #{rule["override"]} | return
+      endif
+    EOS
+  end
+
+  if rule.has_key?("filetype")
+    return "setf #{rule["filetype"]} | return"
+  end
+
+  return ""
+end
+
+def extract(packages)
+  all_dirs = %w(syntax indent doc compiler autoload ftplugin ctags extras after)
+
+  default_dirs = %w(
+    syntax indent doc compiler autoload ftplugin ctags extras
+    after/syntax after/indent after/ftplugin
+  )
+
+  FileUtils.rm_rf(all_dirs)
 
   output = []
-  PACKAGES.map do |package|
+  packages.map do |package|
     repo, branch, path = parse_remote(package["remote"])
-    dir = "tmp/" + repo.split('/')[1]
-    subdirs = []
-    dirs = DIRS.fetch(package.fetch("dirs", "default").to_sym)
+    dir = "tmp/" + repo
+    dirs = package.fetch("dirs", default_dirs)
     ignored_dirs = package.fetch("ignored_dirs", [])
     if ignored_dirs.size > 0
       dirs = dirs.reject { |d| ignored_dirs.any? { |id| d.start_with?(id) } }
@@ -165,18 +316,31 @@ def extract
       subtree = "#{dir}/#{path ? path + "/" : ""}"
       subpath = "#{subtree}#{subdir}"
       if FileTest.directory?(subpath)
-        Dir.glob("#{subdir}/**/*", base: subtree).each do |p|
+        if repo == "vim/vim" && (["glob", "globs"] & package.keys).size == 0
+          raise "Package from vim/vim should define glob or globs: #{package["name"]}"
+        end
+        glob = package.fetch("glob", package.fetch('globs', '**/*.{vim,ctags,vital,txt}'))
+        Dir.glob("#{subdir}/#{glob}", base: subtree).each do |p|
           next unless File.file?("#{subtree}/#{p}")
+          if p.include?("samba")
+            raise package["name"]
+          end
           copy_file(package, "#{subtree}/#{p}", p)
         end
-
-        subdirs << subdir.split("/").last
       elsif File.exist?(subpath)
         copy_file(package, subpath, subdir)
       end
     end
 
-    output << "- [#{package["name"]}](https://github.com/#{repo}) (#{subdirs.uniq.join(", ")})"
+    if branch != "master" || path
+      if path
+        output << "- [#{package["name"]}](https://github.com/#{repo}/tree/#{branch}/#{path})"
+      else
+        output << "- [#{package["name"]}](https://github.com/#{repo}/tree/#{branch})"
+      end
+    else
+      output << "- [#{package["name"]}](https://github.com/#{repo})"
+    end
     progress
   end
 
@@ -195,16 +359,23 @@ def extract
   File.write('README.md', readme)
 end
 
-def generate_ftdetect
-  heuristics, languages = parallel(:load_heuristics, :load_languages)
-
+def generate_ftdetect(packages, heuristics)
   output = <<~EOS
     " don't spam the user when Vim is started in Vi compatibility mode
     let s:cpo_save = &cpo
     set cpo&vim
 
-    if !exists('g:polyglot_disabled')
-      let g:polyglot_disabled = []
+    " Disable all native vim ftdetect
+    if exists('g:polyglot_test')
+      autocmd!
+    endif
+
+    let s:disabled_packages = {}
+
+    if exists('g:polyglot_disabled')
+      for pkg in g:polyglot_disabled
+        let s:disabled_packages[pkg] = 1
+      endfor
     endif
 
     function! s:SetDefault(name, value)
@@ -248,47 +419,55 @@ def generate_ftdetect
       call s:SetDefault('g:python_highlight_file_headers_as_comments', 1)
       call s:SetDefault('g:python_slow_sync', 1)
     endif
-
   EOS
 
-  ambiguous_extensions = PACKAGES.flat_map { |e| e["filetypes"] }.flat_map do |e|
-    if e["linguist"]
-      ((languages[e["linguist"]]["extensions"] || []).map { |e| e[1..-1] } | e.fetch("extra_extensions", [])) - e.fetch("ignored_extensions", [])
-    else
-      e.fetch("extensions", [])
+  extensions = Hash.new { |h, k| h[k] = [] }
+
+  for package in packages
+    for filetype in package["filetypes"]
+      for ext in filetype["extensions"]
+        extensions[ext] << filetype["name"]
+      end
     end
-  end.group_by(&:itself).transform_values(&:count).select { |a, b| b > 1 }.keys.to_set
+  end
+
+  ambiguous_extensions = extensions
+    .select { |a, b| b.uniq.size > 1 }.keys.sort
 
   expected_filetypes = detect_filetypes
 
-  for package in PACKAGES
+  for package in packages
     name = package.fetch("name")
-    output << if name == "jsx"
-      "if !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)\n"
-    else
-      "if index(g:polyglot_disabled, '#{name}') == -1\n"
-    end
+
+    output << "if !has_key(s:disabled_packages, '#{name}')\n"
 
     filetypes = package["filetypes"] or raise "Unknown filetype for: #{package["name"]}"
 
+    package_heuristics = []
+
     for filetype in filetypes
       name = filetype.fetch("name")
-      syntax = filetype["syntax"] ? " syntax=#{filetype["syntax"]}" : ""
-      set_command = package.fetch("custom_set", "set ft=#{name}#{syntax}")
+      syntax = filetype["syntax"] ? " | set syntax=#{filetype["syntax"]}" : ""
 
-      linguist = filetype["linguist"] ? languages.fetch(filetype["linguist"]) : {}
-      extensions = filetype["extensions"] || linguist.fetch("extensions", []).map { |e| e[1..] }
-      extensions = (extensions | filetype.fetch("extra_extensions", [])) - filetype.fetch("ignored_extensions", [])
+      set_command = "setf #{name}"
 
-      filenames = filetype["filenames"] || linguist.fetch("filenames", [])
-      filenames = (filenames | filetype.fetch("extra_filenames", [])) - filetype.fetch("ignored_filenames", [])
+      if filetype["syntax"]
+        set_command = "if !did_filetype() | set ft=#{name} syntax=#{filetype["syntax"]} | endif"
+      end
+
+      if filetype["custom_set"]
+        set_command = filetype["custom_set"]
+      end
+
+      extensions = filetype["extensions"]
+      filenames = filetype["filenames"]
 
       if expected_filetypes[name] && !filetype["syntax"]
         for e in expected_filetypes.fetch(name)[:extensions] - extensions - expand_all(filetype.fetch("ignored_extensions", []))
           puts "Probable missing extension for #{name}: #{e}"
         end
 
-        for e in expand_all(expected_filetypes.fetch(name)[:filenames]) - expand_all(filenames).flat_map { |e| [e, e.gsub(/^\./, '')] } - expand_all(filetype.fetch("ignored_filenames", [])) - ['*']
+        for e in expected_filetypes.fetch(name)[:filenames] - expand_all(filenames).flat_map { |e| [e, e.gsub(/^\./, '')] } - expand_all(filetype.fetch("ignored_filenames", [])) - ['*']
           puts "Probable missing filename for #{name}: #{e}"
         end
       end
@@ -300,9 +479,14 @@ def generate_ftdetect
           output << "  au BufReadPre *.*.#{extension} execute \"do BufRead filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
         end
 
-        if ambiguous_extensions.include?(extension)
-          output << "  au BufNewFile,BufRead *.#{extension} setf #{filetype["name"]}\n"
+        heuristic = heuristics.find { |h| h["extensions"].include?(extension) }
+        if heuristic
+          package_heuristics << heuristic
         else
+          # if ambiguous_extensions.include?(extension)
+          #   puts "Ambiguous extension without heuristic: #{extension} => #{filetype["name"]}"
+          # end
+          #
           output << "  au BufNewFile,BufRead *.#{extension} #{set_command}\n"
         end
       end
@@ -315,25 +499,114 @@ def generate_ftdetect
       end
     end
 
+    for heuristic in package_heuristics.uniq
+      extensions = heuristic["extensions"].map { |e| "*.#{e}" }
+      output << "  au! BufNewFile,BufRead #{extensions.join(",")} call polyglot#Detect#{camelize(heuristic["extensions"].first)}Filetype()\n"
+    end
+
     output << "endif\n\n"
   end
 
   output << <<~EOS
+    au BufNewFile,BufRead,StdinReadPost * 
+      \\ if !did_filetype() && expand("<amatch>") !~ g:ft_ignore_pat 
+      \\ | call polyglot#Heuristics() | endif
+
     " restore Vi compatibility settings
     let &cpo = s:cpo_save
     unlet s:cpo_save
   EOS
  
-  # filetypes = detect_filetypes
-  #
-  # for filetype in filetypes
-  #   
-  # end
-
   File.write('ftdetect/polyglot.vim', output)
+
+  output = <<~EOS
+    " Line continuation is used here, remove 'C' from 'cpoptions'
+    let s:cpo_save = &cpo
+    set cpo&vim
+
+    func! polyglot#Heuristics()
+      " Try to detect filetype from shebang
+      let l:filetype = polyglot#Shebang()
+      if l:filetype != ""
+        exec "setf " . l:filetype
+        return
+      endif
+    endfunc
+    
+    let s:interpreters = {
+    EOS
+
+    for filetype in packages.flat_map { |p| p.fetch("filetypes", []) }.sort_by { |a| a["name"] }
+      for interpreter in filetype["interpreters"]
+        output << "  \\ '#{interpreter}': '#{filetype["name"]}',\n"
+      end
+    end
+
+  output << <<~EOS
+      \\ }
+
+    let s:r_hashbang = '^#!\\s*\\(\\S\\+\\)\\s*\\(.*\\)\\s*'
+    let s:r_envflag = '%(\\S\\+=\\S\\+\\|-[iS]\\|--ignore-environment\\|--split-string\\)'
+    let s:r_env = '^\\%(\\' . s:r_envflag . '\\s\\+\\)*\\(\\S\\+\\)'
+
+    func! polyglot#Shebang()
+      let l:line1 = getline(1)
+
+      if l:line1 !~# "^#!"
+        return
+      endif
+
+      let l:pathrest = matchlist(l:line1, s:r_hashbang)
+
+      if len(l:pathrest) == 0
+        return 
+      endif
+
+      let [_, l:path, l:rest; __] = l:pathrest
+
+      let l:script = split(l:path, "/")[-1]
+
+      if l:script == "env"
+        let l:argspath = matchlist(l:rest, s:r_env)
+        if len(l:argspath) == 0
+          return
+        endif
+
+        let l:script = l:argspath[1]
+      endif
+
+      if has_key(s:interpreters, l:script)
+        return s:interpreters[l:script]
+      endif
+
+      for interpreter in keys(s:interpreters)
+        if l:script =~# '^' . interpreter
+          return s:interpreters[interpreter]
+        endif
+      endfor
+    endfunc
+
+  EOS
+
+  for heuristic in heuristics
+    output << <<~EOS
+      func! polyglot#Detect#{camelize(heuristic["extensions"].first)}Filetype()
+      #{indent(rules_to_code(heuristic), 2)}
+      endfunc
+
+    EOS
+  end
+
+  output << <<~EOS
+    " Restore 'cpoptions'
+    let &cpo = s:cpo_save
+    unlet s:cpo_save
+  EOS
+
+  File.write('autoload/polyglot.vim', output)
 end
 
-def generate_tests
+def generate_tests(packages)
   output = <<~EOS
     function! TestFiletype(filetype)
       try
@@ -349,7 +622,7 @@ def generate_tests
 
   EOS
 
-  for package in PACKAGES
+  for package in packages
     for filetype in package.fetch("filetypes", [])
       output << "call TestFiletype('#{filetype["name"]}')\n"
     end
@@ -407,7 +680,7 @@ def expand_all(pattern)
 end
 
 def detect_filetypes
-  filetypes = Dir['tmp/*/ftdetect/*.vim'].flat_map do |file|
+  filetypes = Dir['tmp/**/ftdetect/*.vim'].flat_map do |file|
     contents = File.read(file).gsub(/^\s*au(tocmd)?!?\s*$/, '')
     results = contents.scan(/^\s*(?:au!|au|au[^g][^ ]*) +(?:\S+)\s+(\S+)[\s\\]+([^\n]+)/)
     results = results.map do |a, b|
@@ -427,14 +700,24 @@ def detect_filetypes
   end.group_by { |a, b| a }.map { |a, b| [a, b.map { |c, d| d }] }.map { |a, b|
     [a, {
       extensions: b.select { |x| x.match(/^\*\.[^\/]+$/) }.map { |a| a.strip[2..] },
-      filenames: b.select { |x| !x.match(/^\*\.[^\/]+$/) }
+      filenames: expand_all(b.select { |x| !x.match(/^\*\.[^\/]+$/) })
     }]
   }]
 end
 
-download
-extract
-generate_ftdetect
-generate_tests
-puts(" Bye! Have a wonderful time!")
-FileUtils.rm_rf("tmp")
+if __FILE__ == $0
+  if !ENV["DEV"]
+    FileUtils.rm_rf("tmp")
+  end
+
+  packages, heuristics = load_data()
+  download(packages)
+  extract(packages)
+  generate_ftdetect(packages, heuristics)
+  generate_tests(packages)
+  puts(" Bye! Have a wonderful time!")
+
+  if !ENV["DEV"]
+    FileUtils.rm_rf("tmp")
+  end
+end

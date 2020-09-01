@@ -37,8 +37,9 @@ nnoremap <buffer><Plug>(crystal-spec-run-all)       :<C-u>CrystalSpecRunAll<CR>
 nnoremap <buffer><Plug>(crystal-spec-run-current)   :<C-u>CrystalSpecRunCurrent<CR>
 nnoremap <buffer><Plug>(crystal-format)             :<C-u>CrystalFormat<CR>
 
+" autocmd is setup per buffer. Please do not use :autocmd!. It refreshes
+" augroup hence removes autocmds for other buffers (#105)
 augroup plugin-ft-crystal
-  autocmd!
   autocmd BufWritePre <buffer> if g:crystal_auto_format && &filetype ==# 'crystal' | call crystal_lang#format('', 1) | endif
 augroup END
 

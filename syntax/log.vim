@@ -45,8 +45,9 @@ syn region logString      start=/'\(s \|t \| \w\)\@!/ end=/'/ end=/$/ end=/s / s
 syn match logDate '\d\{2,4}[-\/]\(\d\{2}\|Jan\|Feb\|Mar\|Apr\|May\|Jun\|Jul\|Aug\|Sep\|Oct\|Nov\|Dec\)[-\/]\d\{2,4}T\?'
 " Matches 8 digit numbers at start of line starting with 20
 syn match logDate '^20\d\{6}'
-" Matches Fri Jan 09 or Feb 11 or Apr  3
-syn match logDate '\(\(Mon\|Tue\|Wed\|Thu\|Fri\|Sat\|Sun\) \)\?\(Jan\|Feb\|Mar\|Apr\|May\|Jun\|Jul\|Aug\|Sep\|Oct\|Nov\|Dec\) [0-9 ]\d'
+" Matches Fri Jan 09 or Feb 11 or Apr  3 or Sun 3
+syn keyword logDate Mon Tue Wed Thu Fri Sat Sun Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec nextgroup=logDateDay
+syn match logDateDay '\s\{1,2}\d\{1,2}' contained
 
 " Matches 12:09:38 or 00:03:38.129Z or 01:32:12.102938 +0700
 syn match logTime '\d\{2}:\d\{2}:\d\{2}\(\.\d\{2,6}\)\?\(\s\?[-+]\d\{2,4}\|Z\)\?\>' nextgroup=logTimeZone,logSysColumns skipwhite
@@ -114,6 +115,7 @@ hi def link logNull Constant
 hi def link logString String
 
 hi def link logDate Identifier
+hi def link logDateDay Identifier
 hi def link logTime Function
 hi def link logTimeZone Identifier
 

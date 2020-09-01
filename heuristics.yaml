@@ -1,0 +1,57 @@
+---
+extensions: [inp]
+rules:
+- lines: 1
+  pattern: '^\*'
+  filetype: abaqus
+- lines: 500
+  pattern: '^header surface data'
+  ignore_case: true
+  filetype: trasys
+---
+extensions: [asa]
+rules:
+- override: "g:filetype_asa"
+- filetype: aspvbs
+---
+extensions: [asp]
+rules:
+- override: "g:filetype_asp"
+- lines: 3
+  pattern: 'perlscript'
+  ignore_case: true
+  filetype: aspperl
+- filetype: aspvbs
+---
+extensions: [m]
+rules:
+- lines: 100
+  rules:
+  - pattern: '^\s*/\*'
+    set: 'saw_comment'
+  - pattern: '^\s*(@(interface|class|protocol|property|end|synchronised|selector|implementation)\b|#import\s+.+\.h[">])'
+    filetype: objc
+  - pattern: '^\s*%'
+    filetype: octave
+  - pattern: '^\s*\(\*'
+    filetype: mma
+  - pattern: '^\s*((type|var)\b|--)'
+    ignore_case: true
+    filetype: murphi
+- if_set: "saw_comment"
+  filetype: objc
+- override: "g:filetype_m"
+- filetype: octave
+---
+extensions: [fs]
+rules:
+- lines: 50
+  rules:
+  - pattern: '^(: |new-device)'
+    filetype: forth
+  - pattern: '^\s*(#light|import|let|module|namespace|open|type)'
+    filetype: fsharp
+  - pattern: '\s*(#version|precision|uniform|varying|vec[234])'
+    filetype: glsl
+- override: "g:filetype_fs"
+- filetype: forth

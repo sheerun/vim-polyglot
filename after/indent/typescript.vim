@@ -25,56 +25,23 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
 
 runtime! indent/graphql.vim
 
-" Don't redefine our function and also require the standard Javascript indent
+" Don't redefine our function and also require the standard Typescript indent
 " function to exist.
-if exists('*GetJavascriptGraphQLIndent') || !exists('*GetJavascriptIndent')
+if exists('*GetTypescriptGraphQLIndent') || !exists('*GetTypescriptIndent')
   finish
 endif
 
 " Set the indentexpr with our own version that will call GetGraphQLIndent when
-" we're inside of a GraphQL string and otherwise defer to GetJavascriptIndent.
-setlocal indentexpr=GetJavascriptGraphQLIndent()
+" we're inside of a GraphQL string and otherwise defer to GetTypescriptIndent.
+setlocal indentexpr=GetTypescriptGraphQLIndent()
 
-function GetJavascriptGraphQLIndent()
+function GetTypescriptGraphQLIndent()
   let l:stack = map(synstack(v:lnum, 1), "synIDattr(v:val,'name')")
   if !empty(l:stack) && l:stack[0] ==# 'graphqlTemplateString'
     return GetGraphQLIndent()
   endif
 
-  return GetJavascriptIndent()
+  return GetTypescriptIndent()
 endfunction
-
-endif
-if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vim indent file
-"
-" Language: javascript.jsx
-" Maintainer: MaxMellon <maxmellon1994@gmail.com>
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if exists('b:did_indent')
-  let s:did_indent = b:did_indent
-  unlet b:did_indent
-endif
-
-let s:keepcpo = &cpo
-set cpo&vim
-
-if exists('s:did_indent')
-  let b:did_indent = s:did_indent
-endif
-
-setlocal indentexpr=GetJsxIndent()
-setlocal indentkeys=0.,0{,0},0),0],0?,0\*,0\,,!^F,:,<:>,o,O,e,<>>,=*/
-
-function! GetJsxIndent()
-  return jsx_pretty#indent#get(function('GetJavascriptIndent'))
-endfunction
-
-let &cpo = s:keepcpo
-unlet s:keepcpo
 
 endif
