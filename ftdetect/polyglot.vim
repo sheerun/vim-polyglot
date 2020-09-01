@@ -237,7 +237,6 @@ if !has_key(s:disabled_packages, 'c/c++')
   au BufNewFile,BufRead *.inl setf cpp
   au BufNewFile,BufRead *.ino setf cpp
   au BufNewFile,BufRead *.ipp setf cpp
-  au BufNewFile,BufRead *.re setf cpp
   au BufNewFile,BufRead *.tcc setf cpp
   au BufNewFile,BufRead *.tpp setf cpp
 endif
