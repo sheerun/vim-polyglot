@@ -156,7 +156,7 @@ def copy_file(package, src, dest)
   open(src, "r") do |input|
     open(dest, "a+") do |output|
       if name == "jsx"
-        output << "if !exists('g:polyglot_disabled') || !(index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'typescript') != -1 || index(g:polyglot_disabled, 'jsx') != -1)\n\n"
+        output << "if !exists('g:polyglot_disabled') || (index(g:polyglot_disabled, 'javascript') == -1 && index(g:polyglot_disabled, 'jsx') == -1)\n\n"
       else
         output << "if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '#{name}') == -1\n\n"
       end

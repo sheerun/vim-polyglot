@@ -610,7 +610,6 @@ if !has_key(s:disabled_packages, 'jinja')
   au BufNewFile,BufRead *.j2 setf jinja.html
   au BufNewFile,BufRead *.jinja setf jinja.html
   au BufNewFile,BufRead *.jinja2 setf jinja.html
-  au BufNewFile,BufRead *.mustache setf jinja.html
   au BufNewFile,BufRead *.njk setf jinja.html
 endif
 
@@ -867,25 +866,6 @@ if !has_key(s:disabled_packages, 'perl')
   au BufNewFile,BufRead Rexfile setf perl
   au BufNewFile,BufRead ack setf perl
   au BufNewFile,BufRead cpanfile setf perl
-endif
-
-if !has_key(s:disabled_packages, 'sql')
-  au BufNewFile,BufRead *.bdy setf sql
-  au BufNewFile,BufRead *.ddl setf sql
-  au BufNewFile,BufRead *.fnc setf sql
-  au BufNewFile,BufRead *.pck setf sql
-  au BufNewFile,BufRead *.pkb setf sql
-  au BufNewFile,BufRead *.pks setf sql
-  au BufNewFile,BufRead *.plb setf sql
-  au BufNewFile,BufRead *.pls setf sql
-  au BufNewFile,BufRead *.plsql setf sql
-  au BufNewFile,BufRead *.prc setf sql
-  au BufNewFile,BufRead *.spc setf sql
-  au BufNewFile,BufRead *.sql setf sql
-  au BufNewFile,BufRead *.tpb setf sql
-  au BufNewFile,BufRead *.tps setf sql
-  au BufNewFile,BufRead *.trg setf sql
-  au BufNewFile,BufRead *.vw setf sql
 endif
 
 if !has_key(s:disabled_packages, 'pgsql')
@@ -1278,6 +1258,7 @@ endif
 
 if !has_key(s:disabled_packages, 'terraform')
   au BufNewFile,BufRead *.hcl setf terraform
+  au BufNewFile,BufRead *.nomad setf terraform
   au BufNewFile,BufRead *.tf setf terraform
   au BufNewFile,BufRead *.tfvars setf terraform
   au BufNewFile,BufRead *.workflow setf terraform
@@ -1391,6 +1372,7 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead *.gml setf xml
   au BufNewFile,BufRead *.gmx setf xml
   au BufNewFile,BufRead *.grxml setf xml
+  au BufNewFile,BufRead *.gst setf xml
   au BufNewFile,BufRead *.iml setf xml
   au BufNewFile,BufRead *.ivy setf xml
   au BufNewFile,BufRead *.jelly setf xml

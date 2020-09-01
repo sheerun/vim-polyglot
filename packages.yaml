@@ -1086,17 +1086,6 @@ filetypes:
 - name: perl
   linguist: Perl
 ---
-name: sql
-remote: shmup/vim-sql-syntax
-filetypes:
-- name: sql
-  linguist: PLSQL
-  ignored_extensions:
-  # Handled by cql plugin
-  - cql
-  # Handled by pgsql plugin
-  - pgsql
----
 name: pgsql
 remote: lifepillar/pgsql.vim
 filetypes:
