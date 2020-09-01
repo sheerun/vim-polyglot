@@ -28,6 +28,9 @@ call s:SetDefault('g:markdown_enable_mappings', 0)
 " Enable jsx syntax by default
 call s:SetDefault('g:jsx_ext_required', 0)
 
+" Needed for sql highlighting
+call s:SetDefault('g:javascript_sql_dialect', 'sql')
+
 " Make csv loading faster
 call s:SetDefault('g:csv_start', 1)
 call s:SetDefault('g:csv_end', 2)
@@ -571,6 +574,9 @@ endif
 if !has_key(s:disabled_packages, 'ion')
   au BufNewFile,BufRead *.ion setf ion
   au BufNewFile,BufRead ~/.config/ion/initrc setf ion
+endif
+
+if !has_key(s:disabled_packages, 'javascript-sql')
 endif
 
 if !has_key(s:disabled_packages, 'javascript')

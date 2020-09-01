@@ -773,6 +773,11 @@ filetypes:
   extensions:
   - flow
 ---
+name: javascript-sql
+remote: statico/vim-javascript-sql
+after: javascript
+filetypes: []
+---
 name: jenkins
 remote: martinda/Jenkinsfile-vim-syntax
 filetypes:
