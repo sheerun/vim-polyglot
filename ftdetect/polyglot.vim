@@ -60,6 +60,230 @@ if !exists('g:python_highlight_all')
   call s:SetDefault('g:python_slow_sync', 1)
 endif
 if !has_key(s:disabled_packages, '8th')
+  au! BufRead,BufNewFile *.8th
+endif
+
+if !has_key(s:disabled_packages, 'a65')
+  au! BufRead,BufNewFile *.a65
+endif
+
+if !has_key(s:disabled_packages, 'aap')
+  au! BufRead,BufNewFile *.aap
+endif
+
+if !has_key(s:disabled_packages, 'abap')
+  au! BufRead,BufNewFile *.abap
+endif
+
+if !has_key(s:disabled_packages, 'abc')
+  au! BufRead,BufNewFile *.abc
+endif
+
+if !has_key(s:disabled_packages, 'acpiasl')
+  au! BufRead,BufNewFile *.dsl
+endif
+
+if !has_key(s:disabled_packages, 'ada')
+  au! BufRead,BufNewFile *.ada
+endif
+
+if !has_key(s:disabled_packages, 'aidl')
+  au! BufRead,BufNewFile *.aidl
+endif
+
+if !has_key(s:disabled_packages, 'aml')
+  au! BufRead,BufNewFile *.aml
+endif
+
+if !has_key(s:disabled_packages, 'applescript')
+  au! BufRead,BufNewFile *.applescript
+endif
+
+if !has_key(s:disabled_packages, 'art')
+  au! BufRead,BufNewFile *.art
+endif
+
+if !has_key(s:disabled_packages, 'asciidoc')
+  au! BufRead,BufNewFile *.asciidoc
+endif
+
+if !has_key(s:disabled_packages, 'asn')
+  au! BufRead,BufNewFile *.asn
+endif
+
+if !has_key(s:disabled_packages, 'ave')
+  au! BufRead,BufNewFile *.ave
+endif
+
+if !has_key(s:disabled_packages, 'awk')
+  au! BufRead,BufNewFile *.awk
+endif
+
+if !has_key(s:disabled_packages, 'c/c++')
+  au! BufRead,BufNewFile *.c,*.cpp,*.tpp
+endif
+
+if !has_key(s:disabled_packages, 'cmake')
+  au! BufRead,BufNewFile *.cmake
+endif
+
+if !has_key(s:disabled_packages, 'dart')
+  au! BufRead,BufNewFile *.dart
+endif
+
+if !has_key(s:disabled_packages, 'dlang')
+  au! BufRead,BufNewFile *.sdl
+endif
+
+if !has_key(s:disabled_packages, 'dockerfile')
+  au! BufRead,BufNewFile *.dockerfile
+endif
+
+if !has_key(s:disabled_packages, 'elm')
+  au! BufRead,BufNewFile *.elm
+endif
+
+if !has_key(s:disabled_packages, 'git')
+  au! BufRead,BufNewFile *.gitconfig
+endif
+
+if !has_key(s:disabled_packages, 'gnuplot')
+  au! BufRead,BufNewFile *.gp,*.gnuplot
+endif
+
+if !has_key(s:disabled_packages, 'go')
+  au! BufRead,BufNewFile *.go
+endif
+
+if !has_key(s:disabled_packages, 'haml')
+  au! BufRead,BufNewFile *.haml
+endif
+
+if !has_key(s:disabled_packages, 'handlebars')
+  au! BufRead,BufNewFile *.hb
+endif
+
+if !has_key(s:disabled_packages, 'haproxy')
+  au! BufRead,BufNewFile *.cfg
+endif
+
+if !has_key(s:disabled_packages, 'html5')
+  au! BufRead,BufNewFile *.st,*.xhtml
+endif
+
+if !has_key(s:disabled_packages, 'json')
+  au! BufRead,BufNewFile *.json,*.template
+endif
+
+if !has_key(s:disabled_packages, 'less')
+  au! BufRead,BufNewFile *.less
+endif
+
+if !has_key(s:disabled_packages, 'lua')
+  au! BufRead,BufNewFile *.lua
+endif
+
+if !has_key(s:disabled_packages, 'm4')
+  au! BufRead,BufNewFile *.m4
+endif
+
+if !has_key(s:disabled_packages, 'markdown')
+  au! BufRead,BufNewFile *.markdown
+endif
+
+if !has_key(s:disabled_packages, 'opencl')
+  au! BufRead,BufNewFile *.cl
+endif
+
+if !has_key(s:disabled_packages, 'perl')
+  au! BufRead,BufNewFile *.perl
+endif
+
+if !has_key(s:disabled_packages, 'php')
+  au! BufRead,BufNewFile *.php
+endif
+
+if !has_key(s:disabled_packages, 'protobuf')
+  au! BufRead,BufNewFile *.proto
+endif
+
+if !has_key(s:disabled_packages, 'python')
+  au! BufRead,BufNewFile *.spec
+endif
+
+if !has_key(s:disabled_packages, 'r-lang')
+  au! BufRead,BufNewFile *.r
+endif
+
+if !has_key(s:disabled_packages, 'raku')
+  au! BufRead,BufNewFile *.pod6
+endif
+
+if !has_key(s:disabled_packages, 'raml')
+  au! BufRead,BufNewFile *.raml
+endif
+
+if !has_key(s:disabled_packages, 'rst')
+  au! BufRead,BufNewFile *.rst
+endif
+
+if !has_key(s:disabled_packages, 'ruby')
+  au! BufRead,BufNewFile *.ruby,*.spec
+endif
+
+if !has_key(s:disabled_packages, 'scala')
+  au! BufRead,BufNewFile *.scala
+endif
+
+if !has_key(s:disabled_packages, 'sbt')
+  au! BufRead,BufNewFile *.sbt
+endif
+
+if !has_key(s:disabled_packages, 'scss')
+  au! BufRead,BufNewFile *.scss
+endif
+
+if !has_key(s:disabled_packages, 'sh')
+  au! BufRead,BufNewFile *.sh,*.tmux,*.zsh
+endif
+
+if !has_key(s:disabled_packages, 'svg')
+  au! BufRead,BufNewFile *.svg
+endif
+
+if !has_key(s:disabled_packages, 'swift')
+  au! BufRead,BufNewFile *.swift
+endif
+
+if !has_key(s:disabled_packages, 'terraform')
+  au! BufRead,BufNewFile *.tf
+endif
+
+if !has_key(s:disabled_packages, 'twig')
+  au! BufRead,BufNewFile *.twig
+endif
+
+if !has_key(s:disabled_packages, 'vbnet')
+  au! BufRead,BufNewFile *.vb
+endif
+
+if !has_key(s:disabled_packages, 'vue')
+  au! BufRead,BufNewFile *.vue
+endif
+
+if !has_key(s:disabled_packages, 'xml')
+  au! BufRead,BufNewFile *.xml,*.ant,*.xsd
+endif
+
+if !has_key(s:disabled_packages, 'xsl')
+  au! BufRead,BufNewFile *.xslt
+endif
+
+if !has_key(s:disabled_packages, 'yaml')
+  au! BufRead,BufNewFile *.yaml
+endif
+
+if !has_key(s:disabled_packages, '8th')
   au BufNewFile,BufRead *.8th setf 8th
 endif
 
@@ -240,11 +464,9 @@ if !has_key(s:disabled_packages, 'c/c++')
   au BufNewFile,BufRead *.hxx setf cpp
   au BufNewFile,BufRead *.inc setf cpp
   au BufNewFile,BufRead *.inl setf cpp
-  au BufNewFile,BufRead *.ino setf cpp
   au BufNewFile,BufRead *.ipp setf cpp
   au BufNewFile,BufRead *.tcc setf cpp
   au BufNewFile,BufRead *.tpp setf cpp
-  au! BufNewFile,BufRead *.re call polyglot#DetectReFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'caddyfile')
@@ -535,8 +757,6 @@ endif
 if !has_key(s:disabled_packages, 'hcl')
   au BufNewFile,BufRead *.hcl setf hcl
   au BufNewFile,BufRead *.nomad setf hcl
-  au BufNewFile,BufRead *.tf setf hcl
-  au BufNewFile,BufRead *.tfvars setf hcl
   au BufNewFile,BufRead *.workflow setf hcl
   au BufNewFile,BufRead Appfile setf hcl
 endif
@@ -621,7 +841,6 @@ if !has_key(s:disabled_packages, 'jinja')
   au BufNewFile,BufRead *.j2 setf jinja.html
   au BufNewFile,BufRead *.jinja setf jinja.html
   au BufNewFile,BufRead *.jinja2 setf jinja.html
-  au BufNewFile,BufRead *.njk setf jinja.html
 endif
 
 if !has_key(s:disabled_packages, 'jq')
@@ -768,7 +987,6 @@ if !has_key(s:disabled_packages, 'markdown')
   au BufNewFile,BufRead *.md setf markdown
   au BufNewFile,BufRead *.mdown setf markdown
   au BufNewFile,BufRead *.mdwn setf markdown
-  au BufNewFile,BufRead *.mdx setf markdown
   au BufNewFile,BufRead *.mkd setf markdown
   au BufNewFile,BufRead *.mkdn setf markdown
   au BufNewFile,BufRead *.mkdown setf markdown
@@ -881,7 +1099,6 @@ endif
 
 if !has_key(s:disabled_packages, 'pgsql')
   au BufNewFile,BufRead *.pgsql let b:sql_type_override='pgsql' | set ft=sql
-  au BufNewFile,BufRead *.sql let b:sql_type_override='pgsql' | set ft=sql
 endif
 
 if !has_key(s:disabled_packages, 'cql')
@@ -1002,7 +1219,6 @@ endif
 if !has_key(s:disabled_packages, 'r-lang')
   au BufNewFile,BufRead *.S setf r
   au BufNewFile,BufRead *.r setf r
-  au BufNewFile,BufRead *.rd setf r
   au BufNewFile,BufRead *.rsx setf r
   au BufNewFile,BufRead *.s setf r
   au BufNewFile,BufRead {.,}Rprofile setf r
@@ -1093,7 +1309,6 @@ if !has_key(s:disabled_packages, 'ruby')
   au BufNewFile,BufRead {.,}simplecov setf ruby
   au BufNewFile,BufRead Appraisals setf ruby
   au BufNewFile,BufRead Berksfile setf ruby
-  au BufNewFile,BufRead Brewfile setf ruby
   au BufNewFile,BufRead Buildfile setf ruby
   au BufNewFile,BufRead Capfile setf ruby
   au BufNewFile,BufRead Cheffile setf ruby
@@ -1140,7 +1355,6 @@ endif
 
 if !has_key(s:disabled_packages, 'scala')
   au BufNewFile,BufRead *.kojo setf scala
-  au BufNewFile,BufRead *.sbt setf scala
   au BufNewFile,BufRead *.sc setf scala
   au BufNewFile,BufRead *.scala setf scala
 endif
@@ -1165,7 +1379,6 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead *.sh.in setf sh
   au BufNewFile,BufRead *.tmux setf sh
   au BufNewFile,BufRead *.tool setf sh
-  au BufNewFile,BufRead *.zsh setf sh
   au BufNewFile,BufRead {.,}bash_aliases setf sh
   au BufNewFile,BufRead {.,}bash_history setf sh
   au BufNewFile,BufRead {.,}bash_logout setf sh
@@ -1177,11 +1390,6 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead {.,}flaskenv setf sh
   au BufNewFile,BufRead {.,}login setf sh
   au BufNewFile,BufRead {.,}profile setf sh
-  au BufNewFile,BufRead {.,}zlogin setf sh
-  au BufNewFile,BufRead {.,}zlogout setf sh
-  au BufNewFile,BufRead {.,}zprofile setf sh
-  au BufNewFile,BufRead {.,}zshenv setf sh
-  au BufNewFile,BufRead {.,}zshrc setf sh
   au BufNewFile,BufRead 9fs setf sh
   au BufNewFile,BufRead PKGBUILD setf sh
   au BufNewFile,BufRead bash_aliases setf sh
@@ -1193,11 +1401,6 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead login setf sh
   au BufNewFile,BufRead man setf sh
   au BufNewFile,BufRead profile setf sh
-  au BufNewFile,BufRead zlogin setf sh
-  au BufNewFile,BufRead zlogout setf sh
-  au BufNewFile,BufRead zprofile setf sh
-  au BufNewFile,BufRead zshenv setf sh
-  au BufNewFile,BufRead zshrc setf sh
   au BufNewFile,BufRead *.zsh setf zsh
   au BufNewFile,BufRead {.,}zlogin setf zsh
   au BufNewFile,BufRead {.,}zlogout setf zsh
@@ -1416,8 +1619,6 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead *.sublime-snippet setf xml
   au BufNewFile,BufRead *.targets setf xml
   au BufNewFile,BufRead *.tml setf xml
-  au BufNewFile,BufRead *.ts setf xml
-  au BufNewFile,BufRead *.tsx setf xml
   au BufNewFile,BufRead *.ui setf xml
   au BufNewFile,BufRead *.urdf setf xml
   au BufNewFile,BufRead *.ux setf xml

@@ -302,6 +302,8 @@ filetypes:
   ignored_extensions:
   # conflicts with more popular reason, remove after heuristics work
   - re
+  # implemented by arduino
+  - ino
 ---
 name: caddyfile
 remote: isobit/vim-caddyfile

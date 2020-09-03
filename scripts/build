@@ -59,17 +59,20 @@ def load_data()
 
         linguist = languages.fetch(filetype["linguist"])
 
-        filetype["extensions"] = (linguist["extensions"] || []).map { |e| e[1..-1] } |
-          filetype.fetch("extra_extensions", []) -
-          filetype.fetch("ignored_extensions", []).uniq
+        filetype["extensions"] = ((
+          (linguist["extensions"] || []).map { |e| e[1..-1] } |
+          filetype.fetch("extra_extensions", [])
+        ) - filetype.fetch("ignored_extensions", [])).uniq
 
-        filetype["filenames"] = (linguist["filenames"] || []) |
-          filetype.fetch("extra_filenames", []) -
-          filetype.fetch("ignored_filenames", []).uniq
+        filetype["filenames"] = ((
+          (linguist["filenames"] || []) |
+          filetype.fetch("extra_filenames", [])
+        ) - filetype.fetch("ignored_filenames", [])).uniq
         
-        filetype["interpreters"] = (linguist["interpreters"] || []) |
-          filetype.fetch("extra_interpreters", []) -
-          filetype.fetch("ignored_interpreters", []).uniq
+        filetype["interpreters"] = ((
+          (linguist["interpreters"] || []) |
+          filetype.fetch("extra_interpreters", [])
+        ) - filetype.fetch("ignored_interpreters", []).uniq)
       else
         filetype["extensions"] ||= []
         filetype["filenames"] ||= []
@@ -445,7 +448,29 @@ def generate_ftdetect(packages, heuristics)
   ambiguous_extensions = extensions
     .select { |a, b| b.uniq.size > 1 }.keys.sort
 
-  expected_filetypes = detect_filetypes
+  expected_filetypes = detect_filetypes('tmp/**/ftdetect/*.vim')
+  native_filetypes = detect_filetypes('tmp/vim/vim/runtime/filetype.vim')
+  native_extensions = native_filetypes.flat_map { |k, v| v["extensions"] }
+  
+  for package in packages
+    name = package.fetch("name")
+
+    to_disable = []
+
+    for filetype in package["filetypes"]
+      for extension in filetype["extensions"]
+        if native_filetypes.has_key?(extension)
+          to_disable << "*." + extension
+        end
+      end
+    end
+
+    if to_disable.size > 0
+      output << "if !has_key(s:disabled_packages, '#{name}')\n"
+      output << "  au! BufRead,BufNewFile #{to_disable.join(",")}\n"
+      output << "endif\n\n"
+    end
+  end
 
   for package in packages
     name = package.fetch("name")
@@ -690,8 +715,8 @@ def expand_all(pattern)
   end
 end
 
-def detect_filetypes
-  filetypes = Dir['tmp/**/ftdetect/*.vim'].flat_map do |file|
+def detect_filetypes(glob)
+  filetypes = Dir[glob].flat_map do |file|
     contents = File.read(file).gsub(/^\s*au(tocmd)?!?\s*$/, '')
     results = contents.scan(/^\s*(?:au!|au|au[^g][^ ]*) +(?:\S+)\s+(\S+)[\s\\]+([^\n]+)/)
     results = results.map do |a, b|
