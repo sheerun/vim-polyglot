@@ -188,6 +188,7 @@ call TestExtension('yaml.ansible', 'host_vars/foobar', '')
 call TestExtension('yaml.ansible', 'handlers.foobar.yaml', '')
 call TestExtension('yaml.ansible', 'requirements.yaml', '')
 call TestExtension('ps1xml', 'foobar.ps1xml', '')
+call TestExtension('terraform', 'terraform.tf', '')
 
 " .m extension
 call TestExtension('octave', 'matlab.m', '')
