@@ -257,7 +257,7 @@ Please note that disabling a language won't make in your vim startup any faster 
 
 Language packs are periodically updated using automated `scripts/build` script.
 
-Feel free to add your language to `packages.yaml`, and send pull-request. Please don't run `make` and include that in your PR, send just changes to `packages.yaml` and build scripts if really necessary. You can run `make test` to run rough tests.
+Feel free to add your language to `packages.yaml` + `heuristics.yaml`, and send pull-request. You can run `make test` to run rough tests. And `make dev` for easy development.
 
 ## License
 
