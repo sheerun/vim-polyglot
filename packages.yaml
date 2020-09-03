@@ -746,13 +746,18 @@ filetypes:
   extensions:
   - ics
 ---
-name: idris
+name: idris1
 remote: idris-hackers/idris-vim
 filetypes:
-- name: idris
+- name: idris1
   linguist: Idris
   extra_filenames:
   - idris-response
+---
+name: idris2
+remote: edwinb/idris2-vim
+filetypes:
+- name: idris2
 ---
 name: ion
 remote: vmchale/ion-vim
