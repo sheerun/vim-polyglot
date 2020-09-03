@@ -1,15 +1,22 @@
 ---
 extensions: [idr]
 rules:
+- lines: 5
+  pattern: '--.*(I|i)dris {0,1}1'
+  filetype: idris
+- lines: 5
+  pattern: '--.*(I|i)dris {0,1}2'
+  filetype: idris2
 - lines: 10
   pattern: '^pkgs .*'
-  filetype: idris1
+  filetype: idris
 - lines: 10
   pattern: '^%language .*'
-  filetype: idris1
+  filetype: idris
 - lines: 10
   pattern: '^%access (private|export|public export|public)'
-  filetype: idris1
+  filetype: idris
+- override: 'g:filetype_idr'
 ---
 extensions: [inp]
 rules:

@@ -749,7 +749,7 @@ filetypes:
 name: idris1
 remote: idris-hackers/idris-vim
 filetypes:
-- name: idris1
+- name: idris
   linguist: Idris
   extra_filenames:
   - idris-response
