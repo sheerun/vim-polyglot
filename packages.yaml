@@ -746,7 +746,7 @@ filetypes:
   extensions:
   - ics
 ---
-name: idris1
+name: idris
 remote: idris-hackers/idris-vim
 filetypes:
 - name: idris

@@ -1,23 +1,4 @@
 ---
-extensions: [idr]
-rules:
-- lines: 5
-  pattern: '--.*(I|i)dris {0,1}1'
-  filetype: idris
-- lines: 5
-  pattern: '--.*(I|i)dris {0,1}2'
-  filetype: idris2
-- lines: 10
-  pattern: '^pkgs .*'
-  filetype: idris
-- lines: 10
-  pattern: '^%language .*'
-  filetype: idris
-- lines: 10
-  pattern: '^%access (private|export|public export|public)'
-  filetype: idris
-- override: 'g:filetype_idr'
----
 extensions: [inp]
 rules:
 - lines: 1
@@ -82,3 +63,22 @@ rules:
   - pattern: '^\s*#(?:(?:if|ifdef|define|pragma)\s+\w|\s*include\s+[<"]|template\s*<)'
     filetype: cpp
   - filetype: reason
+---
+extensions: [idr]
+rules:
+- lines: 5
+  rules:
+  - pattern: '^\s*--.*[Ii]dris ?1'
+    filetype: idris
+  - pattern: '^\s*--.*[Ii]dris ?2'
+    filetype: idris2
+- lines: 30
+  rules:
+  - pattern: '^pkgs =.*'
+    filetype: idris
+  - pattern: '^%language .*'
+    filetype: idris
+  - pattern: '^%access (private|export|public export|public)'
+    filetype: idris
+  - override: 'g:filetype_idr'
+- filetype: idris2

@@ -103,6 +103,7 @@ let s:globs = {
   \ 'i3config': '{*.i3.config,*.i3config,i3.config,i3config,.i3.config,.i3config,}',
   \ 'icalendar': '{*.ics,}',
   \ 'idris': '{*.idr,*.lidr,idris-response,}',
+  \ 'idris2': '{*.idr,}',
   \ 'ion': '{*.ion,}',
   \ 'javascript': '{*.js,*._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile,}',
   \ 'javascriptreact': '{*.jsx,}',

@@ -190,6 +190,11 @@ call TestExtension('yaml.ansible', 'requirements.yaml', '')
 call TestExtension('ps1xml', 'foobar.ps1xml', '')
 call TestExtension('terraform', 'terraform.tf', '')
 
+call TestExtension('idris2', 'foobar.idr', '')
+call TestExtension('idris', 'foobar.idr', "pkgs : List String\npkgs = [\"NCurses\", \"Readline\"]")
+let g:filetype_idr = 'fizfuz'
+call TestExtension('fizfuz', 'fizfuz.idr', '')
+
 " .m extension
 call TestExtension('octave', 'matlab.m', '')
 call TestExtension('objc', 'objc.m', "\n\n  #import <Foundation/Foundation.h>")

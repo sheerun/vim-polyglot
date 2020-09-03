@@ -791,9 +791,13 @@ if !has_key(s:disabled_packages, 'icalendar')
 endif
 
 if !has_key(s:disabled_packages, 'idris')
-  au BufNewFile,BufRead *.idr setf idris
   au BufNewFile,BufRead *.lidr setf idris
   au BufNewFile,BufRead idris-response setf idris
+  au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
+endif
+
+if !has_key(s:disabled_packages, 'idris2')
+  au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'ion')
