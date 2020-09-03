@@ -1,4 +1,16 @@
 ---
+extensions: [idr]
+rules:
+- lines: 10
+  pattern: '^pkgs .*'
+  filetype: idris1
+- lines: 10
+  pattern: '^%language .*'
+  filetype: idris1
+- lines: 10
+  pattern: '^%access (private|export|public export|public)'
+  filetype: idris1
+---
 extensions: [inp]
 rules:
 - lines: 1
