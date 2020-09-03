@@ -758,6 +758,8 @@ name: idris2
 remote: edwinb/idris2-vim
 filetypes:
 - name: idris2
+  extensions:
+    - idr
 ---
 name: ion
 remote: vmchale/ion-vim
