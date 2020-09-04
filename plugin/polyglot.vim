@@ -157,10 +157,6 @@ endfunction
 
 setglobal smarttab
 
-if !exists('g:did_indent_on')
-  filetype indent on
-endif
-
 augroup polyglot
   autocmd!
   autocmd FileType * call s:detect_indent()
