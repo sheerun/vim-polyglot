@@ -95,4 +95,3 @@ rules:
     filetype: idris
   - pattern: '^>\s*--.*[Ii]dris ?2'
     filetype: idris2
-- filetype: idris2
