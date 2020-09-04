@@ -7,10 +7,15 @@
 "   - check maximum of files 2 per directory level instead of 8
 "   - maximum of 3 directory levels are checked
 "   - globs are concatenated for performance
+"   - tabstop setting is not configured, it's up to user
+if exists('g:polyglot_disabled') && index(g:polyglot_disabled, 'autoindent') != -1
+  finish 
+endif
 
-if exists("g:loaded_sleuth") || v:version < 700 || &cp
+if exists("g:loaded_sleuth") || exists("g:polyglot_disabled") || v:version < 700 || &cp
   finish
 endif
+
 let g:loaded_sleuth = 1
 
 function! s:guess(lines) abort

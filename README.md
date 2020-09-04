@@ -245,13 +245,19 @@ Please make sure you have `syntax on` in your `.vimrc` (or use something like [s
 
 Individual language packs can be disabled by setting `g:polyglot_disabled` as follows:
 
-```viml
+```vim
 let g:polyglot_disabled = ['css']
 ```
 
 *Please declare this variable before polyglot is loaded (at the top of .vimrc)*
 
 Please note that disabling a language won't make in your vim startup any faster / slower (only for specific this specific filetype). All plugins are loaded lazily, on demand.
+
+Vim Polyglot tries to automatically detect indentation settings (just like vim-sleuth). If this feature is not working for you for some reason, please file an issue and disable it temporarily with:
+
+```vim
+let g:polyglot_disabled = ['autoindent']
+```
 
 ## Contributing
 
