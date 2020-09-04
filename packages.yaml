@@ -760,6 +760,9 @@ filetypes:
 - name: idris2
   extensions:
     - idr
+    - lidr
+  extra_filenames:
+    - idris-response
 ---
 name: ion
 remote: vmchale/ion-vim
