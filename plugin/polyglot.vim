@@ -138,6 +138,10 @@ function! s:detect_indent() abort
   let dir = expand('%:p:h')
   let level = 3
   while isdirectory(dir) && dir !=# fnamemodify(dir, ':h') && level > 0
+    " Ignore files from homedir and root 
+    if dir == expand('~') || dir == '/'
+      return
+    endif
     for neighbor in glob(dir . '/' . pattern, 0, 1)[0:level]
       " Do not consider directories above .git, .svn or .hg
       if fnamemodify(neighbor, ":h:t")[0] == "."
