@@ -76,9 +76,11 @@ rules:
   rules:
   - pattern: '^pkgs =.*'
     filetype: idris
-  - pattern: '^%language .*'
+  - pattern: '^%language (TypeProviders|ElabReflection)'
     filetype: idris
-  - pattern: '^%access (private|export|public export|public)'
+  - pattern: '^%language PostfixProjections'
+    filetype: idris2
+  - pattern: '^%access .*'
     filetype: idris
   - override: 'g:filetype_idr'
 - filetype: idris2
