@@ -761,6 +761,7 @@ filetypes:
   extensions:
     - idr
     - lidr
+    - ipkg
   extra_filenames:
     - idris-response
 ---
