@@ -179,7 +179,8 @@ filetypes:
   filenames:
   - apt.conf
   - '*/.aptitude/config'
-  - '*/etc/apt/apt.conf.d/{[-_[:alnum:]]\+,[-_.[:alnum:]]\+.conf}'
+  - '*/etc/apt/apt.conf.d/[^.]*'
+  - '*/etc/apt/apt.conf.d/*.conf'
 ---
 name: arch
 remote: vim/vim:runtime

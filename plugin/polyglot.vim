@@ -19,6 +19,11 @@ endif
 let g:loaded_sleuth = 1
 let g:loaded_polyglot = 1
 
+" Makes shiftwidth to be synchronized with tabstop by default
+if &shiftwidth == &tabstop
+  let &shiftwidth = 0
+endif
+
 function! s:guess(lines) abort
   let options = {}
   let ccomment = 0

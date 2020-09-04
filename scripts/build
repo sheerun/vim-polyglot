@@ -371,69 +371,7 @@ def extract(packages)
 end
 
 def generate_ftdetect(packages, heuristics)
-  output = <<~EOS
-    " don't spam the user when Vim is started in Vi compatibility mode
-    let s:cpo_save = &cpo
-    set cpo&vim
-
-    " Disable all native vim ftdetect
-    if exists('g:polyglot_test')
-      autocmd!
-    endif
-
-    let s:disabled_packages = {}
-
-    if exists('g:polyglot_disabled')
-      for pkg in g:polyglot_disabled
-        let s:disabled_packages[pkg] = 1
-      endfor
-    endif
-
-    function! s:SetDefault(name, value)
-      if !exists(a:name)
-        let {a:name} = a:value
-      endif
-    endfunction
-
-    call s:SetDefault('g:markdown_enable_spell_checking', 0)
-    call s:SetDefault('g:markdown_enable_input_abbreviations', 0)
-    call s:SetDefault('g:markdown_enable_mappings', 0)
-
-    " Enable jsx syntax by default
-    call s:SetDefault('g:jsx_ext_required', 0)
-
-    " Needed for sql highlighting
-    call s:SetDefault('g:javascript_sql_dialect', 'sql')
-
-    " Make csv loading faster
-    call s:SetDefault('g:csv_start', 1)
-    call s:SetDefault('g:csv_end', 2)
-
-    " Disable json concealing by default
-    call s:SetDefault('g:vim_json_syntax_conceal', 0)
-
-    call s:SetDefault('g:filetype_euphoria', 'elixir')
-
-    if !exists('g:python_highlight_all')
-      call s:SetDefault('g:python_highlight_builtins', 1)
-      call s:SetDefault('g:python_highlight_builtin_objs', 1)
-      call s:SetDefault('g:python_highlight_builtin_types', 1)
-      call s:SetDefault('g:python_highlight_builtin_funcs', 1)
-      call s:SetDefault('g:python_highlight_builtin_funcs_kwarg', 1)
-      call s:SetDefault('g:python_highlight_exceptions', 1)
-      call s:SetDefault('g:python_highlight_string_formatting', 1)
-      call s:SetDefault('g:python_highlight_string_format', 1)
-      call s:SetDefault('g:python_highlight_string_templates', 1)
-      call s:SetDefault('g:python_highlight_indent_errors', 1)
-      call s:SetDefault('g:python_highlight_space_errors', 1)
-      call s:SetDefault('g:python_highlight_doctests', 1)
-      call s:SetDefault('g:python_highlight_func_calls', 1)
-      call s:SetDefault('g:python_highlight_class_vars', 1)
-      call s:SetDefault('g:python_highlight_operators', 1)
-      call s:SetDefault('g:python_highlight_file_headers_as_comments', 1)
-      call s:SetDefault('g:python_slow_sync', 1)
-    endif
-  EOS
+  output = "\n"
 
   extensions = Hash.new { |h, k| h[k] = [] }
 
@@ -542,18 +480,9 @@ def generate_ftdetect(packages, heuristics)
 
     output << "endif\n\n"
   end
-
-  output << <<~EOS
-    au BufNewFile,BufRead,StdinReadPost * 
-      \\ if !did_filetype() && expand("<amatch>") !~ g:ft_ignore_pat 
-      \\ | call polyglot#Heuristics() | endif
-
-    " restore Vi compatibility settings
-    let &cpo = s:cpo_save
-    unlet s:cpo_save
-  EOS
  
-  File.write('ftdetect/polyglot.vim', output)
+  ftdetect = File.read('ftdetect/polyglot.vim')
+  File.write('ftdetect/polyglot.vim', ftdetect.gsub(/(?<=" filetypes\n).*(?=\n" end filetypes)/m, output))
 
   output = <<~EOS
     " Line continuation is used here, remove 'C' from 'cpoptions'
