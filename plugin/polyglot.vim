@@ -36,7 +36,7 @@ function! s:guess(lines) abort
   let spaces_minus_tabs = 0
 
   for line in a:lines
-    if !len(line) || line =~# '^\s*$'
+    if !len(line) || line =~# '^\W*$'
       continue
     endif
 
