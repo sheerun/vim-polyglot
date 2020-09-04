@@ -969,8 +969,7 @@ The result is also available in the buffer-local variable `b:csv_result`.
 
 See also |csv-aggregate-functions|
 
-                                                                *MinCol_CSV*
-3.27 Maximum/Minimum value of a Column 				*MaxCol_CSV*
+3.27 Maximum/Minimum value of a Column 		*MaxCol_CSV* *MinCol_CSV*
 ---------------------------------------
 You can let Vim output the 10 maximum/minimum values of a column using the
 `:CSVMaxCol` command >
@@ -984,6 +983,7 @@ given, this calculates the sum for the column the cursor is on. Note, that the
 delimiter will be stripped away from each value and also empty values won't be
 considered.
 
+                                                    *format_number_csv*
 By default, Vim uses the a numerical format that uses the '.' as decimal
 separator while there is no thousands separator. If youre file contains
 the numbers in a different format, you can use the /format/ option to specify
@@ -1003,10 +1003,6 @@ uses the Space as thousands separator and the '.' as decimal separator.
 
 If [distinct] is given, only returns the number of distinct values.
 
-Note, if you Vim is compiled without floating point number format (|+float|),
-Vim will only aggregate the integer part and therefore won't use the 'y'
-argument in the /format/ specifier.
-
 The result is also available in the buffer-local variable `b:csv_result`.
 
 3.28 Average value of a Column 				*AvgCol_CSV*
@@ -1021,18 +1017,20 @@ given, this calculates the sum for the column the cursor is on. Note, that the
 delimiter will be stripped away from each value and also empty values won't be
 considered.
 
-For the [/format/] part, see |MaxCol_CSV|.
+For the [/format/] part, see |format_number_csv|.
 
 The result is also available in the buffer-local variable `b:csv_result`.
 
 See also |csv-aggregate-functions|
 
-3.29 Variance of a Column 				*VarCol_CSV*
+3.29 Variance of a Column 				*VarCol_CSV* *SmplVarCol* *PopVarCol*
 _________________________
 
     :[range]PopVarCol [nr] [/format/]
 
     :[range]SmplVarCol [nr] [/format/]
+
+Calculate the Population or Sample Variance for the specified column.
 
 This outputs the result of the column `<nr>` within the range given. If no range
 is given, this will calculate the statistical variance of the whole column. If <nr> is not
@@ -1041,12 +1039,16 @@ will be stripped away from each value and also empty values won't be considered.
 
 The result is also available in the buffer-local variable `b:csv_result`.
 
-3.30 Standard Deviation of a Column 				*StdDevCol_CSV*
+For the [/format/] part, see |format_number_csv|.
+
+3.30 Standard Deviation of a Column *StdDevCol_CSV* *PopStdCol* *SmplStdCol*
 ___________________________________
 
     :[range]PopStdCol [nr] [/format/]
 
     :[range]SmplStdCol [nr] [/format/]
+
+Calculate the Population or Sample Standard Deviation for the specified column.
 
 This outputs the result of the column `<nr>` within the range given. If no range
 is given, this will calculate the standard deviation of the whole column. If <nr> is not
@@ -1054,6 +1056,8 @@ given, this calculates the standard deviation for the column the cursor is on. N
 the delimiter will be stripped away from each value and also empty values won't be considered.
 
 The result is also available in the buffer-local variable `b:csv_result`.
+
+For the [/format/] part, see |format_number_csv|.
 
                                                             *:CSVDupColumn*
 3.31 Duplicate columns                                       *DupColumn_CSV*
@@ -1089,7 +1093,7 @@ This outputs the sum of the row [range]. If no range is given, this will
 calculate the sum for the current row. Note, that the delimiter will be
 stripped away from each value and also empty values won't be considered.
 
-For the [/format/] part, see |MaxCol_CSV|.
+For the [/format/] part, see |format_number_csv|
 ==============================================================================
 4. CSV Configuration					 *csv-configuration*
 

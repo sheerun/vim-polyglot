@@ -1672,7 +1672,7 @@ filetypes:
   - "*/templates/*.tpl"
 ---
 name: help
-remote: vim/vim:runtime
+remote: neovim/neovim:runtime
 glob: '**/help.vim'
 filetypes:
 - name: help

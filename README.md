@@ -125,7 +125,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [haxe](https://github.com/yaymukund/vim-haxe)
 - [hcl](https://github.com/b4b4r07/vim-hcl)
 - [helm](https://github.com/towolf/vim-helm)
-- [help](https://github.com/vim/vim/tree/master/runtime)
+- [help](https://github.com/neovim/neovim/tree/master/runtime)
 - [hive](https://github.com/zebradil/hive.vim)
 - [html5](https://github.com/othree/html5.vim)
 - [i3](https://github.com/mboughaba/i3config.vim)
