@@ -31,6 +31,7 @@ function! s:guess(lines) abort
   let triplequote = 0
   let backtick = 0
   let xmlcomment = 0
+  let heredoc = ''
   let minindent = 10
   let spaces_minus_tabs = 0
 
@@ -85,6 +86,18 @@ function! s:guess(lines) abort
         let xmlcomment = 0
       endif
       continue
+    endif
+
+    " This is correct order because both "<<EOF" and "EOF" matches end
+    if heredoc != ''
+      if line =~# heredoc
+        let heredoc = ''
+      endif
+      continue
+    endif
+    let herematch = matchlist(line, '\C<<\W*\([A-Z]\+\)\s*$')
+    if len(herematch) > 0
+      let heredoc = herematch[1] . '$'
     endif
 
     let spaces_minus_tabs += line[0] == "\t" ? 1 : -1
