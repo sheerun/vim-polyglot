@@ -84,3 +84,13 @@ rules:
     filetype: idris
   - override: 'g:filetype_idr'
 - filetype: idris2
+---
+extensions: [lidr]
+rules:
+- lines: 200
+  rules:
+  - pattern: '^>\s*--.*[Ii]dris ?1'
+    filetype: idris
+  - pattern: '^>\s*--.*[Ii]dris ?2'
+    filetype: idris2
+- filetype: idris2
