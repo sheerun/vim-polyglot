@@ -76,6 +76,8 @@ rules:
   rules:
   - pattern: '^pkgs =.*'
     filetype: idris
+  - pattern: '^depends =.*'
+    filetype: idris2
   - pattern: '^%language (TypeProviders|ElabReflection)'
     filetype: idris
   - pattern: '^%language PostfixProjections'
