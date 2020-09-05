@@ -227,10 +227,16 @@ func! polyglot#DetectIdrFiletype()
     if line =~# '^pkgs =.*'
       setf idris | return
     endif
-    if line =~# '^%language .*'
+    if line =~# '^depends =.*'
+      setf idris2 | return
+    endif
+    if line =~# '^%language \(TypeProviders\|ElabReflection\)'
       setf idris | return
     endif
-    if line =~# '^%access \(private\|export\|public export\|public\)'
+    if line =~# '^%language PostfixProjections'
+      setf idris2 | return
+    endif
+    if line =~# '^%access .*'
       setf idris | return
     endif
     if exists("g:filetype_idr")
@@ -238,6 +244,18 @@ func! polyglot#DetectIdrFiletype()
     endif
   endfor
   setf idris2 | return
+endfunc
+
+func! polyglot#DetectLidrFiletype()
+  for lnum in range(1, min([line("$"), 200]))
+    let line = getline(lnum)
+    if line =~# '^>\s*--.*[Ii]dris \=1'
+      setf idris | return
+    endif
+    if line =~# '^>\s*--.*[Ii]dris \=2'
+      setf idris2 | return
+    endif
+  endfor
 endfunc
 
 " Restore 'cpoptions'

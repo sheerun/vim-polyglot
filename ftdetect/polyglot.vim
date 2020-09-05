@@ -59,6 +59,9 @@ if !exists('g:python_highlight_all')
   call s:SetDefault('g:python_highlight_file_headers_as_comments', 1)
   call s:SetDefault('g:python_slow_sync', 1)
 endif
+
+" filetypes
+
 if !has_key(s:disabled_packages, '8th')
   au! BufRead,BufNewFile *.8th
 endif
@@ -377,7 +380,8 @@ endif
 
 if !has_key(s:disabled_packages, 'aptconf')
   au BufNewFile,BufRead */.aptitude/config setf aptconf
-  au BufNewFile,BufRead */etc/apt/apt.conf.d/{[-_[:alnum:]]\+,[-_.[:alnum:]]\+.conf} setf aptconf
+  au BufNewFile,BufRead */etc/apt/apt.conf.d/*.conf setf aptconf
+  au BufNewFile,BufRead */etc/apt/apt.conf.d/[^.]* setf aptconf
   au BufNewFile,BufRead apt.conf setf aptconf
 endif
 
@@ -791,13 +795,15 @@ if !has_key(s:disabled_packages, 'icalendar')
 endif
 
 if !has_key(s:disabled_packages, 'idris')
-  au BufNewFile,BufRead *.lidr setf idris
   au BufNewFile,BufRead idris-response setf idris
   au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
+  au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'idris2')
+  au BufNewFile,BufRead *.ipkg setf idris2
   au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
+  au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'ion')
@@ -1725,6 +1731,9 @@ endif
 if !has_key(s:disabled_packages, 'trasys')
   au! BufNewFile,BufRead *.inp call polyglot#DetectInpFiletype()
 endif
+
+
+" end filetypes
 
 au BufNewFile,BufRead,StdinReadPost * 
   \ if !did_filetype() && expand("<amatch>") !~ g:ft_ignore_pat 

@@ -125,7 +125,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [haxe](https://github.com/yaymukund/vim-haxe)
 - [hcl](https://github.com/b4b4r07/vim-hcl)
 - [helm](https://github.com/towolf/vim-helm)
-- [help](https://github.com/vim/vim/tree/master/runtime)
+- [help](https://github.com/neovim/neovim/tree/master/runtime)
 - [hive](https://github.com/zebradil/hive.vim)
 - [html5](https://github.com/othree/html5.vim)
 - [i3](https://github.com/mboughaba/i3config.vim)
@@ -246,7 +246,7 @@ Please make sure you have `syntax on` in your `.vimrc` (or use something like [s
 
 Individual language packs can be disabled by setting `g:polyglot_disabled` as follows:
 
-```viml
+```vim
 let g:polyglot_disabled = ['css']
 ```
 
@@ -254,11 +254,17 @@ let g:polyglot_disabled = ['css']
 
 Please note that disabling a language won't make in your vim startup any faster / slower (only for specific this specific filetype). All plugins are loaded lazily, on demand.
 
+Vim Polyglot tries to automatically detect indentation settings (just like vim-sleuth). If this feature is not working for you for some reason, please file an issue and disable it temporarily with:
+
+```vim
+let g:polyglot_disabled = ['autoindent']
+```
+
 ## Contributing
 
 Language packs are periodically updated using automated `scripts/build` script.
 
-Feel free to add your language to `packages.yaml`, and send pull-request. Please don't run `make` and include that in your PR, send just changes to `packages.yaml` and build scripts if really necessary. You can run `make test` to run rough tests.
+Feel free to add your language to `packages.yaml` + `heuristics.yaml`, and send pull-request. You can run `make test` to run rough tests. And `make dev` for easy development.
 
 ## License
 

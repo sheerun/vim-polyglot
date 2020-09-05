@@ -179,7 +179,8 @@ filetypes:
   filenames:
   - apt.conf
   - '*/.aptitude/config'
-  - '*/etc/apt/apt.conf.d/{[-_[:alnum:]]\+,[-_.[:alnum:]]\+.conf}'
+  - '*/etc/apt/apt.conf.d/[^.]*'
+  - '*/etc/apt/apt.conf.d/*.conf'
 ---
 name: arch
 remote: vim/vim:runtime
@@ -1683,7 +1684,7 @@ filetypes:
   - "*/templates/*.tpl"
 ---
 name: help
-remote: vim/vim:runtime
+remote: neovim/neovim:runtime
 glob: '**/help.vim'
 filetypes:
 - name: help
