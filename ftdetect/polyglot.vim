@@ -802,6 +802,7 @@ endif
 
 if !has_key(s:disabled_packages, 'idris2')
   au BufNewFile,BufRead *.ipkg setf idris2
+  au BufNewFile,BufRead idris-response setf idris2
   au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
   au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
 endif

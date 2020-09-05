@@ -77,6 +77,12 @@ def load_data()
         filetype["extensions"] ||= []
         filetype["filenames"] ||= []
         filetype["interpreters"] ||= []
+
+        filetype.keys.each do |key|
+          if key.start_with?("extra_")
+            raise "[#{filetype["name"]}]: #{key} is not allowed if linguist is not used"
+          end
+        end
       end
     end
   end
