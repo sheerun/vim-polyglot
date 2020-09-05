@@ -1,7 +1,8 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
 
 function! cargo#quickfix#CmdPre() abort
-    if &filetype ==# 'rust' && get(b:, 'current_compiler', '') ==# 'cargo'
+    if &filetype ==# 'rust' && get(b:, 'current_compiler', '') ==# 'cargo' &&
+         \ &makeprg =~ '\V\^cargo\ \.\*'
         " Preserve the current directory, and 'lcd' to the nearest Cargo file.
         let b:rust_compiler_cargo_qf_has_lcd = haslocaldir()
         let b:rust_compiler_cargo_qf_prev_cd = getcwd()

@@ -190,6 +190,11 @@ call TestExtension('yaml.ansible', 'requirements.yaml', '')
 call TestExtension('ps1xml', 'foobar.ps1xml', '')
 call TestExtension('terraform', 'terraform.tf', '')
 
+call TestExtension('idris2', 'foobar.idr', '')
+call TestExtension('idris', 'foobar.idr', "pkgs : List String\npkgs = [\"NCurses\", \"Readline\"]")
+let g:filetype_idr = 'fizfuz'
+call TestExtension('fizfuz', 'fizfuz.idr', '')
+
 " .m extension
 call TestExtension('octave', 'matlab.m', '')
 call TestExtension('objc', 'objc.m', "\n\n  #import <Foundation/Foundation.h>")
@@ -215,3 +220,28 @@ call TestExtension('cpp', 'cpp.re', '#include "config.h"')
 call TestExtension('cpp', 'cpp2.re', '#ifdef HAVE_CONFIG_H')
 call TestExtension('cpp', 'cpp3.re', '#define YYCTYPE unsigned char')
 call TestExtension('reason', 'react.re', 'ReasonReact.Router.push("");')
+
+" Idris
+call TestExtension('idris', 'lowercase.idr', '--idris1')
+call TestExtension('idris', 'uppercase.idr', '--Idris1')
+call TestExtension('idris', 'start-space-l.idr', '-- idris1')
+call TestExtension('idris', 'start-space-u.idr', '-- Idris1')
+call TestExtension('idris', 'two-spaces-l.idr', '-- idris 1')
+call TestExtension('idris', 'two-spaces-u.idr', '-- Idris 1')
+"call TestExtension('idris', 'mypkg.ipkg', 'package mypkg\n\npkgs = pruviloj, lightyear')
+call TestExtension('idris', 'use-type-prov.idr', '%language TypeProviders')
+call TestExtension('idris', 'use-elab-refl.idr', '%language ElabReflection')
+call TestExtension('idris', 'access-modifier.idr', '%access export\n\npublic export\nMyTest : Type-> Type\n\nfact : Nat -> Nat')
+call TestExtension('idris2', 'lowercase.idr', '--idris2')
+call TestExtension('idris2', 'uppercase.idr', '--Idris2')
+call TestExtension('idris2', 'start-space-l.idr', '-- idris2')
+call TestExtension('idris2', 'start-space-u.idr', '-- Idris2')
+call TestExtension('idris2', 'two-spaces-l.idr', '-- idris 2')
+call TestExtension('idris2', 'two-spaces-u.idr', '-- Idris 2')
+call TestExtension('idris2', 'mypkg.ipkg', 'package mypkg\n\ndepends = effects')
+call TestExtension('idris2', 'use-post-proj.idr', '%language PostfixProjections')
+
+" Literate Idris
+call TestExtension('lidris', 'lidris-1.lidr', "Some test plaintext\n\n> --idris1\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
+call TestExtension('lidris2', 'lidris-2.lidr', "Some test plaintext\n\n> --idris2\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
+

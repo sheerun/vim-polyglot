@@ -212,6 +212,50 @@ func! polyglot#DetectReFiletype()
   endfor
 endfunc
 
+func! polyglot#DetectIdrFiletype()
+  for lnum in range(1, min([line("$"), 5]))
+    let line = getline(lnum)
+    if line =~# '^\s*--.*[Ii]dris \=1'
+      setf idris | return
+    endif
+    if line =~# '^\s*--.*[Ii]dris \=2'
+      setf idris2 | return
+    endif
+  endfor
+  for lnum in range(1, min([line("$"), 30]))
+    let line = getline(lnum)
+    if line =~# '^pkgs =.*'
+      setf idris | return
+    endif
+    if line =~# '^depends =.*'
+      setf idris2 | return
+    endif
+    if line =~# '^%language \(TypeProviders\|ElabReflection\)'
+      setf idris | return
+    endif
+    if line =~# '^%language PostfixProjections'
+      setf idris2 | return
+    endif
+    if line =~# '^%access .*'
+      setf idris | return
+    endif
+    if exists("g:filetype_idr")
+      exe "setf " . g:filetype_idr | return
+    endif
+  endfor
+  setf idris2 | return
+endfunc
+
+func! polyglot#DetectLidrFiletype()
+  for lnum in range(1, min([line("$"), 200]))
+    let line = getline(lnum)
+    if line =~# '^>\s*--.*[Ii]dris \=1'
+      setf lidris | return
+    endif
+  endfor
+  setf lidris2 | return
+endfunc
+
 " Restore 'cpoptions'
 let &cpo = s:cpo_save
 unlet s:cpo_save

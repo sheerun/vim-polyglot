@@ -755,6 +755,19 @@ filetypes:
   extra_filenames:
   - idris-response
 ---
+name: idris2
+remote: edwinb/idris2-vim
+filetypes:
+- name: idris2
+  extensions:
+  - idr
+  - ipkg
+  filenames:
+  - idris-response
+- name: lidris2
+  extensions:
+  - lidr
+---
 name: ion
 remote: vmchale/ion-vim
 filetypes:

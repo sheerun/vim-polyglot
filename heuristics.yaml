@@ -63,3 +63,33 @@ rules:
   - pattern: '^\s*#(?:(?:if|ifdef|define|pragma)\s+\w|\s*include\s+[<"]|template\s*<)'
     filetype: cpp
   - filetype: reason
+---
+extensions: [idr]
+rules:
+- lines: 5
+  rules:
+  - pattern: '^\s*--.*[Ii]dris ?1'
+    filetype: idris
+  - pattern: '^\s*--.*[Ii]dris ?2'
+    filetype: idris2
+- lines: 30
+  rules:
+  - pattern: '^pkgs =.*'
+    filetype: idris
+  - pattern: '^depends =.*'
+    filetype: idris2
+  - pattern: '^%language (TypeProviders|ElabReflection)'
+    filetype: idris
+  - pattern: '^%language PostfixProjections'
+    filetype: idris2
+  - pattern: '^%access .*'
+    filetype: idris
+  - override: 'g:filetype_idr'
+- filetype: idris2
+---
+extensions: [lidr]
+rules:
+- lines: 200
+  pattern: '^>\s*--.*[Ii]dris ?1'
+  filetype: lidris
+- filetype: lidris2
