@@ -90,8 +90,6 @@ rules:
 extensions: [lidr]
 rules:
 - lines: 200
-  rules:
-  - pattern: '^>\s*--.*[Ii]dris ?1'
-    filetype: idris
-  - pattern: '^>\s*--.*[Ii]dris ?2'
-    filetype: idris2
+  pattern: '^>\s*--.*[Ii]dris ?1'
+  filetype: lidris
+- filetype: lidris2

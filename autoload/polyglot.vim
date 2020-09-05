@@ -250,12 +250,10 @@ func! polyglot#DetectLidrFiletype()
   for lnum in range(1, min([line("$"), 200]))
     let line = getline(lnum)
     if line =~# '^>\s*--.*[Ii]dris \=1'
-      setf idris | return
-    endif
-    if line =~# '^>\s*--.*[Ii]dris \=2'
-      setf idris2 | return
+      setf lidris | return
     endif
   endfor
+  setf lidris2 | return
 endfunc
 
 " Restore 'cpoptions'

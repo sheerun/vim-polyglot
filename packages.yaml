@@ -761,10 +761,12 @@ filetypes:
 - name: idris2
   extensions:
   - idr
-  - lidr
   - ipkg
   filenames:
   - idris-response
+- name: lidris2
+  extensions:
+  - lidr
 ---
 name: ion
 remote: vmchale/ion-vim

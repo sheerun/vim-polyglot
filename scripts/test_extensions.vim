@@ -242,6 +242,6 @@ call TestExtension('idris2', 'mypkg.ipkg', 'package mypkg\n\ndepends = effects')
 call TestExtension('idris2', 'use-post-proj.idr', '%language PostfixProjections')
 
 " Literate Idris
-call TestExtension('idris', 'lidris-1.lidr', "Some test plaintext\n\n> --idris1\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
-call TestExtension('idris2', 'lidris-2.lidr', "Some test plaintext\n\n> --idris2\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
+call TestExtension('lidris', 'lidris-1.lidr', "Some test plaintext\n\n> --idris1\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
+call TestExtension('lidris2', 'lidris-2.lidr', "Some test plaintext\n\n> --idris2\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
 
