@@ -1661,11 +1661,6 @@ filetypes:
   - fish_read_history
   ignored_filenames:
   - '~/.config/fish/fish_{read_,}history'
----
-name: yaml-extras
-remote: stephpy/vim-yaml
-after: yaml
-filetypes: []
 # Ansible needs to be after YAML
 ---
 name: ansible
