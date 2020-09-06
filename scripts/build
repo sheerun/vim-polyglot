@@ -59,10 +59,15 @@ def load_data()
 
         linguist = languages.fetch(filetype["linguist"])
 
-        filetype["extensions"] = ((
-          (linguist["extensions"] || []).map { |e| e[1..-1] } |
+        filetype["extensions"] = (linguist["extensions"] || []).map { |e| e[1..-1] } |
           filetype.fetch("extra_extensions", [])
-        ) - filetype.fetch("ignored_extensions", [])).uniq
+
+        extra_ignored_extensions = filetype.fetch("ignored_extensions", []) - filetype["extensions"]
+        if extra_ignored_extensions.size > 0
+          raise StandardError.new("[#{filetype["name"]}]: Unnecessary ignored extensions: #{extra_ignored_extensions.join(", ")}") 
+        end
+
+        filetype["extensions"] -= filetype.fetch("ignored_extensions", [])
 
         filetype["filenames"] = ((
           (linguist["filenames"] || []) |
@@ -394,7 +399,19 @@ def generate_ftdetect(packages, heuristics)
   expected_filetypes = detect_filetypes('tmp/**/ftdetect/*.vim')
   native_filetypes = detect_filetypes('tmp/vim/vim/runtime/filetype.vim')
   native_extensions = native_filetypes.flat_map { |k, v| v["extensions"] }
+
+  all_filetypes = Hash.new { |h, k| h[k] = { extensions: [], filenames: [] } }
+
+  for k, v in expected_filetypes
+    all_filetypes[k][:extensions].concat(v[:extensions])
+    all_filetypes[k][:filenames].concat(v[:filenames])
+  end
   
+  for k, v in native_filetypes
+    all_filetypes[k][:extensions].concat(v[:extensions])
+    all_filetypes[k][:filenames].concat(v[:filenames])
+  end
+
   for package in packages
     name = package.fetch("name")
 
@@ -438,12 +455,16 @@ def generate_ftdetect(packages, heuristics)
       extensions = filetype["extensions"]
       filenames = filetype["filenames"]
 
-      if expected_filetypes[name] && !filetype["syntax"]
-        for e in expected_filetypes.fetch(name)[:extensions] - extensions - expand_all(filetype.fetch("ignored_extensions", []))
+      expected_extensions = all_filetypes.has_key?(name) ? all_filetypes.fetch(name)[:extensions] : []
+      ignored_extensions = expand_all(filetype.fetch("ignored_extensions", []))
+      ignored_warnings = expand_all(filetype.fetch("ignored_warnings", []))
+
+      if all_filetypes[name] && !filetype["syntax"]
+        for e in expected_extensions - extensions - ignored_extensions - ignored_warnings
           puts "Probable missing extension for #{name}: #{e}"
         end
 
-        for e in expected_filetypes.fetch(name)[:filenames] - expand_all(filenames).flat_map { |e| [e, e.gsub(/^\./, '')] } - expand_all(filetype.fetch("ignored_filenames", [])) - ['*']
+        for e in all_filetypes.fetch(name)[:filenames] - expand_all(filenames).flat_map { |e| [e, e.gsub(/^\./, '')] } - expand_all(filetype.fetch("ignored_warnings", [])) - ['*']
           puts "Probable missing filename for #{name}: #{e}"
         end
       end

@@ -93,3 +93,11 @@ rules:
   pattern: '^>\s*--.*[Ii]dris ?1'
   filetype: lidris
 - filetype: lidris2
+---
+extensions: [bas]
+rules:
+- lines: 5
+  pattern: 'VB_Name|Begin VB\.(Form|MDIForm|UserControl)'
+  filetype: vb
+  ignore_case: true
+- filetype: basic

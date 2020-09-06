@@ -256,6 +256,16 @@ func! polyglot#DetectLidrFiletype()
   setf lidris2 | return
 endfunc
 
+func! polyglot#DetectBasFiletype()
+  for lnum in range(1, min([line("$"), 5]))
+    let line = getline(lnum)
+    if line =~? 'VB_Name\|Begin VB\.\(Form\|MDIForm\|UserControl\)'
+      setf vb | return
+    endif
+  endfor
+  setf basic | return
+endfunc
+
 " Restore 'cpoptions'
 let &cpo = s:cpo_save
 unlet s:cpo_save

@@ -1712,6 +1712,22 @@ if !has_key(s:disabled_packages, 'trasys')
   au! BufNewFile,BufRead *.inp call polyglot#DetectInpFiletype()
 endif
 
+if !has_key(s:disabled_packages, 'basic')
+  au BufNewFile,BufRead *.basic setf basic
+endif
+
+if !has_key(s:disabled_packages, 'visual-basic')
+  au BufNewFile,BufRead *.cls setf vb
+  au BufNewFile,BufRead *.ctl setf vb
+  au BufNewFile,BufRead *.dsm setf vb
+  au BufNewFile,BufRead *.frm setf vb
+  au BufNewFile,BufRead *.frx setf vb
+  au BufNewFile,BufRead *.sba setf vb
+  au BufNewFile,BufRead *.vba setf vb
+  au BufNewFile,BufRead *.vbs setf vb
+  au! BufNewFile,BufRead *.bas call polyglot#DetectBasFiletype()
+endif
+
 
 " end filetypes
 

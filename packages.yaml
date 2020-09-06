@@ -348,14 +348,14 @@ filetypes:
   extra_extensions:
   # 17 results: https://github.com/search?q=extension%3Acoffeekup+html&type=Code
   - coffeekup
-  ignored_extensions:
+  ignored_filenames:
+  # Probably mistake
+  - '*Cakefile'
+  ignored_warnings:
   # Used by C#
   - csx
   # Used by Chuck
   - ck
-  ignored_filenames:
-  # Probably mistake
-  - '*Cakefile'
 - name: litcoffee
   linguist: Literate CoffeeScript
   extra_extensions:
@@ -395,7 +395,7 @@ filetypes:
   extra_extensions:
   - tsv
   - tab
-  ignored_extensions:
+  ignored_warnings:
   # This is definitely not csv-only, maybe re-enable when heuristics done
   - dat
 ---
@@ -815,8 +815,10 @@ filetypes:
   extra_extensions:
   - j2
   ignored_extensions:
-  - mustache
   - njk
+  ignore_warnings:
+  # handled by mustache plugin
+  - mustache
 ---
 name: jq
 remote: vito-c/jq.vim
@@ -857,8 +859,8 @@ filetypes:
   extra_extensions:
   - jst
   - ect
-  ignored_extensions:
-  # I haven't found reference to them
+  ignored_warnings:
+  # I haven't found reference to them on github
   - djs
   - hamljs
 ---
@@ -974,6 +976,7 @@ filetypes:
   ignored_extensions:
   # Handled by mdx extension
   - mdx
+  ignored_warnings:
   - '{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx}'
 ---
 name: mdx
@@ -1551,9 +1554,9 @@ remote: lumiliet/vim-twig
 filetypes:
 - name: html.twig
   linguist: Twig
-  ignored_extensions:
+  ignored_warnings:
+  # handled by other extension
   - xml.twig
-  ignored_extensions:
   # already covered by .twig
   - html.twig
 - name: xml.twig
@@ -1721,3 +1724,26 @@ filetypes:
 - name: trasys
   extensions:
   - inp
+---
+name: basic
+remote: vim/vim:runtime
+glob: '**/basic.vim'
+filetypes:
+- name: basic
+  extensions:
+  - basic
+---
+name: visual-basic
+remote: vim/vim:runtime
+glob: '**/vb.vim'
+filetypes:
+- name: vb
+  linguist: VBA
+  extra_extensions:
+  - vbs
+  - dsm
+  - ctl
+  # SaxBasic is close to Visual Basic
+  - sba
+  ignore_warnings:
+  - vb

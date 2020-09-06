@@ -9,145 +9,145 @@ function! TestExtension(filetype, filename, content)
     exec ":bw!"
   catch
     echo g:message
-    echo 'Filename "' . a:filename  . '" does not resolve to extension "' . a:filetype . '"'
-    echo '  instead received: "' . v:exception . '"'
-    exec ':cq!'
+    echo "Filename '" . a:filename  . "' does not resolve to extension '" . a:filetype . "'"
+    echo "  instead received: '" . v:exception . "'"
+    exec ":cq!"
   endtry
 endfunction
 
-call TestExtension('sh', 'bash1', "#!/bin/bash")
-call TestExtension('sh', 'bash2', "#! /bin/bash")
-call TestExtension('sh', 'bash3', "#! /bin/bash2.3")
-call TestExtension('sh', 'bash4', "#!/usr/bin/env bash")
-call TestExtension('sh', 'bash6', "#!/usr/bin/env -i -=split-string foo=bar bash -l foo")
-call TestExtension('sh', 'bash1', "#!/bin/bash")
+call TestExtension("sh", "bash1", "#!/bin/bash")
+call TestExtension("sh", "bash2", "#! /bin/bash")
+call TestExtension("sh", "bash3", "#! /bin/bash2.3")
+call TestExtension("sh", "bash4", "#!/usr/bin/env bash")
+call TestExtension("sh", "bash6", "#!/usr/bin/env -i -=split-string foo=bar bash -l foo")
+call TestExtension("sh", "bash1", "#!/bin/bash")
 
 " Vim help file
-call TestExtension('help', $VIMRUNTIME . '/doc/foobar.txt', '')
+call TestExtension("help", $VIMRUNTIME . "/doc/foobar.txt", "")
 
 " Abaqus or Trasys
-call TestExtension('abaqus', 'foobar.inp', "*HEADING\nFoobar")
-call TestExtension('trasys', 'foobar.inp', "MSC PATRAN\n* foobar\nHEADER SURFACE DATA\nBSC ENCLO1")
+call TestExtension("abaqus", "foobar.inp", "*HEADING\nFoobar")
+call TestExtension("trasys", "foobar.inp", "MSC PATRAN\n* foobar\nHEADER SURFACE DATA\nBSC ENCLO1")
 
 " 8th (Firth-derivative)
-call TestExtension('8th', 'foobar.8th', '')
-call TestExtension('8th', 'foobar.8th', '')
+call TestExtension("8th", "foobar.8th", "")
+call TestExtension("8th", "foobar.8th", "")
 
 " A-A-P recipe
-call TestExtension('aap', 'foobar.aap', '')
+call TestExtension("aap", "foobar.aap", "")
 
 
 " A2ps printing utility
-call TestExtension('a2ps', '/etc/a2ps.cfg', '')
-call TestExtension('a2ps', '/usr/local/etc/a2ps.cfg', '')
-call TestExtension('a2ps', '/etc/a2ps/foobar.cfg', '')
-call TestExtension('a2ps', '/usr/local/etc/a2ps/foobar.cfg', '')
-call TestExtension('a2ps', '/tmp/a2psrc', '')
-call TestExtension('a2ps', '/tmp/.a2psrc', '')
+call TestExtension("a2ps", "/etc/a2ps.cfg", "")
+call TestExtension("a2ps", "/usr/local/etc/a2ps.cfg", "")
+call TestExtension("a2ps", "/etc/a2ps/foobar.cfg", "")
+call TestExtension("a2ps", "/usr/local/etc/a2ps/foobar.cfg", "")
+call TestExtension("a2ps", "/tmp/a2psrc", "")
+call TestExtension("a2ps", "/tmp/.a2psrc", "")
 
 " ABAB/4
-call TestExtension('abap', 'foobar.abap', '')
+call TestExtension("abap", "foobar.abap", "")
 
 " ABC music notation
-call TestExtension('abc', 'foobar.abc', '')
+call TestExtension("abc", "foobar.abc", "")
 
 " ABEL
-call TestExtension('abel', 'foobar.abl', '')
+call TestExtension("abel", "foobar.abl", "")
 
 " AceDB
-call TestExtension('acedb', 'foobar.wrm', '')
+call TestExtension("acedb", "foobar.wrm", "")
 
 " Ada (83, 9X, 95)
-call TestExtension('ada', 'foobar.adb', '')
-call TestExtension('ada', 'foobar.ads', '')
-call TestExtension('ada', 'foobar.ada', '')
-call TestExtension('ada', 'foobar.gpr', '')
+call TestExtension("ada", "foobar.adb", "")
+call TestExtension("ada", "foobar.ads", "")
+call TestExtension("ada", "foobar.ada", "")
+call TestExtension("ada", "foobar.gpr", "")
 
 " AHDL
-call TestExtension('ahdl', 'foobar.tdf', '')
+call TestExtension("ahdl", "foobar.tdf", "")
 
 " AIDL
-call TestExtension('aidl', 'foobar.aidl', '')
+call TestExtension("aidl", "foobar.aidl", "")
 
 " AMPL
-call TestExtension('ampl', 'foobar.run', '')
+call TestExtension("ampl", "foobar.run", "")
 
 " Ant
-call TestExtension('ant', 'build.xml', '')
+call TestExtension("ant", "build.xml", "")
 
 " Arduino
-call TestExtension('arduino', 'foobar.ino', '')
-call TestExtension('arduino', 'foobar.pde', '')
+call TestExtension("arduino", "foobar.ino", "")
+call TestExtension("arduino", "foobar.pde", "")
 
 " Apache config file
-call TestExtension('apache', '.htaccess', '')
-call TestExtension('apache', '/etc/httpd/foobar.conf', '')
-call TestExtension('apache', '/etc/apache2/sites-foobar/foobar.com', '')
-call TestExtension('apache', '/usr/local/etc/httpd/foobar.conf', '')
-call TestExtension('apache', '/usr/local/etc/apache2/sites-foobar/foobar.com', '')
+call TestExtension("apache", ".htaccess", "")
+call TestExtension("apache", "/etc/httpd/foobar.conf", "")
+call TestExtension("apache", "/etc/apache2/sites-foobar/foobar.com", "")
+call TestExtension("apache", "/usr/local/etc/httpd/foobar.conf", "")
+call TestExtension("apache", "/usr/local/etc/apache2/sites-foobar/foobar.com", "")
 
 " XA65 MOS6510 cross assembler
-call TestExtension('a65', 'foobar.a65', '')
+call TestExtension("a65", "foobar.a65", "")
 
 " Applescript
-call TestExtension('applescript', 'foobar.scpt', '')
+call TestExtension("applescript", "foobar.scpt", "")
 
 " Applix ELF
-call TestExtension('elf', 'foobar.am', '')
-call TestExtension('automake', 'Makefile.am', '')
-call TestExtension('automake', 'makefile.am', '')
+call TestExtension("elf", "foobar.am", "")
+call TestExtension("automake", "Makefile.am", "")
+call TestExtension("automake", "makefile.am", "")
 
 " ALSA configuration
-call TestExtension('alsaconf', '.asoundrc', '')
-call TestExtension('alsaconf', '/usr/share/alsa/alsa.conf', '')
-call TestExtension('alsaconf', '/media/foo/usr/share/alsa/alsa.conf', '')
-call TestExtension('alsaconf', '/etc/asound.conf', '')
-call TestExtension('alsaconf', '/media/foo/etc/asound.conf', '')
+call TestExtension("alsaconf", ".asoundrc", "")
+call TestExtension("alsaconf", "/usr/share/alsa/alsa.conf", "")
+call TestExtension("alsaconf", "/media/foo/usr/share/alsa/alsa.conf", "")
+call TestExtension("alsaconf", "/etc/asound.conf", "")
+call TestExtension("alsaconf", "/media/foo/etc/asound.conf", "")
 
 " Arc Macro Language
-call TestExtension('aml', 'foobar.aml', '')
+call TestExtension("aml", "foobar.aml", "")
 
 " APT config file
-call TestExtension('aptconf', 'apt.conf', '')
-call TestExtension('aptconf', '/root/.aptitude/config', '')
-call TestExtension('aptconf', '/etc/apt/apt.conf.d/foo_bar-12', '')
-call TestExtension('aptconf', '/etc/apt/apt.conf.d/foo_bar-12.conf', '')
-call TestExtension('', '/etc/apt/apt.conf.d/.gsdf', '')
+call TestExtension("aptconf", "apt.conf", "")
+call TestExtension("aptconf", "/root/.aptitude/config", "")
+call TestExtension("aptconf", "/etc/apt/apt.conf.d/foo_bar-12", "")
+call TestExtension("aptconf", "/etc/apt/apt.conf.d/foo_bar-12.conf", "")
+call TestExtension("", "/etc/apt/apt.conf.d/.gsdf", "")
 
 " Arch Inventory file
-call TestExtension('arch', '.arch-inventory', '')
-call TestExtension('arch', '=tagging-method', '')
+call TestExtension("arch", ".arch-inventory", "")
+call TestExtension("arch", "=tagging-method", "")
 
 " ART*Enterprise (formerly ART-IM)
-call TestExtension('art', 'foobar.art', '')
+call TestExtension("art", "foobar.art", "")
 
 " AsciiDoc
-call TestExtension('asciidoc', 'foobar.asciidoc', '')
-call TestExtension('asciidoc', 'foobar.adoc', '')
+call TestExtension("asciidoc", "foobar.asciidoc", "")
+call TestExtension("asciidoc", "foobar.adoc", "")
 
 " ASN.1
-call TestExtension('asn', 'foobar.asn', '')
-call TestExtension('asn', 'foobar.asn1', '')
+call TestExtension("asn", "foobar.asn", "")
+call TestExtension("asn", "foobar.asn1", "")
 
 " Active Server Pages (with Visual Basic Script)
-call TestExtension('aspvbs', 'foobar.asa', '')
-let g:filetype_asa = 'fizfuz'
-call TestExtension('fizfuz', 'foobar.asa', '')
+call TestExtension("aspvbs", "foobar.asa", "")
+let g:filetype_asa = "fizfuz"
+call TestExtension("fizfuz", "foobar.asa", "")
 
 " Active Server Pages (with Perl or Visual Basic Script)
-call TestExtension('aspvbs', 'vbs.asp', "")
-call TestExtension('aspperl', 'perl.asp', "<Job ID=\"DropFiles\">\n<script language=\"PerlScript\">\n</script>\n</Job>")
-let g:filetype_asp = 'fizfuz'
-call TestExtension('fizfuz', 'fizfuz.asp', '')
+call TestExtension("aspvbs", "vbs.asp", "")
+call TestExtension("aspperl", "perl.asp", "<Job ID=\"DropFiles\">\n<script language=\"PerlScript\">\n</script>\n</Job>")
+let g:filetype_asp = "fizfuz"
+call TestExtension("fizfuz", "fizfuz.asp", "")
 
 
 " Grub (must be before catch *.lst)
-call TestExtension('grub', '/boot/grub/menu.lst', '')
-call TestExtension('grub', '/media/foobar/boot/grub/menu.lst', '')
-call TestExtension('grub', '/boot/grub/grub.conf', '')
-call TestExtension('grub', '/media/foobar/boot/grub/grub.conf', '')
-call TestExtension('grub', '/etc/grub.conf', '')
-call TestExtension('grub', '/media/foobar/etc/grub.conf', '')
+call TestExtension("grub", "/boot/grub/menu.lst", "")
+call TestExtension("grub", "/media/foobar/boot/grub/menu.lst", "")
+call TestExtension("grub", "/boot/grub/grub.conf", "")
+call TestExtension("grub", "/media/foobar/boot/grub/grub.conf", "")
+call TestExtension("grub", "/etc/grub.conf", "")
+call TestExtension("grub", "/media/foobar/etc/grub.conf", "")
 
 " Assembly (all kinds)
 " *.lst is not pure assembly, it has two extra columns (address, byte codes)
@@ -155,93 +155,105 @@ call TestExtension('grub', '/media/foobar/etc/grub.conf', '')
 au BufNewFile,BufRead *.asm,*.[sS],*.[aA],*.mac,*.lst	call dist#ft#FTasm()
 
 " Macro (VAX)
-call TestExtension('vmasm', 'foobar.mar', '')
+call TestExtension("vmasm", "foobar.mar", "")
 
 " Atlas
-call TestExtension('atlas', 'foobar.atl', '')
-call TestExtension('atlas', 'foobar.as', '')
+call TestExtension("atlas", "foobar.atl", "")
+call TestExtension("atlas", "foobar.as", "")
 
 " Autoit v3
-call TestExtension('autoit', 'foobar.au3', '')
+call TestExtension("autoit", "foobar.au3", "")
 
 " Autohotkey
-call TestExtension('autohotkey', 'foobar.ahk', '')
+call TestExtension("autohotkey", "foobar.ahk", "")
 
 " Automake
-call TestExtension('automake', 'Makefile.am', '')
-call TestExtension('automake', 'makefile.am', '')
-call TestExtension('automake', 'GNUmakefile.am', '')
+call TestExtension("automake", "Makefile.am", "")
+call TestExtension("automake", "makefile.am", "")
+call TestExtension("automake", "GNUmakefile.am", "")
 
 " Autotest .at files are actually m4
-call TestExtension('m4', 'foobar.at', '')
+call TestExtension("m4", "foobar.at", "")
 
 " Avenue
-call TestExtension('ave', 'foobar.ave', '')
+call TestExtension("ave", "foobar.ave", "")
 
 " Awk
-call TestExtension('awk', 'foobar.awk', '')
+call TestExtension("awk", "foobar.awk", "")
 
 " vim-polyglot only
-call TestExtension('blade', 'test.blade.php', '')
-call TestExtension('yaml.ansible', 'playbook.yml', '')
-call TestExtension('yaml.ansible', 'host_vars/foobar', '')
-call TestExtension('yaml.ansible', 'handlers.foobar.yaml', '')
-call TestExtension('yaml.ansible', 'requirements.yaml', '')
-call TestExtension('ps1xml', 'foobar.ps1xml', '')
-call TestExtension('terraform', 'terraform.tf', '')
+call TestExtension("blade", "test.blade.php", "")
+call TestExtension("yaml.ansible", "playbook.yml", "")
+call TestExtension("yaml.ansible", "host_vars/foobar", "")
+call TestExtension("yaml.ansible", "handlers.foobar.yaml", "")
+call TestExtension("yaml.ansible", "requirements.yaml", "")
+call TestExtension("ps1xml", "foobar.ps1xml", "")
+call TestExtension("terraform", "terraform.tf", "")
 
-call TestExtension('idris2', 'foobar.idr', '')
-call TestExtension('idris', 'foobar.idr', "pkgs : List String\npkgs = [\"NCurses\", \"Readline\"]")
-let g:filetype_idr = 'fizfuz'
-call TestExtension('fizfuz', 'fizfuz.idr', '')
+call TestExtension("idris2", "foobar.idr", "")
+call TestExtension("idris", "foobar.idr", "pkgs : List String\npkgs = [\"NCurses\", \"Readline\"]")
+let g:filetype_idr = "fizfuz"
+call TestExtension("fizfuz", "fizfuz.idr", "")
 
 " .m extension
-call TestExtension('octave', 'matlab.m', '')
-call TestExtension('objc', 'objc.m', "\n\n  #import <Foundation/Foundation.h>")
-call TestExtension('octave', 'objc.m', "results_ub_times=zeros(2,2,M);\n%results pour la lower bound")
-call TestExtension('mma', 'mathematica.m', "newcase[ \"00003\" ];\n  (* Hello world *)")
-call TestExtension('murphi', 'murphi.m', "type\n  square: 1 .. 9")
-call TestExtension('murphi', 'murphi.m', "something\n--foobar")
-call TestExtension('octave', 'percentcomment.m', "hello world\n%foobar")
-call TestExtension('objc', 'comment.m', "\n/* Hello world */")
-let g:filetype_m = 'fizfuz'
-call TestExtension('fizfuz', 'fizfuz.m', '')
+call TestExtension("octave", "matlab.m", "")
+call TestExtension("objc", "objc.m", "\n\n  #import <Foundation/Foundation.h>")
+call TestExtension("octave", "objc.m", "results_ub_times=zeros(2,2,M);\n%results pour la lower bound")
+call TestExtension("mma", "mathematica.m", "newcase[ \"00003\" ];\n  (* Hello world *)")
+call TestExtension("murphi", "murphi.m", "type\n  square: 1 .. 9")
+call TestExtension("murphi", "murphi.m", "something\n--foobar")
+call TestExtension("octave", "percentcomment.m", "hello world\n%foobar")
+call TestExtension("objc", "comment.m", "\n/* Hello world */")
+let g:filetype_m = "fizfuz"
+call TestExtension("fizfuz", "fizfuz.m", "")
 
 " .fs extension
-call TestExtension('forth', 'empty.fs', '')
-call TestExtension('fsharp', 'fsharp.fs', "let myInt = 5")
-call TestExtension('glsl', 'glsl.fs', "//#version 120\nvoid main() {}")
-let g:filetype_fs = 'fizfuz'
-call TestExtension('fizfuz', 'fizfuz.fs', '')
+call TestExtension("forth", "empty.fs", "")
+call TestExtension("fsharp", "fsharp.fs", "let myInt = 5")
+call TestExtension("glsl", "glsl.fs", "//#version 120\nvoid main() {}")
+let g:filetype_fs = "fizfuz"
+call TestExtension("fizfuz", "fizfuz.fs", "")
 
 " .re extension
-call TestExtension('reason', 'empty.re', '')
-call TestExtension('cpp', 'cpp.re', '#include "config.h"')
-call TestExtension('cpp', 'cpp2.re', '#ifdef HAVE_CONFIG_H')
-call TestExtension('cpp', 'cpp3.re', '#define YYCTYPE unsigned char')
-call TestExtension('reason', 'react.re', 'ReasonReact.Router.push("");')
+call TestExtension("reason", "empty.re", "")
+call TestExtension("cpp", "cpp.re", "#include \"config.h\"")
+call TestExtension("cpp", "cpp2.re", "#ifdef HAVE_CONFIG_H")
+call TestExtension("cpp", "cpp3.re", "#define YYCTYPE unsigned char")
+call TestExtension("reason", "react.re", "ReasonReact.Router.push('');")
+
+" .bas extension
+call TestExtension("vbnet", "vb.vb", "")
+call TestExtension("basic", "empty.bas", "")
+call TestExtension("vb", "vb1.bas", "Attribute VB_Name = \"Class1\"")
+call TestExtension("vb", "vb2.bas", "VERSION 5.00\nBegin VB.Form Form1")
+call TestExtension("vb", "vb2.bas", "VERSION 5.00\nBegin VB.Form Form1")
+call TestExtension("vb", "vb.sba", "")
+call TestExtension("vb", "vb.vbs", "")
+call TestExtension("vb", "vb.dsm", "")
+call TestExtension("vb", "vb.dsm", "")
+call TestExtension("vb", "vb.ctl", "")
 
 " Idris
-call TestExtension('idris', 'lowercase.idr', '--idris1')
-call TestExtension('idris', 'uppercase.idr', '--Idris1')
-call TestExtension('idris', 'start-space-l.idr', '-- idris1')
-call TestExtension('idris', 'start-space-u.idr', '-- Idris1')
-call TestExtension('idris', 'two-spaces-l.idr', '-- idris 1')
-call TestExtension('idris', 'two-spaces-u.idr', '-- Idris 1')
-"call TestExtension('idris', 'mypkg.ipkg', 'package mypkg\n\npkgs = pruviloj, lightyear')
-call TestExtension('idris', 'use-type-prov.idr', '%language TypeProviders')
-call TestExtension('idris', 'use-elab-refl.idr', '%language ElabReflection')
-call TestExtension('idris', 'access-modifier.idr', '%access export\n\npublic export\nMyTest : Type-> Type\n\nfact : Nat -> Nat')
-call TestExtension('idris2', 'lowercase.idr', '--idris2')
-call TestExtension('idris2', 'uppercase.idr', '--Idris2')
-call TestExtension('idris2', 'start-space-l.idr', '-- idris2')
-call TestExtension('idris2', 'start-space-u.idr', '-- Idris2')
-call TestExtension('idris2', 'two-spaces-l.idr', '-- idris 2')
-call TestExtension('idris2', 'two-spaces-u.idr', '-- Idris 2')
-call TestExtension('idris2', 'mypkg.ipkg', 'package mypkg\n\ndepends = effects')
-call TestExtension('idris2', 'use-post-proj.idr', '%language PostfixProjections')
+call TestExtension("idris", "lowercase.idr", "--idris1")
+call TestExtension("idris", "uppercase.idr", "--Idris1")
+call TestExtension("idris", "start-space-l.idr", "-- idris1")
+call TestExtension("idris", "start-space-u.idr", "-- Idris1")
+call TestExtension("idris", "two-spaces-l.idr", "-- idris 1")
+call TestExtension("idris", "two-spaces-u.idr", "-- Idris 1")
+"call TestExtension("idris", "mypkg.ipkg", "package mypkg\n\npkgs = pruviloj, lightyear")
+call TestExtension("idris", "use-type-prov.idr", "%language TypeProviders")
+call TestExtension("idris", "use-elab-refl.idr", "%language ElabReflection")
+call TestExtension("idris", "access-modifier.idr", "%access export\n\npublic export\nMyTest : Type-> Type\n\nfact : Nat -> Nat")
+call TestExtension("idris2", "lowercase.idr", "--idris2")
+call TestExtension("idris2", "uppercase.idr", "--Idris2")
+call TestExtension("idris2", "start-space-l.idr", "-- idris2")
+call TestExtension("idris2", "start-space-u.idr", "-- Idris2")
+call TestExtension("idris2", "two-spaces-l.idr", "-- idris 2")
+call TestExtension("idris2", "two-spaces-u.idr", "-- Idris 2")
+call TestExtension("idris2", "mypkg.ipkg", "package mypkg\n\ndepends = effects")
+call TestExtension("idris2", "use-post-proj.idr", "%language PostfixProjections")
 
 " Literate Idris
-call TestExtension('lidris', 'lidris-1.lidr', "Some test plaintext\n\n> --idris1\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
-call TestExtension('lidris2', 'lidris-2.lidr', "Some test plaintext\n\n> --idris2\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
+call TestExtension("lidris", "lidris-1.lidr", "Some test plaintext\n\n> --idris1\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
+call TestExtension("lidris2", "lidris-2.lidr", "Some test plaintext\n\n> --idris2\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
 
