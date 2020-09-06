@@ -757,6 +757,8 @@ filetypes:
 ---
 name: idris2
 remote: edwinb/idris2-vim
+ignored_dirs:
+- doc
 filetypes:
 - name: idris2
   extensions:
