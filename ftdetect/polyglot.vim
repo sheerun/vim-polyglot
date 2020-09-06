@@ -60,6 +60,17 @@ if !exists('g:python_highlight_all')
   call s:SetDefault('g:python_slow_sync', 1)
 endif
 
+
+" Function used for patterns that end in a star: don't set the filetype if the
+" file name matches ft_ignore_pat.
+" When using this, the entry should probably be further down below with the
+" other StarSetf() calls.
+func! s:StarSetf(ft)
+  if expand("<amatch>") !~ g:ft_ignore_pat
+    exe 'setf ' . a:ft
+  endif
+endfunc
+
 " filetypes
 
 if !has_key(s:disabled_packages, '8th')
@@ -364,9 +375,19 @@ if !has_key(s:disabled_packages, 'ant')
 endif
 
 if !has_key(s:disabled_packages, 'apache')
+  au BufNewFile,BufRead */etc/apache2/*.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/conf.*/* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/mods-*/* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/sites-*/* call s:StarSetf('apache')
   au BufNewFile,BufRead */etc/apache2/sites-*/*.com setf apache
   au BufNewFile,BufRead */etc/httpd/*.conf setf apache
+  au BufNewFile,BufRead */etc/httpd/conf.d/*.conf* call s:StarSetf('apache')
   au BufNewFile,BufRead {.,}htaccess setf apache
+  au BufNewFile,BufRead access.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead apache.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead apache2.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead httpd.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead srm.conf* call s:StarSetf('apache')
 endif
 
 if !has_key(s:disabled_packages, 'apiblueprint')
@@ -381,7 +402,7 @@ endif
 if !has_key(s:disabled_packages, 'aptconf')
   au BufNewFile,BufRead */.aptitude/config setf aptconf
   au BufNewFile,BufRead */etc/apt/apt.conf.d/*.conf setf aptconf
-  au BufNewFile,BufRead */etc/apt/apt.conf.d/[^.]* setf aptconf
+  au BufNewFile,BufRead */etc/apt/apt.conf.d/[^.]* call s:StarSetf('aptconf')
   au BufNewFile,BufRead apt.conf setf aptconf
 endif
 
@@ -571,7 +592,7 @@ if !has_key(s:disabled_packages, 'dockerfile')
   au BufNewFile,BufRead *.dock setf Dockerfile
   au BufNewFile,BufRead *.dockerfile setf Dockerfile
   au BufNewFile,BufRead Dockerfile setf Dockerfile
-  au BufNewFile,BufRead Dockerfile* setf Dockerfile
+  au BufNewFile,BufRead Dockerfile* call s:StarSetf('Dockerfile')
   au BufNewFile,BufRead dockerfile setf Dockerfile
   au BufNewFile,BufRead docker-compose*.yaml setf yaml.docker-compose
   au BufNewFile,BufRead docker-compose*.yml setf yaml.docker-compose
@@ -660,7 +681,7 @@ if !has_key(s:disabled_packages, 'git')
   au BufNewFile,BufRead {.,}gitconfig setf gitconfig
   au BufNewFile,BufRead {.,}gitmodules setf gitconfig
   au BufNewFile,BufRead git-rebase-todo setf gitrebase
-  au BufNewFile,BufRead {.,}gitsendemail.* setf gitsendemail
+  au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
   au BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG setf gitcommit
 endif
 
@@ -738,7 +759,7 @@ endif
 
 if !has_key(s:disabled_packages, 'haproxy')
   au BufNewFile,BufRead *.cfg setf haproxy
-  au BufNewFile,BufRead haproxy*.c* setf haproxy
+  au BufNewFile,BufRead haproxy*.c* call s:StarSetf('haproxy')
   au BufNewFile,BufRead haproxy.cfg setf haproxy
 endif
 
@@ -839,7 +860,7 @@ if !has_key(s:disabled_packages, 'jenkins')
   au BufNewFile,BufRead *.Jenkinsfile setf Jenkinsfile
   au BufNewFile,BufRead *.jenkinsfile setf Jenkinsfile
   au BufNewFile,BufRead Jenkinsfile setf Jenkinsfile
-  au BufNewFile,BufRead Jenkinsfile* setf Jenkinsfile
+  au BufNewFile,BufRead Jenkinsfile* call s:StarSetf('Jenkinsfile')
 endif
 
 if !has_key(s:disabled_packages, 'jinja')
@@ -1022,9 +1043,9 @@ if !has_key(s:disabled_packages, 'nginx')
   au BufNewFile,BufRead *.nginx setf nginx
   au BufNewFile,BufRead *.nginxconf setf nginx
   au BufNewFile,BufRead *.vhost setf nginx
-  au BufNewFile,BufRead */etc/nginx/* setf nginx
+  au BufNewFile,BufRead */etc/nginx/* call s:StarSetf('nginx')
   au BufNewFile,BufRead */nginx/*.conf setf nginx
-  au BufNewFile,BufRead */usr/local/nginx/conf/* setf nginx
+  au BufNewFile,BufRead */usr/local/nginx/conf/* call s:StarSetf('nginx')
   au BufNewFile,BufRead *nginx.conf setf nginx
   au BufNewFile,BufRead nginx*.conf setf nginx
   au BufNewFile,BufRead nginx.conf setf nginx
@@ -1328,7 +1349,7 @@ if !has_key(s:disabled_packages, 'ruby')
   au BufNewFile,BufRead Snapfile setf ruby
   au BufNewFile,BufRead Thorfile setf ruby
   au BufNewFile,BufRead Vagrantfile setf ruby
-  au BufNewFile,BufRead [Rr]akefile* setf ruby
+  au BufNewFile,BufRead [Rr]akefile* call s:StarSetf('ruby')
   au BufNewFile,BufRead buildfile setf ruby
   au BufNewFile,BufRead vagrantfile setf ruby
   au BufNewFile,BufRead *.erb setf eruby
@@ -1657,9 +1678,9 @@ if !has_key(s:disabled_packages, 'xsl')
 endif
 
 if !has_key(s:disabled_packages, 'ansible')
-  au BufNewFile,BufRead group_vars/* setf yaml.ansible
+  au BufNewFile,BufRead group_vars/* call s:StarSetf('yaml.ansible')
   au BufNewFile,BufRead handlers.*.y{a,}ml setf yaml.ansible
-  au BufNewFile,BufRead host_vars/* setf yaml.ansible
+  au BufNewFile,BufRead host_vars/* call s:StarSetf('yaml.ansible')
   au BufNewFile,BufRead local.y{a,}ml setf yaml.ansible
   au BufNewFile,BufRead main.y{a,}ml setf yaml.ansible
   au BufNewFile,BufRead playbook.y{a,}ml setf yaml.ansible

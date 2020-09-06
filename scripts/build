@@ -492,7 +492,11 @@ def generate_ftdetect(packages, heuristics)
         if filename[0] == "."
           filename = "{.,}" + filename[1..]
         end
-        autocommands << "  au BufNewFile,BufRead #{filename} #{set_command}\n"
+        if filename[-1] == "*"
+          autocommands << "  au BufNewFile,BufRead #{filename} call s:StarSetf('#{name}')\n"
+        else
+          autocommands << "  au BufNewFile,BufRead #{filename} #{set_command}\n"
+        end
       end
     end
 

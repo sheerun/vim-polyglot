@@ -17,7 +17,7 @@ let s:globs = {
   \ 'aml': '*.aml',
   \ 'ampl': '*.run',
   \ 'ant': 'build.xml',
-  \ 'apache': '',
+  \ 'apache': 'access.conf*,apache.conf*,apache2.conf*,httpd.conf*,srm.conf*',
   \ 'apiblueprint': '*.apib',
   \ 'applescript': '*.applescript,*.scpt',
   \ 'aptconf': 'apt.conf',

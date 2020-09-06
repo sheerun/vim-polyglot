@@ -155,6 +155,16 @@ filetypes:
   - .htaccess
   - '*/etc/httpd/*.conf'
   - '*/etc/apache2/sites-*/*.com'
+  - 'access.conf*'
+  - 'apache.conf*'
+  - 'apache2.conf*'
+  - 'httpd.conf*'
+  - 'srm.conf*'
+  - '*/etc/apache2/*.conf*'
+  - '*/etc/apache2/conf.*/*'
+  - '*/etc/apache2/mods-*/*'
+  - '*/etc/apache2/sites-*/*'
+  - '*/etc/httpd/conf.d/*.conf*'
 ---
 name: apiblueprint
 remote: sheerun/apiblueprint.vim
@@ -1662,7 +1672,7 @@ filetypes:
   extra_filenames:
   - fish_history
   - fish_read_history
-  ignored_filenames:
+  ignored_warnings:
   - '~/.config/fish/fish_{read_,}history'
 # Ansible needs to be after YAML
 ---
@@ -1745,5 +1755,5 @@ filetypes:
   - ctl
   # SaxBasic is close to Visual Basic
   - sba
-  ignore_warnings:
+  ignored_warnings:
   - vb
