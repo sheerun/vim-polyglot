@@ -9,3 +9,8 @@ vim --clean -N -u <(echo "
   \"source scripts/test_filetypes.vim
   qa!
 ")
+
+if ! expect -c 'set timeout 1' -c 'spawn vim -N --clean -c "set nomore | :helptags ./doc | q"' -c 'expect "ENTER" { exit 1 }' > /dev/null; then
+  echo "Please ensure ':helptags ./doc' works properly"
+  exit 1
+fi
