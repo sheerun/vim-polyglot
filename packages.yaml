@@ -1650,7 +1650,9 @@ filetypes:
   linguist: XSLT
 ---
 name: yaml
-remote: stephpy/vim-yaml
+# Fixes indentation issue: https://github.com/vim/vim/issues/6417
+remote: vim/vim@df44a27b53586fccfc6a3aedc89061fdd9a515ff:runtime
+glob: '**/yaml.vim'
 filetypes:
 - name: yaml
   linguist: YAML
@@ -1659,6 +1661,11 @@ filetypes:
   - fish_read_history
   ignored_filenames:
   - '~/.config/fish/fish_{read_,}history'
+---
+name: yaml-extras
+remote: stephpy/vim-yaml
+after: yaml
+filetypes: []
 # Ansible needs to be after YAML
 ---
 name: ansible

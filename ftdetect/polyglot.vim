@@ -1677,6 +1677,9 @@ if !has_key(s:disabled_packages, 'xsl')
   au BufNewFile,BufRead *.xslt setf xsl
 endif
 
+if !has_key(s:disabled_packages, 'yaml-extras')
+endif
+
 if !has_key(s:disabled_packages, 'ansible')
   au BufNewFile,BufRead group_vars/* setf yaml.ansible
   au BufNewFile,BufRead handlers.*.y{a,}ml setf yaml.ansible

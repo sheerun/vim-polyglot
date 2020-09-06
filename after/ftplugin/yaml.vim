@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'yaml') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'yaml-extras') == -1
 
 " Vim indent file
 " Language: Yaml

@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'yaml') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'yaml-extras') == -1
 
 " To make this file do stuff, add something like the following (without the
 " leading ") to your ~/.vimrc:
