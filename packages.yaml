@@ -93,7 +93,9 @@ filetypes:
   - adb
   - ads
   - ada
+  - adc
   - gpr
+  - ada_m
 ---
 name: ahdl
 remote: vim/vim:runtime
@@ -191,6 +193,11 @@ filetypes:
   - '*/.aptitude/config'
   - '*/etc/apt/apt.conf.d/[^.]*'
   - '*/etc/apt/apt.conf.d/*.conf'
+  ignored_warnings:
+  # some kind of bugs in filetype detection algorithm
+  - '*/etc/apt/apt.conf.d/{[-_[:alnum:]]\+,[-_.[:alnum:]]\+.conf}'
+  - '*/etc/apt/apt.conf.d/]\+'
+  - '*/etc/apt/apt.conf.d/]\+.conf'
 ---
 name: arch
 remote: vim/vim:runtime
@@ -302,19 +309,25 @@ filetypes:
 - name: awk
   extensions:
   - awk
+  - gawk
 ---
 name: c/c++
 remote: vim-jp/vim-cpp
 filetypes:
-- name: c
-  linguist: C
 - name: cpp
   linguist: C++
+  extra_extensions:
+  - moc
   ignored_extensions:
   # conflicts with more popular reason, remove after heuristics work
   - re
   # implemented by arduino
   - ino
+- name: c
+  linguist: C
+  extra_extensions:
+  # Quake C
+  - qc
 ---
 name: caddyfile
 remote: isobit/vim-caddyfile
@@ -358,10 +371,9 @@ filetypes:
   extra_extensions:
   # 17 results: https://github.com/search?q=extension%3Acoffeekup+html&type=Code
   - coffeekup
-  ignored_filenames:
+  ignored_warnings:
   # Probably mistake
   - '*Cakefile'
-  ignored_warnings:
   # Used by C#
   - csx
   # Used by Chuck
@@ -430,6 +442,8 @@ remote: dart-lang/dart-vim-plugin
 filetypes:
 - name: dart
   linguist: Dart
+  extra_extensions:
+  - drt
 ---
 name: dhall
 remote: vmchale/dhall-vim
@@ -470,7 +484,7 @@ filetypes:
   filenames:
   - 'docker-compose*.yaml'
   - 'docker-compose*.yml'
-  ignored_filenames:
+  ignored_warnings:
   # Probably mistakes?
   - 'docker-compose*.yaml*'
   - 'docker-compose*.yml*'

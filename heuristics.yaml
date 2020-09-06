@@ -23,6 +23,20 @@ rules:
   filetype: aspperl
 - filetype: aspvbs
 ---
+extensions: [h]
+rules:
+- lines: 200
+  pattern: '^\s*(@(interface|class|protocol|property|end|synchronised|selector|implementation)\b|#import\s+.+\.h[">])'
+  rules:
+  - if_exists: "g:c_syntax_for_h"
+    filetype: objc
+  - filetype: objcpp
+- if_exists: "g:c_syntax_for_h"
+  filetype: c
+- if_exists: "g:ch_syntax_for_h"
+  filetype: ch
+- filetype: cpp
+---
 extensions: [m]
 rules:
 - lines: 100

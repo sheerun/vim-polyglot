@@ -134,7 +134,7 @@ if !has_key(s:disabled_packages, 'awk')
 endif
 
 if !has_key(s:disabled_packages, 'c/c++')
-  au! BufRead,BufNewFile *.c,*.cpp,*.tpp
+  au! BufRead,BufNewFile *.cpp,*.tpp,*.c
 endif
 
 if !has_key(s:disabled_packages, 'cmake')
@@ -343,7 +343,9 @@ endif
 
 if !has_key(s:disabled_packages, 'ada')
   au BufNewFile,BufRead *.ada setf ada
+  au BufNewFile,BufRead *.ada_m setf ada
   au BufNewFile,BufRead *.adb setf ada
+  au BufNewFile,BufRead *.adc setf ada
   au BufNewFile,BufRead *.ads setf ada
   au BufNewFile,BufRead *.gpr setf ada
 endif
@@ -465,6 +467,7 @@ endif
 
 if !has_key(s:disabled_packages, 'awk')
   au BufNewFile,BufRead *.awk setf awk
+  au BufNewFile,BufRead *.gawk setf awk
 endif
 
 if !has_key(s:disabled_packages, 'reason')
@@ -473,16 +476,11 @@ if !has_key(s:disabled_packages, 'reason')
 endif
 
 if !has_key(s:disabled_packages, 'c/c++')
-  au BufNewFile,BufRead *.c setf c
-  au BufNewFile,BufRead *.cats setf c
-  au BufNewFile,BufRead *.h setf c
-  au BufNewFile,BufRead *.idc setf c
   au BufNewFile,BufRead *.c++ setf cpp
   au BufNewFile,BufRead *.cc setf cpp
   au BufNewFile,BufRead *.cp setf cpp
   au BufNewFile,BufRead *.cpp setf cpp
   au BufNewFile,BufRead *.cxx setf cpp
-  au BufNewFile,BufRead *.h setf cpp
   au BufNewFile,BufRead *.h++ setf cpp
   au BufNewFile,BufRead *.hh setf cpp
   au BufNewFile,BufRead *.hpp setf cpp
@@ -490,8 +488,14 @@ if !has_key(s:disabled_packages, 'c/c++')
   au BufNewFile,BufRead *.inc setf cpp
   au BufNewFile,BufRead *.inl setf cpp
   au BufNewFile,BufRead *.ipp setf cpp
+  au BufNewFile,BufRead *.moc setf cpp
   au BufNewFile,BufRead *.tcc setf cpp
   au BufNewFile,BufRead *.tpp setf cpp
+  au BufNewFile,BufRead *.c setf c
+  au BufNewFile,BufRead *.cats setf c
+  au BufNewFile,BufRead *.idc setf c
+  au BufNewFile,BufRead *.qc setf c
+  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'caddyfile')
@@ -566,6 +570,7 @@ endif
 
 if !has_key(s:disabled_packages, 'dart')
   au BufNewFile,BufRead *.dart setf dart
+  au BufNewFile,BufRead *.drt setf dart
 endif
 
 if !has_key(s:disabled_packages, 'dhall')
@@ -1065,7 +1070,7 @@ if !has_key(s:disabled_packages, 'nix')
 endif
 
 if !has_key(s:disabled_packages, 'objc')
-  au BufNewFile,BufRead *.h setf objc
+  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
   au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
 endif
 

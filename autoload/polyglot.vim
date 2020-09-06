@@ -154,6 +154,25 @@ func! polyglot#DetectAspFiletype()
   setf aspvbs | return
 endfunc
 
+func! polyglot#DetectHFiletype()
+  for lnum in range(1, min([line("$"), 200]))
+    let line = getline(lnum)
+    if line =~# '^\s*\(@\(interface\|class\|protocol\|property\|end\|synchronised\|selector\|implementation\)\(\<\|\>\)\|#import\s\+.\+\.h[">]\)'
+      if exists("g:c_syntax_for_h")
+        setf objc | return
+      endif
+      setf objcpp | return
+    endif
+  endfor
+  if exists("g:c_syntax_for_h")
+    setf c | return
+  endif
+  if exists("g:ch_syntax_for_h")
+    setf ch | return
+  endif
+  setf cpp | return
+endfunc
+
 func! polyglot#DetectMFiletype()
   let saw_comment = 0
   for lnum in range(1, min([line("$"), 100]))

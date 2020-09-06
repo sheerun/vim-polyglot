@@ -181,6 +181,18 @@ call TestExtension("ave", "foobar.ave", "")
 " Awk
 call TestExtension("awk", "foobar.awk", "")
 
+" C++
+call TestExtension("c", "foobar.c", "")
+call TestExtension("cpp", "foobar.cxx", "")
+call TestExtension("cpp", "foobar.c++", "")
+call TestExtension("cpp", "foobar.hh", "")
+call TestExtension("cpp", "foobar.hxx", "")
+call TestExtension("cpp", "foobar.hpp", "")
+call TestExtension("cpp", "foobar.ipp", "")
+call TestExtension("cpp", "foobar.moc", "")
+call TestExtension("cpp", "foobar.tcc", "")
+call TestExtension("cpp", "foobar.inl", "")
+
 " vim-polyglot only
 call TestExtension("blade", "test.blade.php", "")
 call TestExtension("yaml.ansible", "playbook.yml", "")
@@ -233,7 +245,7 @@ call TestExtension("vb", "vb.dsm", "")
 call TestExtension("vb", "vb.dsm", "")
 call TestExtension("vb", "vb.ctl", "")
 
-" Idris
+" .idr extension
 call TestExtension("idris", "lowercase.idr", "--idris1")
 call TestExtension("idris", "uppercase.idr", "--Idris1")
 call TestExtension("idris", "start-space-l.idr", "-- idris1")
@@ -253,7 +265,17 @@ call TestExtension("idris2", "two-spaces-u.idr", "-- Idris 2")
 call TestExtension("idris2", "mypkg.ipkg", "package mypkg\n\ndepends = effects")
 call TestExtension("idris2", "use-post-proj.idr", "%language PostfixProjections")
 
-" Literate Idris
+" .lidr extension
 call TestExtension("lidris", "lidris-1.lidr", "Some test plaintext\n\n> --idris1\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
 call TestExtension("lidris2", "lidris-2.lidr", "Some test plaintext\n\n> --idris2\n> myfact : Nat -> Nat\n> myfact Z = 1\n> myfact (S k) = (S k) * myfact k\n\nMore plaintext")
 
+
+" .h extension
+call TestExtension("objcpp", "foo.h", "@interface MTNavigationController : UINavigationController")
+call TestExtension("cpp", "foo.h", "")
+let g:c_syntax_for_h = 1
+call TestExtension("objc", "foo.h", "@interface MTNavigationController : UINavigationController")
+call TestExtension("c", "foo.h", "")
+unlet g:c_syntax_for_h
+let g:ch_syntax_for_h = 1
+call TestExtension("ch", "foo.h", "")

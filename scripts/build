@@ -268,10 +268,6 @@ def rule_to_code(rule)
     end
   end
 
-  if rule.has_key?("rules")
-    return rule["rules"].map { |r| indent(rule_to_code(r), 0) }.join("\n")
-  end
-
   if rule.has_key?("pattern") || rule.has_key?("or") || rule.has_key?("and")
     return <<~EOS
       if #{pattern_to_condition(rule)}
@@ -280,10 +276,22 @@ def rule_to_code(rule)
     EOS
   end
 
+  if rule.has_key?("rules")
+    return rule["rules"].map { |r| indent(rule_to_code(r), 0) }.join("\n")
+  end
+
   if rule.has_key?("if_set")
     return <<~EOS
       if #{rule["negative"] ? "!" : ""}#{rule["if_set"]}
       #{indent(rule_to_code(except(rule, "if_set", "negative")), 2)}
+      endif
+    EOS
+  end
+
+  if rule.has_key?("if_exists")
+    return <<~EOS
+      if #{rule["negative"] ? "!" : ""}exists("#{rule["if_exists"]}")
+      #{indent(rule_to_code(except(rule, "if_exists", "negative")), 2)}
       endif
     EOS
   end
@@ -455,7 +463,7 @@ def generate_ftdetect(packages, heuristics)
       extensions = filetype["extensions"]
       filenames = filetype["filenames"]
 
-      expected_extensions = all_filetypes.has_key?(name) ? all_filetypes.fetch(name)[:extensions] : []
+      expected_extensions = (all_filetypes.has_key?(name) ? all_filetypes.fetch(name)[:extensions] : []).map(&:downcase)
       ignored_extensions = expand_all(filetype.fetch("ignored_extensions", []))
       ignored_warnings = expand_all(filetype.fetch("ignored_warnings", []))
 
