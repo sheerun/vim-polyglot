@@ -416,14 +416,11 @@ def generate_ftdetect(packages, heuristics)
   end
 
   for package in packages
-    name = package.fetch("name")
-
-    output << "if !has_key(s:disabled_packages, '#{name}')\n"
-
     filetypes = package["filetypes"] or raise "Unknown filetype for: #{package["name"]}"
 
     package_heuristics = []
 
+    autocommands = ""
     for filetype in filetypes
       name = filetype.fetch("name")
       syntax = filetype["syntax"] ? " | set syntax=#{filetype["syntax"]}" : ""
@@ -454,8 +451,8 @@ def generate_ftdetect(packages, heuristics)
       for extension in extensions.sort
         outer_filetype = filetype["outer_filetype"]
         if outer_filetype
-          output << "  au BufNewFile *.*.#{extension} execute \"do BufNewFile filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
-          output << "  au BufReadPre *.*.#{extension} execute \"do BufRead filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
+          autocommands << "  au BufNewFile *.*.#{extension} execute \"do BufNewFile filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
+          autocommands << "  au BufReadPre *.*.#{extension} execute \"do BufRead filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
         end
 
         heuristic = heuristics.find { |h| h["extensions"].include?(extension) }
@@ -466,7 +463,7 @@ def generate_ftdetect(packages, heuristics)
           #   puts "Ambiguous extension without heuristic: #{extension} => #{filetype["name"]}"
           # end
           #
-          output << "  au BufNewFile,BufRead *.#{extension} #{set_command}\n"
+          autocommands << "  au BufNewFile,BufRead *.#{extension} #{set_command}\n"
         end
       end
 
@@ -474,16 +471,20 @@ def generate_ftdetect(packages, heuristics)
         if filename[0] == "."
           filename = "{.,}" + filename[1..]
         end
-        output << "  au BufNewFile,BufRead #{filename} #{set_command}\n"
+        autocommands << "  au BufNewFile,BufRead #{filename} #{set_command}\n"
       end
     end
 
     for heuristic in package_heuristics.uniq
       extensions = heuristic["extensions"].map { |e| "*.#{e}" }
-      output << "  au! BufNewFile,BufRead #{extensions.join(",")} call polyglot#Detect#{camelize(heuristic["extensions"].first)}Filetype()\n"
+      autocommands << "  au! BufNewFile,BufRead #{extensions.join(",")} call polyglot#Detect#{camelize(heuristic["extensions"].first)}Filetype()\n"
     end
 
-    output << "endif\n\n"
+    if autocommands != ""
+      output << "if !has_key(s:disabled_packages, '#{package["name"]}')\n"
+      output << autocommands
+      output << "endif\n\n"
+    end
   end
  
   ftdetect = File.read('ftdetect/polyglot.vim')

@@ -515,9 +515,6 @@ if !has_key(s:disabled_packages, 'coffee-script')
   au BufNewFile,BufRead *.litcoffee setf litcoffee
 endif
 
-if !has_key(s:disabled_packages, 'cjsx')
-endif
-
 if !has_key(s:disabled_packages, 'cryptol')
   au BufNewFile,BufRead *.cry setf cryptol
   au BufNewFile,BufRead *.cyl setf cryptol
@@ -810,9 +807,6 @@ endif
 if !has_key(s:disabled_packages, 'ion')
   au BufNewFile,BufRead *.ion setf ion
   au BufNewFile,BufRead ~/.config/ion/initrc setf ion
-endif
-
-if !has_key(s:disabled_packages, 'javascript-sql')
 endif
 
 if !has_key(s:disabled_packages, 'javascript')
@@ -1204,12 +1198,6 @@ if !has_key(s:disabled_packages, 'python')
   au BufNewFile,BufRead wscript setf python
 endif
 
-if !has_key(s:disabled_packages, 'python-indent')
-endif
-
-if !has_key(s:disabled_packages, 'python-compiler')
-endif
-
 if !has_key(s:disabled_packages, 'requirements')
   au BufNewFile,BufRead *.pip setf requirements
   au BufNewFile,BufRead *require.{txt,in} setf requirements
@@ -1352,9 +1340,6 @@ if !has_key(s:disabled_packages, 'rspec')
   au BufNewFile,BufRead *_spec.rb if !did_filetype() | set ft=ruby syntax=rspec | endif
 endif
 
-if !has_key(s:disabled_packages, 'yard')
-endif
-
 if !has_key(s:disabled_packages, 'brewfile')
   au BufNewFile,BufRead Brewfile setf brewfile
 endif
@@ -1420,9 +1405,6 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead {.,}zshrc setf zsh
 endif
 
-if !has_key(s:disabled_packages, 'zinit')
-endif
-
 if !has_key(s:disabled_packages, 'slim')
   au BufNewFile,BufRead *.slim setf slim
 endif
@@ -1451,9 +1433,6 @@ endif
 
 if !has_key(s:disabled_packages, 'svg')
   au BufNewFile,BufRead *.svg setf svg
-endif
-
-if !has_key(s:disabled_packages, 'svg-indent')
 endif
 
 if !has_key(s:disabled_packages, 'swift')
@@ -1675,9 +1654,6 @@ endif
 if !has_key(s:disabled_packages, 'xsl')
   au BufNewFile,BufRead *.xsl setf xsl
   au BufNewFile,BufRead *.xslt setf xsl
-endif
-
-if !has_key(s:disabled_packages, 'yaml-extras')
 endif
 
 if !has_key(s:disabled_packages, 'ansible')
