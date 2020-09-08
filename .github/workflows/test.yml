@@ -14,7 +14,7 @@ jobs:
       run: |
         sudo add-apt-repository ppa:jonathonf/vim -y
         sudo apt-get update -q
-        sudo apt-get install -y vim
+        sudo apt-get install -y vim expect
         vim --version
     - uses: actions/checkout@v2
     - name: Run Tests
