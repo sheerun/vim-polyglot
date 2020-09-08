@@ -169,6 +169,10 @@ if !has_key(s:disabled_packages, 'go')
   au! BufRead,BufNewFile *.go
 endif
 
+if !has_key(s:disabled_packages, 'groovy')
+  au! BufRead,BufNewFile *.groovy
+endif
+
 if !has_key(s:disabled_packages, 'haml')
   au! BufRead,BufNewFile *.haml
 endif
@@ -490,11 +494,13 @@ if !has_key(s:disabled_packages, 'c/c++')
   au BufNewFile,BufRead *.ipp setf cpp
   au BufNewFile,BufRead *.moc setf cpp
   au BufNewFile,BufRead *.tcc setf cpp
+  au BufNewFile,BufRead *.tlh setf cpp
   au BufNewFile,BufRead *.tpp setf cpp
   au BufNewFile,BufRead *.c setf c
   au BufNewFile,BufRead *.cats setf c
   au BufNewFile,BufRead *.idc setf c
   au BufNewFile,BufRead *.qc setf c
+  au BufNewFile,BufRead *enlightenment/*.cfg setf c
   au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
 endif
 
@@ -681,13 +687,15 @@ endif
 if !has_key(s:disabled_packages, 'git')
   au BufNewFile,BufRead *.gitconfig setf gitconfig
   au BufNewFile,BufRead *.git/config setf gitconfig
-  au BufNewFile,BufRead *.git/modules/**/config setf gitconfig
+  au BufNewFile,BufRead *.git/modules/*/config setf gitconfig
   au BufNewFile,BufRead */.config/git/config setf gitconfig
+  au BufNewFile,BufRead */git/config setf gitconfig
+  au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')
   au BufNewFile,BufRead {.,}gitconfig setf gitconfig
   au BufNewFile,BufRead {.,}gitmodules setf gitconfig
   au BufNewFile,BufRead git-rebase-todo setf gitrebase
   au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
-  au BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG setf gitcommit
+  au BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,TAG_EDITMSG setf gitcommit
 endif
 
 if !has_key(s:disabled_packages, 'glsl')
@@ -722,6 +730,7 @@ if !has_key(s:disabled_packages, 'gnuplot')
   au BufNewFile,BufRead *.gnu setf gnuplot
   au BufNewFile,BufRead *.gnuplot setf gnuplot
   au BufNewFile,BufRead *.gp setf gnuplot
+  au BufNewFile,BufRead *.gpi setf gnuplot
   au BufNewFile,BufRead *.p setf gnuplot
   au BufNewFile,BufRead *.plot setf gnuplot
   au BufNewFile,BufRead *.plt setf gnuplot
@@ -739,8 +748,13 @@ if !has_key(s:disabled_packages, 'graphql')
   au BufNewFile,BufRead *.graphqls setf graphql
 endif
 
-if !has_key(s:disabled_packages, 'gradle')
+if !has_key(s:disabled_packages, 'groovy')
   au BufNewFile,BufRead *.gradle setf groovy
+  au BufNewFile,BufRead *.groovy setf groovy
+  au BufNewFile,BufRead *.grt setf groovy
+  au BufNewFile,BufRead *.gtpl setf groovy
+  au BufNewFile,BufRead *.gvy setf groovy
+  au BufNewFile,BufRead Jenkinsfile setf groovy
 endif
 
 if !has_key(s:disabled_packages, 'haml')
@@ -877,6 +891,7 @@ endif
 if !has_key(s:disabled_packages, 'jq')
   au BufNewFile,BufRead *.jq setf jq
   au BufNewFile,BufRead {.,}jqrc setf jq
+  au BufNewFile,BufRead {.,}jqrc* call s:StarSetf('jq')
 endif
 
 if !has_key(s:disabled_packages, 'json5')

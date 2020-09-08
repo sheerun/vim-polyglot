@@ -6,7 +6,7 @@ function! TestExtension(filetype, filename, content)
     1delete _
     filetype detect
     exec "if &filetype != '" . a:filetype . "' \nthrow &filetype\nendif"
-    exec ":bw!"
+    exec ":q!"
   catch
     echo g:message
     echo "Filename '" . a:filename  . "' does not resolve to extension '" . a:filetype . "'"

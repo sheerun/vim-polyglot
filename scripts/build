@@ -463,7 +463,7 @@ def generate_ftdetect(packages, heuristics)
       extensions = filetype["extensions"]
       filenames = filetype["filenames"]
 
-      expected_extensions = (all_filetypes.has_key?(name) ? all_filetypes.fetch(name)[:extensions] : []).map(&:downcase)
+      expected_extensions = (all_filetypes.has_key?(name) ? all_filetypes.fetch(name)[:extensions] : [])
       ignored_extensions = expand_all(filetype.fetch("ignored_extensions", []))
       ignored_warnings = expand_all(filetype.fetch("ignored_warnings", []))
 

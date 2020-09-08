@@ -21,6 +21,7 @@ let s:interpreters = {
   \ 'escript': 'erlang',
   \ 'fish': 'fish',
   \ 'gnuplot': 'gnuplot',
+  \ 'groovy': 'groovy',
   \ 'runhaskell': 'haskell',
   \ 'chakra': 'javascript',
   \ 'd8': 'javascript',
