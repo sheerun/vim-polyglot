@@ -175,7 +175,9 @@ def copy_file(package, src, dest)
       else
         output << "if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '#{name}') == -1\n\n"
       end
-      IO.copy_stream(input, output)
+      contents = File.read(input)
+      contents.gsub!(' ..= ', ' .= ')
+      output << contents
       output << "\nendif\n"
     end
   end
