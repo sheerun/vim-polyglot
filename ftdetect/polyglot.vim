@@ -1780,6 +1780,7 @@ au BufNewFile,BufRead,StdinReadPost *
 if !has_key(s:disabled_packages, 'autoindent')
   " Code below re-implements sleuth for vim-polyglot
   let g:loaded_sleuth = 1
+  let g:loaded_foobar = 1
 
   " Makes shiftwidth to be synchronized with tabstop by default
   if &shiftwidth == &tabstop
@@ -1871,6 +1872,7 @@ if !has_key(s:disabled_packages, 'autoindent')
         let indent = len(matchstr(line, '^ *'))
         if (indent % 2 == 0 || indent % 3 == 0) && indent < minindent
           let minindent = indent
+          let b:sleuth_culprit .= ":" . line
         endif
       endif
     endfor
@@ -1881,6 +1883,7 @@ if !has_key(s:disabled_packages, 'autoindent')
       return 1
     endif
 
+    unlet b:sleuth_culprit
     return 0
   endfunction
 
@@ -1889,6 +1892,7 @@ if !has_key(s:disabled_packages, 'autoindent')
       return
     endif
 
+    let b:sleuth_culprit = expand("<amatch>")
     if s:guess(getline(1, 32))
       return
     endif
@@ -1905,6 +1909,7 @@ if !has_key(s:disabled_packages, 'autoindent')
         return
       endif
       for neighbor in glob(dir . '/' . pattern, 0, 1)[0:level]
+        let b:sleuth_culprit = neighbor
         " Do not consider directories above .git, .svn or .hg
         if fnamemodify(neighbor, ":h:t")[0] == "."
           return
