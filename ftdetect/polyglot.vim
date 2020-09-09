@@ -1775,7 +1775,7 @@ endif
 " end filetypes
 
 au BufNewFile,BufRead,StdinReadPost * 
-  \ if !did_filetype() && expand("<amatch>") !~ g:ft_ignore_pat 
+  \ if !did_filetype() && expand("<afile>") !~ g:ft_ignore_pat 
   \ | call polyglot#Heuristics() | endif
 
 
@@ -1895,7 +1895,7 @@ if !has_key(s:disabled_packages, 'autoindent')
       return
     endif
 
-    let b:sleuth_culprit = expand("<amatch>")
+    let b:sleuth_culprit = expand("<afile>:p")
     if s:guess(getline(1, 32))
       return
     endif
