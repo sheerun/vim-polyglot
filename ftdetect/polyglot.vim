@@ -1923,10 +1923,24 @@ if !has_key(s:disabled_packages, 'autoindent')
 
   setglobal smarttab
 
+  function! SleuthIndicator() abort
+    let sw = &shiftwidth ? &shiftwidth : &tabstop
+    if &expandtab
+      return 'sw='.sw
+    elseif &tabstop == sw
+      return 'ts='.&tabstop
+    else
+      return 'sw='.sw.',ts='.&tabstop
+    endif
+  endfunction
+
   augroup polyglot
     autocmd!
     autocmd FileType * call s:detect_indent()
+    autocmd User Flags call Hoist('buffer', 5, 'SleuthIndicator')
   augroup END
+
+  command! -bar -bang Sleuth call s:detect_indent()
 endif
 
 " restore Vi compatibility settings
