@@ -1799,10 +1799,11 @@ if !has_key(s:disabled_packages, 'autoindent')
     let heredoc = ''
     let minindent = 10
     let spaces_minus_tabs = 0
-    let i = 1
+    let i = 0
 
     for line in a:lines
       let i += 1
+
       if !len(line) || line =~# '^\W*$'
         continue
       endif
@@ -1871,6 +1872,7 @@ if !has_key(s:disabled_packages, 'autoindent')
 
       if line[0] == "\t"
         setlocal noexpandtab
+        let b:sleuth_culprit .= ':' . i
         return 1
       elseif line[0] == " "
         let indent = len(matchstr(line, '^ *'))
