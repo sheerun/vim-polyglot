@@ -13,6 +13,8 @@ if exists('g:polyglot_disabled')
   for pkg in g:polyglot_disabled
     let s:disabled_packages[pkg] = 1
   endfor
+else
+  let g:polyglot_disabled_not_set = 1
 endif
 
 function! s:SetDefault(name, value)
@@ -1947,6 +1949,20 @@ if !has_key(s:disabled_packages, 'autoindent')
 
   command! -bar -bang Sleuth call s:detect_indent()
 endif
+
+func! s:verify()
+  if exists("g:polyglot_disabled_not_set")
+    if exists("g:polyglot_disabled")
+      echohl WarningMsg
+      echo "vim-polyglot: g:polyglot_disabled should be at the top of .vimrc"
+      echohl None
+    endif
+
+    unlet g:polyglot_disabled_not_set
+  endif
+endfunc
+
+autocmd VimEnter * call s:verify()
 
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
