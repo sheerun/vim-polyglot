@@ -1872,13 +1872,13 @@ if !has_key(s:disabled_packages, 'autoindent')
 
       if line[0] == "\t"
         setlocal noexpandtab
+        let &shiftwidth=&tabstop
         let b:sleuth_culprit .= ':' . i
         return 1
       elseif line[0] == " "
         let indent = len(matchstr(line, '^ *'))
         if (indent % 2 == 0 || indent % 3 == 0) && indent < minindent
           let minindent = indent
-          let b:sleuth_culprit .= ':' . i
         endif
       endif
     endfor
@@ -1886,6 +1886,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     if minindent < 10
       setlocal expandtab
       let &shiftwidth=minindent
+      let b:sleuth_culprit .= ':' . i
       return 1
     endif
 
@@ -1970,6 +1971,9 @@ func! s:verify()
 endfunc
 
 autocmd VimEnter * call s:verify()
+
+set sw=3
+set ts=8
 
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
