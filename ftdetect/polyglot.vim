@@ -1887,7 +1887,6 @@ if !has_key(s:disabled_packages, 'autoindent')
       return 1
     endif
 
-    unlet b:sleuth_culprit
     return 0
   endfunction
 
@@ -1910,13 +1909,15 @@ if !has_key(s:disabled_packages, 'autoindent')
     while isdirectory(dir) && dir !=# fnamemodify(dir, ':h') && level > 0
       " Ignore files from homedir and root 
       if dir == expand('~') || dir == '/'
+        unlet b:sleuth_culprit
         return
       endif
       for neighbor in glob(dir . '/' . pattern, 0, 1)[0:level]
         let b:sleuth_culprit = neighbor
         " Do not consider directories above .git, .svn or .hg
         if fnamemodify(neighbor, ":h:t")[0] == "."
-          return
+          let level = 0
+          continue
         endif
         if neighbor !=# expand('%:p') && filereadable(neighbor)
           if s:guess(readfile(neighbor, '', 32))
@@ -1928,6 +1929,8 @@ if !has_key(s:disabled_packages, 'autoindent')
       let dir = fnamemodify(dir, ':h')
       let level -= 1
     endwhile
+
+    unlet b:sleuth_culprit
   endfunction
 
   setglobal smarttab
