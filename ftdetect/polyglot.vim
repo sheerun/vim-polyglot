@@ -1777,8 +1777,7 @@ au BufNewFile,BufRead,StdinReadPost *
   \ | call polyglot#Heuristics() | endif
 
 
-if !has_key(s:disabled_packages, 'helm')
-
+if !has_key(s:disabled_packages, 'autoindent')
   " Code below re-implements sleuth for vim-polyglot
   let g:loaded_sleuth = 1
 
