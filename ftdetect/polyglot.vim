@@ -1972,9 +1972,6 @@ endfunc
 
 autocmd VimEnter * call s:verify()
 
-set sw=3
-set ts=8
-
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
 unlet s:cpo_save
