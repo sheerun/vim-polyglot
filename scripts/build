@@ -36,6 +36,7 @@ def load_data()
     end
   end
 
+  puts deps["javascript"]
   each_node = lambda {|&b| packages.keys.each(&b) }
   each_child = lambda {|n, &b| deps[n].each(&b) }
 
@@ -168,8 +169,33 @@ def copy_file(package, src, dest)
   FileUtils.mkdir_p(File.dirname(dest))
   name = package.fetch("name")
 
+  header = '" Polyglot metafile'
+  if File.exist?(dest)
+    meta_dest = dest
+    new_dest = dest
+    i = 0
+    while File.exist?(new_dest)
+      i += 1
+      new_dest = "#{dest.gsub(/\.vim$/, '')}-#{i}.vim"
+    end
+
+    if File.read(dest).include?(header)
+      dest = new_dest
+    else
+      FileUtils.mv(dest, new_dest)
+      File.write(meta_dest, "#{header}\n")
+      open(meta_dest, "a+") do |output|
+        output << "source <sfile>:h/#{File.basename(new_dest)}\n"
+      end
+      dest = "#{dest.gsub(/\.vim$/, '')}-#{i+1}.vim"
+    end
+    open(meta_dest, "a+") do |output|
+      output << "source <sfile>:h/#{File.basename(dest)}\n"
+    end
+  end
+
   open(src, "r") do |input|
-    open(dest, "a+") do |output|
+    open(dest, "w") do |output|
       if name == "jsx"
         output << "if !exists('g:polyglot_disabled') || (index(g:polyglot_disabled, 'javascript') == -1 && index(g:polyglot_disabled, 'jsx') == -1)\n\n"
       else
@@ -335,7 +361,8 @@ def extract(packages)
   FileUtils.rm_rf(all_dirs)
 
   output = []
-  packages.map do |package|
+  # We need to reverse packages so they are included in proper order
+  packages.reverse.map do |package|
     repo, branch, path, dir = parse_remote(package["remote"])
     dirs = package.fetch("dirs", default_dirs)
     ignored_dirs = package.fetch("ignored_dirs", [])

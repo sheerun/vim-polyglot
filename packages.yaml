@@ -679,6 +679,11 @@ filetypes:
 ---
 name: graphql
 remote: jparise/vim-graphql
+after: [javascript, jsx]
+ignored_dirs:
+# TODO: remove after bug is fixed:
+# https://github.com/jparise/vim-graphql/issues/62
+- after/indent
 filetypes:
 - name: graphql
   linguist: GraphQL
