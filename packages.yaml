@@ -1827,3 +1827,9 @@ filetypes:
   - '*/etc/yum.repos.d/*'
   ignored_warnings:
   - php.ini
+---
+name: odin
+remote: Tetralux/odin.vim
+filetypes:
+- name: odin
+  linguist: Odin

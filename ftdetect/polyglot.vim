@@ -1908,6 +1908,10 @@ if !has_key(s:disabled_packages, 'dosini')
   au BufNewFile,BufRead php.ini-* call s:StarSetf('dosini')
 endif
 
+if !has_key(s:disabled_packages, 'odin')
+  au BufNewFile,BufRead *.odin setf odin
+endif
+
 
 " end filetypes
 

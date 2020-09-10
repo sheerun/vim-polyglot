@@ -97,25 +97,6 @@ def load_data()
   [packages, transform_patterns(heuristics)]
 end
 
-def parallel(*procs)
-  threads = procs.map { |p| Thread.new { method(p).call } }
-  threads.map(&:join).map(&:value)
-end
-
-def read_strings(data, keys, print=false)
-  if data.is_a?(Hash)
-    data.flat_map do |key, val|
-      read_strings(val, keys, keys.include?(key))
-    end
-  elsif data.is_a?(Array)
-    data.flat_map { |d| read_strings(d, keys, print) }
-  elsif data.is_a?(String)
-    print ? [data] : []
-  else
-    []
-  end
-end
-
 def patterns_to_vim_patterns(patterns)
   stdin, stdout, stderr = Open3.popen3('vim', '-V', '--clean', '/dev/stdin', '-es', '-c', "echo expand('%:p:h') | source #{__dir__}/eregex.vim", '-c', "for line in range(0, line('$')) | call setline(line, ExtendedRegex2VimRegex(getline(line))) | endfor", '-c', ':wq! /dev/stdout', chdir: __dir__)
   stdin.write(patterns.join("\n"))
@@ -168,28 +149,30 @@ def copy_file(package, src, dest)
   FileUtils.mkdir_p(File.dirname(dest))
   name = package.fetch("name")
 
-  header = '" Polyglot metafile'
-  if File.exist?(dest)
-    meta_dest = dest
-    new_dest = dest
-    i = 0
-    while File.exist?(new_dest)
-      i += 1
-      new_dest = "#{dest.gsub(/\.vim$/, '')}-#{i}.vim"
-    end
-
-    if File.read(dest).include?(header)
-      dest = new_dest
-    else
-      FileUtils.mv(dest, new_dest)
-      File.write(meta_dest, "#{header}\n")
-      open(meta_dest, "a+") do |output|
-        output << "source <sfile>:h/#{File.basename(new_dest)}\n"
+  if dest.end_with?(".vim")
+    header = '" Polyglot metafile'
+    if File.exist?(dest)
+      meta_dest = dest
+      new_dest = dest
+      i = 0
+      while File.exist?(new_dest)
+        i += 1
+        new_dest = "#{dest.gsub(/\.vim$/, '')}-#{i}.vim"
       end
-      dest = "#{dest.gsub(/\.vim$/, '')}-#{i+1}.vim"
-    end
-    open(meta_dest, "a+") do |output|
-      output << "source <sfile>:h/#{File.basename(dest)}\n"
+
+      if File.read(dest).include?(header)
+        dest = new_dest
+      else
+        FileUtils.mv(dest, new_dest)
+        File.write(meta_dest, "#{header}\n")
+        open(meta_dest, "a+") do |output|
+          output << "source <sfile>:h/#{File.basename(new_dest)}\n"
+        end
+        dest = "#{dest.gsub(/\.vim$/, '')}-#{i+1}.vim"
+      end
+      open(meta_dest, "a+") do |output|
+        output << "source <sfile>:h/#{File.basename(dest)}\n"
+      end
     end
   end
 

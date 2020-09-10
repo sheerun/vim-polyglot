@@ -144,6 +144,7 @@ let s:globs = {
   \ 'ocpbuild': '*.ocp',
   \ 'ocpbuildroot': '*.root',
   \ 'octave': '*.oct,*.m',
+  \ 'odin': '*.odin',
   \ 'omake': '*.om,OMakefile,OMakeroot,OMakeroot.in',
   \ 'opam': '*.opam,*.opam.template,opam',
   \ 'opencl': '*.cl,*.opencl',
