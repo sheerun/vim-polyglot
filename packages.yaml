@@ -921,6 +921,7 @@ filetypes:
 ---
 name: jsx
 remote: MaxMEllon/vim-jsx-pretty
+after: javascript
 filetypes:
 - name: javascriptreact
   linguist: JSX

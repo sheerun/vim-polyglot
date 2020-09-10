@@ -46,6 +46,7 @@ CONFIG                                                  *vim-jsx-pretty-config*
   |---------------------------------------|---------|----------------------|
   | g:vim_jsx_pretty_enable_jsx_highlight |    1    | jsx highlight flag   |
   | g:vim_jsx_pretty_colorful_config      |    0    | colorful config flag |
+  | g:vim_jsx_pretty_disable_js           |    0    | js toggle flag       |
 <
 
 - *g:vim_jsx_pretty_enable_jsx_highlight*

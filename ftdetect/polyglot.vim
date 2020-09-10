@@ -851,6 +851,10 @@ if !has_key(s:disabled_packages, 'ion')
   au BufNewFile,BufRead ~/.config/ion/initrc setf ion
 endif
 
+if !has_key(s:disabled_packages, 'jsx')
+  au BufNewFile,BufRead *.jsx setf javascriptreact
+endif
+
 if !has_key(s:disabled_packages, 'javascript')
   au BufNewFile,BufRead *._js setf javascript
   au BufNewFile,BufRead *.bones setf javascript
@@ -937,10 +941,6 @@ if !has_key(s:disabled_packages, 'jst')
   au BufNewFile,BufRead *.ect setf jst
   au BufNewFile,BufRead *.ejs setf jst
   au BufNewFile,BufRead *.jst setf jst
-endif
-
-if !has_key(s:disabled_packages, 'jsx')
-  au BufNewFile,BufRead *.jsx setf javascriptreact
 endif
 
 if !has_key(s:disabled_packages, 'julia')

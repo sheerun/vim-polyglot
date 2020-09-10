@@ -32,6 +32,6 @@ if exists('s:current_syntax')
   let b:current_syntax = s:current_syntax
 endif
 
-syntax region graphqlMultilineString matchgroup=reasonMultilineString start=+graphql\_s*\zs{|+ end=+|}+ contains=@GraphQLSyntax,reasonEscape,reasonEscapeUnicode,reasonEscapeError,reasonStringContinuation keepend
+syntax region graphqlExtensionPoint matchgroup=Noise start=+\[%graphql\_s*{|+lc=10 end=+|}\_s*]+he=s+1 contains=@GraphQLSyntax keepend
 
 endif

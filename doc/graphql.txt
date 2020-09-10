@@ -46,8 +46,7 @@ the list of recognized template tag names.
 REASONML                                                    *graphql-reasonml*
 
 GraphQL syntax support inside of ReasonML template strings using graphql-ppx
-is available when vim-reasonml (https://github.com/jordwalke/vim-reasonml) is
-also installed.
+is available.
 
 ------------------------------------------------------------------------------
 vim:tw=78:ft=help:norl:
