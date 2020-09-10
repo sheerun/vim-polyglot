@@ -2,17 +2,26 @@
 name: Add language
 about: Add support for new language
 title: ''
-labels: ''
+labels: 'enhancement'
 assignees: ''
 
 ---
 
-<!--- vim-polyglot accepts only lightweight, maintained github-hosted vim plugins -->
+**What is the name of this language in Linguist?**
 
-**GitHub repository url**
+<!-- https://github.com/github/linguist/blob/master/lib/linguist/languages.yml -->
+
+**GitHub repository url of vim plugin**
+
 
 
 **Is this plugin well maintained?**
 
 
+
 **Is this plugin lightweight? (no advanced functionality, just indent and syntax support)**
+
+
+
+
+
