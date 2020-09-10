@@ -11,7 +11,7 @@ assignees: ''
 
 <!-- https://github.com/github/linguist/blob/master/lib/linguist/languages.yml -->
 
-**GitHub repository url of vim plugin**
+**Link to GitHub repository of Vim plugin**
 
 
 
@@ -20,8 +20,5 @@ assignees: ''
 
 
 **Is this plugin lightweight? (no advanced functionality, just indent and syntax support)**
-
-
-
 
 
