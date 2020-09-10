@@ -36,7 +36,6 @@ def load_data()
     end
   end
 
-  puts deps["javascript"]
   each_node = lambda {|&b| packages.keys.each(&b) }
   each_child = lambda {|n, &b| deps[n].each(&b) }
 
@@ -433,21 +432,15 @@ def generate_ftdetect(packages, heuristics)
   ambiguous_extensions = extensions
     .select { |a, b| b.uniq.size > 1 }.keys.sort
 
-  expected_filetypes = detect_filetypes('tmp/**/ftdetect/*.vim')
+  all_filetypes = packages.flat_map { |f| f["filetypes"] || [] }
+  filetype_names = Set.new(all_filetypes.map { |f| f["name"] })
+
   native_filetypes = detect_filetypes('tmp/vim/vim/runtime/filetype.vim')
-  native_extensions = native_filetypes.flat_map { |k, v| v["extensions"] }
+  expected_filetypes = detect_filetypes('tmp/**/ftdetect/*.vim') + native_filetypes
 
-  all_filetypes = Hash.new { |h, k| h[k] = { extensions: [], filenames: [] } }
+  expected_filetypes = expected_filetypes.select { |e| filetype_names.include?(e["name"]) }
 
-  for k, v in expected_filetypes
-    all_filetypes[k][:extensions].concat(v[:extensions])
-    all_filetypes[k][:filenames].concat(v[:filenames])
-  end
-  
-  for k, v in native_filetypes
-    all_filetypes[k][:extensions].concat(v[:extensions])
-    all_filetypes[k][:filenames].concat(v[:filenames])
-  end
+  native_extensions = Set.new(native_filetypes.flat_map { |f| f["extensions"] || [] })
 
   for package in packages
     name = package.fetch("name")
@@ -456,7 +449,7 @@ def generate_ftdetect(packages, heuristics)
 
     for filetype in package["filetypes"]
       for extension in filetype["extensions"]
-        if native_filetypes.has_key?(extension)
+        if native_extensions.include?(extension)
           to_disable << "*." + extension
         end
       end
@@ -491,20 +484,6 @@ def generate_ftdetect(packages, heuristics)
 
       extensions = filetype["extensions"]
       filenames = filetype["filenames"]
-
-      expected_extensions = (all_filetypes.has_key?(name) ? all_filetypes.fetch(name)[:extensions] : [])
-      ignored_extensions = expand_all(filetype.fetch("ignored_extensions", []))
-      ignored_warnings = expand_all(filetype.fetch("ignored_warnings", []))
-
-      if all_filetypes[name] && !filetype["syntax"]
-        for e in expected_extensions - extensions - ignored_extensions - ignored_warnings
-          puts "Probable missing extension for #{name}: #{e}"
-        end
-
-        for e in all_filetypes.fetch(name)[:filenames] - expand_all(filenames).flat_map { |e| [e, e.gsub(/^\./, '')] } - expand_all(filetype.fetch("ignored_warnings", [])) - ['*']
-          puts "Probable missing filename for #{name}: #{e}"
-        end
-      end
 
       for extension in extensions.sort
         outer_filetype = filetype["outer_filetype"]
@@ -549,6 +528,24 @@ def generate_ftdetect(packages, heuristics)
     end
   end
  
+  defined_extensions = all_filetypes.flat_map { |f| expand_all(f["extensions"] || []).map { |e| [f["name"], e] } }
+  expected_extensions = expected_filetypes.flat_map { |f| expand_all(f["extensions"] || []).map { |e| [f["name"], e] } }
+  ignored_extensions = all_filetypes.flat_map { |f| expand_all(f.fetch("ignored_extensions", [])).map { |e| [f["name"], e] } }
+
+  defined_filenames = all_filetypes.flat_map { |f| expand_all(f["filenames"] || []).map { |e| [f["name"], e] } }
+  expected_filenames = expected_filetypes.flat_map { |f| expand_all(f["filenames"] || []).map { |e| [f["name"], e] } }
+  ignored_filenames = all_filetypes.flat_map { |f| expand_all(f.fetch("ignored_filenames", [])).map { |e| [f["name"], e] } }
+
+  ignored_warnings = all_filetypes.flat_map { |f| expand_all(f.fetch("ignored_warnings", [])).map { |e| [f["name"], e] } + [f, "*"] }
+
+  for name, e in expected_extensions - defined_extensions - ignored_extensions - ignored_warnings
+    puts "Missing extension for #{name}: #{e}"
+  end
+
+  for name, e in expected_filenames - defined_filenames - ignored_filenames - ignored_warnings
+    puts "Missing filename for #{name}: #{e}"
+  end
+
   ftdetect = File.read('ftdetect/polyglot.vim')
   File.write('ftdetect/polyglot.vim', ftdetect.gsub(/(?<=" filetypes\n).*(?=\n" end filetypes)/m, output))
 
@@ -728,14 +725,15 @@ def detect_filetypes(glob)
     results
   end
 
-  Hash[filetypes.flat_map do |ext, filetype|
+  filetypes.flat_map do |ext, filetype|
     expand_all(ext).map { |e| [filetype, e] }
   end.group_by { |a, b| a }.map { |a, b| [a, b.map { |c, d| d }] }.map { |a, b|
-    [a, {
-      extensions: b.select { |x| x.match(/^\*\.[^\/]+$/) }.map { |a| a.strip[2..] },
-      filenames: expand_all(b.select { |x| !x.match(/^\*\.[^\/]+$/) })
-    }]
-  }]
+    {
+      "name" => a,
+      "extensions" => b.select { |x| x.match(/^\*\.[^\/]+$/) }.map { |a| a.strip[2..] },
+      "filenames" => expand_all(b.select { |x| !x.match(/^\*\.[^\/]+$/) })
+    }
+  }
 end
 
 def generate_plugins(packages)

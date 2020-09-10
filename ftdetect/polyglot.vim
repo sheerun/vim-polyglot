@@ -73,6 +73,8 @@ func! s:StarSetf(ft)
   endif
 endfunc
 
+augroup filetypedetect
+
 " filetypes
 
 if !has_key(s:disabled_packages, '8th')
@@ -95,12 +97,24 @@ if !has_key(s:disabled_packages, 'abc')
   au! BufRead,BufNewFile *.abc
 endif
 
+if !has_key(s:disabled_packages, 'abel')
+  au! BufRead,BufNewFile *.abl
+endif
+
+if !has_key(s:disabled_packages, 'acedb')
+  au! BufRead,BufNewFile *.wrm
+endif
+
 if !has_key(s:disabled_packages, 'acpiasl')
   au! BufRead,BufNewFile *.dsl
 endif
 
 if !has_key(s:disabled_packages, 'ada')
-  au! BufRead,BufNewFile *.ada
+  au! BufRead,BufNewFile *.adb,*.ads,*.ada,*.adc,*.gpr,*.ada_m
+endif
+
+if !has_key(s:disabled_packages, 'ahdl')
+  au! BufRead,BufNewFile *.tdf
 endif
 
 if !has_key(s:disabled_packages, 'aidl')
@@ -111,8 +125,16 @@ if !has_key(s:disabled_packages, 'aml')
   au! BufRead,BufNewFile *.aml
 endif
 
+if !has_key(s:disabled_packages, 'ampl')
+  au! BufRead,BufNewFile *.run
+endif
+
 if !has_key(s:disabled_packages, 'applescript')
-  au! BufRead,BufNewFile *.applescript
+  au! BufRead,BufNewFile *.scpt
+endif
+
+if !has_key(s:disabled_packages, 'arduino')
+  au! BufRead,BufNewFile *.pde,*.ino
 endif
 
 if !has_key(s:disabled_packages, 'art')
@@ -120,11 +142,23 @@ if !has_key(s:disabled_packages, 'art')
 endif
 
 if !has_key(s:disabled_packages, 'asciidoc')
-  au! BufRead,BufNewFile *.asciidoc
+  au! BufRead,BufNewFile *.asciidoc,*.adoc
+endif
+
+if !has_key(s:disabled_packages, 'autohotkey')
+  au! BufRead,BufNewFile *.ahk
 endif
 
 if !has_key(s:disabled_packages, 'asn')
-  au! BufRead,BufNewFile *.asn
+  au! BufRead,BufNewFile *.asn,*.asn1
+endif
+
+if !has_key(s:disabled_packages, 'atlas')
+  au! BufRead,BufNewFile *.atl,*.as
+endif
+
+if !has_key(s:disabled_packages, 'autoit')
+  au! BufRead,BufNewFile *.au3
 endif
 
 if !has_key(s:disabled_packages, 'ave')
@@ -132,19 +166,27 @@ if !has_key(s:disabled_packages, 'ave')
 endif
 
 if !has_key(s:disabled_packages, 'awk')
-  au! BufRead,BufNewFile *.awk
+  au! BufRead,BufNewFile *.awk,*.gawk
 endif
 
 if !has_key(s:disabled_packages, 'c/c++')
-  au! BufRead,BufNewFile *.cpp,*.tpp,*.c
+  au! BufRead,BufNewFile *.cpp,*.c++,*.cc,*.cxx,*.hh,*.hpp,*.hxx,*.inl,*.ipp,*.tcc,*.tpp,*.moc,*.tlh,*.qc
+endif
+
+if !has_key(s:disabled_packages, 'clojure')
+  au! BufRead,BufNewFile *.clj,*.cljc,*.cljs,*.cljx
 endif
 
 if !has_key(s:disabled_packages, 'cmake')
-  au! BufRead,BufNewFile *.cmake
+  au! BufRead,BufNewFile *.cmake,*.cmake.in
+endif
+
+if !has_key(s:disabled_packages, 'cucumber')
+  au! BufRead,BufNewFile *.feature
 endif
 
 if !has_key(s:disabled_packages, 'dart')
-  au! BufRead,BufNewFile *.dart
+  au! BufRead,BufNewFile *.dart,*.drt
 endif
 
 if !has_key(s:disabled_packages, 'dlang')
@@ -152,27 +194,43 @@ if !has_key(s:disabled_packages, 'dlang')
 endif
 
 if !has_key(s:disabled_packages, 'dockerfile')
-  au! BufRead,BufNewFile *.dockerfile
+  au! BufRead,BufNewFile *.Dockerfile
+endif
+
+if !has_key(s:disabled_packages, 'elf')
+  au! BufRead,BufNewFile *.am
 endif
 
 if !has_key(s:disabled_packages, 'elm')
   au! BufRead,BufNewFile *.elm
 endif
 
-if !has_key(s:disabled_packages, 'git')
-  au! BufRead,BufNewFile *.gitconfig
+if !has_key(s:disabled_packages, 'erlang')
+  au! BufRead,BufNewFile *.erl,*.es,*.hrl,*.yaws
+endif
+
+if !has_key(s:disabled_packages, 'forth')
+  au! BufRead,BufNewFile *.fs,*.ft,*.fth
+endif
+
+if !has_key(s:disabled_packages, 'fsharp')
+  au! BufRead,BufNewFile *.fs
+endif
+
+if !has_key(s:disabled_packages, 'glsl')
+  au! BufRead,BufNewFile *.fs,*.gs,*.comp
 endif
 
 if !has_key(s:disabled_packages, 'gnuplot')
-  au! BufRead,BufNewFile *.gp,*.gnuplot
+  au! BufRead,BufNewFile *.gp,*.gpi
 endif
 
 if !has_key(s:disabled_packages, 'go')
-  au! BufRead,BufNewFile *.go
+  au! BufRead,BufNewFile *.go,*.tmpl
 endif
 
 if !has_key(s:disabled_packages, 'groovy')
-  au! BufRead,BufNewFile *.groovy
+  au! BufRead,BufNewFile *.groovy,*.gradle
 endif
 
 if !has_key(s:disabled_packages, 'haml')
@@ -187,28 +245,56 @@ if !has_key(s:disabled_packages, 'haproxy')
   au! BufRead,BufNewFile *.cfg
 endif
 
+if !has_key(s:disabled_packages, 'haskell')
+  au! BufRead,BufNewFile *.hs,*.hs-boot,*.hsc
+endif
+
 if !has_key(s:disabled_packages, 'html5')
-  au! BufRead,BufNewFile *.st,*.xhtml
+  au! BufRead,BufNewFile *.st,*.xht,*.xhtml
+endif
+
+if !has_key(s:disabled_packages, 'jsx')
+  au! BufRead,BufNewFile *.jsx
+endif
+
+if !has_key(s:disabled_packages, 'javascript')
+  au! BufRead,BufNewFile *.js,*.cjs,*.es,*.gs,*.mjs,*.pac
 endif
 
 if !has_key(s:disabled_packages, 'json')
-  au! BufRead,BufNewFile *.json,*.template
+  au! BufRead,BufNewFile *.json,*.ice,*.webmanifest,*.yy,*.jsonp
+endif
+
+if !has_key(s:disabled_packages, 'kotlin')
+  au! BufRead,BufNewFile *.kt,*.ktm,*.kts
 endif
 
 if !has_key(s:disabled_packages, 'less')
   au! BufRead,BufNewFile *.less
 endif
 
+if !has_key(s:disabled_packages, 'llvm')
+  au! BufRead,BufNewFile *.ll
+endif
+
 if !has_key(s:disabled_packages, 'lua')
-  au! BufRead,BufNewFile *.lua
+  au! BufRead,BufNewFile *.lua,*.nse,*.rockspec
 endif
 
 if !has_key(s:disabled_packages, 'm4')
-  au! BufRead,BufNewFile *.m4
+  au! BufRead,BufNewFile *.m4,*.at
+endif
+
+if !has_key(s:disabled_packages, 'mathematica')
+  au! BufRead,BufNewFile *.cdf,*.nb
 endif
 
 if !has_key(s:disabled_packages, 'markdown')
-  au! BufRead,BufNewFile *.markdown
+  au! BufRead,BufNewFile *.md,*.markdown,*.mdown,*.mdwn,*.mkd,*.mkdn
+endif
+
+if !has_key(s:disabled_packages, 'ocaml')
+  au! BufRead,BufNewFile *.ml,*.mli,*.mll,*.mly
 endif
 
 if !has_key(s:disabled_packages, 'opencl')
@@ -216,11 +302,11 @@ if !has_key(s:disabled_packages, 'opencl')
 endif
 
 if !has_key(s:disabled_packages, 'perl')
-  au! BufRead,BufNewFile *.perl
+  au! BufRead,BufNewFile *.al,*.plx,*.psgi,*.t
 endif
 
 if !has_key(s:disabled_packages, 'php')
-  au! BufRead,BufNewFile *.php
+  au! BufRead,BufNewFile *.php,*.ctp
 endif
 
 if !has_key(s:disabled_packages, 'protobuf')
@@ -228,15 +314,19 @@ if !has_key(s:disabled_packages, 'protobuf')
 endif
 
 if !has_key(s:disabled_packages, 'python')
-  au! BufRead,BufNewFile *.spec
+  au! BufRead,BufNewFile *.py,*.pyi,*.pyw,*.spec
 endif
 
 if !has_key(s:disabled_packages, 'r-lang')
-  au! BufRead,BufNewFile *.r
+  au! BufRead,BufNewFile *.s,*.S,*.rd
+endif
+
+if !has_key(s:disabled_packages, 'racket')
+  au! BufRead,BufNewFile *.rkt
 endif
 
 if !has_key(s:disabled_packages, 'raku')
-  au! BufRead,BufNewFile *.pod6
+  au! BufRead,BufNewFile *.p6,*.pl6,*.pm6,*.t,*.raku,*.rakumod,*.pod6
 endif
 
 if !has_key(s:disabled_packages, 'raml')
@@ -248,7 +338,11 @@ if !has_key(s:disabled_packages, 'rst')
 endif
 
 if !has_key(s:disabled_packages, 'ruby')
-  au! BufRead,BufNewFile *.ruby,*.spec
+  au! BufRead,BufNewFile *.rb,*.builder,*.gemspec,*.rake,*.rbw,*.ru,*.spec,*.rxml,*.rjs,*.rant,*.erb,*.rhtml
+endif
+
+if !has_key(s:disabled_packages, 'rust')
+  au! BufRead,BufNewFile *.rs
 endif
 
 if !has_key(s:disabled_packages, 'scala')
@@ -264,7 +358,11 @@ if !has_key(s:disabled_packages, 'scss')
 endif
 
 if !has_key(s:disabled_packages, 'sh')
-  au! BufRead,BufNewFile *.sh,*.tmux,*.zsh
+  au! BufRead,BufNewFile *.zsh
+endif
+
+if !has_key(s:disabled_packages, 'smt2')
+  au! BufRead,BufNewFile *.smt
 endif
 
 if !has_key(s:disabled_packages, 'svg')
@@ -283,8 +381,20 @@ if !has_key(s:disabled_packages, 'twig')
   au! BufRead,BufNewFile *.twig
 endif
 
+if !has_key(s:disabled_packages, 'typescript')
+  au! BufRead,BufNewFile *.ts,*.tsx
+endif
+
+if !has_key(s:disabled_packages, 'v')
+  au! BufRead,BufNewFile *.v
+endif
+
 if !has_key(s:disabled_packages, 'vbnet')
   au! BufRead,BufNewFile *.vb
+endif
+
+if !has_key(s:disabled_packages, 'vmasm')
+  au! BufRead,BufNewFile *.mar
 endif
 
 if !has_key(s:disabled_packages, 'vue')
@@ -292,15 +402,23 @@ if !has_key(s:disabled_packages, 'vue')
 endif
 
 if !has_key(s:disabled_packages, 'xml')
-  au! BufRead,BufNewFile *.xml,*.ant,*.xsd
+  au! BufRead,BufNewFile *.csproj,*.ui,*.wsdl,*.wsf,*.xlf,*.xliff,*.xmi,*.xsd,*.xul
 endif
 
 if !has_key(s:disabled_packages, 'xsl')
-  au! BufRead,BufNewFile *.xslt
+  au! BufRead,BufNewFile *.xslt,*.xsl
 endif
 
 if !has_key(s:disabled_packages, 'yaml')
-  au! BufRead,BufNewFile *.yaml
+  au! BufRead,BufNewFile *.yml,*.yaml
+endif
+
+if !has_key(s:disabled_packages, 'visual-basic')
+  au! BufRead,BufNewFile *.vba,*.vbs,*.dsm,*.ctl,*.sba
+endif
+
+if !has_key(s:disabled_packages, 'dosini')
+  au! BufRead,BufNewFile *.ini,*.cfg,*.properties
 endif
 
 if !has_key(s:disabled_packages, '8th')
@@ -928,6 +1046,7 @@ if !has_key(s:disabled_packages, 'json')
   au BufNewFile,BufRead {.,}tern-config setf json
   au BufNewFile,BufRead {.,}tern-project setf json
   au BufNewFile,BufRead {.,}watchmanconfig setf json
+  au BufNewFile,BufRead Pipfile.lock setf json
   au BufNewFile,BufRead composer.lock setf json
   au BufNewFile,BufRead mcmod.info setf json
 endif
@@ -1021,6 +1140,7 @@ if !has_key(s:disabled_packages, 'mathematica')
   au BufNewFile,BufRead *.cdf setf mma
   au BufNewFile,BufRead *.ma setf mma
   au BufNewFile,BufRead *.mathematica setf mma
+  au BufNewFile,BufRead *.mma setf mma
   au BufNewFile,BufRead *.mt setf mma
   au BufNewFile,BufRead *.nb setf mma
   au BufNewFile,BufRead *.nbp setf mma
@@ -1771,8 +1891,27 @@ if !has_key(s:disabled_packages, 'visual-basic')
   au! BufNewFile,BufRead *.bas call polyglot#DetectBasFiletype()
 endif
 
+if !has_key(s:disabled_packages, 'dosini')
+  au BufNewFile,BufRead *.cfg setf dosini
+  au BufNewFile,BufRead *.dof setf dosini
+  au BufNewFile,BufRead *.ini setf dosini
+  au BufNewFile,BufRead *.lektorproject setf dosini
+  au BufNewFile,BufRead *.prefs setf dosini
+  au BufNewFile,BufRead *.pro setf dosini
+  au BufNewFile,BufRead *.properties setf dosini
+  au BufNewFile,BufRead */etc/pacman.conf setf dosini
+  au BufNewFile,BufRead */etc/yum.conf setf dosini
+  au BufNewFile,BufRead */etc/yum.repos.d/* call s:StarSetf('dosini')
+  au BufNewFile,BufRead {.,}editorconfig setf dosini
+  au BufNewFile,BufRead {.,}npmrc setf dosini
+  au BufNewFile,BufRead buildozer.spec setf dosini
+  au BufNewFile,BufRead php.ini-* call s:StarSetf('dosini')
+endif
+
 
 " end filetypes
+
+augroup END
 
 au BufNewFile,BufRead,StdinReadPost * 
   \ if !did_filetype() && expand("<afile>") !~ g:ft_ignore_pat 
