@@ -4,11 +4,13 @@ set cpo&vim
 
 func! polyglot#Heuristics()
   " Try to detect filetype from shebang
-  let l:filetype = polyglot#Shebang()
-  if l:filetype != ""
-    exec "setf " . l:filetype
-    return
+  let filetype = polyglot#Shebang()
+  if filetype != ""
+    exec "setf " . filetype
+    return 1
   endif
+
+  return 0
 endfunc
 
 let s:interpreters = {
@@ -86,37 +88,41 @@ let s:r_envflag = '%(\S\+=\S\+\|-[iS]\|--ignore-environment\|--split-string\)'
 let s:r_env = '^\%(\' . s:r_envflag . '\s\+\)*\(\S\+\)'
 
 func! polyglot#Shebang()
-  let l:line1 = getline(1)
+  let line1 = getline(1)
 
-  if l:line1 !~# "^#!"
+  if line1 !~# "^#!"
     return
   endif
 
-  let l:pathrest = matchlist(l:line1, s:r_hashbang)
+  let pathrest = matchlist(line1, s:r_hashbang)
 
-  if len(l:pathrest) == 0
+  if len(pathrest) == 0
     return 
   endif
 
-  let [_, l:path, l:rest; __] = l:pathrest
+  let [_, path, rest; __] = pathrest
 
-  let l:script = split(l:path, "/")[-1]
+  let script = split(path, "/")[-1]
 
-  if l:script == "env"
-    let l:argspath = matchlist(l:rest, s:r_env)
-    if len(l:argspath) == 0
+  if len(script) == 0
+    return
+  endif
+
+  if script == "env"
+    let argspath = matchlist(rest, s:r_env)
+    if len(argspath) == 0
       return
     endif
 
-    let l:script = l:argspath[1]
+    let script = argspath[1]
   endif
 
-  if has_key(s:interpreters, l:script)
-    return s:interpreters[l:script]
+  if has_key(s:interpreters, script)
+    return s:interpreters[script]
   endif
 
   for interpreter in keys(s:interpreters)
-    if l:script =~# '^' . interpreter
+    if script =~# '^' . interpreter
       return s:interpreters[interpreter]
     endif
   endfor

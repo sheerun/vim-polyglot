@@ -1911,12 +1911,11 @@ endif
 
 " end filetypes
 
-augroup END
-
 au BufNewFile,BufRead,StdinReadPost * 
   \ if !did_filetype() && expand("<afile>") !~ g:ft_ignore_pat 
   \ | call polyglot#Heuristics() | endif
 
+augroup END
 
 if !has_key(s:disabled_packages, 'autoindent')
   " Code below re-implements sleuth for vim-polyglot
@@ -2088,10 +2087,10 @@ if !has_key(s:disabled_packages, 'autoindent')
     endif
   endfunction
 
-  augroup polyglot
-    autocmd!
-    autocmd FileType * call s:detect_indent()
-    autocmd User Flags call Hoist('buffer', 5, 'SleuthIndicator')
+  augroup polyglot-sleuth
+    au!
+    au FileType * call s:detect_indent()
+    au User Flags call Hoist('buffer', 5, 'SleuthIndicator')
   augroup END
 
   command! -bar -bang Sleuth call s:detect_indent()
@@ -2109,7 +2108,17 @@ func! s:verify()
   endif
 endfunc
 
-autocmd VimEnter * call s:verify()
+au VimEnter * call s:verify()
+
+func! s:observe_filetype()
+  augroup polyglot-observer
+    au! CursorHold,CursorHoldI <buffer>
+      \ if polyglot#Heuristics() | au! polyglot-observer CursorHold,CursorHoldI | endif
+  augroup END
+endfunc
+
+au BufEnter * if &ft == "" && expand("<afile>") !~ g:ft_ignore_pat
+      \ | call s:observe_filetype() | endif
 
 " restore Vi compatibility settings
 let &cpo = s:cpo_save

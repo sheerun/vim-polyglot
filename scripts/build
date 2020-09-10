@@ -559,8 +559,10 @@ def generate_ftdetect(packages, heuristics)
       let l:filetype = polyglot#Shebang()
       if l:filetype != ""
         exec "setf " . l:filetype
-        return
+        return 1
       endif
+
+      return 0
     endfunc
     
     let s:interpreters = {
