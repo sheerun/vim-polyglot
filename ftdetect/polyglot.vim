@@ -2104,7 +2104,7 @@ func! s:verify()
   if exists("g:polyglot_disabled_not_set")
     if exists("g:polyglot_disabled")
       echohl WarningMsg
-      echo "vim-polyglot: g:polyglot_disabled should be at the top of .vimrc"
+      echo "vim-polyglot: g:polyglot_disabled should be defined before loading vim-polyglot"
       echohl None
     endif
 
