@@ -231,7 +231,7 @@ syn region rustCommentBlockDocNestError matchgroup=rustCommentBlockDocError star
 " then you must deal with cases like ``/*/**/*/``. And don't try making it
 " worse with ``\%(/\@<!\*\)\@<!``, either...
 
-syn keyword rustTodo contained TODO FIXME XXX NB NOTE
+syn keyword rustTodo contained TODO FIXME XXX NB NOTE SAFETY
 
 " asm! macro {{{2
 syn region rustAsmMacro matchgroup=rustMacro start="\<asm!\s*(" end=")" contains=rustAsmDirSpec,rustAsmSym,rustAsmConst,rustAsmOptionsGroup,rustComment.*,rustString.*

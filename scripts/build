@@ -135,8 +135,15 @@ def transform_patterns(heuristics)
 end
 
 def load_languages
-  url = "#{BASE_URL}/lib/linguist/languages.yml"
-  data = URI.open(url) { |io| YAML.load(io.read) }
+  file = 'tmp/languages.yml'
+
+  unless File.exist?(file)
+    url = "#{BASE_URL}/lib/linguist/languages.yml"
+    data = URI.open(url) { |io| io.read }
+    File.write(file, data)
+  end
+
+  YAML.load(File.read(file))
 end
 
 def parse_remote(remote)
