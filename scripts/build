@@ -10,6 +10,8 @@ require 'tsort'
 
 Dir.chdir(File.dirname(__dir__))
 
+Dir.mkdir('tmp') unless File.exists?('tmp')
+
 BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 
 def camelize(str)
