@@ -10,8 +10,6 @@ require 'tsort'
 
 Dir.chdir(File.dirname(__dir__))
 
-Dir.mkdir('tmp') unless File.exists?('tmp')
-
 BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 
 def camelize(str)
@@ -767,6 +765,8 @@ if __FILE__ == $0
   if !ENV["DEV"]
     FileUtils.rm_rf("tmp")
   end
+
+  Dir.mkdir('tmp') unless File.exists?('tmp')
 
   packages, heuristics = load_data()
   download(packages)
