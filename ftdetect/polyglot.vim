@@ -62,6 +62,13 @@ if !exists('g:python_highlight_all')
   call s:SetDefault('g:python_slow_sync', 1)
 endif
 
+" We need it because scripts.vim in vim uses "set ft=" which cannot be
+" overridden with setf (and we can't use set ft= so our scripts.vim work)
+func! s:Setf(ft)
+  if &filetype !~# '\<'.a:ft.'\>'
+    let &filetype = a:ft
+  endif
+endfunc
 
 " Function used for patterns that end in a star: don't set the filetype if the
 " file name matches ft_ignore_pat.
@@ -79,6 +86,10 @@ augroup filetypedetect
 
 if !has_key(s:disabled_packages, '8th')
   au! BufRead,BufNewFile *.8th
+endif
+
+if !has_key(s:disabled_packages, 'haproxy')
+  au! BufRead,BufNewFile *.cfg
 endif
 
 if !has_key(s:disabled_packages, 'a65')
@@ -129,8 +140,16 @@ if !has_key(s:disabled_packages, 'ampl')
   au! BufRead,BufNewFile *.run
 endif
 
+if !has_key(s:disabled_packages, 'xml')
+  au! BufRead,BufNewFile *.csproj,*.ui,*.wsdl,*.wsf,*.xlf,*.xliff,*.xmi,*.xsd,*.xul
+endif
+
 if !has_key(s:disabled_packages, 'applescript')
   au! BufRead,BufNewFile *.scpt
+endif
+
+if !has_key(s:disabled_packages, 'c/c++')
+  au! BufRead,BufNewFile *.cpp,*.c++,*.cc,*.cxx,*.hh,*.hpp,*.hxx,*.inl,*.ipp,*.tcc,*.tpp,*.moc,*.tlh,*.qc
 endif
 
 if !has_key(s:disabled_packages, 'arduino')
@@ -147,6 +166,10 @@ endif
 
 if !has_key(s:disabled_packages, 'autohotkey')
   au! BufRead,BufNewFile *.ahk
+endif
+
+if !has_key(s:disabled_packages, 'elf')
+  au! BufRead,BufNewFile *.am
 endif
 
 if !has_key(s:disabled_packages, 'asn')
@@ -167,10 +190,6 @@ endif
 
 if !has_key(s:disabled_packages, 'awk')
   au! BufRead,BufNewFile *.awk,*.gawk
-endif
-
-if !has_key(s:disabled_packages, 'c/c++')
-  au! BufRead,BufNewFile *.cpp,*.c++,*.cc,*.cxx,*.hh,*.hpp,*.hxx,*.inl,*.ipp,*.tcc,*.tpp,*.moc,*.tlh,*.qc
 endif
 
 if !has_key(s:disabled_packages, 'clojure')
@@ -197,10 +216,6 @@ if !has_key(s:disabled_packages, 'dockerfile')
   au! BufRead,BufNewFile *.Dockerfile
 endif
 
-if !has_key(s:disabled_packages, 'elf')
-  au! BufRead,BufNewFile *.am
-endif
-
 if !has_key(s:disabled_packages, 'elm')
   au! BufRead,BufNewFile *.elm
 endif
@@ -213,12 +228,12 @@ if !has_key(s:disabled_packages, 'forth')
   au! BufRead,BufNewFile *.fs,*.ft,*.fth
 endif
 
-if !has_key(s:disabled_packages, 'fsharp')
-  au! BufRead,BufNewFile *.fs
-endif
-
 if !has_key(s:disabled_packages, 'glsl')
   au! BufRead,BufNewFile *.fs,*.gs,*.comp
+endif
+
+if !has_key(s:disabled_packages, 'fsharp')
+  au! BufRead,BufNewFile *.fs
 endif
 
 if !has_key(s:disabled_packages, 'gnuplot')
@@ -227,6 +242,14 @@ endif
 
 if !has_key(s:disabled_packages, 'go')
   au! BufRead,BufNewFile *.go,*.tmpl
+endif
+
+if !has_key(s:disabled_packages, 'javascript')
+  au! BufRead,BufNewFile *.js,*.cjs,*.es,*.gs,*.mjs,*.pac
+endif
+
+if !has_key(s:disabled_packages, 'jsx')
+  au! BufRead,BufNewFile *.jsx
 endif
 
 if !has_key(s:disabled_packages, 'groovy')
@@ -241,24 +264,12 @@ if !has_key(s:disabled_packages, 'handlebars')
   au! BufRead,BufNewFile *.hb
 endif
 
-if !has_key(s:disabled_packages, 'haproxy')
-  au! BufRead,BufNewFile *.cfg
-endif
-
 if !has_key(s:disabled_packages, 'haskell')
   au! BufRead,BufNewFile *.hs,*.hs-boot,*.hsc
 endif
 
 if !has_key(s:disabled_packages, 'html5')
   au! BufRead,BufNewFile *.st,*.xht,*.xhtml
-endif
-
-if !has_key(s:disabled_packages, 'jsx')
-  au! BufRead,BufNewFile *.jsx
-endif
-
-if !has_key(s:disabled_packages, 'javascript')
-  au! BufRead,BufNewFile *.js,*.cjs,*.es,*.gs,*.mjs,*.pac
 endif
 
 if !has_key(s:disabled_packages, 'json')
@@ -401,10 +412,6 @@ if !has_key(s:disabled_packages, 'vue')
   au! BufRead,BufNewFile *.vue
 endif
 
-if !has_key(s:disabled_packages, 'xml')
-  au! BufRead,BufNewFile *.csproj,*.ui,*.wsdl,*.wsf,*.xlf,*.xliff,*.xmi,*.xsd,*.xul
-endif
-
 if !has_key(s:disabled_packages, 'xsl')
   au! BufRead,BufNewFile *.xslt,*.xsl
 endif
@@ -418,30 +425,36 @@ if !has_key(s:disabled_packages, 'visual-basic')
 endif
 
 if !has_key(s:disabled_packages, 'dosini')
-  au! BufRead,BufNewFile *.ini,*.cfg,*.properties
+  au! BufRead,BufNewFile *.ini,*.properties
 endif
 
 if !has_key(s:disabled_packages, '8th')
-  au BufNewFile,BufRead *.8th setf 8th
+  au BufNewFile,BufRead *.8th call s:Setf('8th')
+endif
+
+if !has_key(s:disabled_packages, 'haproxy')
+  au BufNewFile,BufRead *.cfg call s:Setf('haproxy')
+  au BufNewFile,BufRead haproxy*.c* call s:StarSetf('haproxy')
+  au BufNewFile,BufRead haproxy.cfg call s:Setf('haproxy')
 endif
 
 if !has_key(s:disabled_packages, 'a2ps')
-  au BufNewFile,BufRead */etc/a2ps.cfg setf a2ps
-  au BufNewFile,BufRead */etc/a2ps/*.cfg setf a2ps
-  au BufNewFile,BufRead {.,}a2psrc setf a2ps
-  au BufNewFile,BufRead a2psrc setf a2ps
+  au BufNewFile,BufRead */etc/a2ps.cfg call s:Setf('a2ps')
+  au BufNewFile,BufRead */etc/a2ps/*.cfg call s:Setf('a2ps')
+  au BufNewFile,BufRead {.,}a2psrc call s:Setf('a2ps')
+  au BufNewFile,BufRead a2psrc call s:Setf('a2ps')
 endif
 
 if !has_key(s:disabled_packages, 'a65')
-  au BufNewFile,BufRead *.a65 setf a65
+  au BufNewFile,BufRead *.a65 call s:Setf('a65')
 endif
 
 if !has_key(s:disabled_packages, 'aap')
-  au BufNewFile,BufRead *.aap setf aap
+  au BufNewFile,BufRead *.aap call s:Setf('aap')
 endif
 
 if !has_key(s:disabled_packages, 'abap')
-  au BufNewFile,BufRead *.abap setf abap
+  au BufNewFile,BufRead *.abap call s:Setf('abap')
 endif
 
 if !has_key(s:disabled_packages, 'abaqus')
@@ -449,55 +462,164 @@ if !has_key(s:disabled_packages, 'abaqus')
 endif
 
 if !has_key(s:disabled_packages, 'abc')
-  au BufNewFile,BufRead *.abc setf abc
+  au BufNewFile,BufRead *.abc call s:Setf('abc')
 endif
 
 if !has_key(s:disabled_packages, 'abel')
-  au BufNewFile,BufRead *.abl setf abel
+  au BufNewFile,BufRead *.abl call s:Setf('abel')
 endif
 
 if !has_key(s:disabled_packages, 'acedb')
-  au BufNewFile,BufRead *.wrm setf acedb
+  au BufNewFile,BufRead *.wrm call s:Setf('acedb')
 endif
 
 if !has_key(s:disabled_packages, 'acpiasl')
-  au BufNewFile,BufRead *.asl setf asl
-  au BufNewFile,BufRead *.dsl setf asl
+  au BufNewFile,BufRead *.asl call s:Setf('asl')
+  au BufNewFile,BufRead *.dsl call s:Setf('asl')
 endif
 
 if !has_key(s:disabled_packages, 'ada')
-  au BufNewFile,BufRead *.ada setf ada
-  au BufNewFile,BufRead *.ada_m setf ada
-  au BufNewFile,BufRead *.adb setf ada
-  au BufNewFile,BufRead *.adc setf ada
-  au BufNewFile,BufRead *.ads setf ada
-  au BufNewFile,BufRead *.gpr setf ada
+  au BufNewFile,BufRead *.ada call s:Setf('ada')
+  au BufNewFile,BufRead *.ada_m call s:Setf('ada')
+  au BufNewFile,BufRead *.adb call s:Setf('ada')
+  au BufNewFile,BufRead *.adc call s:Setf('ada')
+  au BufNewFile,BufRead *.ads call s:Setf('ada')
+  au BufNewFile,BufRead *.gpr call s:Setf('ada')
 endif
 
 if !has_key(s:disabled_packages, 'ahdl')
-  au BufNewFile,BufRead *.tdf setf ahdl
+  au BufNewFile,BufRead *.tdf call s:Setf('ahdl')
 endif
 
 if !has_key(s:disabled_packages, 'aidl')
-  au BufNewFile,BufRead *.aidl setf aidl
+  au BufNewFile,BufRead *.aidl call s:Setf('aidl')
 endif
 
 if !has_key(s:disabled_packages, 'alsaconf')
-  au BufNewFile,BufRead */etc/asound.conf setf alsaconf
-  au BufNewFile,BufRead */usr/share/alsa/alsa.conf setf alsaconf
-  au BufNewFile,BufRead {.,}asoundrc setf alsaconf
+  au BufNewFile,BufRead */etc/asound.conf call s:Setf('alsaconf')
+  au BufNewFile,BufRead */usr/share/alsa/alsa.conf call s:Setf('alsaconf')
+  au BufNewFile,BufRead {.,}asoundrc call s:Setf('alsaconf')
 endif
 
 if !has_key(s:disabled_packages, 'aml')
-  au BufNewFile,BufRead *.aml setf aml
+  au BufNewFile,BufRead *.aml call s:Setf('aml')
 endif
 
 if !has_key(s:disabled_packages, 'ampl')
-  au BufNewFile,BufRead *.run setf ampl
+  au BufNewFile,BufRead *.run call s:Setf('ampl')
+endif
+
+if !has_key(s:disabled_packages, 'xml')
+  au BufNewFile,BufRead *.adml call s:Setf('xml')
+  au BufNewFile,BufRead *.admx call s:Setf('xml')
+  au BufNewFile,BufRead *.ant call s:Setf('xml')
+  au BufNewFile,BufRead *.axml call s:Setf('xml')
+  au BufNewFile,BufRead *.builds call s:Setf('xml')
+  au BufNewFile,BufRead *.ccproj call s:Setf('xml')
+  au BufNewFile,BufRead *.ccxml call s:Setf('xml')
+  au BufNewFile,BufRead *.cdxml call s:Setf('xml')
+  au BufNewFile,BufRead *.clixml call s:Setf('xml')
+  au BufNewFile,BufRead *.cproject call s:Setf('xml')
+  au BufNewFile,BufRead *.cscfg call s:Setf('xml')
+  au BufNewFile,BufRead *.csdef call s:Setf('xml')
+  au BufNewFile,BufRead *.csl call s:Setf('xml')
+  au BufNewFile,BufRead *.csproj call s:Setf('xml')
+  au BufNewFile,BufRead *.ct call s:Setf('xml')
+  au BufNewFile,BufRead *.depproj call s:Setf('xml')
+  au BufNewFile,BufRead *.dita call s:Setf('xml')
+  au BufNewFile,BufRead *.ditamap call s:Setf('xml')
+  au BufNewFile,BufRead *.ditaval call s:Setf('xml')
+  au BufNewFile,BufRead *.dll.config call s:Setf('xml')
+  au BufNewFile,BufRead *.dotsettings call s:Setf('xml')
+  au BufNewFile,BufRead *.filters call s:Setf('xml')
+  au BufNewFile,BufRead *.fsproj call s:Setf('xml')
+  au BufNewFile,BufRead *.fxml call s:Setf('xml')
+  au BufNewFile,BufRead *.glade call s:Setf('xml')
+  au BufNewFile,BufRead *.gml call s:Setf('xml')
+  au BufNewFile,BufRead *.gmx call s:Setf('xml')
+  au BufNewFile,BufRead *.grxml call s:Setf('xml')
+  au BufNewFile,BufRead *.gst call s:Setf('xml')
+  au BufNewFile,BufRead *.iml call s:Setf('xml')
+  au BufNewFile,BufRead *.ivy call s:Setf('xml')
+  au BufNewFile,BufRead *.jelly call s:Setf('xml')
+  au BufNewFile,BufRead *.jsproj call s:Setf('xml')
+  au BufNewFile,BufRead *.kml call s:Setf('xml')
+  au BufNewFile,BufRead *.launch call s:Setf('xml')
+  au BufNewFile,BufRead *.mdpolicy call s:Setf('xml')
+  au BufNewFile,BufRead *.mjml call s:Setf('xml')
+  au BufNewFile,BufRead *.mm call s:Setf('xml')
+  au BufNewFile,BufRead *.mod call s:Setf('xml')
+  au BufNewFile,BufRead *.mxml call s:Setf('xml')
+  au BufNewFile,BufRead *.natvis call s:Setf('xml')
+  au BufNewFile,BufRead *.ncl call s:Setf('xml')
+  au BufNewFile,BufRead *.ndproj call s:Setf('xml')
+  au BufNewFile,BufRead *.nproj call s:Setf('xml')
+  au BufNewFile,BufRead *.nuspec call s:Setf('xml')
+  au BufNewFile,BufRead *.odd call s:Setf('xml')
+  au BufNewFile,BufRead *.osm call s:Setf('xml')
+  au BufNewFile,BufRead *.pkgproj call s:Setf('xml')
+  au BufNewFile,BufRead *.pluginspec call s:Setf('xml')
+  au BufNewFile,BufRead *.proj call s:Setf('xml')
+  au BufNewFile,BufRead *.props call s:Setf('xml')
+  au BufNewFile,BufRead *.ps1xml call s:Setf('xml')
+  au BufNewFile,BufRead *.psc1 call s:Setf('xml')
+  au BufNewFile,BufRead *.pt call s:Setf('xml')
+  au BufNewFile,BufRead *.rdf call s:Setf('xml')
+  au BufNewFile,BufRead *.resx call s:Setf('xml')
+  au BufNewFile,BufRead *.rss call s:Setf('xml')
+  au BufNewFile,BufRead *.sch call s:Setf('xml')
+  au BufNewFile,BufRead *.scxml call s:Setf('xml')
+  au BufNewFile,BufRead *.sfproj call s:Setf('xml')
+  au BufNewFile,BufRead *.shproj call s:Setf('xml')
+  au BufNewFile,BufRead *.srdf call s:Setf('xml')
+  au BufNewFile,BufRead *.storyboard call s:Setf('xml')
+  au BufNewFile,BufRead *.sublime-snippet call s:Setf('xml')
+  au BufNewFile,BufRead *.targets call s:Setf('xml')
+  au BufNewFile,BufRead *.tml call s:Setf('xml')
+  au BufNewFile,BufRead *.ui call s:Setf('xml')
+  au BufNewFile,BufRead *.urdf call s:Setf('xml')
+  au BufNewFile,BufRead *.ux call s:Setf('xml')
+  au BufNewFile,BufRead *.vbproj call s:Setf('xml')
+  au BufNewFile,BufRead *.vcxproj call s:Setf('xml')
+  au BufNewFile,BufRead *.vsixmanifest call s:Setf('xml')
+  au BufNewFile,BufRead *.vssettings call s:Setf('xml')
+  au BufNewFile,BufRead *.vstemplate call s:Setf('xml')
+  au BufNewFile,BufRead *.vxml call s:Setf('xml')
+  au BufNewFile,BufRead *.wixproj call s:Setf('xml')
+  au BufNewFile,BufRead *.workflow call s:Setf('xml')
+  au BufNewFile,BufRead *.wsdl call s:Setf('xml')
+  au BufNewFile,BufRead *.wsf call s:Setf('xml')
+  au BufNewFile,BufRead *.wxi call s:Setf('xml')
+  au BufNewFile,BufRead *.wxl call s:Setf('xml')
+  au BufNewFile,BufRead *.wxs call s:Setf('xml')
+  au BufNewFile,BufRead *.x3d call s:Setf('xml')
+  au BufNewFile,BufRead *.xacro call s:Setf('xml')
+  au BufNewFile,BufRead *.xaml call s:Setf('xml')
+  au BufNewFile,BufRead *.xib call s:Setf('xml')
+  au BufNewFile,BufRead *.xlf call s:Setf('xml')
+  au BufNewFile,BufRead *.xliff call s:Setf('xml')
+  au BufNewFile,BufRead *.xmi call s:Setf('xml')
+  au BufNewFile,BufRead *.xml call s:Setf('xml')
+  au BufNewFile,BufRead *.xml.dist call s:Setf('xml')
+  au BufNewFile,BufRead *.xproj call s:Setf('xml')
+  au BufNewFile,BufRead *.xsd call s:Setf('xml')
+  au BufNewFile,BufRead *.xspec call s:Setf('xml')
+  au BufNewFile,BufRead *.xul call s:Setf('xml')
+  au BufNewFile,BufRead *.zcml call s:Setf('xml')
+  au BufNewFile,BufRead {.,}classpath call s:Setf('xml')
+  au BufNewFile,BufRead {.,}cproject call s:Setf('xml')
+  au BufNewFile,BufRead {.,}project call s:Setf('xml')
+  au BufNewFile,BufRead App.config call s:Setf('xml')
+  au BufNewFile,BufRead NuGet.config call s:Setf('xml')
+  au BufNewFile,BufRead Settings.StyleCop call s:Setf('xml')
+  au BufNewFile,BufRead Web.Debug.config call s:Setf('xml')
+  au BufNewFile,BufRead Web.Release.config call s:Setf('xml')
+  au BufNewFile,BufRead Web.config call s:Setf('xml')
+  au BufNewFile,BufRead packages.config call s:Setf('xml')
 endif
 
 if !has_key(s:disabled_packages, 'ant')
-  au BufNewFile,BufRead build.xml setf ant
+  au BufNewFile,BufRead build.xml call s:Setf('ant')
 endif
 
 if !has_key(s:disabled_packages, 'apache')
@@ -505,10 +627,10 @@ if !has_key(s:disabled_packages, 'apache')
   au BufNewFile,BufRead */etc/apache2/conf.*/* call s:StarSetf('apache')
   au BufNewFile,BufRead */etc/apache2/mods-*/* call s:StarSetf('apache')
   au BufNewFile,BufRead */etc/apache2/sites-*/* call s:StarSetf('apache')
-  au BufNewFile,BufRead */etc/apache2/sites-*/*.com setf apache
-  au BufNewFile,BufRead */etc/httpd/*.conf setf apache
+  au BufNewFile,BufRead */etc/apache2/sites-*/*.com call s:Setf('apache')
+  au BufNewFile,BufRead */etc/httpd/*.conf call s:Setf('apache')
   au BufNewFile,BufRead */etc/httpd/conf.d/*.conf* call s:StarSetf('apache')
-  au BufNewFile,BufRead {.,}htaccess setf apache
+  au BufNewFile,BufRead {.,}htaccess call s:Setf('apache')
   au BufNewFile,BufRead access.conf* call s:StarSetf('apache')
   au BufNewFile,BufRead apache.conf* call s:StarSetf('apache')
   au BufNewFile,BufRead apache2.conf* call s:StarSetf('apache')
@@ -517,54 +639,83 @@ if !has_key(s:disabled_packages, 'apache')
 endif
 
 if !has_key(s:disabled_packages, 'apiblueprint')
-  au BufNewFile,BufRead *.apib setf apiblueprint
+  au BufNewFile,BufRead *.apib call s:Setf('apiblueprint')
 endif
 
 if !has_key(s:disabled_packages, 'applescript')
-  au BufNewFile,BufRead *.applescript setf applescript
-  au BufNewFile,BufRead *.scpt setf applescript
+  au BufNewFile,BufRead *.applescript call s:Setf('applescript')
+  au BufNewFile,BufRead *.scpt call s:Setf('applescript')
 endif
 
 if !has_key(s:disabled_packages, 'aptconf')
-  au BufNewFile,BufRead */.aptitude/config setf aptconf
-  au BufNewFile,BufRead */etc/apt/apt.conf.d/*.conf setf aptconf
+  au BufNewFile,BufRead */.aptitude/config call s:Setf('aptconf')
+  au BufNewFile,BufRead */etc/apt/apt.conf.d/*.conf call s:Setf('aptconf')
   au BufNewFile,BufRead */etc/apt/apt.conf.d/[^.]* call s:StarSetf('aptconf')
-  au BufNewFile,BufRead apt.conf setf aptconf
+  au BufNewFile,BufRead apt.conf call s:Setf('aptconf')
 endif
 
 if !has_key(s:disabled_packages, 'arch')
-  au BufNewFile,BufRead {.,}arch-inventory setf arch
-  au BufNewFile,BufRead =tagging-method setf arch
+  au BufNewFile,BufRead {.,}arch-inventory call s:Setf('arch')
+  au BufNewFile,BufRead =tagging-method call s:Setf('arch')
+endif
+
+if !has_key(s:disabled_packages, 'c/c++')
+  au BufNewFile,BufRead *.c++ call s:Setf('cpp')
+  au BufNewFile,BufRead *.cc call s:Setf('cpp')
+  au BufNewFile,BufRead *.cp call s:Setf('cpp')
+  au BufNewFile,BufRead *.cpp call s:Setf('cpp')
+  au BufNewFile,BufRead *.cxx call s:Setf('cpp')
+  au BufNewFile,BufRead *.h++ call s:Setf('cpp')
+  au BufNewFile,BufRead *.hh call s:Setf('cpp')
+  au BufNewFile,BufRead *.hpp call s:Setf('cpp')
+  au BufNewFile,BufRead *.hxx call s:Setf('cpp')
+  au BufNewFile,BufRead *.inc call s:Setf('cpp')
+  au BufNewFile,BufRead *.inl call s:Setf('cpp')
+  au BufNewFile,BufRead *.ipp call s:Setf('cpp')
+  au BufNewFile,BufRead *.moc call s:Setf('cpp')
+  au BufNewFile,BufRead *.tcc call s:Setf('cpp')
+  au BufNewFile,BufRead *.tlh call s:Setf('cpp')
+  au BufNewFile,BufRead *.tpp call s:Setf('cpp')
+  au BufNewFile,BufRead *.c call s:Setf('c')
+  au BufNewFile,BufRead *.cats call s:Setf('c')
+  au BufNewFile,BufRead *.idc call s:Setf('c')
+  au BufNewFile,BufRead *.qc call s:Setf('c')
+  au BufNewFile,BufRead *enlightenment/*.cfg call s:Setf('c')
+  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'arduino')
-  au BufNewFile,BufRead *.ino setf arduino
-  au BufNewFile,BufRead *.pde setf arduino
+  au BufNewFile,BufRead *.ino call s:Setf('arduino')
+  au BufNewFile,BufRead *.pde call s:Setf('arduino')
 endif
 
 if !has_key(s:disabled_packages, 'art')
-  au BufNewFile,BufRead *.art setf art
+  au BufNewFile,BufRead *.art call s:Setf('art')
 endif
 
 if !has_key(s:disabled_packages, 'asciidoc')
-  au BufNewFile,BufRead *.adoc setf asciidoc
-  au BufNewFile,BufRead *.asc setf asciidoc
-  au BufNewFile,BufRead *.asciidoc setf asciidoc
+  au BufNewFile,BufRead *.adoc call s:Setf('asciidoc')
+  au BufNewFile,BufRead *.asc call s:Setf('asciidoc')
+  au BufNewFile,BufRead *.asciidoc call s:Setf('asciidoc')
 endif
 
 if !has_key(s:disabled_packages, 'autohotkey')
-  au BufNewFile,BufRead *.ahk setf autohotkey
-  au BufNewFile,BufRead *.ahkl setf autohotkey
+  au BufNewFile,BufRead *.ahk call s:Setf('autohotkey')
+  au BufNewFile,BufRead *.ahkl call s:Setf('autohotkey')
+endif
+
+if !has_key(s:disabled_packages, 'elf')
+  au BufNewFile,BufRead *.am call s:Setf('elf')
 endif
 
 if !has_key(s:disabled_packages, 'automake')
-  au BufNewFile,BufRead GNUmakefile.am setf automake
-  au BufNewFile,BufRead [Mm]akefile.am setf automake
+  au BufNewFile,BufRead GNUmakefile.am call s:Setf('automake')
+  au BufNewFile,BufRead [Mm]akefile.am call s:Setf('automake')
 endif
 
 if !has_key(s:disabled_packages, 'asn')
-  au BufNewFile,BufRead *.asn setf asn
-  au BufNewFile,BufRead *.asn1 setf asn
+  au BufNewFile,BufRead *.asn call s:Setf('asn')
+  au BufNewFile,BufRead *.asn1 call s:Setf('asn')
 endif
 
 if !has_key(s:disabled_packages, 'aspvbs')
@@ -577,604 +728,559 @@ if !has_key(s:disabled_packages, 'aspperl')
 endif
 
 if !has_key(s:disabled_packages, 'atlas')
-  au BufNewFile,BufRead *.as setf atlas
-  au BufNewFile,BufRead *.atl setf atlas
+  au BufNewFile,BufRead *.as call s:Setf('atlas')
+  au BufNewFile,BufRead *.atl call s:Setf('atlas')
 endif
 
 if !has_key(s:disabled_packages, 'autoit')
-  au BufNewFile,BufRead *.au3 setf autoit
+  au BufNewFile,BufRead *.au3 call s:Setf('autoit')
 endif
 
 if !has_key(s:disabled_packages, 'ave')
-  au BufNewFile,BufRead *.ave setf ave
+  au BufNewFile,BufRead *.ave call s:Setf('ave')
 endif
 
 if !has_key(s:disabled_packages, 'awk')
-  au BufNewFile,BufRead *.awk setf awk
-  au BufNewFile,BufRead *.gawk setf awk
-endif
-
-if !has_key(s:disabled_packages, 'reason')
-  au BufNewFile,BufRead *.rei setf reason
-  au! BufNewFile,BufRead *.re call polyglot#DetectReFiletype()
-endif
-
-if !has_key(s:disabled_packages, 'c/c++')
-  au BufNewFile,BufRead *.c++ setf cpp
-  au BufNewFile,BufRead *.cc setf cpp
-  au BufNewFile,BufRead *.cp setf cpp
-  au BufNewFile,BufRead *.cpp setf cpp
-  au BufNewFile,BufRead *.cxx setf cpp
-  au BufNewFile,BufRead *.h++ setf cpp
-  au BufNewFile,BufRead *.hh setf cpp
-  au BufNewFile,BufRead *.hpp setf cpp
-  au BufNewFile,BufRead *.hxx setf cpp
-  au BufNewFile,BufRead *.inc setf cpp
-  au BufNewFile,BufRead *.inl setf cpp
-  au BufNewFile,BufRead *.ipp setf cpp
-  au BufNewFile,BufRead *.moc setf cpp
-  au BufNewFile,BufRead *.tcc setf cpp
-  au BufNewFile,BufRead *.tlh setf cpp
-  au BufNewFile,BufRead *.tpp setf cpp
-  au BufNewFile,BufRead *.c setf c
-  au BufNewFile,BufRead *.cats setf c
-  au BufNewFile,BufRead *.idc setf c
-  au BufNewFile,BufRead *.qc setf c
-  au BufNewFile,BufRead *enlightenment/*.cfg setf c
-  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
+  au BufNewFile,BufRead *.awk call s:Setf('awk')
+  au BufNewFile,BufRead *.gawk call s:Setf('awk')
 endif
 
 if !has_key(s:disabled_packages, 'caddyfile')
-  au BufNewFile,BufRead Caddyfile setf caddyfile
+  au BufNewFile,BufRead Caddyfile call s:Setf('caddyfile')
 endif
 
 if !has_key(s:disabled_packages, 'carp')
-  au BufNewFile,BufRead *.carp setf carp
+  au BufNewFile,BufRead *.carp call s:Setf('carp')
 endif
 
 if !has_key(s:disabled_packages, 'clojure')
-  au BufNewFile,BufRead *.boot setf clojure
-  au BufNewFile,BufRead *.cl2 setf clojure
-  au BufNewFile,BufRead *.clj setf clojure
-  au BufNewFile,BufRead *.cljc setf clojure
-  au BufNewFile,BufRead *.cljs setf clojure
-  au BufNewFile,BufRead *.cljs.hl setf clojure
-  au BufNewFile,BufRead *.cljscm setf clojure
-  au BufNewFile,BufRead *.cljx setf clojure
-  au BufNewFile,BufRead *.edn setf clojure
-  au BufNewFile,BufRead *.hic setf clojure
-  au BufNewFile,BufRead build.boot setf clojure
-  au BufNewFile,BufRead profile.boot setf clojure
-  au BufNewFile,BufRead riemann.config setf clojure
+  au BufNewFile,BufRead *.boot call s:Setf('clojure')
+  au BufNewFile,BufRead *.cl2 call s:Setf('clojure')
+  au BufNewFile,BufRead *.clj call s:Setf('clojure')
+  au BufNewFile,BufRead *.cljc call s:Setf('clojure')
+  au BufNewFile,BufRead *.cljs call s:Setf('clojure')
+  au BufNewFile,BufRead *.cljs.hl call s:Setf('clojure')
+  au BufNewFile,BufRead *.cljscm call s:Setf('clojure')
+  au BufNewFile,BufRead *.cljx call s:Setf('clojure')
+  au BufNewFile,BufRead *.edn call s:Setf('clojure')
+  au BufNewFile,BufRead *.hic call s:Setf('clojure')
+  au BufNewFile,BufRead build.boot call s:Setf('clojure')
+  au BufNewFile,BufRead profile.boot call s:Setf('clojure')
+  au BufNewFile,BufRead riemann.config call s:Setf('clojure')
 endif
 
 if !has_key(s:disabled_packages, 'cmake')
-  au BufNewFile,BufRead *.cmake setf cmake
-  au BufNewFile,BufRead *.cmake.in setf cmake
-  au BufNewFile,BufRead CMakeLists.txt setf cmake
+  au BufNewFile,BufRead *.cmake call s:Setf('cmake')
+  au BufNewFile,BufRead *.cmake.in call s:Setf('cmake')
+  au BufNewFile,BufRead CMakeLists.txt call s:Setf('cmake')
 endif
 
 if !has_key(s:disabled_packages, 'coffee-script')
-  au BufNewFile,BufRead *._coffee setf coffee
-  au BufNewFile,BufRead *.cake setf coffee
-  au BufNewFile,BufRead *.cjsx setf coffee
-  au BufNewFile,BufRead *.coffee setf coffee
-  au BufNewFile,BufRead *.coffeekup setf coffee
-  au BufNewFile,BufRead *.iced setf coffee
-  au BufNewFile,BufRead Cakefile setf coffee
-  au BufNewFile,BufRead *.coffee.md setf litcoffee
-  au BufNewFile,BufRead *.litcoffee setf litcoffee
+  au BufNewFile,BufRead *._coffee call s:Setf('coffee')
+  au BufNewFile,BufRead *.cake call s:Setf('coffee')
+  au BufNewFile,BufRead *.cjsx call s:Setf('coffee')
+  au BufNewFile,BufRead *.coffee call s:Setf('coffee')
+  au BufNewFile,BufRead *.coffeekup call s:Setf('coffee')
+  au BufNewFile,BufRead *.iced call s:Setf('coffee')
+  au BufNewFile,BufRead Cakefile call s:Setf('coffee')
+  au BufNewFile,BufRead *.coffee.md call s:Setf('litcoffee')
+  au BufNewFile,BufRead *.litcoffee call s:Setf('litcoffee')
 endif
 
 if !has_key(s:disabled_packages, 'cryptol')
-  au BufNewFile,BufRead *.cry setf cryptol
-  au BufNewFile,BufRead *.cyl setf cryptol
-  au BufNewFile,BufRead *.lcry setf cryptol
-  au BufNewFile,BufRead *.lcyl setf cryptol
+  au BufNewFile,BufRead *.cry call s:Setf('cryptol')
+  au BufNewFile,BufRead *.cyl call s:Setf('cryptol')
+  au BufNewFile,BufRead *.lcry call s:Setf('cryptol')
+  au BufNewFile,BufRead *.lcyl call s:Setf('cryptol')
 endif
 
 if !has_key(s:disabled_packages, 'crystal')
-  au BufNewFile,BufRead *.cr setf crystal
-  au BufNewFile,BufRead Projectfile setf crystal
-  au BufNewFile,BufRead *.ecr setf ecrystal
+  au BufNewFile,BufRead *.cr call s:Setf('crystal')
+  au BufNewFile,BufRead Projectfile call s:Setf('crystal')
+  au BufNewFile,BufRead *.ecr call s:Setf('ecrystal')
 endif
 
 if !has_key(s:disabled_packages, 'csv')
-  au BufNewFile,BufRead *.csv setf csv
-  au BufNewFile,BufRead *.tab setf csv
-  au BufNewFile,BufRead *.tsv setf csv
+  au BufNewFile,BufRead *.csv call s:Setf('csv')
+  au BufNewFile,BufRead *.tab call s:Setf('csv')
+  au BufNewFile,BufRead *.tsv call s:Setf('csv')
 endif
 
 if !has_key(s:disabled_packages, 'cucumber')
-  au BufNewFile,BufRead *.feature setf cucumber
-  au BufNewFile,BufRead *.story setf cucumber
+  au BufNewFile,BufRead *.feature call s:Setf('cucumber')
+  au BufNewFile,BufRead *.story call s:Setf('cucumber')
 endif
 
 if !has_key(s:disabled_packages, 'cue')
-  au BufNewFile,BufRead *.cue setf cuesheet
+  au BufNewFile,BufRead *.cue call s:Setf('cuesheet')
 endif
 
 if !has_key(s:disabled_packages, 'dart')
-  au BufNewFile,BufRead *.dart setf dart
-  au BufNewFile,BufRead *.drt setf dart
+  au BufNewFile,BufRead *.dart call s:Setf('dart')
+  au BufNewFile,BufRead *.drt call s:Setf('dart')
 endif
 
 if !has_key(s:disabled_packages, 'dhall')
-  au BufNewFile,BufRead *.dhall setf dhall
-endif
-
-if !has_key(s:disabled_packages, 'grub')
-  au BufNewFile,BufRead */boot/grub/grub.conf setf grub
-  au BufNewFile,BufRead */boot/grub/menu.lst setf grub
-  au BufNewFile,BufRead */etc/grub.conf setf grub
+  au BufNewFile,BufRead *.dhall call s:Setf('dhall')
 endif
 
 if !has_key(s:disabled_packages, 'dlang')
-  au BufNewFile,BufRead *.d setf d
-  au BufNewFile,BufRead *.di setf d
-  au BufNewFile,BufRead *.lst setf dcov
-  au BufNewFile,BufRead *.dd setf dd
-  au BufNewFile,BufRead *.ddoc setf ddoc
-  au BufNewFile,BufRead *.sdl setf dsdl
+  au BufNewFile,BufRead *.d call s:Setf('d')
+  au BufNewFile,BufRead *.di call s:Setf('d')
+  au BufNewFile,BufRead *.lst call s:Setf('dcov')
+  au BufNewFile,BufRead *.dd call s:Setf('dd')
+  au BufNewFile,BufRead *.ddoc call s:Setf('ddoc')
+  au BufNewFile,BufRead *.sdl call s:Setf('dsdl')
 endif
 
 if !has_key(s:disabled_packages, 'dockerfile')
-  au BufNewFile,BufRead *.Dockerfile setf Dockerfile
-  au BufNewFile,BufRead *.dock setf Dockerfile
-  au BufNewFile,BufRead *.dockerfile setf Dockerfile
-  au BufNewFile,BufRead Dockerfile setf Dockerfile
+  au BufNewFile,BufRead *.Dockerfile call s:Setf('Dockerfile')
+  au BufNewFile,BufRead *.dock call s:Setf('Dockerfile')
+  au BufNewFile,BufRead *.dockerfile call s:Setf('Dockerfile')
+  au BufNewFile,BufRead Dockerfile call s:Setf('Dockerfile')
   au BufNewFile,BufRead Dockerfile* call s:StarSetf('Dockerfile')
-  au BufNewFile,BufRead dockerfile setf Dockerfile
-  au BufNewFile,BufRead docker-compose*.yaml setf yaml.docker-compose
-  au BufNewFile,BufRead docker-compose*.yml setf yaml.docker-compose
-endif
-
-if !has_key(s:disabled_packages, 'elf')
-  au BufNewFile,BufRead *.am setf elf
+  au BufNewFile,BufRead dockerfile call s:Setf('Dockerfile')
+  au BufNewFile,BufRead docker-compose*.yaml call s:Setf('yaml.docker-compose')
+  au BufNewFile,BufRead docker-compose*.yml call s:Setf('yaml.docker-compose')
 endif
 
 if !has_key(s:disabled_packages, 'elixir')
-  au BufNewFile,BufRead *.ex setf elixir
-  au BufNewFile,BufRead *.exs setf elixir
-  au BufNewFile,BufRead mix.lock setf elixir
-  au BufNewFile,BufRead *.eex setf eelixir
-  au BufNewFile,BufRead *.leex setf eelixir
+  au BufNewFile,BufRead *.ex call s:Setf('elixir')
+  au BufNewFile,BufRead *.exs call s:Setf('elixir')
+  au BufNewFile,BufRead mix.lock call s:Setf('elixir')
+  au BufNewFile,BufRead *.eex call s:Setf('eelixir')
+  au BufNewFile,BufRead *.leex call s:Setf('eelixir')
 endif
 
 if !has_key(s:disabled_packages, 'elm')
-  au BufNewFile,BufRead *.elm setf elm
+  au BufNewFile,BufRead *.elm call s:Setf('elm')
 endif
 
 if !has_key(s:disabled_packages, 'emberscript')
-  au BufNewFile,BufRead *.em setf ember-script
-  au BufNewFile,BufRead *.emberscript setf ember-script
+  au BufNewFile,BufRead *.em call s:Setf('ember-script')
+  au BufNewFile,BufRead *.emberscript call s:Setf('ember-script')
 endif
 
 if !has_key(s:disabled_packages, 'emblem')
-  au BufNewFile,BufRead *.em setf emblem
-  au BufNewFile,BufRead *.emblem setf emblem
+  au BufNewFile,BufRead *.em call s:Setf('emblem')
+  au BufNewFile,BufRead *.emblem call s:Setf('emblem')
 endif
 
 if !has_key(s:disabled_packages, 'erlang')
-  au BufNewFile,BufRead *.app setf erlang
-  au BufNewFile,BufRead *.app.src setf erlang
-  au BufNewFile,BufRead *.erl setf erlang
-  au BufNewFile,BufRead *.es setf erlang
-  au BufNewFile,BufRead *.escript setf erlang
-  au BufNewFile,BufRead *.hrl setf erlang
-  au BufNewFile,BufRead *.xrl setf erlang
-  au BufNewFile,BufRead *.yaws setf erlang
-  au BufNewFile,BufRead *.yrl setf erlang
-  au BufNewFile,BufRead Emakefile setf erlang
-  au BufNewFile,BufRead rebar.config setf erlang
-  au BufNewFile,BufRead rebar.config.lock setf erlang
-  au BufNewFile,BufRead rebar.lock setf erlang
+  au BufNewFile,BufRead *.app call s:Setf('erlang')
+  au BufNewFile,BufRead *.app.src call s:Setf('erlang')
+  au BufNewFile,BufRead *.erl call s:Setf('erlang')
+  au BufNewFile,BufRead *.es call s:Setf('erlang')
+  au BufNewFile,BufRead *.escript call s:Setf('erlang')
+  au BufNewFile,BufRead *.hrl call s:Setf('erlang')
+  au BufNewFile,BufRead *.xrl call s:Setf('erlang')
+  au BufNewFile,BufRead *.yaws call s:Setf('erlang')
+  au BufNewFile,BufRead *.yrl call s:Setf('erlang')
+  au BufNewFile,BufRead Emakefile call s:Setf('erlang')
+  au BufNewFile,BufRead rebar.config call s:Setf('erlang')
+  au BufNewFile,BufRead rebar.config.lock call s:Setf('erlang')
+  au BufNewFile,BufRead rebar.lock call s:Setf('erlang')
 endif
 
 if !has_key(s:disabled_packages, 'fennel')
-  au BufNewFile,BufRead *.fnl setf fennel
+  au BufNewFile,BufRead *.fnl call s:Setf('fennel')
 endif
 
 if !has_key(s:disabled_packages, 'ferm')
-  au BufNewFile,BufRead *.ferm setf ferm
-  au BufNewFile,BufRead ferm.conf setf ferm
+  au BufNewFile,BufRead *.ferm call s:Setf('ferm')
+  au BufNewFile,BufRead ferm.conf call s:Setf('ferm')
 endif
 
 if !has_key(s:disabled_packages, 'fish')
-  au BufNewFile,BufRead *.fish setf fish
+  au BufNewFile,BufRead *.fish call s:Setf('fish')
 endif
 
 if !has_key(s:disabled_packages, 'flatbuffers')
-  au BufNewFile,BufRead *.fbs setf fbs
+  au BufNewFile,BufRead *.fbs call s:Setf('fbs')
 endif
 
 if !has_key(s:disabled_packages, 'forth')
-  au BufNewFile,BufRead *.ft setf forth
-  au BufNewFile,BufRead *.fth setf forth
+  au BufNewFile,BufRead *.ft call s:Setf('forth')
+  au BufNewFile,BufRead *.fth call s:Setf('forth')
+  au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+endif
+
+if !has_key(s:disabled_packages, 'glsl')
+  au BufNewFile,BufRead *.comp call s:Setf('glsl')
+  au BufNewFile,BufRead *.fp call s:Setf('glsl')
+  au BufNewFile,BufRead *.frag call s:Setf('glsl')
+  au BufNewFile,BufRead *.frg call s:Setf('glsl')
+  au BufNewFile,BufRead *.fsh call s:Setf('glsl')
+  au BufNewFile,BufRead *.fshader call s:Setf('glsl')
+  au BufNewFile,BufRead *.geo call s:Setf('glsl')
+  au BufNewFile,BufRead *.geom call s:Setf('glsl')
+  au BufNewFile,BufRead *.glsl call s:Setf('glsl')
+  au BufNewFile,BufRead *.glslf call s:Setf('glsl')
+  au BufNewFile,BufRead *.glslv call s:Setf('glsl')
+  au BufNewFile,BufRead *.gs call s:Setf('glsl')
+  au BufNewFile,BufRead *.gshader call s:Setf('glsl')
+  au BufNewFile,BufRead *.shader call s:Setf('glsl')
+  au BufNewFile,BufRead *.tesc call s:Setf('glsl')
+  au BufNewFile,BufRead *.tese call s:Setf('glsl')
+  au BufNewFile,BufRead *.vert call s:Setf('glsl')
+  au BufNewFile,BufRead *.vrx call s:Setf('glsl')
+  au BufNewFile,BufRead *.vsh call s:Setf('glsl')
+  au BufNewFile,BufRead *.vshader call s:Setf('glsl')
   au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'fsharp')
-  au BufNewFile,BufRead *.fsi setf fsharp
-  au BufNewFile,BufRead *.fsx setf fsharp
+  au BufNewFile,BufRead *.fsi call s:Setf('fsharp')
+  au BufNewFile,BufRead *.fsx call s:Setf('fsharp')
   au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'gdscript')
-  au BufNewFile,BufRead *.gd setf gdscript3
+  au BufNewFile,BufRead *.gd call s:Setf('gdscript3')
 endif
 
 if !has_key(s:disabled_packages, 'git')
-  au BufNewFile,BufRead *.gitconfig setf gitconfig
-  au BufNewFile,BufRead *.git/config setf gitconfig
-  au BufNewFile,BufRead *.git/modules/*/config setf gitconfig
-  au BufNewFile,BufRead */.config/git/config setf gitconfig
-  au BufNewFile,BufRead */git/config setf gitconfig
+  au BufNewFile,BufRead *.gitconfig call s:Setf('gitconfig')
+  au BufNewFile,BufRead *.git/config call s:Setf('gitconfig')
+  au BufNewFile,BufRead *.git/modules/*/config call s:Setf('gitconfig')
+  au BufNewFile,BufRead */.config/git/config call s:Setf('gitconfig')
+  au BufNewFile,BufRead */git/config call s:Setf('gitconfig')
   au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')
-  au BufNewFile,BufRead {.,}gitconfig setf gitconfig
-  au BufNewFile,BufRead {.,}gitmodules setf gitconfig
-  au BufNewFile,BufRead git-rebase-todo setf gitrebase
+  au BufNewFile,BufRead {.,}gitconfig call s:Setf('gitconfig')
+  au BufNewFile,BufRead {.,}gitmodules call s:Setf('gitconfig')
+  au BufNewFile,BufRead git-rebase-todo call s:Setf('gitrebase')
   au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
-  au BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,TAG_EDITMSG setf gitcommit
-endif
-
-if !has_key(s:disabled_packages, 'glsl')
-  au BufNewFile,BufRead *.comp setf glsl
-  au BufNewFile,BufRead *.fp setf glsl
-  au BufNewFile,BufRead *.frag setf glsl
-  au BufNewFile,BufRead *.frg setf glsl
-  au BufNewFile,BufRead *.fsh setf glsl
-  au BufNewFile,BufRead *.fshader setf glsl
-  au BufNewFile,BufRead *.geo setf glsl
-  au BufNewFile,BufRead *.geom setf glsl
-  au BufNewFile,BufRead *.glsl setf glsl
-  au BufNewFile,BufRead *.glslf setf glsl
-  au BufNewFile,BufRead *.glslv setf glsl
-  au BufNewFile,BufRead *.gs setf glsl
-  au BufNewFile,BufRead *.gshader setf glsl
-  au BufNewFile,BufRead *.shader setf glsl
-  au BufNewFile,BufRead *.tesc setf glsl
-  au BufNewFile,BufRead *.tese setf glsl
-  au BufNewFile,BufRead *.vert setf glsl
-  au BufNewFile,BufRead *.vrx setf glsl
-  au BufNewFile,BufRead *.vsh setf glsl
-  au BufNewFile,BufRead *.vshader setf glsl
-  au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+  au BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,TAG_EDITMSG call s:Setf('gitcommit')
 endif
 
 if !has_key(s:disabled_packages, 'gmpl')
-  au BufNewFile,BufRead *.mod setf gmpl
+  au BufNewFile,BufRead *.mod call s:Setf('gmpl')
 endif
 
 if !has_key(s:disabled_packages, 'gnuplot')
-  au BufNewFile,BufRead *.gnu setf gnuplot
-  au BufNewFile,BufRead *.gnuplot setf gnuplot
-  au BufNewFile,BufRead *.gp setf gnuplot
-  au BufNewFile,BufRead *.gpi setf gnuplot
-  au BufNewFile,BufRead *.p setf gnuplot
-  au BufNewFile,BufRead *.plot setf gnuplot
-  au BufNewFile,BufRead *.plt setf gnuplot
+  au BufNewFile,BufRead *.gnu call s:Setf('gnuplot')
+  au BufNewFile,BufRead *.gnuplot call s:Setf('gnuplot')
+  au BufNewFile,BufRead *.gp call s:Setf('gnuplot')
+  au BufNewFile,BufRead *.gpi call s:Setf('gnuplot')
+  au BufNewFile,BufRead *.p call s:Setf('gnuplot')
+  au BufNewFile,BufRead *.plot call s:Setf('gnuplot')
+  au BufNewFile,BufRead *.plt call s:Setf('gnuplot')
 endif
 
 if !has_key(s:disabled_packages, 'go')
-  au BufNewFile,BufRead *.go setf go
-  au BufNewFile,BufRead go.mod setf gomod
-  au BufNewFile,BufRead *.tmpl setf gohtmltmpl
+  au BufNewFile,BufRead *.go call s:Setf('go')
+  au BufNewFile,BufRead go.mod call s:Setf('gomod')
+  au BufNewFile,BufRead *.tmpl call s:Setf('gohtmltmpl')
+endif
+
+if !has_key(s:disabled_packages, 'javascript')
+  au BufNewFile,BufRead *._js call s:Setf('javascript')
+  au BufNewFile,BufRead *.bones call s:Setf('javascript')
+  au BufNewFile,BufRead *.cjs call s:Setf('javascript')
+  au BufNewFile,BufRead *.es call s:Setf('javascript')
+  au BufNewFile,BufRead *.es6 call s:Setf('javascript')
+  au BufNewFile,BufRead *.frag call s:Setf('javascript')
+  au BufNewFile,BufRead *.gs call s:Setf('javascript')
+  au BufNewFile,BufRead *.jake call s:Setf('javascript')
+  au BufNewFile,BufRead *.js call s:Setf('javascript')
+  au BufNewFile,BufRead *.jsb call s:Setf('javascript')
+  au BufNewFile,BufRead *.jscad call s:Setf('javascript')
+  au BufNewFile,BufRead *.jsfl call s:Setf('javascript')
+  au BufNewFile,BufRead *.jsm call s:Setf('javascript')
+  au BufNewFile,BufRead *.jss call s:Setf('javascript')
+  au BufNewFile,BufRead *.mjs call s:Setf('javascript')
+  au BufNewFile,BufRead *.njs call s:Setf('javascript')
+  au BufNewFile,BufRead *.pac call s:Setf('javascript')
+  au BufNewFile,BufRead *.sjs call s:Setf('javascript')
+  au BufNewFile,BufRead *.ssjs call s:Setf('javascript')
+  au BufNewFile,BufRead *.xsjs call s:Setf('javascript')
+  au BufNewFile,BufRead *.xsjslib call s:Setf('javascript')
+  au BufNewFile,BufRead Jakefile call s:Setf('javascript')
+  au BufNewFile,BufRead *.flow call s:Setf('flow')
+endif
+
+if !has_key(s:disabled_packages, 'jsx')
+  au BufNewFile,BufRead *.jsx call s:Setf('javascriptreact')
 endif
 
 if !has_key(s:disabled_packages, 'graphql')
-  au BufNewFile,BufRead *.gql setf graphql
-  au BufNewFile,BufRead *.graphql setf graphql
-  au BufNewFile,BufRead *.graphqls setf graphql
+  au BufNewFile,BufRead *.gql call s:Setf('graphql')
+  au BufNewFile,BufRead *.graphql call s:Setf('graphql')
+  au BufNewFile,BufRead *.graphqls call s:Setf('graphql')
 endif
 
 if !has_key(s:disabled_packages, 'groovy')
-  au BufNewFile,BufRead *.gradle setf groovy
-  au BufNewFile,BufRead *.groovy setf groovy
-  au BufNewFile,BufRead *.grt setf groovy
-  au BufNewFile,BufRead *.gtpl setf groovy
-  au BufNewFile,BufRead *.gvy setf groovy
-  au BufNewFile,BufRead Jenkinsfile setf groovy
+  au BufNewFile,BufRead *.gradle call s:Setf('groovy')
+  au BufNewFile,BufRead *.groovy call s:Setf('groovy')
+  au BufNewFile,BufRead *.grt call s:Setf('groovy')
+  au BufNewFile,BufRead *.gtpl call s:Setf('groovy')
+  au BufNewFile,BufRead *.gvy call s:Setf('groovy')
+  au BufNewFile,BufRead Jenkinsfile call s:Setf('groovy')
+endif
+
+if !has_key(s:disabled_packages, 'grub')
+  au BufNewFile,BufRead */boot/grub/grub.conf call s:Setf('grub')
+  au BufNewFile,BufRead */boot/grub/menu.lst call s:Setf('grub')
+  au BufNewFile,BufRead */etc/grub.conf call s:Setf('grub')
 endif
 
 if !has_key(s:disabled_packages, 'haml')
-  au BufNewFile,BufRead *.haml setf haml
-  au BufNewFile,BufRead *.haml.deface setf haml
-  au BufNewFile,BufRead *.hamlbars setf haml
-  au BufNewFile,BufRead *.hamlc setf haml
+  au BufNewFile,BufRead *.haml call s:Setf('haml')
+  au BufNewFile,BufRead *.haml.deface call s:Setf('haml')
+  au BufNewFile,BufRead *.hamlbars call s:Setf('haml')
+  au BufNewFile,BufRead *.hamlc call s:Setf('haml')
 endif
 
 if !has_key(s:disabled_packages, 'handlebars')
-  au BufNewFile,BufRead *.handlebars setf mustache
-  au BufNewFile,BufRead *.hb setf mustache
-  au BufNewFile,BufRead *.hbs setf mustache
-  au BufNewFile,BufRead *.hdbs setf mustache
-  au BufNewFile,BufRead *.hjs setf mustache
-  au BufNewFile,BufRead *.hogan setf mustache
-  au BufNewFile,BufRead *.hulk setf mustache
-  au BufNewFile,BufRead *.mustache setf mustache
-  au BufNewFile,BufRead *.njk setf mustache
-endif
-
-if !has_key(s:disabled_packages, 'haproxy')
-  au BufNewFile,BufRead *.cfg setf haproxy
-  au BufNewFile,BufRead haproxy*.c* call s:StarSetf('haproxy')
-  au BufNewFile,BufRead haproxy.cfg setf haproxy
+  au BufNewFile,BufRead *.handlebars call s:Setf('mustache')
+  au BufNewFile,BufRead *.hb call s:Setf('mustache')
+  au BufNewFile,BufRead *.hbs call s:Setf('mustache')
+  au BufNewFile,BufRead *.hdbs call s:Setf('mustache')
+  au BufNewFile,BufRead *.hjs call s:Setf('mustache')
+  au BufNewFile,BufRead *.hogan call s:Setf('mustache')
+  au BufNewFile,BufRead *.hulk call s:Setf('mustache')
+  au BufNewFile,BufRead *.mustache call s:Setf('mustache')
+  au BufNewFile,BufRead *.njk call s:Setf('mustache')
 endif
 
 if !has_key(s:disabled_packages, 'haskell')
-  au BufNewFile,BufRead *.bpk setf haskell
-  au BufNewFile,BufRead *.hs setf haskell
-  au BufNewFile,BufRead *.hs-boot setf haskell
-  au BufNewFile,BufRead *.hsc setf haskell
-  au BufNewFile,BufRead *.hsig setf haskell
+  au BufNewFile,BufRead *.bpk call s:Setf('haskell')
+  au BufNewFile,BufRead *.hs call s:Setf('haskell')
+  au BufNewFile,BufRead *.hs-boot call s:Setf('haskell')
+  au BufNewFile,BufRead *.hsc call s:Setf('haskell')
+  au BufNewFile,BufRead *.hsig call s:Setf('haskell')
 endif
 
 if !has_key(s:disabled_packages, 'haxe')
-  au BufNewFile,BufRead *.hx setf haxe
-  au BufNewFile,BufRead *.hxsl setf haxe
+  au BufNewFile,BufRead *.hx call s:Setf('haxe')
+  au BufNewFile,BufRead *.hxsl call s:Setf('haxe')
 endif
 
 if !has_key(s:disabled_packages, 'hcl')
-  au BufNewFile,BufRead *.hcl setf hcl
-  au BufNewFile,BufRead *.nomad setf hcl
-  au BufNewFile,BufRead *.workflow setf hcl
-  au BufNewFile,BufRead Appfile setf hcl
+  au BufNewFile,BufRead *.hcl call s:Setf('hcl')
+  au BufNewFile,BufRead *.nomad call s:Setf('hcl')
+  au BufNewFile,BufRead *.workflow call s:Setf('hcl')
+  au BufNewFile,BufRead Appfile call s:Setf('hcl')
 endif
 
 if !has_key(s:disabled_packages, 'hive')
-  au BufNewFile,BufRead *.hql setf hive
-  au BufNewFile,BufRead *.q setf hive
-  au BufNewFile,BufRead *.ql setf hive
+  au BufNewFile,BufRead *.hql call s:Setf('hive')
+  au BufNewFile,BufRead *.q call s:Setf('hive')
+  au BufNewFile,BufRead *.ql call s:Setf('hive')
 endif
 
 if !has_key(s:disabled_packages, 'html5')
-  au BufNewFile,BufRead *.htm setf html
-  au BufNewFile,BufRead *.html setf html
-  au BufNewFile,BufRead *.html.hl setf html
-  au BufNewFile,BufRead *.inc setf html
-  au BufNewFile,BufRead *.st setf html
-  au BufNewFile,BufRead *.xht setf html
-  au BufNewFile,BufRead *.xhtml setf html
+  au BufNewFile,BufRead *.htm call s:Setf('html')
+  au BufNewFile,BufRead *.html call s:Setf('html')
+  au BufNewFile,BufRead *.html.hl call s:Setf('html')
+  au BufNewFile,BufRead *.inc call s:Setf('html')
+  au BufNewFile,BufRead *.st call s:Setf('html')
+  au BufNewFile,BufRead *.xht call s:Setf('html')
+  au BufNewFile,BufRead *.xhtml call s:Setf('html')
 endif
 
 if !has_key(s:disabled_packages, 'i3')
-  au BufNewFile,BufRead *.i3.config setf i3config
-  au BufNewFile,BufRead *.i3config setf i3config
-  au BufNewFile,BufRead {.,}i3.config setf i3config
-  au BufNewFile,BufRead {.,}i3config setf i3config
-  au BufNewFile,BufRead i3.config setf i3config
-  au BufNewFile,BufRead i3config setf i3config
+  au BufNewFile,BufRead *.i3.config call s:Setf('i3config')
+  au BufNewFile,BufRead *.i3config call s:Setf('i3config')
+  au BufNewFile,BufRead {.,}i3.config call s:Setf('i3config')
+  au BufNewFile,BufRead {.,}i3config call s:Setf('i3config')
+  au BufNewFile,BufRead i3.config call s:Setf('i3config')
+  au BufNewFile,BufRead i3config call s:Setf('i3config')
 endif
 
 if !has_key(s:disabled_packages, 'icalendar')
-  au BufNewFile,BufRead *.ics setf icalendar
+  au BufNewFile,BufRead *.ics call s:Setf('icalendar')
 endif
 
 if !has_key(s:disabled_packages, 'idris')
-  au BufNewFile,BufRead idris-response setf idris
+  au BufNewFile,BufRead idris-response call s:Setf('idris')
   au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
   au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'idris2')
-  au BufNewFile,BufRead *.ipkg setf idris2
-  au BufNewFile,BufRead idris-response setf idris2
+  au BufNewFile,BufRead *.ipkg call s:Setf('idris2')
+  au BufNewFile,BufRead idris-response call s:Setf('idris2')
   au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
   au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'ion')
-  au BufNewFile,BufRead *.ion setf ion
-  au BufNewFile,BufRead ~/.config/ion/initrc setf ion
-endif
-
-if !has_key(s:disabled_packages, 'jsx')
-  au BufNewFile,BufRead *.jsx setf javascriptreact
-endif
-
-if !has_key(s:disabled_packages, 'javascript')
-  au BufNewFile,BufRead *._js setf javascript
-  au BufNewFile,BufRead *.bones setf javascript
-  au BufNewFile,BufRead *.cjs setf javascript
-  au BufNewFile,BufRead *.es setf javascript
-  au BufNewFile,BufRead *.es6 setf javascript
-  au BufNewFile,BufRead *.frag setf javascript
-  au BufNewFile,BufRead *.gs setf javascript
-  au BufNewFile,BufRead *.jake setf javascript
-  au BufNewFile,BufRead *.js setf javascript
-  au BufNewFile,BufRead *.jsb setf javascript
-  au BufNewFile,BufRead *.jscad setf javascript
-  au BufNewFile,BufRead *.jsfl setf javascript
-  au BufNewFile,BufRead *.jsm setf javascript
-  au BufNewFile,BufRead *.jss setf javascript
-  au BufNewFile,BufRead *.mjs setf javascript
-  au BufNewFile,BufRead *.njs setf javascript
-  au BufNewFile,BufRead *.pac setf javascript
-  au BufNewFile,BufRead *.sjs setf javascript
-  au BufNewFile,BufRead *.ssjs setf javascript
-  au BufNewFile,BufRead *.xsjs setf javascript
-  au BufNewFile,BufRead *.xsjslib setf javascript
-  au BufNewFile,BufRead Jakefile setf javascript
-  au BufNewFile,BufRead *.flow setf flow
+  au BufNewFile,BufRead *.ion call s:Setf('ion')
+  au BufNewFile,BufRead ~/.config/ion/initrc call s:Setf('ion')
 endif
 
 if !has_key(s:disabled_packages, 'jenkins')
-  au BufNewFile,BufRead *.Jenkinsfile setf Jenkinsfile
-  au BufNewFile,BufRead *.jenkinsfile setf Jenkinsfile
-  au BufNewFile,BufRead Jenkinsfile setf Jenkinsfile
+  au BufNewFile,BufRead *.Jenkinsfile call s:Setf('Jenkinsfile')
+  au BufNewFile,BufRead *.jenkinsfile call s:Setf('Jenkinsfile')
+  au BufNewFile,BufRead Jenkinsfile call s:Setf('Jenkinsfile')
   au BufNewFile,BufRead Jenkinsfile* call s:StarSetf('Jenkinsfile')
 endif
 
 if !has_key(s:disabled_packages, 'jinja')
-  au BufNewFile,BufRead *.j2 setf jinja.html
-  au BufNewFile,BufRead *.jinja setf jinja.html
-  au BufNewFile,BufRead *.jinja2 setf jinja.html
+  au BufNewFile,BufRead *.j2 call s:Setf('jinja.html')
+  au BufNewFile,BufRead *.jinja call s:Setf('jinja.html')
+  au BufNewFile,BufRead *.jinja2 call s:Setf('jinja.html')
 endif
 
 if !has_key(s:disabled_packages, 'jq')
-  au BufNewFile,BufRead *.jq setf jq
-  au BufNewFile,BufRead {.,}jqrc setf jq
+  au BufNewFile,BufRead *.jq call s:Setf('jq')
+  au BufNewFile,BufRead {.,}jqrc call s:Setf('jq')
   au BufNewFile,BufRead {.,}jqrc* call s:StarSetf('jq')
 endif
 
 if !has_key(s:disabled_packages, 'json5')
-  au BufNewFile,BufRead *.json5 setf json5
+  au BufNewFile,BufRead *.json5 call s:Setf('json5')
 endif
 
 if !has_key(s:disabled_packages, 'json')
-  au BufNewFile,BufRead *.JSON-tmLanguage setf json
-  au BufNewFile,BufRead *.avsc setf json
-  au BufNewFile,BufRead *.geojson setf json
-  au BufNewFile,BufRead *.gltf setf json
-  au BufNewFile,BufRead *.har setf json
-  au BufNewFile,BufRead *.ice setf json
-  au BufNewFile,BufRead *.json setf json
-  au BufNewFile,BufRead *.jsonl setf json
-  au BufNewFile,BufRead *.jsonp setf json
-  au BufNewFile,BufRead *.mcmeta setf json
-  au BufNewFile,BufRead *.template setf json
-  au BufNewFile,BufRead *.tfstate setf json
-  au BufNewFile,BufRead *.tfstate.backup setf json
-  au BufNewFile,BufRead *.topojson setf json
-  au BufNewFile,BufRead *.webapp setf json
-  au BufNewFile,BufRead *.webmanifest setf json
-  au BufNewFile,BufRead *.yy setf json
-  au BufNewFile,BufRead *.yyp setf json
-  au BufNewFile,BufRead {.,}arcconfig setf json
-  au BufNewFile,BufRead {.,}htmlhintrc setf json
-  au BufNewFile,BufRead {.,}tern-config setf json
-  au BufNewFile,BufRead {.,}tern-project setf json
-  au BufNewFile,BufRead {.,}watchmanconfig setf json
-  au BufNewFile,BufRead Pipfile.lock setf json
-  au BufNewFile,BufRead composer.lock setf json
-  au BufNewFile,BufRead mcmod.info setf json
+  au BufNewFile,BufRead *.JSON-tmLanguage call s:Setf('json')
+  au BufNewFile,BufRead *.avsc call s:Setf('json')
+  au BufNewFile,BufRead *.geojson call s:Setf('json')
+  au BufNewFile,BufRead *.gltf call s:Setf('json')
+  au BufNewFile,BufRead *.har call s:Setf('json')
+  au BufNewFile,BufRead *.ice call s:Setf('json')
+  au BufNewFile,BufRead *.json call s:Setf('json')
+  au BufNewFile,BufRead *.jsonl call s:Setf('json')
+  au BufNewFile,BufRead *.jsonp call s:Setf('json')
+  au BufNewFile,BufRead *.mcmeta call s:Setf('json')
+  au BufNewFile,BufRead *.template call s:Setf('json')
+  au BufNewFile,BufRead *.tfstate call s:Setf('json')
+  au BufNewFile,BufRead *.tfstate.backup call s:Setf('json')
+  au BufNewFile,BufRead *.topojson call s:Setf('json')
+  au BufNewFile,BufRead *.webapp call s:Setf('json')
+  au BufNewFile,BufRead *.webmanifest call s:Setf('json')
+  au BufNewFile,BufRead *.yy call s:Setf('json')
+  au BufNewFile,BufRead *.yyp call s:Setf('json')
+  au BufNewFile,BufRead {.,}arcconfig call s:Setf('json')
+  au BufNewFile,BufRead {.,}htmlhintrc call s:Setf('json')
+  au BufNewFile,BufRead {.,}tern-config call s:Setf('json')
+  au BufNewFile,BufRead {.,}tern-project call s:Setf('json')
+  au BufNewFile,BufRead {.,}watchmanconfig call s:Setf('json')
+  au BufNewFile,BufRead Pipfile.lock call s:Setf('json')
+  au BufNewFile,BufRead composer.lock call s:Setf('json')
+  au BufNewFile,BufRead mcmod.info call s:Setf('json')
 endif
 
 if !has_key(s:disabled_packages, 'jsonnet')
-  au BufNewFile,BufRead *.jsonnet setf jsonnet
-  au BufNewFile,BufRead *.libsonnet setf jsonnet
+  au BufNewFile,BufRead *.jsonnet call s:Setf('jsonnet')
+  au BufNewFile,BufRead *.libsonnet call s:Setf('jsonnet')
 endif
 
 if !has_key(s:disabled_packages, 'jst')
-  au BufNewFile,BufRead *.ect setf jst
-  au BufNewFile,BufRead *.ejs setf jst
-  au BufNewFile,BufRead *.jst setf jst
+  au BufNewFile,BufRead *.ect call s:Setf('jst')
+  au BufNewFile,BufRead *.ejs call s:Setf('jst')
+  au BufNewFile,BufRead *.jst call s:Setf('jst')
 endif
 
 if !has_key(s:disabled_packages, 'julia')
-  au BufNewFile,BufRead *.jl setf julia
+  au BufNewFile,BufRead *.jl call s:Setf('julia')
 endif
 
 if !has_key(s:disabled_packages, 'kotlin')
-  au BufNewFile,BufRead *.kt setf kotlin
-  au BufNewFile,BufRead *.ktm setf kotlin
-  au BufNewFile,BufRead *.kts setf kotlin
+  au BufNewFile,BufRead *.kt call s:Setf('kotlin')
+  au BufNewFile,BufRead *.ktm call s:Setf('kotlin')
+  au BufNewFile,BufRead *.kts call s:Setf('kotlin')
 endif
 
 if !has_key(s:disabled_packages, 'ledger')
-  au BufNewFile,BufRead *.journal setf ledger
-  au BufNewFile,BufRead *.ldg setf ledger
-  au BufNewFile,BufRead *.ledger setf ledger
+  au BufNewFile,BufRead *.journal call s:Setf('ledger')
+  au BufNewFile,BufRead *.ldg call s:Setf('ledger')
+  au BufNewFile,BufRead *.ledger call s:Setf('ledger')
 endif
 
 if !has_key(s:disabled_packages, 'less')
-  au BufNewFile,BufRead *.less setf less
+  au BufNewFile,BufRead *.less call s:Setf('less')
 endif
 
 if !has_key(s:disabled_packages, 'lilypond')
-  au BufNewFile,BufRead *.ily setf lilypond
-  au BufNewFile,BufRead *.ly setf lilypond
+  au BufNewFile,BufRead *.ily call s:Setf('lilypond')
+  au BufNewFile,BufRead *.ly call s:Setf('lilypond')
 endif
 
 if !has_key(s:disabled_packages, 'livescript')
-  au BufNewFile,BufRead *._ls setf livescript
-  au BufNewFile,BufRead *.ls setf livescript
-  au BufNewFile,BufRead Slakefile setf livescript
+  au BufNewFile,BufRead *._ls call s:Setf('livescript')
+  au BufNewFile,BufRead *.ls call s:Setf('livescript')
+  au BufNewFile,BufRead Slakefile call s:Setf('livescript')
 endif
 
 if !has_key(s:disabled_packages, 'llvm')
-  au BufNewFile,BufRead *.ll setf llvm
-  au BufNewFile,BufRead *.td setf tablegen
+  au BufNewFile,BufRead *.ll call s:Setf('llvm')
+  au BufNewFile,BufRead *.td call s:Setf('tablegen')
 endif
 
 if !has_key(s:disabled_packages, 'log')
-  au BufNewFile,BufRead *.LOG setf log
-  au BufNewFile,BufRead *.log setf log
-  au BufNewFile,BufRead *_LOG setf log
-  au BufNewFile,BufRead *_log setf log
+  au BufNewFile,BufRead *.LOG call s:Setf('log')
+  au BufNewFile,BufRead *.log call s:Setf('log')
+  au BufNewFile,BufRead *_LOG call s:Setf('log')
+  au BufNewFile,BufRead *_log call s:Setf('log')
 endif
 
 if !has_key(s:disabled_packages, 'lua')
-  au BufNewFile,BufRead *.fcgi setf lua
-  au BufNewFile,BufRead *.lua setf lua
-  au BufNewFile,BufRead *.nse setf lua
-  au BufNewFile,BufRead *.p8 setf lua
-  au BufNewFile,BufRead *.pd_lua setf lua
-  au BufNewFile,BufRead *.rbxs setf lua
-  au BufNewFile,BufRead *.rockspec setf lua
-  au BufNewFile,BufRead *.wlua setf lua
-  au BufNewFile,BufRead {.,}luacheckrc setf lua
+  au BufNewFile,BufRead *.fcgi call s:Setf('lua')
+  au BufNewFile,BufRead *.lua call s:Setf('lua')
+  au BufNewFile,BufRead *.nse call s:Setf('lua')
+  au BufNewFile,BufRead *.p8 call s:Setf('lua')
+  au BufNewFile,BufRead *.pd_lua call s:Setf('lua')
+  au BufNewFile,BufRead *.rbxs call s:Setf('lua')
+  au BufNewFile,BufRead *.rockspec call s:Setf('lua')
+  au BufNewFile,BufRead *.wlua call s:Setf('lua')
+  au BufNewFile,BufRead {.,}luacheckrc call s:Setf('lua')
 endif
 
 if !has_key(s:disabled_packages, 'm4')
-  au BufNewFile,BufRead *.at setf m4
-  au BufNewFile,BufRead *.m4 setf m4
+  au BufNewFile,BufRead *.at call s:Setf('m4')
+  au BufNewFile,BufRead *.m4 call s:Setf('m4')
 endif
 
 if !has_key(s:disabled_packages, 'mako')
   au BufNewFile *.*.mako execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
   au BufReadPre *.*.mako execute "do BufRead filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
-  au BufNewFile,BufRead *.mako setf mako
+  au BufNewFile,BufRead *.mako call s:Setf('mako')
   au BufNewFile *.*.mao execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
   au BufReadPre *.*.mao execute "do BufRead filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
-  au BufNewFile,BufRead *.mao setf mako
-endif
-
-if !has_key(s:disabled_packages, 'octave')
-  au BufNewFile,BufRead *.oct setf octave
-  au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
+  au BufNewFile,BufRead *.mao call s:Setf('mako')
 endif
 
 if !has_key(s:disabled_packages, 'mathematica')
-  au BufNewFile,BufRead *.cdf setf mma
-  au BufNewFile,BufRead *.ma setf mma
-  au BufNewFile,BufRead *.mathematica setf mma
-  au BufNewFile,BufRead *.mma setf mma
-  au BufNewFile,BufRead *.mt setf mma
-  au BufNewFile,BufRead *.nb setf mma
-  au BufNewFile,BufRead *.nbp setf mma
-  au BufNewFile,BufRead *.wl setf mma
-  au BufNewFile,BufRead *.wls setf mma
-  au BufNewFile,BufRead *.wlt setf mma
+  au BufNewFile,BufRead *.cdf call s:Setf('mma')
+  au BufNewFile,BufRead *.ma call s:Setf('mma')
+  au BufNewFile,BufRead *.mathematica call s:Setf('mma')
+  au BufNewFile,BufRead *.mma call s:Setf('mma')
+  au BufNewFile,BufRead *.mt call s:Setf('mma')
+  au BufNewFile,BufRead *.nb call s:Setf('mma')
+  au BufNewFile,BufRead *.nbp call s:Setf('mma')
+  au BufNewFile,BufRead *.wl call s:Setf('mma')
+  au BufNewFile,BufRead *.wls call s:Setf('mma')
+  au BufNewFile,BufRead *.wlt call s:Setf('mma')
   au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'markdown')
-  au BufNewFile,BufRead *.markdown setf markdown
-  au BufNewFile,BufRead *.md setf markdown
-  au BufNewFile,BufRead *.mdown setf markdown
-  au BufNewFile,BufRead *.mdwn setf markdown
-  au BufNewFile,BufRead *.mkd setf markdown
-  au BufNewFile,BufRead *.mkdn setf markdown
-  au BufNewFile,BufRead *.mkdown setf markdown
-  au BufNewFile,BufRead *.ronn setf markdown
-  au BufNewFile,BufRead *.workbook setf markdown
-  au BufNewFile,BufRead contents.lr setf markdown
+  au BufNewFile,BufRead *.markdown call s:Setf('markdown')
+  au BufNewFile,BufRead *.md call s:Setf('markdown')
+  au BufNewFile,BufRead *.mdown call s:Setf('markdown')
+  au BufNewFile,BufRead *.mdwn call s:Setf('markdown')
+  au BufNewFile,BufRead *.mkd call s:Setf('markdown')
+  au BufNewFile,BufRead *.mkdn call s:Setf('markdown')
+  au BufNewFile,BufRead *.mkdown call s:Setf('markdown')
+  au BufNewFile,BufRead *.ronn call s:Setf('markdown')
+  au BufNewFile,BufRead *.workbook call s:Setf('markdown')
+  au BufNewFile,BufRead contents.lr call s:Setf('markdown')
 endif
 
 if !has_key(s:disabled_packages, 'mdx')
-  au BufNewFile,BufRead *.mdx setf markdown.mdx
+  au BufNewFile,BufRead *.mdx call s:Setf('markdown.mdx')
 endif
 
 if !has_key(s:disabled_packages, 'meson')
-  au BufNewFile,BufRead meson.build setf meson
-  au BufNewFile,BufRead meson_options.txt setf meson
-  au BufNewFile,BufRead *.wrap setf dosini
+  au BufNewFile,BufRead meson.build call s:Setf('meson')
+  au BufNewFile,BufRead meson_options.txt call s:Setf('meson')
+  au BufNewFile,BufRead *.wrap call s:Setf('dosini')
 endif
 
 if !has_key(s:disabled_packages, 'moonscript')
-  au BufNewFile,BufRead *.moon setf moon
+  au BufNewFile,BufRead *.moon call s:Setf('moon')
 endif
 
 if !has_key(s:disabled_packages, 'murphi')
@@ -1182,28 +1288,28 @@ if !has_key(s:disabled_packages, 'murphi')
 endif
 
 if !has_key(s:disabled_packages, 'nginx')
-  au BufNewFile,BufRead *.nginx setf nginx
-  au BufNewFile,BufRead *.nginxconf setf nginx
-  au BufNewFile,BufRead *.vhost setf nginx
+  au BufNewFile,BufRead *.nginx call s:Setf('nginx')
+  au BufNewFile,BufRead *.nginxconf call s:Setf('nginx')
+  au BufNewFile,BufRead *.vhost call s:Setf('nginx')
   au BufNewFile,BufRead */etc/nginx/* call s:StarSetf('nginx')
-  au BufNewFile,BufRead */nginx/*.conf setf nginx
+  au BufNewFile,BufRead */nginx/*.conf call s:Setf('nginx')
   au BufNewFile,BufRead */usr/local/nginx/conf/* call s:StarSetf('nginx')
-  au BufNewFile,BufRead *nginx.conf setf nginx
-  au BufNewFile,BufRead nginx*.conf setf nginx
-  au BufNewFile,BufRead nginx.conf setf nginx
+  au BufNewFile,BufRead *nginx.conf call s:Setf('nginx')
+  au BufNewFile,BufRead nginx*.conf call s:Setf('nginx')
+  au BufNewFile,BufRead nginx.conf call s:Setf('nginx')
 endif
 
 if !has_key(s:disabled_packages, 'nim')
-  au BufNewFile,BufRead *.nim setf nim
-  au BufNewFile,BufRead *.nim.cfg setf nim
-  au BufNewFile,BufRead *.nimble setf nim
-  au BufNewFile,BufRead *.nimrod setf nim
-  au BufNewFile,BufRead *.nims setf nim
-  au BufNewFile,BufRead nim.cfg setf nim
+  au BufNewFile,BufRead *.nim call s:Setf('nim')
+  au BufNewFile,BufRead *.nim.cfg call s:Setf('nim')
+  au BufNewFile,BufRead *.nimble call s:Setf('nim')
+  au BufNewFile,BufRead *.nimrod call s:Setf('nim')
+  au BufNewFile,BufRead *.nims call s:Setf('nim')
+  au BufNewFile,BufRead nim.cfg call s:Setf('nim')
 endif
 
 if !has_key(s:disabled_packages, 'nix')
-  au BufNewFile,BufRead *.nix setf nix
+  au BufNewFile,BufRead *.nix call s:Setf('nix')
 endif
 
 if !has_key(s:disabled_packages, 'objc')
@@ -1212,57 +1318,62 @@ if !has_key(s:disabled_packages, 'objc')
 endif
 
 if !has_key(s:disabled_packages, 'ocaml')
-  au BufNewFile,BufRead *.eliom setf ocaml
-  au BufNewFile,BufRead *.eliomi setf ocaml
-  au BufNewFile,BufRead *.ml setf ocaml
-  au BufNewFile,BufRead *.ml.cppo setf ocaml
-  au BufNewFile,BufRead *.ml4 setf ocaml
-  au BufNewFile,BufRead *.mli setf ocaml
-  au BufNewFile,BufRead *.mli.cppo setf ocaml
-  au BufNewFile,BufRead *.mlip setf ocaml
-  au BufNewFile,BufRead *.mll setf ocaml
-  au BufNewFile,BufRead *.mlp setf ocaml
-  au BufNewFile,BufRead *.mlt setf ocaml
-  au BufNewFile,BufRead *.mly setf ocaml
-  au BufNewFile,BufRead {.,}ocamlinit setf ocaml
-  au BufNewFile,BufRead *.om setf omake
-  au BufNewFile,BufRead OMakefile setf omake
-  au BufNewFile,BufRead OMakeroot setf omake
-  au BufNewFile,BufRead OMakeroot.in setf omake
-  au BufNewFile,BufRead *.opam setf opam
-  au BufNewFile,BufRead *.opam.template setf opam
-  au BufNewFile,BufRead opam setf opam
-  au BufNewFile,BufRead _oasis setf oasis
-  au BufNewFile,BufRead dune setf dune
-  au BufNewFile,BufRead dune-project setf dune
-  au BufNewFile,BufRead dune-workspace setf dune
-  au BufNewFile,BufRead jbuild setf dune
-  au BufNewFile,BufRead _tags setf ocamlbuild_tags
-  au BufNewFile,BufRead *.ocp setf ocpbuild
-  au BufNewFile,BufRead *.root setf ocpbuildroot
-  au BufNewFile,BufRead *.sexp setf sexplib
+  au BufNewFile,BufRead *.eliom call s:Setf('ocaml')
+  au BufNewFile,BufRead *.eliomi call s:Setf('ocaml')
+  au BufNewFile,BufRead *.ml call s:Setf('ocaml')
+  au BufNewFile,BufRead *.ml.cppo call s:Setf('ocaml')
+  au BufNewFile,BufRead *.ml4 call s:Setf('ocaml')
+  au BufNewFile,BufRead *.mli call s:Setf('ocaml')
+  au BufNewFile,BufRead *.mli.cppo call s:Setf('ocaml')
+  au BufNewFile,BufRead *.mlip call s:Setf('ocaml')
+  au BufNewFile,BufRead *.mll call s:Setf('ocaml')
+  au BufNewFile,BufRead *.mlp call s:Setf('ocaml')
+  au BufNewFile,BufRead *.mlt call s:Setf('ocaml')
+  au BufNewFile,BufRead *.mly call s:Setf('ocaml')
+  au BufNewFile,BufRead {.,}ocamlinit call s:Setf('ocaml')
+  au BufNewFile,BufRead *.om call s:Setf('omake')
+  au BufNewFile,BufRead OMakefile call s:Setf('omake')
+  au BufNewFile,BufRead OMakeroot call s:Setf('omake')
+  au BufNewFile,BufRead OMakeroot.in call s:Setf('omake')
+  au BufNewFile,BufRead *.opam call s:Setf('opam')
+  au BufNewFile,BufRead *.opam.template call s:Setf('opam')
+  au BufNewFile,BufRead opam call s:Setf('opam')
+  au BufNewFile,BufRead _oasis call s:Setf('oasis')
+  au BufNewFile,BufRead dune call s:Setf('dune')
+  au BufNewFile,BufRead dune-project call s:Setf('dune')
+  au BufNewFile,BufRead dune-workspace call s:Setf('dune')
+  au BufNewFile,BufRead jbuild call s:Setf('dune')
+  au BufNewFile,BufRead _tags call s:Setf('ocamlbuild_tags')
+  au BufNewFile,BufRead *.ocp call s:Setf('ocpbuild')
+  au BufNewFile,BufRead *.root call s:Setf('ocpbuildroot')
+  au BufNewFile,BufRead *.sexp call s:Setf('sexplib')
+endif
+
+if !has_key(s:disabled_packages, 'octave')
+  au BufNewFile,BufRead *.oct call s:Setf('octave')
+  au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'opencl')
-  au BufNewFile,BufRead *.cl setf opencl
-  au BufNewFile,BufRead *.opencl setf opencl
+  au BufNewFile,BufRead *.cl call s:Setf('opencl')
+  au BufNewFile,BufRead *.opencl call s:Setf('opencl')
 endif
 
 if !has_key(s:disabled_packages, 'perl')
-  au BufNewFile,BufRead *.al setf perl
-  au BufNewFile,BufRead *.cgi setf perl
-  au BufNewFile,BufRead *.fcgi setf perl
-  au BufNewFile,BufRead *.perl setf perl
-  au BufNewFile,BufRead *.ph setf perl
-  au BufNewFile,BufRead *.pl setf perl
-  au BufNewFile,BufRead *.plx setf perl
-  au BufNewFile,BufRead *.pm setf perl
-  au BufNewFile,BufRead *.psgi setf perl
-  au BufNewFile,BufRead *.t setf perl
-  au BufNewFile,BufRead Makefile.PL setf perl
-  au BufNewFile,BufRead Rexfile setf perl
-  au BufNewFile,BufRead ack setf perl
-  au BufNewFile,BufRead cpanfile setf perl
+  au BufNewFile,BufRead *.al call s:Setf('perl')
+  au BufNewFile,BufRead *.cgi call s:Setf('perl')
+  au BufNewFile,BufRead *.fcgi call s:Setf('perl')
+  au BufNewFile,BufRead *.perl call s:Setf('perl')
+  au BufNewFile,BufRead *.ph call s:Setf('perl')
+  au BufNewFile,BufRead *.pl call s:Setf('perl')
+  au BufNewFile,BufRead *.plx call s:Setf('perl')
+  au BufNewFile,BufRead *.pm call s:Setf('perl')
+  au BufNewFile,BufRead *.psgi call s:Setf('perl')
+  au BufNewFile,BufRead *.t call s:Setf('perl')
+  au BufNewFile,BufRead Makefile.PL call s:Setf('perl')
+  au BufNewFile,BufRead Rexfile call s:Setf('perl')
+  au BufNewFile,BufRead ack call s:Setf('perl')
+  au BufNewFile,BufRead cpanfile call s:Setf('perl')
 endif
 
 if !has_key(s:disabled_packages, 'pgsql')
@@ -1270,233 +1381,238 @@ if !has_key(s:disabled_packages, 'pgsql')
 endif
 
 if !has_key(s:disabled_packages, 'cql')
-  au BufNewFile,BufRead *.cql setf cql
-endif
-
-if !has_key(s:disabled_packages, 'blade')
-  au BufNewFile,BufRead *.blade setf blade
-  au BufNewFile,BufRead *.blade.php setf blade
+  au BufNewFile,BufRead *.cql call s:Setf('cql')
 endif
 
 if !has_key(s:disabled_packages, 'php')
-  au BufNewFile,BufRead *.aw setf php
-  au BufNewFile,BufRead *.ctp setf php
-  au BufNewFile,BufRead *.fcgi setf php
-  au BufNewFile,BufRead *.inc setf php
-  au BufNewFile,BufRead *.php setf php
-  au BufNewFile,BufRead *.php3 setf php
-  au BufNewFile,BufRead *.php4 setf php
-  au BufNewFile,BufRead *.php5 setf php
-  au BufNewFile,BufRead *.phps setf php
-  au BufNewFile,BufRead *.phpt setf php
-  au BufNewFile,BufRead {.,}php setf php
-  au BufNewFile,BufRead {.,}php_cs setf php
-  au BufNewFile,BufRead {.,}php_cs.dist setf php
-  au BufNewFile,BufRead Phakefile setf php
+  au BufNewFile,BufRead *.aw call s:Setf('php')
+  au BufNewFile,BufRead *.ctp call s:Setf('php')
+  au BufNewFile,BufRead *.fcgi call s:Setf('php')
+  au BufNewFile,BufRead *.inc call s:Setf('php')
+  au BufNewFile,BufRead *.php call s:Setf('php')
+  au BufNewFile,BufRead *.php3 call s:Setf('php')
+  au BufNewFile,BufRead *.php4 call s:Setf('php')
+  au BufNewFile,BufRead *.php5 call s:Setf('php')
+  au BufNewFile,BufRead *.phps call s:Setf('php')
+  au BufNewFile,BufRead *.phpt call s:Setf('php')
+  au BufNewFile,BufRead {.,}php call s:Setf('php')
+  au BufNewFile,BufRead {.,}php_cs call s:Setf('php')
+  au BufNewFile,BufRead {.,}php_cs.dist call s:Setf('php')
+  au BufNewFile,BufRead Phakefile call s:Setf('php')
+endif
+
+if !has_key(s:disabled_packages, 'blade')
+  au BufNewFile,BufRead *.blade call s:Setf('blade')
+  au BufNewFile,BufRead *.blade.php call s:Setf('blade')
 endif
 
 if !has_key(s:disabled_packages, 'plantuml')
-  au BufNewFile,BufRead *.iuml setf plantuml
-  au BufNewFile,BufRead *.plantuml setf plantuml
-  au BufNewFile,BufRead *.pu setf plantuml
-  au BufNewFile,BufRead *.puml setf plantuml
-  au BufNewFile,BufRead *.uml setf plantuml
+  au BufNewFile,BufRead *.iuml call s:Setf('plantuml')
+  au BufNewFile,BufRead *.plantuml call s:Setf('plantuml')
+  au BufNewFile,BufRead *.pu call s:Setf('plantuml')
+  au BufNewFile,BufRead *.puml call s:Setf('plantuml')
+  au BufNewFile,BufRead *.uml call s:Setf('plantuml')
 endif
 
 if !has_key(s:disabled_packages, 'pony')
-  au BufNewFile,BufRead *.pony setf pony
+  au BufNewFile,BufRead *.pony call s:Setf('pony')
 endif
 
 if !has_key(s:disabled_packages, 'powershell')
-  au BufNewFile,BufRead *.ps1 setf ps1
-  au BufNewFile,BufRead *.psd1 setf ps1
-  au BufNewFile,BufRead *.psm1 setf ps1
-  au BufNewFile,BufRead *.pssc setf ps1
-  au BufNewFile,BufRead *.ps1xml setf ps1xml
+  au BufNewFile,BufRead *.ps1 call s:Setf('ps1')
+  au BufNewFile,BufRead *.psd1 call s:Setf('ps1')
+  au BufNewFile,BufRead *.psm1 call s:Setf('ps1')
+  au BufNewFile,BufRead *.pssc call s:Setf('ps1')
+  au BufNewFile,BufRead *.ps1xml call s:Setf('ps1xml')
 endif
 
 if !has_key(s:disabled_packages, 'protobuf')
-  au BufNewFile,BufRead *.proto setf proto
+  au BufNewFile,BufRead *.proto call s:Setf('proto')
 endif
 
 if !has_key(s:disabled_packages, 'pug')
-  au BufNewFile,BufRead *.jade setf pug
-  au BufNewFile,BufRead *.pug setf pug
+  au BufNewFile,BufRead *.jade call s:Setf('pug')
+  au BufNewFile,BufRead *.pug call s:Setf('pug')
 endif
 
 if !has_key(s:disabled_packages, 'puppet')
-  au BufNewFile,BufRead *.pp setf puppet
-  au BufNewFile,BufRead Modulefile setf puppet
-  au BufNewFile,BufRead *.epp setf embeddedpuppet
+  au BufNewFile,BufRead *.pp call s:Setf('puppet')
+  au BufNewFile,BufRead Modulefile call s:Setf('puppet')
+  au BufNewFile,BufRead *.epp call s:Setf('embeddedpuppet')
 endif
 
 if !has_key(s:disabled_packages, 'purescript')
-  au BufNewFile,BufRead *.purs setf purescript
+  au BufNewFile,BufRead *.purs call s:Setf('purescript')
 endif
 
 if !has_key(s:disabled_packages, 'python')
-  au BufNewFile,BufRead *.cgi setf python
-  au BufNewFile,BufRead *.fcgi setf python
-  au BufNewFile,BufRead *.gyp setf python
-  au BufNewFile,BufRead *.gypi setf python
-  au BufNewFile,BufRead *.lmi setf python
-  au BufNewFile,BufRead *.py setf python
-  au BufNewFile,BufRead *.py3 setf python
-  au BufNewFile,BufRead *.pyde setf python
-  au BufNewFile,BufRead *.pyi setf python
-  au BufNewFile,BufRead *.pyp setf python
-  au BufNewFile,BufRead *.pyt setf python
-  au BufNewFile,BufRead *.pyw setf python
-  au BufNewFile,BufRead *.rpy setf python
-  au BufNewFile,BufRead *.smk setf python
-  au BufNewFile,BufRead *.spec setf python
-  au BufNewFile,BufRead *.tac setf python
-  au BufNewFile,BufRead *.wsgi setf python
-  au BufNewFile,BufRead *.xpy setf python
-  au BufNewFile,BufRead {.,}gclient setf python
-  au BufNewFile,BufRead DEPS setf python
-  au BufNewFile,BufRead SConscript setf python
-  au BufNewFile,BufRead SConstruct setf python
-  au BufNewFile,BufRead Snakefile setf python
-  au BufNewFile,BufRead wscript setf python
+  au BufNewFile,BufRead *.cgi call s:Setf('python')
+  au BufNewFile,BufRead *.fcgi call s:Setf('python')
+  au BufNewFile,BufRead *.gyp call s:Setf('python')
+  au BufNewFile,BufRead *.gypi call s:Setf('python')
+  au BufNewFile,BufRead *.lmi call s:Setf('python')
+  au BufNewFile,BufRead *.py call s:Setf('python')
+  au BufNewFile,BufRead *.py3 call s:Setf('python')
+  au BufNewFile,BufRead *.pyde call s:Setf('python')
+  au BufNewFile,BufRead *.pyi call s:Setf('python')
+  au BufNewFile,BufRead *.pyp call s:Setf('python')
+  au BufNewFile,BufRead *.pyt call s:Setf('python')
+  au BufNewFile,BufRead *.pyw call s:Setf('python')
+  au BufNewFile,BufRead *.rpy call s:Setf('python')
+  au BufNewFile,BufRead *.smk call s:Setf('python')
+  au BufNewFile,BufRead *.spec call s:Setf('python')
+  au BufNewFile,BufRead *.tac call s:Setf('python')
+  au BufNewFile,BufRead *.wsgi call s:Setf('python')
+  au BufNewFile,BufRead *.xpy call s:Setf('python')
+  au BufNewFile,BufRead {.,}gclient call s:Setf('python')
+  au BufNewFile,BufRead DEPS call s:Setf('python')
+  au BufNewFile,BufRead SConscript call s:Setf('python')
+  au BufNewFile,BufRead SConstruct call s:Setf('python')
+  au BufNewFile,BufRead Snakefile call s:Setf('python')
+  au BufNewFile,BufRead wscript call s:Setf('python')
 endif
 
 if !has_key(s:disabled_packages, 'requirements')
-  au BufNewFile,BufRead *.pip setf requirements
-  au BufNewFile,BufRead *require.{txt,in} setf requirements
-  au BufNewFile,BufRead *requirements.{txt,in} setf requirements
-  au BufNewFile,BufRead constraints.{txt,in} setf requirements
+  au BufNewFile,BufRead *.pip call s:Setf('requirements')
+  au BufNewFile,BufRead *require.{txt,in} call s:Setf('requirements')
+  au BufNewFile,BufRead *requirements.{txt,in} call s:Setf('requirements')
+  au BufNewFile,BufRead constraints.{txt,in} call s:Setf('requirements')
 endif
 
 if !has_key(s:disabled_packages, 'qmake')
-  au BufNewFile,BufRead *.pri setf qmake
-  au BufNewFile,BufRead *.pro setf qmake
+  au BufNewFile,BufRead *.pri call s:Setf('qmake')
+  au BufNewFile,BufRead *.pro call s:Setf('qmake')
 endif
 
 if !has_key(s:disabled_packages, 'qml')
-  au BufNewFile,BufRead *.qbs setf qml
-  au BufNewFile,BufRead *.qml setf qml
+  au BufNewFile,BufRead *.qbs call s:Setf('qml')
+  au BufNewFile,BufRead *.qml call s:Setf('qml')
 endif
 
 if !has_key(s:disabled_packages, 'r-lang')
-  au BufNewFile,BufRead *.S setf r
-  au BufNewFile,BufRead *.r setf r
-  au BufNewFile,BufRead *.rsx setf r
-  au BufNewFile,BufRead *.s setf r
-  au BufNewFile,BufRead {.,}Rprofile setf r
-  au BufNewFile,BufRead expr-dist setf r
-  au BufNewFile,BufRead *.rd setf rhelp
+  au BufNewFile,BufRead *.S call s:Setf('r')
+  au BufNewFile,BufRead *.r call s:Setf('r')
+  au BufNewFile,BufRead *.rsx call s:Setf('r')
+  au BufNewFile,BufRead *.s call s:Setf('r')
+  au BufNewFile,BufRead {.,}Rprofile call s:Setf('r')
+  au BufNewFile,BufRead expr-dist call s:Setf('r')
+  au BufNewFile,BufRead *.rd call s:Setf('rhelp')
 endif
 
 if !has_key(s:disabled_packages, 'racket')
-  au BufNewFile,BufRead *.rkt setf racket
-  au BufNewFile,BufRead *.rktd setf racket
-  au BufNewFile,BufRead *.rktl setf racket
-  au BufNewFile,BufRead *.scrbl setf racket
+  au BufNewFile,BufRead *.rkt call s:Setf('racket')
+  au BufNewFile,BufRead *.rktd call s:Setf('racket')
+  au BufNewFile,BufRead *.rktl call s:Setf('racket')
+  au BufNewFile,BufRead *.scrbl call s:Setf('racket')
 endif
 
 if !has_key(s:disabled_packages, 'ragel')
-  au BufNewFile,BufRead *.rl setf ragel
+  au BufNewFile,BufRead *.rl call s:Setf('ragel')
 endif
 
 if !has_key(s:disabled_packages, 'raku')
-  au BufNewFile,BufRead *.6pl setf raku
-  au BufNewFile,BufRead *.6pm setf raku
-  au BufNewFile,BufRead *.nqp setf raku
-  au BufNewFile,BufRead *.p6 setf raku
-  au BufNewFile,BufRead *.p6l setf raku
-  au BufNewFile,BufRead *.p6m setf raku
-  au BufNewFile,BufRead *.pl setf raku
-  au BufNewFile,BufRead *.pl6 setf raku
-  au BufNewFile,BufRead *.pm setf raku
-  au BufNewFile,BufRead *.pm6 setf raku
-  au BufNewFile,BufRead *.pod6 setf raku
-  au BufNewFile,BufRead *.raku setf raku
-  au BufNewFile,BufRead *.rakudoc setf raku
-  au BufNewFile,BufRead *.rakumod setf raku
-  au BufNewFile,BufRead *.rakutest setf raku
-  au BufNewFile,BufRead *.t setf raku
-  au BufNewFile,BufRead *.t6 setf raku
+  au BufNewFile,BufRead *.6pl call s:Setf('raku')
+  au BufNewFile,BufRead *.6pm call s:Setf('raku')
+  au BufNewFile,BufRead *.nqp call s:Setf('raku')
+  au BufNewFile,BufRead *.p6 call s:Setf('raku')
+  au BufNewFile,BufRead *.p6l call s:Setf('raku')
+  au BufNewFile,BufRead *.p6m call s:Setf('raku')
+  au BufNewFile,BufRead *.pl call s:Setf('raku')
+  au BufNewFile,BufRead *.pl6 call s:Setf('raku')
+  au BufNewFile,BufRead *.pm call s:Setf('raku')
+  au BufNewFile,BufRead *.pm6 call s:Setf('raku')
+  au BufNewFile,BufRead *.pod6 call s:Setf('raku')
+  au BufNewFile,BufRead *.raku call s:Setf('raku')
+  au BufNewFile,BufRead *.rakudoc call s:Setf('raku')
+  au BufNewFile,BufRead *.rakumod call s:Setf('raku')
+  au BufNewFile,BufRead *.rakutest call s:Setf('raku')
+  au BufNewFile,BufRead *.t call s:Setf('raku')
+  au BufNewFile,BufRead *.t6 call s:Setf('raku')
 endif
 
 if !has_key(s:disabled_packages, 'raml')
-  au BufNewFile,BufRead *.raml setf raml
+  au BufNewFile,BufRead *.raml call s:Setf('raml')
 endif
 
 if !has_key(s:disabled_packages, 'razor')
-  au BufNewFile,BufRead *.cshtml setf razor
-  au BufNewFile,BufRead *.razor setf razor
+  au BufNewFile,BufRead *.cshtml call s:Setf('razor')
+  au BufNewFile,BufRead *.razor call s:Setf('razor')
+endif
+
+if !has_key(s:disabled_packages, 'reason')
+  au BufNewFile,BufRead *.rei call s:Setf('reason')
+  au! BufNewFile,BufRead *.re call polyglot#DetectReFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'rst')
-  au BufNewFile,BufRead *.rest setf rst
-  au BufNewFile,BufRead *.rest.txt setf rst
-  au BufNewFile,BufRead *.rst setf rst
-  au BufNewFile,BufRead *.rst.txt setf rst
+  au BufNewFile,BufRead *.rest call s:Setf('rst')
+  au BufNewFile,BufRead *.rest.txt call s:Setf('rst')
+  au BufNewFile,BufRead *.rst call s:Setf('rst')
+  au BufNewFile,BufRead *.rst.txt call s:Setf('rst')
 endif
 
 if !has_key(s:disabled_packages, 'ruby')
-  au BufNewFile,BufRead *.axlsx setf ruby
-  au BufNewFile,BufRead *.builder setf ruby
-  au BufNewFile,BufRead *.cap setf ruby
-  au BufNewFile,BufRead *.eye setf ruby
-  au BufNewFile,BufRead *.fcgi setf ruby
-  au BufNewFile,BufRead *.gemspec setf ruby
-  au BufNewFile,BufRead *.god setf ruby
-  au BufNewFile,BufRead *.jbuilder setf ruby
-  au BufNewFile,BufRead *.mspec setf ruby
-  au BufNewFile,BufRead *.opal setf ruby
-  au BufNewFile,BufRead *.pluginspec setf ruby
-  au BufNewFile,BufRead *.podspec setf ruby
-  au BufNewFile,BufRead *.rabl setf ruby
-  au BufNewFile,BufRead *.rake setf ruby
-  au BufNewFile,BufRead *.rant setf ruby
-  au BufNewFile,BufRead *.rb setf ruby
-  au BufNewFile,BufRead *.rbi setf ruby
-  au BufNewFile,BufRead *.rbuild setf ruby
-  au BufNewFile,BufRead *.rbw setf ruby
-  au BufNewFile,BufRead *.rbx setf ruby
-  au BufNewFile,BufRead *.rjs setf ruby
-  au BufNewFile,BufRead *.ru setf ruby
-  au BufNewFile,BufRead *.ruby setf ruby
-  au BufNewFile,BufRead *.rxml setf ruby
-  au BufNewFile,BufRead *.spec setf ruby
-  au BufNewFile,BufRead *.thor setf ruby
-  au BufNewFile,BufRead *.watchr setf ruby
-  au BufNewFile,BufRead {.,}Brewfile setf ruby
-  au BufNewFile,BufRead {.,}Guardfile setf ruby
-  au BufNewFile,BufRead {.,}autotest setf ruby
-  au BufNewFile,BufRead {.,}irbrc setf ruby
-  au BufNewFile,BufRead {.,}pryrc setf ruby
-  au BufNewFile,BufRead {.,}simplecov setf ruby
-  au BufNewFile,BufRead Appraisals setf ruby
-  au BufNewFile,BufRead Berksfile setf ruby
-  au BufNewFile,BufRead Buildfile setf ruby
-  au BufNewFile,BufRead Capfile setf ruby
-  au BufNewFile,BufRead Cheffile setf ruby
-  au BufNewFile,BufRead Dangerfile setf ruby
-  au BufNewFile,BufRead Deliverfile setf ruby
-  au BufNewFile,BufRead Fastfile setf ruby
-  au BufNewFile,BufRead Gemfile setf ruby
-  au BufNewFile,BufRead Gemfile.lock setf ruby
-  au BufNewFile,BufRead Guardfile setf ruby
-  au BufNewFile,BufRead Jarfile setf ruby
-  au BufNewFile,BufRead KitchenSink setf ruby
-  au BufNewFile,BufRead Mavenfile setf ruby
-  au BufNewFile,BufRead Podfile setf ruby
-  au BufNewFile,BufRead Puppetfile setf ruby
-  au BufNewFile,BufRead Rakefile setf ruby
-  au BufNewFile,BufRead Rantfile setf ruby
-  au BufNewFile,BufRead Routefile setf ruby
-  au BufNewFile,BufRead Snapfile setf ruby
-  au BufNewFile,BufRead Thorfile setf ruby
-  au BufNewFile,BufRead Vagrantfile setf ruby
+  au BufNewFile,BufRead *.axlsx call s:Setf('ruby')
+  au BufNewFile,BufRead *.builder call s:Setf('ruby')
+  au BufNewFile,BufRead *.cap call s:Setf('ruby')
+  au BufNewFile,BufRead *.eye call s:Setf('ruby')
+  au BufNewFile,BufRead *.fcgi call s:Setf('ruby')
+  au BufNewFile,BufRead *.gemspec call s:Setf('ruby')
+  au BufNewFile,BufRead *.god call s:Setf('ruby')
+  au BufNewFile,BufRead *.jbuilder call s:Setf('ruby')
+  au BufNewFile,BufRead *.mspec call s:Setf('ruby')
+  au BufNewFile,BufRead *.opal call s:Setf('ruby')
+  au BufNewFile,BufRead *.pluginspec call s:Setf('ruby')
+  au BufNewFile,BufRead *.podspec call s:Setf('ruby')
+  au BufNewFile,BufRead *.rabl call s:Setf('ruby')
+  au BufNewFile,BufRead *.rake call s:Setf('ruby')
+  au BufNewFile,BufRead *.rant call s:Setf('ruby')
+  au BufNewFile,BufRead *.rb call s:Setf('ruby')
+  au BufNewFile,BufRead *.rbi call s:Setf('ruby')
+  au BufNewFile,BufRead *.rbuild call s:Setf('ruby')
+  au BufNewFile,BufRead *.rbw call s:Setf('ruby')
+  au BufNewFile,BufRead *.rbx call s:Setf('ruby')
+  au BufNewFile,BufRead *.rjs call s:Setf('ruby')
+  au BufNewFile,BufRead *.ru call s:Setf('ruby')
+  au BufNewFile,BufRead *.ruby call s:Setf('ruby')
+  au BufNewFile,BufRead *.rxml call s:Setf('ruby')
+  au BufNewFile,BufRead *.spec call s:Setf('ruby')
+  au BufNewFile,BufRead *.thor call s:Setf('ruby')
+  au BufNewFile,BufRead *.watchr call s:Setf('ruby')
+  au BufNewFile,BufRead {.,}Brewfile call s:Setf('ruby')
+  au BufNewFile,BufRead {.,}Guardfile call s:Setf('ruby')
+  au BufNewFile,BufRead {.,}autotest call s:Setf('ruby')
+  au BufNewFile,BufRead {.,}irbrc call s:Setf('ruby')
+  au BufNewFile,BufRead {.,}pryrc call s:Setf('ruby')
+  au BufNewFile,BufRead {.,}simplecov call s:Setf('ruby')
+  au BufNewFile,BufRead Appraisals call s:Setf('ruby')
+  au BufNewFile,BufRead Berksfile call s:Setf('ruby')
+  au BufNewFile,BufRead Buildfile call s:Setf('ruby')
+  au BufNewFile,BufRead Capfile call s:Setf('ruby')
+  au BufNewFile,BufRead Cheffile call s:Setf('ruby')
+  au BufNewFile,BufRead Dangerfile call s:Setf('ruby')
+  au BufNewFile,BufRead Deliverfile call s:Setf('ruby')
+  au BufNewFile,BufRead Fastfile call s:Setf('ruby')
+  au BufNewFile,BufRead Gemfile call s:Setf('ruby')
+  au BufNewFile,BufRead Gemfile.lock call s:Setf('ruby')
+  au BufNewFile,BufRead Guardfile call s:Setf('ruby')
+  au BufNewFile,BufRead Jarfile call s:Setf('ruby')
+  au BufNewFile,BufRead KitchenSink call s:Setf('ruby')
+  au BufNewFile,BufRead Mavenfile call s:Setf('ruby')
+  au BufNewFile,BufRead Podfile call s:Setf('ruby')
+  au BufNewFile,BufRead Puppetfile call s:Setf('ruby')
+  au BufNewFile,BufRead Rakefile call s:Setf('ruby')
+  au BufNewFile,BufRead Rantfile call s:Setf('ruby')
+  au BufNewFile,BufRead Routefile call s:Setf('ruby')
+  au BufNewFile,BufRead Snapfile call s:Setf('ruby')
+  au BufNewFile,BufRead Thorfile call s:Setf('ruby')
+  au BufNewFile,BufRead Vagrantfile call s:Setf('ruby')
   au BufNewFile,BufRead [Rr]akefile* call s:StarSetf('ruby')
-  au BufNewFile,BufRead buildfile setf ruby
-  au BufNewFile,BufRead vagrantfile setf ruby
-  au BufNewFile,BufRead *.erb setf eruby
-  au BufNewFile,BufRead *.erb.deface setf eruby
-  au BufNewFile,BufRead *.rhtml setf eruby
+  au BufNewFile,BufRead buildfile call s:Setf('ruby')
+  au BufNewFile,BufRead vagrantfile call s:Setf('ruby')
+  au BufNewFile,BufRead *.erb call s:Setf('eruby')
+  au BufNewFile,BufRead *.erb.deface call s:Setf('eruby')
+  au BufNewFile,BufRead *.rhtml call s:Setf('eruby')
 endif
 
 if !has_key(s:disabled_packages, 'rspec')
@@ -1504,371 +1620,262 @@ if !has_key(s:disabled_packages, 'rspec')
 endif
 
 if !has_key(s:disabled_packages, 'brewfile')
-  au BufNewFile,BufRead Brewfile setf brewfile
+  au BufNewFile,BufRead Brewfile call s:Setf('brewfile')
 endif
 
 if !has_key(s:disabled_packages, 'rust')
-  au BufNewFile,BufRead *.rs setf rust
-  au BufNewFile,BufRead *.rs.in setf rust
+  au BufNewFile,BufRead *.rs call s:Setf('rust')
+  au BufNewFile,BufRead *.rs.in call s:Setf('rust')
 endif
 
 if !has_key(s:disabled_packages, 'scala')
-  au BufNewFile,BufRead *.kojo setf scala
-  au BufNewFile,BufRead *.sc setf scala
-  au BufNewFile,BufRead *.scala setf scala
+  au BufNewFile,BufRead *.kojo call s:Setf('scala')
+  au BufNewFile,BufRead *.sc call s:Setf('scala')
+  au BufNewFile,BufRead *.scala call s:Setf('scala')
 endif
 
 if !has_key(s:disabled_packages, 'sbt')
-  au BufNewFile,BufRead *.sbt setf sbt.scala
+  au BufNewFile,BufRead *.sbt call s:Setf('sbt.scala')
 endif
 
 if !has_key(s:disabled_packages, 'scss')
-  au BufNewFile,BufRead *.scss setf scss
+  au BufNewFile,BufRead *.scss call s:Setf('scss')
 endif
 
 if !has_key(s:disabled_packages, 'sh')
-  au BufNewFile,BufRead *.bash setf sh
-  au BufNewFile,BufRead *.bats setf sh
-  au BufNewFile,BufRead *.cgi setf sh
-  au BufNewFile,BufRead *.command setf sh
-  au BufNewFile,BufRead *.env setf sh
-  au BufNewFile,BufRead *.fcgi setf sh
-  au BufNewFile,BufRead *.ksh setf sh
-  au BufNewFile,BufRead *.sh setf sh
-  au BufNewFile,BufRead *.sh.in setf sh
-  au BufNewFile,BufRead *.tmux setf sh
-  au BufNewFile,BufRead *.tool setf sh
-  au BufNewFile,BufRead {.,}bash_aliases setf sh
-  au BufNewFile,BufRead {.,}bash_history setf sh
-  au BufNewFile,BufRead {.,}bash_logout setf sh
-  au BufNewFile,BufRead {.,}bash_profile setf sh
-  au BufNewFile,BufRead {.,}bashrc setf sh
-  au BufNewFile,BufRead {.,}cshrc setf sh
-  au BufNewFile,BufRead {.,}env setf sh
-  au BufNewFile,BufRead {.,}env.example setf sh
-  au BufNewFile,BufRead {.,}flaskenv setf sh
-  au BufNewFile,BufRead {.,}login setf sh
-  au BufNewFile,BufRead {.,}profile setf sh
-  au BufNewFile,BufRead 9fs setf sh
-  au BufNewFile,BufRead PKGBUILD setf sh
-  au BufNewFile,BufRead bash_aliases setf sh
-  au BufNewFile,BufRead bash_logout setf sh
-  au BufNewFile,BufRead bash_profile setf sh
-  au BufNewFile,BufRead bashrc setf sh
-  au BufNewFile,BufRead cshrc setf sh
-  au BufNewFile,BufRead gradlew setf sh
-  au BufNewFile,BufRead login setf sh
-  au BufNewFile,BufRead man setf sh
-  au BufNewFile,BufRead profile setf sh
-  au BufNewFile,BufRead *.zsh setf zsh
-  au BufNewFile,BufRead {.,}zlogin setf zsh
-  au BufNewFile,BufRead {.,}zlogout setf zsh
-  au BufNewFile,BufRead {.,}zprofile setf zsh
-  au BufNewFile,BufRead {.,}zshenv setf zsh
-  au BufNewFile,BufRead {.,}zshrc setf zsh
+  au BufNewFile,BufRead *.bash call s:Setf('sh')
+  au BufNewFile,BufRead *.bats call s:Setf('sh')
+  au BufNewFile,BufRead *.cgi call s:Setf('sh')
+  au BufNewFile,BufRead *.command call s:Setf('sh')
+  au BufNewFile,BufRead *.env call s:Setf('sh')
+  au BufNewFile,BufRead *.fcgi call s:Setf('sh')
+  au BufNewFile,BufRead *.ksh call s:Setf('sh')
+  au BufNewFile,BufRead *.sh call s:Setf('sh')
+  au BufNewFile,BufRead *.sh.in call s:Setf('sh')
+  au BufNewFile,BufRead *.tmux call s:Setf('sh')
+  au BufNewFile,BufRead *.tool call s:Setf('sh')
+  au BufNewFile,BufRead {.,}bash_aliases call s:Setf('sh')
+  au BufNewFile,BufRead {.,}bash_history call s:Setf('sh')
+  au BufNewFile,BufRead {.,}bash_logout call s:Setf('sh')
+  au BufNewFile,BufRead {.,}bash_profile call s:Setf('sh')
+  au BufNewFile,BufRead {.,}bashrc call s:Setf('sh')
+  au BufNewFile,BufRead {.,}cshrc call s:Setf('sh')
+  au BufNewFile,BufRead {.,}env call s:Setf('sh')
+  au BufNewFile,BufRead {.,}env.example call s:Setf('sh')
+  au BufNewFile,BufRead {.,}flaskenv call s:Setf('sh')
+  au BufNewFile,BufRead {.,}login call s:Setf('sh')
+  au BufNewFile,BufRead {.,}profile call s:Setf('sh')
+  au BufNewFile,BufRead 9fs call s:Setf('sh')
+  au BufNewFile,BufRead PKGBUILD call s:Setf('sh')
+  au BufNewFile,BufRead bash_aliases call s:Setf('sh')
+  au BufNewFile,BufRead bash_logout call s:Setf('sh')
+  au BufNewFile,BufRead bash_profile call s:Setf('sh')
+  au BufNewFile,BufRead bashrc call s:Setf('sh')
+  au BufNewFile,BufRead cshrc call s:Setf('sh')
+  au BufNewFile,BufRead gradlew call s:Setf('sh')
+  au BufNewFile,BufRead login call s:Setf('sh')
+  au BufNewFile,BufRead man call s:Setf('sh')
+  au BufNewFile,BufRead profile call s:Setf('sh')
+  au BufNewFile,BufRead *.zsh call s:Setf('zsh')
+  au BufNewFile,BufRead {.,}zlogin call s:Setf('zsh')
+  au BufNewFile,BufRead {.,}zlogout call s:Setf('zsh')
+  au BufNewFile,BufRead {.,}zprofile call s:Setf('zsh')
+  au BufNewFile,BufRead {.,}zshenv call s:Setf('zsh')
+  au BufNewFile,BufRead {.,}zshrc call s:Setf('zsh')
 endif
 
 if !has_key(s:disabled_packages, 'slim')
-  au BufNewFile,BufRead *.slim setf slim
+  au BufNewFile,BufRead *.slim call s:Setf('slim')
 endif
 
 if !has_key(s:disabled_packages, 'slime')
-  au BufNewFile,BufRead *.slime setf slime
+  au BufNewFile,BufRead *.slime call s:Setf('slime')
 endif
 
 if !has_key(s:disabled_packages, 'smt2')
-  au BufNewFile,BufRead *.smt setf smt2
-  au BufNewFile,BufRead *.smt2 setf smt2
+  au BufNewFile,BufRead *.smt call s:Setf('smt2')
+  au BufNewFile,BufRead *.smt2 call s:Setf('smt2')
 endif
 
 if !has_key(s:disabled_packages, 'solidity')
-  au BufNewFile,BufRead *.sol setf solidity
+  au BufNewFile,BufRead *.sol call s:Setf('solidity')
 endif
 
 if !has_key(s:disabled_packages, 'stylus')
-  au BufNewFile,BufRead *.styl setf stylus
-  au BufNewFile,BufRead *.stylus setf stylus
+  au BufNewFile,BufRead *.styl call s:Setf('stylus')
+  au BufNewFile,BufRead *.stylus call s:Setf('stylus')
 endif
 
 if !has_key(s:disabled_packages, 'svelte')
-  au BufNewFile,BufRead *.svelte setf svelte
+  au BufNewFile,BufRead *.svelte call s:Setf('svelte')
 endif
 
 if !has_key(s:disabled_packages, 'svg')
-  au BufNewFile,BufRead *.svg setf svg
+  au BufNewFile,BufRead *.svg call s:Setf('svg')
 endif
 
 if !has_key(s:disabled_packages, 'swift')
-  au BufNewFile,BufRead *.swift setf swift
+  au BufNewFile,BufRead *.swift call s:Setf('swift')
 endif
 
 if !has_key(s:disabled_packages, 'sxhkd')
-  au BufNewFile,BufRead *.sxhkdrc setf sxhkdrc
-  au BufNewFile,BufRead sxhkdrc setf sxhkdrc
+  au BufNewFile,BufRead *.sxhkdrc call s:Setf('sxhkdrc')
+  au BufNewFile,BufRead sxhkdrc call s:Setf('sxhkdrc')
 endif
 
 if !has_key(s:disabled_packages, 'systemd')
-  au BufNewFile,BufRead *.automount setf systemd
-  au BufNewFile,BufRead *.mount setf systemd
-  au BufNewFile,BufRead *.path setf systemd
-  au BufNewFile,BufRead *.service setf systemd
-  au BufNewFile,BufRead *.socket setf systemd
-  au BufNewFile,BufRead *.swap setf systemd
-  au BufNewFile,BufRead *.target setf systemd
-  au BufNewFile,BufRead *.timer setf systemd
+  au BufNewFile,BufRead *.automount call s:Setf('systemd')
+  au BufNewFile,BufRead *.mount call s:Setf('systemd')
+  au BufNewFile,BufRead *.path call s:Setf('systemd')
+  au BufNewFile,BufRead *.service call s:Setf('systemd')
+  au BufNewFile,BufRead *.socket call s:Setf('systemd')
+  au BufNewFile,BufRead *.swap call s:Setf('systemd')
+  au BufNewFile,BufRead *.target call s:Setf('systemd')
+  au BufNewFile,BufRead *.timer call s:Setf('systemd')
 endif
 
 if !has_key(s:disabled_packages, 'terraform')
-  au BufNewFile,BufRead *.hcl setf terraform
-  au BufNewFile,BufRead *.nomad setf terraform
-  au BufNewFile,BufRead *.tf setf terraform
-  au BufNewFile,BufRead *.tfvars setf terraform
-  au BufNewFile,BufRead *.workflow setf terraform
+  au BufNewFile,BufRead *.hcl call s:Setf('terraform')
+  au BufNewFile,BufRead *.nomad call s:Setf('terraform')
+  au BufNewFile,BufRead *.tf call s:Setf('terraform')
+  au BufNewFile,BufRead *.tfvars call s:Setf('terraform')
+  au BufNewFile,BufRead *.workflow call s:Setf('terraform')
 endif
 
 if !has_key(s:disabled_packages, 'textile')
-  au BufNewFile,BufRead *.textile setf textile
+  au BufNewFile,BufRead *.textile call s:Setf('textile')
 endif
 
 if !has_key(s:disabled_packages, 'thrift')
-  au BufNewFile,BufRead *.thrift setf thrift
+  au BufNewFile,BufRead *.thrift call s:Setf('thrift')
 endif
 
 if !has_key(s:disabled_packages, 'tmux')
-  au BufNewFile,BufRead {.,}tmux.conf setf tmux
+  au BufNewFile,BufRead {.,}tmux.conf call s:Setf('tmux')
 endif
 
 if !has_key(s:disabled_packages, 'toml')
-  au BufNewFile,BufRead *.toml setf toml
-  au BufNewFile,BufRead */.cargo/config setf toml
-  au BufNewFile,BufRead */.cargo/credentials setf toml
-  au BufNewFile,BufRead Cargo.lock setf toml
-  au BufNewFile,BufRead Gopkg.lock setf toml
-  au BufNewFile,BufRead Pipfile setf toml
-  au BufNewFile,BufRead poetry.lock setf toml
+  au BufNewFile,BufRead *.toml call s:Setf('toml')
+  au BufNewFile,BufRead */.cargo/config call s:Setf('toml')
+  au BufNewFile,BufRead */.cargo/credentials call s:Setf('toml')
+  au BufNewFile,BufRead Cargo.lock call s:Setf('toml')
+  au BufNewFile,BufRead Gopkg.lock call s:Setf('toml')
+  au BufNewFile,BufRead Pipfile call s:Setf('toml')
+  au BufNewFile,BufRead poetry.lock call s:Setf('toml')
 endif
 
 if !has_key(s:disabled_packages, 'tptp')
-  au BufNewFile,BufRead *.ax setf tptp
-  au BufNewFile,BufRead *.p setf tptp
-  au BufNewFile,BufRead *.tptp setf tptp
+  au BufNewFile,BufRead *.ax call s:Setf('tptp')
+  au BufNewFile,BufRead *.p call s:Setf('tptp')
+  au BufNewFile,BufRead *.tptp call s:Setf('tptp')
 endif
 
 if !has_key(s:disabled_packages, 'twig')
-  au BufNewFile,BufRead *.twig setf html.twig
-  au BufNewFile,BufRead *.xml.twig setf xml.twig
+  au BufNewFile,BufRead *.twig call s:Setf('html.twig')
+  au BufNewFile,BufRead *.xml.twig call s:Setf('xml.twig')
 endif
 
 if !has_key(s:disabled_packages, 'typescript')
-  au BufNewFile,BufRead *.ts setf typescript
-  au BufNewFile,BufRead *.tsx setf typescriptreact
+  au BufNewFile,BufRead *.ts call s:Setf('typescript')
+  au BufNewFile,BufRead *.tsx call s:Setf('typescriptreact')
 endif
 
 if !has_key(s:disabled_packages, 'unison')
-  au BufNewFile,BufRead *.u setf unison
-  au BufNewFile,BufRead *.uu setf unison
+  au BufNewFile,BufRead *.u call s:Setf('unison')
+  au BufNewFile,BufRead *.uu call s:Setf('unison')
 endif
 
 if !has_key(s:disabled_packages, 'v')
-  au BufNewFile,BufRead *.v setf v
+  au BufNewFile,BufRead *.v call s:Setf('v')
 endif
 
 if !has_key(s:disabled_packages, 'vala')
-  au BufNewFile,BufRead *.vala setf vala
-  au BufNewFile,BufRead *.valadoc setf vala
-  au BufNewFile,BufRead *.vapi setf vala
+  au BufNewFile,BufRead *.vala call s:Setf('vala')
+  au BufNewFile,BufRead *.valadoc call s:Setf('vala')
+  au BufNewFile,BufRead *.vapi call s:Setf('vala')
 endif
 
 if !has_key(s:disabled_packages, 'vbnet')
-  au BufNewFile,BufRead *.vb setf vbnet
-  au BufNewFile,BufRead *.vbhtml setf vbnet
+  au BufNewFile,BufRead *.vb call s:Setf('vbnet')
+  au BufNewFile,BufRead *.vbhtml call s:Setf('vbnet')
 endif
 
 if !has_key(s:disabled_packages, 'vcl')
-  au BufNewFile,BufRead *.vcl setf vcl
+  au BufNewFile,BufRead *.vcl call s:Setf('vcl')
 endif
 
 if !has_key(s:disabled_packages, 'velocity')
-  au BufNewFile,BufRead *.vm setf velocity
+  au BufNewFile,BufRead *.vm call s:Setf('velocity')
 endif
 
 if !has_key(s:disabled_packages, 'vmasm')
-  au BufNewFile,BufRead *.mar setf vmasm
+  au BufNewFile,BufRead *.mar call s:Setf('vmasm')
 endif
 
 if !has_key(s:disabled_packages, 'vue')
-  au BufNewFile,BufRead *.vue setf vue
-  au BufNewFile,BufRead *.wpy setf vue
+  au BufNewFile,BufRead *.vue call s:Setf('vue')
+  au BufNewFile,BufRead *.wpy call s:Setf('vue')
 endif
 
 if !has_key(s:disabled_packages, 'xdc')
-  au BufNewFile,BufRead *.xdc setf xdc
-endif
-
-if !has_key(s:disabled_packages, 'xml')
-  au BufNewFile,BufRead *.adml setf xml
-  au BufNewFile,BufRead *.admx setf xml
-  au BufNewFile,BufRead *.ant setf xml
-  au BufNewFile,BufRead *.axml setf xml
-  au BufNewFile,BufRead *.builds setf xml
-  au BufNewFile,BufRead *.ccproj setf xml
-  au BufNewFile,BufRead *.ccxml setf xml
-  au BufNewFile,BufRead *.cdxml setf xml
-  au BufNewFile,BufRead *.clixml setf xml
-  au BufNewFile,BufRead *.cproject setf xml
-  au BufNewFile,BufRead *.cscfg setf xml
-  au BufNewFile,BufRead *.csdef setf xml
-  au BufNewFile,BufRead *.csl setf xml
-  au BufNewFile,BufRead *.csproj setf xml
-  au BufNewFile,BufRead *.ct setf xml
-  au BufNewFile,BufRead *.depproj setf xml
-  au BufNewFile,BufRead *.dita setf xml
-  au BufNewFile,BufRead *.ditamap setf xml
-  au BufNewFile,BufRead *.ditaval setf xml
-  au BufNewFile,BufRead *.dll.config setf xml
-  au BufNewFile,BufRead *.dotsettings setf xml
-  au BufNewFile,BufRead *.filters setf xml
-  au BufNewFile,BufRead *.fsproj setf xml
-  au BufNewFile,BufRead *.fxml setf xml
-  au BufNewFile,BufRead *.glade setf xml
-  au BufNewFile,BufRead *.gml setf xml
-  au BufNewFile,BufRead *.gmx setf xml
-  au BufNewFile,BufRead *.grxml setf xml
-  au BufNewFile,BufRead *.gst setf xml
-  au BufNewFile,BufRead *.iml setf xml
-  au BufNewFile,BufRead *.ivy setf xml
-  au BufNewFile,BufRead *.jelly setf xml
-  au BufNewFile,BufRead *.jsproj setf xml
-  au BufNewFile,BufRead *.kml setf xml
-  au BufNewFile,BufRead *.launch setf xml
-  au BufNewFile,BufRead *.mdpolicy setf xml
-  au BufNewFile,BufRead *.mjml setf xml
-  au BufNewFile,BufRead *.mm setf xml
-  au BufNewFile,BufRead *.mod setf xml
-  au BufNewFile,BufRead *.mxml setf xml
-  au BufNewFile,BufRead *.natvis setf xml
-  au BufNewFile,BufRead *.ncl setf xml
-  au BufNewFile,BufRead *.ndproj setf xml
-  au BufNewFile,BufRead *.nproj setf xml
-  au BufNewFile,BufRead *.nuspec setf xml
-  au BufNewFile,BufRead *.odd setf xml
-  au BufNewFile,BufRead *.osm setf xml
-  au BufNewFile,BufRead *.pkgproj setf xml
-  au BufNewFile,BufRead *.pluginspec setf xml
-  au BufNewFile,BufRead *.proj setf xml
-  au BufNewFile,BufRead *.props setf xml
-  au BufNewFile,BufRead *.ps1xml setf xml
-  au BufNewFile,BufRead *.psc1 setf xml
-  au BufNewFile,BufRead *.pt setf xml
-  au BufNewFile,BufRead *.rdf setf xml
-  au BufNewFile,BufRead *.resx setf xml
-  au BufNewFile,BufRead *.rss setf xml
-  au BufNewFile,BufRead *.sch setf xml
-  au BufNewFile,BufRead *.scxml setf xml
-  au BufNewFile,BufRead *.sfproj setf xml
-  au BufNewFile,BufRead *.shproj setf xml
-  au BufNewFile,BufRead *.srdf setf xml
-  au BufNewFile,BufRead *.storyboard setf xml
-  au BufNewFile,BufRead *.sublime-snippet setf xml
-  au BufNewFile,BufRead *.targets setf xml
-  au BufNewFile,BufRead *.tml setf xml
-  au BufNewFile,BufRead *.ui setf xml
-  au BufNewFile,BufRead *.urdf setf xml
-  au BufNewFile,BufRead *.ux setf xml
-  au BufNewFile,BufRead *.vbproj setf xml
-  au BufNewFile,BufRead *.vcxproj setf xml
-  au BufNewFile,BufRead *.vsixmanifest setf xml
-  au BufNewFile,BufRead *.vssettings setf xml
-  au BufNewFile,BufRead *.vstemplate setf xml
-  au BufNewFile,BufRead *.vxml setf xml
-  au BufNewFile,BufRead *.wixproj setf xml
-  au BufNewFile,BufRead *.workflow setf xml
-  au BufNewFile,BufRead *.wsdl setf xml
-  au BufNewFile,BufRead *.wsf setf xml
-  au BufNewFile,BufRead *.wxi setf xml
-  au BufNewFile,BufRead *.wxl setf xml
-  au BufNewFile,BufRead *.wxs setf xml
-  au BufNewFile,BufRead *.x3d setf xml
-  au BufNewFile,BufRead *.xacro setf xml
-  au BufNewFile,BufRead *.xaml setf xml
-  au BufNewFile,BufRead *.xib setf xml
-  au BufNewFile,BufRead *.xlf setf xml
-  au BufNewFile,BufRead *.xliff setf xml
-  au BufNewFile,BufRead *.xmi setf xml
-  au BufNewFile,BufRead *.xml setf xml
-  au BufNewFile,BufRead *.xml.dist setf xml
-  au BufNewFile,BufRead *.xproj setf xml
-  au BufNewFile,BufRead *.xsd setf xml
-  au BufNewFile,BufRead *.xspec setf xml
-  au BufNewFile,BufRead *.xul setf xml
-  au BufNewFile,BufRead *.zcml setf xml
-  au BufNewFile,BufRead {.,}classpath setf xml
-  au BufNewFile,BufRead {.,}cproject setf xml
-  au BufNewFile,BufRead {.,}project setf xml
-  au BufNewFile,BufRead App.config setf xml
-  au BufNewFile,BufRead NuGet.config setf xml
-  au BufNewFile,BufRead Settings.StyleCop setf xml
-  au BufNewFile,BufRead Web.Debug.config setf xml
-  au BufNewFile,BufRead Web.Release.config setf xml
-  au BufNewFile,BufRead Web.config setf xml
-  au BufNewFile,BufRead packages.config setf xml
+  au BufNewFile,BufRead *.xdc call s:Setf('xdc')
 endif
 
 if !has_key(s:disabled_packages, 'xsl')
-  au BufNewFile,BufRead *.xsl setf xsl
-  au BufNewFile,BufRead *.xslt setf xsl
+  au BufNewFile,BufRead *.xsl call s:Setf('xsl')
+  au BufNewFile,BufRead *.xslt call s:Setf('xsl')
+endif
+
+if !has_key(s:disabled_packages, 'yaml')
+  au BufNewFile,BufRead *.mir call s:Setf('yaml')
+  au BufNewFile,BufRead *.reek call s:Setf('yaml')
+  au BufNewFile,BufRead *.rviz call s:Setf('yaml')
+  au BufNewFile,BufRead *.sublime-syntax call s:Setf('yaml')
+  au BufNewFile,BufRead *.syntax call s:Setf('yaml')
+  au BufNewFile,BufRead *.yaml call s:Setf('yaml')
+  au BufNewFile,BufRead *.yaml-tmlanguage call s:Setf('yaml')
+  au BufNewFile,BufRead *.yaml.sed call s:Setf('yaml')
+  au BufNewFile,BufRead *.yml call s:Setf('yaml')
+  au BufNewFile,BufRead *.yml.mysql call s:Setf('yaml')
+  au BufNewFile,BufRead {.,}clang-format call s:Setf('yaml')
+  au BufNewFile,BufRead {.,}clang-tidy call s:Setf('yaml')
+  au BufNewFile,BufRead {.,}gemrc call s:Setf('yaml')
+  au BufNewFile,BufRead fish_history call s:Setf('yaml')
+  au BufNewFile,BufRead fish_read_history call s:Setf('yaml')
+  au BufNewFile,BufRead glide.lock call s:Setf('yaml')
+  au BufNewFile,BufRead yarn.lock call s:Setf('yaml')
 endif
 
 if !has_key(s:disabled_packages, 'ansible')
   au BufNewFile,BufRead group_vars/* call s:StarSetf('yaml.ansible')
-  au BufNewFile,BufRead handlers.*.y{a,}ml setf yaml.ansible
+  au BufNewFile,BufRead handlers.*.y{a,}ml call s:Setf('yaml.ansible')
   au BufNewFile,BufRead host_vars/* call s:StarSetf('yaml.ansible')
-  au BufNewFile,BufRead local.y{a,}ml setf yaml.ansible
-  au BufNewFile,BufRead main.y{a,}ml setf yaml.ansible
-  au BufNewFile,BufRead playbook.y{a,}ml setf yaml.ansible
-  au BufNewFile,BufRead requirements.y{a,}ml setf yaml.ansible
-  au BufNewFile,BufRead roles.*.y{a,}ml setf yaml.ansible
-  au BufNewFile,BufRead site.y{a,}ml setf yaml.ansible
-  au BufNewFile,BufRead tasks.*.y{a,}ml setf yaml.ansible
-endif
-
-if !has_key(s:disabled_packages, 'yaml')
-  au BufNewFile,BufRead *.mir setf yaml
-  au BufNewFile,BufRead *.reek setf yaml
-  au BufNewFile,BufRead *.rviz setf yaml
-  au BufNewFile,BufRead *.sublime-syntax setf yaml
-  au BufNewFile,BufRead *.syntax setf yaml
-  au BufNewFile,BufRead *.yaml setf yaml
-  au BufNewFile,BufRead *.yaml-tmlanguage setf yaml
-  au BufNewFile,BufRead *.yaml.sed setf yaml
-  au BufNewFile,BufRead *.yml setf yaml
-  au BufNewFile,BufRead *.yml.mysql setf yaml
-  au BufNewFile,BufRead {.,}clang-format setf yaml
-  au BufNewFile,BufRead {.,}clang-tidy setf yaml
-  au BufNewFile,BufRead {.,}gemrc setf yaml
-  au BufNewFile,BufRead fish_history setf yaml
-  au BufNewFile,BufRead fish_read_history setf yaml
-  au BufNewFile,BufRead glide.lock setf yaml
-  au BufNewFile,BufRead yarn.lock setf yaml
+  au BufNewFile,BufRead local.y{a,}ml call s:Setf('yaml.ansible')
+  au BufNewFile,BufRead main.y{a,}ml call s:Setf('yaml.ansible')
+  au BufNewFile,BufRead playbook.y{a,}ml call s:Setf('yaml.ansible')
+  au BufNewFile,BufRead requirements.y{a,}ml call s:Setf('yaml.ansible')
+  au BufNewFile,BufRead roles.*.y{a,}ml call s:Setf('yaml.ansible')
+  au BufNewFile,BufRead site.y{a,}ml call s:Setf('yaml.ansible')
+  au BufNewFile,BufRead tasks.*.y{a,}ml call s:Setf('yaml.ansible')
 endif
 
 if !has_key(s:disabled_packages, 'helm')
-  au BufNewFile,BufRead */templates/*.tpl setf helm
-  au BufNewFile,BufRead */templates/*.yaml setf helm
+  au BufNewFile,BufRead */templates/*.tpl call s:Setf('helm')
+  au BufNewFile,BufRead */templates/*.yaml call s:Setf('helm')
 endif
 
 if !has_key(s:disabled_packages, 'help')
-  au BufNewFile,BufRead $VIMRUNTIME/doc/*.txt setf help
+  au BufNewFile,BufRead $VIMRUNTIME/doc/*.txt call s:Setf('help')
 endif
 
 if !has_key(s:disabled_packages, 'zephir')
-  au BufNewFile,BufRead *.zep setf zephir
+  au BufNewFile,BufRead *.zep call s:Setf('zephir')
 endif
 
 if !has_key(s:disabled_packages, 'zig')
-  au BufNewFile,BufRead *.zir setf zir
-  au BufNewFile,BufRead *.zig setf zig
-  au BufNewFile,BufRead *.zir setf zig
+  au BufNewFile,BufRead *.zir call s:Setf('zir')
+  au BufNewFile,BufRead *.zig call s:Setf('zig')
+  au BufNewFile,BufRead *.zir call s:Setf('zig')
 endif
 
 if !has_key(s:disabled_packages, 'trasys')
@@ -1876,40 +1883,39 @@ if !has_key(s:disabled_packages, 'trasys')
 endif
 
 if !has_key(s:disabled_packages, 'basic')
-  au BufNewFile,BufRead *.basic setf basic
+  au BufNewFile,BufRead *.basic call s:Setf('basic')
 endif
 
 if !has_key(s:disabled_packages, 'visual-basic')
-  au BufNewFile,BufRead *.cls setf vb
-  au BufNewFile,BufRead *.ctl setf vb
-  au BufNewFile,BufRead *.dsm setf vb
-  au BufNewFile,BufRead *.frm setf vb
-  au BufNewFile,BufRead *.frx setf vb
-  au BufNewFile,BufRead *.sba setf vb
-  au BufNewFile,BufRead *.vba setf vb
-  au BufNewFile,BufRead *.vbs setf vb
+  au BufNewFile,BufRead *.cls call s:Setf('vb')
+  au BufNewFile,BufRead *.ctl call s:Setf('vb')
+  au BufNewFile,BufRead *.dsm call s:Setf('vb')
+  au BufNewFile,BufRead *.frm call s:Setf('vb')
+  au BufNewFile,BufRead *.frx call s:Setf('vb')
+  au BufNewFile,BufRead *.sba call s:Setf('vb')
+  au BufNewFile,BufRead *.vba call s:Setf('vb')
+  au BufNewFile,BufRead *.vbs call s:Setf('vb')
   au! BufNewFile,BufRead *.bas call polyglot#DetectBasFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'dosini')
-  au BufNewFile,BufRead *.cfg setf dosini
-  au BufNewFile,BufRead *.dof setf dosini
-  au BufNewFile,BufRead *.ini setf dosini
-  au BufNewFile,BufRead *.lektorproject setf dosini
-  au BufNewFile,BufRead *.prefs setf dosini
-  au BufNewFile,BufRead *.pro setf dosini
-  au BufNewFile,BufRead *.properties setf dosini
-  au BufNewFile,BufRead */etc/pacman.conf setf dosini
-  au BufNewFile,BufRead */etc/yum.conf setf dosini
+  au BufNewFile,BufRead *.dof call s:Setf('dosini')
+  au BufNewFile,BufRead *.ini call s:Setf('dosini')
+  au BufNewFile,BufRead *.lektorproject call s:Setf('dosini')
+  au BufNewFile,BufRead *.prefs call s:Setf('dosini')
+  au BufNewFile,BufRead *.pro call s:Setf('dosini')
+  au BufNewFile,BufRead *.properties call s:Setf('dosini')
+  au BufNewFile,BufRead */etc/pacman.conf call s:Setf('dosini')
+  au BufNewFile,BufRead */etc/yum.conf call s:Setf('dosini')
   au BufNewFile,BufRead */etc/yum.repos.d/* call s:StarSetf('dosini')
-  au BufNewFile,BufRead {.,}editorconfig setf dosini
-  au BufNewFile,BufRead {.,}npmrc setf dosini
-  au BufNewFile,BufRead buildozer.spec setf dosini
+  au BufNewFile,BufRead {.,}editorconfig call s:Setf('dosini')
+  au BufNewFile,BufRead {.,}npmrc call s:Setf('dosini')
+  au BufNewFile,BufRead buildozer.spec call s:Setf('dosini')
   au BufNewFile,BufRead php.ini-* call s:StarSetf('dosini')
 endif
 
 if !has_key(s:disabled_packages, 'odin')
-  au BufNewFile,BufRead *.odin setf odin
+  au BufNewFile,BufRead *.odin call s:Setf('odin')
 endif
 
 

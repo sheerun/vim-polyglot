@@ -29,15 +29,8 @@ def load_data()
 
   deps = Hash.new { |h, k| h[k] = [] }
 
-  for package in packages.values
-    for name in [package.fetch("after", [])].flatten
-      packages[name] or raise "#{package["name"]} depends on unknown package: #{name}"
-      deps[name] << package["name"]
-    end
-  end
-
   each_node = lambda {|&b| packages.keys.each(&b) }
-  each_child = lambda {|n, &b| deps[n].each(&b) }
+  each_child = lambda {|n, &b| [packages[n].fetch("after", [])].flatten.each(&b) }
 
   languages = load_languages
 
@@ -327,13 +320,13 @@ def rule_to_code(rule)
   if rule.has_key?("override")
     return <<~EOS
       if exists("#{rule["override"]}")
-        exe "setf " . #{rule["override"]} | return
+        call s:Setf(#{rule["override"]}) | return
       endif
     EOS
   end
 
   if rule.has_key?("filetype")
-    return "setf #{rule["filetype"]} | return"
+    return "call s:Setf('#{rule["filetype"]}') | return"
   end
 
   return ""
@@ -350,8 +343,7 @@ def extract(packages)
   FileUtils.rm_rf(all_dirs)
 
   output = []
-  # We need to reverse packages so they are included in proper order
-  packages.reverse.map do |package|
+  packages.map do |package|
     repo, branch, path, dir = parse_remote(package["remote"])
     dirs = package.fetch("dirs", default_dirs)
     ignored_dirs = package.fetch("ignored_dirs", [])
@@ -462,7 +454,7 @@ def generate_ftdetect(packages, heuristics)
       name = filetype.fetch("name")
       syntax = filetype["syntax"] ? " | set syntax=#{filetype["syntax"]}" : ""
 
-      set_command = "setf #{name}"
+      set_command = "call s:Setf('#{name}')"
 
       if filetype["syntax"]
         set_command = "if !did_filetype() | set ft=#{name} syntax=#{filetype["syntax"]} | endif"
@@ -543,6 +535,14 @@ def generate_ftdetect(packages, heuristics)
     " Line continuation is used here, remove 'C' from 'cpoptions'
     let s:cpo_save = &cpo
     set cpo&vim
+
+    " We need it because scripts.vim in vim uses "set ft=" which cannot be
+    " overridden with setf (and we can't use set ft= so our scripts.vim work)
+    func! s:Setf(ft)
+      if &filetype !~# '\<'.a:ft.'\>'
+        let &filetype = a:ft
+      endif
+    endfunc
 
     func! polyglot#Heuristics()
       " Try to detect filetype from shebang

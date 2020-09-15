@@ -57,7 +57,7 @@ let s:globs = {
   \ 'dd': '*.dd',
   \ 'ddoc': '*.ddoc',
   \ 'dhall': '*.dhall',
-  \ 'dosini': '*.wrap,*.ini,*.cfg,*.dof,*.lektorproject,*.prefs,*.pro,*.properties,buildozer.spec,php.ini-*',
+  \ 'dosini': '*.wrap,*.ini,*.dof,*.lektorproject,*.prefs,*.pro,*.properties,buildozer.spec,php.ini-*',
   \ 'dsdl': '*.sdl',
   \ 'dune': 'jbuild,dune,dune-project,dune-workspace',
   \ 'ecrystal': '*.ecr',
