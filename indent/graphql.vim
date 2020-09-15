@@ -45,6 +45,10 @@ endif
 let s:cpo_save = &cpoptions
 set cpoptions&vim
 
+" searchpair() skip expression that matches in comments and strings.
+let s:pair_skip_expr =
+  \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "comment\\|string"'
+
 " Check if the character at lnum:col is inside a string.
 function s:InString(lnum, col)
   return synIDattr(synID(a:lnum, a:col, 1), 'name') ==# 'graphqlString'
@@ -61,18 +65,18 @@ function GetGraphQLIndent()
   let l:line = getline(v:lnum)
 
   " If this line contains just a closing bracket, find its matching opening
-  " bracket and indent the closing backet to match.
+  " bracket and indent the closing bracket to match.
   let l:col = matchend(l:line, '^\s*[]})]')
   if l:col > 0 && !s:InString(v:lnum, l:col)
-    let l:bracket = l:line[l:col - 1]
     call cursor(v:lnum, l:col)
 
-    if l:bracket is# '}'
-      let l:matched = searchpair('{', '', '}', 'bW')
-    elseif l:bracket is# ']'
-      let l:matched = searchpair('\[', '', '\]', 'bW')
-    elseif l:bracket is# ')'
-      let l:matched = searchpair('(', '', ')', 'bW')
+    let l:bracket = l:line[l:col - 1]
+    if l:bracket ==# '}'
+      let l:matched = searchpair('{', '', '}', 'bW', s:pair_skip_expr)
+    elseif l:bracket ==# ']'
+      let l:matched = searchpair('\[', '', '\]', 'bW', s:pair_skip_expr)
+    elseif l:bracket ==# ')'
+      let l:matched = searchpair('(', '', ')', 'bW', s:pair_skip_expr)
     else
       let l:matched = -1
     endif
@@ -85,9 +89,8 @@ function GetGraphQLIndent()
     return indent(v:lnum)
   endif
 
-  " If the previous line contained an opening bracket, and we are still in it,
-  " add indent depending on the bracket type.
-  if getline(l:prevlnum) =~# '[[{(]\s*$'
+  " If the previous line ended with an opening bracket, indent this line.
+  if getline(l:prevlnum) =~# '\%(#.*\)\@<![[{(]\s*$'
     return indent(l:prevlnum) + shiftwidth()
   endif
 

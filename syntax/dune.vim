@@ -20,7 +20,7 @@ syn keyword lispKey ppx_runtime_libraries virtual_deps js_of_ocaml link_flags
 syn keyword lispKey javascript_files flags ocamlc_flags ocamlopt_flags pps staged_pps
 syn keyword lispKey library_flags c_flags c_library_flags kind package action
 syn keyword lispKey deps targets locks fallback
-syn keyword lispKey inline_tests tests names
+syn keyword lispKey inline_tests tests test names
 
 syn keyword lispAtom true false
 
