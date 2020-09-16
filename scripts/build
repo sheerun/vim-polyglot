@@ -30,7 +30,7 @@ def load_data()
   deps = Hash.new { |h, k| h[k] = [] }
 
   each_node = lambda {|&b| packages.keys.each(&b) }
-  each_child = lambda {|n, &b| [packages[n].fetch("after", [])].flatten.each(&b) }
+  each_child = lambda {|n, &b| [packages[n]["after"] || []].flatten.each(&b) }
 
   languages = load_languages
 
@@ -325,17 +325,17 @@ def rule_to_code(rule)
     variable = "g:filetype_#{rule["extensions"].first}"
     return <<~EOS
       if exists("#{variable}")
-        call s:Setf(#{variable}) | return
+        let &ft = #{variable} | return
       endif
     EOS
   end
 
   if rule.has_key?("filetype")
-    return "call s:Setf('#{rule["filetype"]}') | return"
+    return "set ft=#{rule["filetype"]} | return"
   end
 
   if rule.has_key?("filetype")
-    return "call s:Setf('#{rule["filetype"]}') | return"
+    return "set ft=#{rule["filetype"]} | return"
   end
 
   if rule.has_key?("extensions")
@@ -474,7 +474,7 @@ def generate_ftdetect(packages, heuristics)
       name = filetype.fetch("name")
       syntax = filetype["syntax"] ? " | set syntax=#{filetype["syntax"]}" : ""
 
-      set_command = "call s:Setf('#{name}')"
+      set_command = "set ft=#{name}"
 
       if filetype["syntax"]
         set_command = "set ft=#{name} syntax=#{filetype["syntax"]}"
@@ -556,19 +556,11 @@ def generate_ftdetect(packages, heuristics)
     let s:cpo_save = &cpo
     set cpo&vim
 
-    " We need it because scripts.vim in vim uses "set ft=" which cannot be
-    " overridden with setf (and we can't use set ft= so our scripts.vim work)
-    func! s:Setf(ft)
-      if &filetype !~# '\<'.a:ft.'\>'
-        let &filetype = a:ft
-      endif
-    endfunc
-
     func! polyglot#Shebang()
       " Try to detect filetype from shebang
       let ft = polyglot#ShebangFiletype()
       if ft != ""
-        call s:Setf(ft)
+        let &ft = ft
         return 1
       endif
 
