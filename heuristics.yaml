@@ -11,12 +11,12 @@ rules:
 ---
 extensions: [asa]
 rules:
-- override: "g:filetype_asa"
+- override: true
 - filetype: aspvbs
 ---
 extensions: [asp]
 rules:
-- override: "g:filetype_asp"
+- override: true
 - lines: 3
   pattern: 'perlscript'
   ignore_case: true

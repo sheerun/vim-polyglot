@@ -257,6 +257,8 @@ def rules_to_code(rules)
   end
 
   output << rule_to_code(rules)
+
+  output
 end
 
 def rule_to_code(rule)
@@ -287,7 +289,9 @@ def rule_to_code(rule)
   end
 
   if rule.has_key?("rules")
-    return rule["rules"].map { |r| indent(rule_to_code(r), 0) }.join("\n")
+    return rule["rules"].map do |r|
+      indent(rule_to_code({ "extensions" => rule["extensions"], **r }), 0)
+    end.join("\n")
   end
 
   if rule.has_key?("if_set")
@@ -313,20 +317,29 @@ def rule_to_code(rule)
     EOS
   end
 
-  if (rule.keys - ["filetype", "override", "set"]).size > 0
+  if (rule.keys - ["filetype", "override", "set", "extensions"]).size > 0
     raise "Unknown rule: #{JSON.generate(rule)}"
   end
   
   if rule.has_key?("override")
+    variable = "g:filetype_#{rule["extensions"].first}"
     return <<~EOS
-      if exists("#{rule["override"]}")
-        call s:Setf(#{rule["override"]}) | return
+      if exists("#{variable}")
+        call s:Setf(#{variable}) | return
       endif
     EOS
   end
 
   if rule.has_key?("filetype")
     return "call s:Setf('#{rule["filetype"]}') | return"
+  end
+
+  if rule.has_key?("filetype")
+    return "call s:Setf('#{rule["filetype"]}') | return"
+  end
+
+  if rule.has_key?("extensions")
+    return ""
   end
 
   return ""
