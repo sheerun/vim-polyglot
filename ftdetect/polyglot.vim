@@ -75,12 +75,14 @@ endfunc
 " When using this, the entry should probably be further down below with the
 " other StarSetf() calls.
 func! s:StarSetf(ft)
-  if expand("<amatch>") !~ g:ft_ignore_pat
-    exe 'setf ' . a:ft
+  if expand("<amatch>") !~ g:ft_ignore_pat && &filetype !~# '\<'.a:ft.'\>'
+    let &filetype = a:ft
   endif
 endfunc
 
 augroup filetypedetect
+
+au! filetypedetect BufRead,BufNewFile,StdinReadPost *
 
 " filetypes
 
@@ -90,6 +92,10 @@ endif
 
 if !has_key(s:disabled_packages, 'haproxy')
   au! BufRead,BufNewFile *.cfg
+endif
+
+if !has_key(s:disabled_packages, 'a2ps')
+  au! BufRead,BufNewFile */etc/a2ps.cfg,*/etc/a2ps/*.cfg,a2psrc,.a2psrc
 endif
 
 if !has_key(s:disabled_packages, 'a65')
@@ -132,6 +138,10 @@ if !has_key(s:disabled_packages, 'aidl')
   au! BufRead,BufNewFile *.aidl
 endif
 
+if !has_key(s:disabled_packages, 'alsaconf')
+  au! BufRead,BufNewFile .asoundrc,*/usr/share/alsa/alsa.conf,*/etc/asound.conf
+endif
+
 if !has_key(s:disabled_packages, 'aml')
   au! BufRead,BufNewFile *.aml
 endif
@@ -144,12 +154,28 @@ if !has_key(s:disabled_packages, 'xml')
   au! BufRead,BufNewFile *.csproj,*.ui,*.wsdl,*.wsf,*.xlf,*.xliff,*.xmi,*.xsd,*.xul
 endif
 
+if !has_key(s:disabled_packages, 'ant')
+  au! BufRead,BufNewFile build.xml
+endif
+
+if !has_key(s:disabled_packages, 'apache')
+  au! BufRead,BufNewFile .htaccess,*/etc/httpd/*.conf,*/etc/apache2/sites-*/*.com,access.conf*,apache.conf*,apache2.conf*,httpd.conf*,srm.conf*,*/etc/apache2/*.conf*,*/etc/apache2/conf.*/*,*/etc/apache2/mods-*/*,*/etc/apache2/sites-*/*,*/etc/httpd/conf.d/*.conf*
+endif
+
 if !has_key(s:disabled_packages, 'applescript')
   au! BufRead,BufNewFile *.scpt
 endif
 
+if !has_key(s:disabled_packages, 'aptconf')
+  au! BufRead,BufNewFile apt.conf,*/.aptitude/config
+endif
+
+if !has_key(s:disabled_packages, 'arch')
+  au! BufRead,BufNewFile .arch-inventory,=tagging-method
+endif
+
 if !has_key(s:disabled_packages, 'c/c++')
-  au! BufRead,BufNewFile *.cpp,*.c++,*.cc,*.cxx,*.hh,*.hpp,*.hxx,*.inl,*.ipp,*.tcc,*.tpp,*.moc,*.tlh,*.qc
+  au! BufRead,BufNewFile *.cpp,*.c++,*.cc,*.cxx,*.hh,*.hpp,*.hxx,*.inl,*.ipp,*.tcc,*.tpp,*.moc,*.tlh,*.qc,*enlightenment/*.cfg
 endif
 
 if !has_key(s:disabled_packages, 'arduino')
@@ -170,6 +196,10 @@ endif
 
 if !has_key(s:disabled_packages, 'elf')
   au! BufRead,BufNewFile *.am
+endif
+
+if !has_key(s:disabled_packages, 'automake')
+  au! BufRead,BufNewFile GNUmakefile.am
 endif
 
 if !has_key(s:disabled_packages, 'asn')
@@ -197,7 +227,7 @@ if !has_key(s:disabled_packages, 'clojure')
 endif
 
 if !has_key(s:disabled_packages, 'cmake')
-  au! BufRead,BufNewFile *.cmake,*.cmake.in
+  au! BufRead,BufNewFile *.cmake,*.cmake.in,CMakeLists.txt
 endif
 
 if !has_key(s:disabled_packages, 'cucumber')
@@ -213,7 +243,7 @@ if !has_key(s:disabled_packages, 'dlang')
 endif
 
 if !has_key(s:disabled_packages, 'dockerfile')
-  au! BufRead,BufNewFile *.Dockerfile
+  au! BufRead,BufNewFile *.Dockerfile,Dockerfile
 endif
 
 if !has_key(s:disabled_packages, 'elm')
@@ -236,6 +266,10 @@ if !has_key(s:disabled_packages, 'fsharp')
   au! BufRead,BufNewFile *.fs
 endif
 
+if !has_key(s:disabled_packages, 'git')
+  au! BufRead,BufNewFile .gitconfig,.gitmodules,*.git/config,*/.config/git/config,*.git/modules/*/config,git-rebase-todo
+endif
+
 if !has_key(s:disabled_packages, 'gnuplot')
   au! BufRead,BufNewFile *.gp,*.gpi
 endif
@@ -256,6 +290,10 @@ if !has_key(s:disabled_packages, 'groovy')
   au! BufRead,BufNewFile *.groovy,*.gradle
 endif
 
+if !has_key(s:disabled_packages, 'grub')
+  au! BufRead,BufNewFile */boot/grub/menu.lst,*/boot/grub/grub.conf,*/etc/grub.conf
+endif
+
 if !has_key(s:disabled_packages, 'haml')
   au! BufRead,BufNewFile *.haml
 endif
@@ -273,7 +311,7 @@ if !has_key(s:disabled_packages, 'html5')
 endif
 
 if !has_key(s:disabled_packages, 'json')
-  au! BufRead,BufNewFile *.json,*.ice,*.webmanifest,*.yy,*.jsonp
+  au! BufRead,BufNewFile *.json,*.ice,*.webmanifest,*.yy,*.jsonp,Pipfile.lock
 endif
 
 if !has_key(s:disabled_packages, 'kotlin')
@@ -304,8 +342,12 @@ if !has_key(s:disabled_packages, 'markdown')
   au! BufRead,BufNewFile *.md,*.markdown,*.mdown,*.mdwn,*.mkd,*.mkdn
 endif
 
+if !has_key(s:disabled_packages, 'meson')
+  au! BufRead,BufNewFile meson.build,meson_options.txt
+endif
+
 if !has_key(s:disabled_packages, 'ocaml')
-  au! BufRead,BufNewFile *.ml,*.mli,*.mll,*.mly
+  au! BufRead,BufNewFile *.ml,*.mli,*.mll,*.mly,.ocamlinit
 endif
 
 if !has_key(s:disabled_packages, 'opencl')
@@ -313,7 +355,7 @@ if !has_key(s:disabled_packages, 'opencl')
 endif
 
 if !has_key(s:disabled_packages, 'perl')
-  au! BufRead,BufNewFile *.al,*.plx,*.psgi,*.t
+  au! BufRead,BufNewFile *.al,*.plx,*.psgi,*.t,*.pod,*.mason,*.mhtml,*.comp,*.xs
 endif
 
 if !has_key(s:disabled_packages, 'php')
@@ -325,7 +367,7 @@ if !has_key(s:disabled_packages, 'protobuf')
 endif
 
 if !has_key(s:disabled_packages, 'python')
-  au! BufRead,BufNewFile *.py,*.pyi,*.pyw,*.spec
+  au! BufRead,BufNewFile *.py,*.pyi,*.pyw,*.spec,SConstruct
 endif
 
 if !has_key(s:disabled_packages, 'r-lang')
@@ -349,7 +391,7 @@ if !has_key(s:disabled_packages, 'rst')
 endif
 
 if !has_key(s:disabled_packages, 'ruby')
-  au! BufRead,BufNewFile *.rb,*.builder,*.gemspec,*.rake,*.rbw,*.ru,*.spec,*.rxml,*.rjs,*.rant,*.erb,*.rhtml
+  au! BufRead,BufNewFile *.rb,*.builder,*.gemspec,*.rake,*.rbw,*.ru,*.spec,*.rxml,*.rjs,*.rant,.irbrc,Gemfile,Rakefile,Rantfile,*.erb,*.rhtml
 endif
 
 if !has_key(s:disabled_packages, 'rust')
@@ -369,7 +411,7 @@ if !has_key(s:disabled_packages, 'scss')
 endif
 
 if !has_key(s:disabled_packages, 'sh')
-  au! BufRead,BufNewFile *.zsh
+  au! BufRead,BufNewFile *.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout
 endif
 
 if !has_key(s:disabled_packages, 'smt2')
@@ -386,6 +428,10 @@ endif
 
 if !has_key(s:disabled_packages, 'terraform')
   au! BufRead,BufNewFile *.tf
+endif
+
+if !has_key(s:disabled_packages, 'toml')
+  au! BufRead,BufNewFile Pipfile
 endif
 
 if !has_key(s:disabled_packages, 'twig')
@@ -420,12 +466,24 @@ if !has_key(s:disabled_packages, 'yaml')
   au! BufRead,BufNewFile *.yml,*.yaml
 endif
 
+if !has_key(s:disabled_packages, 'help')
+  au! BufRead,BufNewFile $VIMRUNTIME/doc/*.txt
+endif
+
 if !has_key(s:disabled_packages, 'visual-basic')
   au! BufRead,BufNewFile *.vba,*.vbs,*.dsm,*.ctl,*.sba
 endif
 
 if !has_key(s:disabled_packages, 'dosini')
-  au! BufRead,BufNewFile *.ini,*.properties
+  au! BufRead,BufNewFile *.ini,*.properties,.editorconfig,.npmrc,*/etc/pacman.conf,php.ini-*,*/etc/yum.conf,*/etc/yum.repos.d/*
+endif
+
+if !has_key(s:disabled_packages, 'bzl')
+  au! BufRead,BufNewFile *.bzl,BUILD,WORKSPACE
+endif
+
+if !has_key(s:disabled_packages, 'tads')
+  au! BufRead,BufNewFile *.t
 endif
 
 if !has_key(s:disabled_packages, '8th')
@@ -1071,12 +1129,12 @@ endif
 
 if !has_key(s:disabled_packages, 'html5')
   au BufNewFile,BufRead *.htm call s:Setf('html')
-  au BufNewFile,BufRead *.html call s:Setf('html')
   au BufNewFile,BufRead *.html.hl call s:Setf('html')
   au BufNewFile,BufRead *.inc call s:Setf('html')
   au BufNewFile,BufRead *.st call s:Setf('html')
   au BufNewFile,BufRead *.xht call s:Setf('html')
   au BufNewFile,BufRead *.xhtml call s:Setf('html')
+  au! BufNewFile,BufRead *.html call polyglot#DetectHtmlFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'i3')
@@ -1365,15 +1423,21 @@ if !has_key(s:disabled_packages, 'perl')
   au BufNewFile,BufRead *.fcgi call s:Setf('perl')
   au BufNewFile,BufRead *.perl call s:Setf('perl')
   au BufNewFile,BufRead *.ph call s:Setf('perl')
-  au BufNewFile,BufRead *.pl call s:Setf('perl')
   au BufNewFile,BufRead *.plx call s:Setf('perl')
-  au BufNewFile,BufRead *.pm call s:Setf('perl')
   au BufNewFile,BufRead *.psgi call s:Setf('perl')
-  au BufNewFile,BufRead *.t call s:Setf('perl')
   au BufNewFile,BufRead Makefile.PL call s:Setf('perl')
   au BufNewFile,BufRead Rexfile call s:Setf('perl')
   au BufNewFile,BufRead ack call s:Setf('perl')
   au BufNewFile,BufRead cpanfile call s:Setf('perl')
+  au BufNewFile,BufRead *.pod call s:Setf('pod')
+  au BufNewFile,BufRead *.comp call s:Setf('mason')
+  au BufNewFile,BufRead *.mason call s:Setf('mason')
+  au BufNewFile,BufRead *.mhtml call s:Setf('mason')
+  au BufNewFile,BufRead *.xs call s:Setf('xs')
+  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+  au! BufNewFile,BufRead *.pm call polyglot#DetectPmFiletype()
+  au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
+  au! BufNewFile,BufRead *.tt2 call polyglot#DetectTt2Filetype()
 endif
 
 if !has_key(s:disabled_packages, 'pgsql')
@@ -1517,17 +1581,17 @@ if !has_key(s:disabled_packages, 'raku')
   au BufNewFile,BufRead *.p6 call s:Setf('raku')
   au BufNewFile,BufRead *.p6l call s:Setf('raku')
   au BufNewFile,BufRead *.p6m call s:Setf('raku')
-  au BufNewFile,BufRead *.pl call s:Setf('raku')
   au BufNewFile,BufRead *.pl6 call s:Setf('raku')
-  au BufNewFile,BufRead *.pm call s:Setf('raku')
   au BufNewFile,BufRead *.pm6 call s:Setf('raku')
   au BufNewFile,BufRead *.pod6 call s:Setf('raku')
   au BufNewFile,BufRead *.raku call s:Setf('raku')
   au BufNewFile,BufRead *.rakudoc call s:Setf('raku')
   au BufNewFile,BufRead *.rakumod call s:Setf('raku')
   au BufNewFile,BufRead *.rakutest call s:Setf('raku')
-  au BufNewFile,BufRead *.t call s:Setf('raku')
   au BufNewFile,BufRead *.t6 call s:Setf('raku')
+  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+  au! BufNewFile,BufRead *.pm call polyglot#DetectPmFiletype()
+  au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'raml')
@@ -1616,7 +1680,7 @@ if !has_key(s:disabled_packages, 'ruby')
 endif
 
 if !has_key(s:disabled_packages, 'rspec')
-  au BufNewFile,BufRead *_spec.rb if !did_filetype() | set ft=ruby syntax=rspec | endif
+  au BufNewFile,BufRead *_spec.rb set ft=ruby syntax=rspec
 endif
 
 if !has_key(s:disabled_packages, 'brewfile')
@@ -1918,12 +1982,41 @@ if !has_key(s:disabled_packages, 'odin')
   au BufNewFile,BufRead *.odin call s:Setf('odin')
 endif
 
+if !has_key(s:disabled_packages, 'bzl')
+  au BufNewFile,BufRead *.bzl call s:Setf('bzl')
+  au BufNewFile,BufRead BUCK call s:Setf('bzl')
+  au BufNewFile,BufRead BUILD call s:Setf('bzl')
+  au BufNewFile,BufRead BUILD.bazel call s:Setf('bzl')
+  au BufNewFile,BufRead Tiltfile call s:Setf('bzl')
+  au BufNewFile,BufRead WORKSPACE call s:Setf('bzl')
+endif
+
+if !has_key(s:disabled_packages, 'prolog')
+  au BufNewFile,BufRead *.pro call s:Setf('prolog')
+  au BufNewFile,BufRead *.prolog call s:Setf('prolog')
+  au BufNewFile,BufRead *.yap call s:Setf('prolog')
+  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+endif
+
+if !has_key(s:disabled_packages, 'tads')
+  au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
+endif
+
 
 " end filetypes
 
-au BufNewFile,BufRead,StdinReadPost * 
-  \ if !did_filetype() && expand("<afile>") !~ g:ft_ignore_pat 
-  \ | call polyglot#Heuristics() | endif
+func! s:PolyglotFallback() 
+  if expand("<afile>") !~ g:ft_ignore_pat
+    if getline(1) =~# "^#!"
+      call polyglot#Shebang()
+    endif
+    if &filetype == ''
+      runtime! scripts.vim
+    endif
+  endif
+endfunc
+
+au BufNewFile,BufRead,StdinReadPost * call s:PolyglotFallback()
 
 augroup END
 
@@ -2123,7 +2216,7 @@ au VimEnter * call s:verify()
 func! s:observe_filetype()
   augroup polyglot-observer
     au! CursorHold,CursorHoldI <buffer>
-      \ if polyglot#Heuristics() | au! polyglot-observer CursorHold,CursorHoldI | endif
+      \ if polyglot#Shebang() | au! polyglot-observer CursorHold,CursorHoldI | endif
   augroup END
 endfunc
 

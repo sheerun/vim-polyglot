@@ -1175,6 +1175,23 @@ remote: vim-perl/vim-perl
 filetypes:
 - name: perl
   linguist: Perl
+- name: pod
+  extensions:
+  - pod
+- name: mason
+  extensions:
+  - mason
+  - mhtml
+  - comp
+- name: tt2
+  extensions:
+  - tt2
+- name: tt2html
+  extensions:
+  - tt2
+- name: xs
+  extensions:
+  - xs
 ---
 name: pgsql
 remote: lifepillar/pgsql.vim
@@ -1834,3 +1851,25 @@ remote: Tetralux/odin.vim
 filetypes:
 - name: odin
   linguist: Odin
+---
+name: bzl
+remote: vim/vim:runtime
+glob: '**/bzl.vim'
+filetypes:
+- name: bzl
+  linguist: Starlark
+---
+name: prolog
+remote: vim/vim:runtime
+glob: '**/prolog.vim'
+filetypes:
+- name: prolog
+  linguist: Prolog
+---
+name: tads
+remote: vim/vim:runtime
+glob: '**/tads.vim'
+filetypes:
+- name: tads
+  extensions:
+  - t

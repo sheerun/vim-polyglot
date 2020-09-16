@@ -10,11 +10,11 @@ func! s:Setf(ft)
   endif
 endfunc
 
-func! polyglot#Heuristics()
+func! polyglot#Shebang()
   " Try to detect filetype from shebang
-  let l:filetype = polyglot#Shebang()
-  if l:filetype != ""
-    exec "setf " . l:filetype
+  let ft = polyglot#ShebangFiletype()
+  if ft != ""
+    call s:Setf(ft)
     return 1
   endif
 
@@ -52,6 +52,8 @@ let s:interpreters = {
   \ 'cperl': 'perl',
   \ 'perl': 'perl',
   \ 'php': 'php',
+  \ 'swipl': 'prolog',
+  \ 'yap': 'prolog',
   \ 'pwsh': 'ps1',
   \ 'python': 'python',
   \ 'python2': 'python',
@@ -95,7 +97,7 @@ let s:r_hashbang = '^#!\s*\(\S\+\)\s*\(.*\)\s*'
 let s:r_envflag = '%(\S\+=\S\+\|-[iS]\|--ignore-environment\|--split-string\)'
 let s:r_env = '^\%(\' . s:r_envflag . '\s\+\)*\(\S\+\)'
 
-func! polyglot#Shebang()
+func! polyglot#ShebangFiletype()
   let l:line1 = getline(1)
 
   if l:line1 !~# "^#!"
@@ -133,7 +135,7 @@ func! polyglot#Shebang()
 endfunc
 
 func! polyglot#DetectInpFiletype()
-  let line = getline(1)
+  let line = getline(nextnonblank(1))
   if line =~# '^\*'
     call s:Setf('abaqus') | return
   endif
@@ -269,10 +271,10 @@ func! polyglot#DetectIdrFiletype()
     if line =~# '^%access .*'
       call s:Setf('idris') | return
     endif
-    if exists("g:filetype_idr")
-      call s:Setf(g:filetype_idr) | return
-    endif
   endfor
+  if exists("g:filetype_idr")
+    call s:Setf(g:filetype_idr) | return
+  endif
   call s:Setf('idris2') | return
 endfunc
 
@@ -294,6 +296,89 @@ func! polyglot#DetectBasFiletype()
     endif
   endfor
   call s:Setf('basic') | return
+endfunc
+
+func! polyglot#DetectPmFiletype()
+  let line = getline(nextnonblank(1))
+  if line =~# 'XPM2'
+    call s:Setf('xpm2') | return
+  endif
+  if line =~# 'XPM'
+    call s:Setf('xpm') | return
+  endif
+  for lnum in range(1, min([line("$"), 50]))
+    let line = getline(lnum)
+    if line =~# '^\s*\%(use\s\+v6\(\<\|\>\)\|\(\<\|\>\)module\(\<\|\>\)\|\(\<\|\>\)\%(my\s\+\)\=class\(\<\|\>\)\)'
+      call s:Setf('raku') | return
+    endif
+    if line =~# '\(\<\|\>\)use\s\+\%(strict\(\<\|\>\)\|v\=5\.\)'
+      call s:Setf('perl') | return
+    endif
+  endfor
+  if exists("g:filetype_pm")
+    call s:Setf(g:filetype_pm) | return
+  endif
+  call s:Setf('perl') | return
+endfunc
+
+func! polyglot#DetectPlFiletype()
+  let line = getline(nextnonblank(1))
+  if line =~# '^[^#]*:-' || line =~# '^\s*\%(%\|/\*\)' || line =~# '\.\s*$'
+    call s:Setf('prolog') | return
+  endif
+  for lnum in range(1, min([line("$"), 50]))
+    let line = getline(lnum)
+    if line =~# '^\s*\%(use\s\+v6\(\<\|\>\)\|\(\<\|\>\)module\(\<\|\>\)\|\(\<\|\>\)\%(my\s\+\)\=class\(\<\|\>\)\)'
+      call s:Setf('raku') | return
+    endif
+    if line =~# '\(\<\|\>\)use\s\+\%(strict\(\<\|\>\)\|v\=5\.\)'
+      call s:Setf('perl') | return
+    endif
+  endfor
+  if exists("g:filetype_pl")
+    call s:Setf(g:filetype_pl) | return
+  endif
+  call s:Setf('perl') | return
+endfunc
+
+func! polyglot#DetectTFiletype()
+  for lnum in range(1, min([line("$"), 5]))
+    let line = getline(lnum)
+    if line =~# '^\.'
+      call s:Setf('nroff') | return
+    endif
+  endfor
+  for lnum in range(1, min([line("$"), 50]))
+    let line = getline(lnum)
+    if line =~# '^\s*\%(use\s\+v6\(\<\|\>\)\|\(\<\|\>\)module\(\<\|\>\)\|\(\<\|\>\)\%(my\s\+\)\=class\(\<\|\>\)\)'
+      call s:Setf('raku') | return
+    endif
+    if line =~# '\(\<\|\>\)use\s\+\%(strict\(\<\|\>\)\|v\=5\.\)'
+      call s:Setf('perl') | return
+    endif
+  endfor
+  if exists("g:filetype_t")
+    call s:Setf(g:filetype_t) | return
+  endif
+  call s:Setf('perl') | return
+endfunc
+
+func! polyglot#DetectTt2Filetype()
+  for lnum in range(1, min([line("$"), 3]))
+    let line = getline(lnum)
+    if line =~? '<\%(!DOCTYPE HTML\|[%?]\|html\)'
+      call s:Setf('tt2html') | return
+    endif
+  endfor
+  call s:Setf('tt2') | return
+endfunc
+
+func! polyglot#DetectHtmlFiletype()
+  let line = getline(nextnonblank(1))
+  if line =~# '^\(%\|<[%&].*>\)'
+    call s:Setf('mason') | return
+  endif
+  call s:Setf('html') | return
 endfunc
 
 " Restore 'cpoptions'

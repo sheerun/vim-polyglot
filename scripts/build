@@ -263,7 +263,7 @@ def rule_to_code(rule)
   if rule.has_key?("lines")
     if rule["lines"] == 1
       return <<~EOS
-        let line = getline(1)
+        let line = getline(nextnonblank(1))
 
         #{indent(rule_to_code(except(rule, "lines")), 0)}
       EOS
@@ -423,6 +423,7 @@ def generate_ftdetect(packages, heuristics)
   expected_filetypes = expected_filetypes.select { |e| filetype_names.include?(e["name"]) }
 
   native_extensions = Set.new(native_filetypes.flat_map { |f| f["extensions"] || [] })
+  native_filenames = Set.new(native_filetypes.flat_map { |f| f["filenames"] || [] })
 
   for package in packages
     name = package.fetch("name")
@@ -433,6 +434,12 @@ def generate_ftdetect(packages, heuristics)
       for extension in filetype["extensions"]
         if native_extensions.include?(extension)
           to_disable << "*." + extension
+        end
+      end
+
+      for filename in filetype["filenames"]
+        if native_filenames.include?(filename)
+          to_disable << filename
         end
       end
     end
@@ -457,7 +464,7 @@ def generate_ftdetect(packages, heuristics)
       set_command = "call s:Setf('#{name}')"
 
       if filetype["syntax"]
-        set_command = "if !did_filetype() | set ft=#{name} syntax=#{filetype["syntax"]} | endif"
+        set_command = "set ft=#{name} syntax=#{filetype["syntax"]}"
       end
 
       if filetype["custom_set"]
@@ -544,11 +551,11 @@ def generate_ftdetect(packages, heuristics)
       endif
     endfunc
 
-    func! polyglot#Heuristics()
+    func! polyglot#Shebang()
       " Try to detect filetype from shebang
-      let l:filetype = polyglot#Shebang()
-      if l:filetype != ""
-        exec "setf " . l:filetype
+      let ft = polyglot#ShebangFiletype()
+      if ft != ""
+        call s:Setf(ft)
         return 1
       endif
 
@@ -571,7 +578,7 @@ def generate_ftdetect(packages, heuristics)
     let s:r_envflag = '%(\\S\\+=\\S\\+\\|-[iS]\\|--ignore-environment\\|--split-string\\)'
     let s:r_env = '^\\%(\\' . s:r_envflag . '\\s\\+\\)*\\(\\S\\+\\)'
 
-    func! polyglot#Shebang()
+    func! polyglot#ShebangFiletype()
       let l:line1 = getline(1)
 
       if l:line1 !~# "^#!"

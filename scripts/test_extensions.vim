@@ -15,6 +15,12 @@ function! TestExtension(filetype, filename, content)
   endtry
 endfunction
 
+" make sure native vim scripts.vim is respected
+call TestExtension("rib", "renderman", "##RenderMan")
+
+" make sure case of file does matter when recognizing file
+call TestExtension("ruby", "scripts/build", "#!/usr/bin/env ruby")
+
 call TestExtension("sh", "bash1", "#!/bin/bash")
 call TestExtension("sh", "bash2", "#! /bin/bash")
 call TestExtension("sh", "bash3", "#! /bin/bash2.3")
@@ -279,3 +285,72 @@ call TestExtension("c", "foo.h", "")
 unlet g:c_syntax_for_h
 let g:ch_syntax_for_h = 1
 call TestExtension("ch", "foo.h", "")
+
+" perl
+call TestExtension("perl", "empty.plx", "")
+call TestExtension("perl", "empty.al", "")
+call TestExtension("perl", "empty.psgi", "")
+call TestExtension("pod", "empty.pod", "")
+
+" raku
+call TestExtension("raku", "empty.p6", "")
+call TestExtension("raku", "empty.pm6", "")
+call TestExtension("raku", "empty.pl6", "")
+call TestExtension("raku", "empty.raku", "")
+call TestExtension("raku", "empty.rakumod", "")
+call TestExtension("raku", "empty.pod6", "")
+call TestExtension("raku", "empty.rakudoc", "")
+call TestExtension("raku", "empty.rakutest", "")
+call TestExtension("raku", "empty.t6", "")
+
+
+" .pm extension
+call TestExtension("perl", "empty.pm", "")
+call TestExtension("perl", "strict.pm", " use strict hello;")
+call TestExtension("perl", "use5.pm", " use 5;")
+call TestExtension("perl", "usev5.pm", " use v5;")
+call TestExtension("raku", "script.pm", "#!/usr/bin/env perl6\nprint('Hello world')")
+call TestExtension("raku", "class.pm", " class Class {}")
+call TestExtension("raku", "module.pm", " module foobar")
+call TestExtension("xpm", "xpm.pm", "/* XPM */")
+call TestExtension("xpm2", "xpm2.pm", "/* XPM2 */")
+let g:filetype_pm = "fizfuz"
+call TestExtension("fizfuz", "fizfuz.pm", "")
+
+" .pl extension
+call TestExtension("perl", "empty.pl", "")
+call TestExtension("prolog", "comment.pl", "% hello world")
+call TestExtension("prolog", "comment2.pl", "/* hello world */")
+call TestExtension("prolog", "statement.pl", "happy(vincent). ")
+call TestExtension("prolog", "statement2.pl", "nearbychk(X,Y) :- Y is X-1.")
+call TestExtension("perl", "strict.pl", " use strict hello;")
+call TestExtension("perl", "use5.pl", " use 5;")
+call TestExtension("perl", "usev5.pl", " use v5;")
+call TestExtension("raku", "script.pl", "#!/usr/bin/env perl6\nprint('Hello world')")
+call TestExtension("raku", "class.pl", " class Class {}")
+call TestExtension("raku", "module.pl", " module foobar")
+let g:filetype_pl = "fizfuz"
+call TestExtension("fizfuz", "fizfuz.pl", "")
+
+" .t extension
+call TestExtension("perl", "empty.t", "")
+call TestExtension("perl", "strict.t", " use strict hello;")
+call TestExtension("perl", "use5.t", " use 5;")
+call TestExtension("perl", "usev5.t", " use v5;")
+call TestExtension("raku", "script.t", "#!/usr/bin/env perl6\nprint('Hello world')")
+call TestExtension("raku", "class.t", " class Class {}")
+call TestExtension("raku", "module.t", " module foobar")
+call TestExtension("nroff", "module.t", ".nf\n101 Main Street")
+let g:filetype_t = "fizfuz"
+call TestExtension("fizfuz", "fizfuz.t", "")
+
+" .tt2 extension
+call TestExtension("tt2", "empty.tt2", "")
+call TestExtension("tt2html", "doctype.tt2", "<!DOCTYPE HTML>")
+call TestExtension("tt2html", "percent.tt2", "<%filter>")
+call TestExtension("tt2html", "html.tt2", "<html>")
+
+" .html extension
+call TestExtension("html", "empty.html", "")
+call TestExtension("mason", "mason1.html", "% my $planet = 42;")
+call TestExtension("mason", "mason2.html", "<%filter></%filter>")

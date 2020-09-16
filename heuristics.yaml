@@ -98,7 +98,7 @@ rules:
     filetype: idris2
   - pattern: '^%access .*'
     filetype: idris
-  - override: 'g:filetype_idr'
+- override: 'g:filetype_idr'
 - filetype: idris2
 ---
 extensions: [lidr]
@@ -115,3 +115,70 @@ rules:
   filetype: vb
   ignore_case: true
 - filetype: basic
+---
+extensions: [pm]
+rules:
+- lines: 1
+  rules:
+  - pattern: 'XPM2'
+    filetype: xpm2
+  - pattern: 'XPM'
+    filetype: xpm
+- lines: 50
+  rules:
+  - pattern: '^\s*(?:use\s+v6\b|\bmodule\b|\b(?:my\s+)?class\b)'
+    filetype: raku
+  - pattern: '\buse\s+(?:strict\b|v?5\.)'
+    filetype: perl
+- override: 'g:filetype_pm'
+- filetype: perl
+---
+extensions: [pl]
+rules:
+- lines: 1
+  or:
+  - pattern: '^[^#]*:-'
+  - pattern: '^\s*(?:%|/\*)'
+  - pattern: '\.\s*$'
+  filetype: prolog
+- lines: 50
+  rules:
+  - pattern: '^\s*(?:use\s+v6\b|\bmodule\b|\b(?:my\s+)?class\b)'
+    filetype: raku
+  - pattern: '\buse\s+(?:strict\b|v?5\.)'
+    filetype: perl
+- override: 'g:filetype_pl'
+- filetype: perl
+---
+extensions: [t]
+rules:
+- lines: 5
+  pattern: '^\.'
+  filetype: nroff
+- lines: 50
+  rules:
+  - pattern: '^\s*(?:use\s+v6\b|\bmodule\b|\b(?:my\s+)?class\b)'
+    filetype: raku
+  - pattern: '\buse\s+(?:strict\b|v?5\.)'
+    filetype: perl
+  ## I haven't found turing syntax for vim...
+  # - pattern: '^\s*%[ \t]+|^\s*var\s+\w+(\s*:\s*\w+)?\s*:=\s*\w+'
+  #   filetype: turing
+- override: 'g:filetype_t'
+- filetype: perl
+---
+extensions: [tt2]
+rules:
+- lines: 3
+  pattern: '<(?:!DOCTYPE HTML|[%?]|html)'
+  ignore_case: true
+  filetype: tt2html
+- filetype: tt2
+---
+extensions: [html]
+rules:
+- lines: 1
+  pattern: '^(%|<[%&].*>)'
+  filetype: mason
+- filetype: html
+
