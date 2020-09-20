@@ -99,7 +99,7 @@ func! polyglot#ShebangFiletype()
   let l:pathrest = matchlist(l:line1, s:r_hashbang)
 
   if len(l:pathrest) == 0
-    return 
+    return
   endif
 
   let [_, l:path, l:rest; __] = l:pathrest
@@ -369,6 +369,10 @@ func! polyglot#DetectHtmlFiletype()
   let line = getline(nextnonblank(1))
   if line =~# '^\(%\|<[%&].*>\)'
     set ft=mason | return
+  endif
+
+  if line =~ '{%\s*\(extends\|block\|load\)\>\|{#\s\+'
+    set ft=htmldjango | return
   endif
   set ft=html | return
 endfunc
