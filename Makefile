@@ -1,6 +1,6 @@
-.PHONY: all test dev
+.PHONY: build test dev
 
-all:
+build:
 	@ scripts/build
 
 test:

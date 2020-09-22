@@ -366,6 +366,10 @@ if !has_key(s:disabled_packages, 'protobuf')
   au! BufRead,BufNewFile *.proto
 endif
 
+if !has_key(s:disabled_packages, 'puppet')
+  au! BufRead,BufNewFile *.pp
+endif
+
 if !has_key(s:disabled_packages, 'python')
   au! BufRead,BufNewFile *.py,*.pyi,*.pyw,*.spec,SConstruct
 endif

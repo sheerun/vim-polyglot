@@ -5,8 +5,8 @@ set -e
 vim --clean -N -u <(echo "
   let &rtp='$PWD,'.&rtp
   let g:polyglot_test = 1
-  source scripts/test_extensions.vim
-  source scripts/test_filetypes.vim
+  source tests/extensions.vim
+  source tests/filetypes.vim
   qa!
 ")
 
