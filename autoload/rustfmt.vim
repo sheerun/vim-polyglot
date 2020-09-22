@@ -109,7 +109,7 @@ function! s:DeleteLines(start, end) abort
 endfunction
 
 function! s:RunRustfmt(command, tmpname, from_writepre)
-    mkview!
+    let l:view = winsaveview()
 
     let l:stderr_tmpname = tempname()
     call writefile([], l:stderr_tmpname)
@@ -215,7 +215,7 @@ function! s:RunRustfmt(command, tmpname, from_writepre)
         lwindow
     endif
 
-    silent! loadview
+    call winrestview(l:view)
 endfunction
 
 function! rustfmt#FormatRange(line1, line2)

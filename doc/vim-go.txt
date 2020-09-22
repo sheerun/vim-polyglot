@@ -426,10 +426,6 @@ CTRL-t
 
     If [!] is not given the first error is jumped to.
 
-    If using neovim `:GoTestFunc` will run in a new terminal or run
-    asynchronously in the background according to |'g:go_term_enabled'|. You
-    can set the mode of the new terminal with |'g:go_term_mode'|.
-
                                                               *:GoTestCompile*
 :GoTestCompile[!] [expand]
 
@@ -440,10 +436,6 @@ CTRL-t
     create test binary.
 
     If [!] is not given the first error is jumped to.
-
-    If using neovim `:GoTestCompile` will run in a new terminal or run
-    asynchronously in the background according to |'g:go_term_enabled'|. You
-    can set the mode of the new terminal with |'g:go_term_mode'|.
 
                                                                  *:GoCoverage*
 :GoCoverage[!] [options]
@@ -1484,6 +1476,14 @@ and `guru`.
 >
   let g:go_def_mode = 'gopls'
 <
+                                                      *'g:go_fillstruct_mode'*
+
+Use this option to define the command to be used for |:GoFillStruct|. By
+default `fillstruct` is used. Valid values are `fillstruct` and `gopls`. By
+default it is `fillstruct`.
+>
+  let g:go_fillstruct_mode = 'fillstruct'
+<
                                                        *'g:go_referrers_mode'*
 
 Use this option to define the command to be used for |:GoReferrers|. By
@@ -1789,9 +1789,12 @@ same.
 
                                                         *'g:go_gopls_enabled'*
 
-Specifies whether `gopls` can be used by vim-go. By default gopls is enabled.
-When gopls is disabled completion will not work and other configuration
+Specifies whether `gopls` can be used by vim-go.
+
+Completion will not work when gopls is disabled and other configuration
 options may also need to be adjusted.
+
+By default gopls is enabled.
 
 >
   let g:go_gopls_enabled = 1
@@ -1799,15 +1802,21 @@ options may also need to be adjusted.
 
                                                         *'g:go_gopls_options'*
 
-The commandline arguments to pass to gopls. By default, it's `-remote=auto`.
+The commandline arguments to pass to gopls.
+
+By default, it is `['-remote=auto']`.
 >
-  let g:go_gopls_options = []
+  let g:go_gopls_options = ['-remote=auto']
 <
 
                                                        *'g:go_gopls_analyses'*
 
-The analyses settings for `gopls`. By default, it's `v:null`. Valid map values
-are `v:true` and `v:false`.
+The analyses settings for `gopls`.
+
+The Expected value is either `v:null` or a dictionary. The dictionary will be
+provided to `gopls` via json-rpc, so dictionary values need to be of the
+appropriate type for Vim to convert to JSON (e.g. truthy dictionary values
+should be `v:true` or `v:false`). By default, it is `v:null`.
 >
   let g:go_gopls_analyses = v:null
 <
@@ -1815,34 +1824,36 @@ are `v:true` and `v:false`.
                                             *'g:go_gopls_complete_unimported'*
 
 Specifies whether `gopls` should include suggestions from unimported packages.
-When it is `v:null`, `gopls`' default will be used. By default it is
-`v:null`.
+
+When it is `v:null`, `gopls`' default will be used. By default it is `v:null`.
 >
   let g:go_gopls_complete_unimported = v:null
 <
 
                                                 *'g:go_gopls_deep_completion'*
 
-Specifies whether `gopls` should use deep completion. When it is `v:null`,
-`gopls`' default will be used. By default it is `v:null`.
+Specifies whether `gopls` should use deep completion.
 
+When it is `v:null`, `gopls`' default will be used. By default it is `v:null`.
 >
   let g:go_gopls_deep_completion = v:null
 <
 
                                                        *'g:go_gopls_matcher'*
 
-Specifies how `gopls` should match for completions. Valid values are `v:null`,
-`fuzzy`, and `caseSensitive`.  When it is `v:null`, `gopls`' default will be
-used. By default it is `v:null`.
+Specifies how `gopls` should match for completions.
+
+Valid values are `v:null`, `fuzzy`, and `caseSensitive`. When it is `v:null`,
+`gopls`' default will be used. By default it is `v:null`.
 >
   let g:go_gopls_matcher = v:null
 <
 
                                                    *'g:go_gopls_staticcheck'*
 
-Specifies whether `gopls` should run staticcheck checks. When it is `v:null`,
-`gopls`' default will be used. By default it is `v:null`.
+Specifies whether `gopls` should run staticcheck checks.
+
+When it is `v:null`, `gopls`' default will be used. By default it is `v:null`.
 >
   let g:go_gopls_staticcheck = v:null
 <
@@ -1852,8 +1863,9 @@ Specifies whether `gopls` should run staticcheck checks. When it is `v:null`,
 Specifies whether `gopls` can provide placeholders for function parameters and
 struct fields. When set, completion items will be treated as anonymous
 snippets if UltiSnips is installed and configured to be used as
-|'g:go_snippet_engine'|. When it is `v:null`, `gopls`' default will be used.
-By default it is `v:null`.
+|'g:go_snippet_engine'|.
+
+When it is `v:null`, `gopls`' default will be used. By default it is `v:null`.
 >
   let g:go_gopls_use_placeholders = v:null
 <
@@ -1861,8 +1873,9 @@ By default it is `v:null`.
                                                    *'g:go_gopls_temp_modfile'*
 
 Specifies whether `gopls` should use a temp modfile and suggest edits rather
-than modifying the ambient go.mod file.  When it is `v:null`, `gopls`' default
-will be used.  By default it is `v:null`.
+than modifying the ambient go.mod file.
+
+When it is `v:null`, `gopls`' default will be used. By default it is `v:null`.
 >
   let g:go_gopls_temp_modfile = v:null
 <
@@ -1870,16 +1883,18 @@ will be used.  By default it is `v:null`.
                                                          *'g:go_gopls_local'*
 
 Specifies the prefix for imports that `gopls` should consider group
-separately. When it is `v:null`, `gopls`' default will be used.  By default it
-is `v:null`.
+separately.
+
+When it is `v:null`, `gopls`' default will be used. By default it is `v:null`.
 >
   let g:go_gopls_local = v:null
 <
 
                                                        *'g:go_gopls_gofumpt'*
 
-Specifies whether `gopls` should use `gofumpt` for formatting. When it is
-`v:null`, `gopls`' default will be used.  By default it is `v:null`.
+Specifies whether `gopls` should use `gofumpt` for formatting.
+
+When it is `v:null`, `gopls`' default will be used. By default it is `v:null`.
 >
   let g:go_gopls_gofumpt = v:null
 <
@@ -1887,10 +1902,12 @@ Specifies whether `gopls` should use `gofumpt` for formatting. When it is
                                                       *'g:go_gopls_settings'*
 
 Specifies `gopls` workspace settings for `gopls` that are not yet officially
-supported by vim-go. Any value in the dictionary will be overridden by values
-provided in the specific options supported by vim-go (e.g.
-g:go_gopls_staticcheck) or settings statically configured by vim-go to ensure
-expected behavior. By default it is `v:null`.
+supported by vim-go.
+
+Any value in the dictionary will be overridden by values provided in the
+specific options supported by vim-go (e.g.  g:go_gopls_staticcheck) or
+settings statically configured by vim-go to ensure expected behavior. By
+default it is `v:null`.
 >
   let g:go_gopls_settings = v:null
 <
@@ -1898,7 +1915,9 @@ expected behavior. By default it is `v:null`.
 
 Specifies whether `gopls` diagnostics are enabled. Only the diagnostics for
 the current buffer will be processed when it is not set; all others will be
-ignored. By default it is disabled.
+ignored.
+
+By default it is disabled.
 >
   let g:go_diagnostics_enabled = 0
 <
@@ -2322,6 +2341,14 @@ The rest of the commands and mappings become available after executing
 
     Use `-test.flag` to pass flags to `go test` when debugging a test; for
     example `-test.v` or `-test.run TestFoo`
+
+                                                            *:GoDebugTestFunc*
+:GoDebugTestFunc [expand]
+
+    Behaves the same as |:GoDebugTest| and implicitly adds `-test.run` to run
+    the nearest test or example function (i.e the nearest function declaration
+    that matches `func Test` or `func Example`) at or previous to the cursor.
+    Search will not wrap around when at the top of the file.
 
                                                              *:GoDebugRestart*
 :GoDebugRestart

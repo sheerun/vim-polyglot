@@ -68,6 +68,7 @@ function! terraform#commands(ArgLead, CmdLine, CursorPos) abort
     \ 'version',
     \ 'workspace',
     \ '0.12upgrade',
+    \ '0.13upgrade',
     \ 'debug',
     \ 'force-unlock',
     \ 'push',
