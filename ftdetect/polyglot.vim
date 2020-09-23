@@ -8,10 +8,15 @@ if exists('g:polyglot_test')
 endif
 
 let s:disabled_packages = {}
+let s:new_polyglot_disabled = []
 
 if exists('g:polyglot_disabled')
   for pkg in g:polyglot_disabled
-    let s:disabled_packages[pkg] = 1
+    let base = split(pkg, '\.')
+    if len(base) > 0
+      let s:disabled_packages[pkg] = 1
+      call add(s:new_polyglot_disabled, base[0]) 
+    endif
   endfor
 else
   let g:polyglot_disabled_not_set = 1
@@ -2226,6 +2231,12 @@ endfunc
 
 au BufEnter * if &ft == "" && expand("<afile>") !~ g:ft_ignore_pat
       \ | call s:observe_filetype() | endif
+
+
+" Save polyglot_disabled without postfixes
+if exists('g:polyglot_disabled')
+  let g:polyglot_disabled = s:new_polyglot_disabled
+endif
 
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
