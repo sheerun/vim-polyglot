@@ -255,8 +255,10 @@ Please make sure you have `syntax on` in your `.vimrc` (or use something like [s
 Individual language packs can be disabled by setting `g:polyglot_disabled` as follows:
 
 ```vim
-let g:polyglot_disabled = ['css']
+let g:polyglot_disabled = ['markdown']
 ```
+
+The list of available languages to disable is shown above.
 
 *Please declare this variable before polyglot is loaded (at the top of .vimrc)*
 
