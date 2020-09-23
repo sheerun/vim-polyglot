@@ -10,11 +10,11 @@ let s:cpo_save = &cpoptions
 set cpoptions&vim
 
 setlocal nolisp
-setlocal autoindent shiftwidth=2 tabstop=2 softtabstop=2
+setlocal autoindent shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 setlocal indentexpr=TerraformIndent(v:lnum)
 setlocal indentkeys+=<:>,0=},0=)
 let b:undo_indent = 'setlocal lisp< autoindent< shiftwidth< tabstop< softtabstop<'
-  \ . ' indentexpr< indentkeys<'
+  \ . ' expandtab< indentexpr< indentkeys<'
 
 let &cpoptions = s:cpo_save
 unlet s:cpo_save

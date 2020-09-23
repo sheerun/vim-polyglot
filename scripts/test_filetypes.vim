@@ -1,4 +1,6 @@
 function! TestFiletype(filetype)
+  call Log('Loading ' . a:filetype . ' filetype...')
+
   try
     enew
     exec 'set ft=' . a:filetype

@@ -1,13 +1,8 @@
 function! TestFiletype(filetype)
-  try
-    enew
-    exec 'set ft=' . a:filetype
-  catch
-    echo 'Error loading filetype ' . a:filetype  . ':'
-    echo v:exception
-    echo v:throwpoint
-    exec ':cq!'
-  endtry
+  call Log('Loading ' . a:filetype . ' filetype...')
+
+  enew
+  exec 'set ft=' . a:filetype
 endfunction
 
 call TestFiletype('8th')

@@ -1,16 +1,60 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-set -e
+def run_script(src)
+  system("bash", "-c", src)
+end
 
-vim --clean -N -u <(echo "
-  let &rtp='$PWD,'.&rtp
-  let g:polyglot_test = 1
-  source tests/extensions.vim
-  source tests/filetypes.vim
-  qa!
-")
+def run_vimscript(src)
+  wrapper = <<~EOF
+    vim --clean --not-a-term -u <(cat <<- "EOM"
+    let g:polyglot_test = 1
+    let &rtp='$PWD,' . &rtp
+    runtime filetype.vim
+    set t_ti= t_te=
+    set shortmess+=F
+    set noswapfile
+    set nocp
+    set nomore
+    func! Log(msg)
+      if $DEV != '1'
+        echo a:msg
+      else
+        echon '.'
+      endif
+    endfunc
+    EOM
+    ) -S <(cat <<- "EOM"
+      try
+      #{src}
+      catch
+        echo v:exception
+        echo v:throwpoint
+      endtry
+      qa!
+    EOM
+    ) | perl -pe 's/\e\[[0-9;]*[a-zA-Z]//g'
+  EOF
 
-if ! expect -c 'set timeout 1' -c 'spawn vim -N --clean -c "set nomore | :helptags ./doc | q"' -c 'expect "ENTER" { exit 1 }' > /dev/null; then
-  echo "Please ensure ':helptags ./doc' works properly"
-  exit 1
-fi
+  run_script(wrapper)
+end
+
+test_helptags = <<~EOF
+  if ! expect -c 'set timeout 1' -c 'spawn vim -N --clean -c "set nomore | :helptags ./doc | q"' -c 'expect "ENTER" { exit 1 }' > /dev/null; then
+    echo "Please ensure ':helptags ./doc' works properly"
+    exit 1
+  fi
+EOF
+
+run_vimscript('source tests/filetypes.vim')
+run_vimscript('source tests/extensions.vim')
+run_script(test_helptags)
+
+# run_vimscript("
+#   func! TestIndent(file)
+#     :e a:file
+#     echo 'ok'
+#     echo &filetype
+#   endfunc
+#
+#   #{Dir['tests/indent/**/test.*'].map { |f| "call TestIndent(\"#{f}\")"}.join("\n")}
+# ")

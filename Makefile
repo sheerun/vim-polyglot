@@ -7,4 +7,4 @@ test:
 	@ scripts/test
 
 dev:
-	@ echo "packages.yaml\nheuristics.yaml\nscripts/test\nscripts/build\nscripts/test_extensions.vim" | DEV=1 entr bash -c 'make && make test'
+	@ echo "packages.yaml\nheuristics.yaml\nscripts/test\nscripts/build\ntests/extensions.vim" | DEV=1 entr bash -c 'make && make test'

@@ -1,8 +1,10 @@
 function! TestExtension(filetype, filename, content)
+  call Log('Detecting ' . a:filetype . ' filetype (' . a:filename . ')...')
+
   try
     let g:message = ""
     exec "noautocmd n " . a:filename
-    put =a:content
+    silent put =a:content
     1delete _
     filetype detect
     exec "if &filetype != '" . a:filetype . "' \nthrow &filetype\nendif"

@@ -643,15 +643,10 @@ end
 def generate_tests(packages)
   output = <<~EOS
     function! TestFiletype(filetype)
-      try
-        enew
-        exec 'set ft=' . a:filetype
-      catch
-        echo 'Error loading filetype ' . a:filetype  . ':'
-        echo v:exception
-        echo v:throwpoint
-        exec ':cq!'
-      endtry
+      call Log('Loading ' . a:filetype . ' filetype...')
+
+      enew
+      exec 'set ft=' . a:filetype
     endfunction
 
   EOS
@@ -662,7 +657,7 @@ def generate_tests(packages)
     end
   end
 
-  File.write('scripts/test_filetypes.vim', output)
+  File.write('tests/filetypes.vim', output)
 
 
 end
