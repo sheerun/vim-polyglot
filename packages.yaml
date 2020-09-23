@@ -345,6 +345,11 @@ filetypes:
   filenames:
   - Caddyfile
 ---
+name: cpp-modern
+remote: bfrg/vim-cpp-modern
+after: c/c++
+filetypes: []
+---
 name: carp
 remote: hellerve/carp-vim
 filetypes:
