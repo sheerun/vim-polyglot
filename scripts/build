@@ -290,7 +290,7 @@ def rule_to_code(rule)
 
   if rule.has_key?("rules")
     return rule["rules"].map do |r|
-      indent(rule_to_code({ "extensions" => rule["extensions"], **r }), 0)
+      indent(rule_to_code({ "extensions" => rule["extensions"] }.merge(r)), 0)
     end.join("\n")
   end
 
@@ -508,7 +508,7 @@ def generate_ftdetect(packages, heuristics)
 
       for filename in filenames.sort
         if filename[0] == "."
-          filename = "{.,}" + filename[1..]
+          filename = "{.,}" + filename[1..-1]
         end
         if filename[-1] == "*"
           autocommands << "  au BufNewFile,BufRead #{filename} call s:StarSetf('#{name}')\n"
@@ -729,7 +729,7 @@ def detect_filetypes(glob)
   end.group_by { |a, b| a }.map { |a, b| [a, b.map { |c, d| d }] }.map { |a, b|
     {
       "name" => a,
-      "extensions" => b.select { |x| x.match(/^\*\.[^\/]+$/) }.map { |a| a.strip[2..] },
+      "extensions" => b.select { |x| x.match(/^\*\.[^\/]+$/) }.map { |a| a.strip[2..-1] },
       "filenames" => expand_all(b.select { |x| !x.match(/^\*\.[^\/]+$/) })
     }
   }
