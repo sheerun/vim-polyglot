@@ -370,6 +370,12 @@ func! polyglot#DetectHtmlFiletype()
   if line =~# '^\(%\|<[%&].*>\)'
     set ft=mason | return
   endif
+  for lnum in range(1, min([line("$"), 50]))
+    let line = getline(lnum)
+    if line =~# '{{.*}}\|{%-\=\s*\(end.*\|extends\|block\|macro\|set\|if\|for\|include\|trans\)\(\<\|\>\)'
+      set ft=jinja.html | return
+    endif
+  endfor
   set ft=html | return
 endfunc
 
