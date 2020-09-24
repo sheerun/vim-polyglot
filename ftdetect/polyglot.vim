@@ -2023,6 +2023,10 @@ if !has_key(s:disabled_packages, 'tads')
   au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
 endif
 
+if !has_key(s:disabled_packages, 'gitignore')
+  au BufNewFile,BufRead {.,}gitignore set ft=gitignore
+endif
+
 
 
 au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>") !~ g:ft_ignore_pat |

@@ -1882,3 +1882,10 @@ filetypes:
 - name: tads
   extensions:
   - t
+---
+name: gitignore
+remote: rdolgushin/gitignore.vim
+filetypes:
+- name: gitignore
+  filenames:
+  - '.gitignore'

@@ -697,7 +697,7 @@ def generate_plugins(packages)
   for package in packages
     for filetype in package["filetypes"]
       extensions = (filetype["extensions"] || []).map { |e| "*.#{e}" }
-      files = (filetype["filenames"] || []).reject { |e| e.match(/\*\*|\//) || e[0] == "." }
+      files = (filetype["filenames"] || []).reject { |e| e.match(/\*\*|\//) }
       patterns[filetype["name"]].concat(extensions)
       patterns[filetype["name"]].concat(files)
     end
