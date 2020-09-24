@@ -115,7 +115,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [fsharp](https://github.com/ionide/Ionide-vim)
 - [gdscript](https://github.com/calviken/vim-gdscript3)
 - [git](https://github.com/tpope/vim-git)
-- [gitignore](https://github.com/rdolgushin/gitignore.vim)
+- [gitignore](https://github.com/fszymanski/fzf-gitignore)
 - [glsl](https://github.com/tikhomirov/vim-glsl)
 - [gmpl](https://github.com/maelvalais/gmpl.vim)
 - [gnuplot](https://github.com/vim-scripts/gnuplot-syntax-highlighting)

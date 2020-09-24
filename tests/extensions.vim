@@ -370,4 +370,4 @@ call TestExtension("htmldjango", "jinja4.html", "{# some comment #}")
 call TestExtension("xhtml", "xhtml.html", "<DTD   XHTML ")
 
 " .gitignore
-call TestExtension(".gitignore", ".gitignore", "")
+call TestExtension("gitignore", ".gitignore", "")

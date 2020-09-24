@@ -1884,7 +1884,7 @@ filetypes:
   - t
 ---
 name: gitignore
-remote: rdolgushin/gitignore.vim
+remote: fszymanski/fzf-gitignore
 filetypes:
 - name: gitignore
   filenames:
