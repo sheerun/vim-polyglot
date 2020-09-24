@@ -317,7 +317,7 @@ def rule_to_code(rule)
     EOS
   end
 
-  if (rule.keys - ["filetype", "override", "set", "extensions"]).size > 0
+  if (rule.keys - ["filetype", "override", "set", "extensions", "fallback"]).size > 0
     raise "Unknown rule: #{JSON.generate(rule)}"
   end
   
@@ -335,7 +335,11 @@ def rule_to_code(rule)
   end
 
   if rule.has_key?("filetype")
-    return "set ft=#{rule["filetype"]} | return"
+    if rule.has_key?("fallback")
+      return "set ft=#{rule["filetype"]} | return"
+    else
+      return "setf FALLBACK #{rule["filetype"]} | return"
+    end
   end
 
   if rule.has_key?("extensions")

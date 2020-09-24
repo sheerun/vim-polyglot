@@ -372,8 +372,11 @@ func! polyglot#DetectHtmlFiletype()
   endif
   for lnum in range(1, min([line("$"), 50]))
     let line = getline(lnum)
-    if line =~# '{{.*}}\|{%-\=\s*\(end.*\|extends\|block\|macro\|set\|if\|for\|include\|trans\)\(\<\|\>\)'
+    if line =~# '{{.*}}\|{%-\=\s*\(end.*\|extends\|block\|macro\|set\|if\|for\|include\|trans\)\(\<\|\>\)\|{#\s\+'
       set ft=jinja.html | return
+    endif
+    if line =~# '\(\<\|\>\)DTD\s\+XHTML\s'
+      set ft=xhtml | return
     endif
   endfor
   set ft=html | return

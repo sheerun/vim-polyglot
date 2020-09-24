@@ -181,7 +181,10 @@ rules:
   pattern: '^(%|<[%&].*>)'
   filetype: mason
 - lines: 50
-  pattern: '{{.*}}|{%-?\s*(end.*|extends|block|macro|set|if|for|include|trans)\b'
-  filetype: jinja.html
+  rules:
+  - pattern: '{{.*}}|{%-?\s*(end.*|extends|block|macro|set|if|for|include|trans)\b|{#\s+'
+    filetype: jinja.html
+  - pattern: '\bDTD\s+XHTML\s'
+    filetype: xhtml
 - filetype: html
-
+  fallback: true
