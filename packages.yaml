@@ -169,7 +169,7 @@ filetypes:
   - '*/etc/httpd/conf.d/*.conf*'
 ---
 name: apiblueprint
-remote: sheerun/apiblueprint.vim
+remote: kylef/apiblueprint.vim
 filetypes:
 - name: apiblueprint
   linguist: API Blueprint
@@ -440,9 +440,6 @@ remote: tpope/vim-cucumber
 filetypes:
 - name: cucumber
   linguist: Gherkin
-  extra_extensions:
-  # https://github.com/search?q=extension%3Astory+when&type=Code
-  - story
 ---
 name: cue
 remote: mgrabovsky/vim-cuesheet
@@ -720,7 +717,8 @@ filetypes:
   - '*/etc/grub.conf'
 ---
 name: haml
-remote: sheerun/vim-haml
+remote: tpope/vim-haml
+glob: '**/haml.vim'
 filetypes:
 - name: haml
   linguist: Haml
@@ -729,16 +727,17 @@ filetypes:
   - hamlbars
 ---
 name: handlebars
-remote: sheerun/vim-mustache-handlebars
+remote: mustache/vim-mustache-handlebars
 filetypes:
-- name: mustache
-  linguist: Handlebars
+- name: html.mustache
+  linguist: Mustache
   extra_extensions:
+  - hogan
   - hulk
   - hjs
-  - mustache
-  - njk
-  - hogan
+- name: html.handlebars
+  linguist: Handlebars
+  extra_extensions:
   - hdbs
   - hb
 ---
@@ -770,8 +769,6 @@ remote: b4b4r07/vim-hcl
 filetypes:
 - name: hcl
   linguist: HCL
-  extra_extensions:
-  - nomad
   extra_filenames:
   - Appfile
   ignored_extensions:
@@ -873,15 +870,14 @@ filetypes:
   - Jenkinsfile
   - Jenkinsfile*
 ---
-name: jinja
-remote: lepture/vim-jinja
+name: htmldjango
+remote: vim/vim:runtime
+globs:
+- '**/django.vim'
+- '**/htmldjango.vim'
 filetypes:
-- name: jinja.html
+- name: htmldjango
   linguist: HTML+Django
-  extra_extensions:
-  - j2
-  ignored_extensions:
-  - njk
   ignore_warnings:
   # handled by mustache plugin
   - mustache
@@ -1437,7 +1433,9 @@ filetypes:
   - '*_spec.rb'
 ---
 name: yard
-remote: sheerun/vim-yardoc
+remote: noprompt/vim-yardoc
+patches:
+- 'https://github.com/sheerun/vim-yardoc/commit/173924ec12a66e26a886e80431b92cc9bda578d4.patch'
 # just adds to ruby
 filetypes: []
 ---
@@ -1727,6 +1725,9 @@ filetypes:
   linguist: XML
   extra_extensions:
   - cdxml
+  - tpm
+  - csproj.user
+  - wpl
   ignored_extensions:
   - ts
   - tsx
@@ -1863,6 +1864,9 @@ glob: '**/bzl.vim'
 filetypes:
 - name: bzl
   linguist: Starlark
+  extra_extensions:
+  - bazel
+  - BUILD
 ---
 name: prolog
 remote: vim/vim:runtime

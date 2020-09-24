@@ -156,7 +156,7 @@ if !has_key(s:disabled_packages, 'ampl')
 endif
 
 if !has_key(s:disabled_packages, 'xml')
-  au! BufRead,BufNewFile *.csproj,*.ui,*.wsdl,*.wsf,*.xlf,*.xliff,*.xmi,*.xsd,*.xul
+  au! BufRead,BufNewFile *.csproj,*.ui,*.wsdl,*.wsf,*.xlf,*.xliff,*.xmi,*.xsd,*.xul,*.tpm,*.csproj.user,*.wpl
 endif
 
 if !has_key(s:disabled_packages, 'ant')
@@ -488,7 +488,7 @@ if !has_key(s:disabled_packages, 'dosini')
 endif
 
 if !has_key(s:disabled_packages, 'bzl')
-  au! BufRead,BufNewFile *.bzl,BUILD,WORKSPACE
+  au! BufRead,BufNewFile *.bzl,*.bazel,*.BUILD,BUILD,WORKSPACE
 endif
 
 if !has_key(s:disabled_packages, 'tads')
@@ -591,6 +591,7 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead *.csdef set ft=xml
   au BufNewFile,BufRead *.csl set ft=xml
   au BufNewFile,BufRead *.csproj set ft=xml
+  au BufNewFile,BufRead *.csproj.user set ft=xml
   au BufNewFile,BufRead *.ct set ft=xml
   au BufNewFile,BufRead *.depproj set ft=xml
   au BufNewFile,BufRead *.dita set ft=xml
@@ -643,6 +644,7 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead *.sublime-snippet set ft=xml
   au BufNewFile,BufRead *.targets set ft=xml
   au BufNewFile,BufRead *.tml set ft=xml
+  au BufNewFile,BufRead *.tpm set ft=xml
   au BufNewFile,BufRead *.ui set ft=xml
   au BufNewFile,BufRead *.urdf set ft=xml
   au BufNewFile,BufRead *.ux set ft=xml
@@ -654,6 +656,7 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead *.vxml set ft=xml
   au BufNewFile,BufRead *.wixproj set ft=xml
   au BufNewFile,BufRead *.workflow set ft=xml
+  au BufNewFile,BufRead *.wpl set ft=xml
   au BufNewFile,BufRead *.wsdl set ft=xml
   au BufNewFile,BufRead *.wsf set ft=xml
   au BufNewFile,BufRead *.wxi set ft=xml
@@ -1099,15 +1102,14 @@ if !has_key(s:disabled_packages, 'haml')
 endif
 
 if !has_key(s:disabled_packages, 'handlebars')
-  au BufNewFile,BufRead *.handlebars set ft=mustache
-  au BufNewFile,BufRead *.hb set ft=mustache
-  au BufNewFile,BufRead *.hbs set ft=mustache
-  au BufNewFile,BufRead *.hdbs set ft=mustache
-  au BufNewFile,BufRead *.hjs set ft=mustache
-  au BufNewFile,BufRead *.hogan set ft=mustache
-  au BufNewFile,BufRead *.hulk set ft=mustache
-  au BufNewFile,BufRead *.mustache set ft=mustache
-  au BufNewFile,BufRead *.njk set ft=mustache
+  au BufNewFile,BufRead *.hjs set ft=html.mustache
+  au BufNewFile,BufRead *.hogan set ft=html.mustache
+  au BufNewFile,BufRead *.hulk set ft=html.mustache
+  au BufNewFile,BufRead *.mustache set ft=html.mustache
+  au BufNewFile,BufRead *.handlebars set ft=html.handlebars
+  au BufNewFile,BufRead *.hb set ft=html.handlebars
+  au BufNewFile,BufRead *.hbs set ft=html.handlebars
+  au BufNewFile,BufRead *.hdbs set ft=html.handlebars
 endif
 
 if !has_key(s:disabled_packages, 'haskell')
@@ -1184,10 +1186,11 @@ if !has_key(s:disabled_packages, 'jenkins')
   au BufNewFile,BufRead Jenkinsfile* call s:StarSetf('Jenkinsfile')
 endif
 
-if !has_key(s:disabled_packages, 'jinja')
-  au BufNewFile,BufRead *.j2 set ft=jinja.html
-  au BufNewFile,BufRead *.jinja set ft=jinja.html
-  au BufNewFile,BufRead *.jinja2 set ft=jinja.html
+if !has_key(s:disabled_packages, 'htmldjango')
+  au BufNewFile,BufRead *.j2 set ft=htmldjango
+  au BufNewFile,BufRead *.jinja set ft=htmldjango
+  au BufNewFile,BufRead *.jinja2 set ft=htmldjango
+  au BufNewFile,BufRead *.njk set ft=htmldjango
 endif
 
 if !has_key(s:disabled_packages, 'jq')
@@ -1992,6 +1995,8 @@ if !has_key(s:disabled_packages, 'odin')
 endif
 
 if !has_key(s:disabled_packages, 'bzl')
+  au BufNewFile,BufRead *.BUILD set ft=bzl
+  au BufNewFile,BufRead *.bazel set ft=bzl
   au BufNewFile,BufRead *.bzl set ft=bzl
   au BufNewFile,BufRead BUCK set ft=bzl
   au BufNewFile,BufRead BUILD set ft=bzl

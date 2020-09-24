@@ -375,13 +375,15 @@ def extract(packages)
         if repo == "vim/vim" && (["glob", "globs"] & package.keys).size == 0
           raise "Package from vim/vim should define glob or globs: #{package["name"]}"
         end
-        glob = package.fetch("glob", package.fetch('globs', '**/*.{vim,ctags,vital,txt}'))
-        Dir.glob("#{subdir}/#{glob}", base: subtree).each do |p|
-          next unless File.file?("#{subtree}/#{p}")
-          if p.include?("samba")
-            raise package["name"]
+        globs = [package.fetch("glob", package.fetch('globs', '**/*.{vim,ctags,vital,txt}'))].flatten
+        globs.each do |glob|
+          Dir.glob("#{subdir}/#{glob}", base: subtree).each do |p|
+            next unless File.file?("#{subtree}/#{p}")
+            if p.include?("samba")
+              raise package["name"]
+            end
+            copy_file(package, "#{subtree}/#{p}", p)
           end
-          copy_file(package, "#{subtree}/#{p}", p)
         end
       elsif File.exist?(subpath)
         copy_file(package, subpath, subdir)

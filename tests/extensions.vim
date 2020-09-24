@@ -201,6 +201,13 @@ call TestExtension("cpp", "foobar.moc", "")
 call TestExtension("cpp", "foobar.tcc", "")
 call TestExtension("cpp", "foobar.inl", "")
 
+" Django
+
+call TestExtension("htmldjango", "foobar.j2", "")
+call TestExtension("htmldjango", "foobar.jinja", "")
+call TestExtension("htmldjango", "foobar.jinja2", "")
+call TestExtension("htmldjango", "foobar.njk", "")
+
 " vim-polyglot only
 call TestExtension("blade", "test.blade.php", "")
 call TestExtension("yaml.ansible", "playbook.yml", "")
@@ -356,8 +363,8 @@ call TestExtension("tt2html", "html.tt2", "<html>")
 call TestExtension("html", "empty.html", "")
 call TestExtension("mason", "mason1.html", "% my $planet = 42;")
 call TestExtension("mason", "mason2.html", "<%filter></%filter>")
-call TestExtension("jinja.html", "jinja1.html", "{{ item.href }}")
-call TestExtension("jinja.html", "jinja2.html", "{% for item in navigation %}{% endfor %}")
-call TestExtension("jinja.html", "jinja3.html", "{% block head %}")
-call TestExtension("jinja.html", "jinja4.html", "{# some comment #}")
+call TestExtension("htmldjango", "jinja1.html", "{{ item.href }}")
+call TestExtension("htmldjango", "jinja2.html", "{% for item in navigation %}{% endfor %}")
+call TestExtension("htmldjango", "jinja3.html", "{% block head %}")
+call TestExtension("htmldjango", "jinja4.html", "{# some comment #}")
 call TestExtension("xhtml", "xhtml.html", "<DTD   XHTML ")
