@@ -9,6 +9,14 @@ if exists('g:polyglot_test')
   autocmd!
 endif
 
+func! polyglot#Observe(fn)
+  let b:polyglot_observe = a:fn
+  augroup polyglot-observer
+    au! CursorHold,CursorHoldI,BufWritePost <buffer>
+      \ execute('if polyglot#' . b:polyglot_observe . '() | au! polyglot-observer | endif')
+  augroup END
+endfunc
+
 let s:disabled_packages = {}
 let s:new_polyglot_disabled = []
 
@@ -2021,7 +2029,7 @@ au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>") !~ g:ft_ignore_pat |
   \ call polyglot#Shebang() | endif
 
 au BufEnter * if &ft == "" && expand("<afile>") !~ g:ft_ignore_pat |
-      \ call polyglot#ObserveShebang() | endif
+      \ call polyglot#Observe('Shebang') | endif
 
 augroup END
 

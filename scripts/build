@@ -126,10 +126,6 @@ def transform_patterns(heuristics)
   patterns_mapping = Hash[patterns.zip(patterns_to_vim_patterns(patterns))]
   each_hash(heuristics) do |h|
     if h.has_key?("pattern")
-      if h["pattern"].include?("#import")
-        puts h["pattern"]
-        puts patterns_mapping.fetch(h["pattern"])
-      end
       h["pattern"] = patterns_mapping.fetch(h["pattern"])
     end
   end
@@ -326,10 +322,20 @@ def rule_to_code(rule)
     EOS
   end
 
-  if (rule.keys - ["filetype", "override", "set", "extensions", "fallback"]).size > 0
-    raise "Unknown rule: #{JSON.generate(rule)}"
+  if rule.has_key?("filetype")
+    if rule.has_key?("fallback")
+      return <<~EOS
+        set ft=#{rule["filetype"]} | au! BufWritePost <buffer> ++once call polyglot#Detect#{camelize(rule["extensions"].first)}Filetype()
+        return
+      EOS
+    end
+
+    return <<~EOS
+      set ft=#{rule["filetype"]} | return
+      #{indent(rule_to_code(except(rule, "filetype")), 0)}
+    EOS
   end
-  
+
   if rule.has_key?("override")
     variable = "g:filetype_#{rule["extensions"].first}"
     return <<~EOS
@@ -339,22 +345,10 @@ def rule_to_code(rule)
     EOS
   end
 
-  if rule.has_key?("filetype")
-    return "set ft=#{rule["filetype"]} | return"
+  if (rule.keys - ["extensions"]).size > 0
+    raise "Unknown rule: #{JSON.generate(rule)}"
   end
-
-  if rule.has_key?("filetype")
-    if rule.has_key?("fallback")
-      return "set ft=#{rule["filetype"]} | return"
-    else
-      return "setf FALLBACK #{rule["filetype"]} | return"
-    end
-  end
-
-  if rule.has_key?("extensions")
-    return ""
-  end
-
+  
   return ""
 end
 
