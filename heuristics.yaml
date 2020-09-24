@@ -69,6 +69,7 @@ rules:
     filetype: glsl
 - override: true
 - filetype: forth
+  fallback: true
 ---
 extensions: [re]
 rules:

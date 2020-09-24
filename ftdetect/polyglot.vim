@@ -1,3 +1,5 @@
+""" ftdetect/polyglot.vim
+
 " don't spam the user when Vim is started in Vi compatibility mode
 let s:cpo_save = &cpo
 set cpo&vim
@@ -87,9 +89,6 @@ endfunc
 
 augroup filetypedetect
 
-au! filetypedetect BufRead,BufNewFile,StdinReadPost *
-
-" filetypes
 
 if !has_key(s:disabled_packages, '8th')
   au! BufRead,BufNewFile *.8th
@@ -2017,20 +2016,12 @@ if !has_key(s:disabled_packages, 'tads')
 endif
 
 
-" end filetypes
 
-func! s:PolyglotFallback() 
-  if expand("<afile>") !~ g:ft_ignore_pat
-    if getline(1) =~# "^#!"
-      call polyglot#Shebang()
-    endif
-    if &filetype == ''
-      runtime! scripts.vim
-    endif
-  endif
-endfunc
+au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>") !~ g:ft_ignore_pat |
+  \ call polyglot#Shebang() | endif
 
-au BufNewFile,BufRead,StdinReadPost * call s:PolyglotFallback()
+au BufEnter * if &ft == "" && expand("<afile>") !~ g:ft_ignore_pat |
+      \ call polyglot#ObserveShebang() | endif
 
 augroup END
 
@@ -2227,17 +2218,6 @@ endfunc
 
 au VimEnter * call s:verify()
 
-func! s:observe_filetype()
-  augroup polyglot-observer
-    au! CursorHold,CursorHoldI <buffer>
-      \ if polyglot#Shebang() | au! polyglot-observer CursorHold,CursorHoldI | endif
-  augroup END
-endfunc
-
-au BufEnter * if &ft == "" && expand("<afile>") !~ g:ft_ignore_pat
-      \ | call s:observe_filetype() | endif
-
-
 " Save polyglot_disabled without postfixes
 if exists('g:polyglot_disabled')
   let g:polyglot_disabled = s:new_polyglot_disabled
@@ -2245,4 +2225,3 @@ endif
 
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
-unlet s:cpo_save

@@ -12,6 +12,10 @@ Dir.chdir(File.dirname(__dir__))
 
 BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
 
+def read_section(name)
+  File.read('polyglot.vim').match(/""" #{Regexp.escape(name)}.*\n(?=\n""")/m)[0]
+end
+
 def camelize(str)
   str.split(/[-_\.]/).map { |a| a.capitalize }.join("")
 end
@@ -121,6 +125,10 @@ def transform_patterns(heuristics)
   patterns_mapping = Hash[patterns.zip(patterns_to_vim_patterns(patterns))]
   each_hash(heuristics) do |h|
     if h.has_key?("pattern")
+      if h["pattern"].include?("#import")
+        puts h["pattern"]
+        puts patterns_mapping.fetch(h["pattern"])
+      end
       h["pattern"] = patterns_mapping.fetch(h["pattern"])
     end
   end
@@ -554,25 +562,14 @@ def generate_ftdetect(packages, heuristics)
     puts "Missing filename for #{name}: #{e}"
   end
 
-  ftdetect = File.read('ftdetect/polyglot.vim')
-  File.write('ftdetect/polyglot.vim', ftdetect.gsub(/(?<=" filetypes\n).*(?=\n" end filetypes)/m, output))
+  ftdetect = read_section('ftdetect/polyglot.vim')
+
+  File.write(
+    'ftdetect/polyglot.vim',
+     ftdetect.gsub('" scripts/build inserts here filetype detection autocommands') { output }
+  )
 
   output = <<~EOS
-    " Line continuation is used here, remove 'C' from 'cpoptions'
-    let s:cpo_save = &cpo
-    set cpo&vim
-
-    func! polyglot#Shebang()
-      " Try to detect filetype from shebang
-      let ft = polyglot#ShebangFiletype()
-      if ft != ""
-        let &ft = ft
-        return 1
-      endif
-
-      return 0
-    endfunc
-    
     let s:interpreters = {
     EOS
 
@@ -585,47 +582,6 @@ def generate_ftdetect(packages, heuristics)
   output << <<~EOS
       \\ }
 
-    let s:r_hashbang = '^#!\\s*\\(\\S\\+\\)\\s*\\(.*\\)\\s*'
-    let s:r_envflag = '%(\\S\\+=\\S\\+\\|-[iS]\\|--ignore-environment\\|--split-string\\)'
-    let s:r_env = '^\\%(\\' . s:r_envflag . '\\s\\+\\)*\\(\\S\\+\\)'
-
-    func! polyglot#ShebangFiletype()
-      let l:line1 = getline(1)
-
-      if l:line1 !~# "^#!"
-        return
-      endif
-
-      let l:pathrest = matchlist(l:line1, s:r_hashbang)
-
-      if len(l:pathrest) == 0
-        return 
-      endif
-
-      let [_, l:path, l:rest; __] = l:pathrest
-
-      let l:script = split(l:path, "/")[-1]
-
-      if l:script == "env"
-        let l:argspath = matchlist(l:rest, s:r_env)
-        if len(l:argspath) == 0
-          return
-        endif
-
-        let l:script = l:argspath[1]
-      endif
-
-      if has_key(s:interpreters, l:script)
-        return s:interpreters[l:script]
-      endif
-
-      for interpreter in keys(s:interpreters)
-        if l:script =~# '^' . interpreter
-          return s:interpreters[interpreter]
-        endif
-      endfor
-    endfunc
-
   EOS
 
   for heuristic in heuristics
@@ -637,13 +593,10 @@ def generate_ftdetect(packages, heuristics)
     EOS
   end
 
-  output << <<~EOS
-    " Restore 'cpoptions'
-    let &cpo = s:cpo_save
-    unlet s:cpo_save
-  EOS
+  autoload_script = read_section('autoload/polyglot.vim')
+  autoload_script["\" scripts/build generates heuristics functions here\n"] = output
 
-  File.write('autoload/polyglot.vim', output)
+  File.write('autoload/polyglot.vim', autoload_script)
 end
 
 def generate_tests(packages)
@@ -742,8 +695,6 @@ def detect_filetypes(glob)
 end
 
 def generate_plugins(packages)
-  FileUtils.mkdir_p('autoload/polyglot')
-
   output = "let s:globs = {\n"
 
   patterns = Hash.new { |h, k| h[k] = [] }
