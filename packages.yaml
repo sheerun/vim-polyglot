@@ -1889,3 +1889,5 @@ filetypes:
 - name: gitignore
   filenames:
   - '.gitignore'
+  - '*/.config/git/ignore'
+  - '*.git/info/exclude'

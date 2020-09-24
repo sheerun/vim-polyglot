@@ -2024,6 +2024,8 @@ if !has_key(s:disabled_packages, 'tads')
 endif
 
 if !has_key(s:disabled_packages, 'gitignore')
+  au BufNewFile,BufRead *.git/info/exclude set ft=gitignore
+  au BufNewFile,BufRead */.config/git/ignore set ft=gitignore
   au BufNewFile,BufRead {.,}gitignore set ft=gitignore
 endif
 
