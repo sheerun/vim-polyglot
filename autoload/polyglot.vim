@@ -405,7 +405,7 @@ if exists('g:polyglot_test')
   autocmd!
 endif
 
-func! polyglot#Observe(fn)
+func! s:Observe(fn)
   let b:polyglot_observe = a:fn
   augroup polyglot-observer
     au! CursorHold,CursorHoldI,BufWritePost <buffer>
@@ -499,7 +499,7 @@ au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>") !~ g:ft_ignore_pat |
   \ call polyglot#Shebang() | endif
 
 au BufEnter * if &ft == "" && expand("<afile>") !~ g:ft_ignore_pat |
-      \ call polyglot#Observe('Shebang') | endif
+      \ call s:Observe('Shebang') | endif
 
 augroup END
 
