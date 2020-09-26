@@ -596,7 +596,7 @@ if !has_key(s:disabled_packages, 'autoindent')
 
       if line[0] == "\t"
         setlocal noexpandtab
-        let &shiftwidth=&tabstop
+        let &l:shiftwidth = &tabstop
         let b:sleuth_culprit .= ':' . i
         return 1
       elseif line[0] == " "
@@ -609,7 +609,7 @@ if !has_key(s:disabled_packages, 'autoindent')
 
     if minindent < 10
       setlocal expandtab
-      let &shiftwidth=minindent
+      let &l:shiftwidth = minindent
       let b:sleuth_culprit .= ':' . i
       return 1
     endif
