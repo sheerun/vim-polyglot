@@ -163,7 +163,7 @@ if !has_key(s:disabled_packages, 'ampl')
 endif
 
 if !has_key(s:disabled_packages, 'xml')
-  au! BufRead,BufNewFile *.csproj,*.ui,*.wsdl,*.wsf,*.xlf,*.xliff,*.xmi,*.xsd,*.xul,*.tpm,*.csproj.user,*.wpl
+  au! BufRead,BufNewFile *.csproj,*.ui,*.wsdl,*.wsf,*.xlf,*.xliff,*.xmi,*.xsd,*.xul,*.tpm,*.csproj.user,*.wpl,*/etc/blkid.tab,*/etc/blkid.tab.old,*/etc/xdg/menus/*.menu
 endif
 
 if !has_key(s:disabled_packages, 'ant')
@@ -610,6 +610,7 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead *.ditaval set ft=xml
   au BufNewFile,BufRead *.dll.config set ft=xml
   au BufNewFile,BufRead *.dotsettings set ft=xml
+  au BufNewFile,BufRead *.fglrxrc set ft=xml
   au BufNewFile,BufRead *.filters set ft=xml
   au BufNewFile,BufRead *.fsproj set ft=xml
   au BufNewFile,BufRead *.fxml set ft=xml
@@ -687,6 +688,9 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead *.xspec set ft=xml
   au BufNewFile,BufRead *.xul set ft=xml
   au BufNewFile,BufRead *.zcml set ft=xml
+  au BufNewFile,BufRead */etc/blkid.tab set ft=xml
+  au BufNewFile,BufRead */etc/blkid.tab.old set ft=xml
+  au BufNewFile,BufRead */etc/xdg/menus/*.menu set ft=xml
   au BufNewFile,BufRead {.,}classpath set ft=xml
   au BufNewFile,BufRead {.,}cproject set ft=xml
   au BufNewFile,BufRead {.,}project set ft=xml

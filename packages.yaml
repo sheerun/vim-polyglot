@@ -1731,6 +1731,11 @@ filetypes:
   - tpm
   - csproj.user
   - wpl
+  - fglrxrc
+  extra_filenames:
+  - '*/etc/blkid.tab'
+  - '*/etc/blkid.tab.old'
+  - '*/etc/xdg/menus/*.menu'
   ignored_extensions:
   - ts
   - tsx

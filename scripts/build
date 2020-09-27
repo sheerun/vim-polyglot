@@ -726,6 +726,9 @@ def process_list(list, extras)
 end
 
 def show_warnings(all_filetypes, expected_filetypes)
+  if !ENV["DEV"]
+    return
+  end
   all_expected = process_list(expected_filetypes, false) do |f|
     (f["extensions"] || []).map { |e| "*." + e } + (f["filenames"] || [])
   end
