@@ -194,7 +194,7 @@ let s:globs = {
   \ 'svg': '*.svg',
   \ 'swift': '*.swift',
   \ 'sxhkdrc': '*.sxhkdrc,sxhkdrc',
-  \ 'systemd': '*.automount,*.mount,*.path,*.service,*.socket,*.swap,*.target,*.timer',
+  \ 'systemd': '*.automount,*.dnssd,*.link,*.mount,*.netdev,*.network,*.nspawn,*.path,*.service,*.slice,*.socket,*.swap,*.target,*.timer,*.#*',
   \ 'tablegen': '*.td',
   \ 'tads': '*.t',
   \ 'terraform': '*.hcl,*.nomad,*.tf,*.tfvars,*.workflow',

@@ -738,8 +738,15 @@ def show_warnings(all_filetypes, expected_filetypes)
       [f["extensions"], f["ignored_extensions"]].compact.flatten.map { |e| "*." + e }
   end
 
+  all_handled_regexps = Hash[all_handled.group_by { |a, b| a }.map { |a, b| [a, b[1]] }.map do |a, b|
+    [a, Regexp.union(b.map { |x| Regexp.escape(x).gsub('\\*', '.*') })]
+  end]
+
   for name, e in all_expected - all_handled
-    if e.match?(/\/\*\.[^\/]+$/) && all_handled.include?([name, e.split('/').last])
+    if e.match?(/\/\*?\.[^\/]+$/) && all_handled.include?([name, e.split('/').last.gsub('*', '')])
+      next
+    end
+    if e.include?('*') && all_handled_regexps[name].match?(e)
       next
     end
     puts "Missing for #{name}: #{e}"

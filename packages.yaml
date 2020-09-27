@@ -1583,13 +1583,22 @@ filetypes:
 - name: systemd
   extensions:
   - automount
+  - dnssd
+  - link
   - mount
+  - netdev
+  - network
+  - nspawn
   - path
   - service
+  - slice
   - socket
   - swap
   - target
   - timer
+  filenames:
+  - '*.#*'
+  - '*/systemd/*.conf'
 ---
 name: terraform
 remote: hashivim/vim-terraform

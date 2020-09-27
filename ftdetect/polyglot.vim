@@ -1817,13 +1817,21 @@ endif
 
 if !has_key(s:disabled_packages, 'systemd')
   au BufNewFile,BufRead *.automount set ft=systemd
+  au BufNewFile,BufRead *.dnssd set ft=systemd
+  au BufNewFile,BufRead *.link set ft=systemd
   au BufNewFile,BufRead *.mount set ft=systemd
+  au BufNewFile,BufRead *.netdev set ft=systemd
+  au BufNewFile,BufRead *.network set ft=systemd
+  au BufNewFile,BufRead *.nspawn set ft=systemd
   au BufNewFile,BufRead *.path set ft=systemd
   au BufNewFile,BufRead *.service set ft=systemd
+  au BufNewFile,BufRead *.slice set ft=systemd
   au BufNewFile,BufRead *.socket set ft=systemd
   au BufNewFile,BufRead *.swap set ft=systemd
   au BufNewFile,BufRead *.target set ft=systemd
   au BufNewFile,BufRead *.timer set ft=systemd
+  au BufNewFile,BufRead *.#* call s:StarSetf('systemd')
+  au BufNewFile,BufRead */systemd/*.conf set ft=systemd
 endif
 
 if !has_key(s:disabled_packages, 'terraform')
