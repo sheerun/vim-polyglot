@@ -327,8 +327,8 @@ filetypes:
   - ino
   ignored_warnings:
   # TODO: fix these
-  - C
-  - H
+  - '*.C'
+  - '*.H'
 - name: c
   linguist: C
   extra_extensions:
@@ -389,9 +389,9 @@ filetypes:
   # Probably mistake
   - '*Cakefile'
   # Used by C#
-  - csx
+  - '*.csx'
   # Used by Chuck
-  - ck
+  - '*.ck'
 - name: litcoffee
   linguist: Literate CoffeeScript
   extra_extensions:
@@ -433,7 +433,7 @@ filetypes:
   - tab
   ignored_warnings:
   # This is definitely not csv-only, maybe re-enable when heuristics done
-  - dat
+  - '*.dat'
 ---
 name: cucumber
 remote: tpope/vim-cucumber
@@ -924,8 +924,8 @@ filetypes:
   - ect
   ignored_warnings:
   # I haven't found reference to them on github
-  - djs
-  - hamljs
+  - '*.djs'
+  - '*.hamljs'
 ---
 name: jsx
 remote: MaxMEllon/vim-jsx-pretty
@@ -1042,7 +1042,7 @@ filetypes:
   # Handled by mdx extension
   - mdx
   ignored_warnings:
-  - '{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx}'
+  - '*.{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx}'
 ---
 name: mdx
 remote: jxnblk/vim-mdx-js
@@ -1642,9 +1642,9 @@ filetypes:
   linguist: Twig
   ignored_warnings:
   # handled by other extension
-  - xml.twig
+  - '*.xml.twig'
   # already covered by .twig
-  - html.twig
+  - '*.html.twig'
 - name: xml.twig
   extensions:
   - xml.twig
@@ -1835,7 +1835,7 @@ filetypes:
   # SaxBasic is close to Visual Basic
   - sba
   ignored_warnings:
-  - vb
+  - '*.vb'
 ---
 name: dosini
 remote: vim/vim:runtime
@@ -1853,7 +1853,7 @@ filetypes:
   ignored_extensions:
   - cfg
   ignored_warnings:
-  - php.ini
+  - '*.php.ini'
 ---
 name: odin
 remote: Tetralux/odin.vim

@@ -721,13 +721,13 @@ end
 
 def process_list(list, extras)
   list.flat_map do |f|
-    expand_all(yield f, extras).uniq.map { |e| [f["name"], e] }
+    expand_all(yield(f), extras).uniq.map { |e| [f["name"], e] }
   end
 end
 
 def show_warnings(all_filetypes, expected_filetypes)
   all_expected = process_list(expected_filetypes, false) do |f|
-    (f["extensions"] || []).map { |e| "*" + e } + (f["filenames"] || [])
+    (f["extensions"] || []).map { |e| "*." + e } + (f["filenames"] || [])
   end
 
   all_handled = process_list(all_filetypes, all_expected) do |f|
