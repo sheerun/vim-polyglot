@@ -56,6 +56,7 @@ syntax cluster typescriptPrimaryType contains=
   \ typescriptTupleType,
   \ typescriptTypeQuery,
   \ typescriptStringLiteralType,
+  \ typescriptTemplateLiteralType,
   \ typescriptReadonlyArrayKeyword,
   \ typescriptAssertType
 
@@ -63,6 +64,17 @@ syntax region  typescriptStringLiteralType contained
   \ start=/\z(["']\)/  skip=/\\\\\|\\\z1\|\\\n/  end=/\z1\|$/
   \ nextgroup=typescriptUnion
   \ skipwhite skipempty
+
+syntax region  typescriptTemplateLiteralType contained
+  \ start=/`/  skip=/\\\\\|\\`\|\n/  end=/`\|$/
+  \ contains=typescriptTemplateSubstitutionType
+  \ nextgroup=typescriptTypeOperator
+  \ skipwhite skipempty
+
+syntax region  typescriptTemplateSubstitutionType matchgroup=typescriptTemplateSB
+  \ start=/\${/ end=/}/
+  \ contains=@typescriptType
+  \ contained
 
 syntax region typescriptParenthesizedType matchgroup=typescriptParens
   \ start=/(/ end=/)/
@@ -103,9 +115,11 @@ syntax region typescriptTupleType matchgroup=typescriptBraces
   \ contained skipwhite
 
 syntax cluster typescriptTypeOperator
-  \ contains=typescriptUnion,typescriptTypeBracket
+  \ contains=typescriptUnion,typescriptTypeBracket,typescriptConstraint,typescriptConditionalType
 
 syntax match typescriptUnion /|\|&/ contained nextgroup=@typescriptPrimaryType skipwhite skipempty
+
+syntax match typescriptConditionalType /?\|:/ contained nextgroup=@typescriptPrimaryType skipwhite skipempty
 
 syntax cluster typescriptFunctionType contains=typescriptGenericFunc,typescriptFuncType
 syntax region typescriptGenericFunc matchgroup=typescriptTypeBrackets
