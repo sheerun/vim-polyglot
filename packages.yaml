@@ -1908,3 +1908,14 @@ filetypes:
   - '.gitignore'
   - '*/.config/git/ignore'
   - '*.git/info/exclude'
+---
+name: sql
+remote: vim/vim:runtime
+glob: '**/sql.vim'
+filetypes:
+- name: sql
+  linguist: PLSQL
+  extra_extensions:
+  - tyb
+  - typ
+  - tyc

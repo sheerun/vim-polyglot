@@ -506,6 +506,10 @@ if !has_key(s:disabled_packages, 'tads')
   au! BufRead,BufNewFile *.t
 endif
 
+if !has_key(s:disabled_packages, 'sql')
+  au! BufRead,BufNewFile *.pls,*.pkb,*.pks,*.plsql,*.tyb,*.typ,*.tyc
+endif
+
 if !has_key(s:disabled_packages, '8th')
   au BufNewFile,BufRead *.8th set ft=8th
 endif
@@ -2044,6 +2048,28 @@ if !has_key(s:disabled_packages, 'gitignore')
   au BufNewFile,BufRead *.git/info/exclude set ft=gitignore
   au BufNewFile,BufRead */.config/git/ignore set ft=gitignore
   au BufNewFile,BufRead {.,}gitignore set ft=gitignore
+endif
+
+if !has_key(s:disabled_packages, 'sql')
+  au BufNewFile,BufRead *.bdy set ft=sql
+  au BufNewFile,BufRead *.ddl set ft=sql
+  au BufNewFile,BufRead *.fnc set ft=sql
+  au BufNewFile,BufRead *.pck set ft=sql
+  au BufNewFile,BufRead *.pkb set ft=sql
+  au BufNewFile,BufRead *.pks set ft=sql
+  au BufNewFile,BufRead *.plb set ft=sql
+  au BufNewFile,BufRead *.pls set ft=sql
+  au BufNewFile,BufRead *.plsql set ft=sql
+  au BufNewFile,BufRead *.prc set ft=sql
+  au BufNewFile,BufRead *.spc set ft=sql
+  au BufNewFile,BufRead *.sql set ft=sql
+  au BufNewFile,BufRead *.tpb set ft=sql
+  au BufNewFile,BufRead *.tps set ft=sql
+  au BufNewFile,BufRead *.trg set ft=sql
+  au BufNewFile,BufRead *.tyb set ft=sql
+  au BufNewFile,BufRead *.tyc set ft=sql
+  au BufNewFile,BufRead *.typ set ft=sql
+  au BufNewFile,BufRead *.vw set ft=sql
 endif
 
 

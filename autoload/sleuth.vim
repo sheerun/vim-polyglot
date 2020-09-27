@@ -188,7 +188,7 @@ let s:globs = {
   \ 'slime': '*.slime',
   \ 'smt2': '*.smt2,*.smt',
   \ 'solidity': '*.sol',
-  \ 'sql': '*.pgsql',
+  \ 'sql': '*.pgsql,*.pls,*.bdy,*.ddl,*.fnc,*.pck,*.pkb,*.pks,*.plb,*.plsql,*.prc,*.spc,*.sql,*.tpb,*.tps,*.trg,*.vw,*.tyb,*.typ,*.tyc',
   \ 'stylus': '*.styl,*.stylus',
   \ 'svelte': '*.svelte',
   \ 'svg': '*.svg',
