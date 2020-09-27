@@ -1492,6 +1492,9 @@ filetypes:
   - 'zlogin'
   - 'zprofile'
   - 'zlogout'
+  extra_filenames:
+  # Udev symlinks config
+  - '*/etc/udev/cdsymlinks.conf'
 - name: zsh
   extensions:
   - zsh
@@ -1611,7 +1614,7 @@ remote: ericpruitt/tmux.vim:vim
 filetypes:
 - name: tmux
   filenames:
-  - '.tmux.conf'
+  - '.tmux*.conf'
 ---
 name: toml
 remote: cespare/vim-toml

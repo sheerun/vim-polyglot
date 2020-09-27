@@ -427,7 +427,7 @@ if !has_key(s:disabled_packages, 'scss')
 endif
 
 if !has_key(s:disabled_packages, 'sh')
-  au! BufRead,BufNewFile *.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout
+  au! BufRead,BufNewFile */etc/udev/cdsymlinks.conf,*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout
 endif
 
 if !has_key(s:disabled_packages, 'smt2')
@@ -444,6 +444,10 @@ endif
 
 if !has_key(s:disabled_packages, 'terraform')
   au! BufRead,BufNewFile *.tf
+endif
+
+if !has_key(s:disabled_packages, 'tmux')
+  au! BufRead,BufNewFile .tmux*.conf
 endif
 
 if !has_key(s:disabled_packages, 'toml')
@@ -1737,6 +1741,7 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead *.sh.in set ft=sh
   au BufNewFile,BufRead *.tmux set ft=sh
   au BufNewFile,BufRead *.tool set ft=sh
+  au BufNewFile,BufRead */etc/udev/cdsymlinks.conf set ft=sh
   au BufNewFile,BufRead {.,}bash_aliases set ft=sh
   au BufNewFile,BufRead {.,}bash_history set ft=sh
   au BufNewFile,BufRead {.,}bash_logout set ft=sh
@@ -1834,7 +1839,7 @@ if !has_key(s:disabled_packages, 'thrift')
 endif
 
 if !has_key(s:disabled_packages, 'tmux')
-  au BufNewFile,BufRead {.,}tmux.conf set ft=tmux
+  au BufNewFile,BufRead {.,}tmux*.conf set ft=tmux
 endif
 
 if !has_key(s:disabled_packages, 'toml')

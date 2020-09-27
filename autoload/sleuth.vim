@@ -200,7 +200,7 @@ let s:globs = {
   \ 'terraform': '*.hcl,*.nomad,*.tf,*.tfvars,*.workflow',
   \ 'textile': '*.textile',
   \ 'thrift': '*.thrift',
-  \ 'tmux': '.tmux.conf',
+  \ 'tmux': '.tmux*.conf',
   \ 'toml': '*.toml,Cargo.lock,Gopkg.lock,poetry.lock,Pipfile',
   \ 'tptp': '*.p,*.tptp,*.ax',
   \ 'trasys': '*.inp',

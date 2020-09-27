@@ -539,23 +539,7 @@ def generate_ftdetect(packages, heuristics)
     end
   end
  
-  defined_extensions = all_filetypes.flat_map { |f| expand_all(f["extensions"] || []).map { |e| [f["name"], e] } }
-  expected_extensions = expected_filetypes.flat_map { |f| expand_all(f["extensions"] || []).map { |e| [f["name"], e] } }
-  ignored_extensions = all_filetypes.flat_map { |f| expand_all(f.fetch("ignored_extensions", [])).map { |e| [f["name"], e] } }
-
-  defined_filenames = all_filetypes.flat_map { |f| expand_all(f["filenames"] || []).map { |e| [f["name"], e] } }
-  expected_filenames = expected_filetypes.flat_map { |f| expand_all(f["filenames"] || []).map { |e| [f["name"], e] } }
-  ignored_filenames = all_filetypes.flat_map { |f| expand_all(f.fetch("ignored_filenames", [])).map { |e| [f["name"], e] } }
-
-  ignored_warnings = all_filetypes.flat_map { |f| expand_all(f.fetch("ignored_warnings", [])).map { |e| [f["name"], e] } + [f, "*"] }
-
-  for name, e in expected_extensions - defined_extensions - ignored_extensions - ignored_warnings
-    puts "Missing extension for #{name}: #{e}"
-  end
-
-  for name, e in expected_filenames - defined_filenames - ignored_filenames - ignored_warnings
-    puts "Missing filename for #{name}: #{e}"
-  end
+  show_warnings(all_filetypes, expected_filetypes)
 
   ftdetect = read_section('ftdetect/polyglot.vim')
 
@@ -650,14 +634,30 @@ def comma_expanson(s)
   end
 end
 
-def expand_all(pattern)
+def expand_all(pattern, all = false)
+  if !pattern
+    return []
+  end
+
   if pattern.is_a?(Array)
-    return pattern.flat_map { |p| expand_all(p) }
+    return pattern.flat_map { |p| expand_all(p, all) }
   end
 
   comma_expanson(pattern).flat_map do |e|
     brace_expansion(e).flat_map do |e2|
-      square_expansion(e2)
+      square_expansion(e2).flat_map do |e3|
+        results = [e3]
+        if all
+          if e3[0] == "."
+            results << e3[1..-1]
+          end
+          if e3.include?("*")
+            results.concat(results.map { |e4| e4.gsub("*", "") })
+          end
+          results << "*"
+        end
+        results
+      end
     end
   end
 end
@@ -717,6 +717,30 @@ def generate_plugins(packages)
 
 
   File.write('autoload/sleuth.vim', output)
+end
+
+def process_list(list, extras)
+  list.flat_map do |f|
+    expand_all(yield f, extras).uniq.map { |e| [f["name"], e] }
+  end
+end
+
+def show_warnings(all_filetypes, expected_filetypes)
+  all_expected = process_list(expected_filetypes, false) do |f|
+    (f["extensions"] || []).map { |e| "*" + e } + (f["filenames"] || [])
+  end
+
+  all_handled = process_list(all_filetypes, all_expected) do |f|
+    [f["filenames"], f["ignored_filenames"], f["ignored_warnings"]].compact.flatten + 
+      [f["extensions"], f["ignored_extensions"]].compact.flatten.map { |e| "*." + e }
+  end
+
+  for name, e in all_expected - all_handled
+    if e.match?(/\/\*\.[^\/]+$/) && all_handled.include?([name, e.split('/').last])
+      next
+    end
+    puts "Missing for #{name}: #{e}"
+  end
 end
 
 
