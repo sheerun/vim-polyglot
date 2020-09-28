@@ -958,10 +958,8 @@ filetypes:
   - journal
 ---
 name: less
-remote: groenewege/vim-less
-ignored_dirs:
-# We don't want to slow down .html files
-- after
+remote: vim/vim:runtime
+glob: '**/less.vim'
 filetypes:
 - name: less
   linguist: Less

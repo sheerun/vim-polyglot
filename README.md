@@ -152,7 +152,7 @@ If you need full functionality of any plugin, please use it directly with your p
 - [julia](https://github.com/JuliaEditorSupport/julia-vim)
 - [kotlin](https://github.com/udalov/kotlin-vim)
 - [ledger](https://github.com/ledger/vim-ledger)
-- [less](https://github.com/groenewege/vim-less)
+- [less](https://github.com/vim/vim/tree/master/runtime)
 - [lilypond](https://github.com/anowlcalledjosh/vim-lilypond)
 - [livescript](https://github.com/gkz/vim-ls)
 - [llvm](https://github.com/rhysd/vim-llvm)
