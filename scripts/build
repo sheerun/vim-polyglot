@@ -433,9 +433,6 @@ def generate_ftdetect(packages, heuristics)
     end
   end
 
-  ambiguous_extensions = extensions
-    .select { |a, b| b.uniq.size > 1 }.keys.sort
-
   all_filetypes = packages.flat_map { |f| f["filetypes"] || [] }
   filetype_names = Set.new(all_filetypes.map { |f| f["name"] })
 
@@ -478,7 +475,7 @@ def generate_ftdetect(packages, heuristics)
 
     package_heuristics = []
 
-    autocommands = ""
+    autocommands = []
     for filetype in filetypes
       name = filetype.fetch("name")
       syntax = filetype["syntax"] ? " | set syntax=#{filetype["syntax"]}" : ""
@@ -496,7 +493,8 @@ def generate_ftdetect(packages, heuristics)
       extensions = filetype["extensions"]
       filenames = filetype["filenames"]
 
-      set_extensions = []
+      set_globs = []
+
       for extension in extensions.sort
         outer_filetype = filetype["outer_filetype"]
         if outer_filetype
@@ -508,16 +506,8 @@ def generate_ftdetect(packages, heuristics)
         if heuristic
           package_heuristics << heuristic
         else
-          # if ambiguous_extensions.include?(extension)
-          #   puts "Ambiguous extension without heuristic: #{extension} => #{filetype["name"]}"
-          # end
-          #
-          set_extensions << "*." + extension
+          set_globs << "*." + extension
         end
-      end
-
-      if set_extensions.size > 0
-        autocommands << "  au BufNewFile,BufRead #{set_extensions.join(",")} #{set_command}\n"
       end
 
       for filename in filenames.sort
@@ -527,10 +517,15 @@ def generate_ftdetect(packages, heuristics)
         if filename[-1] == "*"
           autocommands << "  au BufNewFile,BufRead #{filename} call s:StarSetf('#{name}')\n"
         else
-          autocommands << "  au BufNewFile,BufRead #{filename} #{set_command}\n"
+          set_globs << filename
         end
       end
+
+      if set_globs.size > 0
+        autocommands << "  au BufNewFile,BufRead #{set_globs.join(",")} #{set_command}\n"
+      end
     end
+
 
     for heuristic in package_heuristics.uniq
       extensions = heuristic["extensions"].map { |e| "*.#{e}" }
@@ -539,7 +534,7 @@ def generate_ftdetect(packages, heuristics)
 
     if autocommands != ""
       output << "if !has_key(s:disabled_packages, '#{package["name"]}')\n"
-      output << autocommands
+      output << autocommands.reverse.join("")
       output << "endif\n\n"
     end
   end

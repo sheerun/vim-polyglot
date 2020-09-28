@@ -519,16 +519,12 @@ if !has_key(s:disabled_packages, '8th')
 endif
 
 if !has_key(s:disabled_packages, 'haproxy')
-  au BufNewFile,BufRead *.cfg set ft=haproxy
+  au BufNewFile,BufRead *.cfg,haproxy.cfg set ft=haproxy
   au BufNewFile,BufRead haproxy*.c* call s:StarSetf('haproxy')
-  au BufNewFile,BufRead haproxy.cfg set ft=haproxy
 endif
 
 if !has_key(s:disabled_packages, 'a2ps')
-  au BufNewFile,BufRead */etc/a2ps.cfg set ft=a2ps
-  au BufNewFile,BufRead */etc/a2ps/*.cfg set ft=a2ps
-  au BufNewFile,BufRead {.,}a2psrc set ft=a2ps
-  au BufNewFile,BufRead a2psrc set ft=a2ps
+  au BufNewFile,BufRead */etc/a2ps.cfg,*/etc/a2ps/*.cfg,{.,}a2psrc,a2psrc set ft=a2ps
 endif
 
 if !has_key(s:disabled_packages, 'a65')
@@ -576,9 +572,7 @@ if !has_key(s:disabled_packages, 'aidl')
 endif
 
 if !has_key(s:disabled_packages, 'alsaconf')
-  au BufNewFile,BufRead */etc/asound.conf set ft=alsaconf
-  au BufNewFile,BufRead */usr/share/alsa/alsa.conf set ft=alsaconf
-  au BufNewFile,BufRead {.,}asoundrc set ft=alsaconf
+  au BufNewFile,BufRead */etc/asound.conf,*/usr/share/alsa/alsa.conf,{.,}asoundrc set ft=alsaconf
 endif
 
 if !has_key(s:disabled_packages, 'aml')
@@ -590,21 +584,7 @@ if !has_key(s:disabled_packages, 'ampl')
 endif
 
 if !has_key(s:disabled_packages, 'xml')
-  au BufNewFile,BufRead *.adml,*.admx,*.ant,*.axml,*.builds,*.ccproj,*.ccxml,*.cdxml,*.clixml,*.cproject,*.cscfg,*.csdef,*.csl,*.csproj,*.csproj.user,*.ct,*.depproj,*.dita,*.ditamap,*.ditaval,*.dll.config,*.dotsettings,*.filters,*.fsproj,*.fxml,*.glade,*.gml,*.gmx,*.grxml,*.gst,*.iml,*.ivy,*.jelly,*.jsproj,*.kml,*.launch,*.mdpolicy,*.mjml,*.mm,*.mod,*.mxml,*.natvis,*.ncl,*.ndproj,*.nproj,*.nuspec,*.odd,*.osm,*.pkgproj,*.pluginspec,*.proj,*.props,*.ps1xml,*.psc1,*.pt,*.rdf,*.resx,*.rss,*.sch,*.scxml,*.sfproj,*.shproj,*.srdf,*.storyboard,*.sublime-snippet,*.targets,*.tml,*.tpm,*.ui,*.urdf,*.ux,*.vbproj,*.vcxproj,*.vsixmanifest,*.vssettings,*.vstemplate,*.vxml,*.wixproj,*.workflow,*.wpl,*.wsdl,*.wsf,*.wxi,*.wxl,*.wxs,*.x3d,*.xacro,*.xaml,*.xib,*.xlf,*.xliff,*.xmi,*.xml,*.xml.dist,*.xproj,*.xsd,*.xspec,*.xul,*.zcml set ft=xml
-  au BufNewFile,BufRead */etc/blkid.tab set ft=xml
-  au BufNewFile,BufRead */etc/blkid.tab.old set ft=xml
-  au BufNewFile,BufRead */etc/xdg/menus/*.menu set ft=xml
-  au BufNewFile,BufRead *fglrxrc set ft=xml
-  au BufNewFile,BufRead {.,}classpath set ft=xml
-  au BufNewFile,BufRead {.,}cproject set ft=xml
-  au BufNewFile,BufRead {.,}project set ft=xml
-  au BufNewFile,BufRead App.config set ft=xml
-  au BufNewFile,BufRead NuGet.config set ft=xml
-  au BufNewFile,BufRead Settings.StyleCop set ft=xml
-  au BufNewFile,BufRead Web.Debug.config set ft=xml
-  au BufNewFile,BufRead Web.Release.config set ft=xml
-  au BufNewFile,BufRead Web.config set ft=xml
-  au BufNewFile,BufRead packages.config set ft=xml
+  au BufNewFile,BufRead *.adml,*.admx,*.ant,*.axml,*.builds,*.ccproj,*.ccxml,*.cdxml,*.clixml,*.cproject,*.cscfg,*.csdef,*.csl,*.csproj,*.csproj.user,*.ct,*.depproj,*.dita,*.ditamap,*.ditaval,*.dll.config,*.dotsettings,*.filters,*.fsproj,*.fxml,*.glade,*.gml,*.gmx,*.grxml,*.gst,*.iml,*.ivy,*.jelly,*.jsproj,*.kml,*.launch,*.mdpolicy,*.mjml,*.mm,*.mod,*.mxml,*.natvis,*.ncl,*.ndproj,*.nproj,*.nuspec,*.odd,*.osm,*.pkgproj,*.pluginspec,*.proj,*.props,*.ps1xml,*.psc1,*.pt,*.rdf,*.resx,*.rss,*.sch,*.scxml,*.sfproj,*.shproj,*.srdf,*.storyboard,*.sublime-snippet,*.targets,*.tml,*.tpm,*.ui,*.urdf,*.ux,*.vbproj,*.vcxproj,*.vsixmanifest,*.vssettings,*.vstemplate,*.vxml,*.wixproj,*.workflow,*.wpl,*.wsdl,*.wsf,*.wxi,*.wxl,*.wxs,*.x3d,*.xacro,*.xaml,*.xib,*.xlf,*.xliff,*.xmi,*.xml,*.xml.dist,*.xproj,*.xsd,*.xspec,*.xul,*.zcml,*/etc/blkid.tab,*/etc/blkid.tab.old,*/etc/xdg/menus/*.menu,*fglrxrc,{.,}classpath,{.,}cproject,{.,}project,App.config,NuGet.config,Settings.StyleCop,Web.Debug.config,Web.Release.config,Web.config,packages.config set ft=xml
 endif
 
 if !has_key(s:disabled_packages, 'ant')
@@ -612,19 +592,17 @@ if !has_key(s:disabled_packages, 'ant')
 endif
 
 if !has_key(s:disabled_packages, 'apache')
-  au BufNewFile,BufRead */etc/apache2/*.conf* call s:StarSetf('apache')
-  au BufNewFile,BufRead */etc/apache2/conf.*/* call s:StarSetf('apache')
-  au BufNewFile,BufRead */etc/apache2/mods-*/* call s:StarSetf('apache')
-  au BufNewFile,BufRead */etc/apache2/sites-*/* call s:StarSetf('apache')
-  au BufNewFile,BufRead */etc/apache2/sites-*/*.com set ft=apache
-  au BufNewFile,BufRead */etc/httpd/*.conf set ft=apache
-  au BufNewFile,BufRead */etc/httpd/conf.d/*.conf* call s:StarSetf('apache')
-  au BufNewFile,BufRead {.,}htaccess set ft=apache
-  au BufNewFile,BufRead access.conf* call s:StarSetf('apache')
-  au BufNewFile,BufRead apache.conf* call s:StarSetf('apache')
-  au BufNewFile,BufRead apache2.conf* call s:StarSetf('apache')
-  au BufNewFile,BufRead httpd.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/sites-*/*.com,*/etc/httpd/*.conf,{.,}htaccess set ft=apache
   au BufNewFile,BufRead srm.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead httpd.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead apache2.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead apache.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead access.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/httpd/conf.d/*.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/sites-*/* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/mods-*/* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/conf.*/* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/*.conf* call s:StarSetf('apache')
 endif
 
 if !has_key(s:disabled_packages, 'apiblueprint')
@@ -636,22 +614,18 @@ if !has_key(s:disabled_packages, 'applescript')
 endif
 
 if !has_key(s:disabled_packages, 'aptconf')
-  au BufNewFile,BufRead */.aptitude/config set ft=aptconf
-  au BufNewFile,BufRead */etc/apt/apt.conf.d/*.conf set ft=aptconf
+  au BufNewFile,BufRead */.aptitude/config,*/etc/apt/apt.conf.d/*.conf,apt.conf set ft=aptconf
   au BufNewFile,BufRead */etc/apt/apt.conf.d/[^.]* call s:StarSetf('aptconf')
-  au BufNewFile,BufRead apt.conf set ft=aptconf
 endif
 
 if !has_key(s:disabled_packages, 'arch')
-  au BufNewFile,BufRead {.,}arch-inventory set ft=arch
-  au BufNewFile,BufRead =tagging-method set ft=arch
+  au BufNewFile,BufRead {.,}arch-inventory,=tagging-method set ft=arch
 endif
 
 if !has_key(s:disabled_packages, 'c/c++')
-  au BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.moc,*.tcc,*.tlh,*.tpp set ft=cpp
-  au BufNewFile,BufRead *.c,*.cats,*.idc,*.qc set ft=c
-  au BufNewFile,BufRead *enlightenment/*.cfg set ft=c
   au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
+  au BufNewFile,BufRead *.c,*.cats,*.idc,*.qc,*enlightenment/*.cfg set ft=c
+  au BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.moc,*.tcc,*.tlh,*.tpp set ft=cpp
 endif
 
 if !has_key(s:disabled_packages, 'arduino')
@@ -675,8 +649,7 @@ if !has_key(s:disabled_packages, 'elf')
 endif
 
 if !has_key(s:disabled_packages, 'automake')
-  au BufNewFile,BufRead GNUmakefile.am set ft=automake
-  au BufNewFile,BufRead [Mm]akefile.am set ft=automake
+  au BufNewFile,BufRead GNUmakefile.am,[Mm]akefile.am set ft=automake
 endif
 
 if !has_key(s:disabled_packages, 'asn')
@@ -684,8 +657,8 @@ if !has_key(s:disabled_packages, 'asn')
 endif
 
 if !has_key(s:disabled_packages, 'aspvbs')
-  au! BufNewFile,BufRead *.asa call polyglot#DetectAsaFiletype()
   au! BufNewFile,BufRead *.asp call polyglot#DetectAspFiletype()
+  au! BufNewFile,BufRead *.asa call polyglot#DetectAsaFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'aspperl')
@@ -712,26 +685,27 @@ if !has_key(s:disabled_packages, 'caddyfile')
   au BufNewFile,BufRead Caddyfile set ft=caddyfile
 endif
 
+if !has_key(s:disabled_packages, 'cpp-modern')
+endif
+
 if !has_key(s:disabled_packages, 'carp')
   au BufNewFile,BufRead *.carp set ft=carp
 endif
 
 if !has_key(s:disabled_packages, 'clojure')
-  au BufNewFile,BufRead *.boot,*.cl2,*.clj,*.cljc,*.cljs,*.cljs.hl,*.cljscm,*.cljx,*.edn,*.hic set ft=clojure
-  au BufNewFile,BufRead build.boot set ft=clojure
-  au BufNewFile,BufRead profile.boot set ft=clojure
-  au BufNewFile,BufRead riemann.config set ft=clojure
+  au BufNewFile,BufRead *.boot,*.cl2,*.clj,*.cljc,*.cljs,*.cljs.hl,*.cljscm,*.cljx,*.edn,*.hic,build.boot,profile.boot,riemann.config set ft=clojure
 endif
 
 if !has_key(s:disabled_packages, 'cmake')
-  au BufNewFile,BufRead *.cmake,*.cmake.in set ft=cmake
-  au BufNewFile,BufRead CMakeLists.txt set ft=cmake
+  au BufNewFile,BufRead *.cmake,*.cmake.in,CMakeLists.txt set ft=cmake
 endif
 
 if !has_key(s:disabled_packages, 'coffee-script')
-  au BufNewFile,BufRead *._coffee,*.cake,*.cjsx,*.coffee,*.coffeekup,*.iced set ft=coffee
-  au BufNewFile,BufRead Cakefile set ft=coffee
   au BufNewFile,BufRead *.coffee.md,*.litcoffee set ft=litcoffee
+  au BufNewFile,BufRead *._coffee,*.cake,*.cjsx,*.coffee,*.coffeekup,*.iced,Cakefile set ft=coffee
+endif
+
+if !has_key(s:disabled_packages, 'cjsx')
 endif
 
 if !has_key(s:disabled_packages, 'cryptol')
@@ -739,9 +713,8 @@ if !has_key(s:disabled_packages, 'cryptol')
 endif
 
 if !has_key(s:disabled_packages, 'crystal')
-  au BufNewFile,BufRead *.cr set ft=crystal
-  au BufNewFile,BufRead Projectfile set ft=crystal
   au BufNewFile,BufRead *.ecr set ft=ecrystal
+  au BufNewFile,BufRead *.cr,Projectfile set ft=crystal
 endif
 
 if !has_key(s:disabled_packages, 'csv')
@@ -765,26 +738,22 @@ if !has_key(s:disabled_packages, 'dhall')
 endif
 
 if !has_key(s:disabled_packages, 'dlang')
-  au BufNewFile,BufRead *.d,*.di set ft=d
-  au BufNewFile,BufRead *.lst set ft=dcov
-  au BufNewFile,BufRead *.dd set ft=dd
-  au BufNewFile,BufRead *.ddoc set ft=ddoc
   au BufNewFile,BufRead *.sdl set ft=dsdl
+  au BufNewFile,BufRead *.ddoc set ft=ddoc
+  au BufNewFile,BufRead *.dd set ft=dd
+  au BufNewFile,BufRead *.lst set ft=dcov
+  au BufNewFile,BufRead *.d,*.di set ft=d
 endif
 
 if !has_key(s:disabled_packages, 'dockerfile')
-  au BufNewFile,BufRead *.Dockerfile,*.dock,*.dockerfile set ft=Dockerfile
-  au BufNewFile,BufRead Dockerfile set ft=Dockerfile
+  au BufNewFile,BufRead docker-compose*.yaml,docker-compose*.yml set ft=yaml.docker-compose
+  au BufNewFile,BufRead *.Dockerfile,*.dock,*.dockerfile,Dockerfile,dockerfile set ft=Dockerfile
   au BufNewFile,BufRead Dockerfile* call s:StarSetf('Dockerfile')
-  au BufNewFile,BufRead dockerfile set ft=Dockerfile
-  au BufNewFile,BufRead docker-compose*.yaml set ft=yaml.docker-compose
-  au BufNewFile,BufRead docker-compose*.yml set ft=yaml.docker-compose
 endif
 
 if !has_key(s:disabled_packages, 'elixir')
-  au BufNewFile,BufRead *.ex,*.exs set ft=elixir
-  au BufNewFile,BufRead mix.lock set ft=elixir
   au BufNewFile,BufRead *.eex,*.leex set ft=eelixir
+  au BufNewFile,BufRead *.ex,*.exs,mix.lock set ft=elixir
 endif
 
 if !has_key(s:disabled_packages, 'elm')
@@ -800,11 +769,7 @@ if !has_key(s:disabled_packages, 'emblem')
 endif
 
 if !has_key(s:disabled_packages, 'erlang')
-  au BufNewFile,BufRead *.app,*.app.src,*.erl,*.es,*.escript,*.hrl,*.xrl,*.yaws,*.yrl set ft=erlang
-  au BufNewFile,BufRead Emakefile set ft=erlang
-  au BufNewFile,BufRead rebar.config set ft=erlang
-  au BufNewFile,BufRead rebar.config.lock set ft=erlang
-  au BufNewFile,BufRead rebar.lock set ft=erlang
+  au BufNewFile,BufRead *.app,*.app.src,*.erl,*.es,*.escript,*.hrl,*.xrl,*.yaws,*.yrl,Emakefile,rebar.config,rebar.config.lock,rebar.lock set ft=erlang
 endif
 
 if !has_key(s:disabled_packages, 'fennel')
@@ -812,8 +777,7 @@ if !has_key(s:disabled_packages, 'fennel')
 endif
 
 if !has_key(s:disabled_packages, 'ferm')
-  au BufNewFile,BufRead *.ferm set ft=ferm
-  au BufNewFile,BufRead ferm.conf set ft=ferm
+  au BufNewFile,BufRead *.ferm,ferm.conf set ft=ferm
 endif
 
 if !has_key(s:disabled_packages, 'fish')
@@ -825,18 +789,18 @@ if !has_key(s:disabled_packages, 'flatbuffers')
 endif
 
 if !has_key(s:disabled_packages, 'forth')
-  au BufNewFile,BufRead *.ft,*.fth set ft=forth
   au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+  au BufNewFile,BufRead *.ft,*.fth set ft=forth
 endif
 
 if !has_key(s:disabled_packages, 'glsl')
-  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader set ft=glsl
   au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader set ft=glsl
 endif
 
 if !has_key(s:disabled_packages, 'fsharp')
-  au BufNewFile,BufRead *.fsi,*.fsx set ft=fsharp
   au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+  au BufNewFile,BufRead *.fsi,*.fsx set ft=fsharp
 endif
 
 if !has_key(s:disabled_packages, 'gdscript')
@@ -844,17 +808,11 @@ if !has_key(s:disabled_packages, 'gdscript')
 endif
 
 if !has_key(s:disabled_packages, 'git')
-  au BufNewFile,BufRead *.gitconfig set ft=gitconfig
-  au BufNewFile,BufRead *.git/config set ft=gitconfig
-  au BufNewFile,BufRead *.git/modules/*/config set ft=gitconfig
-  au BufNewFile,BufRead */.config/git/config set ft=gitconfig
-  au BufNewFile,BufRead */git/config set ft=gitconfig
-  au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')
-  au BufNewFile,BufRead {.,}gitconfig set ft=gitconfig
-  au BufNewFile,BufRead {.,}gitmodules set ft=gitconfig
-  au BufNewFile,BufRead git-rebase-todo set ft=gitrebase
-  au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
   au BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,TAG_EDITMSG set ft=gitcommit
+  au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
+  au BufNewFile,BufRead git-rebase-todo set ft=gitrebase
+  au BufNewFile,BufRead *.gitconfig,*.git/config,*.git/modules/*/config,*/.config/git/config,*/git/config,{.,}gitconfig,{.,}gitmodules set ft=gitconfig
+  au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')
 endif
 
 if !has_key(s:disabled_packages, 'gmpl')
@@ -866,15 +824,14 @@ if !has_key(s:disabled_packages, 'gnuplot')
 endif
 
 if !has_key(s:disabled_packages, 'go')
-  au BufNewFile,BufRead *.go set ft=go
-  au BufNewFile,BufRead go.mod set ft=gomod
   au BufNewFile,BufRead *.tmpl set ft=gohtmltmpl
+  au BufNewFile,BufRead go.mod set ft=gomod
+  au BufNewFile,BufRead *.go set ft=go
 endif
 
 if !has_key(s:disabled_packages, 'javascript')
-  au BufNewFile,BufRead *._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.javascript,*.js,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib set ft=javascript
-  au BufNewFile,BufRead Jakefile set ft=javascript
   au BufNewFile,BufRead *.flow set ft=flow
+  au BufNewFile,BufRead *._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.javascript,*.js,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile set ft=javascript
 endif
 
 if !has_key(s:disabled_packages, 'jsx')
@@ -886,14 +843,14 @@ if !has_key(s:disabled_packages, 'graphql')
 endif
 
 if !has_key(s:disabled_packages, 'groovy')
-  au BufNewFile,BufRead *.gradle,*.groovy,*.grt,*.gtpl,*.gvy set ft=groovy
-  au BufNewFile,BufRead Jenkinsfile set ft=groovy
+  au BufNewFile,BufRead *.gradle,*.groovy,*.grt,*.gtpl,*.gvy,Jenkinsfile set ft=groovy
+endif
+
+if !has_key(s:disabled_packages, 'gradle')
 endif
 
 if !has_key(s:disabled_packages, 'grub')
-  au BufNewFile,BufRead */boot/grub/grub.conf set ft=grub
-  au BufNewFile,BufRead */boot/grub/menu.lst set ft=grub
-  au BufNewFile,BufRead */etc/grub.conf set ft=grub
+  au BufNewFile,BufRead */boot/grub/grub.conf,*/boot/grub/menu.lst,*/etc/grub.conf set ft=grub
 endif
 
 if !has_key(s:disabled_packages, 'haml')
@@ -901,8 +858,8 @@ if !has_key(s:disabled_packages, 'haml')
 endif
 
 if !has_key(s:disabled_packages, 'handlebars')
-  au BufNewFile,BufRead *.hjs,*.hogan,*.hulk,*.mustache set ft=html.mustache
   au BufNewFile,BufRead *.handlebars,*.hb,*.hbs,*.hdbs set ft=html.handlebars
+  au BufNewFile,BufRead *.hjs,*.hogan,*.hulk,*.mustache set ft=html.mustache
 endif
 
 if !has_key(s:disabled_packages, 'haskell')
@@ -914,8 +871,7 @@ if !has_key(s:disabled_packages, 'haxe')
 endif
 
 if !has_key(s:disabled_packages, 'hcl')
-  au BufNewFile,BufRead *.hcl,*.nomad,*.workflow set ft=hcl
-  au BufNewFile,BufRead Appfile set ft=hcl
+  au BufNewFile,BufRead *.hcl,*.nomad,*.workflow,Appfile set ft=hcl
 endif
 
 if !has_key(s:disabled_packages, 'hive')
@@ -923,16 +879,12 @@ if !has_key(s:disabled_packages, 'hive')
 endif
 
 if !has_key(s:disabled_packages, 'html5')
-  au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.st,*.xht,*.xhtml set ft=html
   au! BufNewFile,BufRead *.html call polyglot#DetectHtmlFiletype()
+  au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.st,*.xht,*.xhtml set ft=html
 endif
 
 if !has_key(s:disabled_packages, 'i3')
-  au BufNewFile,BufRead *.i3.config,*.i3config set ft=i3config
-  au BufNewFile,BufRead {.,}i3.config set ft=i3config
-  au BufNewFile,BufRead {.,}i3config set ft=i3config
-  au BufNewFile,BufRead i3.config set ft=i3config
-  au BufNewFile,BufRead i3config set ft=i3config
+  au BufNewFile,BufRead *.i3.config,*.i3config,{.,}i3.config,{.,}i3config,i3.config,i3config set ft=i3config
 endif
 
 if !has_key(s:disabled_packages, 'icalendar')
@@ -940,26 +892,26 @@ if !has_key(s:disabled_packages, 'icalendar')
 endif
 
 if !has_key(s:disabled_packages, 'idris')
-  au BufNewFile,BufRead idris-response set ft=idris
-  au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
   au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
+  au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
+  au BufNewFile,BufRead idris-response set ft=idris
 endif
 
 if !has_key(s:disabled_packages, 'idris2')
-  au BufNewFile,BufRead *.ipkg set ft=idris2
-  au BufNewFile,BufRead idris-response set ft=idris2
-  au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
   au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
+  au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
+  au BufNewFile,BufRead *.ipkg,idris-response set ft=idris2
 endif
 
 if !has_key(s:disabled_packages, 'ion')
-  au BufNewFile,BufRead *.ion set ft=ion
-  au BufNewFile,BufRead ~/.config/ion/initrc set ft=ion
+  au BufNewFile,BufRead *.ion,~/.config/ion/initrc set ft=ion
+endif
+
+if !has_key(s:disabled_packages, 'javascript-sql')
 endif
 
 if !has_key(s:disabled_packages, 'jenkins')
-  au BufNewFile,BufRead *.Jenkinsfile,*.jenkinsfile set ft=Jenkinsfile
-  au BufNewFile,BufRead Jenkinsfile set ft=Jenkinsfile
+  au BufNewFile,BufRead *.Jenkinsfile,*.jenkinsfile,Jenkinsfile set ft=Jenkinsfile
   au BufNewFile,BufRead Jenkinsfile* call s:StarSetf('Jenkinsfile')
 endif
 
@@ -968,8 +920,7 @@ if !has_key(s:disabled_packages, 'htmldjango')
 endif
 
 if !has_key(s:disabled_packages, 'jq')
-  au BufNewFile,BufRead *.jq set ft=jq
-  au BufNewFile,BufRead {.,}jqrc set ft=jq
+  au BufNewFile,BufRead *.jq,{.,}jqrc set ft=jq
   au BufNewFile,BufRead {.,}jqrc* call s:StarSetf('jq')
 endif
 
@@ -978,15 +929,7 @@ if !has_key(s:disabled_packages, 'json5')
 endif
 
 if !has_key(s:disabled_packages, 'json')
-  au BufNewFile,BufRead *.JSON-tmLanguage,*.avsc,*.geojson,*.gltf,*.har,*.ice,*.json,*.jsonl,*.jsonp,*.mcmeta,*.template,*.tfstate,*.tfstate.backup,*.topojson,*.webapp,*.webmanifest,*.yy,*.yyp set ft=json
-  au BufNewFile,BufRead {.,}arcconfig set ft=json
-  au BufNewFile,BufRead {.,}htmlhintrc set ft=json
-  au BufNewFile,BufRead {.,}tern-config set ft=json
-  au BufNewFile,BufRead {.,}tern-project set ft=json
-  au BufNewFile,BufRead {.,}watchmanconfig set ft=json
-  au BufNewFile,BufRead Pipfile.lock set ft=json
-  au BufNewFile,BufRead composer.lock set ft=json
-  au BufNewFile,BufRead mcmod.info set ft=json
+  au BufNewFile,BufRead *.JSON-tmLanguage,*.avsc,*.geojson,*.gltf,*.har,*.ice,*.json,*.jsonl,*.jsonp,*.mcmeta,*.template,*.tfstate,*.tfstate.backup,*.topojson,*.webapp,*.webmanifest,*.yy,*.yyp,{.,}arcconfig,{.,}htmlhintrc,{.,}tern-config,{.,}tern-project,{.,}watchmanconfig,Pipfile.lock,composer.lock,mcmod.info set ft=json
 endif
 
 if !has_key(s:disabled_packages, 'jsonnet')
@@ -1018,24 +961,20 @@ if !has_key(s:disabled_packages, 'lilypond')
 endif
 
 if !has_key(s:disabled_packages, 'livescript')
-  au BufNewFile,BufRead *._ls,*.ls set ft=livescript
-  au BufNewFile,BufRead Slakefile set ft=livescript
+  au BufNewFile,BufRead *._ls,*.ls,Slakefile set ft=livescript
 endif
 
 if !has_key(s:disabled_packages, 'llvm')
-  au BufNewFile,BufRead *.ll set ft=llvm
   au BufNewFile,BufRead *.td set ft=tablegen
+  au BufNewFile,BufRead *.ll set ft=llvm
 endif
 
 if !has_key(s:disabled_packages, 'log')
-  au BufNewFile,BufRead *.LOG,*.log set ft=log
-  au BufNewFile,BufRead *_LOG set ft=log
-  au BufNewFile,BufRead *_log set ft=log
+  au BufNewFile,BufRead *.LOG,*.log,*_LOG,*_log set ft=log
 endif
 
 if !has_key(s:disabled_packages, 'lua')
-  au BufNewFile,BufRead *.fcgi,*.lua,*.nse,*.p8,*.pd_lua,*.rbxs,*.rockspec,*.wlua set ft=lua
-  au BufNewFile,BufRead {.,}luacheckrc set ft=lua
+  au BufNewFile,BufRead *.fcgi,*.lua,*.nse,*.p8,*.pd_lua,*.rbxs,*.rockspec,*.wlua,{.,}luacheckrc set ft=lua
 endif
 
 if !has_key(s:disabled_packages, 'm4')
@@ -1043,21 +982,20 @@ if !has_key(s:disabled_packages, 'm4')
 endif
 
 if !has_key(s:disabled_packages, 'mako')
-  au BufNewFile *.*.mako execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
-  au BufReadPre *.*.mako execute "do BufRead filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
-  au BufNewFile *.*.mao execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
-  au BufReadPre *.*.mao execute "do BufRead filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
   au BufNewFile,BufRead *.mako,*.mao set ft=mako
+  au BufReadPre *.*.mao execute "do BufRead filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
+  au BufNewFile *.*.mao execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
+  au BufReadPre *.*.mako execute "do BufRead filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
+  au BufNewFile *.*.mako execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
 endif
 
 if !has_key(s:disabled_packages, 'mathematica')
-  au BufNewFile,BufRead *.cdf,*.ma,*.mathematica,*.mma,*.mt,*.nb,*.nbp,*.wl,*.wls,*.wlt set ft=mma
   au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
+  au BufNewFile,BufRead *.cdf,*.ma,*.mathematica,*.mma,*.mt,*.nb,*.nbp,*.wl,*.wls,*.wlt set ft=mma
 endif
 
 if !has_key(s:disabled_packages, 'markdown')
-  au BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mdwn,*.mkd,*.mkdn,*.mkdown,*.ronn,*.workbook set ft=markdown
-  au BufNewFile,BufRead contents.lr set ft=markdown
+  au BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mdwn,*.mkd,*.mkdn,*.mkdown,*.ronn,*.workbook,contents.lr set ft=markdown
 endif
 
 if !has_key(s:disabled_packages, 'mdx')
@@ -1065,9 +1003,8 @@ if !has_key(s:disabled_packages, 'mdx')
 endif
 
 if !has_key(s:disabled_packages, 'meson')
-  au BufNewFile,BufRead meson.build set ft=meson
-  au BufNewFile,BufRead meson_options.txt set ft=meson
   au BufNewFile,BufRead *.wrap set ft=dosini
+  au BufNewFile,BufRead meson.build,meson_options.txt set ft=meson
 endif
 
 if !has_key(s:disabled_packages, 'moonscript')
@@ -1079,18 +1016,13 @@ if !has_key(s:disabled_packages, 'murphi')
 endif
 
 if !has_key(s:disabled_packages, 'nginx')
-  au BufNewFile,BufRead *.nginx,*.nginxconf,*.vhost set ft=nginx
-  au BufNewFile,BufRead */etc/nginx/* call s:StarSetf('nginx')
-  au BufNewFile,BufRead */nginx/*.conf set ft=nginx
+  au BufNewFile,BufRead *.nginx,*.nginxconf,*.vhost,*/nginx/*.conf,*nginx.conf,nginx*.conf,nginx.conf set ft=nginx
   au BufNewFile,BufRead */usr/local/nginx/conf/* call s:StarSetf('nginx')
-  au BufNewFile,BufRead *nginx.conf set ft=nginx
-  au BufNewFile,BufRead nginx*.conf set ft=nginx
-  au BufNewFile,BufRead nginx.conf set ft=nginx
+  au BufNewFile,BufRead */etc/nginx/* call s:StarSetf('nginx')
 endif
 
 if !has_key(s:disabled_packages, 'nim')
-  au BufNewFile,BufRead *.nim,*.nim.cfg,*.nimble,*.nimrod,*.nims set ft=nim
-  au BufNewFile,BufRead nim.cfg set ft=nim
+  au BufNewFile,BufRead *.nim,*.nim.cfg,*.nimble,*.nimrod,*.nims,nim.cfg set ft=nim
 endif
 
 if !has_key(s:disabled_packages, 'nix')
@@ -1098,33 +1030,25 @@ if !has_key(s:disabled_packages, 'nix')
 endif
 
 if !has_key(s:disabled_packages, 'objc')
-  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
   au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
+  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'ocaml')
-  au BufNewFile,BufRead *.eliom,*.eliomi,*.ml,*.ml.cppo,*.ml4,*.mli,*.mli.cppo,*.mlip,*.mll,*.mlp,*.mlt,*.mly set ft=ocaml
-  au BufNewFile,BufRead {.,}ocamlinit set ft=ocaml
-  au BufNewFile,BufRead *.om set ft=omake
-  au BufNewFile,BufRead OMakefile set ft=omake
-  au BufNewFile,BufRead OMakeroot set ft=omake
-  au BufNewFile,BufRead OMakeroot.in set ft=omake
-  au BufNewFile,BufRead *.opam,*.opam.template set ft=opam
-  au BufNewFile,BufRead opam set ft=opam
-  au BufNewFile,BufRead _oasis set ft=oasis
-  au BufNewFile,BufRead dune set ft=dune
-  au BufNewFile,BufRead dune-project set ft=dune
-  au BufNewFile,BufRead dune-workspace set ft=dune
-  au BufNewFile,BufRead jbuild set ft=dune
-  au BufNewFile,BufRead _tags set ft=ocamlbuild_tags
-  au BufNewFile,BufRead *.ocp set ft=ocpbuild
-  au BufNewFile,BufRead *.root set ft=ocpbuildroot
   au BufNewFile,BufRead *.sexp set ft=sexplib
+  au BufNewFile,BufRead *.root set ft=ocpbuildroot
+  au BufNewFile,BufRead *.ocp set ft=ocpbuild
+  au BufNewFile,BufRead _tags set ft=ocamlbuild_tags
+  au BufNewFile,BufRead dune,dune-project,dune-workspace,jbuild set ft=dune
+  au BufNewFile,BufRead _oasis set ft=oasis
+  au BufNewFile,BufRead *.opam,*.opam.template,opam set ft=opam
+  au BufNewFile,BufRead *.om,OMakefile,OMakeroot,OMakeroot.in set ft=omake
+  au BufNewFile,BufRead *.eliom,*.eliomi,*.ml,*.ml.cppo,*.ml4,*.mli,*.mli.cppo,*.mlip,*.mll,*.mlp,*.mlt,*.mly,{.,}ocamlinit set ft=ocaml
 endif
 
 if !has_key(s:disabled_packages, 'octave')
-  au BufNewFile,BufRead *.oct set ft=octave
   au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
+  au BufNewFile,BufRead *.oct set ft=octave
 endif
 
 if !has_key(s:disabled_packages, 'opencl')
@@ -1132,20 +1056,14 @@ if !has_key(s:disabled_packages, 'opencl')
 endif
 
 if !has_key(s:disabled_packages, 'perl')
-  au BufNewFile,BufRead *.al,*.cgi,*.fcgi,*.perl,*.ph,*.plx,*.psgi set ft=perl
-  au BufNewFile,BufRead {.,}gitolite.rc set ft=perl
-  au BufNewFile,BufRead Makefile.PL set ft=perl
-  au BufNewFile,BufRead Rexfile set ft=perl
-  au BufNewFile,BufRead ack set ft=perl
-  au BufNewFile,BufRead cpanfile set ft=perl
-  au BufNewFile,BufRead example.gitolite.rc set ft=perl
-  au BufNewFile,BufRead *.pod set ft=pod
-  au BufNewFile,BufRead *.comp,*.mason,*.mhtml set ft=mason
-  au BufNewFile,BufRead *.xs set ft=xs
-  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
-  au! BufNewFile,BufRead *.pm call polyglot#DetectPmFiletype()
-  au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
   au! BufNewFile,BufRead *.tt2 call polyglot#DetectTt2Filetype()
+  au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
+  au! BufNewFile,BufRead *.pm call polyglot#DetectPmFiletype()
+  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+  au BufNewFile,BufRead *.xs set ft=xs
+  au BufNewFile,BufRead *.comp,*.mason,*.mhtml set ft=mason
+  au BufNewFile,BufRead *.pod set ft=pod
+  au BufNewFile,BufRead *.al,*.cgi,*.fcgi,*.perl,*.ph,*.plx,*.psgi,{.,}gitolite.rc,Makefile.PL,Rexfile,ack,cpanfile,example.gitolite.rc set ft=perl
 endif
 
 if !has_key(s:disabled_packages, 'pgsql')
@@ -1157,11 +1075,7 @@ if !has_key(s:disabled_packages, 'cql')
 endif
 
 if !has_key(s:disabled_packages, 'php')
-  au BufNewFile,BufRead *.aw,*.ctp,*.fcgi,*.inc,*.php,*.php3,*.php4,*.php5,*.phps,*.phpt,*.phtml set ft=php
-  au BufNewFile,BufRead {.,}php set ft=php
-  au BufNewFile,BufRead {.,}php_cs set ft=php
-  au BufNewFile,BufRead {.,}php_cs.dist set ft=php
-  au BufNewFile,BufRead Phakefile set ft=php
+  au BufNewFile,BufRead *.aw,*.ctp,*.fcgi,*.inc,*.php,*.php3,*.php4,*.php5,*.phps,*.phpt,*.phtml,{.,}php,{.,}php_cs,{.,}php_cs.dist,Phakefile set ft=php
 endif
 
 if !has_key(s:disabled_packages, 'blade')
@@ -1177,8 +1091,8 @@ if !has_key(s:disabled_packages, 'pony')
 endif
 
 if !has_key(s:disabled_packages, 'powershell')
-  au BufNewFile,BufRead *.ps1,*.psd1,*.psm1,*.pssc set ft=ps1
   au BufNewFile,BufRead *.ps1xml set ft=ps1xml
+  au BufNewFile,BufRead *.ps1,*.psd1,*.psm1,*.pssc set ft=ps1
 endif
 
 if !has_key(s:disabled_packages, 'protobuf')
@@ -1190,9 +1104,8 @@ if !has_key(s:disabled_packages, 'pug')
 endif
 
 if !has_key(s:disabled_packages, 'puppet')
-  au BufNewFile,BufRead *.pp set ft=puppet
-  au BufNewFile,BufRead Modulefile set ft=puppet
   au BufNewFile,BufRead *.epp set ft=embeddedpuppet
+  au BufNewFile,BufRead *.pp,Modulefile set ft=puppet
 endif
 
 if !has_key(s:disabled_packages, 'purescript')
@@ -1200,22 +1113,17 @@ if !has_key(s:disabled_packages, 'purescript')
 endif
 
 if !has_key(s:disabled_packages, 'python')
-  au BufNewFile,BufRead *.cgi,*.fcgi,*.gyp,*.gypi,*.lmi,*.ptl,*.py,*.py3,*.pyde,*.pyi,*.pyp,*.pyt,*.pyw,*.rpy,*.smk,*.spec,*.tac,*.wsgi,*.xpy set ft=python
-  au BufNewFile,BufRead {.,}gclient set ft=python
-  au BufNewFile,BufRead {.,}pythonrc set ft=python
-  au BufNewFile,BufRead {.,}pythonstartup set ft=python
-  au BufNewFile,BufRead DEPS set ft=python
-  au BufNewFile,BufRead SConscript set ft=python
-  au BufNewFile,BufRead SConstruct set ft=python
-  au BufNewFile,BufRead Snakefile set ft=python
-  au BufNewFile,BufRead wscript set ft=python
+  au BufNewFile,BufRead *.cgi,*.fcgi,*.gyp,*.gypi,*.lmi,*.ptl,*.py,*.py3,*.pyde,*.pyi,*.pyp,*.pyt,*.pyw,*.rpy,*.smk,*.spec,*.tac,*.wsgi,*.xpy,{.,}gclient,{.,}pythonrc,{.,}pythonstartup,DEPS,SConscript,SConstruct,Snakefile,wscript set ft=python
+endif
+
+if !has_key(s:disabled_packages, 'python-indent')
+endif
+
+if !has_key(s:disabled_packages, 'python-compiler')
 endif
 
 if !has_key(s:disabled_packages, 'requirements')
-  au BufNewFile,BufRead *.pip set ft=requirements
-  au BufNewFile,BufRead *require.{txt,in} set ft=requirements
-  au BufNewFile,BufRead *requirements.{txt,in} set ft=requirements
-  au BufNewFile,BufRead constraints.{txt,in} set ft=requirements
+  au BufNewFile,BufRead *.pip,*require.{txt,in},*requirements.{txt,in},constraints.{txt,in} set ft=requirements
 endif
 
 if !has_key(s:disabled_packages, 'qmake')
@@ -1227,10 +1135,8 @@ if !has_key(s:disabled_packages, 'qml')
 endif
 
 if !has_key(s:disabled_packages, 'r-lang')
-  au BufNewFile,BufRead *.S,*.r,*.rsx,*.s set ft=r
-  au BufNewFile,BufRead {.,}Rprofile set ft=r
-  au BufNewFile,BufRead expr-dist set ft=r
   au BufNewFile,BufRead *.rd set ft=rhelp
+  au BufNewFile,BufRead *.S,*.r,*.rsx,*.s,{.,}Rprofile,expr-dist set ft=r
 endif
 
 if !has_key(s:disabled_packages, 'racket')
@@ -1242,10 +1148,10 @@ if !has_key(s:disabled_packages, 'ragel')
 endif
 
 if !has_key(s:disabled_packages, 'raku')
-  au BufNewFile,BufRead *.6pl,*.6pm,*.nqp,*.p6,*.p6l,*.p6m,*.pl6,*.pm6,*.pod6,*.raku,*.rakudoc,*.rakumod,*.rakutest,*.t6 set ft=raku
-  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
-  au! BufNewFile,BufRead *.pm call polyglot#DetectPmFiletype()
   au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
+  au! BufNewFile,BufRead *.pm call polyglot#DetectPmFiletype()
+  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+  au BufNewFile,BufRead *.6pl,*.6pm,*.nqp,*.p6,*.p6l,*.p6m,*.pl6,*.pm6,*.pod6,*.raku,*.rakudoc,*.rakumod,*.rakutest,*.t6 set ft=raku
 endif
 
 if !has_key(s:disabled_packages, 'raml')
@@ -1257,8 +1163,8 @@ if !has_key(s:disabled_packages, 'razor')
 endif
 
 if !has_key(s:disabled_packages, 'reason')
-  au BufNewFile,BufRead *.rei set ft=reason
   au! BufNewFile,BufRead *.re call polyglot#DetectReFiletype()
+  au BufNewFile,BufRead *.rei set ft=reason
 endif
 
 if !has_key(s:disabled_packages, 'rst')
@@ -1266,43 +1172,16 @@ if !has_key(s:disabled_packages, 'rst')
 endif
 
 if !has_key(s:disabled_packages, 'ruby')
-  au BufNewFile,BufRead *.axlsx,*.builder,*.cap,*.eye,*.fcgi,*.gemspec,*.god,*.jbuilder,*.mspec,*.opal,*.pluginspec,*.podspec,*.rabl,*.rake,*.rant,*.rb,*.rbi,*.rbuild,*.rbw,*.rbx,*.rjs,*.ru,*.ruby,*.rxml,*.spec,*.thor,*.watchr set ft=ruby
-  au BufNewFile,BufRead {.,}Brewfile set ft=ruby
-  au BufNewFile,BufRead {.,}Guardfile set ft=ruby
-  au BufNewFile,BufRead {.,}autotest set ft=ruby
-  au BufNewFile,BufRead {.,}irbrc set ft=ruby
-  au BufNewFile,BufRead {.,}pryrc set ft=ruby
-  au BufNewFile,BufRead {.,}simplecov set ft=ruby
-  au BufNewFile,BufRead Appraisals set ft=ruby
-  au BufNewFile,BufRead Berksfile set ft=ruby
-  au BufNewFile,BufRead Buildfile set ft=ruby
-  au BufNewFile,BufRead Capfile set ft=ruby
-  au BufNewFile,BufRead Cheffile set ft=ruby
-  au BufNewFile,BufRead Dangerfile set ft=ruby
-  au BufNewFile,BufRead Deliverfile set ft=ruby
-  au BufNewFile,BufRead Fastfile set ft=ruby
-  au BufNewFile,BufRead Gemfile set ft=ruby
-  au BufNewFile,BufRead Gemfile.lock set ft=ruby
-  au BufNewFile,BufRead Guardfile set ft=ruby
-  au BufNewFile,BufRead Jarfile set ft=ruby
-  au BufNewFile,BufRead KitchenSink set ft=ruby
-  au BufNewFile,BufRead Mavenfile set ft=ruby
-  au BufNewFile,BufRead Podfile set ft=ruby
-  au BufNewFile,BufRead Puppetfile set ft=ruby
-  au BufNewFile,BufRead Rakefile set ft=ruby
-  au BufNewFile,BufRead Rantfile set ft=ruby
-  au BufNewFile,BufRead Routefile set ft=ruby
-  au BufNewFile,BufRead Snapfile set ft=ruby
-  au BufNewFile,BufRead Thorfile set ft=ruby
-  au BufNewFile,BufRead Vagrantfile set ft=ruby
-  au BufNewFile,BufRead [Rr]akefile* call s:StarSetf('ruby')
-  au BufNewFile,BufRead buildfile set ft=ruby
-  au BufNewFile,BufRead vagrantfile set ft=ruby
   au BufNewFile,BufRead *.erb,*.erb.deface,*.rhtml set ft=eruby
+  au BufNewFile,BufRead *.axlsx,*.builder,*.cap,*.eye,*.fcgi,*.gemspec,*.god,*.jbuilder,*.mspec,*.opal,*.pluginspec,*.podspec,*.rabl,*.rake,*.rant,*.rb,*.rbi,*.rbuild,*.rbw,*.rbx,*.rjs,*.ru,*.ruby,*.rxml,*.spec,*.thor,*.watchr,{.,}Brewfile,{.,}Guardfile,{.,}autotest,{.,}irbrc,{.,}pryrc,{.,}simplecov,Appraisals,Berksfile,Buildfile,Capfile,Cheffile,Dangerfile,Deliverfile,Fastfile,Gemfile,Gemfile.lock,Guardfile,Jarfile,KitchenSink,Mavenfile,Podfile,Puppetfile,Rakefile,Rantfile,Routefile,Snapfile,Thorfile,Vagrantfile,buildfile,vagrantfile set ft=ruby
+  au BufNewFile,BufRead [Rr]akefile* call s:StarSetf('ruby')
 endif
 
 if !has_key(s:disabled_packages, 'rspec')
   au BufNewFile,BufRead *_spec.rb set ft=ruby syntax=rspec
+endif
+
+if !has_key(s:disabled_packages, 'yard')
 endif
 
 if !has_key(s:disabled_packages, 'brewfile')
@@ -1326,45 +1205,14 @@ if !has_key(s:disabled_packages, 'scss')
 endif
 
 if !has_key(s:disabled_packages, 'sh')
-  au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool set ft=sh
-  au BufNewFile,BufRead */etc/udev/cdsymlinks.conf set ft=sh
-  au BufNewFile,BufRead {.,}bash_aliases set ft=sh
-  au BufNewFile,BufRead {.,}bash_history set ft=sh
-  au BufNewFile,BufRead {.,}bash_logout set ft=sh
-  au BufNewFile,BufRead {.,}bash_profile set ft=sh
-  au BufNewFile,BufRead {.,}bashrc set ft=sh
-  au BufNewFile,BufRead {.,}cshrc set ft=sh
-  au BufNewFile,BufRead {.,}env set ft=sh
-  au BufNewFile,BufRead {.,}env.example set ft=sh
-  au BufNewFile,BufRead {.,}flaskenv set ft=sh
-  au BufNewFile,BufRead {.,}login set ft=sh
-  au BufNewFile,BufRead {.,}profile set ft=sh
-  au BufNewFile,BufRead 9fs set ft=sh
-  au BufNewFile,BufRead PKGBUILD set ft=sh
-  au BufNewFile,BufRead bash_aliases set ft=sh
-  au BufNewFile,BufRead bash_logout set ft=sh
-  au BufNewFile,BufRead bash_profile set ft=sh
-  au BufNewFile,BufRead bashrc set ft=sh
-  au BufNewFile,BufRead cshrc set ft=sh
-  au BufNewFile,BufRead gradlew set ft=sh
-  au BufNewFile,BufRead login set ft=sh
-  au BufNewFile,BufRead man set ft=sh
-  au BufNewFile,BufRead profile set ft=sh
-  au BufNewFile,BufRead zlogin set ft=sh
-  au BufNewFile,BufRead zlogout set ft=sh
-  au BufNewFile,BufRead zprofile set ft=sh
-  au BufNewFile,BufRead zshenv set ft=sh
-  au BufNewFile,BufRead zshrc set ft=sh
-  au BufNewFile,BufRead *.zsh set ft=zsh
-  au BufNewFile,BufRead {.,}zcompdump* call s:StarSetf('zsh')
-  au BufNewFile,BufRead {.,}zfbfmarks set ft=zsh
-  au BufNewFile,BufRead {.,}zlog* call s:StarSetf('zsh')
-  au BufNewFile,BufRead {.,}zlogin set ft=zsh
-  au BufNewFile,BufRead {.,}zlogout set ft=zsh
-  au BufNewFile,BufRead {.,}zprofile set ft=zsh
+  au BufNewFile,BufRead *.zsh,{.,}zfbfmarks,{.,}zlogin,{.,}zlogout,{.,}zprofile,{.,}zshenv,{.,}zshrc set ft=zsh
   au BufNewFile,BufRead {.,}zsh* call s:StarSetf('zsh')
-  au BufNewFile,BufRead {.,}zshenv set ft=zsh
-  au BufNewFile,BufRead {.,}zshrc set ft=zsh
+  au BufNewFile,BufRead {.,}zlog* call s:StarSetf('zsh')
+  au BufNewFile,BufRead {.,}zcompdump* call s:StarSetf('zsh')
+  au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,login,man,profile,zlogin,zlogout,zprofile,zshenv,zshrc set ft=sh
+endif
+
+if !has_key(s:disabled_packages, 'zinit')
 endif
 
 if !has_key(s:disabled_packages, 'slim')
@@ -1395,19 +1243,20 @@ if !has_key(s:disabled_packages, 'svg')
   au BufNewFile,BufRead *.svg set ft=svg
 endif
 
+if !has_key(s:disabled_packages, 'svg-indent')
+endif
+
 if !has_key(s:disabled_packages, 'swift')
   au BufNewFile,BufRead *.swift set ft=swift
 endif
 
 if !has_key(s:disabled_packages, 'sxhkd')
-  au BufNewFile,BufRead *.sxhkdrc set ft=sxhkdrc
-  au BufNewFile,BufRead sxhkdrc set ft=sxhkdrc
+  au BufNewFile,BufRead *.sxhkdrc,sxhkdrc set ft=sxhkdrc
 endif
 
 if !has_key(s:disabled_packages, 'systemd')
-  au BufNewFile,BufRead *.automount,*.dnssd,*.link,*.mount,*.netdev,*.network,*.nspawn,*.path,*.service,*.slice,*.socket,*.swap,*.target,*.timer set ft=systemd
+  au BufNewFile,BufRead *.automount,*.dnssd,*.link,*.mount,*.netdev,*.network,*.nspawn,*.path,*.service,*.slice,*.socket,*.swap,*.target,*.timer,*/systemd/*.conf set ft=systemd
   au BufNewFile,BufRead *.#* call s:StarSetf('systemd')
-  au BufNewFile,BufRead */systemd/*.conf set ft=systemd
 endif
 
 if !has_key(s:disabled_packages, 'terraform')
@@ -1427,13 +1276,7 @@ if !has_key(s:disabled_packages, 'tmux')
 endif
 
 if !has_key(s:disabled_packages, 'toml')
-  au BufNewFile,BufRead *.toml set ft=toml
-  au BufNewFile,BufRead */.cargo/config set ft=toml
-  au BufNewFile,BufRead */.cargo/credentials set ft=toml
-  au BufNewFile,BufRead Cargo.lock set ft=toml
-  au BufNewFile,BufRead Gopkg.lock set ft=toml
-  au BufNewFile,BufRead Pipfile set ft=toml
-  au BufNewFile,BufRead poetry.lock set ft=toml
+  au BufNewFile,BufRead *.toml,*/.cargo/config,*/.cargo/credentials,Cargo.lock,Gopkg.lock,Pipfile,poetry.lock set ft=toml
 endif
 
 if !has_key(s:disabled_packages, 'tptp')
@@ -1441,13 +1284,13 @@ if !has_key(s:disabled_packages, 'tptp')
 endif
 
 if !has_key(s:disabled_packages, 'twig')
-  au BufNewFile,BufRead *.twig set ft=html.twig
   au BufNewFile,BufRead *.xml.twig set ft=xml.twig
+  au BufNewFile,BufRead *.twig set ft=html.twig
 endif
 
 if !has_key(s:disabled_packages, 'typescript')
-  au BufNewFile,BufRead *.ts set ft=typescript
   au BufNewFile,BufRead *.tsx set ft=typescriptreact
+  au BufNewFile,BufRead *.ts set ft=typescript
 endif
 
 if !has_key(s:disabled_packages, 'unison')
@@ -1491,32 +1334,17 @@ if !has_key(s:disabled_packages, 'xsl')
 endif
 
 if !has_key(s:disabled_packages, 'yaml')
-  au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql set ft=yaml
-  au BufNewFile,BufRead {.,}clang-format set ft=yaml
-  au BufNewFile,BufRead {.,}clang-tidy set ft=yaml
-  au BufNewFile,BufRead {.,}gemrc set ft=yaml
-  au BufNewFile,BufRead fish_history set ft=yaml
-  au BufNewFile,BufRead fish_read_history set ft=yaml
-  au BufNewFile,BufRead glide.lock set ft=yaml
-  au BufNewFile,BufRead yarn.lock set ft=yaml
+  au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,fish_history,fish_read_history,glide.lock,yarn.lock set ft=yaml
 endif
 
 if !has_key(s:disabled_packages, 'ansible')
-  au BufNewFile,BufRead group_vars/* call s:StarSetf('yaml.ansible')
-  au BufNewFile,BufRead handlers.*.y{a,}ml set ft=yaml.ansible
+  au BufNewFile,BufRead handlers.*.y{a,}ml,local.y{a,}ml,main.y{a,}ml,playbook.y{a,}ml,requirements.y{a,}ml,roles.*.y{a,}ml,site.y{a,}ml,tasks.*.y{a,}ml set ft=yaml.ansible
   au BufNewFile,BufRead host_vars/* call s:StarSetf('yaml.ansible')
-  au BufNewFile,BufRead local.y{a,}ml set ft=yaml.ansible
-  au BufNewFile,BufRead main.y{a,}ml set ft=yaml.ansible
-  au BufNewFile,BufRead playbook.y{a,}ml set ft=yaml.ansible
-  au BufNewFile,BufRead requirements.y{a,}ml set ft=yaml.ansible
-  au BufNewFile,BufRead roles.*.y{a,}ml set ft=yaml.ansible
-  au BufNewFile,BufRead site.y{a,}ml set ft=yaml.ansible
-  au BufNewFile,BufRead tasks.*.y{a,}ml set ft=yaml.ansible
+  au BufNewFile,BufRead group_vars/* call s:StarSetf('yaml.ansible')
 endif
 
 if !has_key(s:disabled_packages, 'helm')
-  au BufNewFile,BufRead */templates/*.tpl set ft=helm
-  au BufNewFile,BufRead */templates/*.yaml set ft=helm
+  au BufNewFile,BufRead */templates/*.tpl,*/templates/*.yaml set ft=helm
 endif
 
 if !has_key(s:disabled_packages, 'help')
@@ -1528,8 +1356,8 @@ if !has_key(s:disabled_packages, 'zephir')
 endif
 
 if !has_key(s:disabled_packages, 'zig')
-  au BufNewFile,BufRead *.zir set ft=zir
   au BufNewFile,BufRead *.zig,*.zir set ft=zig
+  au BufNewFile,BufRead *.zir set ft=zir
 endif
 
 if !has_key(s:disabled_packages, 'trasys')
@@ -1541,19 +1369,14 @@ if !has_key(s:disabled_packages, 'basic')
 endif
 
 if !has_key(s:disabled_packages, 'visual-basic')
-  au BufNewFile,BufRead *.cls,*.ctl,*.dsm,*.frm,*.frx,*.sba,*.vba,*.vbs set ft=vb
   au! BufNewFile,BufRead *.bas call polyglot#DetectBasFiletype()
+  au BufNewFile,BufRead *.cls,*.ctl,*.dsm,*.frm,*.frx,*.sba,*.vba,*.vbs set ft=vb
 endif
 
 if !has_key(s:disabled_packages, 'dosini')
-  au BufNewFile,BufRead *.dof,*.ini,*.lektorproject,*.prefs,*.pro,*.properties set ft=dosini
-  au BufNewFile,BufRead */etc/pacman.conf set ft=dosini
-  au BufNewFile,BufRead */etc/yum.conf set ft=dosini
-  au BufNewFile,BufRead */etc/yum.repos.d/* call s:StarSetf('dosini')
-  au BufNewFile,BufRead {.,}editorconfig set ft=dosini
-  au BufNewFile,BufRead {.,}npmrc set ft=dosini
-  au BufNewFile,BufRead buildozer.spec set ft=dosini
+  au BufNewFile,BufRead *.dof,*.ini,*.lektorproject,*.prefs,*.pro,*.properties,*/etc/pacman.conf,*/etc/yum.conf,{.,}editorconfig,{.,}npmrc,buildozer.spec set ft=dosini
   au BufNewFile,BufRead php.ini-* call s:StarSetf('dosini')
+  au BufNewFile,BufRead */etc/yum.repos.d/* call s:StarSetf('dosini')
 endif
 
 if !has_key(s:disabled_packages, 'odin')
@@ -1561,17 +1384,12 @@ if !has_key(s:disabled_packages, 'odin')
 endif
 
 if !has_key(s:disabled_packages, 'bzl')
-  au BufNewFile,BufRead *.BUILD,*.bazel,*.bzl set ft=bzl
-  au BufNewFile,BufRead BUCK set ft=bzl
-  au BufNewFile,BufRead BUILD set ft=bzl
-  au BufNewFile,BufRead BUILD.bazel set ft=bzl
-  au BufNewFile,BufRead Tiltfile set ft=bzl
-  au BufNewFile,BufRead WORKSPACE set ft=bzl
+  au BufNewFile,BufRead *.BUILD,*.bazel,*.bzl,BUCK,BUILD,BUILD.bazel,Tiltfile,WORKSPACE set ft=bzl
 endif
 
 if !has_key(s:disabled_packages, 'prolog')
-  au BufNewFile,BufRead *.pdb,*.pro,*.prolog,*.yap set ft=prolog
   au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+  au BufNewFile,BufRead *.pdb,*.pro,*.prolog,*.yap set ft=prolog
 endif
 
 if !has_key(s:disabled_packages, 'tads')
@@ -1579,9 +1397,7 @@ if !has_key(s:disabled_packages, 'tads')
 endif
 
 if !has_key(s:disabled_packages, 'gitignore')
-  au BufNewFile,BufRead *.git/info/exclude set ft=gitignore
-  au BufNewFile,BufRead */.config/git/ignore set ft=gitignore
-  au BufNewFile,BufRead {.,}gitignore set ft=gitignore
+  au BufNewFile,BufRead *.git/info/exclude,*/.config/git/ignore,{.,}gitignore set ft=gitignore
 endif
 
 if !has_key(s:disabled_packages, 'sql')
