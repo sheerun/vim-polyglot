@@ -1504,6 +1504,9 @@ filetypes:
   - '.zlogin'
   - '.zprofile'
   - '.zlogout'
+  - '.zlog*'
+  - '.zcompdump*'
+  - '.zfbfmarks'
 ---
 name: zinit
 remote: zinit-zsh/zplugin-vim-syntax

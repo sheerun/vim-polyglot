@@ -729,6 +729,7 @@ def show_warnings(all_filetypes, expected_filetypes)
   if !ENV["DEV"]
     return
   end
+
   all_expected = process_list(expected_filetypes, false) do |f|
     (f["extensions"] || []).map { |e| "*." + e } + (f["filenames"] || [])
   end
@@ -742,8 +743,11 @@ def show_warnings(all_filetypes, expected_filetypes)
     [a, Regexp.union(b.map { |x| Regexp.escape(x).gsub('\\*', '.*') })]
   end]
 
+  puts all_handled.select { |a, b| a.include?('zsh') }
+
+  puts all_handled_regexps["zsh"]
   for name, e in all_expected - all_handled
-    if e.match?(/\/\*?\.[^\/]+$/) && all_handled.include?([name, e.split('/').last.gsub('*', '')])
+    if all_handled.include?([name, e.split('/').last.gsub('*', '')])
       next
     end
     if e.include?('*') && all_handled_regexps[name].match?(e)

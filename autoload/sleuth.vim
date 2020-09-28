@@ -228,7 +228,7 @@ let s:globs = {
   \ 'zephir': '*.zep',
   \ 'zig': '*.zig,*.zir',
   \ 'zir': '*.zir',
-  \ 'zsh': '*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout',
+  \ 'zsh': '*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout,.zlog*,.zcompdump*,.zfbfmarks',
   \}
 
 func! sleuth#GlobForFiletype(type)

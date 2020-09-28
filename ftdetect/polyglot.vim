@@ -427,7 +427,7 @@ if !has_key(s:disabled_packages, 'scss')
 endif
 
 if !has_key(s:disabled_packages, 'sh')
-  au! BufRead,BufNewFile */etc/udev/cdsymlinks.conf,*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout
+  au! BufRead,BufNewFile */etc/udev/cdsymlinks.conf,*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout,.zlog*,.zcompdump*,.zfbfmarks
 endif
 
 if !has_key(s:disabled_packages, 'smt2')
@@ -1773,6 +1773,9 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead man set ft=sh
   au BufNewFile,BufRead profile set ft=sh
   au BufNewFile,BufRead *.zsh set ft=zsh
+  au BufNewFile,BufRead {.,}zcompdump* call s:StarSetf('zsh')
+  au BufNewFile,BufRead {.,}zfbfmarks set ft=zsh
+  au BufNewFile,BufRead {.,}zlog* call s:StarSetf('zsh')
   au BufNewFile,BufRead {.,}zlogin set ft=zsh
   au BufNewFile,BufRead {.,}zlogout set ft=zsh
   au BufNewFile,BufRead {.,}zprofile set ft=zsh
