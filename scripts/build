@@ -654,6 +654,9 @@ def expand_all(pattern, all = false)
           if e3.include?("*")
             results.concat(results.map { |e4| e4.gsub("*", "") })
           end
+          if e3.match(/\*\.[a-z]/)
+            results << "*." + e3[2].upcase + e3[3..-1]
+          end
           results << "*"
         end
         results
@@ -743,9 +746,6 @@ def show_warnings(all_filetypes, expected_filetypes)
     [a, Regexp.union(b.map { |x| Regexp.escape(x).gsub('\\*', '.*') })]
   end]
 
-  puts all_handled.select { |a, b| a.include?('zsh') }
-
-  puts all_handled_regexps["zsh"]
   for name, e in all_expected - all_handled
     if all_handled.include?([name, e.split('/').last.gsub('*', '')])
       next
