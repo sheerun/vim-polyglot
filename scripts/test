@@ -18,8 +18,6 @@ def run_vimscript(src)
     func! Log(msg)
       if $DEV != '1'
         echo a:msg
-      else
-        echon '.'
       endif
     endfunc
     EOM

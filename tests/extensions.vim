@@ -2,6 +2,7 @@ function! TestExtension(filetype, filename, content)
   call Log('Detecting ' . a:filetype . ' filetype (' . a:filename . ')...')
 
   try
+    set shortmess+=F
     let g:message = ""
     exec "noautocmd n " . a:filename
     silent put =a:content

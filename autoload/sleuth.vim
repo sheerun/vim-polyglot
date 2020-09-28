@@ -111,7 +111,7 @@ let s:globs = {
   \ 'idris': '*.idr,*.lidr,idris-response',
   \ 'idris2': '*.idr,*.ipkg,idris-response',
   \ 'ion': '*.ion',
-  \ 'javascript': '*.js,*._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile',
+  \ 'javascript': '*.js,*._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,*.javascript,Jakefile',
   \ 'javascriptreact': '*.jsx',
   \ 'jq': '*.jq,.jqrc,.jqrc*',
   \ 'json': '*.json,*.avsc,*.geojson,*.gltf,*.har,*.ice,*.JSON-tmLanguage,*.jsonl,*.mcmeta,*.tfstate,*.tfstate.backup,*.topojson,*.webapp,*.webmanifest,*.yy,*.yyp,*.jsonp,*.template,.arcconfig,.htmlhintrc,.tern-config,.tern-project,.watchmanconfig,composer.lock,mcmod.info,Pipfile.lock',
@@ -228,7 +228,7 @@ let s:globs = {
   \ 'zephir': '*.zep',
   \ 'zig': '*.zig,*.zir',
   \ 'zir': '*.zir',
-  \ 'zsh': '*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout,.zlog*,.zcompdump*,.zfbfmarks',
+  \ 'zsh': '*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout,.zlog*,.zcompdump*,.zfbfmarks,.zsh*',
   \}
 
 func! sleuth#GlobForFiletype(type)

@@ -850,6 +850,8 @@ ignored_dirs:
 filetypes:
 - name: javascript
   linguist: JavaScript
+  extra_extensions:
+  - javascript
 - name: flow
   extensions:
   - flow
@@ -1510,6 +1512,7 @@ filetypes:
   - '.zlog*'
   - '.zcompdump*'
   - '.zfbfmarks'
+  - '.zsh*'
 ---
 name: zinit
 remote: zinit-zsh/zplugin-vim-syntax

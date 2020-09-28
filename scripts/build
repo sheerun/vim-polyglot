@@ -657,7 +657,6 @@ def expand_all(pattern, all = false)
           if e3.match(/\*\.[a-z]/)
             results << "*." + e3[2].upcase + e3[3..-1]
           end
-          results << "*"
         end
         results
       end
@@ -737,17 +736,18 @@ def show_warnings(all_filetypes, expected_filetypes)
     (f["extensions"] || []).map { |e| "*." + e } + (f["filenames"] || [])
   end
 
+
   all_handled = process_list(all_filetypes, all_expected) do |f|
     [f["filenames"], f["ignored_filenames"], f["ignored_warnings"]].compact.flatten + 
       [f["extensions"], f["ignored_extensions"]].compact.flatten.map { |e| "*." + e }
   end
 
-  all_handled_regexps = Hash[all_handled.group_by { |a, b| a }.map { |a, b| [a, b[1]] }.map do |a, b|
-    [a, Regexp.union(b.map { |x| Regexp.escape(x).gsub('\\*', '.*') })]
+  all_handled_regexps = Hash[all_handled.group_by { |a, b| a }.map do |a, b|
+    [a, Regexp.union(b.map { |x| Regexp.new(Regexp.escape(x[1]).gsub('\\*', '.*')) })]
   end]
 
   for name, e in all_expected - all_handled
-    if all_handled_regexps[name].match?(e)
+    if all_handled_regexps[name].match?(e) || e == "*"
       next
     end
     puts "Missing for #{name}: #{e}"

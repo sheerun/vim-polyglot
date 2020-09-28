@@ -291,7 +291,7 @@ if !has_key(s:disabled_packages, 'go')
 endif
 
 if !has_key(s:disabled_packages, 'javascript')
-  au! BufRead,BufNewFile *.js,*.cjs,*.es,*.gs,*.mjs,*.pac
+  au! BufRead,BufNewFile *.js,*.cjs,*.es,*.gs,*.mjs,*.pac,*.javascript
 endif
 
 if !has_key(s:disabled_packages, 'jsx')
@@ -427,7 +427,7 @@ if !has_key(s:disabled_packages, 'scss')
 endif
 
 if !has_key(s:disabled_packages, 'sh')
-  au! BufRead,BufNewFile */etc/udev/cdsymlinks.conf,*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout,.zlog*,.zcompdump*,.zfbfmarks
+  au! BufRead,BufNewFile */etc/udev/cdsymlinks.conf,*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout,.zlog*,.zcompdump*,.zfbfmarks,.zsh*
 endif
 
 if !has_key(s:disabled_packages, 'smt2')
@@ -1075,6 +1075,7 @@ if !has_key(s:disabled_packages, 'javascript')
   au BufNewFile,BufRead *.frag set ft=javascript
   au BufNewFile,BufRead *.gs set ft=javascript
   au BufNewFile,BufRead *.jake set ft=javascript
+  au BufNewFile,BufRead *.javascript set ft=javascript
   au BufNewFile,BufRead *.js set ft=javascript
   au BufNewFile,BufRead *.jsb set ft=javascript
   au BufNewFile,BufRead *.jscad set ft=javascript
@@ -1794,6 +1795,7 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead {.,}zlogin set ft=zsh
   au BufNewFile,BufRead {.,}zlogout set ft=zsh
   au BufNewFile,BufRead {.,}zprofile set ft=zsh
+  au BufNewFile,BufRead {.,}zsh* call s:StarSetf('zsh')
   au BufNewFile,BufRead {.,}zshenv set ft=zsh
   au BufNewFile,BufRead {.,}zshrc set ft=zsh
 endif
