@@ -496,6 +496,7 @@ def generate_ftdetect(packages, heuristics)
       extensions = filetype["extensions"]
       filenames = filetype["filenames"]
 
+      set_extensions = []
       for extension in extensions.sort
         outer_filetype = filetype["outer_filetype"]
         if outer_filetype
@@ -511,8 +512,12 @@ def generate_ftdetect(packages, heuristics)
           #   puts "Ambiguous extension without heuristic: #{extension} => #{filetype["name"]}"
           # end
           #
-          autocommands << "  au BufNewFile,BufRead *.#{extension} #{set_command}\n"
+          set_extensions << "*." + extension
         end
+      end
+
+      if set_extensions.size > 0
+        autocommands << "  au BufNewFile,BufRead #{set_extensions.join(",")} #{set_command}\n"
       end
 
       for filename in filenames.sort
