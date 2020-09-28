@@ -367,11 +367,11 @@ if !has_key(s:disabled_packages, 'opencl')
 endif
 
 if !has_key(s:disabled_packages, 'perl')
-  au! BufRead,BufNewFile *.al,*.plx,*.psgi,*.t,*.pod,*.mason,*.mhtml,*.comp,*.xs
+  au! BufRead,BufNewFile *.al,*.plx,*.psgi,*.t,example.gitolite.rc,.gitolite.rc,*.pod,*.mason,*.mhtml,*.comp,*.xs
 endif
 
 if !has_key(s:disabled_packages, 'php')
-  au! BufRead,BufNewFile *.php,*.ctp
+  au! BufRead,BufNewFile *.php,*.ctp,*.phtml
 endif
 
 if !has_key(s:disabled_packages, 'protobuf')
@@ -383,7 +383,7 @@ if !has_key(s:disabled_packages, 'puppet')
 endif
 
 if !has_key(s:disabled_packages, 'python')
-  au! BufRead,BufNewFile *.py,*.pyi,*.pyw,*.spec,SConstruct
+  au! BufRead,BufNewFile *.py,*.pyi,*.pyw,*.spec,*.ptl,SConstruct,.pythonrc,.pythonstartup
 endif
 
 if !has_key(s:disabled_packages, 'r-lang')
@@ -502,6 +502,10 @@ if !has_key(s:disabled_packages, 'bzl')
   au! BufRead,BufNewFile *.bzl,*.bazel,*.BUILD,BUILD,WORKSPACE
 endif
 
+if !has_key(s:disabled_packages, 'prolog')
+  au! BufRead,BufNewFile *.pdb
+endif
+
 if !has_key(s:disabled_packages, 'tads')
   au! BufRead,BufNewFile *.t
 endif
@@ -614,7 +618,6 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead *.ditaval set ft=xml
   au BufNewFile,BufRead *.dll.config set ft=xml
   au BufNewFile,BufRead *.dotsettings set ft=xml
-  au BufNewFile,BufRead *.fglrxrc set ft=xml
   au BufNewFile,BufRead *.filters set ft=xml
   au BufNewFile,BufRead *.fsproj set ft=xml
   au BufNewFile,BufRead *.fxml set ft=xml
@@ -695,6 +698,7 @@ if !has_key(s:disabled_packages, 'xml')
   au BufNewFile,BufRead */etc/blkid.tab set ft=xml
   au BufNewFile,BufRead */etc/blkid.tab.old set ft=xml
   au BufNewFile,BufRead */etc/xdg/menus/*.menu set ft=xml
+  au BufNewFile,BufRead *fglrxrc set ft=xml
   au BufNewFile,BufRead {.,}classpath set ft=xml
   au BufNewFile,BufRead {.,}cproject set ft=xml
   au BufNewFile,BufRead {.,}project set ft=xml
@@ -1456,10 +1460,12 @@ if !has_key(s:disabled_packages, 'perl')
   au BufNewFile,BufRead *.ph set ft=perl
   au BufNewFile,BufRead *.plx set ft=perl
   au BufNewFile,BufRead *.psgi set ft=perl
+  au BufNewFile,BufRead {.,}gitolite.rc set ft=perl
   au BufNewFile,BufRead Makefile.PL set ft=perl
   au BufNewFile,BufRead Rexfile set ft=perl
   au BufNewFile,BufRead ack set ft=perl
   au BufNewFile,BufRead cpanfile set ft=perl
+  au BufNewFile,BufRead example.gitolite.rc set ft=perl
   au BufNewFile,BufRead *.pod set ft=pod
   au BufNewFile,BufRead *.comp set ft=mason
   au BufNewFile,BufRead *.mason set ft=mason
@@ -1490,6 +1496,7 @@ if !has_key(s:disabled_packages, 'php')
   au BufNewFile,BufRead *.php5 set ft=php
   au BufNewFile,BufRead *.phps set ft=php
   au BufNewFile,BufRead *.phpt set ft=php
+  au BufNewFile,BufRead *.phtml set ft=php
   au BufNewFile,BufRead {.,}php set ft=php
   au BufNewFile,BufRead {.,}php_cs set ft=php
   au BufNewFile,BufRead {.,}php_cs.dist set ft=php
@@ -1546,6 +1553,7 @@ if !has_key(s:disabled_packages, 'python')
   au BufNewFile,BufRead *.gyp set ft=python
   au BufNewFile,BufRead *.gypi set ft=python
   au BufNewFile,BufRead *.lmi set ft=python
+  au BufNewFile,BufRead *.ptl set ft=python
   au BufNewFile,BufRead *.py set ft=python
   au BufNewFile,BufRead *.py3 set ft=python
   au BufNewFile,BufRead *.pyde set ft=python
@@ -1560,6 +1568,8 @@ if !has_key(s:disabled_packages, 'python')
   au BufNewFile,BufRead *.wsgi set ft=python
   au BufNewFile,BufRead *.xpy set ft=python
   au BufNewFile,BufRead {.,}gclient set ft=python
+  au BufNewFile,BufRead {.,}pythonrc set ft=python
+  au BufNewFile,BufRead {.,}pythonstartup set ft=python
   au BufNewFile,BufRead DEPS set ft=python
   au BufNewFile,BufRead SConscript set ft=python
   au BufNewFile,BufRead SConstruct set ft=python
@@ -1772,6 +1782,11 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead login set ft=sh
   au BufNewFile,BufRead man set ft=sh
   au BufNewFile,BufRead profile set ft=sh
+  au BufNewFile,BufRead zlogin set ft=sh
+  au BufNewFile,BufRead zlogout set ft=sh
+  au BufNewFile,BufRead zprofile set ft=sh
+  au BufNewFile,BufRead zshenv set ft=sh
+  au BufNewFile,BufRead zshrc set ft=sh
   au BufNewFile,BufRead *.zsh set ft=zsh
   au BufNewFile,BufRead {.,}zcompdump* call s:StarSetf('zsh')
   au BufNewFile,BufRead {.,}zfbfmarks set ft=zsh
@@ -2037,6 +2052,7 @@ if !has_key(s:disabled_packages, 'bzl')
 endif
 
 if !has_key(s:disabled_packages, 'prolog')
+  au BufNewFile,BufRead *.pdb set ft=prolog
   au BufNewFile,BufRead *.pro set ft=prolog
   au BufNewFile,BufRead *.prolog set ft=prolog
   au BufNewFile,BufRead *.yap set ft=prolog

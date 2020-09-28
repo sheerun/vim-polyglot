@@ -747,10 +747,7 @@ def show_warnings(all_filetypes, expected_filetypes)
   end]
 
   for name, e in all_expected - all_handled
-    if all_handled.include?([name, e.split('/').last.gsub('*', '')])
-      next
-    end
-    if e.include?('*') && all_handled_regexps[name].match?(e)
+    if all_handled_regexps[name].match?(e)
       next
     end
     puts "Missing for #{name}: #{e}"

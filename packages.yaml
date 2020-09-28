@@ -1176,6 +1176,9 @@ remote: vim-perl/vim-perl
 filetypes:
 - name: perl
   linguist: Perl
+  extra_filenames:
+  - example.gitolite.rc
+  - .gitolite.rc
 - name: pod
   extensions:
   - pod
@@ -1215,6 +1218,8 @@ remote: StanAngeloff/php.vim
 filetypes:
 - name: php
   linguist: PHP
+  extra_extensions:
+  - phtml
 ---
 name: blade
 remote: jwalton512/vim-blade
@@ -1284,6 +1289,11 @@ filetypes:
   linguist: Python
   ignored_filenames:
   - 'lit.*cfg'
+  extra_extensions:
+  - ptl
+  extra_filenames:
+  - '.pythonrc'
+  - '.pythonstartup'
 ---
 name: python-indent
 remote: Vimjas/vim-python-pep8-indent
@@ -1487,13 +1497,8 @@ filetypes:
   - '.zlogin'
   - '.zprofile'
   - '.zlogout'
-  - 'zshrc'
-  - 'zshenv'
-  - 'zlogin'
-  - 'zprofile'
-  - 'zlogout'
-  extra_filenames:
   # Udev symlinks config
+  extra_filenames:
   - '*/etc/udev/cdsymlinks.conf'
 - name: zsh
   extensions:
@@ -1743,11 +1748,11 @@ filetypes:
   - tpm
   - csproj.user
   - wpl
-  - fglrxrc
   extra_filenames:
   - '*/etc/blkid.tab'
   - '*/etc/blkid.tab.old'
   - '*/etc/xdg/menus/*.menu'
+  - '*fglrxrc'
   ignored_extensions:
   - ts
   - tsx
@@ -1869,8 +1874,6 @@ filetypes:
   - '*/etc/yum.repos.d/*'
   ignored_extensions:
   - cfg
-  ignored_warnings:
-  - '*.php.ini'
 ---
 name: odin
 remote: Tetralux/odin.vim
@@ -1894,6 +1897,8 @@ glob: '**/prolog.vim'
 filetypes:
 - name: prolog
   linguist: Prolog
+  extra_extensions:
+  - pdb
 ---
 name: tads
 remote: vim/vim:runtime

@@ -371,3 +371,8 @@ call TestExtension("xhtml", "xhtml.html", "<DTD   XHTML ")
 
 " .gitignore
 call TestExtension("gitignore", ".gitignore", "")
+
+" .xml
+
+call TestExtension("xml", ".fglrxrc", "")
+call TestExtension("xml", "fglrxrc", "")
