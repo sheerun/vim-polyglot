@@ -512,7 +512,8 @@ def generate_ftdetect(packages, heuristics)
   native_extensions = Set.new(native_filetypes.flat_map { |f| f["extensions"] || [] })
   native_filenames = Set.new(native_filetypes.flat_map { |f| f["filenames"] || [] })
 
-  for package in packages
+  # Because we're using setf we need to reverse order
+  for package in packages.reverse
     filetypes = package["filetypes"] or raise "Unknown filetype for: #{package["name"]}"
 
     package_heuristics = []
@@ -522,7 +523,7 @@ def generate_ftdetect(packages, heuristics)
       name = filetype.fetch("name")
       syntax = filetype["syntax"] ? " | set syntax=#{filetype["syntax"]}" : ""
 
-      set_command = "set ft=#{name}"
+      set_command = "setf #{name}"
 
       if filetype["syntax"]
         set_command = "set ft=#{name} syntax=#{filetype["syntax"]}"
