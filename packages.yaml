@@ -1752,6 +1752,8 @@ filetypes:
   ignored_extensions:
   - ts
   - tsx
+  # handled by powershell plugin
+  - ps1xml
 ---
 name: xsl
 remote: vim-scripts/XSLT-syntax
