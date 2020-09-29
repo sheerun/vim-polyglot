@@ -14,7 +14,7 @@ A collection of language packs for Vim.
 - Automatically detect indentation (includes performance-optimized version of [vim-sleuth](https://github.com/tpope/vim-sleuth))
 - Each build is tested by automated vimrunner script on CI. See `spec` directory.
 
-\*To be completely honest, optimized `ftdetect` script takes around `20ms` to load.
+\*To be completely honest, optimized `ftdetect` script takes around `10ms` to load.
 
 ## Installation
 
