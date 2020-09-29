@@ -364,11 +364,13 @@ call TestExtension("tt2html", "html.tt2", "<html>")
 call TestExtension("html", "empty.html", "")
 call TestExtension("mason", "mason1.html", "% my $planet = 42;")
 call TestExtension("mason", "mason2.html", "<%filter></%filter>")
-call TestExtension("htmldjango", "jinja1.html", "{{ item.href }}")
 call TestExtension("htmldjango", "jinja2.html", "{% for item in navigation %}{% endfor %}")
 call TestExtension("htmldjango", "jinja3.html", "{% block head %}")
 call TestExtension("htmldjango", "jinja4.html", "{# some comment #}")
 call TestExtension("xhtml", "xhtml.html", "<DTD   XHTML ")
+
+" many html templates use {{ }}, e.g. Angular, we should not assume django
+call TestExtension("html", "template.html", "{{ item.href }}")
 
 " .gitignore
 call TestExtension("gitignore", ".gitignore", "")
