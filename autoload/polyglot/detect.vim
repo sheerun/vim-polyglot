@@ -1,3 +1,5 @@
+" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
+
 func! polyglot#detect#Inp()
   let line = getline(nextnonblank(1))
   if line =~# '^\*'

@@ -97,6 +97,7 @@ endfunc
 
 augroup filetypedetect
 
+" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
 if !has_key(s:disabled_packages, '8th')
   au! BufNewFile,BufRead *.8th set ft=8th
@@ -992,7 +993,7 @@ if !has_key(s:disabled_packages, 'sql')
   au! BufNewFile,BufRead *.bdy,*.ddl,*.fnc,*.pck,*.pkb,*.pks,*.plb,*.pls,*.plsql,*.prc,*.spc,*.sql,*.tpb,*.tps,*.trg,*.tyb,*.tyc,*.typ,*.vw set ft=sql
 endif
 
-
+" DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 
 au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>:e") == "" |
   \ call polyglot#shebang#Detect() | endif

@@ -1,3 +1,5 @@
+" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
+
 let s:globs = {
   \ '8th': '*.8th',
   \ 'Dockerfile': '*.dockerfile,*.dock,*.Dockerfile,Dockerfile,dockerfile,Dockerfile*',
