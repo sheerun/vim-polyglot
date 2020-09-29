@@ -27,6 +27,13 @@ if !get(g:, 'cpp_no_function_highlight', 0)
     hi def link cUserFunction Function
 endif
 
+"  Highlight member variable names.
+if get(g:, 'cpp_member_variable_highlight', 0)
+    syn match   cCustomDot    "\." contained
+    syn match   cCustomPtr    "->" contained
+    syn match   cCustomMemVar "\(\.\|->\)\h\w*" contains=cCustomDot,cCustomPtr
+    hi def link cCustomMemVar Function
+endif
 
 " Common ANSI-standard Names
 syn keyword cAnsiName
