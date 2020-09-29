@@ -1,15 +1,9 @@
-""" autoload/polyglot.vim
+""" autoload/polyglot/shebang.vim
 
-" Line continuation is used here, remove 'C' from 'cpoptions'
-let s:cpo_save = &cpo
-set cpo&vim
-
-func! polyglot#Shebang()
-  if getline(1) =~# "^#!"
-    let ft = polyglot#ShebangFiletype()
-    if ft != ""
-      let &ft = ft
-    endif
+func! polyglot#shebang#Detect()
+  let ft = s:Filetype()
+  if ft != ""
+    let &ft = ft
   endif
 
   if &ft == ""
@@ -23,7 +17,7 @@ let s:r_hashbang = '^#!\s*\(\S\+\)\s*\(.*\)\s*'
 let s:r_envflag = '%(\S\+=\S\+\|-[iS]\|--ignore-environment\|--split-string\)'
 let s:r_env = '^\%(\' . s:r_envflag . '\s\+\)*\(\S\+\)'
 
-func! polyglot#ShebangFiletype()
+func! s:Filetype()
   let l:line1 = getline(1)
 
   if l:line1 !~# "^#!"
@@ -59,12 +53,6 @@ func! polyglot#ShebangFiletype()
     endif
   endfor
 endfunc
-
-" scripts/build generates heuristics functions here
-
-" Restore 'cpoptions'
-let &cpo = s:cpo_save
-unlet s:cpo_save
 
 """ ftdetect/polyglot.vim
 
@@ -167,11 +155,11 @@ augroup filetypedetect
 
 " scripts/build inserts here filetype detection autocommands
 
-au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>") !~ g:ft_ignore_pat |
-  \ call polyglot#Shebang() | endif
+au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>:e") == "" |
+  \ call polyglot#shebang#Detect() | endif
 
-au BufEnter * if &ft == "" && expand("<afile>") !~ g:ft_ignore_pat |
-      \ call s:Observe('Shebang') | endif
+au BufEnter * if &ft == "" && expand("<afile>:e") == ""  |
+      \ call s:Observe('shebang#Detect') | endif
 
 augroup END
 
@@ -298,7 +286,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     if s:guess(getline(1, 32))
       return
     endif
-    let pattern = sleuth#GlobForFiletype(&filetype)
+    let pattern = polyglot#sleuth#GlobForFiletype(&filetype)
     if len(pattern) == 0
       return
     endif

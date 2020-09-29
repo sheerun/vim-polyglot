@@ -232,6 +232,6 @@ let s:globs = {
   \ 'zsh': '*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout,.zlog*,.zcompdump*,.zfbfmarks,.zsh*',
   \}
 
-func! sleuth#GlobForFiletype(type)
+func! polyglot#sleuth#GlobForFiletype(type)
   return get(s:globs, a:type, '')
 endfunc

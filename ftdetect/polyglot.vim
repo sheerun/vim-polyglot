@@ -128,7 +128,7 @@ if !has_key(s:disabled_packages, 'abap')
 endif
 
 if !has_key(s:disabled_packages, 'abaqus')
-  au! BufNewFile,BufRead *.inp call polyglot#DetectInpFiletype()
+  au! BufNewFile,BufRead *.inp call polyglot#detect#Inp()
 endif
 
 if !has_key(s:disabled_packages, 'abc')
@@ -215,7 +215,7 @@ if !has_key(s:disabled_packages, 'arch')
 endif
 
 if !has_key(s:disabled_packages, 'c/c++')
-  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
+  au! BufNewFile,BufRead *.h call polyglot#detect#H()
   au! BufNewFile,BufRead *.c,*.cats,*.idc,*.qc,*enlightenment/*.cfg set ft=c
   au! BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.moc,*.tcc,*.tlh,*.tpp set ft=cpp
 endif
@@ -249,12 +249,12 @@ if !has_key(s:disabled_packages, 'asn')
 endif
 
 if !has_key(s:disabled_packages, 'aspvbs')
-  au! BufNewFile,BufRead *.asp call polyglot#DetectAspFiletype()
-  au! BufNewFile,BufRead *.asa call polyglot#DetectAsaFiletype()
+  au! BufNewFile,BufRead *.asp call polyglot#detect#Asp()
+  au! BufNewFile,BufRead *.asa call polyglot#detect#Asa()
 endif
 
 if !has_key(s:disabled_packages, 'aspperl')
-  au! BufNewFile,BufRead *.asp call polyglot#DetectAspFiletype()
+  au! BufNewFile,BufRead *.asp call polyglot#detect#Asp()
 endif
 
 if !has_key(s:disabled_packages, 'atlas')
@@ -381,12 +381,12 @@ if !has_key(s:disabled_packages, 'flatbuffers')
 endif
 
 if !has_key(s:disabled_packages, 'forth')
-  au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+  au! BufNewFile,BufRead *.fs call polyglot#detect#Fs()
   au! BufNewFile,BufRead *.ft,*.fth set ft=forth
 endif
 
 if !has_key(s:disabled_packages, 'fsharp')
-  au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+  au! BufNewFile,BufRead *.fs call polyglot#detect#Fs()
   au! BufNewFile,BufRead *.fsi,*.fsx set ft=fsharp
 endif
 
@@ -403,7 +403,7 @@ if !has_key(s:disabled_packages, 'git')
 endif
 
 if !has_key(s:disabled_packages, 'glsl')
-  au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+  au! BufNewFile,BufRead *.fs call polyglot#detect#Fs()
   au! BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader set ft=glsl
 endif
 
@@ -471,7 +471,7 @@ if !has_key(s:disabled_packages, 'hive')
 endif
 
 if !has_key(s:disabled_packages, 'html5')
-  au! BufNewFile,BufRead *.html call polyglot#DetectHtmlFiletype()
+  au! BufNewFile,BufRead *.html call polyglot#detect#Html()
   au! BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.st,*.xht,*.xhtml set ft=html
 endif
 
@@ -484,14 +484,14 @@ if !has_key(s:disabled_packages, 'icalendar')
 endif
 
 if !has_key(s:disabled_packages, 'idris')
-  au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
-  au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
+  au! BufNewFile,BufRead *.lidr call polyglot#detect#Lidr()
+  au! BufNewFile,BufRead *.idr call polyglot#detect#Idr()
   au! BufNewFile,BufRead idris-response set ft=idris
 endif
 
 if !has_key(s:disabled_packages, 'idris2')
-  au! BufNewFile,BufRead *.lidr call polyglot#DetectLidrFiletype()
-  au! BufNewFile,BufRead *.idr call polyglot#DetectIdrFiletype()
+  au! BufNewFile,BufRead *.lidr call polyglot#detect#Lidr()
+  au! BufNewFile,BufRead *.idr call polyglot#detect#Idr()
   au! BufNewFile,BufRead *.ipkg,idris-response set ft=idris2
 endif
 
@@ -582,7 +582,7 @@ if !has_key(s:disabled_packages, 'mako')
 endif
 
 if !has_key(s:disabled_packages, 'mathematica')
-  au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
+  au! BufNewFile,BufRead *.m call polyglot#detect#M()
   au! BufNewFile,BufRead *.cdf,*.ma,*.mathematica,*.mma,*.mt,*.nb,*.nbp,*.wl,*.wls,*.wlt set ft=mma
 endif
 
@@ -604,7 +604,7 @@ if !has_key(s:disabled_packages, 'moonscript')
 endif
 
 if !has_key(s:disabled_packages, 'murphi')
-  au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
+  au! BufNewFile,BufRead *.m call polyglot#detect#M()
 endif
 
 if !has_key(s:disabled_packages, 'nginx')
@@ -622,8 +622,8 @@ if !has_key(s:disabled_packages, 'nix')
 endif
 
 if !has_key(s:disabled_packages, 'objc')
-  au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
-  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
+  au! BufNewFile,BufRead *.m call polyglot#detect#M()
+  au! BufNewFile,BufRead *.h call polyglot#detect#H()
 endif
 
 if !has_key(s:disabled_packages, 'ocaml')
@@ -639,7 +639,7 @@ if !has_key(s:disabled_packages, 'ocaml')
 endif
 
 if !has_key(s:disabled_packages, 'octave')
-  au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
+  au! BufNewFile,BufRead *.m call polyglot#detect#M()
   au! BufNewFile,BufRead *.oct set ft=octave
 endif
 
@@ -648,10 +648,10 @@ if !has_key(s:disabled_packages, 'opencl')
 endif
 
 if !has_key(s:disabled_packages, 'perl')
-  au! BufNewFile,BufRead *.tt2 call polyglot#DetectTt2Filetype()
-  au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
-  au! BufNewFile,BufRead *.pm call polyglot#DetectPmFiletype()
-  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+  au! BufNewFile,BufRead *.tt2 call polyglot#detect#Tt2()
+  au! BufNewFile,BufRead *.t call polyglot#detect#T()
+  au! BufNewFile,BufRead *.pm call polyglot#detect#Pm()
+  au! BufNewFile,BufRead *.pl call polyglot#detect#Pl()
   au! BufNewFile,BufRead *.xs set ft=xs
   au! BufNewFile,BufRead *.comp,*.mason,*.mhtml set ft=mason
   au! BufNewFile,BufRead *.pod set ft=pod
@@ -740,9 +740,9 @@ if !has_key(s:disabled_packages, 'ragel')
 endif
 
 if !has_key(s:disabled_packages, 'raku')
-  au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
-  au! BufNewFile,BufRead *.pm call polyglot#DetectPmFiletype()
-  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+  au! BufNewFile,BufRead *.t call polyglot#detect#T()
+  au! BufNewFile,BufRead *.pm call polyglot#detect#Pm()
+  au! BufNewFile,BufRead *.pl call polyglot#detect#Pl()
   au! BufNewFile,BufRead *.6pl,*.6pm,*.nqp,*.p6,*.p6l,*.p6m,*.pl6,*.pm6,*.pod6,*.raku,*.rakudoc,*.rakumod,*.rakutest,*.t6 set ft=raku
 endif
 
@@ -755,7 +755,7 @@ if !has_key(s:disabled_packages, 'razor')
 endif
 
 if !has_key(s:disabled_packages, 'reason')
-  au! BufNewFile,BufRead *.re call polyglot#DetectReFiletype()
+  au! BufNewFile,BufRead *.re call polyglot#detect#Re()
   au! BufNewFile,BufRead *.rei set ft=reason
 endif
 
@@ -949,7 +949,7 @@ if !has_key(s:disabled_packages, 'zig')
 endif
 
 if !has_key(s:disabled_packages, 'trasys')
-  au! BufNewFile,BufRead *.inp call polyglot#DetectInpFiletype()
+  au! BufNewFile,BufRead *.inp call polyglot#detect#Inp()
 endif
 
 if !has_key(s:disabled_packages, 'basic')
@@ -957,7 +957,7 @@ if !has_key(s:disabled_packages, 'basic')
 endif
 
 if !has_key(s:disabled_packages, 'visual-basic')
-  au! BufNewFile,BufRead *.bas call polyglot#DetectBasFiletype()
+  au! BufNewFile,BufRead *.bas call polyglot#detect#Bas()
   au! BufNewFile,BufRead *.cls,*.ctl,*.dsm,*.frm,*.frx,*.sba,*.vba,*.vbs set ft=vb
 endif
 
@@ -976,12 +976,12 @@ if !has_key(s:disabled_packages, 'bzl')
 endif
 
 if !has_key(s:disabled_packages, 'prolog')
-  au! BufNewFile,BufRead *.pl call polyglot#DetectPlFiletype()
+  au! BufNewFile,BufRead *.pl call polyglot#detect#Pl()
   au! BufNewFile,BufRead *.pdb,*.pro,*.prolog,*.yap set ft=prolog
 endif
 
 if !has_key(s:disabled_packages, 'tads')
-  au! BufNewFile,BufRead *.t call polyglot#DetectTFiletype()
+  au! BufNewFile,BufRead *.t call polyglot#detect#T()
 endif
 
 if !has_key(s:disabled_packages, 'gitignore')
@@ -994,11 +994,11 @@ endif
 
 
 
-au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>") !~ g:ft_ignore_pat |
-  \ call polyglot#Shebang() | endif
+au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>:e") == "" |
+  \ call polyglot#shebang#Detect() | endif
 
-au BufEnter * if &ft == "" && expand("<afile>") !~ g:ft_ignore_pat |
-      \ call s:Observe('Shebang') | endif
+au BufEnter * if &ft == "" && expand("<afile>:e") == ""  |
+      \ call s:Observe('shebang#Detect') | endif
 
 augroup END
 
@@ -1125,7 +1125,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     if s:guess(getline(1, 32))
       return
     endif
-    let pattern = sleuth#GlobForFiletype(&filetype)
+    let pattern = polyglot#sleuth#GlobForFiletype(&filetype)
     if len(pattern) == 0
       return
     endif
@@ -1202,3 +1202,4 @@ endif
 
 " restore Vi compatibility settings
 let &cpo = s:cpo_save
+

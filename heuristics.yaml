@@ -132,6 +132,8 @@ rules:
     filetype: perl
 - override: true
 - filetype: perl
+  shebang: true
+  fallback: true
 ---
 extensions: [pl]
 rules:
@@ -149,6 +151,8 @@ rules:
     filetype: perl
 - override: true
 - filetype: perl
+  shebang: true
+  fallback: true
 ---
 extensions: [t]
 rules:
@@ -166,6 +170,8 @@ rules:
   #   filetype: turing
 - override: true
 - filetype: perl
+  shebang: true
+  fallback: true
 ---
 extensions: [tt2]
 rules:

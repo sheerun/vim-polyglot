@@ -30,6 +30,7 @@ call TestExtension("sh", "bash3", "#! /bin/bash2.3")
 call TestExtension("sh", "bash4", "#!/usr/bin/env bash")
 call TestExtension("sh", "bash6", "#!/usr/bin/env -i -=split-string foo=bar bash -l foo")
 call TestExtension("sh", "bash1", "#!/bin/bash")
+call TestExtension("sh", "bash7", ":")
 
 " Vim help file
 call TestExtension("help", $VIMRUNTIME . "/doc/foobar.txt", "")
