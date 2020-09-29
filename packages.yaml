@@ -10,8 +10,6 @@ filetypes:
 name: a2ps
 remote: vim/vim:runtime
 glob: '**/a2ps.vim'
-after:
-- haproxy
 filetypes:
 - name: a2ps
   filenames:
@@ -142,7 +140,6 @@ filetypes:
 name: ant
 remote: vim/vim:runtime
 glob: '**/ant.vim'
-after: xml
 filetypes:
 - name: ant
   filenames:
@@ -210,7 +207,7 @@ filetypes:
 ---
 name: arduino
 remote: sudar/vim-arduino-syntax
-after: c/c++
+dependencies: c/c++
 filetypes:
 - name: arduino
   linguist: Processing
@@ -240,7 +237,6 @@ filetypes:
 name: automake
 remote: vim/vim:runtime
 glob: '**/automake.vim'
-after: elf
 filetypes:
 - name: automake
   filenames:
@@ -260,7 +256,6 @@ name: aspvbs
 remote: vim/vim:runtime
 globs:
 - '**/aspvbs.vim'
-dependencies:
 filetypes:
 - name: aspvbs
   extensions:
@@ -271,7 +266,6 @@ name: aspperl
 remote: vim/vim:runtime
 globs:
 - '**/aspperl.vim'
-dependencies:
 filetypes:
 - name: aspperl
   extensions:
@@ -347,7 +341,7 @@ filetypes:
 ---
 name: cpp-modern
 remote: bfrg/vim-cpp-modern
-after: c/c++
+dependencies: c/c++
 filetypes: []
 ---
 name: carp
@@ -590,7 +584,6 @@ name: fsharp
 remote: ionide/Ionide-vim
 ignored_dirs:
 - ftplugin
-after: glsl
 filetypes:
 - name: fsharp
   linguist: F#
@@ -681,7 +674,8 @@ filetypes:
 ---
 name: graphql
 remote: jparise/vim-graphql
-after: [javascript, jsx]
+dependencies: javascript
+after: jsx
 ignored_dirs:
 # TODO: remove after bug is fixed:
 # https://github.com/jparise/vim-graphql/issues/62
@@ -692,7 +686,7 @@ filetypes:
 ---
 name: gradle
 remote: tfnico/vim-gradle
-after: groovy
+dependencies: groovy
 # Just adds compiler
 filetypes: []
 ---
@@ -708,7 +702,6 @@ filetypes:
 name: grub
 remote: vim/vim:runtime
 glob: '**/grub.vim'
-after: dlang
 filetypes:
 - name: grub
   filenames:
@@ -747,6 +740,8 @@ filetypes:
 - name: haproxy
   linguist: HAProxy
   extra_filenames:
+  - 'haproxy*.conf*'
+  ignored_warnings:
   - 'haproxy*.c*'
 ---
 name: haskell
@@ -858,7 +853,7 @@ filetypes:
 ---
 name: javascript-sql
 remote: statico/vim-javascript-sql
-after: javascript
+dependencies: javascript
 filetypes: []
 ---
 name: jenkins
@@ -931,7 +926,7 @@ filetypes:
 ---
 name: jsx
 remote: MaxMEllon/vim-jsx-pretty
-after: javascript
+dependencies: javascript
 filetypes:
 - name: javascriptreact
   linguist: JSX
@@ -1158,7 +1153,7 @@ filetypes:
 ---
 name: octave
 remote: McSinyx/vim-octave
-after: mathematica
+dependencies: mathematica
 filetypes:
 - name: octave
   extensions:
@@ -1223,7 +1218,7 @@ filetypes:
 ---
 name: blade
 remote: jwalton512/vim-blade
-after: php
+dependencies: php
 filetypes:
 - name: blade
   linguist: Blade
@@ -1245,7 +1240,6 @@ filetypes:
 ---
 name: powershell
 remote: PProvost/vim-ps1
-after: xml
 filetypes:
 - name: ps1
   linguist: PowerShell
@@ -1388,7 +1382,6 @@ filetypes:
 ---
 name: reason
 remote: reasonml-editor/vim-reason-plus
-after: c/c++
 filetypes:
 - name: reason
   linguist: Reason
@@ -1780,7 +1773,7 @@ filetypes:
 ---
 name: ansible
 remote: pearofducks/ansible-vim
-after: yaml
+dependencies: yaml
 filetypes:
 - name: yaml.ansible
   filenames:
@@ -1928,3 +1921,14 @@ filetypes:
   - tyb
   - typ
   - tyc
+---
+name: conf
+remote: vim/vim:runtime
+glob: '**/conf.vim'
+filetypes:
+- name: conf
+  extensions:
+  - conf
+  filenames:
+  - auto.master
+  - config

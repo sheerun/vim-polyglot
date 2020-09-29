@@ -376,6 +376,10 @@ call TestExtension("html", "template.html", "{{ item.href }}")
 call TestExtension("gitignore", ".gitignore", "")
 
 " .xml
-
 call TestExtension("xml", ".fglrxrc", "")
 call TestExtension("xml", "fglrxrc", "")
+
+" .conf
+call TestExtension("conf", "foo.conf", "")
+call TestExtension("conf", "config", "")
+call TestExtension("conf", "auto.master", "")

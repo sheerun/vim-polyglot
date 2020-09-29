@@ -27,22 +27,80 @@ def except(hash, *keys)
   h
 end
 
+def verify(packages, heuristics)
+  extensions_with_heuristics = Set.new(heuristics.flat_map { |e| e["extensions"] })
+  no_heuristics = Hash.new { |a, b| a[b] = [] }
+
+  for p in packages
+    for f in p["filetypes"]
+      for e in f["extensions"]
+        if !extensions_with_heuristics.include?(e)
+          no_heuristics[e] << p["name"]
+        end
+      end
+    end
+  end
+
+  no_heuristics.select! { |a, b| b.size > 1}
+
+  for e, names in no_heuristics
+    if ENV["DEV"]
+      puts "No heuristics for .#{e} extension (#{names.join(", ")})"
+    end
+  end
+end
+
+def sort_packages(packages)
+  implicit_dependencies = Hash.new { |h, k| h[k] = [] }
+  by_extension = Hash.new { |h, k| h[k] = [] }
+
+  for p in packages
+    for f in p["filetypes"]
+      for e in f["extensions"]
+        by_extension[e] << p["name"]
+      end
+    end
+  end
+
+  for p in packages
+    for f in p["filetypes"]
+      for t in f["filenames"]
+        filename = t.split('/').last
+        if filename.include?(".")
+          ext = filename.split(".").last.gsub('*', '')
+          if by_extension[ext]
+            for name in by_extension[ext]
+              if p["name"] != name
+                implicit_dependencies[p["name"]] |= [name]
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  packages = Hash[packages.group_by { |a| a.fetch("name") }.map { |a, b| [a, b.first] }]
+
+  each_node = lambda { |&b| packages.keys.each(&b) }
+  each_child = lambda { |n, &b|
+    [
+      implicit_dependencies[n] || [],
+      packages[n]["dependencies"] || [],
+      packages[n]["after"] || []
+    ].flatten.each(&b)
+  }
+
+  TSort.tsort(each_node, each_child).map { |a| packages[a] }
+end
+
 def load_data()
-  packages = Hash[YAML.load_stream(File.read('packages.yaml'))
-    .group_by { |a| a.fetch("name") }
-    .map { |a, b| [a, b.first] }]
-
-  deps = Hash.new { |h, k| h[k] = [] }
-
-  each_node = lambda {|&b| packages.keys.each(&b) }
-  each_child = lambda {|n, &b| [packages[n]["after"] || []].flatten.each(&b) }
-
+  packages = load_packages
   languages = load_languages
+  heuristics = load_heuristics
 
   # Reason can have ocaml as interpreter but let's not depend on it...
   languages["Reason"]["interpreters"] -= ["ocaml"]
-
-  packages = TSort.tsort(each_node, each_child).map { |a| packages[a] }
 
   for package in packages
     for filetype in package["filetypes"]
@@ -90,7 +148,9 @@ def load_data()
     end
   end
 
-  heuristics = YAML.load_stream(File.read('heuristics.yaml'))
+  verify(packages, heuristics)
+
+  packages = sort_packages(packages)
 
   [packages, transform_patterns(heuristics)]
 end
@@ -142,6 +202,14 @@ def load_languages
   end
 
   YAML.load(File.read(file))
+end
+
+def load_packages
+  YAML.load_stream(File.read('packages.yaml'))
+end
+
+def load_heuristics
+  YAML.load_stream(File.read('heuristics.yaml'))
 end
 
 def parse_remote(remote)
@@ -422,16 +490,6 @@ end
 
 def generate_ftdetect(packages, heuristics)
   output = "\n"
-
-  extensions = Hash.new { |h, k| h[k] = [] }
-
-  for package in packages
-    for filetype in package["filetypes"]
-      for ext in filetype["extensions"]
-        extensions[ext] << filetype["name"]
-      end
-    end
-  end
 
   all_filetypes = packages.flat_map { |f| f["filetypes"] || [] }
   filetype_names = Set.new(all_filetypes.map { |f| f["name"] })
@@ -738,8 +796,8 @@ def show_warnings(all_filetypes, expected_filetypes)
 
 
   all_handled = process_list(all_filetypes, all_expected) do |f|
-    [f["filenames"], f["ignored_filenames"], f["ignored_warnings"]].compact.flatten + 
-      [f["extensions"], f["ignored_extensions"]].compact.flatten.map { |e| "*." + e }
+    [f["filenames"], f["ignored_filenames"], f["ignored_warnings"], f["extra_filenames"]].compact.flatten + 
+      [f["extensions"], f["ignored_extensions"], f["extra_extensions"]].compact.flatten.map { |e| "*." + e }
   end
 
   all_handled_regexps = Hash[all_handled.group_by { |a, b| a }.map do |a, b|

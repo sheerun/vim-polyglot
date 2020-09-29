@@ -102,6 +102,10 @@ if !has_key(s:disabled_packages, '8th')
   au! BufRead,BufNewFile *.8th
 endif
 
+if !has_key(s:disabled_packages, 'conf')
+  au! BufRead,BufNewFile auto.master
+endif
+
 if !has_key(s:disabled_packages, 'haproxy')
   au! BufRead,BufNewFile *.cfg
 endif
@@ -254,6 +258,10 @@ if !has_key(s:disabled_packages, 'dlang')
   au! BufRead,BufNewFile *.sdl
 endif
 
+if !has_key(s:disabled_packages, 'yaml')
+  au! BufRead,BufNewFile *.yml,*.yaml
+endif
+
 if !has_key(s:disabled_packages, 'dockerfile')
   au! BufRead,BufNewFile *.Dockerfile,Dockerfile
 endif
@@ -270,16 +278,16 @@ if !has_key(s:disabled_packages, 'forth')
   au! BufRead,BufNewFile *.fs,*.ft,*.fth
 endif
 
-if !has_key(s:disabled_packages, 'glsl')
-  au! BufRead,BufNewFile *.fs,*.gs,*.comp
-endif
-
 if !has_key(s:disabled_packages, 'fsharp')
   au! BufRead,BufNewFile *.fs
 endif
 
 if !has_key(s:disabled_packages, 'git')
   au! BufRead,BufNewFile .gitconfig,.gitmodules,*.git/config,*/.config/git/config,*.git/modules/*/config,git-rebase-todo
+endif
+
+if !has_key(s:disabled_packages, 'glsl')
+  au! BufRead,BufNewFile *.fs,*.gs,*.comp
 endif
 
 if !has_key(s:disabled_packages, 'gnuplot')
@@ -482,10 +490,6 @@ if !has_key(s:disabled_packages, 'xsl')
   au! BufRead,BufNewFile *.xslt,*.xsl
 endif
 
-if !has_key(s:disabled_packages, 'yaml')
-  au! BufRead,BufNewFile *.yml,*.yaml
-endif
-
 if !has_key(s:disabled_packages, 'help')
   au! BufRead,BufNewFile $VIMRUNTIME/doc/*.txt
 endif
@@ -518,9 +522,13 @@ if !has_key(s:disabled_packages, '8th')
   au BufNewFile,BufRead *.8th set ft=8th
 endif
 
+if !has_key(s:disabled_packages, 'conf')
+  au BufNewFile,BufRead *.conf,auto.master,config set ft=conf
+endif
+
 if !has_key(s:disabled_packages, 'haproxy')
   au BufNewFile,BufRead *.cfg,haproxy.cfg set ft=haproxy
-  au BufNewFile,BufRead haproxy*.c* call s:StarSetf('haproxy')
+  au BufNewFile,BufRead haproxy*.conf* call s:StarSetf('haproxy')
 endif
 
 if !has_key(s:disabled_packages, 'a2ps')
@@ -581,6 +589,10 @@ endif
 
 if !has_key(s:disabled_packages, 'ampl')
   au BufNewFile,BufRead *.run set ft=ampl
+endif
+
+if !has_key(s:disabled_packages, 'csv')
+  au BufNewFile,BufRead *.csv,*.tab,*.tsv set ft=csv
 endif
 
 if !has_key(s:disabled_packages, 'xml')
@@ -717,10 +729,6 @@ if !has_key(s:disabled_packages, 'crystal')
   au BufNewFile,BufRead *.cr,Projectfile set ft=crystal
 endif
 
-if !has_key(s:disabled_packages, 'csv')
-  au BufNewFile,BufRead *.csv,*.tab,*.tsv set ft=csv
-endif
-
 if !has_key(s:disabled_packages, 'cucumber')
   au BufNewFile,BufRead *.feature,*.story set ft=cucumber
 endif
@@ -743,6 +751,10 @@ if !has_key(s:disabled_packages, 'dlang')
   au BufNewFile,BufRead *.dd set ft=dd
   au BufNewFile,BufRead *.lst set ft=dcov
   au BufNewFile,BufRead *.d,*.di set ft=d
+endif
+
+if !has_key(s:disabled_packages, 'yaml')
+  au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,fish_history,fish_read_history,glide.lock,yarn.lock set ft=yaml
 endif
 
 if !has_key(s:disabled_packages, 'dockerfile')
@@ -793,11 +805,6 @@ if !has_key(s:disabled_packages, 'forth')
   au BufNewFile,BufRead *.ft,*.fth set ft=forth
 endif
 
-if !has_key(s:disabled_packages, 'glsl')
-  au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
-  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader set ft=glsl
-endif
-
 if !has_key(s:disabled_packages, 'fsharp')
   au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
   au BufNewFile,BufRead *.fsi,*.fsx set ft=fsharp
@@ -813,6 +820,11 @@ if !has_key(s:disabled_packages, 'git')
   au BufNewFile,BufRead git-rebase-todo set ft=gitrebase
   au BufNewFile,BufRead *.gitconfig,*.git/config,*.git/modules/*/config,*/.config/git/config,*/git/config,{.,}gitconfig,{.,}gitmodules set ft=gitconfig
   au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')
+endif
+
+if !has_key(s:disabled_packages, 'glsl')
+  au! BufNewFile,BufRead *.fs call polyglot#DetectFsFiletype()
+  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader set ft=glsl
 endif
 
 if !has_key(s:disabled_packages, 'gmpl')
@@ -1331,10 +1343,6 @@ endif
 
 if !has_key(s:disabled_packages, 'xsl')
   au BufNewFile,BufRead *.xsl,*.xslt set ft=xsl
-endif
-
-if !has_key(s:disabled_packages, 'yaml')
-  au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,fish_history,fish_read_history,glide.lock,yarn.lock set ft=yaml
 endif
 
 if !has_key(s:disabled_packages, 'ansible')
