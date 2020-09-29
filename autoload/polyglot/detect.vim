@@ -185,7 +185,7 @@ func! polyglot#detect#Pm()
     let &ft = g:filetype_pm | return
   endif
   if polyglot#shebang#Detect() | return | endif
-  set ft=perl | au! BufWritePost <buffer> ++once call polyglot#detect#Pm()
+  set ft=perl | au BufWritePost <buffer> ++once call polyglot#detect#Pm()
   return
 endfunc
 
@@ -207,7 +207,7 @@ func! polyglot#detect#Pl()
     let &ft = g:filetype_pl | return
   endif
   if polyglot#shebang#Detect() | return | endif
-  set ft=perl | au! BufWritePost <buffer> ++once call polyglot#detect#Pl()
+  set ft=perl | au BufWritePost <buffer> ++once call polyglot#detect#Pl()
   return
 endfunc
 
@@ -231,7 +231,7 @@ func! polyglot#detect#T()
     let &ft = g:filetype_t | return
   endif
   if polyglot#shebang#Detect() | return | endif
-  set ft=perl | au! BufWritePost <buffer> ++once call polyglot#detect#T()
+  set ft=perl | au BufWritePost <buffer> ++once call polyglot#detect#T()
   return
 endfunc
 
@@ -259,6 +259,6 @@ func! polyglot#detect#Html()
       set ft=xhtml | return
     endif
   endfor
-  set ft=html | au! BufWritePost <buffer> ++once call polyglot#detect#Html()
+  set ft=html | au BufWritePost <buffer> ++once call polyglot#detect#Html()
   return
 endfunc

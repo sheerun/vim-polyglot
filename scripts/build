@@ -395,7 +395,7 @@ def rule_to_code(rule)
   if rule.has_key?("filetype")
     if rule.has_key?("fallback")
       return <<~EOS
-        set ft=#{rule["filetype"]} | au! BufWritePost <buffer> ++once call polyglot#detect##{camelize(rule["extensions"].first)}()
+        set ft=#{rule["filetype"]} | au BufWritePost <buffer> ++once call polyglot#detect##{camelize(rule["extensions"].first)}()
         return
       EOS
     end
@@ -564,7 +564,7 @@ def generate_ftdetect(packages, heuristics)
       end
 
       if set_globs.size > 0
-        autocommands << "  au! BufNewFile,BufRead #{set_globs.join(",")} #{set_command}\n"
+        autocommands << "  au BufNewFile,BufRead #{set_globs.join(",")} #{set_command}\n"
       end
     end
 
@@ -583,13 +583,13 @@ def generate_ftdetect(packages, heuristics)
 
   show_warnings(all_filetypes, expected_filetypes)
 
-  ftdetect = File.read('ftdetect/polyglot.vim')
+  ftdetect = File.read('filetype.vim')
 
   starting = '" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE'
   ending = '" DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE'
 
   File.write(
-    'ftdetect/polyglot.vim',
+    'filetype.vim',
     ftdetect.gsub(/(?<=#{starting}\n)(.*)(?=#{ending})/m) { output }
   )
 
