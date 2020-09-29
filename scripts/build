@@ -503,32 +503,6 @@ def generate_ftdetect(packages, heuristics)
   native_filenames = Set.new(native_filetypes.flat_map { |f| f["filenames"] || [] })
 
   for package in packages
-    name = package.fetch("name")
-
-    to_disable = []
-
-    for filetype in package["filetypes"]
-      for extension in filetype["extensions"]
-        if native_extensions.include?(extension)
-          to_disable << "*." + extension
-        end
-      end
-
-      for filename in filetype["filenames"]
-        if native_filenames.include?(filename)
-          to_disable << filename
-        end
-      end
-    end
-
-    if to_disable.size > 0
-      output << "if !has_key(s:disabled_packages, '#{name}')\n"
-      output << "  au! BufRead,BufNewFile #{to_disable.join(",")}\n"
-      output << "endif\n\n"
-    end
-  end
-
-  for package in packages
     filetypes = package["filetypes"] or raise "Unknown filetype for: #{package["name"]}"
 
     package_heuristics = []
@@ -580,7 +554,7 @@ def generate_ftdetect(packages, heuristics)
       end
 
       if set_globs.size > 0
-        autocommands << "  au BufNewFile,BufRead #{set_globs.join(",")} #{set_command}\n"
+        autocommands << "  au! BufNewFile,BufRead #{set_globs.join(",")} #{set_command}\n"
       end
     end
 
