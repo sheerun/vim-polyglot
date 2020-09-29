@@ -1606,7 +1606,9 @@ name: terraform
 remote: hashivim/vim-terraform
 filetypes:
 - name: terraform
-  linguist: HCL
+  extensions:
+  - tf
+  - tfvars
 ---
 name: textile
 remote: timcharper/textile.vim

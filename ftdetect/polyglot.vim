@@ -1272,7 +1272,7 @@ if !has_key(s:disabled_packages, 'systemd')
 endif
 
 if !has_key(s:disabled_packages, 'terraform')
-  au BufNewFile,BufRead *.hcl,*.nomad,*.tf,*.tfvars,*.workflow set ft=terraform
+  au BufNewFile,BufRead *.tf,*.tfvars set ft=terraform
 endif
 
 if !has_key(s:disabled_packages, 'textile')

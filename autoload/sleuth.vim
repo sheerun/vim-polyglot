@@ -198,7 +198,7 @@ let s:globs = {
   \ 'systemd': '*.automount,*.dnssd,*.link,*.mount,*.netdev,*.network,*.nspawn,*.path,*.service,*.slice,*.socket,*.swap,*.target,*.timer,*.#*',
   \ 'tablegen': '*.td',
   \ 'tads': '*.t',
-  \ 'terraform': '*.hcl,*.nomad,*.tf,*.tfvars,*.workflow',
+  \ 'terraform': '*.tf,*.tfvars',
   \ 'textile': '*.textile',
   \ 'thrift': '*.thrift',
   \ 'tmux': '.tmux*.conf',
