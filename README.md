@@ -32,9 +32,10 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 You can also use Vim 8 built-in package manager:
 
 ```
-mkdir -p ~/.vim/pack/default/start
-git clone https://github.com/sheerun/vim-polyglot ~/.vim/pack/default/start/vim-polyglot
+git clone --depth 1 https://github.com/sheerun/vim-polyglot ~/.vim/pack/plugins/opt/sheerun/vim-polyglot
 ```
+
+**And then add `packload` command to your `.vimrc`** (or `packadd sheerun/vim-polyglot`)
 
 NOTE: Not all features of individual language packs are available. We strip them from functionality slowing vim startup (for example we ignore `plugins` folder that is loaded regardless of file type, instead we prefer `ftplugin` which is loaded lazily).
 
