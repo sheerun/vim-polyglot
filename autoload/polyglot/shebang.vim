@@ -30,7 +30,13 @@ func! s:Filetype()
 
   let [_, l:path, l:rest; __] = l:pathrest
 
-  let l:script = split(l:path, "/")[-1]
+  let l:pathparts = split(l:path, "/")
+
+  if len(l:pathparts) == 0
+    return
+  endif
+
+  let l:script = l:pathparts[-1]
 
   if l:script == "env"
     let l:argspath = matchlist(l:rest, s:r_env)
