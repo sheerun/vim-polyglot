@@ -94,9 +94,6 @@ def load_data()
   languages = load_languages
   heuristics = load_heuristics
 
-  # Reason can have ocaml as interpreter but let's not depend on it...
-  languages["Reason"]["interpreters"] -= ["ocaml"]
-
   for package in packages
     for filetype in package["filetypes"]
       if filetype["linguist"]
@@ -584,13 +581,13 @@ def generate_ftdetect(packages, heuristics)
 
   show_warnings(all_filetypes, expected_filetypes)
 
-  ftdetect = File.read('filetype.vim')
+  ftdetect = File.read('ftdetect/polyglot.vim')
 
   starting = '" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE'
   ending = '" DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE'
 
   File.write(
-    'filetype.vim',
+    'ftdetect/polyglot.vim',
     ftdetect.gsub(/(?<=#{starting}\n)(.*)(?=#{ending})/m) { output }
   )
 

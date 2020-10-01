@@ -25,6 +25,7 @@ syntax keyword odinCase case
 syntax keyword odinContinue continue
 syntax keyword odinBreak break
 syntax keyword odinSizeOf size_of
+syntax keyword odinOffsetOf offset_of
 syntax keyword odinTypeInfoOf type_info_of
 syntax keyword odinTypeIdOf typeid_of
 syntax keyword odinTypeOf type_of
@@ -102,6 +103,7 @@ highlight link odinNotIn Keyword
 highlight link odinContinue Keyword
 highlight link odinBreak Keyword
 highlight link odinSizeOf Keyword
+highlight link odinOffsetOf Keyword
 highlight link odinTypeOf Keyword
 highlight link odinTypeInfoOf Keyword
 highlight link odinTypeIdOf Keyword
