@@ -1,3 +1,11 @@
+" Line continuation is used here, remove 'C' from 'cpoptions'
+let s:cpo_save = &cpo
+set cpo&vim
+
+func! s:WritePostOnce(fn)
+  exe 'au! filetypedetect BufWritePost <buffer> ++once ' . a:fn
+endfunc
+
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
 func! polyglot#detect#Inp()
@@ -185,7 +193,8 @@ func! polyglot#detect#Pm()
     let &ft = g:filetype_pm | return
   endif
   if polyglot#shebang#Detect() | return | endif
-  set ft=perl | au BufWritePost <buffer> ++once call polyglot#detect#Pm()
+  setf perl
+  call s:WritePostOnce('call polyglot#detect#Pm()')
   return
 endfunc
 
@@ -207,7 +216,8 @@ func! polyglot#detect#Pl()
     let &ft = g:filetype_pl | return
   endif
   if polyglot#shebang#Detect() | return | endif
-  set ft=perl | au BufWritePost <buffer> ++once call polyglot#detect#Pl()
+  setf perl
+  call s:WritePostOnce('call polyglot#detect#Pl()')
   return
 endfunc
 
@@ -231,7 +241,8 @@ func! polyglot#detect#T()
     let &ft = g:filetype_t | return
   endif
   if polyglot#shebang#Detect() | return | endif
-  set ft=perl | au BufWritePost <buffer> ++once call polyglot#detect#T()
+  setf perl
+  call s:WritePostOnce('call polyglot#detect#T()')
   return
 endfunc
 
@@ -259,6 +270,12 @@ func! polyglot#detect#Html()
       set ft=xhtml | return
     endif
   endfor
-  set ft=html | au BufWritePost <buffer> ++once call polyglot#detect#Html()
+  setf html
+  call s:WritePostOnce('call polyglot#detect#Html()')
   return
 endfunc
+
+" DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
+
+let &cpo = s:cpo_save
+unlet s:cpo_save

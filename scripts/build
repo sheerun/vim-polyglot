@@ -392,7 +392,8 @@ def rule_to_code(rule)
   if rule.has_key?("filetype")
     if rule.has_key?("fallback")
       return <<~EOS
-        set ft=#{rule["filetype"]} | au BufWritePost <buffer> ++once call polyglot#detect##{camelize(rule["extensions"].first)}()
+        setf #{rule["filetype"]}
+        call s:WritePostOnce('call polyglot#detect##{camelize(rule["extensions"].first)}()')
         return
       EOS
     end
@@ -496,7 +497,7 @@ end
 def generate_ftdetect(packages, heuristics)
   FileUtils.mkdir_p('autoload/polyglot')
 
-  output = "\n"
+  output = ""
 
   all_filetypes = packages.flat_map { |f| f["filetypes"] || [] }
   filetype_names = Set.new(all_filetypes.map { |f| f["name"] })
@@ -581,17 +582,9 @@ def generate_ftdetect(packages, heuristics)
 
   show_warnings(all_filetypes, expected_filetypes)
 
-  ftdetect = File.read('ftdetect/polyglot.vim')
+  inject_code('ftdetect/polyglot.vim', output)
 
-  starting = '" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE'
-  ending = '" DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE'
-
-  File.write(
-    'ftdetect/polyglot.vim',
-    ftdetect.gsub(/(?<=#{starting}\n)(.*)(?=#{ending})/m) { output }
-  )
-
-  output = ["\" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE\n"]
+  output = []
 
   for heuristic in heuristics
     output << <<~EOS
@@ -601,7 +594,7 @@ def generate_ftdetect(packages, heuristics)
     EOS
   end
 
-  File.write('autoload/polyglot/detect.vim', output.join("\n"))
+  inject_code('autoload/polyglot/detect.vim', output.join("\n"))
 
   output = <<~EOS
     let s:interpreters = {
@@ -619,9 +612,15 @@ def generate_ftdetect(packages, heuristics)
 end
 
 def inject_code(path, code)
-  header = "\" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE\n"
-  normal, generated = File.read(path).split(header)
-  File.write(path, [normal, generated].join(header))
+  source = File.read(path)
+
+  starting = '" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE'
+  ending = '" DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE'
+
+  File.write(
+    path,
+    source.gsub(/(?<=#{starting}\n)(.*)(?=#{ending})/m) { "\n" + code + "\n" }
+  )
 end
 
 def generate_tests(packages)
@@ -739,8 +738,6 @@ end
 
 def generate_plugins(packages)
   output = <<~EOS
-    " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
-
     let s:globs = {
   EOS
 
