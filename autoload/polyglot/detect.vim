@@ -3,7 +3,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 func! s:WritePostOnce(fn)
-  exe 'au! filetypedetect BufWritePost <buffer> ++once ' . a:fn
+  exe 'au! filetypedetect BufWritePost <buffer> au! filetypedetect BufWritePost <buffer> | ' . a:fn
 endfunc
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
