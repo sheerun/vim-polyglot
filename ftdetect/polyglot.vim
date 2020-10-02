@@ -3,6 +3,11 @@
 " Maintainer:	Adam Stankiewicz <sheerun@sher.pl>
 " URL: https://github.com/sheerun/vim-polyglot
 
+" We are not supporting non-compatible mode
+if &compatible
+  finish
+endif
+
 " Listen very carefully, I will say this only once
 if exists("did_load_polyglot")
   finish
