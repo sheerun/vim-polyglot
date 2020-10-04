@@ -390,17 +390,9 @@ def rule_to_code(rule)
   end
 
   if rule.has_key?("filetype")
-    if rule.has_key?("fallback")
-      return <<~EOS
-        setf #{rule["filetype"]}
-        call s:WritePostOnce('call polyglot#detect##{camelize(rule["extensions"].first)}()')
-        return
-      EOS
-    end
-
     return <<~EOS
       set ft=#{rule["filetype"]} | return
-      #{indent(rule_to_code(except(rule, "filetype")), 0)}
+      #{indent(rule_to_code(except(rule, "filetype", "fallback")), 0)}
     EOS
   end
 
@@ -570,7 +562,7 @@ def generate_ftdetect(packages, heuristics)
 
     for heuristic in package_heuristics.uniq
       extensions = heuristic["extensions"].map { |e| "*.#{e}" }
-      autocommands << "  au! BufNewFile,BufRead #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()\n"
+      autocommands << "  au! BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()\n"
     end
 
     if autocommands != ""
