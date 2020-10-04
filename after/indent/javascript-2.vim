@@ -23,25 +23,24 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
 " Language: GraphQL
 " Maintainer: Jon Parise <jon@indelible.org>
 
-runtime! indent/graphql.vim
-
-" Don't redefine our function and also require the standard Javascript indent
-" function to exist.
-if exists('*GetJavascriptGraphQLIndent') || !exists('*GetJavascriptIndent')
+if exists('*GetJavascriptGraphQLIndent') && !empty(&indentexpr)
   finish
 endif
 
+runtime! indent/graphql.vim
+
 " Set the indentexpr with our own version that will call GetGraphQLIndent when
-" we're inside of a GraphQL string and otherwise defer to GetJavascriptIndent.
+" we're inside of a GraphQL string and otherwise defer to the base function.
+let b:indentexpr_base = &indentexpr
 setlocal indentexpr=GetJavascriptGraphQLIndent()
 
 function GetJavascriptGraphQLIndent()
-  let l:stack = map(synstack(v:lnum, 1), "synIDattr(v:val,'name')")
-  if !empty(l:stack) && l:stack[0] ==# 'graphqlTemplateString'
+  let l:stack = map(synstack(v:lnum, 1), "synIDattr(v:val, 'name')")
+  if get(l:stack, 0) ==# 'graphqlTemplateString'
     return GetGraphQLIndent()
   endif
 
-  return GetJavascriptIndent()
+  return eval(b:indentexpr_base)
 endfunction
 
 endif
