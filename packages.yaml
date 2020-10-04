@@ -1943,3 +1943,40 @@ filetypes:
   filenames:
   - auto.master
   - config
+---
+name: b
+remote: vim/vim:runtime
+glob: '**/b.vim'
+filetypes:
+- name: b
+  extensions:
+  - mch
+  - ref
+  - imp
+---
+name: ibasic
+remote: vim/vim:runtime
+glob: '**/ibasic.vim'
+filetypes:
+- name: ibasic
+  extensions:
+  - iba
+  - ibi
+---
+name: freebasic
+remote: vim/vim:runtime
+glob: '**/freebasic.vim'
+filetypes:
+- name: freebasic
+  extensions:
+  - fb
+  - bi
+---
+name: hamster
+remote: vim/vim:runtime
+glob: '**/hamster.vim'
+filetypes:
+- name: hamster
+  extensions:
+  - hsc
+  - hsm

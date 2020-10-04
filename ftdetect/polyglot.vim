@@ -117,6 +117,22 @@ augroup filetypedetect
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(s:disabled_packages, 'hamster')
+  au BufNewFile,BufRead *.hsc,*.hsm setf hamster
+endif
+
+if !has_key(s:disabled_packages, 'freebasic')
+  au BufNewFile,BufRead *.bi,*.fb setf freebasic
+endif
+
+if !has_key(s:disabled_packages, 'ibasic')
+  au BufNewFile,BufRead *.iba,*.ibi setf ibasic
+endif
+
+if !has_key(s:disabled_packages, 'b')
+  au BufNewFile,BufRead *.imp,*.mch,*.ref setf b
+endif
+
 if !has_key(s:disabled_packages, 'sql')
   au BufNewFile,BufRead *.bdy,*.ddl,*.fnc,*.pck,*.pkb,*.pks,*.plb,*.pls,*.plsql,*.prc,*.spc,*.sql,*.tpb,*.tps,*.trg,*.tyb,*.tyc,*.typ,*.vw setf sql
 endif
@@ -1233,125 +1249,6 @@ if !exists("g:ft_ignore_pat")
   let g:ft_ignore_pat = '\.\(Z\|gz\|bz2\|zip\|tgz\)$'
 endif
 
-" Vim help file
-au BufNewFile,BufRead $VIMRUNTIME/doc/*.txt	setf help
-
-" Abaqus or Trasys
-au BufNewFile,BufRead *.inp			call polyglot#ft#Check_inp()
-
-" A2ps printing utility
-au BufNewFile,BufRead */etc/a2ps.cfg,*/etc/a2ps/*.cfg,a2psrc,.a2psrc setf a2ps
-
-" AMPL
-au BufNewFile,BufRead *.run			setf ampl
-
-" Ant
-au BufNewFile,BufRead build.xml			setf ant
-
-" Arduino
-au BufNewFile,BufRead *.ino,*.pde		setf arduino
-
-" Apache config file
-au BufNewFile,BufRead .htaccess,*/etc/httpd/*.conf		setf apache
-au BufNewFile,BufRead */etc/apache2/sites-*/*.com		setf apache
-
-" XA65 MOS6510 cross assembler
-au BufNewFile,BufRead *.a65			setf a65
-
-" Applescript
-au BufNewFile,BufRead *.scpt			setf applescript
-
-" Applix ELF
-au BufNewFile,BufRead *.am
-	\ if expand("<afile>") !~? 'Makefile.am\>' | setf elf | endif
-
-" ALSA configuration
-au BufNewFile,BufRead .asoundrc,*/usr/share/alsa/alsa.conf,*/etc/asound.conf setf alsaconf
-
-" Arc Macro Language
-au BufNewFile,BufRead *.aml			setf aml
-
-" APT config file
-au BufNewFile,BufRead apt.conf		       setf aptconf
-au BufNewFile,BufRead */.aptitude/config       setf aptconf
-au BufNewFile,BufRead */etc/apt/apt.conf.d/{[-_[:alnum:]]\+,[-_.[:alnum:]]\+.conf} setf aptconf
-
-" Arch Inventory file
-au BufNewFile,BufRead .arch-inventory,=tagging-method	setf arch
-
-" ART*Enterprise (formerly ART-IM)
-au BufNewFile,BufRead *.art			setf art
-
-" AsciiDoc
-au BufNewFile,BufRead *.asciidoc,*.adoc		setf asciidoc
-
-" ASN.1
-au BufNewFile,BufRead *.asn,*.asn1		setf asn
-
-" Active Server Pages (with Visual Basic Script)
-au BufNewFile,BufRead *.asa
-	\ if exists("g:filetype_asa") |
-	\   exe "setf " . g:filetype_asa |
-	\ else |
-	\   setf aspvbs |
-	\ endif
-
-" Active Server Pages (with Perl or Visual Basic Script)
-au BufNewFile,BufRead *.asp
-	\ if exists("g:filetype_asp") |
-	\   exe "setf " . g:filetype_asp |
-	\ elseif getline(1) . getline(2) . getline(3) =~? "perlscript" |
-	\   setf aspperl |
-	\ else |
-	\   setf aspvbs |
-	\ endif
-
-" Grub (must be before catch *.lst)
-au BufNewFile,BufRead */boot/grub/menu.lst,*/boot/grub/grub.conf,*/etc/grub.conf setf grub
-
-" Assembly (all kinds)
-" *.lst is not pure assembly, it has two extra columns (address, byte codes)
-au BufNewFile,BufRead *.asm,*.[sS],*.[aA],*.mac,*.lst	call polyglot#ft#FTasm()
-
-" Macro (VAX)
-au BufNewFile,BufRead *.mar			setf vmasm
-
-" Atlas
-au BufNewFile,BufRead *.atl,*.as		setf atlas
-
-" Autoit v3
-au BufNewFile,BufRead *.au3			setf autoit
-
-" Autohotkey
-au BufNewFile,BufRead *.ahk			setf autohotkey
-
-" Automake
-au BufNewFile,BufRead [mM]akefile.am,GNUmakefile.am	setf automake
-
-" Autotest .at files are actually m4
-au BufNewFile,BufRead *.at			setf m4
-
-" Avenue
-au BufNewFile,BufRead *.ave			setf ave
-
-" Awk
-au BufNewFile,BufRead *.awk,*.gawk		setf awk
-
-" B
-au BufNewFile,BufRead *.mch,*.ref,*.imp		setf b
-
-" BASIC or Visual Basic
-au BufNewFile,BufRead *.bas			call polyglot#ft#FTVB("basic")
-
-" Visual Basic Script (close to Visual Basic) or Visual Basic .NET
-au BufNewFile,BufRead *.vb,*.vbs,*.dsm,*.ctl	setf vb
-
-" IBasic file (similar to QBasic)
-au BufNewFile,BufRead *.iba,*.ibi		setf ibasic
-
-" FreeBasic file (similar to QBasic)
-au BufNewFile,BufRead *.fb,*.bi			setf freebasic
-
 " Batch file for MSDOS.
 au BufNewFile,BufRead *.bat,*.sys		setf dosbatch
 " *.cmd is close to a Batch file, but on OS/2 Rexx files also use *.cmd.
@@ -1819,12 +1716,6 @@ au BufNewFile,BufRead gnashrc,.gnashrc,gnashpluginrc,.gnashpluginrc setf gnash
 au BufNewFile,BufRead gitolite.conf		setf gitolite
 au BufNewFile,BufRead {,.}gitolite.rc,example.gitolite.rc	setf perl
 
-" Gnuplot scripts
-au BufNewFile,BufRead *.gpi			setf gnuplot
-
-" Go (Google)
-au BufNewFile,BufRead *.go			setf go
-
 " GrADS scripts
 au BufNewFile,BufRead *.gs			setf grads
 
@@ -1842,12 +1733,6 @@ au BufNewFile,BufRead */etc/group,*/etc/group-,*/etc/group.edit,*/etc/gshadow,*/
 
 " GTK RC
 au BufNewFile,BufRead .gtkrc,gtkrc		setf gtkrc
-
-" Haml
-au BufNewFile,BufRead *.haml			setf haml
-
-" Hamster Classic | Playground files
-au BufNewFile,BufRead *.hsc,*.hsm		setf hamster
 
 " Haskell
 au BufNewFile,BufRead *.hs,*.hs-boot		setf haskell
