@@ -6,8 +6,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pgsql') == -1
 " Version:      2.2.2
 " License:      This file is placed in the public domain.
 
-" Based on PostgreSQL 12.3
-" Automatically generated on 2020-07-31 at 10:47:30
+" Based on PostgreSQL 12.4
+" Automatically generated on 2020-10-03 at 18:36:49
 
 if exists("b:current_syntax")
   finish
@@ -25,12 +25,12 @@ syn keyword sqlSpecial contained false null true
 
 " Statements
 syn keyword sqlStatement contained abort add alter analyze begin checkpoint close cluster comment
-syn keyword sqlStatement contained commit constraints copy create deallocate declare delete discard do drop
-syn keyword sqlStatement contained end execute explain fetch grant import insert label listen load lock
-syn keyword sqlStatement contained move notify prepare prepared reassign refresh reindex release reset
-syn keyword sqlStatement contained revoke rollback savepoint security select select set show start
-syn keyword sqlStatement contained transaction truncate unlisten update vacuum values work
-syn match sqlStatement /\<create\_s\+or\_s\+replace\>/
+syn keyword sqlStatement contained commit constraints copy deallocate declare delete discard do drop end
+syn keyword sqlStatement contained execute explain fetch grant import insert label listen load lock move
+syn keyword sqlStatement contained notify prepare prepared reassign refresh reindex release reset revoke
+syn keyword sqlStatement contained rollback savepoint security select select set show start transaction
+syn keyword sqlStatement contained truncate unlisten update vacuum values work
+syn match sqlStatement contained /\<create\%(\_s\+or\_s\+replace\)\=\>/
 " Types
 syn keyword sqlType contained aclitem addbandarg addr addr_gid_seq addrfeat addrfeat_gid_seq
 syn keyword sqlType contained agg_count agg_samealignment anyarray anyelement anyenum
@@ -702,7 +702,7 @@ syn keyword sqlConstant contained ltree_plpythonu pldbgapi plpython2u plpython3u
 if index(get(g:, 'pgsql_disabled_extensions', []), 'refint') == -1
   syn keyword sqlFunction contained check_foreign_key check_primary_key
 endif " refint
-" Extension: postgis (v3.0.1)
+" Extension: postgis (v3.0.2)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis') == -1
   syn keyword sqlFunction contained addauth addgeometrycolumn box
   syn keyword sqlFunction contained box2d box2d_in box2d_out box2df_in
@@ -988,7 +988,7 @@ endif " adminpack
 if index(get(g:, 'pgsql_disabled_extensions', []), 'dict_xsyn') == -1
   syn keyword sqlFunction contained dxsyn_init dxsyn_lexize
 endif " dict_xsyn
-" Extension: address_standardizer (v3.0.1)
+" Extension: address_standardizer (v3.0.2)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'address_standardizer') == -1
   syn keyword sqlFunction contained parse_address standardize_address
   syn keyword sqlType contained stdaddr
@@ -1046,7 +1046,7 @@ if index(get(g:, 'pgsql_disabled_extensions', []), 'cube') == -1
   syn keyword sqlType contained cube
   syn keyword sqlFunction contained g_cube_compress g_cube_decompress
 endif " cube
-" Extension: postgis_tiger_geocoder (v3.0.1)
+" Extension: postgis_tiger_geocoder (v3.0.2)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_tiger_geocoder') == -1
   syn keyword sqlFunction contained count_words create_census_base_tables
   syn keyword sqlFunction contained cull_null diff_zip
@@ -1150,11 +1150,11 @@ endif " pgstattuple
 if index(get(g:, 'pgsql_disabled_extensions', []), 'autoinc') == -1
   syn keyword sqlFunction contained autoinc
 endif " autoinc
-" Extension: address_standardizer_data_us (v3.0.1)
+" Extension: address_standardizer_data_us (v3.0.2)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'address_standardizer_data_us') == -1
   syn keyword sqlTable contained us_gaz us_lex us_rules
 endif " address_standardizer_data_us
-" Extension: postgis_topology (v3.0.1)
+" Extension: postgis_topology (v3.0.2)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_topology') == -1
   syn keyword sqlFunction contained addedge addface addnode
   syn keyword sqlFunction contained addtopogeometrycolumn addtosearchpath asgml
@@ -1187,7 +1187,7 @@ if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_topology') == -1
   syn keyword sqlType contained topoelementarray topogeometry
   syn keyword sqlType contained validatetopology_returntype
 endif " postgis_topology
-" Extension: postgis_raster (v3.0.1)
+" Extension: postgis_raster (v3.0.2)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_raster') == -1
   syn keyword sqlFunction contained addoverviewconstraints addrasterconstraints
   syn keyword sqlFunction contained box3d bytea dropoverviewconstraints
@@ -1534,7 +1534,7 @@ if index(get(g:, 'pgsql_disabled_extensions', []), 'fuzzystrmatch') == -1
   syn keyword sqlFunction contained levenshtein levenshtein_less_equal
   syn keyword sqlFunction contained metaphone soundex text_soundex
 endif " fuzzystrmatch
-" Extension: pgrouting (v3.0.2)
+" Extension: pgrouting (v3.1.0)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'pgrouting') == -1
   syn keyword sqlFunction contained pgr_alphashape pgr_analyzegraph
   syn keyword sqlFunction contained pgr_analyzeoneway pgr_articulationpoints pgr_astar
@@ -1578,7 +1578,7 @@ if index(get(g:, 'pgsql_disabled_extensions', []), 'pgcrypto') == -1
   syn keyword sqlFunction contained pgp_sym_decrypt_bytea pgp_sym_encrypt
   syn keyword sqlFunction contained pgp_sym_encrypt_bytea
 endif " pgcrypto
-" Extension: postgis_sfcgal (v3.0.1)
+" Extension: postgis_sfcgal (v3.0.2)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_sfcgal') == -1
   syn keyword sqlFunction contained postgis_sfcgal_noop
   syn keyword sqlFunction contained postgis_sfcgal_scripts_installed postgis_sfcgal_version st_3darea
@@ -1971,6 +1971,9 @@ else
   syn region plpgsql matchgroup=sqlString start=+\$\$+ end=+\$\$+ keepend
     \ contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlPlpgsqlKeyword,sqlPlpgsqlVariable,sqlPlpgsqlOperator,sqlNumber,sqlIsOperator,sqlString,sqlTodo
 endif
+
+" Folding
+syn region sqlFold start='^\s*\zs\c\(create\|update\|alter\|select\|insert\|do\)\>' end=';$' transparent fold contains=ALL
 
 " PL/<any other language>
 fun! s:add_syntax(s)

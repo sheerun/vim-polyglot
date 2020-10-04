@@ -6,7 +6,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cpp-modern') ==
 " Original Author: Jon Haggblad <https://github.com/octol>
 " Maintainer:      bfrg <https://github.com/bfrg>
 " Website:         https://github.com/bfrg/vim-cpp-modern
-" Last Change:     Oct 1, 2020
+" Last Change:     Oct 4, 2020
 "
 " This syntax file is based on:
 " https://github.com/octol/vim-cpp-enhanced-highlight
@@ -14,17 +14,17 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cpp-modern') ==
 " ==============================================================================
 
 " Standard library {{{1
-syntax keyword cppSTLconstant
+syntax keyword cppSTLdefine
         \ MB_CUR_MAX MB_LEN_MAX WCHAR_MAX WCHAR_MIN WEOF __STDC_UTF_16__ __STDC_UTF_32__
 
 syntax keyword cppSTLnamespace
         \ std experimental rel_ops
 
 syntax keyword cppSTLconstant
-        \ badbit digits digits10 eofbit failbit goodbit has_denorm has_denorm_loss has_infinity has_quiet_NaN has_signaling_NaN is_bounded is_exact is_iec559 is_integer is_modulo is_signed is_specialized max_exponent max_exponent10 min_exponent min_exponent10 nothrow npos radix round_style tinyness_before traps
+        \ badbit digits digits10 eofbit failbit goodbit has_denorm has_denorm_loss has_infinity has_quiet_NaN has_signaling_NaN is_bounded is_exact is_iec559 is_integer is_modulo is_signed is_specialized max_exponent max_exponent10 min_exponent min_exponent10 npos radix round_style tinyness_before traps
 
 syntax keyword cppSTLvariable
-        \ cerr cin clog cout wcerr wcin wclog wcout
+        \ cerr cin clog cout wcerr wcin wclog wcout nothrow
 
 syntax keyword cppSTLexception
         \ bad_alloc bad_exception bad_typeid bad_cast domain_error exception failure invalid_argument length_error logic_error out_of_range overflow_error range_error runtime_error underflow_error
@@ -36,7 +36,10 @@ syntax keyword cppSTLios
         \ boolalpha dec defaultfloat fixed hex hexfloat internal left noboolalpha noshowbase noshowpoint noshowpos noskipws nounitbuf nouppercase oct right scientific showbase showpoint showpos skipws unitbuf uppercase
 
 syntax keyword cppSTLtype
-        \ fmtflags iostate openmode Init allocator auto_ptr basic_filebuf basic_fstream basic_ifstream basic_ios basic_iostream basic_istream basic_istringstream basic_ofstream basic_ostream basic_ostringstream basic_streambuf basic_string basic_stringbuf basic_stringstream binary_compose binder1st binder2nd bitset char_traits char_type const_mem_fun1_t const_mem_fun_ref1_t const_mem_fun_ref_t const_mem_fun_t const_pointer const_reference container_type deque difference_type div_t double_t event_callback filebuf first_type float_denorm_style float_round_style float_t fpos fstream gslice_array ifstream imaxdiv_t indirect_array int_type ios ios_base iostream istream istringstream istrstream iterator_category iterator_traits key_compare key_type ldiv_t list lldiv_t map mapped_type mask_array mbstate_t mem_fun1_t mem_fun_ref1_t mem_fun_ref_t mem_fun_t multimap multiset nothrow_t numeric_limits off_type ofstream ostream ostringstream ostrstream pair pointer pointer_to_binary_function pointer_to_unary_function pos_type priority_queue queue reference second_type seekdir sequence_buffer set sig_atomic_t size_type slice_array stack state_type stream streambuf streamoff streampos streamsize string stringbuf stringstream strstream strstreambuf temporary_buffer test_type time_t tm traits_type type_info u16string u32string unary_compose unary_negate valarray value_compare value_type vector wctrans_t wctype_t wfilebuf wfstream wifstream wint_t wios wiostream wistream wistringstream wofstream wostream wostringstream wstreambuf wstreampos wstring wstringbuf wstringstream codecvt codecvt_base codecvt_byname collate collate_byname ctype ctype_base ctype_byname locale messages messages_base messages_byname money_base money_get money_put moneypunct moneypunct_byname num_get num_put numpunct numpunct_byname time_base time_get time_get_byname time_put time_put_byname binary_function binary_negate bit_and bit_not bit_or divides equal_to greater greater_equal less less_equal logical_and logical_not logical_or minus modulus multiplies negate not_equal_to plus unary_function unary_negate bidirectional_iterator_tag forward_iterator_tag input_iterator_tag output_iterator_tag random_access_iterator_tag
+        \ fmtflags iostate openmode Init allocator auto_ptr basic_filebuf basic_fstream basic_ifstream basic_ios basic_iostream basic_istream basic_istringstream basic_ofstream basic_ostream basic_ostringstream basic_streambuf basic_string basic_stringbuf basic_stringstream binary_compose binder1st binder2nd bitset char_traits char_type const_mem_fun1_t const_mem_fun_ref1_t const_mem_fun_ref_t const_mem_fun_t const_pointer const_reference container_type deque difference_type div_t event_callback filebuf first_type float_denorm_style float_round_style fpos fstream gslice_array ifstream imaxdiv_t indirect_array int_type ios ios_base iostream istream istringstream istrstream iterator_category iterator_traits key_compare key_type ldiv_t list lldiv_t map mapped_type mask_array mbstate_t mem_fun1_t mem_fun_ref1_t mem_fun_ref_t mem_fun_t multimap multiset nothrow_t numeric_limits off_type ofstream ostream ostringstream ostrstream pair pointer pointer_to_binary_function pointer_to_unary_function pos_type priority_queue queue reference second_type seekdir sequence_buffer set size_type slice_array stack state_type stream streambuf streamoff streampos streamsize string stringbuf stringstream strstream strstreambuf temporary_buffer test_type tm traits_type type_info u16string u32string unary_compose unary_negate valarray value_compare value_type vector wfilebuf wfstream wifstream wios wiostream wistream wistringstream wofstream wostream wostringstream wstreambuf wstreampos wstring wstringbuf wstringstream codecvt codecvt_base codecvt_byname collate collate_byname ctype ctype_base ctype_byname locale messages messages_base messages_byname money_base money_get money_put moneypunct moneypunct_byname num_get num_put numpunct numpunct_byname time_base time_get time_get_byname time_put time_put_byname binary_function binary_negate bit_and bit_not bit_or divides equal_to greater greater_equal less less_equal logical_and logical_not logical_or minus modulus multiplies negate not_equal_to plus unary_function unary_negate bidirectional_iterator_tag forward_iterator_tag input_iterator_tag output_iterator_tag random_access_iterator_tag
+
+syntax keyword cppSTLtypedef
+        \ time_t sig_atomic_t wctrans_t wctype_t wint_t
 
 syntax keyword cppSTLiterator
         \ back_insert_iterator bidirectional_iterator const_iterator const_reverse_iterator forward_iterator front_insert_iterator input_iterator insert_iterator istream_iterator istreambuf_iterator iterator ostream_iterator ostreambuf_iterator output_iterator random_access_iterator raw_storage_iterator reverse_bidirectional_iterator reverse_iterator
@@ -58,13 +61,18 @@ if !exists('cpp_no_cpp11')
     syntax keyword cppSTLnamespace chrono this_thread
 
     syntax keyword cppSTLtype
-            \ array atomic atomic_bool atomic_char atomic_char16_t atomic_char32_t atomic_flag atomic_int atomic_int_fast16_t atomic_int_fast32_t atomic_int_fast64_t atomic_int_fast8_t atomic_int_least16_t atomic_int_least32_t atomic_int_least64_t atomic_int_least8_t atomic_intmax_t atomic_intptr_t atomic_llong atomic_long atomic_ptrdiff_t atomic_schar atomic_short atomic_size_t atomic_uchar atomic_uint atomic_uint_fast16_t atomic_uint_fast32_t atomic_uint_fast64_t atomic_uint_fast8_t atomic_uint_least16_t atomic_uint_least32_t atomic_uint_least64_t atomic_uint_least8_t atomic_uintmax_t atomic_uintptr_t atomic_ullong atomic_ulong atomic_ushort atomic_wchar_t duration duration_values high_resolution_clock hours microseconds milliseconds minutes nanoseconds seconds steady_clock system_clock time_point treat_as_floating_point condition_variable nullptr_t max_align_t exception_ptr nested_exception hash is_bind_expression is_placeholder reference_wrapper forward_list future packaged_task promise shared_future initializer_list codecvt_mode codecvt_utf16 codecvt_utf8 codecvt_utf8_utf16 wbuffer_convert wstring_convert allocator_arg_t allocator_traits allocator_type default_delete enable_shared_from_this is_always_equal owner_less pointer_safety pointer_traits propagate_on_container_copy_assignment propagate_on_container_move_assignment propagate_on_container_swap rebind_alloc rebind_traits shared_ptr unique_ptr uses_allocator void_pointer const_void_pointer weak_ptr adopt_lock_t condition_variable_any defer_lock_t lock_guard mutex once_flag recursive_mutex recursive_timed_mutex timed_mutex try_to_lock_t unique_lock bernoulli_distribution binomial_distribution cauchy_distribution chi_squared_distribution default_random_engine discard_block_engine discrete_distribution exponential_distribution extreme_value_distribution fisher_f_distribution gamma_distribution geometric_distribution independent_bits_engine knuth_b linear_congruential_engine lognormal_distribution mersenne_twister_engine minstd_rand minstd_rand0 mt19937 mt19937_64 negative_binomial_distribution normal_distribution piecewise_constant_distribution piecewise_linear_distribution poisson_distribution random_device ranlux24 ranlux24_base ranlux48 ranlux48_base seed_seq shuffle_order_engine student_t_distribution subtract_with_carry_engine uniform_int_distribution uniform_real_distribution weibull_distribution atto centi deca deci exa femto giga hecto kilo mega micro milli nano peta pico ratio ratio_add ratio_divide ratio_equal ratio_greater ratio_greater_equal ratio_less ratio_less_equal ratio_multiply ratio_not_equal ratio_subtract tera yocto yotta zepto zetta basic_regex match_results regex_traits sub_match syntax_option_type match_flag_type error_type scoped_allocator_adaptor outer_allocator_type inner_allocator_type error_code error_condition error_category is_error_code_enum is_error_condition_enum thread tuple tuple_size tuple_element type_index add_const add_cv add_lvalue_reference add_pointer add_rvalue_reference add_volatile aligned_storage aligned_union alignment_of common_type conditional decay enable_if extent false_type has_virtual_destructor integral_constant is_abstract is_arithmetic is_array is_assignable is_base_of is_class is_compound is_const is_constructible is_convertible is_copy_assignable is_copy_constructible is_default_constructible is_destructible is_empty is_enum is_floating_point is_function is_fundamental is_integral is_literal_type is_lvalue_reference is_member_function_pointer is_member_object_pointer is_member_pointer is_move_assignable is_move_constructible is_nothrow_assignable is_nothrow_constructible is_nothrow_copy_assignable is_nothrow_copy_constructible is_nothrow_default_constructible is_nothrow_destructible is_nothrow_move_assignable is_nothrow_move_constructible is_object is_pod is_pointer is_polymorphic is_reference is_rvalue_reference is_same is_scalar is_signed is_standard_layout is_trivial is_trivially_assignable is_trivially_constructible is_trivially_copy_assignable is_trivially_copy_constructible is_trivially_copyable is_trivially_default_constructible is_trivially_destructible is_trivially_move_assignable is_trivially_move_constructible is_union is_unsigned is_void is_volatile make_signed make_unsigned rank remove_all_extents remove_const remove_cv remove_extent remove_pointer remove_reference remove_volatile result_of true_type underlying_type hasher key_equal unordered_map unordered_multimap unordered_multiset unordered_set piecewise_construct_t function
+            \ array atomic atomic_bool atomic_char atomic_flag atomic_int atomic_llong atomic_long atomic_schar atomic_short atomic_uchar atomic_uint atomic_ullong atomic_ulong atomic_ushort duration duration_values high_resolution_clock hours microseconds milliseconds minutes nanoseconds seconds steady_clock system_clock time_point treat_as_floating_point condition_variable exception_ptr nested_exception hash is_bind_expression is_placeholder reference_wrapper forward_list future packaged_task promise shared_future initializer_list codecvt_mode codecvt_utf16 codecvt_utf8 codecvt_utf8_utf16 wbuffer_convert wstring_convert allocator_traits allocator_type default_delete enable_shared_from_this is_always_equal owner_less pointer_safety pointer_traits propagate_on_container_copy_assignment propagate_on_container_move_assignment propagate_on_container_swap rebind_alloc rebind_traits shared_ptr unique_ptr uses_allocator void_pointer const_void_pointer weak_ptr condition_variable_any lock_guard mutex once_flag recursive_mutex recursive_timed_mutex timed_mutex unique_lock bernoulli_distribution binomial_distribution cauchy_distribution chi_squared_distribution default_random_engine discard_block_engine discrete_distribution exponential_distribution extreme_value_distribution fisher_f_distribution gamma_distribution geometric_distribution independent_bits_engine knuth_b linear_congruential_engine lognormal_distribution mersenne_twister_engine minstd_rand minstd_rand0 mt19937 mt19937_64 negative_binomial_distribution normal_distribution piecewise_constant_distribution piecewise_linear_distribution poisson_distribution random_device ranlux24 ranlux24_base ranlux48 ranlux48_base seed_seq shuffle_order_engine student_t_distribution subtract_with_carry_engine uniform_int_distribution uniform_real_distribution weibull_distribution atto centi deca deci exa femto giga hecto kilo mega micro milli nano peta pico ratio ratio_add ratio_divide ratio_equal ratio_greater ratio_greater_equal ratio_less ratio_less_equal ratio_multiply ratio_not_equal ratio_subtract tera yocto yotta zepto zetta basic_regex match_results regex_traits sub_match syntax_option_type match_flag_type error_type scoped_allocator_adaptor outer_allocator_type inner_allocator_type error_code error_condition error_category is_error_code_enum is_error_condition_enum thread tuple tuple_size tuple_element type_index add_const add_cv add_lvalue_reference add_pointer add_rvalue_reference add_volatile aligned_storage aligned_union alignment_of common_type conditional decay enable_if extent false_type has_virtual_destructor integral_constant is_abstract is_arithmetic is_array is_assignable is_base_of is_class is_compound is_const is_constructible is_convertible is_copy_assignable is_copy_constructible is_default_constructible is_destructible is_empty is_enum is_floating_point is_function is_fundamental is_integral is_literal_type is_lvalue_reference is_member_function_pointer is_member_object_pointer is_member_pointer is_move_assignable is_move_constructible is_nothrow_assignable is_nothrow_constructible is_nothrow_copy_assignable is_nothrow_copy_constructible is_nothrow_default_constructible is_nothrow_destructible is_nothrow_move_assignable is_nothrow_move_constructible is_object is_pod is_pointer is_polymorphic is_reference is_rvalue_reference is_same is_scalar is_signed is_standard_layout is_trivial is_trivially_assignable is_trivially_constructible is_trivially_copy_assignable is_trivially_copy_constructible is_trivially_copyable is_trivially_default_constructible is_trivially_destructible is_trivially_move_assignable is_trivially_move_constructible is_union is_unsigned is_void is_volatile make_signed make_unsigned rank remove_all_extents remove_const remove_cv remove_extent remove_pointer remove_reference remove_volatile result_of true_type underlying_type hasher key_equal unordered_map unordered_multimap unordered_multiset unordered_set function
 
-    syntax keyword cppSTLconstant
-            \ _1 _2 _3 _4 _5 _6 _7 _8 _9 max_digits10 allocator_arg defer_lock try_to_lock adopt_lock math_errhandling
+    syntax keyword cppSTLtypedef
+            \ atomic_char16_t atomic_char32_t atomic_int_fast16_t atomic_int_fast32_t atomic_int_fast64_t atomic_int_fast8_t atomic_int_least16_t atomic_int_least32_t atomic_int_least64_t atomic_int_least8_t atomic_intmax_t atomic_intptr_t atomic_ptrdiff_t atomic_size_t atomic_uint_fast16_t atomic_uint_fast32_t atomic_uint_fast64_t atomic_uint_fast8_t atomic_uint_least16_t atomic_uint_least32_t atomic_uint_least64_t atomic_uint_least8_t atomic_uintmax_t atomic_uintptr_t atomic_wchar_t nullptr_t max_align_t allocator_arg_t adopt_lock_t defer_lock_t try_to_lock_t piecewise_construct_t
 
-    syntax keyword cppSTLconstant
-            \ FLT_EVAL_METHOD FP_INFINITE FP_NAN FP_NORMAL FP_SUBNORMAL FP_ZERO HUGE_VALF HUGE_VALL INFINITY MATH_ERREXCEPT MATH_ERRNO NAN
+    syntax keyword cppSTLconstant max_digits10
+
+    syntax keyword cppSTLvariable
+            \ _1 _2 _3 _4 _5 _6 _7 _8 _9 defer_lock try_to_lock adopt_lock allocator_arg
+
+    syntax keyword cppSTLdefine
+            \ math_errhandling FLT_EVAL_METHOD FP_INFINITE FP_NAN FP_NORMAL FP_SUBNORMAL FP_ZERO HUGE_VALF HUGE_VALL INFINITY MATH_ERREXCEPT MATH_ERRNO NAN
 
     syntax keyword cppSTLenum
             \ memory_order future_status future_errc launch io_errc cv_status errc
@@ -79,8 +87,8 @@ if !exists('cpp_no_cpp11')
     syntax keyword cppSTLiterator
             \ move_iterator regex_iterator regex_token_iterator const_local_iterator local_iterator
 
-    " Note: ignore is also a function (could also be put under cppSTLvariable)
-    syntax match cppSTLconstant "\<ignore\>(\@!"
+    " Note: ignore is also a function
+    syntax match cppSTLvariable "\<ignore\>(\@!"
 endif
 
 
@@ -91,7 +99,10 @@ if !exists('cpp_no_cpp14')
     syntax keyword cppSTLfunction make_unique
 
     syntax keyword cppSTLtype
-            \ index_sequence index_sequence_for integer_sequence make_index_sequence make_integer_sequence shared_lock shared_timed_mutex tuple_element_t add_const_t add_cv_t add_lvalue_reference_t add_pointer_t add_rvalue_reference_t add_volatile_t aligned_storage_t aligned_union_t common_type_t conditional_t decay_t enable_if_t is_null_pointer make_signed_t make_unsigned_t remove_all_extents_t remove_const_t remove_cv_t remove_extent_t remove_pointer_t remove_reference_t remove_volatile_t result_of_t underlying_type_t
+            \ index_sequence index_sequence_for integer_sequence make_index_sequence make_integer_sequence shared_lock shared_timed_mutex is_null_pointer
+
+    syntax keyword cppSTLtypedef
+            \ tuple_element_t add_const_t add_cv_t add_lvalue_reference_t add_pointer_t add_rvalue_reference_t add_volatile_t aligned_storage_t aligned_union_t common_type_t conditional_t decay_t enable_if_t make_signed_t make_unsigned_t remove_all_extents_t remove_const_t remove_cv_t remove_extent_t remove_pointer_t remove_reference_t remove_volatile_t result_of_t underlying_type_t
 endif
 
 
@@ -100,7 +111,10 @@ if !exists('cpp_no_cpp17')
     syntax keyword cppSTLnamespace filesystem execution
 
     syntax keyword cppSTLtype
-            \ any is_execution_policy parallel_policy parallel_unsequenced_policy sequenced_policy directory_entry directory_iterator file_status file_time_type path recursive_directory_iterator space_info default_order default_order_t default_searcher boyer_moore_searcher boyer_moore_horspool_searcher memory_resource monotonic_buffer_resource polymorphic_allocator pool_options synchronized_pool_resource unsynchronized_pool_resource scoped_lock optional nullopt_t shared_mutex basic_string_view string_view u16string_view u32string_view wstring_view bool_constant conjunction disjunction has_unique_object_representations invoke_result invoke_result_t is_aggregate is_callable is_invocable is_invocable_r is_nothrow_invocable is_nothrow_invocable_r is_nothrow_swappable is_nothrow_swappable_with is_nowthrow_callable is_swappable is_swappable_with negation void_t node_type insert_return_type in_place_tag in_place_t in_place_type_t in_place_index_t monostate variant variant_size variant_alternative variant_alternative_t
+            \ any is_execution_policy parallel_policy parallel_unsequenced_policy sequenced_policy directory_entry directory_iterator file_status file_time_type path recursive_directory_iterator space_info default_order default_searcher boyer_moore_searcher boyer_moore_horspool_searcher memory_resource monotonic_buffer_resource polymorphic_allocator pool_options synchronized_pool_resource unsynchronized_pool_resource scoped_lock optional shared_mutex basic_string_view string_view u16string_view u32string_view wstring_view bool_constant conjunction disjunction has_unique_object_representations invoke_result is_aggregate is_callable is_invocable is_invocable_r is_nothrow_invocable is_nothrow_invocable_r is_nothrow_swappable is_nothrow_swappable_with is_nowthrow_callable is_swappable is_swappable_with negation node_type insert_return_type in_place_tag monostate variant variant_size variant_alternative
+
+    syntax keyword cppSTLtypedef
+            \ invoke_result_t default_order_t nullopt_t void_t in_place_t in_place_type_t in_place_index_t variant_alternative_t
 
     syntax keyword cppSTLexception
             \ bad_any_cast filesystem_error bad_optional_access bad_variant_access
@@ -120,12 +134,12 @@ if !exists('cpp_no_cpp17')
     " Note: There is std::filesystem::path::format and std::format() in <format>
     syntax match cppSTLenum "\<format\>(\@!"
 
+    " Note: these can be both member objects and methods
+    syntax match cppSTLvariable "\<\%(capacity\|free\|available\)\>(\@!"
+
     " Note: these keywords are very likely to coincide with user-defined variables
     " syntax keyword cppSTLconstant
     "         \ all mask unknown replace add remove nofollow none not_found regular directory symlink block character fifo socket unknown
-
-    " Note: these are also functions
-    " syntax keyword cppSTLconstant capacity free available
 endif
 
 
@@ -136,7 +150,10 @@ if !exists('cpp_no_cpp20')
     syntax keyword cppSTLvariable default_sentinel unreachable_sentinel
 
     syntax keyword cppSTLtype
-            \ atomic_ref endian weak_ordering strong_ordering partial_ordering weak_equality strong_equality common_comparison_category common_comparison_category_t contract_violation coroutine_traits coroutine_handle noop_coroutine_handle noop_coroutine_promise suspend_never suspend_always remove_cvref remove_cvref_t is_bounded_array is_layout_compatible is_unbounded_array is_nothrow_convertible has_strong_structural_equality is_pointer_interconvertible_base_of unwrap_reference unwrap_reference_t unwrap_ref_decay unwrap_ref_decay_t basic_common_reference common_reference common_reference_t iterator_t sentinel_t dangling safe_iterator_t safe_subrange_t ref_view filter_view transform_view iota_view join_view empty_view single_view split_view common_view reverse_view view_interface span basic_syncbuf basic_osyncstream syncbuf wsyncbuf osyncstream wosyncstream jthread latch barrier stop_token stop_source stop_callback counting_semaphore binary_semaphore source_location compare_three_way_result compare_three_way_result_t contiguous_iterator_tag incrementable_traits iter_value_t iter_reference_t iter_difference_t iter_rvalue_reference_t iter_common_reference_t indirectly_readable_traits move_sentinel default_sentinel_t unreachable_sentinel_t common_iterator counted_iterator indirect_result_t projected type_identity type_identity_t
+            \ atomic_ref endian weak_ordering strong_ordering partial_ordering weak_equality strong_equality common_comparison_category contract_violation coroutine_traits coroutine_handle noop_coroutine_handle noop_coroutine_promise suspend_never suspend_always remove_cvref is_bounded_array is_layout_compatible is_unbounded_array is_nothrow_convertible has_strong_structural_equality is_pointer_interconvertible_base_of unwrap_reference unwrap_ref_decay basic_common_reference common_reference dangling ref_view filter_view transform_view iota_view join_view empty_view single_view split_view common_view reverse_view view_interface span basic_syncbuf basic_osyncstream syncbuf wsyncbuf osyncstream wosyncstream jthread latch barrier stop_token stop_source stop_callback counting_semaphore binary_semaphore source_location compare_three_way_result contiguous_iterator_tag incrementable_traits indirectly_readable_traits move_sentinel common_iterator counted_iterator projected type_identity
+
+    syntax keyword cppSTLtypedef
+            \ common_comparison_category_t remove_cvref_t unwrap_reference_t unwrap_ref_decay_t common_reference_t iterator_t sentinel_t safe_iterator_t safe_subrange_t compare_three_way_result_t iter_value_t iter_reference_t iter_difference_t iter_rvalue_reference_t iter_common_reference_t default_sentinel_t unreachable_sentinel_t indirect_result_t type_identity_t
 
     syntax keyword cppSTLfunction
             \ make_unique_default_init make_shared_default_init allocate_shared_default_init uses_allocator_construction_args make_obj_using_allocator is_corresponding_member subspan in_range is_pointer_interconvertible_with_class
@@ -161,11 +178,13 @@ endif
 hi def link cppSTLbool         Boolean
 hi def link cppStatement       Statement
 hi def link cppSTLfunction     Function
+hi def link cppSTLdefine       Constant
 hi def link cppSTLconstant     Constant
 hi def link cppSTLnamespace    Constant
-hi def link cppSTLtype         Type
 hi def link cppSTLexception    Type
-hi def link cppSTLiterator     Typedef
+hi def link cppSTLiterator     Type
+hi def link cppSTLtype         Type
+hi def link cppSTLtypedef      Typedef
 hi def link cppSTLenum         Typedef
 hi def link cppSTLios          Function
 hi def link cppSTLconcept      Typedef

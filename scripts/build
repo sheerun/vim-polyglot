@@ -43,6 +43,18 @@ def verify(packages, heuristics)
       puts "No heuristics for .#{e} extension (#{names.join(", ")})"
     end
   end
+
+  extensions = packages.flat_map { |e| e["filetypes"] || [] }
+    .flat_map { |e| e["extensions"].map { |e| "*." + e } }
+  native_filetypes = detect_filetypes_str(
+    File.read('ftdetect/polyglot.vim').match(/" DO NOT EDIT CODE ABOVE.*/m)[0]
+  ).flat_map { |e| expand_all(e) }
+
+  for e in (native_filetypes & extensions)
+    if ENV["DEV"]
+      puts "Duplicated handling for #{e}"
+    end
+  end
 end
 
 def sort_packages(packages)
@@ -506,10 +518,12 @@ def generate_ftdetect(packages, heuristics)
   for package in packages.reverse
     filetypes = package["filetypes"] or raise "Unknown filetype for: #{package["name"]}"
 
-    package_heuristics = []
+    package_autocommands = []
 
-    autocommands = []
     for filetype in filetypes
+      autocommands = []
+      filetype_heuristics = []
+
       name = filetype.fetch("name")
       syntax = filetype["syntax"] ? " | set syntax=#{filetype["syntax"]}" : ""
 
@@ -531,13 +545,13 @@ def generate_ftdetect(packages, heuristics)
       for extension in extensions.sort
         outer_filetype = filetype["outer_filetype"]
         if outer_filetype
-          autocommands << "  au BufNewFile *.*.#{extension} execute \"do BufNewFile filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
-          autocommands << "  au BufReadPre *.*.#{extension} execute \"do BufRead filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}\n"
+          autocommands << "au BufNewFile *.*.#{extension} execute \"do BufNewFile filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}"
+          autocommands << "au BufReadPre *.*.#{extension} execute \"do BufRead filetypedetect \" . expand(\"<afile>:r\") | #{outer_filetype}"
         end
 
         heuristic = heuristics.find { |h| h["extensions"].include?(extension) }
         if heuristic
-          package_heuristics << heuristic
+          filetype_heuristics << heuristic
         else
           set_globs << "*." + extension
         end
@@ -548,28 +562,34 @@ def generate_ftdetect(packages, heuristics)
           filename = "{.,}" + filename[1..-1]
         end
         if filename[-1] == "*"
-          autocommands << "  au BufNewFile,BufRead #{filename} call s:StarSetf('#{name}')\n"
+          autocommands << "au BufNewFile,BufRead #{filename} call s:StarSetf('#{name}')"
         else
           set_globs << filename
         end
       end
 
       if set_globs.size > 0
-        autocommands << "  au BufNewFile,BufRead #{set_globs.join(",")} #{set_command}\n"
+        autocommands << "au BufNewFile,BufRead #{set_globs.join(",")} #{set_command}"
       end
+
+      for heuristic in filetype_heuristics.uniq
+        extensions = heuristic["extensions"].map { |e| "*.#{e}" }
+        autocommands << "au! BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()"
+      end
+
+      if autocommands.size > 0 && filetype["description"]
+        autocommands << '" ' + filetype["description"]
+      end
+
+      package_autocommands << autocommands
     end
 
-
-    for heuristic in package_heuristics.uniq
-      extensions = heuristic["extensions"].map { |e| "*.#{e}" }
-      autocommands << "  au! BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()\n"
-    end
-
-    if autocommands != ""
+    if package_autocommands.flatten.size > 0
       output << "if !has_key(s:disabled_packages, '#{package["name"]}')\n"
-      output << autocommands.reverse.join("")
-      output << "endif\n\n"
+      output << indent(package_autocommands.map { |pc| pc.reverse.join("\n") }.join("\n\n"), 2)
+      output << "\nendif\n\n"
     end
+
   end
 
   show_warnings(all_filetypes, expected_filetypes)
@@ -701,21 +721,23 @@ def expand_all(pattern, all = false)
   end
 end
 
+def detect_filetypes_str(contents)
+  contents = contents.gsub(/^\s*au(tocmd)?!?\s*$/, '')
+  results = contents.scan(/^\s*(?:au!|au|au[^g][^ ]*) +(?:\S+)\s+(\S+)[\s\\]+([^\n]+)/)
+  results = results.map do |a, b|
+    [
+      a,
+      b.gsub(/call (?:s:setf|s:StarSetf)\('([^']+)'\)/i, 'setf \1')
+      .gsub(/set(?:local)?\s+(?:ft|filetype)=(\S+)/, 'setf \1')
+      .gsub(/setf\S*/, 'setf')
+      .gsub(/.*setf\s+(\S+).*/, 'setf \1')
+    ]
+  end.select { |a, b| b.match(/setf \S+/) }.map { |a, b| [a, b.split(" ")[1]] }
+  results
+end
+
 def detect_filetypes(glob)
-  filetypes = Dir[glob].flat_map do |file|
-    contents = File.read(file).gsub(/^\s*au(tocmd)?!?\s*$/, '')
-    results = contents.scan(/^\s*(?:au!|au|au[^g][^ ]*) +(?:\S+)\s+(\S+)[\s\\]+([^\n]+)/)
-    results = results.map do |a, b|
-      [
-        a,
-        b.gsub(/call (?:s:setf|s:StarSetf)\('([^']+)'\)/i, 'setf \1')
-          .gsub(/set(?:local)?\s+(?:ft|filetype)=(\S+)/, 'setf \1')
-        .gsub(/setf\S*/, 'setf')
-        .gsub(/.*setf\s+(\S+).*/, 'setf \1')
-      ]
-    end.select { |a, b| b.match(/setf \S+/) }.map { |a, b| [a, b.split(" ")[1]] }
-    results
-  end
+  filetypes = Dir[glob].flat_map { |file| detect_filetypes_str(File.read(file)) }
 
   filetypes.flat_map do |ext, filetype|
     expand_all(ext).map { |e| [filetype, e] }

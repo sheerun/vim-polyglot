@@ -53,6 +53,8 @@ Text enclosed between `$anyword$` pairs, where `anyword` is any non-empty
 sequence of word characters different from those with a special meaning (such
 as `$pgsql$`) is treated as a multi-line string.
 
+When |foldmethod| is set to "syntax", SQL commands can be folded.
+
 Finally, the plugin supports syntax highlighting of arbitrary languages within
 procedure and function blocks. This feature needs to be configured: see
 |g:pgsql_pl|.

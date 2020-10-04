@@ -7,7 +7,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cpp-modern') ==
 "                  http://www.vim.org/scripts/script.php?script_id=3064
 " Maintainer:      bfrg <bfrg@users.noreply.github.com>
 " Website:         https://github.com/bfrg/vim-cpp-modern
-" Last Change:     Mar 14, 2020
+" Last Change:     Oct 4, 2020
 "
 " Extended C syntax highlighting including highlighting of user-defined
 " functions.
@@ -17,7 +17,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cpp-modern') ==
 " ==============================================================================
 
 
-" Highlight some additional keywords in the comments
+" Highlight additional keywords in the comments
 syn keyword cTodo contained BUG NOTE
 
 
@@ -49,26 +49,5 @@ if get(g:, 'cpp_simple_highlight', 0)
     hi link cStructure    Statement
     hi link cLabel        Statement
 endif
-
-
-" Operators
-" syn match cOperator "\(<<\|>>\|[-+*/%&^|<>!=]\)="
-" syn match cOperator "<<\|>>\|&&\|||\|++\|--\|->"
-" syn match cOperator "[.!~*&%<>^|=,+-]"
-" syn match cOperator "/[^/*=]"me=e-1
-" syn match cOperator "/$"
-" syn match cOperator "&&\|||"
-" syn match cOperator "[][]"
-
-" Preprocessor
-" syn keyword cDefined defined contained containedin=cDefine
-" hi def link cDefined cDefine
-
-" Delimiters
-" syn match cDelimiter "[();\\]"
-" hi def link cDelimiter Delimiter
-" foldmethod=syntax fix, courtesy of Ivan Freitas
-" syn match cBraces display "[{}]"
-" hi def link cBraces Delimiter
 
 endif

@@ -162,8 +162,8 @@ if !has_key(s:disabled_packages, 'trasys')
 endif
 
 if !has_key(s:disabled_packages, 'zig')
-  au BufNewFile,BufRead *.zig,*.zir setf zig
   au BufNewFile,BufRead *.zir setf zir
+  au BufNewFile,BufRead *.zig,*.zir setf zig
 endif
 
 if !has_key(s:disabled_packages, 'zephir')
@@ -225,13 +225,13 @@ if !has_key(s:disabled_packages, 'unison')
 endif
 
 if !has_key(s:disabled_packages, 'typescript')
-  au BufNewFile,BufRead *.tsx setf typescriptreact
   au BufNewFile,BufRead *.ts setf typescript
+  au BufNewFile,BufRead *.tsx setf typescriptreact
 endif
 
 if !has_key(s:disabled_packages, 'twig')
-  au BufNewFile,BufRead *.xml.twig setf xml.twig
   au BufNewFile,BufRead *.twig setf html.twig
+  au BufNewFile,BufRead *.xml.twig setf xml.twig
 endif
 
 if !has_key(s:disabled_packages, 'tptp')
@@ -271,9 +271,6 @@ if !has_key(s:disabled_packages, 'swift')
   au BufNewFile,BufRead *.swift setf swift
 endif
 
-if !has_key(s:disabled_packages, 'svg-indent')
-endif
-
 if !has_key(s:disabled_packages, 'svg')
   au BufNewFile,BufRead *.svg setf svg
 endif
@@ -302,15 +299,12 @@ if !has_key(s:disabled_packages, 'slim')
   au BufNewFile,BufRead *.slim setf slim
 endif
 
-if !has_key(s:disabled_packages, 'zinit')
-endif
-
 if !has_key(s:disabled_packages, 'sh')
+  au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,login,man,profile,zlogin,zlogout,zprofile,zshenv,zshrc setf sh
   au BufNewFile,BufRead *.zsh,{.,}zfbfmarks,{.,}zlogin,{.,}zlogout,{.,}zprofile,{.,}zshenv,{.,}zshrc setf zsh
   au BufNewFile,BufRead {.,}zsh* call s:StarSetf('zsh')
   au BufNewFile,BufRead {.,}zlog* call s:StarSetf('zsh')
   au BufNewFile,BufRead {.,}zcompdump* call s:StarSetf('zsh')
-  au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,login,man,profile,zlogin,zlogout,zprofile,zshenv,zshrc setf sh
 endif
 
 if !has_key(s:disabled_packages, 'scss')
@@ -333,17 +327,14 @@ if !has_key(s:disabled_packages, 'brewfile')
   au BufNewFile,BufRead Brewfile setf brewfile
 endif
 
-if !has_key(s:disabled_packages, 'yard')
-endif
-
 if !has_key(s:disabled_packages, 'rspec')
   au BufNewFile,BufRead *_spec.rb set ft=ruby syntax=rspec
 endif
 
 if !has_key(s:disabled_packages, 'ruby')
-  au BufNewFile,BufRead *.erb,*.erb.deface,*.rhtml setf eruby
   au BufNewFile,BufRead *.axlsx,*.builder,*.cap,*.eye,*.fcgi,*.gemspec,*.god,*.jbuilder,*.mspec,*.opal,*.pluginspec,*.podspec,*.rabl,*.rake,*.rant,*.rb,*.rbi,*.rbuild,*.rbw,*.rbx,*.rjs,*.ru,*.ruby,*.rxml,*.spec,*.thor,*.watchr,{.,}Brewfile,{.,}Guardfile,{.,}autotest,{.,}irbrc,{.,}pryrc,{.,}simplecov,Appraisals,Berksfile,Buildfile,Capfile,Cheffile,Dangerfile,Deliverfile,Fastfile,Gemfile,Gemfile.lock,Guardfile,Jarfile,KitchenSink,Mavenfile,Podfile,Puppetfile,Rakefile,Rantfile,Routefile,Snapfile,Thorfile,Vagrantfile,buildfile,vagrantfile setf ruby
   au BufNewFile,BufRead [Rr]akefile* call s:StarSetf('ruby')
+  au BufNewFile,BufRead *.erb,*.erb.deface,*.rhtml setf eruby
 endif
 
 if !has_key(s:disabled_packages, 'rst')
@@ -379,8 +370,8 @@ if !has_key(s:disabled_packages, 'racket')
 endif
 
 if !has_key(s:disabled_packages, 'r-lang')
-  au BufNewFile,BufRead *.rd setf rhelp
   au BufNewFile,BufRead *.S,*.r,*.rsx,*.s,{.,}Rprofile,expr-dist setf r
+  au BufNewFile,BufRead *.rd setf rhelp
 endif
 
 if !has_key(s:disabled_packages, 'qml')
@@ -395,12 +386,6 @@ if !has_key(s:disabled_packages, 'requirements')
   au BufNewFile,BufRead *.pip,*require.{txt,in},*requirements.{txt,in},constraints.{txt,in} setf requirements
 endif
 
-if !has_key(s:disabled_packages, 'python-compiler')
-endif
-
-if !has_key(s:disabled_packages, 'python-indent')
-endif
-
 if !has_key(s:disabled_packages, 'python')
   au BufNewFile,BufRead *.cgi,*.fcgi,*.gyp,*.gypi,*.lmi,*.ptl,*.py,*.py3,*.pyde,*.pyi,*.pyp,*.pyt,*.pyw,*.rpy,*.smk,*.spec,*.tac,*.wsgi,*.xpy,{.,}gclient,{.,}pythonrc,{.,}pythonstartup,DEPS,SConscript,SConstruct,Snakefile,wscript setf python
 endif
@@ -410,8 +395,8 @@ if !has_key(s:disabled_packages, 'purescript')
 endif
 
 if !has_key(s:disabled_packages, 'puppet')
-  au BufNewFile,BufRead *.epp setf embeddedpuppet
   au BufNewFile,BufRead *.pp,Modulefile setf puppet
+  au BufNewFile,BufRead *.epp setf embeddedpuppet
 endif
 
 if !has_key(s:disabled_packages, 'pug')
@@ -423,8 +408,8 @@ if !has_key(s:disabled_packages, 'protobuf')
 endif
 
 if !has_key(s:disabled_packages, 'powershell')
-  au BufNewFile,BufRead *.ps1xml setf ps1xml
   au BufNewFile,BufRead *.ps1,*.psd1,*.psm1,*.pssc setf ps1
+  au BufNewFile,BufRead *.ps1xml setf ps1xml
 endif
 
 if !has_key(s:disabled_packages, 'pony')
@@ -452,14 +437,15 @@ if !has_key(s:disabled_packages, 'pgsql')
 endif
 
 if !has_key(s:disabled_packages, 'perl')
-  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
   au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
   au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
   au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
-  au BufNewFile,BufRead *.xs setf xs
-  au BufNewFile,BufRead *.comp,*.mason,*.mhtml setf mason
-  au BufNewFile,BufRead *.pod setf pod
   au BufNewFile,BufRead *.al,*.cgi,*.fcgi,*.perl,*.ph,*.plx,*.psgi,{.,}gitolite.rc,Makefile.PL,Rexfile,ack,cpanfile,example.gitolite.rc setf perl
+  au BufNewFile,BufRead *.pod setf pod
+  au BufNewFile,BufRead *.comp,*.mason,*.mhtml setf mason
+  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
+  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
+  au BufNewFile,BufRead *.xs setf xs
 endif
 
 if !has_key(s:disabled_packages, 'opencl')
@@ -472,15 +458,15 @@ if !has_key(s:disabled_packages, 'octave')
 endif
 
 if !has_key(s:disabled_packages, 'ocaml')
-  au BufNewFile,BufRead *.sexp setf sexplib
-  au BufNewFile,BufRead *.root setf ocpbuildroot
-  au BufNewFile,BufRead *.ocp setf ocpbuild
-  au BufNewFile,BufRead _tags setf ocamlbuild_tags
-  au BufNewFile,BufRead dune,dune-project,dune-workspace,jbuild setf dune
-  au BufNewFile,BufRead _oasis setf oasis
-  au BufNewFile,BufRead *.opam,*.opam.template,opam setf opam
-  au BufNewFile,BufRead *.om,OMakefile,OMakeroot,OMakeroot.in setf omake
   au BufNewFile,BufRead *.eliom,*.eliomi,*.ml,*.ml.cppo,*.ml4,*.mli,*.mli.cppo,*.mlip,*.mll,*.mlp,*.mlt,*.mly,{.,}ocamlinit setf ocaml
+  au BufNewFile,BufRead *.om,OMakefile,OMakeroot,OMakeroot.in setf omake
+  au BufNewFile,BufRead *.opam,*.opam.template,opam setf opam
+  au BufNewFile,BufRead _oasis setf oasis
+  au BufNewFile,BufRead dune,dune-project,dune-workspace,jbuild setf dune
+  au BufNewFile,BufRead _tags setf ocamlbuild_tags
+  au BufNewFile,BufRead *.ocp setf ocpbuild
+  au BufNewFile,BufRead *.root setf ocpbuildroot
+  au BufNewFile,BufRead *.sexp setf sexplib
 endif
 
 if !has_key(s:disabled_packages, 'objc')
@@ -511,8 +497,8 @@ if !has_key(s:disabled_packages, 'moonscript')
 endif
 
 if !has_key(s:disabled_packages, 'meson')
-  au BufNewFile,BufRead *.wrap setf dosini
   au BufNewFile,BufRead meson.build,meson_options.txt setf meson
+  au BufNewFile,BufRead *.wrap setf dosini
 endif
 
 if !has_key(s:disabled_packages, 'mdx')
@@ -549,8 +535,8 @@ if !has_key(s:disabled_packages, 'log')
 endif
 
 if !has_key(s:disabled_packages, 'llvm')
-  au BufNewFile,BufRead *.td setf tablegen
   au BufNewFile,BufRead *.ll setf llvm
+  au BufNewFile,BufRead *.td setf tablegen
 endif
 
 if !has_key(s:disabled_packages, 'livescript')
@@ -607,17 +593,14 @@ if !has_key(s:disabled_packages, 'jenkins')
   au BufNewFile,BufRead Jenkinsfile* call s:StarSetf('Jenkinsfile')
 endif
 
-if !has_key(s:disabled_packages, 'javascript-sql')
-endif
-
 if !has_key(s:disabled_packages, 'ion')
   au BufNewFile,BufRead *.ion,~/.config/ion/initrc setf ion
 endif
 
 if !has_key(s:disabled_packages, 'idris2')
-  au! BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
   au! BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
   au BufNewFile,BufRead *.ipkg,idris-response setf idris2
+  au! BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
 endif
 
 if !has_key(s:disabled_packages, 'idris')
@@ -656,8 +639,8 @@ if !has_key(s:disabled_packages, 'haskell')
 endif
 
 if !has_key(s:disabled_packages, 'handlebars')
-  au BufNewFile,BufRead *.handlebars,*.hb,*.hbs,*.hdbs setf html.handlebars
   au BufNewFile,BufRead *.hjs,*.hogan,*.hulk,*.mustache setf html.mustache
+  au BufNewFile,BufRead *.handlebars,*.hb,*.hbs,*.hdbs setf html.handlebars
 endif
 
 if !has_key(s:disabled_packages, 'haml')
@@ -666,9 +649,6 @@ endif
 
 if !has_key(s:disabled_packages, 'grub')
   au BufNewFile,BufRead */boot/grub/grub.conf,*/boot/grub/menu.lst,*/etc/grub.conf setf grub
-endif
-
-if !has_key(s:disabled_packages, 'gradle')
 endif
 
 if !has_key(s:disabled_packages, 'groovy')
@@ -684,14 +664,14 @@ if !has_key(s:disabled_packages, 'jsx')
 endif
 
 if !has_key(s:disabled_packages, 'javascript')
-  au BufNewFile,BufRead *.flow setf flow
   au BufNewFile,BufRead *._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.javascript,*.js,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile setf javascript
+  au BufNewFile,BufRead *.flow setf flow
 endif
 
 if !has_key(s:disabled_packages, 'go')
-  au BufNewFile,BufRead *.tmpl setf gohtmltmpl
-  au BufNewFile,BufRead go.mod setf gomod
   au BufNewFile,BufRead *.go setf go
+  au BufNewFile,BufRead go.mod setf gomod
+  au BufNewFile,BufRead *.tmpl setf gohtmltmpl
 endif
 
 if !has_key(s:disabled_packages, 'gnuplot')
@@ -708,11 +688,11 @@ if !has_key(s:disabled_packages, 'glsl')
 endif
 
 if !has_key(s:disabled_packages, 'git')
-  au BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,TAG_EDITMSG setf gitcommit
-  au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
-  au BufNewFile,BufRead git-rebase-todo setf gitrebase
   au BufNewFile,BufRead *.gitconfig,*.git/config,*.git/modules/*/config,*/.config/git/config,*/git/config,{.,}gitconfig,{.,}gitmodules setf gitconfig
   au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')
+  au BufNewFile,BufRead git-rebase-todo setf gitrebase
+  au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
+  au BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,TAG_EDITMSG setf gitcommit
 endif
 
 if !has_key(s:disabled_packages, 'gdscript')
@@ -762,14 +742,14 @@ if !has_key(s:disabled_packages, 'elm')
 endif
 
 if !has_key(s:disabled_packages, 'elixir')
-  au BufNewFile,BufRead *.eex,*.leex setf eelixir
   au BufNewFile,BufRead *.ex,*.exs,mix.lock setf elixir
+  au BufNewFile,BufRead *.eex,*.leex setf eelixir
 endif
 
 if !has_key(s:disabled_packages, 'dockerfile')
-  au BufNewFile,BufRead docker-compose*.yaml,docker-compose*.yml setf yaml.docker-compose
   au BufNewFile,BufRead *.Dockerfile,*.dock,*.dockerfile,Dockerfile,dockerfile setf Dockerfile
   au BufNewFile,BufRead Dockerfile* call s:StarSetf('Dockerfile')
+  au BufNewFile,BufRead docker-compose*.yaml,docker-compose*.yml setf yaml.docker-compose
 endif
 
 if !has_key(s:disabled_packages, 'yaml')
@@ -777,11 +757,11 @@ if !has_key(s:disabled_packages, 'yaml')
 endif
 
 if !has_key(s:disabled_packages, 'dlang')
-  au BufNewFile,BufRead *.sdl setf dsdl
-  au BufNewFile,BufRead *.ddoc setf ddoc
-  au BufNewFile,BufRead *.dd setf dd
-  au BufNewFile,BufRead *.lst setf dcov
   au BufNewFile,BufRead *.d,*.di setf d
+  au BufNewFile,BufRead *.lst setf dcov
+  au BufNewFile,BufRead *.dd setf dd
+  au BufNewFile,BufRead *.ddoc setf ddoc
+  au BufNewFile,BufRead *.sdl setf dsdl
 endif
 
 if !has_key(s:disabled_packages, 'dhall')
@@ -801,20 +781,17 @@ if !has_key(s:disabled_packages, 'cucumber')
 endif
 
 if !has_key(s:disabled_packages, 'crystal')
-  au BufNewFile,BufRead *.ecr setf ecrystal
   au BufNewFile,BufRead *.cr,Projectfile setf crystal
+  au BufNewFile,BufRead *.ecr setf ecrystal
 endif
 
 if !has_key(s:disabled_packages, 'cryptol')
   au BufNewFile,BufRead *.cry,*.cyl,*.lcry,*.lcyl setf cryptol
 endif
 
-if !has_key(s:disabled_packages, 'cjsx')
-endif
-
 if !has_key(s:disabled_packages, 'coffee-script')
-  au BufNewFile,BufRead *.coffee.md,*.litcoffee setf litcoffee
   au BufNewFile,BufRead *._coffee,*.cake,*.cjsx,*.coffee,*.coffeekup,*.iced,Cakefile setf coffee
+  au BufNewFile,BufRead *.coffee.md,*.litcoffee setf litcoffee
 endif
 
 if !has_key(s:disabled_packages, 'cmake')
@@ -827,9 +804,6 @@ endif
 
 if !has_key(s:disabled_packages, 'carp')
   au BufNewFile,BufRead *.carp setf carp
-endif
-
-if !has_key(s:disabled_packages, 'cpp-modern')
 endif
 
 if !has_key(s:disabled_packages, 'caddyfile')
@@ -891,8 +865,9 @@ endif
 
 if !has_key(s:disabled_packages, 'c/c++')
   au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
-  au BufNewFile,BufRead *.c,*.cats,*.idc,*.qc,*enlightenment/*.cfg setf c
   au BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.moc,*.tcc,*.tlh,*.tpp setf cpp
+  au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
+  au BufNewFile,BufRead *.c,*.cats,*.idc,*.qc,*enlightenment/*.cfg setf c
 endif
 
 if !has_key(s:disabled_packages, 'arch')
@@ -939,6 +914,7 @@ if !has_key(s:disabled_packages, 'csv')
 endif
 
 if !has_key(s:disabled_packages, 'ampl')
+  " AMPL
   au BufNewFile,BufRead *.run setf ampl
 endif
 
@@ -951,14 +927,17 @@ if !has_key(s:disabled_packages, 'alsaconf')
 endif
 
 if !has_key(s:disabled_packages, 'aidl')
+  " AIDL
   au BufNewFile,BufRead *.aidl setf aidl
 endif
 
 if !has_key(s:disabled_packages, 'ahdl')
+  " AHDL
   au BufNewFile,BufRead *.tdf setf ahdl
 endif
 
 if !has_key(s:disabled_packages, 'ada')
+  " Ada (83, 9X, 95)
   au BufNewFile,BufRead *.ada,*.ada_m,*.adb,*.adc,*.ads,*.gpr setf ada
 endif
 
@@ -967,14 +946,17 @@ if !has_key(s:disabled_packages, 'acpiasl')
 endif
 
 if !has_key(s:disabled_packages, 'acedb')
+  " AceDB
   au BufNewFile,BufRead *.wrm setf acedb
 endif
 
 if !has_key(s:disabled_packages, 'abel')
+  " ABEL
   au BufNewFile,BufRead *.abl setf abel
 endif
 
 if !has_key(s:disabled_packages, 'abc')
+  " ABC music notation
   au BufNewFile,BufRead *.abc setf abc
 endif
 
@@ -983,14 +965,17 @@ if !has_key(s:disabled_packages, 'abaqus')
 endif
 
 if !has_key(s:disabled_packages, 'abap')
+  " ABAB/4
   au BufNewFile,BufRead *.abap setf abap
 endif
 
 if !has_key(s:disabled_packages, 'aap')
+  " A-A-P recipe
   au BufNewFile,BufRead *.aap setf aap
 endif
 
 if !has_key(s:disabled_packages, 'a65')
+  " XA65 MOS6510 cross assembler
   au BufNewFile,BufRead *.a65 setf a65
 endif
 
@@ -1008,6 +993,7 @@ if !has_key(s:disabled_packages, 'conf')
 endif
 
 if !has_key(s:disabled_packages, '8th')
+  " 8th (Firth-derivative)
   au BufNewFile,BufRead *.8th setf 8th
 endif
 
@@ -1253,40 +1239,8 @@ au BufNewFile,BufRead $VIMRUNTIME/doc/*.txt	setf help
 " Abaqus or Trasys
 au BufNewFile,BufRead *.inp			call polyglot#ft#Check_inp()
 
-" 8th (Firth-derivative)
-au BufNewFile,BufRead *.8th			setf 8th
-
-" A-A-P recipe
-au BufNewFile,BufRead *.aap			setf aap
-
 " A2ps printing utility
 au BufNewFile,BufRead */etc/a2ps.cfg,*/etc/a2ps/*.cfg,a2psrc,.a2psrc setf a2ps
-
-" ABAB/4
-au BufNewFile,BufRead *.abap			setf abap
-
-" ABC music notation
-au BufNewFile,BufRead *.abc			setf abc
-
-" ABEL
-au BufNewFile,BufRead *.abl			setf abel
-
-" AceDB
-au BufNewFile,BufRead *.wrm			setf acedb
-
-" Ada (83, 9X, 95)
-au BufNewFile,BufRead *.adb,*.ads,*.ada		setf ada
-if has("vms")
-  au BufNewFile,BufRead *.gpr,*.ada_m,*.adc	setf ada
-else
-  au BufNewFile,BufRead *.gpr			setf ada
-endif
-
-" AHDL
-au BufNewFile,BufRead *.tdf			setf ahdl
-
-" AIDL
-au BufNewFile,BufRead *.aidl			setf aidl
 
 " AMPL
 au BufNewFile,BufRead *.run			setf ampl
