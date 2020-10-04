@@ -1010,11 +1010,11 @@ name: m4
 remote: vim/vim:runtime
 glob: '**/m4.vim'
 filetypes:
-  - name: m4
-    linguist: M4
-    extra_extensions:
-    # Autotest .at files are actually m4
-    - at
+- name: m4
+  linguist: M4
+  extra_extensions:
+  # Autotest .at files are actually m4
+  - at
 ---
 name: mako
 remote: sophacles/vim-bundle-mako
