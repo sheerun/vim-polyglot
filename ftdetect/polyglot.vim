@@ -233,7 +233,7 @@ if !has_key(s:disabled_packages, 'vala')
 endif
 
 if !has_key(s:disabled_packages, 'v')
-  au BufNewFile,BufRead *.v setf v
+  au BufNewFile,BufRead *.v,*.vsh,*.vv setf vlang
 endif
 
 if !has_key(s:disabled_packages, 'unison')

@@ -74,13 +74,14 @@ highlight def link svelteRepeat Repeat
 " Vim and it is enabled for the Svelte plugin.
 function! s:enabled(language)
   " Check whether a syntax file for {language} exists
-  if empty(globpath(&runtimepath, 'syntax/' . a:language . '.vim'))
+  let s:syntax_name = get(a:language, 'as', a:language.name)
+  if empty(globpath(&runtimepath, 'syntax/' . s:syntax_name . '.vim'))
     return 0
   endif
 
   " If g:svelte_preprocessors is set, check for it there, otherwise return 0.
   if exists('g:svelte_preprocessors') && type(g:svelte_preprocessors) == v:t_list
-    return index(g:svelte_preprocessors, a:language) != -1
+    return index(g:svelte_preprocessors, a:language.name) != -1
   else
     return 0
   endif
@@ -96,7 +97,7 @@ let s:languages = [
       \ ]
 
 " Add global tag definitions to our defaults.
-if exists('g:svelte_preprocessor_tags') && type('g:svelte_preprocessor_tags') == v:t_list
+if exists('g:svelte_preprocessor_tags') && type(g:svelte_preprocessor_tags) == v:t_list
   let s:languages += g:svelte_preprocessor_tags
 endif
 
@@ -104,7 +105,7 @@ for s:language in s:languages
   let s:attr = '\(lang\|type\)=\("\|''\)[^\2]*' . s:language.name . '[^\2]*\2'
   let s:start = '<' . s:language.tag . '\>\_[^>]*' . s:attr . '\_[^>]*>'
 
-  if s:enabled(s:language.name)
+  if s:enabled(s:language)
     execute 'syntax include @' . s:language.name . ' syntax/' . get(s:language, 'as', s:language.name) . '.vim'
     unlet! b:current_syntax
 

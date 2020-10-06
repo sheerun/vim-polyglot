@@ -1688,8 +1688,11 @@ filetypes:
 name: v
 remote: ollykel/v-vim
 filetypes:
-- name: v
+- name: vlang
   linguist: V
+  extra_extensions:
+  - vv
+  - vsh
 ---
 name: vala
 remote: arrufat/vala.vim
