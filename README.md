@@ -41,7 +41,7 @@ If you need full functionality of any plugin, please use it directly with your p
 
 ## Language packs
 
-On top of all language packas from [vim repository](https://github.com/vim/vim/tree/master/runtime), vim-polyglot includes:
+On top of all language packs from [vim repository](https://github.com/vim/vim/tree/master/runtime), vim-polyglot includes:
 
 <!--Language Packs-->
 - [acpiasl](https://github.com/martinlroth/vim-acpi-asl)
