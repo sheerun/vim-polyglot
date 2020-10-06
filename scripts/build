@@ -481,6 +481,9 @@ def extract(packages)
       end
     end
 
+    if repo.include?("vim/vim")
+      next
+    end
     if branch != "master" || path
       if path
         output << "- [#{package["name"]}](https://github.com/#{repo}/tree/#{branch}/#{path})"
@@ -497,7 +500,7 @@ def extract(packages)
 
   readme.gsub!(
     %r{(?<=<!--Package Count-->).*?(?=<!--/Package Count-->)},
-    output.size.to_s
+    packages.size.to_s
   )
 
   readme.gsub!(
