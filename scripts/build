@@ -108,6 +108,19 @@ def load_data()
 
   for package in packages
     for filetype in package["filetypes"]
+      if filetype["patterns"]
+        for pattern in filetype["patterns"]
+          for p in comma_expanson(pattern["pattern"])
+            if p.match(/^\*\.[^\*]+$/)
+              filetype["extensions"] ||= []
+              filetype["extensions"]  << p[2..-1]
+            else
+              filetype["filenames"] ||= []
+              filetype["filenames"]  << p
+            end
+          end
+        end
+      end
       if filetype["linguist"]
         if filetype["extensions"]
           raise "#{package["name"]} #{filetype["name"]}: extensions can't be set when linguist is defined"
@@ -460,9 +473,6 @@ def extract(packages)
         globs.each do |glob|
           Dir.glob("#{subdir}/#{glob}", base: subtree).each do |p|
             next unless File.file?("#{subtree}/#{p}")
-            if p.include?("samba")
-              raise package["name"]
-            end
             copy_file(package, "#{subtree}/#{p}", p)
           end
         end

@@ -117,6 +117,1561 @@ augroup filetypedetect
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(s:disabled_packages, 'pullrequest')
+  au BufNewFile,BufRead PULLREQ_EDITMSG setf pullrequest
+endif
+
+if !has_key(s:disabled_packages, 'text')
+  au BufNewFile,BufRead *.text,README setf text
+endif
+
+if !has_key(s:disabled_packages, 'svn')
+  au BufNewFile,BufRead svn-commit*.tmp setf svn
+endif
+
+if !has_key(s:disabled_packages, 'logcheck')
+  au BufNewFile,BufRead */etc/logcheck/*.d*/* call s:StarSetf('logcheck')
+endif
+
+if !has_key(s:disabled_packages, 'fvwm')
+  au BufNewFile,BufRead */.fvwm/* call s:StarSetf('fvwm')
+endif
+
+if !has_key(s:disabled_packages, 'crontab')
+  au BufNewFile,BufRead crontab setf crontab
+  au BufNewFile,BufRead crontab.* call s:StarSetf('crontab')
+  au BufNewFile,BufRead */etc/cron.d/* call s:StarSetf('crontab')
+endif
+
+if !has_key(s:disabled_packages, 'bzr')
+  au BufNewFile,BufRead bzr_log.* call s:StarSetf('bzr')
+endif
+
+if !has_key(s:disabled_packages, 'asteriskvm')
+  au BufNewFile,BufRead *asterisk*/*voicemail.conf* call s:StarSetf('asteriskvm')
+endif
+
+if !has_key(s:disabled_packages, 'asterisk')
+  au BufNewFile,BufRead *asterisk/*.conf* call s:StarSetf('asterisk')
+endif
+
+if !has_key(s:disabled_packages, 'apachestyle')
+  au BufNewFile,BufRead proftpd.conf* call s:StarSetf('apachestyle')
+  au BufNewFile,BufRead */etc/proftpd/conf.*/* call s:StarSetf('apachestyle')
+  au BufNewFile,BufRead */etc/proftpd/*.conf* call s:StarSetf('apachestyle')
+endif
+
+if !has_key(s:disabled_packages, 'z8a')
+  au BufNewFile,BufRead *.z8a setf z8a
+endif
+
+if !has_key(s:disabled_packages, 'zimbutempl')
+  au BufNewFile,BufRead *.zut setf zimbutempl
+endif
+
+if !has_key(s:disabled_packages, 'zimbu')
+  au BufNewFile,BufRead *.zu setf zimbu
+endif
+
+if !has_key(s:disabled_packages, 'yacc')
+  au BufNewFile,BufRead *.y++,*.yxx,*.yy setf yacc
+endif
+
+if !has_key(s:disabled_packages, 'xslt')
+  au BufNewFile,BufRead *.xsl,*.xslt setf xslt
+endif
+
+if !has_key(s:disabled_packages, 'xsd')
+  au BufNewFile,BufRead *.xsd setf xsd
+endif
+
+if !has_key(s:disabled_packages, 'xquery')
+  au BufNewFile,BufRead *.xq,*.xql,*.xqm,*.xquery,*.xqy setf xquery
+endif
+
+if !has_key(s:disabled_packages, 'xmodmap')
+  au BufNewFile,BufRead *Xmodmap setf xmodmap
+  au BufNewFile,BufRead *xmodmap* call s:StarSetf('xmodmap')
+endif
+
+if !has_key(s:disabled_packages, 'xmath')
+  au BufNewFile,BufRead *.msc,*.msf setf xmath
+endif
+
+if !has_key(s:disabled_packages, 'xdefaults')
+  au BufNewFile,BufRead *.ad,{.,}Xdefaults,{.,}Xpdefaults,{.,}Xresources,xdm-config setf xdefaults
+  au BufNewFile,BufRead Xresources* call s:StarSetf('xdefaults')
+  au BufNewFile,BufRead */app-defaults/* call s:StarSetf('xdefaults')
+  au BufNewFile,BufRead */Xresources/* call s:StarSetf('xdefaults')
+endif
+
+if !has_key(s:disabled_packages, 'xinetd')
+  au BufNewFile,BufRead */etc/xinetd.conf setf xinetd
+  au BufNewFile,BufRead */etc/xinetd.d/* call s:StarSetf('xinetd')
+endif
+
+if !has_key(s:disabled_packages, 'xhtml')
+  au BufNewFile,BufRead *.xht,*.xhtml setf xhtml
+endif
+
+if !has_key(s:disabled_packages, 'wsh')
+  au BufNewFile,BufRead *.ws[fc] setf wsh
+endif
+
+if !has_key(s:disabled_packages, 'cvs')
+  au BufNewFile,BufRead cvs\d\+ setf cvs
+endif
+
+if !has_key(s:disabled_packages, 'cvsrc')
+  au BufNewFile,BufRead {.,}cvsrc setf cvsrc
+endif
+
+if !has_key(s:disabled_packages, 'wvdial')
+  au BufNewFile,BufRead {.,}wvdialrc,wvdial.conf setf wvdial
+endif
+
+if !has_key(s:disabled_packages, 'wsml')
+  au BufNewFile,BufRead *.wsml setf wsml
+endif
+
+if !has_key(s:disabled_packages, 'winbatch')
+  au BufNewFile,BufRead *.wbt setf winbatch
+endif
+
+if !has_key(s:disabled_packages, 'wml')
+  au BufNewFile,BufRead *.wml setf wml
+endif
+
+if !has_key(s:disabled_packages, 'wget')
+  au BufNewFile,BufRead {.,}wgetrc,wgetrc setf wget
+endif
+
+if !has_key(s:disabled_packages, 'webmacro')
+  au BufNewFile,BufRead *.wm setf webmacro
+endif
+
+if !has_key(s:disabled_packages, 'wast')
+  au BufNewFile,BufRead *.wast,*.wat setf wast
+endif
+
+if !has_key(s:disabled_packages, 'vroom')
+  au BufNewFile,BufRead *.vroom setf vroom
+endif
+
+if !has_key(s:disabled_packages, 'vrml')
+  au BufNewFile,BufRead *.wrl setf vrml
+endif
+
+if !has_key(s:disabled_packages, 'vgrindefs')
+  au BufNewFile,BufRead vgrindefs setf vgrindefs
+endif
+
+if !has_key(s:disabled_packages, 'viminfo')
+  au BufNewFile,BufRead {.,}viminfo,_viminfo setf viminfo
+endif
+
+if !has_key(s:disabled_packages, 'vim')
+  au BufNewFile,BufRead *.vba,*.vim,{.,}exrc,_exrc setf vim
+  au BufNewFile,BufRead *vimrc* call s:StarSetf('vim')
+endif
+
+if !has_key(s:disabled_packages, 'vhdl')
+  au BufNewFile,BufRead *.hdl,*.vbe,*.vhd,*.vhdl,*.vho,*.vst setf vhdl
+  au BufNewFile,BufRead *.vhdl_[0-9]* call s:StarSetf('vhdl')
+endif
+
+if !has_key(s:disabled_packages, 'systemverilog')
+  au BufNewFile,BufRead *.sv,*.svh setf systemverilog
+endif
+
+if !has_key(s:disabled_packages, 'verilogams')
+  au BufNewFile,BufRead *.va,*.vams setf verilogams
+endif
+
+if !has_key(s:disabled_packages, 'verilog')
+  au BufNewFile,BufRead *.v setf verilog
+endif
+
+if !has_key(s:disabled_packages, 'vera')
+  au BufNewFile,BufRead *.vr,*.vrh,*.vri setf vera
+endif
+
+if !has_key(s:disabled_packages, 'upstart')
+  au BufNewFile,BufRead */.config/upstart/*.conf,*/.config/upstart/*.override,*/.init/*.conf,*/.init/*.override,*/etc/init/*.conf,*/etc/init/*.override,*/usr/share/upstart/*.conf,*/usr/share/upstart/*.override setf upstart
+endif
+
+if !has_key(s:disabled_packages, 'updatedb')
+  au BufNewFile,BufRead */etc/updatedb.conf setf updatedb
+endif
+
+if !has_key(s:disabled_packages, 'uc')
+  au BufNewFile,BufRead *.uc setf uc
+endif
+
+if !has_key(s:disabled_packages, 'udevperm')
+  au BufNewFile,BufRead */etc/udev/permissions.d/*.permissions setf udevperm
+endif
+
+if !has_key(s:disabled_packages, 'udevconf')
+  au BufNewFile,BufRead */etc/udev/udev.conf setf udevconf
+endif
+
+if !has_key(s:disabled_packages, 'uil')
+  au BufNewFile,BufRead *.uil,*.uit setf uil
+endif
+
+if !has_key(s:disabled_packages, 'tsscl')
+  au BufNewFile,BufRead *.tsscl setf tsscl
+endif
+
+if !has_key(s:disabled_packages, 'tssop')
+  au BufNewFile,BufRead *.tssop setf tssop
+endif
+
+if !has_key(s:disabled_packages, 'tssgm')
+  au BufNewFile,BufRead *.tssgm setf tssgm
+endif
+
+if !has_key(s:disabled_packages, 'trustees')
+  au BufNewFile,BufRead trustees.conf setf trustees
+endif
+
+if !has_key(s:disabled_packages, 'treetop')
+  au BufNewFile,BufRead *.treetop setf treetop
+endif
+
+if !has_key(s:disabled_packages, 'tpp')
+  au BufNewFile,BufRead *.tpp setf tpp
+endif
+
+if !has_key(s:disabled_packages, 'tidy')
+  au BufNewFile,BufRead {.,}tidyrc,tidyrc setf tidy
+endif
+
+if !has_key(s:disabled_packages, 'texmf')
+  au BufNewFile,BufRead texmf.cnf setf texmf
+endif
+
+if !has_key(s:disabled_packages, 'texinfo')
+  au BufNewFile,BufRead *.texi,*.texinfo,*.txi setf texinfo
+endif
+
+if !has_key(s:disabled_packages, 'context')
+  au BufNewFile,BufRead *.mkii,*.mkiv,*.mkvi setf context
+endif
+
+if !has_key(s:disabled_packages, 'tex')
+  au BufNewFile,BufRead *.bbl,*.dtx,*.latex,*.ltx,*.sty setf tex
+endif
+
+if !has_key(s:disabled_packages, 'terminfo')
+  au BufNewFile,BufRead *.ti setf terminfo
+endif
+
+if !has_key(s:disabled_packages, 'teraterm')
+  au BufNewFile,BufRead *.ttl setf teraterm
+endif
+
+if !has_key(s:disabled_packages, 'tsalt')
+  au BufNewFile,BufRead *.slt setf tsalt
+endif
+
+if !has_key(s:disabled_packages, 'tli')
+  au BufNewFile,BufRead *.tli setf tli
+endif
+
+if !has_key(s:disabled_packages, 'tcl')
+  au BufNewFile,BufRead *.itcl,*.itk,*.jacl,*.tcl,*.tk setf tcl
+endif
+
+if !has_key(s:disabled_packages, 'taskedit')
+  au BufNewFile,BufRead *.task setf taskedit
+endif
+
+if !has_key(s:disabled_packages, 'taskdata')
+  au BufNewFile,BufRead {pending,completed,undo}.data setf taskdata
+endif
+
+if !has_key(s:disabled_packages, 'tak')
+  au BufNewFile,BufRead *.tak setf tak
+endif
+
+if !has_key(s:disabled_packages, 'tags')
+  au BufNewFile,BufRead tags setf tags
+endif
+
+if !has_key(s:disabled_packages, 'sudoers')
+  au BufNewFile,BufRead */etc/sudoers,sudoers.tmp setf sudoers
+endif
+
+if !has_key(s:disabled_packages, 'sdc')
+  au BufNewFile,BufRead *.sdc setf sdc
+endif
+
+if !has_key(s:disabled_packages, 'sysctl')
+  au BufNewFile,BufRead */etc/sysctl.conf,*/etc/sysctl.d/*.conf setf sysctl
+endif
+
+if !has_key(s:disabled_packages, 'sil')
+  au BufNewFile,BufRead *.sil setf sil
+endif
+
+if !has_key(s:disabled_packages, 'swiftgyb')
+  au BufNewFile,BufRead *.swift.gyb setf swiftgyb
+endif
+
+if !has_key(s:disabled_packages, 'voscm')
+  au BufNewFile,BufRead *.cm setf voscm
+endif
+
+if !has_key(s:disabled_packages, 'sml')
+  au BufNewFile,BufRead *.sml setf sml
+endif
+
+if !has_key(s:disabled_packages, 'stp')
+  au BufNewFile,BufRead *.stp setf stp
+endif
+
+if !has_key(s:disabled_packages, 'smcl')
+  au BufNewFile,BufRead *.hlp,*.ihlp,*.smcl setf smcl
+endif
+
+if !has_key(s:disabled_packages, 'stata')
+  au BufNewFile,BufRead *.ado,*.do,*.imata,*.mata setf stata
+endif
+
+if !has_key(s:disabled_packages, 'sshdconfig')
+  au BufNewFile,BufRead */etc/ssh/sshd_config.d/*.conf,sshd_config setf sshdconfig
+endif
+
+if !has_key(s:disabled_packages, 'sshconfig')
+  au BufNewFile,BufRead */.ssh/config,*/etc/ssh/ssh_config.d/*.conf,ssh_config setf sshconfig
+endif
+
+if !has_key(s:disabled_packages, 'sqr')
+  au BufNewFile,BufRead *.sqi,*.sqr setf sqr
+endif
+
+if !has_key(s:disabled_packages, 'sqlj')
+  au BufNewFile,BufRead *.sqlj setf sqlj
+endif
+
+if !has_key(s:disabled_packages, 'squid')
+  au BufNewFile,BufRead squid.conf setf squid
+endif
+
+if !has_key(s:disabled_packages, 'spice')
+  au BufNewFile,BufRead *.sp,*.spice setf spice
+endif
+
+if !has_key(s:disabled_packages, 'slice')
+  au BufNewFile,BufRead *.ice setf slice
+endif
+
+if !has_key(s:disabled_packages, 'spup')
+  au BufNewFile,BufRead *.spd,*.spdata,*.speedup setf spup
+endif
+
+if !has_key(s:disabled_packages, 'hog')
+  au BufNewFile,BufRead *.hog,snort.conf,vision.conf setf hog
+endif
+
+if !has_key(s:disabled_packages, 'mib')
+  au BufNewFile,BufRead *.mib,*.my setf mib
+endif
+
+if !has_key(s:disabled_packages, 'snobol4')
+  au BufNewFile,BufRead *.sno,*.spt setf snobol4
+endif
+
+if !has_key(s:disabled_packages, 'smith')
+  au BufNewFile,BufRead *.smith,*.smt setf smith
+endif
+
+if !has_key(s:disabled_packages, 'st')
+  au BufNewFile,BufRead *.st setf st
+endif
+
+if !has_key(s:disabled_packages, 'slrnsc')
+  au BufNewFile,BufRead *.score setf slrnsc
+endif
+
+if !has_key(s:disabled_packages, 'slrnrc')
+  au BufNewFile,BufRead {.,}slrnrc setf slrnrc
+endif
+
+if !has_key(s:disabled_packages, 'skill')
+  au BufNewFile,BufRead *.cdf,*.il,*.ils setf skill
+endif
+
+if !has_key(s:disabled_packages, 'sisu')
+  au BufNewFile,BufRead *.-sst,*.-sst.meta,*._sst,*._sst.meta,*.ssi,*.ssm,*.sst,*.sst.meta setf sisu
+endif
+
+if !has_key(s:disabled_packages, 'sinda')
+  au BufNewFile,BufRead *.s85,*.sin setf sinda
+endif
+
+if !has_key(s:disabled_packages, 'simula')
+  au BufNewFile,BufRead *.sim setf simula
+endif
+
+if !has_key(s:disabled_packages, 'screen')
+  au BufNewFile,BufRead {.,}screenrc,screenrc setf screen
+endif
+
+if !has_key(s:disabled_packages, 'scheme')
+  au BufNewFile,BufRead *.rkt,*.scm,*.ss setf scheme
+endif
+
+if !has_key(s:disabled_packages, 'catalog')
+  au BufNewFile,BufRead catalog setf catalog
+  au BufNewFile,BufRead sgml.catalog* call s:StarSetf('catalog')
+endif
+
+if !has_key(s:disabled_packages, 'setserial')
+  au BufNewFile,BufRead */etc/serial.conf setf setserial
+endif
+
+if !has_key(s:disabled_packages, 'slpspi')
+  au BufNewFile,BufRead */etc/slp.spi setf slpspi
+endif
+
+if !has_key(s:disabled_packages, 'spyce')
+  au BufNewFile,BufRead *.spi,*.spy setf spyce
+endif
+
+if !has_key(s:disabled_packages, 'slpreg')
+  au BufNewFile,BufRead */etc/slp.reg setf slpreg
+endif
+
+if !has_key(s:disabled_packages, 'slpconf')
+  au BufNewFile,BufRead */etc/slp.conf setf slpconf
+endif
+
+if !has_key(s:disabled_packages, 'services')
+  au BufNewFile,BufRead */etc/services setf services
+endif
+
+if !has_key(s:disabled_packages, 'sm')
+  au BufNewFile,BufRead sendmail.cf setf sm
+endif
+
+if !has_key(s:disabled_packages, 'sieve')
+  au BufNewFile,BufRead *.sieve,*.siv setf sieve
+endif
+
+if !has_key(s:disabled_packages, 'sed')
+  au BufNewFile,BufRead *.sed setf sed
+endif
+
+if !has_key(s:disabled_packages, 'sdl')
+  au BufNewFile,BufRead *.pr,*.sdl setf sdl
+endif
+
+if !has_key(s:disabled_packages, 'sd')
+  au BufNewFile,BufRead *.sd setf sd
+endif
+
+if !has_key(s:disabled_packages, 'scilab')
+  au BufNewFile,BufRead *.sce,*.sci setf scilab
+endif
+
+if !has_key(s:disabled_packages, 'sather')
+  au BufNewFile,BufRead *.sa setf sather
+endif
+
+if !has_key(s:disabled_packages, 'sass')
+  au BufNewFile,BufRead *.sass setf sass
+endif
+
+if !has_key(s:disabled_packages, 'sas')
+  au BufNewFile,BufRead *.sas setf sas
+endif
+
+if !has_key(s:disabled_packages, 'samba')
+  au BufNewFile,BufRead smb.conf setf samba
+endif
+
+if !has_key(s:disabled_packages, 'slang')
+  au BufNewFile,BufRead *.sl setf slang
+endif
+
+if !has_key(s:disabled_packages, 'rtf')
+  au BufNewFile,BufRead *.rtf setf rtf
+endif
+
+if !has_key(s:disabled_packages, 'rpcgen')
+  au BufNewFile,BufRead *.x setf rpcgen
+endif
+
+if !has_key(s:disabled_packages, 'robots')
+  au BufNewFile,BufRead robots.txt setf robots
+endif
+
+if !has_key(s:disabled_packages, 'rpl')
+  au BufNewFile,BufRead *.rpl setf rpl
+endif
+
+if !has_key(s:disabled_packages, 'rng')
+  au BufNewFile,BufRead *.rng setf rng
+endif
+
+if !has_key(s:disabled_packages, 'rnc')
+  au BufNewFile,BufRead *.rnc setf rnc
+endif
+
+if !has_key(s:disabled_packages, 'resolv')
+  au BufNewFile,BufRead resolv.conf setf resolv
+endif
+
+if !has_key(s:disabled_packages, 'remind')
+  au BufNewFile,BufRead *.rem,*.remind,{.,}reminders setf remind
+  au BufNewFile,BufRead {.,}reminders* call s:StarSetf('remind')
+endif
+
+if !has_key(s:disabled_packages, 'rrst')
+  au BufNewFile,BufRead *.rrst,*.srst setf rrst
+endif
+
+if !has_key(s:disabled_packages, 'rmd')
+  au BufNewFile,BufRead *.rmd,*.smd setf rmd
+endif
+
+if !has_key(s:disabled_packages, 'rnoweb')
+  au BufNewFile,BufRead *.rnw,*.snw setf rnoweb
+endif
+
+if !has_key(s:disabled_packages, 'rexx')
+  au BufNewFile,BufRead *.jrexx,*.orx,*.rex,*.rexx,*.rexxj,*.rxj,*.rxo,*.testGroup,*.testUnit setf rexx
+endif
+
+if !has_key(s:disabled_packages, 'rego')
+  au BufNewFile,BufRead *.rego setf rego
+endif
+
+if !has_key(s:disabled_packages, 'rib')
+  au BufNewFile,BufRead *.rib setf rib
+endif
+
+if !has_key(s:disabled_packages, 'readline')
+  au BufNewFile,BufRead {.,}inputrc,inputrc setf readline
+endif
+
+if !has_key(s:disabled_packages, 'rcs')
+  au BufNewFile,BufRead *\,v setf rcs
+endif
+
+if !has_key(s:disabled_packages, 'ratpoison')
+  au BufNewFile,BufRead {.,}ratpoisonrc,ratpoisonrc setf ratpoison
+endif
+
+if !has_key(s:disabled_packages, 'radiance')
+  au BufNewFile,BufRead *.mat,*.rad setf radiance
+endif
+
+if !has_key(s:disabled_packages, 'pyrex')
+  au BufNewFile,BufRead *.pxd,*.pyx setf pyrex
+endif
+
+if !has_key(s:disabled_packages, 'protocols')
+  au BufNewFile,BufRead */etc/protocols setf protocols
+endif
+
+if !has_key(s:disabled_packages, 'promela')
+  au BufNewFile,BufRead *.pml setf promela
+endif
+
+if !has_key(s:disabled_packages, 'psf')
+  au BufNewFile,BufRead *.psf setf psf
+endif
+
+if !has_key(s:disabled_packages, 'procmail')
+  au BufNewFile,BufRead {.,}procmail,{.,}procmailrc setf procmail
+endif
+
+if !has_key(s:disabled_packages, 'privoxy')
+  au BufNewFile,BufRead *.action setf privoxy
+endif
+
+if !has_key(s:disabled_packages, 'proc')
+  au BufNewFile,BufRead *.pc setf proc
+endif
+
+if !has_key(s:disabled_packages, 'obj')
+  au BufNewFile,BufRead *.obj setf obj
+endif
+
+if !has_key(s:disabled_packages, 'ppwiz')
+  au BufNewFile,BufRead *.ih,*.it setf ppwiz
+endif
+
+if !has_key(s:disabled_packages, 'pccts')
+  au BufNewFile,BufRead *.g setf pccts
+endif
+
+if !has_key(s:disabled_packages, 'povini')
+  au BufNewFile,BufRead {.,}povrayrc setf povini
+endif
+
+if !has_key(s:disabled_packages, 'pov')
+  au BufNewFile,BufRead *.pov setf pov
+endif
+
+if !has_key(s:disabled_packages, 'ppd')
+  au BufNewFile,BufRead *.ppd setf ppd
+endif
+
+if !has_key(s:disabled_packages, 'postscr')
+  au BufNewFile,BufRead *.afm,*.ai,*.eps,*.epsf,*.epsi,*.pfa,*.ps setf postscr
+endif
+
+if !has_key(s:disabled_packages, 'pfmain')
+  au BufNewFile,BufRead main.cf setf pfmain
+endif
+
+if !has_key(s:disabled_packages, 'po')
+  au BufNewFile,BufRead *.po,*.pot setf po
+endif
+
+if !has_key(s:disabled_packages, 'plp')
+  au BufNewFile,BufRead *.plp setf plp
+endif
+
+if !has_key(s:disabled_packages, 'plsql')
+  au BufNewFile,BufRead *.pls,*.plsql setf plsql
+endif
+
+if !has_key(s:disabled_packages, 'plm')
+  au BufNewFile,BufRead *.p36,*.pac,*.plm setf plm
+endif
+
+if !has_key(s:disabled_packages, 'pli')
+  au BufNewFile,BufRead *.pl1,*.pli setf pli
+endif
+
+if !has_key(s:disabled_packages, 'pine')
+  au BufNewFile,BufRead {.,}pinerc,{.,}pinercex,pinerc,pinercex setf pine
+endif
+
+if !has_key(s:disabled_packages, 'pilrc')
+  au BufNewFile,BufRead *.rcp setf pilrc
+endif
+
+if !has_key(s:disabled_packages, 'pinfo')
+  au BufNewFile,BufRead */.pinforc,*/etc/pinforc setf pinfo
+endif
+
+if !has_key(s:disabled_packages, 'cmod')
+  au BufNewFile,BufRead *.cmod setf cmod
+endif
+
+if !has_key(s:disabled_packages, 'pike')
+  au BufNewFile,BufRead *.pike,*.pmod setf pike
+endif
+
+if !has_key(s:disabled_packages, 'pcmk')
+  au BufNewFile,BufRead *.pcmk setf pcmk
+endif
+
+if !has_key(s:disabled_packages, 'pdf')
+  au BufNewFile,BufRead *.pdf setf pdf
+endif
+
+if !has_key(s:disabled_packages, 'pascal')
+  au BufNewFile,BufRead *.dpr,*.pas setf pascal
+endif
+
+if !has_key(s:disabled_packages, 'passwd')
+  au BufNewFile,BufRead */etc/passwd,*/etc/passwd-,*/etc/passwd.edit,*/etc/shadow,*/etc/shadow-,*/etc/shadow.edit,*/var/backups/passwd.bak,*/var/backups/shadow.bak setf passwd
+endif
+
+if !has_key(s:disabled_packages, 'papp')
+  au BufNewFile,BufRead *.papp,*.pxml,*.pxsl setf papp
+endif
+
+if !has_key(s:disabled_packages, 'pamenv')
+  au BufNewFile,BufRead {.,}pam_environment,pam_env.conf setf pamenv
+endif
+
+if !has_key(s:disabled_packages, 'pamconf')
+  au BufNewFile,BufRead */etc/pam.conf setf pamconf
+  au BufNewFile,BufRead */etc/pam.d/* call s:StarSetf('pamconf')
+endif
+
+if !has_key(s:disabled_packages, 'pf')
+  au BufNewFile,BufRead pf.conf setf pf
+endif
+
+if !has_key(s:disabled_packages, 'ora')
+  au BufNewFile,BufRead *.ora setf ora
+endif
+
+if !has_key(s:disabled_packages, 'opl')
+  au BufNewFile,BufRead *.[Oo][Pp][Ll] setf opl
+endif
+
+if !has_key(s:disabled_packages, 'openroad')
+  au BufNewFile,BufRead *.or setf openroad
+endif
+
+if !has_key(s:disabled_packages, 'omnimark')
+  au BufNewFile,BufRead *.xin,*.xom setf omnimark
+endif
+
+if !has_key(s:disabled_packages, 'occam')
+  au BufNewFile,BufRead *.occ setf occam
+endif
+
+if !has_key(s:disabled_packages, 'nsis')
+  au BufNewFile,BufRead *.nsh,*.nsi setf nsis
+endif
+
+if !has_key(s:disabled_packages, 'nqc')
+  au BufNewFile,BufRead *.nqc setf nqc
+endif
+
+if !has_key(s:disabled_packages, 'nroff')
+  au BufNewFile,BufRead *.mom,*.nr,*.roff,*.tmac,*.tr setf nroff
+  au BufNewFile,BufRead tmac.* call s:StarSetf('nroff')
+endif
+
+if !has_key(s:disabled_packages, 'ncf')
+  au BufNewFile,BufRead *.ncf setf ncf
+endif
+
+if !has_key(s:disabled_packages, 'ninja')
+  au BufNewFile,BufRead *.ninja setf ninja
+endif
+
+if !has_key(s:disabled_packages, 'netrc')
+  au BufNewFile,BufRead {.,}netrc setf netrc
+endif
+
+if !has_key(s:disabled_packages, 'neomuttrc')
+  au BufNewFile,BufRead Neomuttrc setf neomuttrc
+  au BufNewFile,BufRead neomuttrc* call s:StarSetf('neomuttrc')
+  au BufNewFile,BufRead Neomuttrc* call s:StarSetf('neomuttrc')
+  au BufNewFile,BufRead {.,}neomuttrc* call s:StarSetf('neomuttrc')
+  au BufNewFile,BufRead */.neomutt/neomuttrc* call s:StarSetf('neomuttrc')
+endif
+
+if !has_key(s:disabled_packages, 'natural')
+  au BufNewFile,BufRead *.NS[ACGLMNPS] setf natural
+endif
+
+if !has_key(s:disabled_packages, 'nanorc')
+  au BufNewFile,BufRead *.nanorc,*/etc/nanorc setf nanorc
+endif
+
+if !has_key(s:disabled_packages, 'n1ql')
+  au BufNewFile,BufRead *.n1ql,*.nql setf n1ql
+endif
+
+if !has_key(s:disabled_packages, 'mush')
+  au BufNewFile,BufRead *.mush setf mush
+endif
+
+if !has_key(s:disabled_packages, 'mupad')
+  au BufNewFile,BufRead *.mu setf mupad
+endif
+
+if !has_key(s:disabled_packages, 'muttrc')
+  au BufNewFile,BufRead Mutt{ng,}rc setf muttrc
+  au BufNewFile,BufRead mutt{ng,}rc* call s:StarSetf('muttrc')
+  au BufNewFile,BufRead Mutt{ng,}rc* call s:StarSetf('muttrc')
+  au BufNewFile,BufRead {.,}mutt{ng,}rc* call s:StarSetf('muttrc')
+  au BufNewFile,BufRead */etc/Muttrc.d/* call s:StarSetf('muttrc')
+  au BufNewFile,BufRead */.mutt{ng,}/mutt{ng,}rc* call s:StarSetf('muttrc')
+endif
+
+if !has_key(s:disabled_packages, 'mysql')
+  au BufNewFile,BufRead *.mysql setf mysql
+endif
+
+if !has_key(s:disabled_packages, 'msql')
+  au BufNewFile,BufRead *.msql setf msql
+endif
+
+if !has_key(s:disabled_packages, 'mrxvtrc')
+  au BufNewFile,BufRead {.,}mrxvtrc,mrxvtrc setf mrxvtrc
+endif
+
+if !has_key(s:disabled_packages, 'srec')
+  au BufNewFile,BufRead *.mot,*.s19,*.s28,*.s37,*.srec setf srec
+endif
+
+if !has_key(s:disabled_packages, 'mplayerconf')
+  au BufNewFile,BufRead */.mplayer/config,mplayer.conf setf mplayerconf
+endif
+
+if !has_key(s:disabled_packages, 'modconf')
+  au BufNewFile,BufRead */etc/conf.modules,*/etc/modules,*/etc/modules.conf setf modconf
+  au BufNewFile,BufRead */etc/modprobe.* call s:StarSetf('modconf')
+endif
+
+if !has_key(s:disabled_packages, 'moo')
+  au BufNewFile,BufRead *.moo setf moo
+endif
+
+if !has_key(s:disabled_packages, 'monk')
+  au BufNewFile,BufRead *.isc,*.monk,*.ssc,*.tsc setf monk
+endif
+
+if !has_key(s:disabled_packages, 'modula3')
+  au BufNewFile,BufRead *.[mi][3g] setf modula3
+endif
+
+if !has_key(s:disabled_packages, 'modula2')
+  au BufNewFile,BufRead *.DEF,*.MOD,*.m2,*.mi setf modula2
+endif
+
+if !has_key(s:disabled_packages, 'mmp')
+  au BufNewFile,BufRead *.mmp setf mmp
+endif
+
+if !has_key(s:disabled_packages, 'mix')
+  au BufNewFile,BufRead *.mix,*.mixal setf mix
+endif
+
+if !has_key(s:disabled_packages, 'mgl')
+  au BufNewFile,BufRead *.mgl setf mgl
+endif
+
+if !has_key(s:disabled_packages, 'mp')
+  au BufNewFile,BufRead *.mp setf mp
+endif
+
+if !has_key(s:disabled_packages, 'mf')
+  au BufNewFile,BufRead *.mf setf mf
+endif
+
+if !has_key(s:disabled_packages, 'messages')
+  au BufNewFile,BufRead */log/{auth,cron,daemon,debug,kern,lpr,mail,messages,news/news,syslog,user}{,.log,.err,.info,.warn,.crit,.notice}{,.[0-9]*,-[0-9]*} setf messages
+endif
+
+if !has_key(s:disabled_packages, 'hgcommit')
+  au BufNewFile,BufRead hg-editor-*.txt setf hgcommit
+endif
+
+if !has_key(s:disabled_packages, 'mel')
+  au BufNewFile,BufRead *.mel setf mel
+endif
+
+if !has_key(s:disabled_packages, 'map')
+  au BufNewFile,BufRead *.map setf map
+endif
+
+if !has_key(s:disabled_packages, 'maple')
+  au BufNewFile,BufRead *.mpl,*.mv,*.mws setf maple
+endif
+
+if !has_key(s:disabled_packages, 'manconf')
+  au BufNewFile,BufRead */etc/man.conf,man.config setf manconf
+endif
+
+if !has_key(s:disabled_packages, 'man')
+  au BufNewFile,BufRead *.man setf man
+endif
+
+if !has_key(s:disabled_packages, 'mallard')
+  au BufNewFile,BufRead *.page setf mallard
+endif
+
+if !has_key(s:disabled_packages, 'ist')
+  au BufNewFile,BufRead *.ist,*.mst setf ist
+endif
+
+if !has_key(s:disabled_packages, 'mailcap')
+  au BufNewFile,BufRead {.,}mailcap,mailcap setf mailcap
+endif
+
+if !has_key(s:disabled_packages, 'mailaliases')
+  au BufNewFile,BufRead */etc/aliases,*/etc/mail/aliases setf mailaliases
+endif
+
+if !has_key(s:disabled_packages, 'mail')
+  au BufNewFile,BufRead *.eml,{.,}article,{.,}article.\d\+,{.,}followup,{.,}letter,{.,}letter.\d\+,/tmp/SLRN[0-9A-Z.]\+,ae\d\+.txt,mutt[[:alnum:]_-]\\\{6\},mutt{ng,}-*-\w\+,neomutt-*-\w\+,neomutt[[:alnum:]_-]\\\{6\},pico.\d\+,snd.\d\+,{neo,}mutt[[:alnum:]._-]\\\{6\} setf mail
+  au BufNewFile,BufRead reportbug-* call s:StarSetf('mail')
+endif
+
+if !has_key(s:disabled_packages, 'mgp')
+  au BufNewFile,BufRead *.mgp setf mgp
+endif
+
+if !has_key(s:disabled_packages, 'lss')
+  au BufNewFile,BufRead *.lss setf lss
+endif
+
+if !has_key(s:disabled_packages, 'lsl')
+  au BufNewFile,BufRead *.lsl setf lsl
+endif
+
+if !has_key(s:disabled_packages, 'lout')
+  au BufNewFile,BufRead *.lou,*.lout setf lout
+endif
+
+if !has_key(s:disabled_packages, 'lotos')
+  au BufNewFile,BufRead *.lot,*.lotos setf lotos
+endif
+
+if !has_key(s:disabled_packages, 'logtalk')
+  au BufNewFile,BufRead *.lgt setf logtalk
+endif
+
+if !has_key(s:disabled_packages, 'logindefs')
+  au BufNewFile,BufRead */etc/login.defs setf logindefs
+endif
+
+if !has_key(s:disabled_packages, 'loginaccess')
+  au BufNewFile,BufRead */etc/login.access setf loginaccess
+endif
+
+if !has_key(s:disabled_packages, 'litestep')
+  au BufNewFile,BufRead */LiteStep/*/*.rc setf litestep
+endif
+
+if !has_key(s:disabled_packages, 'lite')
+  au BufNewFile,BufRead *.lite,*.lt setf lite
+endif
+
+if !has_key(s:disabled_packages, 'liquid')
+  au BufNewFile,BufRead *.liquid setf liquid
+endif
+
+if !has_key(s:disabled_packages, 'lisp')
+  au BufNewFile,BufRead *.cl,*.el,*.lisp,*.lsp,{.,}emacs,{.,}sawfishrc,{.,}sbclrc,sbclrc setf lisp
+endif
+
+if !has_key(s:disabled_packages, 'lilo')
+  au BufNewFile,BufRead lilo.conf setf lilo
+  au BufNewFile,BufRead lilo.conf* call s:StarSetf('lilo')
+endif
+
+if !has_key(s:disabled_packages, 'lifelines')
+  au BufNewFile,BufRead *.ll setf lifelines
+endif
+
+if !has_key(s:disabled_packages, 'lftp')
+  au BufNewFile,BufRead *lftp/rc,{.,}lftprc,lftp.conf setf lftp
+endif
+
+if !has_key(s:disabled_packages, 'sensors')
+  au BufNewFile,BufRead */etc/sensors.conf,*/etc/sensors3.conf setf sensors
+endif
+
+if !has_key(s:disabled_packages, 'libao')
+  au BufNewFile,BufRead */.libao,*/etc/libao.conf setf libao
+endif
+
+if !has_key(s:disabled_packages, 'lex')
+  au BufNewFile,BufRead *.l,*.l++,*.lex,*.lxx setf lex
+endif
+
+if !has_key(s:disabled_packages, 'ld')
+  au BufNewFile,BufRead *.ld setf ld
+endif
+
+if !has_key(s:disabled_packages, 'ldif')
+  au BufNewFile,BufRead *.ldif setf ldif
+endif
+
+if !has_key(s:disabled_packages, 'lprolog')
+  au BufNewFile,BufRead *.sig setf lprolog
+endif
+
+if !has_key(s:disabled_packages, 'limits')
+  au BufNewFile,BufRead */etc/*limits.conf,*/etc/*limits.d/*.conf,*/etc/limits setf limits
+endif
+
+if !has_key(s:disabled_packages, 'latte')
+  au BufNewFile,BufRead *.latte,*.lte setf latte
+endif
+
+if !has_key(s:disabled_packages, 'lace')
+  au BufNewFile,BufRead *.ACE,*.ace setf lace
+endif
+
+if !has_key(s:disabled_packages, 'kconfig')
+  au BufNewFile,BufRead Kconfig,Kconfig.debug setf kconfig
+  au BufNewFile,BufRead Kconfig.* call s:StarSetf('kconfig')
+endif
+
+if !has_key(s:disabled_packages, 'kscript')
+  au BufNewFile,BufRead *.ks setf kscript
+endif
+
+if !has_key(s:disabled_packages, 'kivy')
+  au BufNewFile,BufRead *.kv setf kivy
+endif
+
+if !has_key(s:disabled_packages, 'kwt')
+  au BufNewFile,BufRead *.k setf kwt
+endif
+
+if !has_key(s:disabled_packages, 'kix')
+  au BufNewFile,BufRead *.kix setf kix
+endif
+
+if !has_key(s:disabled_packages, 'jovial')
+  au BufNewFile,BufRead *.j73,*.jov,*.jovial setf jovial
+endif
+
+if !has_key(s:disabled_packages, 'jgraph')
+  au BufNewFile,BufRead *.jgr setf jgraph
+endif
+
+if !has_key(s:disabled_packages, 'jess')
+  au BufNewFile,BufRead *.clp setf jess
+endif
+
+if !has_key(s:disabled_packages, 'jproperties')
+  au BufNewFile,BufRead *.properties,*.properties_??,*.properties_??_?? setf jproperties
+  au BufNewFile,BufRead *.properties_??_??_* call s:StarSetf('jproperties')
+endif
+
+if !has_key(s:disabled_packages, 'jsp')
+  au BufNewFile,BufRead *.jsp setf jsp
+endif
+
+if !has_key(s:disabled_packages, 'javacc')
+  au BufNewFile,BufRead *.jj,*.jjt setf javacc
+endif
+
+if !has_key(s:disabled_packages, 'java')
+  au BufNewFile,BufRead *.jav,*.java setf java
+endif
+
+if !has_key(s:disabled_packages, 'jam')
+  au BufNewFile,BufRead *.jpl,*.jpr setf jam
+  au BufNewFile,BufRead Prl*.* call s:StarSetf('jam')
+  au BufNewFile,BufRead JAM*.* call s:StarSetf('jam')
+endif
+
+if !has_key(s:disabled_packages, 'jal')
+  au BufNewFile,BufRead *.JAL,*.jal setf jal
+endif
+
+if !has_key(s:disabled_packages, 'j')
+  au BufNewFile,BufRead *.ijs setf j
+endif
+
+if !has_key(s:disabled_packages, 'iss')
+  au BufNewFile,BufRead *.iss setf iss
+endif
+
+if !has_key(s:disabled_packages, 'inittab')
+  au BufNewFile,BufRead inittab setf inittab
+endif
+
+if !has_key(s:disabled_packages, 'fgl')
+  au BufNewFile,BufRead *.4gh,*.4gl,*.m4gl setf fgl
+endif
+
+if !has_key(s:disabled_packages, 'ipfilter')
+  au BufNewFile,BufRead ipf.conf,ipf.rules,ipf6.conf setf ipfilter
+endif
+
+if !has_key(s:disabled_packages, 'usw2kagtlog')
+  au BufNewFile,BufRead *.usw2kagt.log\c,usw2kagt.*.log\c,usw2kagt.log\c setf usw2kagtlog
+endif
+
+if !has_key(s:disabled_packages, 'usserverlog')
+  au BufNewFile,BufRead *.usserver.log\c,usserver.*.log\c,usserver.log\c setf usserverlog
+endif
+
+if !has_key(s:disabled_packages, 'upstreaminstalllog')
+  au BufNewFile,BufRead *.upstreaminstall.log\c,upstreaminstall.*.log\c,upstreaminstall.log\c setf upstreaminstalllog
+endif
+
+if !has_key(s:disabled_packages, 'upstreamlog')
+  au BufNewFile,BufRead *.upstream.log\c,UPSTREAM-*.log\c,fdrupstream.log,upstream.*.log\c,upstream.log\c setf upstreamlog
+endif
+
+if !has_key(s:disabled_packages, 'upstreamdat')
+  au BufNewFile,BufRead *.upstream.dat\c,upstream.*.dat\c,upstream.dat\c setf upstreamdat
+endif
+
+if !has_key(s:disabled_packages, 'initng')
+  au BufNewFile,BufRead *.ii,*/etc/initng/*/*.i setf initng
+endif
+
+if !has_key(s:disabled_packages, 'inform')
+  au BufNewFile,BufRead *.INF,*.inf setf inform
+endif
+
+if !has_key(s:disabled_packages, 'indent')
+  au BufNewFile,BufRead {.,}indent.pro,indentrc setf indent
+endif
+
+if !has_key(s:disabled_packages, 'icemenu')
+  au BufNewFile,BufRead */.icewm/menu setf icemenu
+endif
+
+if !has_key(s:disabled_packages, 'msidl')
+  au BufNewFile,BufRead *.mof,*.odl setf msidl
+endif
+
+if !has_key(s:disabled_packages, 'icon')
+  au BufNewFile,BufRead *.icn setf icon
+endif
+
+if !has_key(s:disabled_packages, 'httest')
+  au BufNewFile,BufRead *.htb,*.htt setf httest
+endif
+
+if !has_key(s:disabled_packages, 'hb')
+  au BufNewFile,BufRead *.hb setf hb
+endif
+
+if !has_key(s:disabled_packages, 'hostsaccess')
+  au BufNewFile,BufRead */etc/hosts.allow,*/etc/hosts.deny setf hostsaccess
+endif
+
+if !has_key(s:disabled_packages, 'hostconf')
+  au BufNewFile,BufRead */etc/host.conf setf hostconf
+endif
+
+if !has_key(s:disabled_packages, 'template')
+  au BufNewFile,BufRead *.tmpl setf template
+endif
+
+if !has_key(s:disabled_packages, 'htmlm4')
+  au BufNewFile,BufRead *.html.m4 setf htmlm4
+endif
+
+if !has_key(s:disabled_packages, 'tilde')
+  au BufNewFile,BufRead *.t.html setf tilde
+endif
+
+if !has_key(s:disabled_packages, 'hollywood')
+  au BufNewFile,BufRead *.hws setf hollywood
+endif
+
+if !has_key(s:disabled_packages, 'hex')
+  au BufNewFile,BufRead *.h32,*.hex setf hex
+endif
+
+if !has_key(s:disabled_packages, 'hercules')
+  au BufNewFile,BufRead *.errsum,*.ev,*.sum,*.vc setf hercules
+endif
+
+if !has_key(s:disabled_packages, 'hastepreproc')
+  au BufNewFile,BufRead *.htpp setf hastepreproc
+endif
+
+if !has_key(s:disabled_packages, 'haste')
+  au BufNewFile,BufRead *.ht setf haste
+endif
+
+if !has_key(s:disabled_packages, 'chaskell')
+  au BufNewFile,BufRead *.chs setf chaskell
+endif
+
+if !has_key(s:disabled_packages, 'lhaskell')
+  au BufNewFile,BufRead *.lhs setf lhaskell
+endif
+
+if !has_key(s:disabled_packages, 'gtkrc')
+  au BufNewFile,BufRead {.,}gtkrc,gtkrc setf gtkrc
+  au BufNewFile,BufRead gtkrc* call s:StarSetf('gtkrc')
+  au BufNewFile,BufRead {.,}gtkrc* call s:StarSetf('gtkrc')
+endif
+
+if !has_key(s:disabled_packages, 'group')
+  au BufNewFile,BufRead */etc/group,*/etc/group-,*/etc/group.edit,*/etc/gshadow,*/etc/gshadow-,*/etc/gshadow.edit,*/var/backups/group.bak,*/var/backups/gshadow.bak setf group
+endif
+
+if !has_key(s:disabled_packages, 'gsp')
+  au BufNewFile,BufRead *.gsp setf gsp
+endif
+
+if !has_key(s:disabled_packages, 'gretl')
+  au BufNewFile,BufRead *.gretl setf gretl
+endif
+
+if !has_key(s:disabled_packages, 'grads')
+  au BufNewFile,BufRead *.gs setf grads
+endif
+
+if !has_key(s:disabled_packages, 'gitolite')
+  au BufNewFile,BufRead gitolite.conf setf gitolite
+  au BufNewFile,BufRead */gitolite-admin/conf/* call s:StarSetf('gitolite')
+endif
+
+if !has_key(s:disabled_packages, 'gnash')
+  au BufNewFile,BufRead {.,}gnashpluginrc,{.,}gnashrc,gnashpluginrc,gnashrc setf gnash
+endif
+
+if !has_key(s:disabled_packages, 'gpg')
+  au BufNewFile,BufRead */.gnupg/gpg.conf,*/.gnupg/options,*/usr/*/gnupg/options.skel setf gpg
+endif
+
+if !has_key(s:disabled_packages, 'gp')
+  au BufNewFile,BufRead *.gp,{.,}gprc setf gp
+endif
+
+if !has_key(s:disabled_packages, 'gkrellmrc')
+  au BufNewFile,BufRead gkrellmrc,gkrellmrc_? setf gkrellmrc
+endif
+
+if !has_key(s:disabled_packages, 'gedcom')
+  au BufNewFile,BufRead *.ged,lltxxxxx.txt setf gedcom
+  au BufNewFile,BufRead */tmp/lltmp* call s:StarSetf('gedcom')
+endif
+
+if !has_key(s:disabled_packages, 'gdmo')
+  au BufNewFile,BufRead *.gdmo,*.mo setf gdmo
+endif
+
+if !has_key(s:disabled_packages, 'gdb')
+  au BufNewFile,BufRead {.,}gdbinit setf gdb
+endif
+
+if !has_key(s:disabled_packages, 'fstab')
+  au BufNewFile,BufRead fstab,mtab setf fstab
+endif
+
+if !has_key(s:disabled_packages, 'framescript')
+  au BufNewFile,BufRead *.fsl setf framescript
+endif
+
+if !has_key(s:disabled_packages, 'fortran')
+  au BufNewFile,BufRead *.f,*.f03,*.f08,*.f77,*.f90,*.f95,*.for,*.fortran,*.fpp,*.ftn setf fortran
+endif
+
+if !has_key(s:disabled_packages, 'reva')
+  au BufNewFile,BufRead *.frt setf reva
+endif
+
+if !has_key(s:disabled_packages, 'focexec')
+  au BufNewFile,BufRead *.fex,*.focexec setf focexec
+endif
+
+if !has_key(s:disabled_packages, 'fetchmail')
+  au BufNewFile,BufRead {.,}fetchmailrc setf fetchmail
+endif
+
+if !has_key(s:disabled_packages, 'factor')
+  au BufNewFile,BufRead *.factor setf factor
+endif
+
+if !has_key(s:disabled_packages, 'fan')
+  au BufNewFile,BufRead *.fan,*.fwt setf fan
+endif
+
+if !has_key(s:disabled_packages, 'falcon')
+  au BufNewFile,BufRead *.fal setf falcon
+endif
+
+if !has_key(s:disabled_packages, 'exports')
+  au BufNewFile,BufRead exports setf exports
+endif
+
+if !has_key(s:disabled_packages, 'expect')
+  au BufNewFile,BufRead *.exp setf expect
+endif
+
+if !has_key(s:disabled_packages, 'exim')
+  au BufNewFile,BufRead exim.conf setf exim
+endif
+
+if !has_key(s:disabled_packages, 'csc')
+  au BufNewFile,BufRead *.csc setf csc
+endif
+
+if !has_key(s:disabled_packages, 'esterel')
+  au BufNewFile,BufRead *.strl setf esterel
+endif
+
+if !has_key(s:disabled_packages, 'esqlc')
+  au BufNewFile,BufRead *.EC,*.ec setf esqlc
+endif
+
+if !has_key(s:disabled_packages, 'esmtprc')
+  au BufNewFile,BufRead *esmtprc setf esmtprc
+endif
+
+if !has_key(s:disabled_packages, 'elmfilt')
+  au BufNewFile,BufRead filter-rules setf elmfilt
+endif
+
+if !has_key(s:disabled_packages, 'elinks')
+  au BufNewFile,BufRead elinks.conf setf elinks
+endif
+
+if !has_key(s:disabled_packages, 'ecd')
+  au BufNewFile,BufRead *.ecd setf ecd
+endif
+
+if !has_key(s:disabled_packages, 'edif')
+  au BufNewFile,BufRead *.ed\(f\|if\|o\) setf edif
+endif
+
+if !has_key(s:disabled_packages, 'dts')
+  au BufNewFile,BufRead *.dts,*.dtsi setf dts
+endif
+
+if !has_key(s:disabled_packages, 'dtd')
+  au BufNewFile,BufRead *.dtd setf dtd
+endif
+
+if !has_key(s:disabled_packages, 'dsl')
+  au BufNewFile,BufRead *.dsl setf dsl
+endif
+
+if !has_key(s:disabled_packages, 'datascript')
+  au BufNewFile,BufRead *.ds setf datascript
+endif
+
+if !has_key(s:disabled_packages, 'dracula')
+  au BufNewFile,BufRead *.drac,*.drc,*lpe,*lvs setf dracula
+  au BufNewFile,BufRead drac.* call s:StarSetf('dracula')
+endif
+
+if !has_key(s:disabled_packages, 'def')
+  au BufNewFile,BufRead *.def setf def
+endif
+
+if !has_key(s:disabled_packages, 'dylan')
+  au BufNewFile,BufRead *.dylan setf dylan
+endif
+
+if !has_key(s:disabled_packages, 'dylanintr')
+  au BufNewFile,BufRead *.intr setf dylanintr
+endif
+
+if !has_key(s:disabled_packages, 'dylanlid')
+  au BufNewFile,BufRead *.lid setf dylanlid
+endif
+
+if !has_key(s:disabled_packages, 'dot')
+  au BufNewFile,BufRead *.dot,*.gv setf dot
+endif
+
+if !has_key(s:disabled_packages, 'dircolors')
+  au BufNewFile,BufRead */etc/DIR_COLORS,{.,}dir_colors,{.,}dircolors setf dircolors
+endif
+
+if !has_key(s:disabled_packages, 'diff')
+  au BufNewFile,BufRead *.diff,*.rej setf diff
+endif
+
+if !has_key(s:disabled_packages, 'dictdconf')
+  au BufNewFile,BufRead dictd.conf setf dictdconf
+endif
+
+if !has_key(s:disabled_packages, 'dictconf')
+  au BufNewFile,BufRead {.,}dictrc,dict.conf setf dictconf
+endif
+
+if !has_key(s:disabled_packages, 'desktop')
+  au BufNewFile,BufRead *.desktop,*.directory setf desktop
+endif
+
+if !has_key(s:disabled_packages, 'desc')
+  au BufNewFile,BufRead *.desc setf desc
+endif
+
+if !has_key(s:disabled_packages, 'dnsmasq')
+  au BufNewFile,BufRead */etc/dnsmasq.conf setf dnsmasq
+  au BufNewFile,BufRead */etc/dnsmasq.d/* call s:StarSetf('dnsmasq')
+endif
+
+if !has_key(s:disabled_packages, 'denyhosts')
+  au BufNewFile,BufRead denyhosts.conf setf denyhosts
+endif
+
+if !has_key(s:disabled_packages, 'debsources')
+  au BufNewFile,BufRead */etc/apt/sources.list,*/etc/apt/sources.list.d/*.list setf debsources
+endif
+
+if !has_key(s:disabled_packages, 'debcopyright')
+  au BufNewFile,BufRead */debian/copyright setf debcopyright
+endif
+
+if !has_key(s:disabled_packages, 'debcontrol')
+  au BufNewFile,BufRead */debian/control setf debcontrol
+endif
+
+if !has_key(s:disabled_packages, 'cuplsim')
+  au BufNewFile,BufRead *.si setf cuplsim
+endif
+
+if !has_key(s:disabled_packages, 'cupl')
+  au BufNewFile,BufRead *.pld setf cupl
+endif
+
+if !has_key(s:disabled_packages, 'csp')
+  au BufNewFile,BufRead *.csp,*.fdr setf csp
+endif
+
+if !has_key(s:disabled_packages, 'quake')
+  au BufNewFile,BufRead *baseq[2-3]/*.cfg,*id1/*.cfg,*quake[1-3]/*.cfg setf quake
+endif
+
+if !has_key(s:disabled_packages, 'lynx')
+  au BufNewFile,BufRead lynx.cfg setf lynx
+endif
+
+if !has_key(s:disabled_packages, 'eterm')
+  au BufNewFile,BufRead *Eterm/*.cfg setf eterm
+endif
+
+if !has_key(s:disabled_packages, 'dcd')
+  au BufNewFile,BufRead *.dcd setf dcd
+endif
+
+if !has_key(s:disabled_packages, 'cuda')
+  au BufNewFile,BufRead *.cu,*.cuh setf cuda
+endif
+
+if !has_key(s:disabled_packages, 'config')
+  au BufNewFile,BufRead Pipfile,configure.ac,configure.in setf config
+  au BufNewFile,BufRead /etc/hostname.* call s:StarSetf('config')
+endif
+
+if !has_key(s:disabled_packages, 'cf')
+  au BufNewFile,BufRead *.cfc,*.cfi,*.cfm setf cf
+endif
+
+if !has_key(s:disabled_packages, 'coco')
+  au BufNewFile,BufRead *.atg setf coco
+endif
+
+if !has_key(s:disabled_packages, 'cobol')
+  au BufNewFile,BufRead *.cbl,*.cob,*.lib setf cobol
+endif
+
+if !has_key(s:disabled_packages, 'cmusrc')
+  au BufNewFile,BufRead */.cmus/{autosave,rc,command-history,*.theme},*/cmus/{rc,*.theme} setf cmusrc
+endif
+
+if !has_key(s:disabled_packages, 'cl')
+  au BufNewFile,BufRead *.eni setf cl
+endif
+
+if !has_key(s:disabled_packages, 'clean')
+  au BufNewFile,BufRead *.dcl,*.icl setf clean
+endif
+
+if !has_key(s:disabled_packages, 'chordpro')
+  au BufNewFile,BufRead *.cho,*.chopro,*.chordpro,*.crd,*.crdpro setf chordpro
+endif
+
+if !has_key(s:disabled_packages, 'chill')
+  au BufNewFile,BufRead *..ch setf chill
+endif
+
+if !has_key(s:disabled_packages, 'debchangelog')
+  au BufNewFile,BufRead NEWS.Debian,NEWS.dch,changelog.Debian,changelog.dch setf debchangelog
+endif
+
+if !has_key(s:disabled_packages, 'cterm')
+  au BufNewFile,BufRead *.con setf cterm
+endif
+
+if !has_key(s:disabled_packages, 'css')
+  au BufNewFile,BufRead *.css setf css
+endif
+
+if !has_key(s:disabled_packages, 'ch')
+  au BufNewFile,BufRead *.chf setf ch
+endif
+
+if !has_key(s:disabled_packages, 'cynpp')
+  au BufNewFile,BufRead *.cyn setf cynpp
+endif
+
+if !has_key(s:disabled_packages, 'crm')
+  au BufNewFile,BufRead *.crm setf crm
+endif
+
+if !has_key(s:disabled_packages, 'conaryrecipe')
+  au BufNewFile,BufRead *.recipe setf conaryrecipe
+endif
+
+if !has_key(s:disabled_packages, 'cdl')
+  au BufNewFile,BufRead *.cdl setf cdl
+endif
+
+if !has_key(s:disabled_packages, 'chaiscript')
+  au BufNewFile,BufRead *.chai setf chaiscript
+endif
+
+if !has_key(s:disabled_packages, 'cfengine')
+  au BufNewFile,BufRead cfengine.conf setf cfengine
+endif
+
+if !has_key(s:disabled_packages, 'cdrdaoconf')
+  au BufNewFile,BufRead */etc/cdrdao.conf,*/etc/default/cdrdao,*/etc/defaults/cdrdao,{.,}cdrdao setf cdrdaoconf
+endif
+
+if !has_key(s:disabled_packages, 'cdrtoc')
+  au BufNewFile,BufRead *.toc setf cdrtoc
+endif
+
+if !has_key(s:disabled_packages, 'cabal')
+  au BufNewFile,BufRead *.cabal setf cabal
+endif
+
+if !has_key(s:disabled_packages, 'csdl')
+  au BufNewFile,BufRead *.csdl setf csdl
+endif
+
+if !has_key(s:disabled_packages, 'cs')
+  au BufNewFile,BufRead *.cs setf cs
+endif
+
+if !has_key(s:disabled_packages, 'calendar')
+  au BufNewFile,BufRead calendar setf calendar
+  au BufNewFile,BufRead */share/calendar/calendar.* call s:StarSetf('calendar')
+  au BufNewFile,BufRead */share/calendar/*/calendar.* call s:StarSetf('calendar')
+  au BufNewFile,BufRead */.calendar/* call s:StarSetf('calendar')
+endif
+
+if !has_key(s:disabled_packages, 'lpc')
+  au BufNewFile,BufRead *.lpc,*.ulpc setf lpc
+endif
+
+if !has_key(s:disabled_packages, 'bsdl')
+  au BufNewFile,BufRead *.bsdl,*bsd setf bsdl
+endif
+
+if !has_key(s:disabled_packages, 'blank')
+  au BufNewFile,BufRead *.bl setf blank
+endif
+
+if !has_key(s:disabled_packages, 'bindzone')
+  au BufNewFile,BufRead named.root setf bindzone
+  au BufNewFile,BufRead */named/db.* call s:StarSetf('bindzone')
+  au BufNewFile,BufRead */bind/db.* call s:StarSetf('bindzone')
+endif
+
+if !has_key(s:disabled_packages, 'named')
+  au BufNewFile,BufRead named*.conf,rndc*.conf,rndc*.key setf named
+endif
+
+if !has_key(s:disabled_packages, 'bst')
+  au BufNewFile,BufRead *.bst setf bst
+endif
+
+if !has_key(s:disabled_packages, 'bib')
+  au BufNewFile,BufRead *.bib setf bib
+endif
+
+if !has_key(s:disabled_packages, 'bdf')
+  au BufNewFile,BufRead *.bdf setf bdf
+endif
+
+if !has_key(s:disabled_packages, 'bc')
+  au BufNewFile,BufRead *.bc setf bc
+endif
+
+if !has_key(s:disabled_packages, 'dosbatch')
+  au BufNewFile,BufRead *.bat,*.sys setf dosbatch
+endif
+
 if !has_key(s:disabled_packages, 'hamster')
   au BufNewFile,BufRead *.hsc,*.hsm setf hamster
 endif
@@ -164,6 +1719,10 @@ if !has_key(s:disabled_packages, 'dosini')
   au BufNewFile,BufRead */etc/yum.repos.d/* call s:StarSetf('dosini')
 endif
 
+if !has_key(s:disabled_packages, 'spec')
+  au BufNewFile,BufRead *.spec setf spec
+endif
+
 if !has_key(s:disabled_packages, 'visual-basic')
   au! BufNewFile,BufRead,BufWritePost *.bas call polyglot#detect#Bas()
   au BufNewFile,BufRead *.cls,*.ctl,*.dsm,*.frm,*.frx,*.sba,*.vba,*.vbs setf vb
@@ -192,6 +1751,10 @@ endif
 
 if !has_key(s:disabled_packages, 'helm')
   au BufNewFile,BufRead */templates/*.tpl,*/templates/*.yaml setf helm
+endif
+
+if !has_key(s:disabled_packages, 'smarty')
+  au BufNewFile,BufRead *.tpl setf smarty
 endif
 
 if !has_key(s:disabled_packages, 'ansible')
@@ -272,6 +1835,10 @@ endif
 
 if !has_key(s:disabled_packages, 'terraform')
   au BufNewFile,BufRead *.tf,*.tfvars setf terraform
+endif
+
+if !has_key(s:disabled_packages, 'tf')
+  au BufNewFile,BufRead *.tf,{.,}tfrc,tfrc setf tf
 endif
 
 if !has_key(s:disabled_packages, 'systemd')
@@ -462,6 +2029,10 @@ if !has_key(s:disabled_packages, 'perl')
   au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
   au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
   au BufNewFile,BufRead *.xs setf xs
+endif
+
+if !has_key(s:disabled_packages, 'rc')
+  au BufNewFile,BufRead *.rc,*.rch setf rc
 endif
 
 if !has_key(s:disabled_packages, 'opencl')
@@ -856,7 +2427,7 @@ if !has_key(s:disabled_packages, 'asn')
 endif
 
 if !has_key(s:disabled_packages, 'automake')
-  au BufNewFile,BufRead GNUmakefile.am,[Mm]akefile.am setf automake
+  au BufNewFile,BufRead *.dsp,*.mak,*.mk,GNUmakefile.am,Makefile.am,makefile.am setf automake
 endif
 
 if !has_key(s:disabled_packages, 'elf')
@@ -1006,6 +2577,14 @@ endif
 
 if !has_key(s:disabled_packages, 'conf')
   au BufNewFile,BufRead *.conf,auto.master,config setf conf
+endif
+
+if !has_key(s:disabled_packages, 'master')
+  au BufNewFile,BufRead *.mas,*.master setf master
+endif
+
+if !has_key(s:disabled_packages, 'cfg')
+  au BufNewFile,BufRead *.cfg,*.hgrc,*hgrc setf cfg
 endif
 
 if !has_key(s:disabled_packages, '8th')

@@ -1,0 +1,122 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+def comma_expanson(s)
+  s.scan(/{[^{]+}|[^{]+/).map { |a| a[0] == "{" ? a : a.split(",", -1) }.reduce([]) do |a, b|
+    a.size > 0 ?
+      (b.is_a?(String) ?
+         a[0..-2] + [a[-1] + b] :
+         a[0..-2] + [a[-1] + b[0]] + b[1..-1]) :
+      [b].flatten
+  end
+end
+
+def import_autocommands
+  cmd = <<~EOF
+vim -es -u DEFAULTS -c 'exe("func! Capture() \\n redir => capture \\n silent autocmd filetypedetect BufRead \\n redir END \\n return capture \\n endfunc") | let a = Capture() | put =a | %print | :q!'
+  EOF
+  filetypes = Hash.new { |h, k| h[k] = [] }
+  autocommands = `#{cmd}`
+  for pattern, cmd in autocommands.scan(/^    ([^ ]+)\s*(.*)\n/)
+    cmd = cmd.strip
+
+    what = {}
+    if match = cmd.match(/^setf\s+(.*)$/)
+      what[:ft] = match[1]
+    elsif match = cmd.match(/^call s:StarSetf\(\'(.*)\'\)$/)
+      what[:ft] = match[1]
+    elsif match = cmd.match(/^set filetype=(.*)$/)
+      what[:ft] = match[1]
+    end
+
+    if what != {}
+      for p in comma_expanson(pattern.strip)
+        filetypes[what[:ft].strip] << p
+      end
+    end
+  end
+
+
+  filetypes
+end
+
+$with_special_char = /#{[".", ":", "{", "}", "[", "]", ",", "&", "*", "#", "?", "|", "-", "<", ">", "=", "!", "%", "@", "\\"].map { |e| Regexp.escape(e) }.join("|")}/
+def print_pattern(p)
+  if p.match($with_special_char)
+    p.gsub("'", "\\'")
+  end
+
+  return p
+end
+
+def generate_packages_entries(filetypes, comments)
+  entries = []
+
+  current_filetypes = YAML.load_stream(File.read('packages.yaml')).flat_map do |p|
+    p["filetypes"].map { |a| a["name"] }
+  end
+
+  for ft, patterns in filetypes
+    if current_filetypes.include?(ft)
+      next
+    end
+
+    output = {
+      "name" => ft,
+      "remote" => "vim/vim:runtime",
+      "glob" => "**/" + ft + ".vim",
+      "filetypes" => [{
+        "name" => ft,
+        "patterns" => []
+      }]
+    }
+    paths_with_comments = patterns.group_by { |p| (comments[ft] || {})[p] || "" }
+    for comment, paths in paths_with_comments
+      output["filetypes"][0]["patterns"] << {
+        "pattern" => paths.join(","),
+      }
+
+      if comment.strip.size > 0
+        output["filetypes"][0]["patterns"].last["description"] = comment
+      end
+    end
+    entries << YAML.dump(output)
+  end
+
+  return entries
+end
+
+filetypes = import_autocommands
+
+def fix_quotes(a)
+  a = a.gsub(/\\/) { '\\\\' }
+  a.scan(/^.*?"(.+?)"\n/m).each { |p| a[p[0]] = p[0].gsub('"') { '\\"'} }
+  a
+end
+
+def get_comments
+  comments_cmd = <<~'EOF'
+  awk '/^"/ { comment = $0; next } match($0, "(\\S+)\\s+setf (\\S*)$", a) { print "- filetype: \"" a[2] "\"\n  description: \"" substr(comment, 3) "\"\n  patterns: \"" a[1] "\"" }' 'tmp/vim/vim/runtime/filetype.vim'
+  EOF
+
+  comments = YAML.load(fix_quotes(`#{comments_cmd}`))
+
+  comments.reject! { |c| c["patterns"].strip == "" || c["patterns"].include?('\\') }
+  result = {}
+  comments = comments.flat_map do |c| 
+    result[c["filetype"]] ||= {}
+
+    for p in comma_expanson(c["patterns"])
+      result[c["filetype"]][p] = c["description"]
+    end
+  end
+  result
+end
+
+comments = get_comments()
+autocommands = import_autocommands()
+entries = generate_packages_entries(autocommands, comments)
+print(entries.join(""))
+
+

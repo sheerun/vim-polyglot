@@ -251,8 +251,13 @@ glob: '**/automake.vim'
 filetypes:
 - name: automake
   filenames:
-  - '[Mm]akefile.am'
+  - Makefile.am
+  - makefile.am
   - GNUmakefile.am
+  extensions:
+  - mak
+  - dsp
+  - mk
 ---
 name: asn
 remote: vim/vim:runtime
@@ -1611,6 +1616,7 @@ filetypes:
 ---
 name: terraform
 remote: hashivim/vim-terraform
+after: tf
 filetypes:
 - name: terraform
   extensions:
@@ -1983,3 +1989,3504 @@ filetypes:
   extensions:
   - hsc
   - hsm
+---
+name: dosbatch
+remote: vim/vim:runtime
+glob: "**/dosbatch.vim"
+filetypes:
+- name: dosbatch
+  patterns:
+  - pattern: "*.bat,*.sys"
+    description: Batch file for MSDOS.
+---
+name: bc
+remote: vim/vim:runtime
+glob: "**/bc.vim"
+filetypes:
+- name: bc
+  patterns:
+  - pattern: "*.bc"
+    description: BC calculator
+---
+name: bdf
+remote: vim/vim:runtime
+glob: "**/bdf.vim"
+filetypes:
+- name: bdf
+  patterns:
+  - pattern: "*.bdf"
+    description: BDF font
+---
+name: bib
+remote: vim/vim:runtime
+glob: "**/bib.vim"
+filetypes:
+- name: bib
+  patterns:
+  - pattern: "*.bib"
+    description: BibTeX bibliography database file
+---
+name: bst
+remote: vim/vim:runtime
+glob: "**/bst.vim"
+filetypes:
+- name: bst
+  patterns:
+  - pattern: "*.bst"
+    description: BibTeX Bibliography Style
+---
+name: named
+remote: vim/vim:runtime
+glob: "**/named.vim"
+filetypes:
+- name: named
+  patterns:
+  - pattern: named*.conf,rndc*.conf,rndc*.key
+    description: sudoedit uses namedXXXX.conf
+---
+name: bindzone
+remote: vim/vim:runtime
+glob: "**/bindzone.vim"
+filetypes:
+- name: bindzone
+  patterns:
+  - pattern: named.root
+    description: BIND zone
+  - pattern: "*/named/db.*,*/bind/db.*"
+---
+name: blank
+remote: vim/vim:runtime
+glob: "**/blank.vim"
+filetypes:
+- name: blank
+  patterns:
+  - pattern: "*.bl"
+    description: Blank
+---
+name: bsdl
+remote: vim/vim:runtime
+glob: "**/bsdl.vim"
+filetypes:
+- name: bsdl
+  patterns:
+  - pattern: "*bsd,*.bsdl"
+    description: BSDL
+---
+name: lpc
+remote: vim/vim:runtime
+glob: "**/lpc.vim"
+filetypes:
+- name: lpc
+  patterns:
+  - pattern: "*.lpc,*.ulpc"
+    description: C or lpc
+---
+name: calendar
+remote: vim/vim:runtime
+glob: "**/calendar.vim"
+filetypes:
+- name: calendar
+  patterns:
+  - pattern: calendar
+    description: Calendar
+  - pattern: "*/.calendar/*,*/share/calendar/*/calendar.*,*/share/calendar/calendar.*"
+---
+name: cs
+remote: vim/vim:runtime
+glob: "**/cs.vim"
+filetypes:
+- name: cs
+  patterns:
+  - pattern: "*.cs"
+    description: C#
+---
+name: csdl
+remote: vim/vim:runtime
+glob: "**/csdl.vim"
+filetypes:
+- name: csdl
+  patterns:
+  - pattern: "*.csdl"
+    description: CSDL
+---
+name: cabal
+remote: vim/vim:runtime
+glob: "**/cabal.vim"
+filetypes:
+- name: cabal
+  patterns:
+  - pattern: "*.cabal"
+    description: Cabal
+---
+name: cdrtoc
+remote: vim/vim:runtime
+glob: "**/cdrtoc.vim"
+filetypes:
+- name: cdrtoc
+  patterns:
+  - pattern: "*.toc"
+    description: Cdrdao TOC
+---
+name: cdrdaoconf
+remote: vim/vim:runtime
+glob: "**/cdrdaoconf.vim"
+filetypes:
+- name: cdrdaoconf
+  patterns:
+  - pattern: "*/etc/cdrdao.conf,*/etc/defaults/cdrdao,*/etc/default/cdrdao,.cdrdao"
+    description: Cdrdao config
+---
+name: cfengine
+remote: vim/vim:runtime
+glob: "**/cfengine.vim"
+filetypes:
+- name: cfengine
+  patterns:
+  - pattern: cfengine.conf
+    description: Cfengine
+---
+name: chaiscript
+remote: vim/vim:runtime
+glob: "**/chaiscript.vim"
+filetypes:
+- name: chaiscript
+  patterns:
+  - pattern: "*.chai"
+    description: ChaiScript
+---
+name: cdl
+remote: vim/vim:runtime
+glob: "**/cdl.vim"
+filetypes:
+- name: cdl
+  patterns:
+  - pattern: "*.cdl"
+    description: Comshare Dimension Definition Language
+---
+name: conaryrecipe
+remote: vim/vim:runtime
+glob: "**/conaryrecipe.vim"
+filetypes:
+- name: conaryrecipe
+  patterns:
+  - pattern: "*.recipe"
+    description: Conary Recipe
+---
+name: crm
+remote: vim/vim:runtime
+glob: "**/crm.vim"
+filetypes:
+- name: crm
+  patterns:
+  - pattern: "*.crm"
+    description: Controllable Regex Mutilator
+---
+name: cynpp
+remote: vim/vim:runtime
+glob: "**/cynpp.vim"
+filetypes:
+- name: cynpp
+  patterns:
+  - pattern: "*.cyn"
+    description: Cyn++
+---
+name: ch
+remote: vim/vim:runtime
+glob: "**/ch.vim"
+filetypes:
+- name: ch
+  patterns:
+  - pattern: "*.chf"
+    description: Ch (CHscript)
+---
+name: css
+remote: vim/vim:runtime
+glob: "**/css.vim"
+filetypes:
+- name: css
+  patterns:
+  - pattern: "*.css"
+    description: Cascading Style Sheets
+---
+name: cterm
+remote: vim/vim:runtime
+glob: "**/cterm.vim"
+filetypes:
+- name: cterm
+  patterns:
+  - pattern: "*.con"
+    description: Century Term Command Scripts (*.cmd too)
+---
+name: debchangelog
+remote: vim/vim:runtime
+glob: "**/debchangelog.vim"
+filetypes:
+- name: debchangelog
+  patterns:
+  - pattern: changelog.Debian,changelog.dch,NEWS.Debian,NEWS.dch
+---
+name: chill
+remote: vim/vim:runtime
+glob: "**/chill.vim"
+filetypes:
+- name: chill
+  patterns:
+  - pattern: "*..ch"
+    description: CHILL
+---
+name: chordpro
+remote: vim/vim:runtime
+glob: "**/chordpro.vim"
+filetypes:
+- name: chordpro
+  patterns:
+  - pattern: "*.chopro,*.crd,*.cho,*.crdpro,*.chordpro"
+    description: ChordPro
+---
+name: clean
+remote: vim/vim:runtime
+glob: "**/clean.vim"
+filetypes:
+- name: clean
+  patterns:
+  - pattern: "*.dcl,*.icl"
+    description: Clean
+---
+name: cl
+remote: vim/vim:runtime
+glob: "**/cl.vim"
+filetypes:
+- name: cl
+  patterns:
+  - pattern: "*.eni"
+    description: Clever
+---
+name: cmusrc
+remote: vim/vim:runtime
+glob: "**/cmusrc.vim"
+filetypes:
+- name: cmusrc
+  patterns:
+  - pattern: "*/.cmus/{autosave,rc,command-history,*.theme},*/cmus/{rc,*.theme}"
+    description: Cmusrc
+---
+name: cobol
+remote: vim/vim:runtime
+glob: "**/cobol.vim"
+filetypes:
+- name: cobol
+  patterns:
+  - pattern: "*.cbl,*.cob,*.lib"
+    description: Cobol
+---
+name: coco
+remote: vim/vim:runtime
+glob: "**/coco.vim"
+filetypes:
+- name: coco
+  patterns:
+  - pattern: "*.atg"
+    description: Coco/R
+---
+name: cf
+remote: vim/vim:runtime
+glob: "**/cf.vim"
+filetypes:
+- name: cf
+  patterns:
+  - pattern: "*.cfm,*.cfi,*.cfc"
+    description: Cold Fusion
+---
+name: config
+remote: vim/vim:runtime
+glob: "**/config.vim"
+filetypes:
+- name: config
+  patterns:
+  - pattern: configure.in,configure.ac
+    description: Configure scripts
+  - pattern: Pipfile
+    description: Pipenv Pipfiles
+  - pattern: "/etc/hostname.*"
+---
+name: cuda
+remote: vim/vim:runtime
+glob: "**/cuda.vim"
+filetypes:
+- name: cuda
+  patterns:
+  - pattern: "*.cu,*.cuh"
+    description: CUDA  Cumpute Unified Device Architecture
+---
+name: dockerfile
+remote: vim/vim:runtime
+glob: "**/dockerfile.vim"
+filetypes:
+- name: dockerfile
+  patterns:
+  - pattern: Containerfile,Dockerfile,*.Dockerfile
+    description: Dockerfile; Podman uses the same syntax with name Containerfile
+---
+name: dcd
+remote: vim/vim:runtime
+glob: "**/dcd.vim"
+filetypes:
+- name: dcd
+  patterns:
+  - pattern: "*.dcd"
+    description: WildPackets EtherPeek Decoder
+---
+name: eterm
+remote: vim/vim:runtime
+glob: "**/eterm.vim"
+filetypes:
+- name: eterm
+  patterns:
+  - pattern: "*Eterm/*.cfg"
+    description: Eterm
+---
+name: lynx
+remote: vim/vim:runtime
+glob: "**/lynx.vim"
+filetypes:
+- name: lynx
+  patterns:
+  - pattern: lynx.cfg
+    description: Lynx config files
+---
+name: quake
+remote: vim/vim:runtime
+glob: "**/quake.vim"
+filetypes:
+- name: quake
+  patterns:
+  - pattern: "*baseq[2-3]/*.cfg,*id1/*.cfg,*quake[1-3]/*.cfg"
+    description: Quake
+---
+name: cfg
+remote: vim/vim:runtime
+glob: "**/cfg.vim"
+filetypes:
+- name: cfg
+  patterns:
+  - pattern: "*.cfg"
+    description: Configure files
+  - pattern: "*.hgrc,*hgrc"
+    description: Mercurial config (looks like generic config file)
+---
+name: csp
+remote: vim/vim:runtime
+glob: "**/csp.vim"
+filetypes:
+- name: csp
+  patterns:
+  - pattern: "*.csp,*.fdr"
+    description: Communicating Sequential Processes
+---
+name: cupl
+remote: vim/vim:runtime
+glob: "**/cupl.vim"
+filetypes:
+- name: cupl
+  patterns:
+  - pattern: "*.pld"
+    description: CUPL logic description and simulation
+---
+name: cuplsim
+remote: vim/vim:runtime
+glob: "**/cuplsim.vim"
+filetypes:
+- name: cuplsim
+  patterns:
+  - pattern: "*.si"
+    description: CUPL logic description and simulation
+---
+name: debcontrol
+remote: vim/vim:runtime
+glob: "**/debcontrol.vim"
+filetypes:
+- name: debcontrol
+  patterns:
+  - pattern: "*/debian/control"
+    description: Debian Control
+---
+name: debcopyright
+remote: vim/vim:runtime
+glob: "**/debcopyright.vim"
+filetypes:
+- name: debcopyright
+  patterns:
+  - pattern: "*/debian/copyright"
+    description: Debian Copyright
+---
+name: debsources
+remote: vim/vim:runtime
+glob: "**/debsources.vim"
+filetypes:
+- name: debsources
+  patterns:
+  - pattern: "*/etc/apt/sources.list,*/etc/apt/sources.list.d/*.list"
+    description: Debian Sources.list
+---
+name: denyhosts
+remote: vim/vim:runtime
+glob: "**/denyhosts.vim"
+filetypes:
+- name: denyhosts
+  patterns:
+  - pattern: denyhosts.conf
+    description: Deny hosts
+---
+name: dnsmasq
+remote: vim/vim:runtime
+glob: "**/dnsmasq.vim"
+filetypes:
+- name: dnsmasq
+  patterns:
+  - pattern: "*/etc/dnsmasq.conf"
+    description: dnsmasq(8) configuration files
+  - pattern: "*/etc/dnsmasq.d/*"
+---
+name: desc
+remote: vim/vim:runtime
+glob: "**/desc.vim"
+filetypes:
+- name: desc
+  patterns:
+  - pattern: "*.desc"
+    description: ROCKLinux package description
+---
+name: desktop
+remote: vim/vim:runtime
+glob: "**/desktop.vim"
+filetypes:
+- name: desktop
+  patterns:
+  - pattern: "*.desktop,*.directory"
+    description: Desktop files
+---
+name: dictconf
+remote: vim/vim:runtime
+glob: "**/dictconf.vim"
+filetypes:
+- name: dictconf
+  patterns:
+  - pattern: dict.conf,.dictrc
+    description: Dict config
+---
+name: dictdconf
+remote: vim/vim:runtime
+glob: "**/dictdconf.vim"
+filetypes:
+- name: dictdconf
+  patterns:
+  - pattern: dictd.conf
+    description: Dictd config
+---
+name: diff
+remote: vim/vim:runtime
+glob: "**/diff.vim"
+filetypes:
+- name: diff
+  patterns:
+  - pattern: "*.diff,*.rej"
+    description: Diff files
+---
+name: dircolors
+remote: vim/vim:runtime
+glob: "**/dircolors.vim"
+filetypes:
+- name: dircolors
+  patterns:
+  - pattern: ".dir_colors,.dircolors,*/etc/DIR_COLORS"
+    description: Dircolors
+---
+name: dot
+remote: vim/vim:runtime
+glob: "**/dot.vim"
+filetypes:
+- name: dot
+  patterns:
+  - pattern: "*.dot,*.gv"
+    description: DOT
+---
+name: dylanlid
+remote: vim/vim:runtime
+glob: "**/dylanlid.vim"
+filetypes:
+- name: dylanlid
+  patterns:
+  - pattern: "*.lid"
+    description: Dylan - lid files
+---
+name: dylanintr
+remote: vim/vim:runtime
+glob: "**/dylanintr.vim"
+filetypes:
+- name: dylanintr
+  patterns:
+  - pattern: "*.intr"
+    description: Dylan - intr files (melange)
+---
+name: dylan
+remote: vim/vim:runtime
+glob: "**/dylan.vim"
+filetypes:
+- name: dylan
+  patterns:
+  - pattern: "*.dylan"
+    description: Dylan
+---
+name: def
+remote: vim/vim:runtime
+glob: "**/def.vim"
+filetypes:
+- name: def
+  patterns:
+  - pattern: "*.def"
+    description: Microsoft Module Definition
+---
+name: dracula
+remote: vim/vim:runtime
+glob: "**/dracula.vim"
+filetypes:
+- name: dracula
+  patterns:
+  - pattern: "*.drac,*.drc,*lvs,*lpe"
+    description: Dracula
+  - pattern: drac.*
+---
+name: datascript
+remote: vim/vim:runtime
+glob: "**/datascript.vim"
+filetypes:
+- name: datascript
+  patterns:
+  - pattern: "*.ds"
+    description: Datascript
+---
+name: dsl
+remote: vim/vim:runtime
+glob: "**/dsl.vim"
+filetypes:
+- name: dsl
+  patterns:
+  - pattern: "*.dsl"
+    description: dsl
+---
+name: dtd
+remote: vim/vim:runtime
+glob: "**/dtd.vim"
+filetypes:
+- name: dtd
+  patterns:
+  - pattern: "*.dtd"
+    description: DTD (Document Type Definition for XML)
+---
+name: dts
+remote: vim/vim:runtime
+glob: "**/dts.vim"
+filetypes:
+- name: dts
+  patterns:
+  - pattern: "*.dts,*.dtsi"
+    description: DTS/DSTI (device tree files)
+---
+name: edif
+remote: vim/vim:runtime
+glob: "**/edif.vim"
+filetypes:
+- name: edif
+  patterns:
+  - pattern: "*.ed\\(f\\|if\\|o\\)"
+---
+name: ecd
+remote: vim/vim:runtime
+glob: "**/ecd.vim"
+filetypes:
+- name: ecd
+  patterns:
+  - pattern: "*.ecd"
+    description: Embedix Component Description
+---
+name: elinks
+remote: vim/vim:runtime
+glob: "**/elinks.vim"
+filetypes:
+- name: elinks
+  patterns:
+  - pattern: elinks.conf
+    description: Elinks configuration
+---
+name: elmfilt
+remote: vim/vim:runtime
+glob: "**/elmfilt.vim"
+filetypes:
+- name: elmfilt
+  patterns:
+  - pattern: filter-rules
+    description: Elm Filter Rules file
+---
+name: esmtprc
+remote: vim/vim:runtime
+glob: "**/esmtprc.vim"
+filetypes:
+- name: esmtprc
+  patterns:
+  - pattern: "*esmtprc"
+    description: ESMTP rc file
+---
+name: esqlc
+remote: vim/vim:runtime
+glob: "**/esqlc.vim"
+filetypes:
+- name: esqlc
+  patterns:
+  - pattern: "*.ec,*.EC"
+    description: ESQL-C
+---
+name: esterel
+remote: vim/vim:runtime
+glob: "**/esterel.vim"
+filetypes:
+- name: esterel
+  patterns:
+  - pattern: "*.strl"
+    description: Esterel
+---
+name: csc
+remote: vim/vim:runtime
+glob: "**/csc.vim"
+filetypes:
+- name: csc
+  patterns:
+  - pattern: "*.csc"
+    description: Essbase script
+---
+name: exim
+remote: vim/vim:runtime
+glob: "**/exim.vim"
+filetypes:
+- name: exim
+  patterns:
+  - pattern: exim.conf
+    description: Exim
+---
+name: expect
+remote: vim/vim:runtime
+glob: "**/expect.vim"
+filetypes:
+- name: expect
+  patterns:
+  - pattern: "*.exp"
+    description: Expect
+---
+name: exports
+remote: vim/vim:runtime
+glob: "**/exports.vim"
+filetypes:
+- name: exports
+  patterns:
+  - pattern: exports
+    description: Exports
+---
+name: falcon
+remote: vim/vim:runtime
+glob: "**/falcon.vim"
+filetypes:
+- name: falcon
+  patterns:
+  - pattern: "*.fal"
+    description: Falcon
+---
+name: fan
+remote: vim/vim:runtime
+glob: "**/fan.vim"
+filetypes:
+- name: fan
+  patterns:
+  - pattern: "*.fan,*.fwt"
+    description: Fantom
+---
+name: factor
+remote: vim/vim:runtime
+glob: "**/factor.vim"
+filetypes:
+- name: factor
+  patterns:
+  - pattern: "*.factor"
+    description: Factor
+---
+name: fetchmail
+remote: vim/vim:runtime
+glob: "**/fetchmail.vim"
+filetypes:
+- name: fetchmail
+  patterns:
+  - pattern: ".fetchmailrc"
+    description: Fetchmail RC file
+---
+name: focexec
+remote: vim/vim:runtime
+glob: "**/focexec.vim"
+filetypes:
+- name: focexec
+  patterns:
+  - pattern: "*.fex,*.focexec"
+    description: Focus Executable
+---
+name: master
+remote: vim/vim:runtime
+glob: "**/master.vim"
+filetypes:
+- name: master
+  patterns:
+  - pattern: "*.mas,*.master"
+    description: Focus Master file (but not for auto.master)
+---
+name: reva
+remote: vim/vim:runtime
+glob: "**/reva.vim"
+filetypes:
+- name: reva
+  patterns:
+  - pattern: "*.frt"
+    description: Reva Forth
+---
+name: fortran
+remote: vim/vim:runtime
+glob: "**/fortran.vim"
+filetypes:
+- name: fortran
+  patterns:
+  - pattern: "*.f,*.for,*.fortran,*.fpp,*.ftn,*.f77,*.f90,*.f95,*.f03,*.f08"
+    description: Fortran
+---
+name: framescript
+remote: vim/vim:runtime
+glob: "**/framescript.vim"
+filetypes:
+- name: framescript
+  patterns:
+  - pattern: "*.fsl"
+    description: Framescript
+---
+name: fstab
+remote: vim/vim:runtime
+glob: "**/fstab.vim"
+filetypes:
+- name: fstab
+  patterns:
+  - pattern: fstab,mtab
+    description: FStab
+---
+name: gdb
+remote: vim/vim:runtime
+glob: "**/gdb.vim"
+filetypes:
+- name: gdb
+  patterns:
+  - pattern: ".gdbinit"
+    description: GDB command files
+---
+name: gdmo
+remote: vim/vim:runtime
+glob: "**/gdmo.vim"
+filetypes:
+- name: gdmo
+  patterns:
+  - pattern: "*.mo,*.gdmo"
+    description: GDMO
+---
+name: gedcom
+remote: vim/vim:runtime
+glob: "**/gedcom.vim"
+filetypes:
+- name: gedcom
+  patterns:
+  - pattern: "*.ged,lltxxxxx.txt"
+    description: Gedcom
+  - pattern: "*/tmp/lltmp*"
+---
+name: gkrellmrc
+remote: vim/vim:runtime
+glob: "**/gkrellmrc.vim"
+filetypes:
+- name: gkrellmrc
+  patterns:
+  - pattern: gkrellmrc,gkrellmrc_?
+    description: Gkrellmrc
+---
+name: gp
+remote: vim/vim:runtime
+glob: "**/gp.vim"
+filetypes:
+- name: gp
+  patterns:
+  - pattern: "*.gp,.gprc"
+    description: GP scripts (2.0 and onward)
+---
+name: gpg
+remote: vim/vim:runtime
+glob: "**/gpg.vim"
+filetypes:
+- name: gpg
+  patterns:
+  - pattern: "*/.gnupg/options,*/.gnupg/gpg.conf,*/usr/*/gnupg/options.skel"
+    description: GPG
+---
+name: gnash
+remote: vim/vim:runtime
+glob: "**/gnash.vim"
+filetypes:
+- name: gnash
+  patterns:
+  - pattern: gnashrc,.gnashrc,gnashpluginrc,.gnashpluginrc
+    description: gnash(1) configuration files
+---
+name: gitolite
+remote: vim/vim:runtime
+glob: "**/gitolite.vim"
+filetypes:
+- name: gitolite
+  patterns:
+  - pattern: gitolite.conf
+    description: Gitolite
+  - pattern: "*/gitolite-admin/conf/*"
+---
+name: grads
+remote: vim/vim:runtime
+glob: "**/grads.vim"
+filetypes:
+- name: grads
+  patterns:
+  - pattern: "*.gs"
+    description: GrADS scripts
+---
+name: gretl
+remote: vim/vim:runtime
+glob: "**/gretl.vim"
+filetypes:
+- name: gretl
+  patterns:
+  - pattern: "*.gretl"
+    description: Gretl
+---
+name: gsp
+remote: vim/vim:runtime
+glob: "**/gsp.vim"
+filetypes:
+- name: gsp
+  patterns:
+  - pattern: "*.gsp"
+    description: GNU Server Pages
+---
+name: group
+remote: vim/vim:runtime
+glob: "**/group.vim"
+filetypes:
+- name: group
+  patterns:
+  - pattern: "*/etc/group,*/etc/group-,*/etc/group.edit,*/etc/gshadow,*/etc/gshadow-,*/etc/gshadow.edit,*/var/backups/group.bak,*/var/backups/gshadow.bak"
+    description: Group file
+---
+name: gtkrc
+remote: vim/vim:runtime
+glob: "**/gtkrc.vim"
+filetypes:
+- name: gtkrc
+  patterns:
+  - pattern: ".gtkrc,gtkrc"
+    description: GTK RC
+  - pattern: ".gtkrc*,gtkrc*"
+---
+name: lhaskell
+remote: vim/vim:runtime
+glob: "**/lhaskell.vim"
+filetypes:
+- name: lhaskell
+  patterns:
+  - pattern: "*.lhs"
+    description: Haskell
+---
+name: chaskell
+remote: vim/vim:runtime
+glob: "**/chaskell.vim"
+filetypes:
+- name: chaskell
+  patterns:
+  - pattern: "*.chs"
+    description: Haskell
+---
+name: haste
+remote: vim/vim:runtime
+glob: "**/haste.vim"
+filetypes:
+- name: haste
+  patterns:
+  - pattern: "*.ht"
+    description: Haste
+---
+name: hastepreproc
+remote: vim/vim:runtime
+glob: "**/hastepreproc.vim"
+filetypes:
+- name: hastepreproc
+  patterns:
+  - pattern: "*.htpp"
+    description: Haste
+---
+name: hercules
+remote: vim/vim:runtime
+glob: "**/hercules.vim"
+filetypes:
+- name: hercules
+  patterns:
+  - pattern: "*.vc,*.ev,*.sum,*.errsum"
+    description: Hercules
+---
+name: hex
+remote: vim/vim:runtime
+glob: "**/hex.vim"
+filetypes:
+- name: hex
+  patterns:
+  - pattern: "*.hex,*.h32"
+    description: HEX (Intel)
+---
+name: hollywood
+remote: vim/vim:runtime
+glob: "**/hollywood.vim"
+filetypes:
+- name: hollywood
+  patterns:
+  - pattern: "*.hws"
+    description: Hollywood
+---
+name: tilde
+remote: vim/vim:runtime
+glob: "**/tilde.vim"
+filetypes:
+- name: tilde
+  patterns:
+  - pattern: "*.t.html"
+    description: Tilde (must be before HTML)
+---
+name: htmlm4
+remote: vim/vim:runtime
+glob: "**/htmlm4.vim"
+filetypes:
+- name: htmlm4
+  patterns:
+  - pattern: "*.html.m4"
+    description: HTML with M4
+---
+name: template
+remote: vim/vim:runtime
+glob: "**/template.vim"
+filetypes:
+- name: template
+  patterns:
+  - pattern: "*.tmpl"
+    description: Some template.  Used to be HTML Cheetah.
+---
+name: hostconf
+remote: vim/vim:runtime
+glob: "**/hostconf.vim"
+filetypes:
+- name: hostconf
+  patterns:
+  - pattern: "*/etc/host.conf"
+    description: Host config
+---
+name: hostsaccess
+remote: vim/vim:runtime
+glob: "**/hostsaccess.vim"
+filetypes:
+- name: hostsaccess
+  patterns:
+  - pattern: "*/etc/hosts.allow,*/etc/hosts.deny"
+    description: Hosts access
+---
+name: hb
+remote: vim/vim:runtime
+glob: "**/hb.vim"
+filetypes:
+- name: hb
+  patterns:
+  - pattern: "*.hb"
+    description: Hyper Builder
+---
+name: httest
+remote: vim/vim:runtime
+glob: "**/httest.vim"
+filetypes:
+- name: httest
+  patterns:
+  - pattern: "*.htt,*.htb"
+    description: Httest
+---
+name: icon
+remote: vim/vim:runtime
+glob: "**/icon.vim"
+filetypes:
+- name: icon
+  patterns:
+  - pattern: "*.icn"
+    description: Icon
+---
+name: msidl
+remote: vim/vim:runtime
+glob: "**/msidl.vim"
+filetypes:
+- name: msidl
+  patterns:
+  - pattern: "*.odl,*.mof"
+    description: MOF = WMI (Windows Management Instrumentation) Managed Object Format
+---
+name: icemenu
+remote: vim/vim:runtime
+glob: "**/icemenu.vim"
+filetypes:
+- name: icemenu
+  patterns:
+  - pattern: "*/.icewm/menu"
+    description: Icewm menu
+---
+name: indent
+remote: vim/vim:runtime
+glob: "**/indent.vim"
+filetypes:
+- name: indent
+  patterns:
+  - pattern: ".indent.pro"
+    description: Indent profile (must come before IDL *.pro!)
+  - pattern: indentrc
+    description: Indent RC
+---
+name: inform
+remote: vim/vim:runtime
+glob: "**/inform.vim"
+filetypes:
+- name: inform
+  patterns:
+  - pattern: "*.inf,*.INF"
+    description: Inform
+---
+name: initng
+remote: vim/vim:runtime
+glob: "**/initng.vim"
+filetypes:
+- name: initng
+  patterns:
+  - pattern: "*/etc/initng/*/*.i,*.ii"
+    description: Initng
+---
+name: upstreamdat
+remote: vim/vim:runtime
+glob: "**/upstreamdat.vim"
+filetypes:
+- name: upstreamdat
+  patterns:
+  - pattern: upstream.dat\c,upstream.*.dat\c,*.upstream.dat\c
+---
+name: upstreamlog
+remote: vim/vim:runtime
+glob: "**/upstreamlog.vim"
+filetypes:
+- name: upstreamlog
+  patterns:
+  - pattern: fdrupstream.log,upstream.log\c,upstream.*.log\c,*.upstream.log\c,UPSTREAM-*.log\c
+---
+name: upstreaminstalllog
+remote: vim/vim:runtime
+glob: "**/upstreaminstalllog.vim"
+filetypes:
+- name: upstreaminstalllog
+  patterns:
+  - pattern: upstreaminstall.log\c,upstreaminstall.*.log\c,*.upstreaminstall.log\c
+---
+name: usserverlog
+remote: vim/vim:runtime
+glob: "**/usserverlog.vim"
+filetypes:
+- name: usserverlog
+  patterns:
+  - pattern: usserver.log\c,usserver.*.log\c,*.usserver.log\c
+---
+name: usw2kagtlog
+remote: vim/vim:runtime
+glob: "**/usw2kagtlog.vim"
+filetypes:
+- name: usw2kagtlog
+  patterns:
+  - pattern: usw2kagt.log\c,usw2kagt.*.log\c,*.usw2kagt.log\c
+---
+name: ipfilter
+remote: vim/vim:runtime
+glob: "**/ipfilter.vim"
+filetypes:
+- name: ipfilter
+  patterns:
+  - pattern: ipf.conf,ipf6.conf,ipf.rules
+    description: Ipfilter
+---
+name: fgl
+remote: vim/vim:runtime
+glob: "**/fgl.vim"
+filetypes:
+- name: fgl
+  patterns:
+  - pattern: "*.4gl,*.4gh,*.m4gl"
+    description: Informix 4GL (source - canonical, include file, I4GL+M4 preproc.)
+---
+name: inittab
+remote: vim/vim:runtime
+glob: "**/inittab.vim"
+filetypes:
+- name: inittab
+  patterns:
+  - pattern: inittab
+    description: SysV Inittab
+---
+name: iss
+remote: vim/vim:runtime
+glob: "**/iss.vim"
+filetypes:
+- name: iss
+  patterns:
+  - pattern: "*.iss"
+    description: Inno Setup
+---
+name: j
+remote: vim/vim:runtime
+glob: "**/j.vim"
+filetypes:
+- name: j
+  patterns:
+  - pattern: "*.ijs"
+    description: J
+---
+name: jal
+remote: vim/vim:runtime
+glob: "**/jal.vim"
+filetypes:
+- name: jal
+  patterns:
+  - pattern: "*.jal,*.JAL"
+    description: JAL
+---
+name: jam
+remote: vim/vim:runtime
+glob: "**/jam.vim"
+filetypes:
+- name: jam
+  patterns:
+  - pattern: "*.jpl,*.jpr"
+    description: Jam
+  - pattern: Prl*.*,JAM*.*
+---
+name: java
+remote: vim/vim:runtime
+glob: "**/java.vim"
+filetypes:
+- name: java
+  patterns:
+  - pattern: "*.java,*.jav"
+    description: Java
+---
+name: javacc
+remote: vim/vim:runtime
+glob: "**/javacc.vim"
+filetypes:
+- name: javacc
+  patterns:
+  - pattern: "*.jj,*.jjt"
+    description: JavaCC
+---
+name: jsp
+remote: vim/vim:runtime
+glob: "**/jsp.vim"
+filetypes:
+- name: jsp
+  patterns:
+  - pattern: "*.jsp"
+    description: Java Server Pages
+---
+name: jproperties
+remote: vim/vim:runtime
+glob: "**/jproperties.vim"
+filetypes:
+- name: jproperties
+  patterns:
+  - pattern: "*.properties,*.properties_??,*.properties_??_??"
+    description: 'Java Properties resource file (note: doesn''t catch font.properties.pl)'
+  - pattern: "*.properties_??_??_*"
+---
+name: jess
+remote: vim/vim:runtime
+glob: "**/jess.vim"
+filetypes:
+- name: jess
+  patterns:
+  - pattern: "*.clp"
+    description: Jess
+---
+name: jgraph
+remote: vim/vim:runtime
+glob: "**/jgraph.vim"
+filetypes:
+- name: jgraph
+  patterns:
+  - pattern: "*.jgr"
+    description: Jgraph
+---
+name: jovial
+remote: vim/vim:runtime
+glob: "**/jovial.vim"
+filetypes:
+- name: jovial
+  patterns:
+  - pattern: "*.jov,*.j73,*.jovial"
+    description: Jovial
+---
+name: kix
+remote: vim/vim:runtime
+glob: "**/kix.vim"
+filetypes:
+- name: kix
+  patterns:
+  - pattern: "*.kix"
+    description: Kixtart
+---
+name: kwt
+remote: vim/vim:runtime
+glob: "**/kwt.vim"
+filetypes:
+- name: kwt
+  patterns:
+  - pattern: "*.k"
+    description: Kimwitu[++]
+---
+name: kivy
+remote: vim/vim:runtime
+glob: "**/kivy.vim"
+filetypes:
+- name: kivy
+  patterns:
+  - pattern: "*.kv"
+    description: Kivy
+---
+name: kscript
+remote: vim/vim:runtime
+glob: "**/kscript.vim"
+filetypes:
+- name: kscript
+  patterns:
+  - pattern: "*.ks"
+    description: KDE script
+---
+name: kconfig
+remote: vim/vim:runtime
+glob: "**/kconfig.vim"
+filetypes:
+- name: kconfig
+  patterns:
+  - pattern: Kconfig,Kconfig.debug
+    description: Kconfig
+  - pattern: Kconfig.*
+---
+name: lace
+remote: vim/vim:runtime
+glob: "**/lace.vim"
+filetypes:
+- name: lace
+  patterns:
+  - pattern: "*.ace,*.ACE"
+    description: Lace (ISE)
+---
+name: latte
+remote: vim/vim:runtime
+glob: "**/latte.vim"
+filetypes:
+- name: latte
+  patterns:
+  - pattern: "*.latte,*.lte"
+    description: Latte
+---
+name: limits
+remote: vim/vim:runtime
+glob: "**/limits.vim"
+filetypes:
+- name: limits
+  patterns:
+  - pattern: "*/etc/limits,*/etc/*limits.conf,*/etc/*limits.d/*.conf"
+    description: Limits
+---
+name: lprolog
+remote: vim/vim:runtime
+glob: "**/lprolog.vim"
+filetypes:
+- name: lprolog
+  patterns:
+  - pattern: "*.sig"
+    description: LambdaProlog (*.mod too, see Modsim)
+---
+name: ldif
+remote: vim/vim:runtime
+glob: "**/ldif.vim"
+filetypes:
+- name: ldif
+  patterns:
+  - pattern: "*.ldif"
+    description: LDAP LDIF
+---
+name: ld
+remote: vim/vim:runtime
+glob: "**/ld.vim"
+filetypes:
+- name: ld
+  patterns:
+  - pattern: "*.ld"
+    description: Ld loader
+---
+name: lex
+remote: vim/vim:runtime
+glob: "**/lex.vim"
+filetypes:
+- name: lex
+  patterns:
+  - pattern: "*.lex,*.l,*.lxx,*.l++"
+    description: Lex
+---
+name: libao
+remote: vim/vim:runtime
+glob: "**/libao.vim"
+filetypes:
+- name: libao
+  patterns:
+  - pattern: "*/etc/libao.conf,*/.libao"
+    description: Libao
+---
+name: sensors
+remote: vim/vim:runtime
+glob: "**/sensors.vim"
+filetypes:
+- name: sensors
+  patterns:
+  - pattern: "*/etc/sensors.conf,*/etc/sensors3.conf"
+    description: Libsensors
+---
+name: lftp
+remote: vim/vim:runtime
+glob: "**/lftp.vim"
+filetypes:
+- name: lftp
+  patterns:
+  - pattern: lftp.conf,.lftprc,*lftp/rc
+    description: LFTP
+---
+name: lifelines
+remote: vim/vim:runtime
+glob: "**/lifelines.vim"
+filetypes:
+- name: lifelines
+  patterns:
+  - pattern: "*.ll"
+    description: Lifelines (or Lex for C++!)
+---
+name: lilo
+remote: vim/vim:runtime
+glob: "**/lilo.vim"
+filetypes:
+- name: lilo
+  patterns:
+  - pattern: lilo.conf
+    description: 'Lilo: Linux loader'
+  - pattern: lilo.conf*
+---
+name: lisp
+remote: vim/vim:runtime
+glob: "**/lisp.vim"
+filetypes:
+- name: lisp
+  patterns:
+  - pattern: "*.lsp,*.lisp,*.el,*.cl,.emacs,.sawfishrc"
+    description: "*.jl was removed, it's also used for Julia, better skip than guess
+      wrong."
+  - pattern: sbclrc,.sbclrc
+    description: SBCL implementation of Common Lisp
+---
+name: liquid
+remote: vim/vim:runtime
+glob: "**/liquid.vim"
+filetypes:
+- name: liquid
+  patterns:
+  - pattern: "*.liquid"
+    description: Liquid
+---
+name: lite
+remote: vim/vim:runtime
+glob: "**/lite.vim"
+filetypes:
+- name: lite
+  patterns:
+  - pattern: "*.lite,*.lt"
+    description: Lite
+---
+name: litestep
+remote: vim/vim:runtime
+glob: "**/litestep.vim"
+filetypes:
+- name: litestep
+  patterns:
+  - pattern: "*/LiteStep/*/*.rc"
+    description: LiteStep RC files
+---
+name: loginaccess
+remote: vim/vim:runtime
+glob: "**/loginaccess.vim"
+filetypes:
+- name: loginaccess
+  patterns:
+  - pattern: "*/etc/login.access"
+    description: Login access
+---
+name: logindefs
+remote: vim/vim:runtime
+glob: "**/logindefs.vim"
+filetypes:
+- name: logindefs
+  patterns:
+  - pattern: "*/etc/login.defs"
+    description: Login defs
+---
+name: logtalk
+remote: vim/vim:runtime
+glob: "**/logtalk.vim"
+filetypes:
+- name: logtalk
+  patterns:
+  - pattern: "*.lgt"
+    description: Logtalk
+---
+name: lotos
+remote: vim/vim:runtime
+glob: "**/lotos.vim"
+filetypes:
+- name: lotos
+  patterns:
+  - pattern: "*.lot,*.lotos"
+    description: LOTOS
+---
+name: lout
+remote: vim/vim:runtime
+glob: "**/lout.vim"
+filetypes:
+- name: lout
+  patterns:
+  - pattern: "*.lou,*.lout"
+    description: 'Lout (also: *.lt)'
+---
+name: lsl
+remote: vim/vim:runtime
+glob: "**/lsl.vim"
+filetypes:
+- name: lsl
+  patterns:
+  - pattern: "*.lsl"
+    description: Linden Scripting Language (Second Life)
+---
+name: lss
+remote: vim/vim:runtime
+glob: "**/lss.vim"
+filetypes:
+- name: lss
+  patterns:
+  - pattern: "*.lss"
+    description: Lynx style file (or LotusScript!)
+---
+name: mgp
+remote: vim/vim:runtime
+glob: "**/mgp.vim"
+filetypes:
+- name: mgp
+  patterns:
+  - pattern: "*.mgp"
+    description: MaGic Point
+---
+name: mail
+remote: vim/vim:runtime
+glob: "**/mail.vim"
+filetypes:
+- name: mail
+  patterns:
+  - pattern: snd.\d\+,.letter,.letter.\d\+,.followup,.article,.article.\d\+,pico.\d\+,mutt{ng,}-*-\w\+,mutt[[:alnum:]_-]\\\{6\},neomutt-*-\w\+,neomutt[[:alnum:]_-]\\\{6\},ae\d\+.txt,/tmp/SLRN[0-9A-Z.]\+,*.eml,{neo,}mutt[[:alnum:]._-]\\\{6\},reportbug-*
+---
+name: mailaliases
+remote: vim/vim:runtime
+glob: "**/mailaliases.vim"
+filetypes:
+- name: mailaliases
+  patterns:
+  - pattern: "*/etc/mail/aliases,*/etc/aliases"
+    description: Mail aliases
+---
+name: mailcap
+remote: vim/vim:runtime
+glob: "**/mailcap.vim"
+filetypes:
+- name: mailcap
+  patterns:
+  - pattern: ".mailcap,mailcap"
+    description: Mailcap configuration file
+---
+name: ist
+remote: vim/vim:runtime
+glob: "**/ist.vim"
+filetypes:
+- name: ist
+  patterns:
+  - pattern: "*.ist,*.mst"
+    description: MakeIndex
+---
+name: mallard
+remote: vim/vim:runtime
+glob: "**/mallard.vim"
+filetypes:
+- name: mallard
+  patterns:
+  - pattern: "*.page"
+    description: Mallard
+---
+name: man
+remote: vim/vim:runtime
+glob: "**/man.vim"
+filetypes:
+- name: man
+  patterns:
+  - pattern: "*.man"
+    description: Manpage
+---
+name: manconf
+remote: vim/vim:runtime
+glob: "**/manconf.vim"
+filetypes:
+- name: manconf
+  patterns:
+  - pattern: "*/etc/man.conf,man.config"
+    description: Man config
+---
+name: maple
+remote: vim/vim:runtime
+glob: "**/maple.vim"
+filetypes:
+- name: maple
+  patterns:
+  - pattern: "*.mv,*.mpl,*.mws"
+    description: Maple V
+---
+name: map
+remote: vim/vim:runtime
+glob: "**/map.vim"
+filetypes:
+- name: map
+  patterns:
+  - pattern: "*.map"
+    description: Map (UMN mapserver config file)
+---
+name: mel
+remote: vim/vim:runtime
+glob: "**/mel.vim"
+filetypes:
+- name: mel
+  patterns:
+  - pattern: "*.mel"
+    description: Maya Extension Language
+---
+name: hgcommit
+remote: vim/vim:runtime
+glob: "**/hgcommit.vim"
+filetypes:
+- name: hgcommit
+  patterns:
+  - pattern: hg-editor-*.txt
+    description: Mercurial (hg) commit file
+---
+name: messages
+remote: vim/vim:runtime
+glob: "**/messages.vim"
+filetypes:
+- name: messages
+  patterns:
+  - pattern: "*/log/{auth,cron,daemon,debug,kern,lpr,mail,messages,news/news,syslog,user}{,.log,.err,.info,.warn,.crit,.notice}{,.[0-9]*,-[0-9]*}"
+    description: Messages (logs mostly)
+---
+name: mf
+remote: vim/vim:runtime
+glob: "**/mf.vim"
+filetypes:
+- name: mf
+  patterns:
+  - pattern: "*.mf"
+    description: Metafont
+---
+name: mp
+remote: vim/vim:runtime
+glob: "**/mp.vim"
+filetypes:
+- name: mp
+  patterns:
+  - pattern: "*.mp"
+    description: MetaPost
+---
+name: mgl
+remote: vim/vim:runtime
+glob: "**/mgl.vim"
+filetypes:
+- name: mgl
+  patterns:
+  - pattern: "*.mgl"
+    description: MGL
+---
+name: mix
+remote: vim/vim:runtime
+glob: "**/mix.vim"
+filetypes:
+- name: mix
+  patterns:
+  - pattern: "*.mix,*.mixal"
+    description: MIX - Knuth assembly
+---
+name: mmp
+remote: vim/vim:runtime
+glob: "**/mmp.vim"
+filetypes:
+- name: mmp
+  patterns:
+  - pattern: "*.mmp"
+    description: Symbian meta-makefile definition (MMP)
+---
+name: modula2
+remote: vim/vim:runtime
+glob: "**/modula2.vim"
+filetypes:
+- name: modula2
+  patterns:
+  - pattern: "*.m2,*.DEF,*.MOD,*.mi"
+    description: Modula 2  (.md removed in favor of Markdown)
+---
+name: modula3
+remote: vim/vim:runtime
+glob: "**/modula3.vim"
+filetypes:
+- name: modula3
+  patterns:
+  - pattern: "*.[mi][3g]"
+    description: Modula 3 (.m3, .i3, .mg, .ig)
+---
+name: monk
+remote: vim/vim:runtime
+glob: "**/monk.vim"
+filetypes:
+- name: monk
+  patterns:
+  - pattern: "*.isc,*.monk,*.ssc,*.tsc"
+    description: Monk
+---
+name: moo
+remote: vim/vim:runtime
+glob: "**/moo.vim"
+filetypes:
+- name: moo
+  patterns:
+  - pattern: "*.moo"
+    description: MOO
+---
+name: modconf
+remote: vim/vim:runtime
+glob: "**/modconf.vim"
+filetypes:
+- name: modconf
+  patterns:
+  - pattern: "*/etc/modules.conf,*/etc/modules,*/etc/conf.modules"
+    description: Modconf
+  - pattern: "*/etc/modprobe.*"
+---
+name: mplayerconf
+remote: vim/vim:runtime
+glob: "**/mplayerconf.vim"
+filetypes:
+- name: mplayerconf
+  patterns:
+  - pattern: mplayer.conf,*/.mplayer/config
+    description: Mplayer config
+---
+name: srec
+remote: vim/vim:runtime
+glob: "**/srec.vim"
+filetypes:
+- name: srec
+  patterns:
+  - pattern: "*.s19,*.s28,*.s37,*.mot,*.srec"
+    description: Motorola S record
+---
+name: mrxvtrc
+remote: vim/vim:runtime
+glob: "**/mrxvtrc.vim"
+filetypes:
+- name: mrxvtrc
+  patterns:
+  - pattern: mrxvtrc,.mrxvtrc
+    description: Mrxvtrc
+---
+name: msql
+remote: vim/vim:runtime
+glob: "**/msql.vim"
+filetypes:
+- name: msql
+  patterns:
+  - pattern: "*.msql"
+    description: Msql
+---
+name: mysql
+remote: vim/vim:runtime
+glob: "**/mysql.vim"
+filetypes:
+- name: mysql
+  patterns:
+  - pattern: "*.mysql"
+    description: Mysql
+---
+name: muttrc
+remote: vim/vim:runtime
+glob: "**/muttrc.vim"
+filetypes:
+- name: muttrc
+  patterns:
+  - pattern: "*/etc/Muttrc.d/*,.mutt{ng,}rc*,*/.mutt{ng,}/mutt{ng,}rc*,mutt{ng,}rc*,Mutt{ng,}rc*"
+  - pattern: Mutt{ng,}rc
+    description: Mutt setup file (also for Muttng)
+---
+name: rc
+remote: vim/vim:runtime
+glob: "**/rc.vim"
+filetypes:
+- name: rc
+  patterns:
+  - pattern: "*.rc,*.rch"
+    description: M$ Resource files
+---
+name: mupad
+remote: vim/vim:runtime
+glob: "**/mupad.vim"
+filetypes:
+- name: mupad
+  patterns:
+  - pattern: "*.mu"
+    description: MuPAD source
+---
+name: mush
+remote: vim/vim:runtime
+glob: "**/mush.vim"
+filetypes:
+- name: mush
+  patterns:
+  - pattern: "*.mush"
+    description: Mush
+---
+name: n1ql
+remote: vim/vim:runtime
+glob: "**/n1ql.vim"
+filetypes:
+- name: n1ql
+  patterns:
+  - pattern: "*.n1ql,*.nql"
+    description: N1QL
+---
+name: nanorc
+remote: vim/vim:runtime
+glob: "**/nanorc.vim"
+filetypes:
+- name: nanorc
+  patterns:
+  - pattern: "*/etc/nanorc,*.nanorc"
+    description: Nano
+---
+name: natural
+remote: vim/vim:runtime
+glob: "**/natural.vim"
+filetypes:
+- name: natural
+  patterns:
+  - pattern: "*.NS[ACGLMNPS]"
+    description: Natural
+---
+name: neomuttrc
+remote: vim/vim:runtime
+glob: "**/neomuttrc.vim"
+filetypes:
+- name: neomuttrc
+  patterns:
+  - pattern: Neomuttrc
+    description: Noemutt setup file
+  - pattern: ".neomuttrc*,*/.neomutt/neomuttrc*,neomuttrc*,Neomuttrc*"
+---
+name: netrc
+remote: vim/vim:runtime
+glob: "**/netrc.vim"
+filetypes:
+- name: netrc
+  patterns:
+  - pattern: ".netrc"
+    description: Netrc
+---
+name: ninja
+remote: vim/vim:runtime
+glob: "**/ninja.vim"
+filetypes:
+- name: ninja
+  patterns:
+  - pattern: "*.ninja"
+    description: Ninja file
+---
+name: ncf
+remote: vim/vim:runtime
+glob: "**/ncf.vim"
+filetypes:
+- name: ncf
+  patterns:
+  - pattern: "*.ncf"
+    description: Novell netware batch files
+---
+name: nroff
+remote: vim/vim:runtime
+glob: "**/nroff.vim"
+filetypes:
+- name: nroff
+  patterns:
+  - pattern: "*.tr,*.nr,*.roff,*.tmac,*.mom"
+    description: Nroff/Troff (*.ms and *.t are checked below)
+  - pattern: tmac.*
+---
+name: nqc
+remote: vim/vim:runtime
+glob: "**/nqc.vim"
+filetypes:
+- name: nqc
+  patterns:
+  - pattern: "*.nqc"
+    description: Not Quite C
+---
+name: nsis
+remote: vim/vim:runtime
+glob: "**/nsis.vim"
+filetypes:
+- name: nsis
+  patterns:
+  - pattern: "*.nsi,*.nsh"
+    description: NSIS
+---
+name: occam
+remote: vim/vim:runtime
+glob: "**/occam.vim"
+filetypes:
+- name: occam
+  patterns:
+  - pattern: "*.occ"
+    description: Occam
+---
+name: omnimark
+remote: vim/vim:runtime
+glob: "**/omnimark.vim"
+filetypes:
+- name: omnimark
+  patterns:
+  - pattern: "*.xom,*.xin"
+    description: Omnimark
+---
+name: openroad
+remote: vim/vim:runtime
+glob: "**/openroad.vim"
+filetypes:
+- name: openroad
+  patterns:
+  - pattern: "*.or"
+    description: OpenROAD
+---
+name: opl
+remote: vim/vim:runtime
+glob: "**/opl.vim"
+filetypes:
+- name: opl
+  patterns:
+  - pattern: "*.[Oo][Pp][Ll]"
+    description: OPL
+---
+name: ora
+remote: vim/vim:runtime
+glob: "**/ora.vim"
+filetypes:
+- name: ora
+  patterns:
+  - pattern: "*.ora"
+    description: Oracle config file
+---
+name: pf
+remote: vim/vim:runtime
+glob: "**/pf.vim"
+filetypes:
+- name: pf
+  patterns:
+  - pattern: pf.conf
+    description: Packet filter conf
+---
+name: pamconf
+remote: vim/vim:runtime
+glob: "**/pamconf.vim"
+filetypes:
+- name: pamconf
+  patterns:
+  - pattern: "*/etc/pam.conf"
+    description: Pam conf
+  - pattern: "*/etc/pam.d/*"
+---
+name: pamenv
+remote: vim/vim:runtime
+glob: "**/pamenv.vim"
+filetypes:
+- name: pamenv
+  patterns:
+  - pattern: pam_env.conf,.pam_environment
+    description: Pam environment
+---
+name: papp
+remote: vim/vim:runtime
+glob: "**/papp.vim"
+filetypes:
+- name: papp
+  patterns:
+  - pattern: "*.papp,*.pxml,*.pxsl"
+    description: PApp
+---
+name: passwd
+remote: vim/vim:runtime
+glob: "**/passwd.vim"
+filetypes:
+- name: passwd
+  patterns:
+  - pattern: "*/etc/passwd,*/etc/passwd-,*/etc/passwd.edit,*/etc/shadow,*/etc/shadow-,*/etc/shadow.edit,*/var/backups/passwd.bak,*/var/backups/shadow.bak"
+    description: Password file
+---
+name: pascal
+remote: vim/vim:runtime
+glob: "**/pascal.vim"
+filetypes:
+- name: pascal
+  patterns:
+  - pattern: "*.pas"
+    description: Pascal (also *.p)
+  - pattern: "*.dpr"
+    description: Delphi or Lazarus program file
+---
+name: pdf
+remote: vim/vim:runtime
+glob: "**/pdf.vim"
+filetypes:
+- name: pdf
+  patterns:
+  - pattern: "*.pdf"
+    description: PDF
+---
+name: pcmk
+remote: vim/vim:runtime
+glob: "**/pcmk.vim"
+filetypes:
+- name: pcmk
+  patterns:
+  - pattern: "*.pcmk"
+    description: PCMK - HAE - crm configure edit
+---
+name: pike
+remote: vim/vim:runtime
+glob: "**/pike.vim"
+filetypes:
+- name: pike
+  patterns:
+  - pattern: "*.pike,*.pmod"
+    description: Pike and Cmod
+---
+name: cmod
+remote: vim/vim:runtime
+glob: "**/cmod.vim"
+filetypes:
+- name: cmod
+  patterns:
+  - pattern: "*.cmod"
+    description: Pike and Cmod
+---
+name: pinfo
+remote: vim/vim:runtime
+glob: "**/pinfo.vim"
+filetypes:
+- name: pinfo
+  patterns:
+  - pattern: "*/etc/pinforc,*/.pinforc"
+    description: Pinfo config
+---
+name: pilrc
+remote: vim/vim:runtime
+glob: "**/pilrc.vim"
+filetypes:
+- name: pilrc
+  patterns:
+  - pattern: "*.rcp"
+    description: Palm Resource compiler
+---
+name: pine
+remote: vim/vim:runtime
+glob: "**/pine.vim"
+filetypes:
+- name: pine
+  patterns:
+  - pattern: ".pinerc,pinerc,.pinercex,pinercex"
+    description: Pine config
+---
+name: pli
+remote: vim/vim:runtime
+glob: "**/pli.vim"
+filetypes:
+- name: pli
+  patterns:
+  - pattern: "*.pli,*.pl1"
+    description: PL/1, PL/I
+---
+name: plm
+remote: vim/vim:runtime
+glob: "**/plm.vim"
+filetypes:
+- name: plm
+  patterns:
+  - pattern: "*.plm,*.p36,*.pac"
+    description: 'PL/M (also: *.inp)'
+---
+name: plsql
+remote: vim/vim:runtime
+glob: "**/plsql.vim"
+filetypes:
+- name: plsql
+  patterns:
+  - pattern: "*.pls,*.plsql"
+    description: PL/SQL
+---
+name: plp
+remote: vim/vim:runtime
+glob: "**/plp.vim"
+filetypes:
+- name: plp
+  patterns:
+  - pattern: "*.plp"
+    description: PLP
+---
+name: po
+remote: vim/vim:runtime
+glob: "**/po.vim"
+filetypes:
+- name: po
+  patterns:
+  - pattern: "*.po,*.pot"
+    description: PO and PO template (GNU gettext)
+---
+name: pfmain
+remote: vim/vim:runtime
+glob: "**/pfmain.vim"
+filetypes:
+- name: pfmain
+  patterns:
+  - pattern: main.cf
+    description: Postfix main config
+---
+name: postscr
+remote: vim/vim:runtime
+glob: "**/postscr.vim"
+filetypes:
+- name: postscr
+  patterns:
+  - pattern: "*.ps,*.pfa,*.afm,*.eps,*.epsf,*.epsi,*.ai"
+    description: PostScript (+ font files, encapsulated PostScript, Adobe Illustrator)
+---
+name: ppd
+remote: vim/vim:runtime
+glob: "**/ppd.vim"
+filetypes:
+- name: ppd
+  patterns:
+  - pattern: "*.ppd"
+    description: PostScript Printer Description
+---
+name: pov
+remote: vim/vim:runtime
+glob: "**/pov.vim"
+filetypes:
+- name: pov
+  patterns:
+  - pattern: "*.pov"
+    description: Povray
+---
+name: povini
+remote: vim/vim:runtime
+glob: "**/povini.vim"
+filetypes:
+- name: povini
+  patterns:
+  - pattern: ".povrayrc"
+    description: Povray configuration
+---
+name: pccts
+remote: vim/vim:runtime
+glob: "**/pccts.vim"
+filetypes:
+- name: pccts
+  patterns:
+  - pattern: "*.g"
+    description: "u BufNewFile,BufRead *.g\t\t\tsetf antrl"
+---
+name: ppwiz
+remote: vim/vim:runtime
+glob: "**/ppwiz.vim"
+filetypes:
+- name: ppwiz
+  patterns:
+  - pattern: "*.it,*.ih"
+    description: PPWizard
+---
+name: obj
+remote: vim/vim:runtime
+glob: "**/obj.vim"
+filetypes:
+- name: obj
+  patterns:
+  - pattern: "*.obj"
+    description: 'TODO: is there a way to avoid MS-Windows Object files?'
+---
+name: proc
+remote: vim/vim:runtime
+glob: "**/proc.vim"
+filetypes:
+- name: proc
+  patterns:
+  - pattern: "*.pc"
+    description: Oracle Pro*C/C++
+---
+name: privoxy
+remote: vim/vim:runtime
+glob: "**/privoxy.vim"
+filetypes:
+- name: privoxy
+  patterns:
+  - pattern: "*.action"
+    description: Privoxy actions file
+---
+name: procmail
+remote: vim/vim:runtime
+glob: "**/procmail.vim"
+filetypes:
+- name: procmail
+  patterns:
+  - pattern: ".procmail,.procmailrc"
+    description: Procmail
+---
+name: psf
+remote: vim/vim:runtime
+glob: "**/psf.vim"
+filetypes:
+- name: psf
+  patterns:
+  - pattern: "*.psf"
+    description: Software Distributor Product Specification File (POSIX 1387.2-1995)
+---
+name: promela
+remote: vim/vim:runtime
+glob: "**/promela.vim"
+filetypes:
+- name: promela
+  patterns:
+  - pattern: "*.pml"
+    description: Promela
+---
+name: protocols
+remote: vim/vim:runtime
+glob: "**/protocols.vim"
+filetypes:
+- name: protocols
+  patterns:
+  - pattern: "*/etc/protocols"
+    description: Protocols
+---
+name: pyrex
+remote: vim/vim:runtime
+glob: "**/pyrex.vim"
+filetypes:
+- name: pyrex
+  patterns:
+  - pattern: "*.pyx,*.pxd"
+    description: Pyrex
+---
+name: radiance
+remote: vim/vim:runtime
+glob: "**/radiance.vim"
+filetypes:
+- name: radiance
+  patterns:
+  - pattern: "*.rad,*.mat"
+    description: Radiance
+---
+name: ratpoison
+remote: vim/vim:runtime
+glob: "**/ratpoison.vim"
+filetypes:
+- name: ratpoison
+  patterns:
+  - pattern: ".ratpoisonrc,ratpoisonrc"
+    description: Ratpoison config/command files
+---
+name: rcs
+remote: vim/vim:runtime
+glob: "**/rcs.vim"
+filetypes:
+- name: rcs
+  patterns:
+  - pattern: "*\\,v"
+---
+name: readline
+remote: vim/vim:runtime
+glob: "**/readline.vim"
+filetypes:
+- name: readline
+  patterns:
+  - pattern: ".inputrc,inputrc"
+    description: Readline
+---
+name: rib
+remote: vim/vim:runtime
+glob: "**/rib.vim"
+filetypes:
+- name: rib
+  patterns:
+  - pattern: "*.rib"
+    description: Renderman Interface Bytestream
+---
+name: rego
+remote: vim/vim:runtime
+glob: "**/rego.vim"
+filetypes:
+- name: rego
+  patterns:
+  - pattern: "*.rego"
+    description: Rego Policy Language
+---
+name: rexx
+remote: vim/vim:runtime
+glob: "**/rexx.vim"
+filetypes:
+- name: rexx
+  patterns:
+  - pattern: "*.rex,*.orx,*.rxo,*.rxj,*.jrexx,*.rexxj,*.rexx,*.testGroup,*.testUnit"
+    description: Rexx
+---
+name: rnoweb
+remote: vim/vim:runtime
+glob: "**/rnoweb.vim"
+filetypes:
+- name: rnoweb
+  patterns:
+  - pattern: "*.rnw,*.snw"
+    description: R noweb file
+---
+name: rmd
+remote: vim/vim:runtime
+glob: "**/rmd.vim"
+filetypes:
+- name: rmd
+  patterns:
+  - pattern: "*.rmd,*.smd"
+    description: R Markdown file
+---
+name: rrst
+remote: vim/vim:runtime
+glob: "**/rrst.vim"
+filetypes:
+- name: rrst
+  patterns:
+  - pattern: "*.rrst,*.srst"
+    description: R reStructuredText file
+---
+name: remind
+remote: vim/vim:runtime
+glob: "**/remind.vim"
+filetypes:
+- name: remind
+  patterns:
+  - pattern: ".reminders,*.remind,*.rem"
+    description: Remind
+  - pattern: ".reminders*"
+---
+name: resolv
+remote: vim/vim:runtime
+glob: "**/resolv.vim"
+filetypes:
+- name: resolv
+  patterns:
+  - pattern: resolv.conf
+    description: Resolv.conf
+---
+name: rnc
+remote: vim/vim:runtime
+glob: "**/rnc.vim"
+filetypes:
+- name: rnc
+  patterns:
+  - pattern: "*.rnc"
+    description: Relax NG Compact
+---
+name: rng
+remote: vim/vim:runtime
+glob: "**/rng.vim"
+filetypes:
+- name: rng
+  patterns:
+  - pattern: "*.rng"
+    description: Relax NG XML
+---
+name: rpl
+remote: vim/vim:runtime
+glob: "**/rpl.vim"
+filetypes:
+- name: rpl
+  patterns:
+  - pattern: "*.rpl"
+    description: RPL/2
+---
+name: robots
+remote: vim/vim:runtime
+glob: "**/robots.vim"
+filetypes:
+- name: robots
+  patterns:
+  - pattern: robots.txt
+    description: Robots.txt
+---
+name: rpcgen
+remote: vim/vim:runtime
+glob: "**/rpcgen.vim"
+filetypes:
+- name: rpcgen
+  patterns:
+  - pattern: "*.x"
+    description: Rpcgen
+---
+name: rtf
+remote: vim/vim:runtime
+glob: "**/rtf.vim"
+filetypes:
+- name: rtf
+  patterns:
+  - pattern: "*.rtf"
+    description: RTF
+---
+name: slang
+remote: vim/vim:runtime
+glob: "**/slang.vim"
+filetypes:
+- name: slang
+  patterns:
+  - pattern: "*.sl"
+    description: S-lang (or shader language, or SmallLisp)
+---
+name: samba
+remote: vim/vim:runtime
+glob: "**/samba.vim"
+filetypes:
+- name: samba
+  patterns:
+  - pattern: smb.conf
+    description: Samba config
+---
+name: sas
+remote: vim/vim:runtime
+glob: "**/sas.vim"
+filetypes:
+- name: sas
+  patterns:
+  - pattern: "*.sas"
+    description: SAS script
+---
+name: sass
+remote: vim/vim:runtime
+glob: "**/sass.vim"
+filetypes:
+- name: sass
+  patterns:
+  - pattern: "*.sass"
+    description: Sass
+---
+name: sather
+remote: vim/vim:runtime
+glob: "**/sather.vim"
+filetypes:
+- name: sather
+  patterns:
+  - pattern: "*.sa"
+    description: Sather
+---
+name: sbt
+remote: vim/vim:runtime
+glob: "**/sbt.vim"
+filetypes:
+- name: sbt
+  patterns:
+  - pattern: "*.sbt"
+    description: SBT - Scala Build Tool
+---
+name: scilab
+remote: vim/vim:runtime
+glob: "**/scilab.vim"
+filetypes:
+- name: scilab
+  patterns:
+  - pattern: "*.sci,*.sce"
+    description: Scilab
+---
+name: sd
+remote: vim/vim:runtime
+glob: "**/sd.vim"
+filetypes:
+- name: sd
+  patterns:
+  - pattern: "*.sd"
+    description: 'SD: Streaming Descriptors'
+---
+name: sdl
+remote: vim/vim:runtime
+glob: "**/sdl.vim"
+filetypes:
+- name: sdl
+  patterns:
+  - pattern: "*.sdl,*.pr"
+    description: SDL
+---
+name: sed
+remote: vim/vim:runtime
+glob: "**/sed.vim"
+filetypes:
+- name: sed
+  patterns:
+  - pattern: "*.sed"
+    description: sed
+---
+name: sieve
+remote: vim/vim:runtime
+glob: "**/sieve.vim"
+filetypes:
+- name: sieve
+  patterns:
+  - pattern: "*.siv,*.sieve"
+    description: Sieve (RFC 3028, 5228)
+---
+name: sm
+remote: vim/vim:runtime
+glob: "**/sm.vim"
+filetypes:
+- name: sm
+  patterns:
+  - pattern: sendmail.cf
+    description: Sendmail
+---
+name: services
+remote: vim/vim:runtime
+glob: "**/services.vim"
+filetypes:
+- name: services
+  patterns:
+  - pattern: "*/etc/services"
+    description: Services
+---
+name: slpconf
+remote: vim/vim:runtime
+glob: "**/slpconf.vim"
+filetypes:
+- name: slpconf
+  patterns:
+  - pattern: "*/etc/slp.conf"
+    description: Service Location config
+---
+name: slpreg
+remote: vim/vim:runtime
+glob: "**/slpreg.vim"
+filetypes:
+- name: slpreg
+  patterns:
+  - pattern: "*/etc/slp.reg"
+    description: Service Location registration
+---
+name: slpspi
+remote: vim/vim:runtime
+glob: "**/slpspi.vim"
+filetypes:
+- name: slpspi
+  patterns:
+  - pattern: "*/etc/slp.spi"
+    description: Service Location SPI
+---
+name: setserial
+remote: vim/vim:runtime
+glob: "**/setserial.vim"
+filetypes:
+- name: setserial
+  patterns:
+  - pattern: "*/etc/serial.conf"
+    description: Setserial config
+---
+name: catalog
+remote: vim/vim:runtime
+glob: "**/catalog.vim"
+filetypes:
+- name: catalog
+  patterns:
+  - pattern: catalog
+    description: SGML catalog file
+  - pattern: sgml.catalog*
+---
+name: scheme
+remote: vim/vim:runtime
+glob: "**/scheme.vim"
+filetypes:
+- name: scheme
+  patterns:
+  - pattern: "*.scm,*.ss,*.rkt"
+    description: Scheme
+---
+name: screen
+remote: vim/vim:runtime
+glob: "**/screen.vim"
+filetypes:
+- name: screen
+  patterns:
+  - pattern: ".screenrc,screenrc"
+    description: Screen RC
+---
+name: simula
+remote: vim/vim:runtime
+glob: "**/simula.vim"
+filetypes:
+- name: simula
+  patterns:
+  - pattern: "*.sim"
+    description: Simula
+---
+name: sinda
+remote: vim/vim:runtime
+glob: "**/sinda.vim"
+filetypes:
+- name: sinda
+  patterns:
+  - pattern: "*.sin,*.s85"
+    description: SINDA
+---
+name: sisu
+remote: vim/vim:runtime
+glob: "**/sisu.vim"
+filetypes:
+- name: sisu
+  patterns:
+  - pattern: "*.sst,*.ssm,*.ssi,*.-sst,*._sst,*.sst.meta,*.-sst.meta,*._sst.meta"
+    description: SiSU
+---
+name: skill
+remote: vim/vim:runtime
+glob: "**/skill.vim"
+filetypes:
+- name: skill
+  patterns:
+  - pattern: "*.il,*.ils,*.cdf"
+    description: SKILL
+---
+name: slrnrc
+remote: vim/vim:runtime
+glob: "**/slrnrc.vim"
+filetypes:
+- name: slrnrc
+  patterns:
+  - pattern: ".slrnrc"
+    description: SLRN
+---
+name: slrnsc
+remote: vim/vim:runtime
+glob: "**/slrnsc.vim"
+filetypes:
+- name: slrnsc
+  patterns:
+  - pattern: "*.score"
+    description: SLRN
+---
+name: st
+remote: vim/vim:runtime
+glob: "**/st.vim"
+filetypes:
+- name: st
+  patterns:
+  - pattern: "*.st"
+    description: Smalltalk (and TeX)
+---
+name: smarty
+remote: vim/vim:runtime
+glob: "**/smarty.vim"
+filetypes:
+- name: smarty
+  patterns:
+  - pattern: "*.tpl"
+    description: Smarty templates
+---
+name: smith
+remote: vim/vim:runtime
+glob: "**/smith.vim"
+filetypes:
+- name: smith
+  patterns:
+  - pattern: "*.smt,*.smith"
+    description: SMITH
+---
+name: snobol4
+remote: vim/vim:runtime
+glob: "**/snobol4.vim"
+filetypes:
+- name: snobol4
+  patterns:
+  - pattern: "*.sno,*.spt"
+    description: Snobol4 and spitbol
+---
+name: mib
+remote: vim/vim:runtime
+glob: "**/mib.vim"
+filetypes:
+- name: mib
+  patterns:
+  - pattern: "*.mib,*.my"
+    description: SNMP MIB files
+---
+name: hog
+remote: vim/vim:runtime
+glob: "**/hog.vim"
+filetypes:
+- name: hog
+  patterns:
+  - pattern: "*.hog,snort.conf,vision.conf"
+    description: Snort Configuration
+---
+name: spec
+remote: vim/vim:runtime
+glob: "**/spec.vim"
+filetypes:
+- name: spec
+  patterns:
+  - pattern: "*.spec"
+    description: Spec (Linux RPM)
+---
+name: spup
+remote: vim/vim:runtime
+glob: "**/spup.vim"
+filetypes:
+- name: spup
+  patterns:
+  - pattern: "*.speedup,*.spdata,*.spd"
+    description: Speedup (AspenTech plant simulator)
+---
+name: slice
+remote: vim/vim:runtime
+glob: "**/slice.vim"
+filetypes:
+- name: slice
+  patterns:
+  - pattern: "*.ice"
+    description: Slice
+---
+name: spice
+remote: vim/vim:runtime
+glob: "**/spice.vim"
+filetypes:
+- name: spice
+  patterns:
+  - pattern: "*.sp,*.spice"
+    description: Spice
+---
+name: spyce
+remote: vim/vim:runtime
+glob: "**/spyce.vim"
+filetypes:
+- name: spyce
+  patterns:
+  - pattern: "*.spy,*.spi"
+    description: Spyce
+---
+name: squid
+remote: vim/vim:runtime
+glob: "**/squid.vim"
+filetypes:
+- name: squid
+  patterns:
+  - pattern: squid.conf
+    description: Squid
+---
+name: sqlj
+remote: vim/vim:runtime
+glob: "**/sqlj.vim"
+filetypes:
+- name: sqlj
+  patterns:
+  - pattern: "*.sqlj"
+    description: SQLJ
+---
+name: sqr
+remote: vim/vim:runtime
+glob: "**/sqr.vim"
+filetypes:
+- name: sqr
+  patterns:
+  - pattern: "*.sqr,*.sqi"
+    description: SQR
+---
+name: sshconfig
+remote: vim/vim:runtime
+glob: "**/sshconfig.vim"
+filetypes:
+- name: sshconfig
+  patterns:
+  - pattern: ssh_config,*/.ssh/config,*/etc/ssh/ssh_config.d/*.conf
+    description: OpenSSH configuration
+---
+name: sshdconfig
+remote: vim/vim:runtime
+glob: "**/sshdconfig.vim"
+filetypes:
+- name: sshdconfig
+  patterns:
+  - pattern: sshd_config,*/etc/ssh/sshd_config.d/*.conf
+    description: OpenSSH server configuration
+---
+name: stata
+remote: vim/vim:runtime
+glob: "**/stata.vim"
+filetypes:
+- name: stata
+  patterns:
+  - pattern: "*.ado,*.do,*.imata,*.mata"
+    description: Stata
+---
+name: smcl
+remote: vim/vim:runtime
+glob: "**/smcl.vim"
+filetypes:
+- name: smcl
+  patterns:
+  - pattern: "*.hlp,*.ihlp,*.smcl"
+    description: SMCL
+---
+name: stp
+remote: vim/vim:runtime
+glob: "**/stp.vim"
+filetypes:
+- name: stp
+  patterns:
+  - pattern: "*.stp"
+    description: Stored Procedures
+---
+name: sml
+remote: vim/vim:runtime
+glob: "**/sml.vim"
+filetypes:
+- name: sml
+  patterns:
+  - pattern: "*.sml"
+    description: Standard ML
+---
+name: voscm
+remote: vim/vim:runtime
+glob: "**/voscm.vim"
+filetypes:
+- name: voscm
+  patterns:
+  - pattern: "*.cm"
+    description: Sratus VOS command macro
+---
+name: swiftgyb
+remote: vim/vim:runtime
+glob: "**/swiftgyb.vim"
+filetypes:
+- name: swiftgyb
+  patterns:
+  - pattern: "*.swift.gyb"
+    description: Swift
+---
+name: sil
+remote: vim/vim:runtime
+glob: "**/sil.vim"
+filetypes:
+- name: sil
+  patterns:
+  - pattern: "*.sil"
+    description: Swift Intermediate Language
+---
+name: sysctl
+remote: vim/vim:runtime
+glob: "**/sysctl.vim"
+filetypes:
+- name: sysctl
+  patterns:
+  - pattern: "*/etc/sysctl.conf,*/etc/sysctl.d/*.conf"
+    description: Sysctl
+---
+name: sdc
+remote: vim/vim:runtime
+glob: "**/sdc.vim"
+filetypes:
+- name: sdc
+  patterns:
+  - pattern: "*.sdc"
+    description: Synopsys Design Constraints
+---
+name: sudoers
+remote: vim/vim:runtime
+glob: "**/sudoers.vim"
+filetypes:
+- name: sudoers
+  patterns:
+  - pattern: "*/etc/sudoers,sudoers.tmp"
+    description: Sudoers
+---
+name: tags
+remote: vim/vim:runtime
+glob: "**/tags.vim"
+filetypes:
+- name: tags
+  patterns:
+  - pattern: tags
+    description: Tags
+---
+name: tak
+remote: vim/vim:runtime
+glob: "**/tak.vim"
+filetypes:
+- name: tak
+  patterns:
+  - pattern: "*.tak"
+    description: TAK
+---
+name: taskdata
+remote: vim/vim:runtime
+glob: "**/taskdata.vim"
+filetypes:
+- name: taskdata
+  patterns:
+  - pattern: "{pending,completed,undo}.data"
+    description: Task
+---
+name: taskedit
+remote: vim/vim:runtime
+glob: "**/taskedit.vim"
+filetypes:
+- name: taskedit
+  patterns:
+  - pattern: "*.task"
+    description: Task
+---
+name: tcl
+remote: vim/vim:runtime
+glob: "**/tcl.vim"
+filetypes:
+- name: tcl
+  patterns:
+  - pattern: "*.tcl,*.tk,*.itcl,*.itk,*.jacl"
+    description: Tcl (JACL too)
+---
+name: tli
+remote: vim/vim:runtime
+glob: "**/tli.vim"
+filetypes:
+- name: tli
+  patterns:
+  - pattern: "*.tli"
+    description: TealInfo
+---
+name: tsalt
+remote: vim/vim:runtime
+glob: "**/tsalt.vim"
+filetypes:
+- name: tsalt
+  patterns:
+  - pattern: "*.slt"
+    description: Telix Salt
+---
+name: teraterm
+remote: vim/vim:runtime
+glob: "**/teraterm.vim"
+filetypes:
+- name: teraterm
+  patterns:
+  - pattern: "*.ttl"
+    description: Tera Term Language
+---
+name: terminfo
+remote: vim/vim:runtime
+glob: "**/terminfo.vim"
+filetypes:
+- name: terminfo
+  patterns:
+  - pattern: "*.ti"
+    description: Terminfo
+---
+name: tex
+remote: vim/vim:runtime
+glob: "**/tex.vim"
+filetypes:
+- name: tex
+  patterns:
+  - pattern: "*.latex,*.sty,*.dtx,*.ltx,*.bbl"
+    description: TeX
+---
+name: context
+remote: vim/vim:runtime
+glob: "**/context.vim"
+filetypes:
+- name: context
+  patterns:
+  - pattern: "*.mkii,*.mkiv,*.mkvi"
+    description: ConTeXt
+---
+name: texinfo
+remote: vim/vim:runtime
+glob: "**/texinfo.vim"
+filetypes:
+- name: texinfo
+  patterns:
+  - pattern: "*.texinfo,*.texi,*.txi"
+    description: Texinfo
+---
+name: texmf
+remote: vim/vim:runtime
+glob: "**/texmf.vim"
+filetypes:
+- name: texmf
+  patterns:
+  - pattern: texmf.cnf
+    description: TeX configuration
+---
+name: tidy
+remote: vim/vim:runtime
+glob: "**/tidy.vim"
+filetypes:
+- name: tidy
+  patterns:
+  - pattern: ".tidyrc,tidyrc"
+    description: Tidy config
+---
+name: tf
+remote: vim/vim:runtime
+glob: "**/tf.vim"
+filetypes:
+- name: tf
+  patterns:
+  - pattern: "*.tf,.tfrc,tfrc"
+    description: TF mud client
+---
+name: tpp
+remote: vim/vim:runtime
+glob: "**/tpp.vim"
+filetypes:
+- name: tpp
+  patterns:
+  - pattern: "*.tpp"
+    description: TPP - Text Presentation Program
+---
+name: treetop
+remote: vim/vim:runtime
+glob: "**/treetop.vim"
+filetypes:
+- name: treetop
+  patterns:
+  - pattern: "*.treetop"
+    description: Treetop
+---
+name: trustees
+remote: vim/vim:runtime
+glob: "**/trustees.vim"
+filetypes:
+- name: trustees
+  patterns:
+  - pattern: trustees.conf
+    description: Trustees
+---
+name: tssgm
+remote: vim/vim:runtime
+glob: "**/tssgm.vim"
+filetypes:
+- name: tssgm
+  patterns:
+  - pattern: "*.tssgm"
+    description: TSS - Geometry
+---
+name: tssop
+remote: vim/vim:runtime
+glob: "**/tssop.vim"
+filetypes:
+- name: tssop
+  patterns:
+  - pattern: "*.tssop"
+    description: TSS - Optics
+---
+name: tsscl
+remote: vim/vim:runtime
+glob: "**/tsscl.vim"
+filetypes:
+- name: tsscl
+  patterns:
+  - pattern: "*.tsscl"
+    description: TSS - Command Line (temporary)
+---
+name: twig
+remote: vim/vim:runtime
+glob: "**/twig.vim"
+filetypes:
+- name: twig
+  patterns:
+  - pattern: "*.twig"
+    description: TWIG files
+---
+name: uil
+remote: vim/vim:runtime
+glob: "**/uil.vim"
+filetypes:
+- name: uil
+  patterns:
+  - pattern: "*.uit,*.uil"
+    description: Motif UIT/UIL files
+---
+name: udevconf
+remote: vim/vim:runtime
+glob: "**/udevconf.vim"
+filetypes:
+- name: udevconf
+  patterns:
+  - pattern: "*/etc/udev/udev.conf"
+    description: Udev conf
+---
+name: udevperm
+remote: vim/vim:runtime
+glob: "**/udevperm.vim"
+filetypes:
+- name: udevperm
+  patterns:
+  - pattern: "*/etc/udev/permissions.d/*.permissions"
+    description: Udev permissions
+---
+name: uc
+remote: vim/vim:runtime
+glob: "**/uc.vim"
+filetypes:
+- name: uc
+  patterns:
+  - pattern: "*.uc"
+    description: UnrealScript
+---
+name: updatedb
+remote: vim/vim:runtime
+glob: "**/updatedb.vim"
+filetypes:
+- name: updatedb
+  patterns:
+  - pattern: "*/etc/updatedb.conf"
+    description: Updatedb
+---
+name: upstart
+remote: vim/vim:runtime
+glob: "**/upstart.vim"
+filetypes:
+- name: upstart
+  patterns:
+  - pattern: "*/usr/share/upstart/*.conf,*/usr/share/upstart/*.override,*/etc/init/*.conf,*/etc/init/*.override,*/.init/*.conf,*/.init/*.override,*/.config/upstart/*.conf,*/.config/upstart/*.override"
+    description: Upstart (init(8)) config files
+---
+name: vera
+remote: vim/vim:runtime
+glob: "**/vera.vim"
+filetypes:
+- name: vera
+  patterns:
+  - pattern: "*.vr,*.vri,*.vrh"
+    description: Vera
+---
+name: verilog
+remote: vim/vim:runtime
+glob: "**/verilog.vim"
+filetypes:
+- name: verilog
+  patterns:
+  - pattern: "*.v"
+    description: Verilog HDL
+---
+name: verilogams
+remote: vim/vim:runtime
+glob: "**/verilogams.vim"
+filetypes:
+- name: verilogams
+  patterns:
+  - pattern: "*.va,*.vams"
+    description: Verilog-AMS HDL
+---
+name: systemverilog
+remote: vim/vim:runtime
+glob: "**/systemverilog.vim"
+filetypes:
+- name: systemverilog
+  patterns:
+  - pattern: "*.sv,*.svh"
+    description: SystemVerilog
+---
+name: vhdl
+remote: vim/vim:runtime
+glob: "**/vhdl.vim"
+filetypes:
+- name: vhdl
+  patterns:
+  - pattern: "*.hdl,*.vhd,*.vhdl,*.vbe,*.vst,*.vho"
+    description: VHDL
+  - pattern: "*.vhdl_[0-9]*"
+---
+name: vim
+remote: vim/vim:runtime
+glob: "**/vim.vim"
+filetypes:
+- name: vim
+  patterns:
+  - pattern: "*.vim,*.vba,.exrc,_exrc"
+    description: Vim script
+  - pattern: "*vimrc*"
+---
+name: viminfo
+remote: vim/vim:runtime
+glob: "**/viminfo.vim"
+filetypes:
+- name: viminfo
+  patterns:
+  - pattern: ".viminfo,_viminfo"
+    description: Viminfo file
+---
+name: vgrindefs
+remote: vim/vim:runtime
+glob: "**/vgrindefs.vim"
+filetypes:
+- name: vgrindefs
+  patterns:
+  - pattern: vgrindefs
+    description: Vgrindefs file
+---
+name: vrml
+remote: vim/vim:runtime
+glob: "**/vrml.vim"
+filetypes:
+- name: vrml
+  patterns:
+  - pattern: "*.wrl"
+    description: VRML V1.0c
+---
+name: vroom
+remote: vim/vim:runtime
+glob: "**/vroom.vim"
+filetypes:
+- name: vroom
+  patterns:
+  - pattern: "*.vroom"
+    description: Vroom (vim testing and executable documentation)
+---
+name: wast
+remote: vim/vim:runtime
+glob: "**/wast.vim"
+filetypes:
+- name: wast
+  patterns:
+  - pattern: "*.wast,*.wat"
+    description: WebAssembly
+---
+name: webmacro
+remote: vim/vim:runtime
+glob: "**/webmacro.vim"
+filetypes:
+- name: webmacro
+  patterns:
+  - pattern: "*.wm"
+    description: Webmacro
+---
+name: wget
+remote: vim/vim:runtime
+glob: "**/wget.vim"
+filetypes:
+- name: wget
+  patterns:
+  - pattern: ".wgetrc,wgetrc"
+    description: Wget config
+---
+name: wml
+remote: vim/vim:runtime
+glob: "**/wml.vim"
+filetypes:
+- name: wml
+  patterns:
+  - pattern: "*.wml"
+    description: Website MetaLanguage
+---
+name: winbatch
+remote: vim/vim:runtime
+glob: "**/winbatch.vim"
+filetypes:
+- name: winbatch
+  patterns:
+  - pattern: "*.wbt"
+    description: Winbatch
+---
+name: wsml
+remote: vim/vim:runtime
+glob: "**/wsml.vim"
+filetypes:
+- name: wsml
+  patterns:
+  - pattern: "*.wsml"
+    description: WSML
+---
+name: wvdial
+remote: vim/vim:runtime
+glob: "**/wvdial.vim"
+filetypes:
+- name: wvdial
+  patterns:
+  - pattern: wvdial.conf,.wvdialrc
+    description: WvDial
+---
+name: cvsrc
+remote: vim/vim:runtime
+glob: "**/cvsrc.vim"
+filetypes:
+- name: cvsrc
+  patterns:
+  - pattern: ".cvsrc"
+    description: CVS RC file
+---
+name: cvs
+remote: vim/vim:runtime
+glob: "**/cvs.vim"
+filetypes:
+- name: cvs
+  patterns:
+  - pattern: cvs\d\+
+---
+name: wsh
+remote: vim/vim:runtime
+glob: "**/wsh.vim"
+filetypes:
+- name: wsh
+  patterns:
+  - pattern: "*.ws[fc]"
+    description: Windows Scripting Host and Windows Script Component
+---
+name: xhtml
+remote: vim/vim:runtime
+glob: "**/xhtml.vim"
+filetypes:
+- name: xhtml
+  patterns:
+  - pattern: "*.xhtml,*.xht"
+    description: XHTML
+---
+name: xinetd
+remote: vim/vim:runtime
+glob: "**/xinetd.vim"
+filetypes:
+- name: xinetd
+  patterns:
+  - pattern: "*/etc/xinetd.conf"
+    description: Xinetd conf
+  - pattern: "*/etc/xinetd.d/*"
+---
+name: xdefaults
+remote: vim/vim:runtime
+glob: "**/xdefaults.vim"
+filetypes:
+- name: xdefaults
+  patterns:
+  - pattern: ".Xdefaults,.Xpdefaults,.Xresources,xdm-config,*.ad"
+    description: X resources file
+  - pattern: Xresources*,*/app-defaults/*,*/Xresources/*
+---
+name: xmath
+remote: vim/vim:runtime
+glob: "**/xmath.vim"
+filetypes:
+- name: xmath
+  patterns:
+  - pattern: "*.msc,*.msf"
+    description: Xmath
+---
+name: xmodmap
+remote: vim/vim:runtime
+glob: "**/xmodmap.vim"
+filetypes:
+- name: xmodmap
+  patterns:
+  - pattern: "*Xmodmap"
+    description: X11 xmodmap (also see below)
+  - pattern: "*xmodmap*"
+---
+name: xquery
+remote: vim/vim:runtime
+glob: "**/xquery.vim"
+filetypes:
+- name: xquery
+  patterns:
+  - pattern: "*.xq,*.xql,*.xqm,*.xquery,*.xqy"
+    description: Xquery
+---
+name: xsd
+remote: vim/vim:runtime
+glob: "**/xsd.vim"
+filetypes:
+- name: xsd
+  patterns:
+  - pattern: "*.xsd"
+    description: XSD
+---
+name: xslt
+remote: vim/vim:runtime
+glob: "**/xslt.vim"
+filetypes:
+- name: xslt
+  patterns:
+  - pattern: "*.xsl,*.xslt"
+    description: Xslt
+---
+name: yacc
+remote: vim/vim:runtime
+glob: "**/yacc.vim"
+filetypes:
+- name: yacc
+  patterns:
+  - pattern: "*.yy,*.yxx,*.y++"
+    description: Yacc
+---
+name: zimbu
+remote: vim/vim:runtime
+glob: "**/zimbu.vim"
+filetypes:
+- name: zimbu
+  patterns:
+  - pattern: "*.zu"
+    description: Zimbu
+---
+name: zimbutempl
+remote: vim/vim:runtime
+glob: "**/zimbutempl.vim"
+filetypes:
+- name: zimbutempl
+  patterns:
+  - pattern: "*.zut"
+    description: Zimbu Templates
+---
+name: z8a
+remote: vim/vim:runtime
+glob: "**/z8a.vim"
+filetypes:
+- name: z8a
+  patterns:
+  - pattern: "*.z8a"
+    description: Z80 assembler asz80
+---
+name: apachestyle
+remote: vim/vim:runtime
+glob: "**/apachestyle.vim"
+filetypes:
+- name: apachestyle
+  patterns:
+  - pattern: "*/etc/proftpd/*.conf*,*/etc/proftpd/conf.*/*,proftpd.conf*"
+---
+name: asterisk
+remote: vim/vim:runtime
+glob: "**/asterisk.vim"
+filetypes:
+- name: asterisk
+  patterns:
+  - pattern: "*asterisk/*.conf*"
+---
+name: asteriskvm
+remote: vim/vim:runtime
+glob: "**/asteriskvm.vim"
+filetypes:
+- name: asteriskvm
+  patterns:
+  - pattern: "*asterisk*/*voicemail.conf*"
+---
+name: bzr
+remote: vim/vim:runtime
+glob: "**/bzr.vim"
+filetypes:
+- name: bzr
+  patterns:
+  - pattern: bzr_log.*
+    description: Bazaar version control
+---
+name: crontab
+remote: vim/vim:runtime
+glob: "**/crontab.vim"
+filetypes:
+- name: crontab
+  patterns:
+  - pattern: crontab,crontab.*,*/etc/cron.d/*
+---
+name: fvwm
+remote: vim/vim:runtime
+glob: "**/fvwm.vim"
+filetypes:
+- name: fvwm
+  patterns:
+  - pattern: "*/.fvwm/*"
+---
+name: logcheck
+remote: vim/vim:runtime
+glob: "**/logcheck.vim"
+filetypes:
+- name: logcheck
+  patterns:
+  - pattern: "*/etc/logcheck/*.d*/*"
+---
+name: svn
+remote: vim/vim:runtime
+glob: "**/svn.vim"
+filetypes:
+- name: svn
+  patterns:
+  - pattern: svn-commit*.tmp
+    description: Subversion commit file
+---
+name: text
+remote: vim/vim:runtime
+glob: "**/text.vim"
+filetypes:
+- name: text
+  patterns:
+  - pattern: "*.text,README"
+    description: the "conf" type being used if there is a line starting with '#'.
+---
+name: pullrequest
+remote: vim/vim:runtime
+glob: "**/pullrequest.vim"
+filetypes:
+- name: pullrequest
+  patterns:
+  - pattern: PULLREQ_EDITMSG
