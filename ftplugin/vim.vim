@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vim') == -1
 " Vim filetype plugin
 " Language:	Vim
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last Change:	2020 Aug 14
+" Last Change:	2018 Aug 07
 
 " Only do this when not done yet for this buffer
 if exists("b:did_ftplugin")
@@ -14,11 +14,11 @@ endif
 let b:did_ftplugin = 1
 
 let s:cpo_save = &cpo
-set cpo&vim
+set cpo-=C
 
 if !exists('*VimFtpluginUndo')
   func VimFtpluginUndo()
-    setl fo< isk< com< tw< commentstring<
+    setl fo< isk< com< tw< commentstring< keywordprg<
     if exists('b:did_add_maps')
       silent! nunmap <buffer> [[
       silent! vunmap <buffer> [[
@@ -32,7 +32,7 @@ if !exists('*VimFtpluginUndo')
       silent! vunmap <buffer> ]"
       silent! nunmap <buffer> ["
       silent! vunmap <buffer> ["
-    endif
+     endif
     unlet! b:match_ignorecase b:match_words b:match_skip b:did_add_maps
   endfunc
 endif
@@ -51,29 +51,31 @@ setlocal isk+=#
 setlocal keywordprg=:help
 
 " Set 'comments' to format dashed lists in comments
-" Avoid that #{} starts a comment.
-setlocal com=sO:\"\ -,mO:\"\ \ ,sO:#\ -,mO:#\ \ ,eO:##,:\",b:#
+setlocal com=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
 
 " Format comments to be up to 78 characters long
 if &tw == 0
   setlocal tw=78
 endif
 
-" Comments start with a double quote; in Vim9 script # would also work
+" Comments start with a double quote
 setlocal commentstring=\"%s
+
+" Prefer Vim help instead of manpages.
+setlocal keywordprg=:help
 
 if !exists("no_plugin_maps") && !exists("no_vim_maps")
   let b:did_add_maps = 1
 
   " Move around functions.
-  nnoremap <silent><buffer> [[ m':call search('^\s*\(fu\%[nction]\\|def\)\>', "bW")<CR>
-  vnoremap <silent><buffer> [[ m':<C-U>exe "normal! gv"<Bar>call search('^\s*\(fu\%[nction]\\|def\)\>', "bW")<CR>
-  nnoremap <silent><buffer> ]] m':call search('^\s*\(fu\%[nction]\\|def\)\>', "W")<CR>
-  vnoremap <silent><buffer> ]] m':<C-U>exe "normal! gv"<Bar>call search('^\s*\(fu\%[nction]\\|def\)\>', "W")<CR>
-  nnoremap <silent><buffer> [] m':call search('^\s*end\(f\%[unction]\\|def\)\>', "bW")<CR>
-  vnoremap <silent><buffer> [] m':<C-U>exe "normal! gv"<Bar>call search('^\s*end\(f\%[unction]\\|def\)\>', "bW")<CR>
-  nnoremap <silent><buffer> ][ m':call search('^\s*end\(f\%[unction]\\|def\)\>', "W")<CR>
-  vnoremap <silent><buffer> ][ m':<C-U>exe "normal! gv"<Bar>call search('^\s*end\(f\%[unction]\\|def\)\>', "W")<CR>
+  nnoremap <silent><buffer> [[ m':call search('^\s*fu\%[nction]\>', "bW")<CR>
+  vnoremap <silent><buffer> [[ m':<C-U>exe "normal! gv"<Bar>call search('^\s*fu\%[nction]\>', "bW")<CR>
+  nnoremap <silent><buffer> ]] m':call search('^\s*fu\%[nction]\>', "W")<CR>
+  vnoremap <silent><buffer> ]] m':<C-U>exe "normal! gv"<Bar>call search('^\s*fu\%[nction]\>', "W")<CR>
+  nnoremap <silent><buffer> [] m':call search('^\s*endf\%[unction]\>', "bW")<CR>
+  vnoremap <silent><buffer> [] m':<C-U>exe "normal! gv"<Bar>call search('^\s*endf\%[unction]\>', "bW")<CR>
+  nnoremap <silent><buffer> ][ m':call search('^\s*endf\%[unction]\>', "W")<CR>
+  vnoremap <silent><buffer> ][ m':<C-U>exe "normal! gv"<Bar>call search('^\s*endf\%[unction]\>', "W")<CR>
 
   " Move around comments
   nnoremap <silent><buffer> ]" :call search('^\(\s*".*\n\)\@<!\(\s*"\)', "W")<CR>
@@ -86,10 +88,9 @@ endif
 if exists("loaded_matchit")
   let b:match_ignorecase = 0
   let b:match_words =
-	\ '\<\%(fu\%[nction]\|def\)\>)\@!:\<retu\%[rn]\>:\<\%(endf\%[unction]\|enddef\)\>,' .
+	\ '\<fu\%[nction]\>:\<retu\%[rn]\>:\<endf\%[unction]\>,' .
  	\ '\<\(wh\%[ile]\|for\)\>:\<brea\%[k]\>:\<con\%[tinue]\>:\<end\(w\%[hile]\|fo\%[r]\)\>,' .
 	\ '\<if\>:\<el\%[seif]\>:\<en\%[dif]\>,' .
-	\ '{:},' .
 	\ '\<try\>:\<cat\%[ch]\>:\<fina\%[lly]\>:\<endt\%[ry]\>,' .
 	\ '\<aug\%[roup]\s\+\%(END\>\)\@!\S:\<aug\%[roup]\s\+END\>,'
   " Ignore syntax region commands and settings, any 'en*' would clobber

@@ -5152,7 +5152,7 @@ filetypes:
   - pattern: "*.vhdl_[0-9]*"
 ---
 name: vim
-remote: vim/vim:runtime
+remote: neovim/neovim:runtime
 glob: "**/vim.vim"
 filetypes:
 - name: vim

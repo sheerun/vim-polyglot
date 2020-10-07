@@ -191,6 +191,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [vbnet](https://github.com/vim-scripts/vbnet.vim)
 - [vcl](https://github.com/smerrill/vcl-vim-plugin)
 - [velocity](https://github.com/lepture/vim-velocity)
+- [vim](https://github.com/neovim/neovim/tree/master/runtime)
 - [vue](https://github.com/posva/vim-vue)
 - [xdc](https://github.com/amal-khailtash/vim-xdc-syntax)
 - [xml](https://github.com/amadeus/vim-xml)
