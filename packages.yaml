@@ -3560,15 +3560,6 @@ filetypes:
   - pattern: "*.page"
     description: Mallard
 ---
-name: man
-remote: vim/vim:runtime
-glob: "**/man.vim"
-filetypes:
-- name: man
-  patterns:
-  - pattern: "*.man"
-    description: Manpage
----
 name: manconf
 remote: vim/vim:runtime
 glob: "**/manconf.vim"

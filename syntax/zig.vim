@@ -38,7 +38,7 @@ syn match zigBuiltinFn "\v\@(errorReturnTrace|fence|fieldParentPtr|field|unionIn
 syn match zigBuiltinFn "\v\@(frameAddress|import|newStackCall|asyncCall|intToPtr)>"
 syn match zigBuiltinFn "\v\@(memcpy|memset|mod|mulWithOverflow|splat|src)>"
 syn match zigBuiltinFn "\v\@(bitOffsetOf|byteOffsetOf|OpaqueType|panic|ptrCast)>"
-syn match zigBuiltinFn "\v\@(ptrToInt|rem|returnAddress|setCold|Type|shuffle)>"
+syn match zigBuiltinFn "\v\@(ptrToInt|rem|returnAddress|setCold|Type|shuffle|reduce)>"
 syn match zigBuiltinFn "\v\@(setRuntimeSafety|setEvalBranchQuota|setFloatMode)>"
 syn match zigBuiltinFn "\v\@(setGlobalLinkage|setGlobalSection|shlExact|This|hasDecl|hasField)>"
 syn match zigBuiltinFn "\v\@(shlWithOverflow|shrExact|sizeOf|bitSizeOf|sqrt|byteSwap|subWithOverflow|intCast|floatCast|intToFloat|floatToInt|boolToInt|errSetCast)>"

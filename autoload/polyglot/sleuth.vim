@@ -308,7 +308,6 @@ let s:globs = {
   \ 'mailcap': '.mailcap,mailcap',
   \ 'mako': '*.mako,*.mao',
   \ 'mallard': '*.page',
-  \ 'man': '*.man',
   \ 'manconf': 'man.config',
   \ 'map': '*.map',
   \ 'maple': '*.mv,*.mpl,*.mws',

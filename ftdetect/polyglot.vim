@@ -970,10 +970,6 @@ if !has_key(s:disabled_packages, 'manconf')
   au BufNewFile,BufRead */etc/man.conf,man.config setf manconf
 endif
 
-if !has_key(s:disabled_packages, 'man')
-  au BufNewFile,BufRead *.man setf man
-endif
-
 if !has_key(s:disabled_packages, 'mallard')
   au BufNewFile,BufRead *.page setf mallard
 endif

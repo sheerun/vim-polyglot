@@ -26,9 +26,6 @@ syntax match htmlTagName contained "\<[a-zA-Z:\.]*\>"
 " "bind:something", etc.
 syntax match svelteKeyword "\<[a-z]\+:[a-zA-Z|]\+=" contained containedin=htmlTag
 
-" Mixed-case attributes are likely props.
-syntax match svelteKeyword "\<[a-z]\+:[a-zA-Z|]\+=" contained containedin=htmlTag
-
 " The "slot" attribute has special meaning.
 syntax keyword svelteKeyword slot contained containedin=htmlTag
 
