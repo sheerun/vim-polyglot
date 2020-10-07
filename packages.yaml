@@ -4945,15 +4945,6 @@ filetypes:
   - pattern: "*.latex,*.sty,*.dtx,*.ltx,*.bbl"
     description: TeX
 ---
-name: context
-remote: vim/vim:runtime
-glob: "**/context.vim"
-filetypes:
-- name: context
-  patterns:
-  - pattern: "*.mkii,*.mkiv,*.mkvi"
-    description: ConTeXt
----
 name: texinfo
 remote: vim/vim:runtime
 glob: "**/texinfo.vim"

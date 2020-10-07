@@ -356,10 +356,6 @@ if !has_key(s:disabled_packages, 'texinfo')
   au BufNewFile,BufRead *.texi,*.texinfo,*.txi setf texinfo
 endif
 
-if !has_key(s:disabled_packages, 'context')
-  au BufNewFile,BufRead *.mkii,*.mkiv,*.mkvi setf context
-endif
-
 if !has_key(s:disabled_packages, 'tex')
   au BufNewFile,BufRead *.bbl,*.dtx,*.latex,*.ltx,*.sty setf tex
 endif

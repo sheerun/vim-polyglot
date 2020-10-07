@@ -80,7 +80,6 @@ let s:globs = {
   \ 'conaryrecipe': '*.recipe',
   \ 'conf': '*.conf,auto.master,config',
   \ 'config': 'configure.in,configure.ac,Pipfile',
-  \ 'context': '*.mkii,*.mkiv,*.mkvi',
   \ 'cpp': '*.cpp,*.c++,*.cc,*.cp,*.cxx,*.h,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.tcc,*.tpp,*.moc,*.tlh',
   \ 'cql': '*.cql',
   \ 'crm': '*.crm',
