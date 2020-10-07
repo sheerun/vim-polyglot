@@ -323,6 +323,7 @@ filetypes:
 ---
 name: c/c++
 remote: vim-jp/vim-cpp
+dependencies: autodoc
 filetypes:
 - name: cpp
   linguist: C++
@@ -791,8 +792,9 @@ filetypes:
   extra_extensions:
   - ql
 ---
+# TODO: change after https://github.com/othree/html5.vim/pull/106 is merged
 name: html5
-remote: othree/html5.vim
+remote: sheerun/html5.vim
 filetypes:
 - name: html
   linguist: HTML
@@ -1933,7 +1935,9 @@ filetypes:
 ---
 name: sql
 remote: vim/vim:runtime
-glob: '**/sql.vim'
+glob: 
+- '**/sql.vim'
+- '**/sqloracle.vim'
 filetypes:
 - name: sql
   linguist: PLSQL
@@ -2690,6 +2694,7 @@ filetypes:
   - pattern: exports
     description: Exports
 ---
+# TODO: change after merge: 
 name: falcon
 remote: vim/vim:runtime
 glob: "**/falcon.vim"
@@ -4002,6 +4007,7 @@ filetypes:
 name: pike
 remote: vim/vim:runtime
 glob: "**/pike.vim"
+dependencies: autodoc
 filetypes:
 - name: pike
   patterns:
@@ -4011,6 +4017,7 @@ filetypes:
 name: cmod
 remote: vim/vim:runtime
 glob: "**/cmod.vim"
+dependencies: autodoc
 filetypes:
 - name: cmod
   patterns:
@@ -5472,3 +5479,9 @@ filetypes:
 - name: pullrequest
   patterns:
   - pattern: PULLREQ_EDITMSG
+---
+name: autodoc
+remote: vim/vim:runtime
+glob: "**/autodoc.vim"
+# Needed by c, cmod, and pike
+filetypes: []

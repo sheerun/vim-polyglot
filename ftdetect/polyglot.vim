@@ -69,6 +69,7 @@ call s:SetDefault('g:javascript_sql_dialect', 'sql')
 " Make csv loading faster
 call s:SetDefault('g:csv_start', 1)
 call s:SetDefault('g:csv_end', 2)
+call s:SetDefault('g:csv_default_delim', ',')
 
 " Disable json concealing by default
 call s:SetDefault('g:vim_json_syntax_conceal', 0)

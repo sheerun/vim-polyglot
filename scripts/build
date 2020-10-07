@@ -177,7 +177,8 @@ def patterns_to_vim_patterns(patterns)
   stdin.write(patterns.join("\n"))
   stdin.close
   stdout.readlines.map(&:chomp).map do |r|
-    r.gsub('\b', '\(\<\|\>\)')
+    r.gsub!('\b', '\(\<\|\>\)')
+    r
   end
 end
 
@@ -274,7 +275,10 @@ def copy_file(package, src, dest)
         output << "if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '#{name}') == -1\n\n"
       end
       contents = File.read(input)
+      # ..= is feature of new vims...
       contents.gsub!(' ..= ', ' .= ')
+      # https://github.com/vim/vim/pull/7091 
+      contents.gsub!('fileencoding=', 'encoding=')
       output << contents
       output << "\nendif\n"
     end
@@ -649,15 +653,7 @@ def inject_code(path, code)
 end
 
 def generate_tests(packages)
-  output = <<~EOS
-    function! TestFiletype(filetype)
-      call Log('Loading ' . a:filetype . ' filetype...')
-
-      enew
-      exec 'set ft=' . a:filetype
-    endfunction
-
-  EOS
+  output = ""
 
   for package in packages
     for filetype in package.fetch("filetypes", [])
@@ -665,7 +661,7 @@ def generate_tests(packages)
     end
   end
 
-  File.write('tests/filetypes.vim', output)
+  inject_code('tests/filetypes.vim', output)
 
 
 end

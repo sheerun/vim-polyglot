@@ -19,6 +19,17 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
 " Modified:     htdebeer <H.T.de.Beer@gmail.com>
 " Changes:      add common SVG elements and attributes for inline SVG
 
+" quit when a syntax file was already loaded
+if !exists("main_syntax")
+  if exists("b:current_syntax")
+    finish
+  endif
+  let main_syntax = 'html'
+endif
+
+let s:cpo_save = &cpo
+set cpo&vim
+
 " Patch 7.4.1142
 if has("patch-7.4-1142")
   if has("win32")
@@ -192,5 +203,13 @@ syn keyword htmlArg contained scriptlevel scriptminsize scriptsize scriptsizemul
 syn keyword htmlArg contained stretchy subscriptshift superscriptshift symmetric thickmathspace thinmathspace type valign verythickmathspace verythinmathspace
 syn keyword htmlArg contained veryverythickmathspace veryverythinmathspace voffset width xref
 
+let b:current_syntax = "html"
+
+if main_syntax == 'html'
+  unlet main_syntax
+endif
+
+let &cpo = s:cpo_save
+unlet s:cpo_save
 
 endif

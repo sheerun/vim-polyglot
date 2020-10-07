@@ -1,9 +1,16 @@
 function! TestFiletype(filetype)
   call Log('Loading ' . a:filetype . ' filetype...')
 
-  enew
-  exec 'set ft=' . a:filetype
+  try
+    enew
+    exec 'set ft=' . a:filetype
+  catch
+    echo 'Failed to load ' . a:filetype  . ' filetype...'
+    echo v:exception
+  endtry
 endfunction
+
+" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
 call TestFiletype('8th')
 call TestFiletype('cfg')
@@ -625,3 +632,5 @@ call TestFiletype('logcheck')
 call TestFiletype('svn')
 call TestFiletype('text')
 call TestFiletype('pullrequest')
+
+" DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE

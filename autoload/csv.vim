@@ -75,9 +75,13 @@ fu! csv#Init(start, end, ...) "{{{3
     endif
 
     if empty(b:delimiter) && !exists("b:csv_fixed_width")
-        call csv#Warn("No delimiter found. See :h csv-delimiter to set it manually!")
-        " Use a sane default as delimiter:
-        let b:delimiter = ','
+        if !exists("g:csv_default_delim")
+          call csv#Warn("No delimiter found. See :h csv-delimiter to set it manually!")
+          " Use a sane default as delimiter:
+          let b:delimiter = ','
+        else
+          let b:delimiter = g:csv_default_delim
+        endif
     endif
 
     let s:del='\%(' . b:delimiter . '\|$\)'
