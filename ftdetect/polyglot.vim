@@ -118,6 +118,11 @@ augroup filetypedetect
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(s:disabled_packages, 'html')
+  au! BufNewFile,BufRead,BufWritePost *.html call polyglot#detect#Html()
+  au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.st,*.xht,*.xhtml setf html
+endif
+
 if !has_key(s:disabled_packages, 'pullrequest')
   au BufNewFile,BufRead PULLREQ_EDITMSG setf pullrequest
 endif
@@ -2195,11 +2200,6 @@ endif
 
 if !has_key(s:disabled_packages, 'i3')
   au BufNewFile,BufRead *.i3.config,*.i3config,{.,}i3.config,{.,}i3config,i3.config,i3config setf i3config
-endif
-
-if !has_key(s:disabled_packages, 'html5')
-  au! BufNewFile,BufRead,BufWritePost *.html call polyglot#detect#Html()
-  au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.st,*.xht,*.xhtml setf html
 endif
 
 if !has_key(s:disabled_packages, 'hive')
