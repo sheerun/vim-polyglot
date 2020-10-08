@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'iss') == -1
 " Vim syntax file
 " Language:             Inno Setup File (iss file) and My InnoSetup extension
 " Maintainer:           Jason Mills (jmills@cs.mun.ca)
-" Previous Maintainer:  Dominique Stéphan (dominique@mggen.com)
+" Previous Maintainer:  Dominique StÃ©phan (dominique@mggen.com)
 " Last Change:          2019 Sep 27
 "
 " Todo:

@@ -275,10 +275,14 @@ def copy_file(package, src, dest)
         output << "if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '#{name}') == -1\n\n"
       end
       contents = File.read(input)
+      # fix encoding if required
+      contents.gsub!(/!@#%#/, "") rescue contents = contents.force_encoding('iso-8859-1').encode('utf-8')
       # ..= is feature of new vims...
       contents.gsub!(' ..= ', ' .= ')
       # https://github.com/vim/vim/pull/7091 
-      contents.gsub!('fileencoding=', 'encoding=')
+      contents.gsub!(/set(local)? fileencoding=utf-8/, '')
+      contents.gsub!(/ fileencoding=utf-8/, '')
+      contents.gsub!('À-ÿ', '\u00ac-\uffff')
       output << contents
       output << "\nendif\n"
     end
@@ -476,8 +480,8 @@ def extract(packages)
         globs = [package.fetch("glob", package.fetch('globs', '**/*.{vim,ctags,vital,txt}'))].flatten
         globs.each do |glob|
           Dir.glob("#{subdir}/#{glob}", base: subtree).each do |p|
-            next unless File.file?("#{subtree}/#{p}")
-            copy_file(package, "#{subtree}/#{p}", p)
+            next unless File.file?("#{subtree}#{p}")
+            copy_file(package, "#{subtree}#{p}", p)
           end
         end
       elsif File.exist?(subpath)

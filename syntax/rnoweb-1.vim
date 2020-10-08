@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'r-lang') == -1
 " Vim syntax file
 " Language:    R noweb Files
 " Maintainer:  Johannes Ranke <jranke@uni-bremen.de>
-" Last Change: 2007 Mär 30
+" Last Change: 2007 MÃ¤r 30
 " Version:     0.8
 " SVN:	       $Id: rnoweb.vim 69 2007-03-30 08:55:36Z ranke $
 " Remarks:     - This file is inspired by the proposal of 

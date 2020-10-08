@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rpl') == -1
 
 " Vim filetype plugin file
 " Language:     RPL/2
-" Maintainer:   Joël BERTRAND <rpl2@free.fr>
+" Maintainer:   JoÃ«l BERTRAND <rpl2@free.fr>
 " Last Change:	2012 Mar 07
 " Version: 		0.1
 

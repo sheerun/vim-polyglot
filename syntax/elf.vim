@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elf') == -1
 
 " Vim syntax file
 " Language:    ELF
-" Maintainer:  Christian V. J. Brüssow <cvjb@cvjb.de>
+" Maintainer:  Christian V. J. BrÃ¼ssow <cvjb@cvjb.de>
 " Last Change: Son 22 Jun 2003 20:43:14 CEST
 " Filenames:   *.ab,*.am
 " URL:	       http://www.cvjb.de/comp/vim/elf.vim

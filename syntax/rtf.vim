@@ -9,7 +9,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rtf') == -1
 " .hlp (windows help files) use compiled rtf files
 " rtf documentation at http://night.primate.wisc.edu/software/RTF/
 "
-" Maintainer:	Dominique Stéphan (dominique@mggen.com)
+" Maintainer:	Dominique StÃ©phan (dominique@mggen.com)
 " URL: http://www.mggen.com/vim/syntax/rtf.zip
 " Last change:	2001 Mai 02
 

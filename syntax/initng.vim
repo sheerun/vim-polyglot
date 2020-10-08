@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'initng') == -1
 
 " Vim syntax file
 " Language:	initng .i files
-" Maintainer:	Elan Ruusam‰e <glen@pld-linux.org>
+" Maintainer:	Elan Ruusam√§e <glen@pld-linux.org>
 " URL:		http://glen.alkohol.ee/pld/initng/
 " License:	GPL v2
 " Version:	0.13

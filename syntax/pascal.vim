@@ -4,7 +4,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pascal') == -1
 " Language:	Pascal
 " Version: 2.8
 " Last Change:	2004/10/17 17:47:30
-" Maintainer:  Xavier Crégut <xavier.cregut@enseeiht.fr>
+" Maintainer:  Xavier CrÃ©gut <xavier.cregut@enseeiht.fr>
 " Previous Maintainer:	Mario Eusebio <bio@dq.fct.unl.pt>
 
 " Contributors: Tim Chase <tchase@csc.com>,

@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'robots') == -1
 " Vim syntax file
 " Language:	"Robots.txt" files
 " Robots.txt files indicate to WWW robots which parts of a web site should not be accessed.
-" Maintainer:	Dominique Stéphan (dominique@mggen.com)
+" Maintainer:	Dominique StÃ©phan (dominique@mggen.com)
 " URL: http://www.mggen.com/vim/syntax/robots.zip
 " Last change:	2001 May 09
 

@@ -2,7 +2,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nroff') == -1
 
 " VIM syntax file
 " Language:	nroff/groff
-" Maintainer:	Pedro Alejandro López-Valencia <palopezv@gmail.com>
+" Maintainer:	Pedro Alejandro LÃ³pez-Valencia <palopezv@gmail.com>
 " URL:		http://vorbote.wordpress.com/
 " Last Change:	2012 Feb 2
 "
@@ -10,7 +10,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nroff') == -1
 "
 " ACKNOWLEDGEMENTS:
 "
-" My thanks to Jérôme Plût <Jerome.Plut@ens.fr>, who was the
+" My thanks to JÃ©rÃ´me PlÃ»t <Jerome.Plut@ens.fr>, who was the
 " creator and maintainer of this syntax file for several years.
 " May I be as good at it as he has been.
 "
