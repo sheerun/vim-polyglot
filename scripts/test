@@ -46,7 +46,7 @@ test_helptags = <<~EOF
 EOF
 
 run_vimscript('source tests/filetypes.vim')
-# run_vimscript('source tests/extensions.vim')
+run_vimscript('source tests/extensions.vim')
 run_script(test_helptags)
 
 # run_vimscript("

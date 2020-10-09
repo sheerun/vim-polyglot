@@ -6,12 +6,19 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cpp-modern') ==
 " Original Author: Jon Haggblad <https://github.com/octol>
 " Maintainer:      bfrg <https://github.com/bfrg>
 " Website:         https://github.com/bfrg/vim-cpp-modern
-" Last Change:     Oct 4, 2020
+" Last Change:     Oct 8, 2020
 "
 " This syntax file is based on:
 " https://github.com/octol/vim-cpp-enhanced-highlight
-" http://www.vim.org/scripts/script.php?script_id=4293
 " ==============================================================================
+
+" C++ attributes {{{1
+if get(g:, 'cpp_attributes_highlight', 0)
+    syntax region cppAttribute matchgroup=cppAttributeBrackets start='\[\[' end=']]' contains=cString
+    hi def link cppAttribute         Macro
+    hi def link cppAttributeBrackets Identifier
+endif
+
 
 " Standard library {{{1
 syntax keyword cppSTLdefine

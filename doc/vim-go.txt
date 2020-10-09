@@ -1625,27 +1625,45 @@ window. The list to use can be set using |'g:go_list_type_commands'|.
 <
                                           *'g:go_metalinter_autosave_enabled'*
 
-Specifies the enabled linters for auto |:GoMetaLinter| on save. By
-default it's using `vet` and `golint`. If any are enabled, `--disable-all`
-will be sent to the metalinter.
+Specifies the enabled linters for auto |:GoMetaLinter| on save. When the
+metalinter is `golangci-lint`, if any are enabled, `--disable-all` will be
+sent to the metalinter.
+
+When `g:go_metalinter_command` is set to `staticcheck`, the default value is
+an empty list; `staticcheck`'s `-checks` flag will not be used.
+>
+  let g:go_metalinter_autosave_enabled = ['all']
+<
+
+When `g:go_metalinter_command is set to `golangci-lint'`, the default value is
 >
   let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 <
                                                    *'g:go_metalinter_enabled'*
 
-Specifies the linters to enable for the |:GoMetaLinter| command. By default
-it's using `vet`, `golint` and `errcheck`. If any are enabled, `--disable-all`
-will be sent to the metalinter.
+Specifies the linters to enable for the |:GoMetaLinter| command. For
+`golangci-lint`, if any are enabled, `--disable-all` will be passed to the
+metalinter.
+
+When `g:go_metalinter_command` is set to `staticcheck`, the default value is
+an empty list; `staticcheck`'s `-checks` flag will not be used.
+>
+  let g:go_metalinter_autosave_enabled = ['all']
+<
+
+When `g:go_metalinter_command is set to `golangci-lint'`, the default value is
 >
   let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 <
                                                    *'g:go_metalinter_command'*
 
 Overrides the command to be executed when |:GoMetaLinter| is called. By
-default it's `golangci-lint`. Valid options are `golangci-lint` and `gopls`.
+default it's `golangci-lint`. Valid options are `golangci-lint, `gopls`, and
+`staticcheck`..
+
 When the value is `gopls`, users may want to consider setting
-`g:go_gopls_staticcheck`.  It can also be used as an advanced setting for
-users who want to have more control over the metalinter.
+`g:go_gopls_staticcheck`. It can also be used as an advanced setting for users
+who want to have more control over the metalinter.
 >
   let g:go_metalinter_command = "golangci-lint"
 <
@@ -1653,6 +1671,8 @@ users who want to have more control over the metalinter.
 
 Overrides the maximum time the linters have to complete. By default it's 5
 seconds.
+
+Only applies when the metalinter is `golangci-lint`.
 >
   let g:go_metalinter_deadline = "5s"
 <
@@ -2286,7 +2306,7 @@ The program will halt on the breakpoint, at which point you can inspect the
 program state. You can go to the next line with |:GoDebugNext| (<F10>) or step
 in with |:GoDebugStep| (<F11>).
 
-The program can also be halted with `:GoDebugHalt` (<F6>).
+The program can also be halted with `:GoDebugHalt` (<F8>).
 
 The variable window in the bottom left (`GODEBUG_VARIABLES`) will display all
 local variables. Struct values are displayed as `{...}`, array/slices as
@@ -2362,7 +2382,7 @@ The rest of the commands and mappings become available after executing
 
     Halt the program.
 
-    Mapped to <F6> by default.
+    Mapped to <F8> by default.
 
                                                                 *:GoDebugStop*
                                                              *(go-debug-stop)*

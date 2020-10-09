@@ -629,7 +629,7 @@ endif
 
 if !has_key(s:disabled_packages, 'remind')
   au BufNewFile,BufRead *.rem,*.remind,{.,}reminders setf remind
-  au BufNewFile,BufRead {.,}reminders* call s:StarSetf('remind')
+  au BufNewFile,BufRead .reminders* call s:StarSetf('remind')
 endif
 
 if !has_key(s:disabled_packages, 'rrst')
@@ -854,7 +854,7 @@ if !has_key(s:disabled_packages, 'neomuttrc')
   au BufNewFile,BufRead Neomuttrc setf neomuttrc
   au BufNewFile,BufRead neomuttrc* call s:StarSetf('neomuttrc')
   au BufNewFile,BufRead Neomuttrc* call s:StarSetf('neomuttrc')
-  au BufNewFile,BufRead {.,}neomuttrc* call s:StarSetf('neomuttrc')
+  au BufNewFile,BufRead .neomuttrc* call s:StarSetf('neomuttrc')
   au BufNewFile,BufRead */.neomutt/neomuttrc* call s:StarSetf('neomuttrc')
 endif
 
@@ -882,7 +882,7 @@ if !has_key(s:disabled_packages, 'muttrc')
   au BufNewFile,BufRead Mutt{ng,}rc setf muttrc
   au BufNewFile,BufRead mutt{ng,}rc* call s:StarSetf('muttrc')
   au BufNewFile,BufRead Mutt{ng,}rc* call s:StarSetf('muttrc')
-  au BufNewFile,BufRead {.,}mutt{ng,}rc* call s:StarSetf('muttrc')
+  au BufNewFile,BufRead .mutt{ng,}rc* call s:StarSetf('muttrc')
   au BufNewFile,BufRead */etc/Muttrc.d/* call s:StarSetf('muttrc')
   au BufNewFile,BufRead */.mutt{ng,}/mutt{ng,}rc* call s:StarSetf('muttrc')
 endif
@@ -1273,7 +1273,7 @@ endif
 if !has_key(s:disabled_packages, 'gtkrc')
   au BufNewFile,BufRead {.,}gtkrc,gtkrc setf gtkrc
   au BufNewFile,BufRead gtkrc* call s:StarSetf('gtkrc')
-  au BufNewFile,BufRead {.,}gtkrc* call s:StarSetf('gtkrc')
+  au BufNewFile,BufRead .gtkrc* call s:StarSetf('gtkrc')
 endif
 
 if !has_key(s:disabled_packages, 'group')
@@ -1820,7 +1820,7 @@ if !has_key(s:disabled_packages, 'toml')
 endif
 
 if !has_key(s:disabled_packages, 'tmux')
-  au BufNewFile,BufRead {.,}tmux*.conf setf tmux
+  au BufNewFile,BufRead .tmux*.conf setf tmux
 endif
 
 if !has_key(s:disabled_packages, 'thrift')
@@ -1883,9 +1883,9 @@ endif
 if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,login,man,profile,zlogin,zlogout,zprofile,zshenv,zshrc setf sh
   au BufNewFile,BufRead *.zsh,{.,}zfbfmarks,{.,}zlogin,{.,}zlogout,{.,}zprofile,{.,}zshenv,{.,}zshrc setf zsh
-  au BufNewFile,BufRead {.,}zsh* call s:StarSetf('zsh')
-  au BufNewFile,BufRead {.,}zlog* call s:StarSetf('zsh')
-  au BufNewFile,BufRead {.,}zcompdump* call s:StarSetf('zsh')
+  au BufNewFile,BufRead .zsh* call s:StarSetf('zsh')
+  au BufNewFile,BufRead .zlog* call s:StarSetf('zsh')
+  au BufNewFile,BufRead .zcompdump* call s:StarSetf('zsh')
 endif
 
 if !has_key(s:disabled_packages, 'scss')
@@ -2166,7 +2166,7 @@ endif
 
 if !has_key(s:disabled_packages, 'jq')
   au BufNewFile,BufRead *.jq,{.,}jqrc setf jq
-  au BufNewFile,BufRead {.,}jqrc* call s:StarSetf('jq')
+  au BufNewFile,BufRead .jqrc* call s:StarSetf('jq')
 endif
 
 if !has_key(s:disabled_packages, 'htmldjango')
@@ -2271,7 +2271,7 @@ if !has_key(s:disabled_packages, 'git')
   au BufNewFile,BufRead *.gitconfig,*.git/config,*.git/modules/*/config,*/.config/git/config,*/git/config,{.,}gitconfig,{.,}gitmodules setf gitconfig
   au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')
   au BufNewFile,BufRead git-rebase-todo setf gitrebase
-  au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
+  au BufNewFile,BufRead .gitsendemail.* call s:StarSetf('gitsendemail')
   au BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,TAG_EDITMSG setf gitcommit
 endif
 

@@ -385,3 +385,6 @@ call TestExtension("xml", "fglrxrc", "")
 call TestExtension("conf", "foo.conf", "")
 call TestExtension("conf", "config", "")
 call TestExtension("conf", "auto.master", "")
+
+" https://github.com/sheerun/vim-polyglot/issues/579
+call TestExtension("dart", "reminders.dart", "")
