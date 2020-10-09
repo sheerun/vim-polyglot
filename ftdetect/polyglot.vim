@@ -1820,7 +1820,7 @@ if !has_key(s:disabled_packages, 'toml')
 endif
 
 if !has_key(s:disabled_packages, 'tmux')
-  au BufNewFile,BufRead .tmux*.conf setf tmux
+  au BufNewFile,BufRead {.,}tmux*.conf setf tmux
 endif
 
 if !has_key(s:disabled_packages, 'thrift')

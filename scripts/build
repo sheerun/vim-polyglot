@@ -579,7 +579,7 @@ def generate_ftdetect(packages, heuristics)
       end
 
       for filename in filenames.sort
-        if filename.match?(/^\.[^\*\/]+$/)
+        if filename.match?(/^\.[^\/]+[^\*]$/)
           filename = "{.,}" + filename[1..-1]
         end
         if filename[-1] == "*"
