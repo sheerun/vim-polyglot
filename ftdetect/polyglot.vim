@@ -2735,6 +2735,9 @@ if !has_key(s:disabled_packages, 'autoindent')
     if s:guess(getline(1, 32))
       return
     endif
+    if s:guess(getline(1, 1024))
+      return
+    endif
     let pattern = polyglot#sleuth#GlobForFiletype(&filetype)
     if len(pattern) == 0
       return
