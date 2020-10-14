@@ -117,6 +117,11 @@ func! s:StarSetf(ft)
   endif
 endfunc
 
+" Load user-defined filetype.vim
+augroup filetypedetect
+runtime! filetype.vim
+augroup END
+
 augroup filetypedetect
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
@@ -4833,6 +4838,10 @@ au BufNewFile,BufRead *.txt
 	\  if getline('$') !~ 'vim:.*ft=help'
 	\|   setf text
 	\| endif
+
+" Use the filetype detect plugins.  They may overrule any of the previously
+" detected filetypes.
+runtime! ftdetect/*.vim
 
 " NOTE: The above command could have ended the filetypedetect autocmd group
 " and started another one. Let's make sure it has ended to get to a consistent
