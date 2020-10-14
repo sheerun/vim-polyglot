@@ -311,7 +311,7 @@ def copy_file(package, src, dest)
 end
 
 def download(packages)
-  packages.map { |p| p["remote"] or raise "No remote for: " + p["name"] }.uniq.each_slice(20) do |remotes|
+  packages.map { |p| p["remote"] }.compact.uniq.each_slice(20) do |remotes|
     remotes.map do |remote|
       Thread.new do
         repo, branch, path, dir = parse_remote(remote)
@@ -488,6 +488,9 @@ def extract(packages)
 
   output = []
   packages.map do |package|
+    if !package["remote"]
+      next
+    end
     repo, branch, path, dir = parse_remote(package["remote"])
     dirs = package.fetch("dirs", default_dirs)
     ignored_dirs = package.fetch("ignored_dirs", [])
