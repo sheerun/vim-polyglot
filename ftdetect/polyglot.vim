@@ -27,6 +27,9 @@ let did_load_filetypes = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
+" Be consistent across different systems
+set nofileignorecase
+
 func! s:Observe(fn)
   let b:polyglot_observe = a:fn
   augroup polyglot-observer
@@ -118,9 +121,10 @@ augroup filetypedetect
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
-if !has_key(s:disabled_packages, 'html')
-  au! BufNewFile,BufRead,BufWritePost *.html call polyglot#detect#Html()
-  au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.st,*.xht,*.xhtml setf html
+if !has_key(s:disabled_packages, 'xf86conf')
+  au BufNewFile,BufRead */xorg.conf.d/*.conf,xorg.conf,xorg.conf-4 setf xf86conf
+  au BufNewFile,BufRead XF86Config-4* call s:StarSetf('xf86conf')
+  au BufNewFile,BufRead XF86Config* call s:StarSetf('xf86conf')
 endif
 
 if !has_key(s:disabled_packages, 'pullrequest')
@@ -351,7 +355,7 @@ if !has_key(s:disabled_packages, 'tpp')
 endif
 
 if !has_key(s:disabled_packages, 'tidy')
-  au BufNewFile,BufRead {.,}tidyrc,tidyrc setf tidy
+  au BufNewFile,BufRead {.,}tidyrc,tidy.conf,tidyrc setf tidy
 endif
 
 if !has_key(s:disabled_packages, 'texmf')
@@ -563,10 +567,6 @@ if !has_key(s:disabled_packages, 'sieve')
   au BufNewFile,BufRead *.sieve,*.siv setf sieve
 endif
 
-if !has_key(s:disabled_packages, 'sed')
-  au BufNewFile,BufRead *.sed setf sed
-endif
-
 if !has_key(s:disabled_packages, 'sdl')
   au BufNewFile,BufRead *.pr,*.sdl setf sdl
 endif
@@ -577,6 +577,10 @@ endif
 
 if !has_key(s:disabled_packages, 'scilab')
   au BufNewFile,BufRead *.sce,*.sci setf scilab
+endif
+
+if !has_key(s:disabled_packages, 'sbt')
+  au BufNewFile,BufRead *.sbt setf sbt
 endif
 
 if !has_key(s:disabled_packages, 'sather')
@@ -781,7 +785,7 @@ if !has_key(s:disabled_packages, 'pdf')
 endif
 
 if !has_key(s:disabled_packages, 'pascal')
-  au BufNewFile,BufRead *.dpr,*.pas setf pascal
+  au BufNewFile,BufRead *.dpr,*.lpr,*.pas,*.pp setf pascal
 endif
 
 if !has_key(s:disabled_packages, 'passwd')
@@ -885,10 +889,6 @@ if !has_key(s:disabled_packages, 'muttrc')
   au BufNewFile,BufRead .mutt{ng,}rc* call s:StarSetf('muttrc')
   au BufNewFile,BufRead */etc/Muttrc.d/* call s:StarSetf('muttrc')
   au BufNewFile,BufRead */.mutt{ng,}/mutt{ng,}rc* call s:StarSetf('muttrc')
-endif
-
-if !has_key(s:disabled_packages, 'mysql')
-  au BufNewFile,BufRead *.mysql setf mysql
 endif
 
 if !has_key(s:disabled_packages, 'msql')
@@ -1240,6 +1240,11 @@ endif
 
 if !has_key(s:disabled_packages, 'tilde')
   au BufNewFile,BufRead *.t.html setf tilde
+endif
+
+if !has_key(s:disabled_packages, 'html')
+  au BufNewFile,BufRead,BufWritePost *.html call polyglot#detect#Html()
+  au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.st,*.xht,*.xhtml setf html
 endif
 
 if !has_key(s:disabled_packages, 'hollywood')
@@ -1695,11 +1700,11 @@ if !has_key(s:disabled_packages, 'gitignore')
 endif
 
 if !has_key(s:disabled_packages, 'tads')
-  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+  au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
 endif
 
 if !has_key(s:disabled_packages, 'prolog')
-  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
+  au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.pdb,*.pro,*.prolog,*.yap setf prolog
 endif
 
@@ -1722,7 +1727,7 @@ if !has_key(s:disabled_packages, 'spec')
 endif
 
 if !has_key(s:disabled_packages, 'visual-basic')
-  au! BufNewFile,BufRead,BufWritePost *.bas call polyglot#detect#Bas()
+  au BufNewFile,BufRead,BufWritePost *.bas call polyglot#detect#Bas()
   au BufNewFile,BufRead *.cls,*.ctl,*.dsm,*.frm,*.frx,*.sba,*.vba,*.vbs setf vb
 endif
 
@@ -1731,7 +1736,7 @@ if !has_key(s:disabled_packages, 'basic')
 endif
 
 if !has_key(s:disabled_packages, 'trasys')
-  au! BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
+  au BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
 endif
 
 if !has_key(s:disabled_packages, 'zig')
@@ -1881,8 +1886,8 @@ if !has_key(s:disabled_packages, 'slim')
 endif
 
 if !has_key(s:disabled_packages, 'sh')
-  au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,login,man,profile,zlogin,zlogout,zprofile,zshenv,zshrc setf sh
-  au BufNewFile,BufRead *.zsh,{.,}zfbfmarks,{.,}zlogin,{.,}zlogout,{.,}zprofile,{.,}zshenv,{.,}zshrc setf zsh
+  au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,login,man,profile setf sh
+  au BufNewFile,BufRead *.zsh,*/etc/zprofile,{.,}zfbfmarks,{.,}zlogin,{.,}zlogout,{.,}zprofile,{.,}zshenv,{.,}zshrc setf zsh
   au BufNewFile,BufRead .zsh* call s:StarSetf('zsh')
   au BufNewFile,BufRead .zlog* call s:StarSetf('zsh')
   au BufNewFile,BufRead .zcompdump* call s:StarSetf('zsh')
@@ -1890,10 +1895,6 @@ endif
 
 if !has_key(s:disabled_packages, 'scss')
   au BufNewFile,BufRead *.scss setf scss
-endif
-
-if !has_key(s:disabled_packages, 'sbt')
-  au BufNewFile,BufRead *.sbt setf sbt.scala
 endif
 
 if !has_key(s:disabled_packages, 'scala')
@@ -1923,7 +1924,7 @@ if !has_key(s:disabled_packages, 'rst')
 endif
 
 if !has_key(s:disabled_packages, 'reason')
-  au! BufNewFile,BufRead,BufWritePost *.re call polyglot#detect#Re()
+  au BufNewFile,BufRead,BufWritePost *.re call polyglot#detect#Re()
   au BufNewFile,BufRead *.rei setf reason
 endif
 
@@ -1936,9 +1937,9 @@ if !has_key(s:disabled_packages, 'raml')
 endif
 
 if !has_key(s:disabled_packages, 'raku')
-  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
-  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
-  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
+  au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+  au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
+  au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.6pl,*.6pm,*.nqp,*.p6,*.p6l,*.p6m,*.pl6,*.pm6,*.pod6,*.raku,*.rakudoc,*.rakumod,*.rakutest,*.t6 setf raku
 endif
 
@@ -2018,14 +2019,14 @@ if !has_key(s:disabled_packages, 'pgsql')
 endif
 
 if !has_key(s:disabled_packages, 'perl')
-  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
-  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
-  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
+  au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+  au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
+  au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.al,*.cgi,*.fcgi,*.perl,*.ph,*.plx,*.psgi,{.,}gitolite.rc,Makefile.PL,Rexfile,ack,cpanfile,example.gitolite.rc setf perl
   au BufNewFile,BufRead *.pod setf pod
   au BufNewFile,BufRead *.comp,*.mason,*.mhtml setf mason
-  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
-  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
+  au BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
+  au BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
   au BufNewFile,BufRead *.xs setf xs
 endif
 
@@ -2038,7 +2039,7 @@ if !has_key(s:disabled_packages, 'opencl')
 endif
 
 if !has_key(s:disabled_packages, 'octave')
-  au! BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
+  au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
   au BufNewFile,BufRead *.oct setf octave
 endif
 
@@ -2055,8 +2056,8 @@ if !has_key(s:disabled_packages, 'ocaml')
 endif
 
 if !has_key(s:disabled_packages, 'objc')
-  au! BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
-  au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
+  au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
+  au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
 endif
 
 if !has_key(s:disabled_packages, 'nix')
@@ -2074,7 +2075,7 @@ if !has_key(s:disabled_packages, 'nginx')
 endif
 
 if !has_key(s:disabled_packages, 'murphi')
-  au! BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
+  au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
 endif
 
 if !has_key(s:disabled_packages, 'moonscript')
@@ -2090,12 +2091,8 @@ if !has_key(s:disabled_packages, 'mdx')
   au BufNewFile,BufRead *.mdx setf markdown.mdx
 endif
 
-if !has_key(s:disabled_packages, 'markdown')
-  au BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mdwn,*.mkd,*.mkdn,*.mkdown,*.ronn,*.workbook,contents.lr setf markdown
-endif
-
 if !has_key(s:disabled_packages, 'mathematica')
-  au! BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
+  au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
   au BufNewFile,BufRead *.cdf,*.ma,*.mathematica,*.mma,*.mt,*.nb,*.nbp,*.wl,*.wls,*.wlt setf mma
 endif
 
@@ -2183,14 +2180,14 @@ if !has_key(s:disabled_packages, 'ion')
 endif
 
 if !has_key(s:disabled_packages, 'idris2')
-  au! BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
+  au BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
   au BufNewFile,BufRead *.ipkg,idris-response setf idris2
-  au! BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
+  au BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
 endif
 
 if !has_key(s:disabled_packages, 'idris')
-  au! BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
-  au! BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
+  au BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
+  au BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
   au BufNewFile,BufRead idris-response setf idris
 endif
 
@@ -2216,6 +2213,11 @@ endif
 
 if !has_key(s:disabled_packages, 'haskell')
   au BufNewFile,BufRead *.bpk,*.hs,*.hs-boot,*.hsc,*.hsig setf haskell
+endif
+
+if !has_key(s:disabled_packages, 'haproxy')
+  au BufNewFile,BufRead haproxy*.conf* call s:StarSetf('haproxy')
+  au BufNewFile,BufRead haproxy*.cfg* call s:StarSetf('haproxy')
 endif
 
 if !has_key(s:disabled_packages, 'handlebars')
@@ -2263,7 +2265,7 @@ if !has_key(s:disabled_packages, 'gmpl')
 endif
 
 if !has_key(s:disabled_packages, 'glsl')
-  au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
+  au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
 endif
 
@@ -2280,12 +2282,12 @@ if !has_key(s:disabled_packages, 'gdscript')
 endif
 
 if !has_key(s:disabled_packages, 'fsharp')
-  au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
+  au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.fsi,*.fsx setf fsharp
 endif
 
 if !has_key(s:disabled_packages, 'forth')
-  au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
+  au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.ft,*.fth setf forth
 endif
 
@@ -2327,13 +2329,19 @@ if !has_key(s:disabled_packages, 'elixir')
 endif
 
 if !has_key(s:disabled_packages, 'dockerfile')
-  au BufNewFile,BufRead *.Dockerfile,*.dock,*.dockerfile,Dockerfile,dockerfile setf Dockerfile
-  au BufNewFile,BufRead Dockerfile* call s:StarSetf('Dockerfile')
   au BufNewFile,BufRead docker-compose*.yaml,docker-compose*.yml setf yaml.docker-compose
 endif
 
 if !has_key(s:disabled_packages, 'yaml')
   au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,fish_history,fish_read_history,glide.lock,yarn.lock setf yaml
+endif
+
+if !has_key(s:disabled_packages, 'mysql')
+  au BufNewFile,BufRead *.mysql setf mysql
+endif
+
+if !has_key(s:disabled_packages, 'sed')
+  au BufNewFile,BufRead *.sed setf sed
 endif
 
 if !has_key(s:disabled_packages, 'dlang')
@@ -2374,6 +2382,10 @@ if !has_key(s:disabled_packages, 'coffee-script')
   au BufNewFile,BufRead *.coffee.md,*.litcoffee setf litcoffee
 endif
 
+if !has_key(s:disabled_packages, 'markdown')
+  au BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mdwn,*.mkd,*.mkdn,*.mkdown,*.ronn,*.workbook,contents.lr setf markdown
+endif
+
 if !has_key(s:disabled_packages, 'cmake')
   au BufNewFile,BufRead *.cmake,*.cmake.in,CMakeLists.txt setf cmake
 endif
@@ -2407,12 +2419,12 @@ if !has_key(s:disabled_packages, 'atlas')
 endif
 
 if !has_key(s:disabled_packages, 'aspperl')
-  au! BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
+  au BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
 endif
 
 if !has_key(s:disabled_packages, 'aspvbs')
-  au! BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
-  au! BufNewFile,BufRead,BufWritePost *.asa call polyglot#detect#Asa()
+  au BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
+  au BufNewFile,BufRead,BufWritePost *.asa call polyglot#detect#Asa()
 endif
 
 if !has_key(s:disabled_packages, 'asn')
@@ -2420,11 +2432,15 @@ if !has_key(s:disabled_packages, 'asn')
 endif
 
 if !has_key(s:disabled_packages, 'automake')
-  au BufNewFile,BufRead *.dsp,*.mak,*.mk,GNUmakefile.am,Makefile.am,makefile.am setf automake
+  au BufNewFile,BufRead GNUmakefile.am,[mM]akefile.am setf automake
 endif
 
 if !has_key(s:disabled_packages, 'elf')
   au BufNewFile,BufRead *.am setf elf
+endif
+
+if !has_key(s:disabled_packages, 'make')
+  au BufNewFile,BufRead *.dsp,*.mak,*.mk,*[mM]akefile setf make
 endif
 
 if !has_key(s:disabled_packages, 'autohotkey')
@@ -2444,9 +2460,9 @@ if !has_key(s:disabled_packages, 'arduino')
 endif
 
 if !has_key(s:disabled_packages, 'c/c++')
-  au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
+  au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
   au BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.moc,*.tcc,*.tlh,*.tpp setf cpp
-  au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
+  au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
   au BufNewFile,BufRead *.c,*.cats,*.idc,*.qc,*enlightenment/*.cfg setf c
 endif
 
@@ -2506,6 +2522,14 @@ if !has_key(s:disabled_packages, 'alsaconf')
   au BufNewFile,BufRead */etc/asound.conf,*/usr/share/alsa/alsa.conf,{.,}asoundrc setf alsaconf
 endif
 
+if !has_key(s:disabled_packages, 'conf')
+  au BufNewFile,BufRead *.conf,auto.master,config setf conf
+endif
+
+if !has_key(s:disabled_packages, 'master')
+  au BufNewFile,BufRead *.mas,*.master setf master
+endif
+
 if !has_key(s:disabled_packages, 'aidl')
   " AIDL
   au BufNewFile,BufRead *.aidl setf aidl
@@ -2541,7 +2565,7 @@ if !has_key(s:disabled_packages, 'abc')
 endif
 
 if !has_key(s:disabled_packages, 'abaqus')
-  au! BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
+  au BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
 endif
 
 if !has_key(s:disabled_packages, 'abap')
@@ -2561,19 +2585,6 @@ endif
 
 if !has_key(s:disabled_packages, 'a2ps')
   au BufNewFile,BufRead */etc/a2ps.cfg,*/etc/a2ps/*.cfg,{.,}a2psrc,a2psrc setf a2ps
-endif
-
-if !has_key(s:disabled_packages, 'haproxy')
-  au BufNewFile,BufRead *.cfg,haproxy.cfg setf haproxy
-  au BufNewFile,BufRead haproxy*.conf* call s:StarSetf('haproxy')
-endif
-
-if !has_key(s:disabled_packages, 'conf')
-  au BufNewFile,BufRead *.conf,auto.master,config setf conf
-endif
-
-if !has_key(s:disabled_packages, 'master')
-  au BufNewFile,BufRead *.mas,*.master setf master
 endif
 
 if !has_key(s:disabled_packages, 'cfg')
@@ -3635,9 +3646,6 @@ au BufNewFile,BufRead *.mod
 	\   setf modsim3 |
 	\ endif
 
-" Modula 2  (.md removed in favor of Markdown)
-au BufNewFile,BufRead *.m2,*.DEF,*.MOD,*.mi	setf modula2
-
 " Modula 3 (.m3, .i3, .mg, .ig)
 au BufNewFile,BufRead *.[mi][3g]		setf modula3
 
@@ -3949,13 +3957,6 @@ au BufNewFile,BufRead *.rego			setf rego
 
 " Rexx
 au BufNewFile,BufRead *.rex,*.orx,*.rxo,*.rxj,*.jrexx,*.rexxj,*.rexx,*.testGroup,*.testUnit	setf rexx
-
-" R (Splus)
-if has("fname_case")
-  au BufNewFile,BufRead *.s,*.S			setf r
-else
-  au BufNewFile,BufRead *.s			setf r
-endif
 
 " R Help file
 if has("fname_case")

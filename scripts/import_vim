@@ -1,15 +1,16 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
+require 'json'
 
 def comma_expanson(s)
-  s.scan(/{[^{]+}|[^{]+/).map { |a| a[0] == "{" ? a : a.split(",", -1) }.reduce([]) do |a, b|
+  s.scan(/{[^{]+}|[^{]+/).map { |a| a[0] == "{" ? a : a.split(/(?<!\\),/, -1) }.reduce([]) do |a, b|
     a.size > 0 ?
       (b.is_a?(String) ?
          a[0..-2] + [a[-1] + b] :
          a[0..-2] + [a[-1] + b[0]] + b[1..-1]) :
       [b].flatten
-  end
+  end.map { |e| e.gsub('\\,', ',')}
 end
 
 def import_autocommands
@@ -37,6 +38,9 @@ vim -es -u DEFAULTS -c 'exe("func! Capture() \\n redir => capture \\n silent aut
     end
   end
 
+  for k, v in filetypes
+    filetypes[k].uniq!
+  end
 
   filetypes
 end
@@ -87,8 +91,6 @@ def generate_packages_entries(filetypes, comments)
   return entries
 end
 
-filetypes = import_autocommands
-
 def fix_quotes(a)
   a = a.gsub(/\\/) { '\\\\' }
   a.scan(/^.*?"(.+?)"\n/m).each { |p| a[p[0]] = p[0].gsub('"') { '\\"'} }
@@ -114,9 +116,200 @@ def get_comments
   result
 end
 
-comments = get_comments()
+def square_expansion(s)
+  return [s] unless s.include?('[')
+  s.scan(/(\[[^\]]+\]|[^\[]+)/).map { |x| x[0] }
+    .map { |x| x[0] == "[" ? x[1..-2].split("") : [x] }
+    .reduce(&:product).map(&:flatten).map(&:join)
+end
+
+def brace_expansion(s)
+  if !s.include?('{')
+    return [s]
+  end
+  r=1                                       # Dummy value to forward-declare the parse function `r`
+  t=->x{                                    # Function to parse a bracket block
+    x=x[0].gsub(/^{(.*)}$/){$1}             # Remove outer brackets if both are present
+                                            # x[0] is required because of quirks in the `scan` function
+    x=x.scan(/(({(\g<1>|,)*}|[^,{}]|(?<=,|^)(?=,|$))+)/)
+                                            # Regex black magic: collect elements of outer bracket
+    x.map{|i|i=i[0];i[?{]?r[i]:i}.flatten   # For each element with brackets, run parse function
+  }
+  r=->x{                                    # Function to parse bracket expansions a{b,c}{d,e}
+    i=x.scan(/({(\g<1>)*}|[^{} ]+)/)        # Regex black magic: scan for adjacent sets of brackets
+    i=i.map(&t)                             # Map all elements against the bracket parser function `t`
+    i.shift.product(*i).map &:join          # Combine the adjacent sets with cartesian product and join them together
+  }
+  s.split.map(&r).flatten
+end
+
+def generate_tests(autocommands)
+  existing = JSON.parse(File.read('tmp/vim/vim/src/testdir/test_filetype.vim')
+    .match(/let s:filename_checks = ({.*?\\ })/m)[1]
+    .gsub('    \\', ' ').gsub("'", '"')
+    .gsub('$VIMRUNTIME .', '').gsub(",\n  }", "}"))
+
+  output = []
+
+  generated = {}
+  for ft in autocommands.keys().sort()
+    patterns = autocommands[ft]
+
+    files1 = []
+    to_delete = []
+
+    patterns.reject! { |p| p.match?(/[\|\\\(]/) }
+
+    patterns = patterns.map do |pattern|
+      pattern = pattern.gsub('[0-9]', '1').gsub('[2-3]', '2').gsub('[1-3]', '1').gsub('?', 'x')
+
+      if pattern.match?(/\/\*\.[^\*\/]+$/)
+        pattern = pattern.gsub(/\/\*\.([^\*\/]+)$/, '/file.\1')
+      end
+
+      if pattern.match?(/[\/\.-]\*$/)
+        pattern = pattern[0..-2] + "file"
+      end
+
+      pattern = pattern.gsub(/\/\*\//) { '/any/' }
+
+      pattern
+    end
+
+    patterns = patterns.flat_map { |p| brace_expansion(p) }
+
+    for pattern in patterns
+      if pattern.match(/^\*[.\,][^\*\/]+$/)
+        files1 << pattern.gsub('*', 'file')
+
+        to_delete << pattern
+      end
+      if pattern.match(/^[^\*\/]+\.\*$/)
+        files1 << pattern.gsub('*', 'file')
+        to_delete << pattern
+      end
+    end
+    files1.sort!
+    patterns = patterns - to_delete
+
+
+    files2 = []
+    for pattern in patterns
+      if !pattern.match(/\*/)
+        files2 << pattern
+        to_delete << pattern
+      end
+    end
+    files2.sort!
+    patterns = patterns - to_delete
+
+    patterns = patterns.flat_map do |pattern|
+      if pattern.match?(/^\*\//)
+        [pattern[1..-1], "any" + pattern[1..-1]]
+      else
+        [pattern]
+      end
+    end
+    
+    patterns = patterns.flat_map do |pattern|
+      if pattern.match?(/^\*[-\.]/)
+        ["some" + pattern[1..-1]]
+      elsif pattern.match?(/^\*/)
+        [pattern[1..-1], "some-" + pattern[1..-1]]
+      else
+        [pattern]
+      end
+    end
+
+    patterns = patterns.flat_map do |pattern|
+      if pattern.match?(/[^\/]+\/\*-[^\\]+$/)
+        [pattern.gsub('/*-', '/file-')]
+      elsif pattern.match?(/[^\/]+\/\*\.[^\\]+$/)
+        [pattern.gsub('/*.', '/file.')]
+      elsif pattern.match?(/[^\/]+\/\*[^\\]+$/)
+        [pattern.gsub('/*', '/'), pattern.gsub('/*', '/some-')]
+      else
+        [pattern]
+      end
+    end
+
+    patterns = patterns.flat_map do |pattern|
+      if pattern.include?('-*/')
+        [pattern.gsub('-*/', '-file/')]
+      elsif pattern.include?('.*/')
+        [pattern.gsub('.*/', '.file/')]
+      elsif pattern.include?('*/')
+        [pattern.gsub('*/', '/'), pattern.gsub('*/', '-some/')]
+      else
+        [pattern]
+      end
+    end
+
+    patterns = patterns.flat_map do |pattern|
+      if pattern.match?(/[^\/]+\.\*\.([^\*\/]+)$/)
+        [pattern.gsub('.*.', '.file.')]
+      elsif pattern.match?(/[^\/]+-\*\.([^\*\/]+)$/)
+        [pattern.gsub('-*.', '-file.')]
+      elsif pattern.match?(/[^\/]+\*\.([^\*\/]+)$/)
+        [pattern.gsub('*.', '.'), pattern.gsub('*.', '-file.')]
+      else
+        [pattern]
+      end
+    end
+
+    patterns = patterns.flat_map do |pattern|
+      if pattern.match?(/\*$/)
+        [pattern[0..-2], pattern[0..-2] + "-file"]
+      else
+        [pattern]
+      end
+    end
+    patterns.sort!
+
+    files = [*files1, *files2, *patterns].flat_map { |e| square_expansion(e) }
+    generated[ft] = files
+
+  end
+
+
+  for ft, original in existing
+    for file in generated.fetch(ft, [])
+
+      unless original.include?(file) || ['file.DEF', 'file.MOD', 'file.BUILD', 'BUILD'].include?(file) || ft == "help"
+        original << file
+      end
+    end
+    generated.delete(ft)
+    output << "    \\ '#{ft}': #{JSON.generate(original).gsub('"', "'").gsub("','", "', '")},"
+  end
+
+  for ft, paths in generated
+    idx = output.find_index { |a| a > "    \\ '" + ft }
+    output.insert(idx, "    \\ '#{ft}': #{JSON.generate(paths).gsub('"', "'").gsub("','", "', '")},")
+  end
+
+
+  output << "    \\ }"
+
+  msgs = <<'EOF'
+    \ 'messages': ['/log/auth', '/log/cron', '/log/daemon', '/log/debug', '/log/kern', '/log/lpr', '/log/mail', '/log/messages', '/log/news/news', '/log/syslog', '/log/user',
+    \     '/log/auth.log', '/log/cron.log', '/log/daemon.log', '/log/debug.log', '/log/kern.log', '/log/lpr.log', '/log/mail.log', '/log/messages.log', '/log/news/news.log', '/log/syslog.log', '/log/user.log',
+    \     '/log/auth.err', '/log/cron.err', '/log/daemon.err', '/log/debug.err', '/log/kern.err', '/log/lpr.err', '/log/mail.err', '/log/messages.err', '/log/news/news.err', '/log/syslog.err', '/log/user.err',
+    \      '/log/auth.info', '/log/cron.info', '/log/daemon.info', '/log/debug.info', '/log/kern.info', '/log/lpr.info', '/log/mail.info', '/log/messages.info', '/log/news/news.info', '/log/syslog.info', '/log/user.info',
+    \      '/log/auth.warn', '/log/cron.warn', '/log/daemon.warn', '/log/debug.warn', '/log/kern.warn', '/log/lpr.warn', '/log/mail.warn', '/log/messages.warn', '/log/news/news.warn', '/log/syslog.warn', '/log/user.warn',
+    \      '/log/auth.crit', '/log/cron.crit', '/log/daemon.crit', '/log/debug.crit', '/log/kern.crit', '/log/lpr.crit', '/log/mail.crit', '/log/messages.crit', '/log/news/news.crit', '/log/syslog.crit', '/log/user.crit',
+    \      '/log/auth.notice', '/log/cron.notice', '/log/daemon.notice', '/log/debug.notice', '/log/kern.notice', '/log/lpr.notice', '/log/mail.notice', '/log/messages.notice', '/log/news/news.notice', '/log/syslog.notice', '/log/user.notice'],
+EOF
+
+
+  "let s:filename_checks = {\n" + output.join("\n").gsub("'/doc/help.txt'", "$VIMRUNTIME . '/doc/help.txt'").gsub(/    \\ 'messages':.*?\],\n/m) { msgs }
+
+
+end
+
+#comments = get_comments()
 autocommands = import_autocommands()
-entries = generate_packages_entries(autocommands, comments)
-print(entries.join(""))
-
-
+# entries = generate_packages_entries(autocommands, comments)
+# print(entries.join(""))
+result = generate_tests(autocommands)
+print(result)

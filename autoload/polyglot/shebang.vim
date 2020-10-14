@@ -513,7 +513,6 @@ let s:interpreters = {
   \ 'pdksh': 'sh',
   \ 'rc': 'sh',
   \ 'sh': 'sh',
-  \ 'zsh': 'sh',
   \ 'boolector': 'smt2',
   \ 'cvc4': 'smt2',
   \ 'mathsat5': 'smt2',
@@ -526,6 +525,7 @@ let s:interpreters = {
   \ 'z3': 'smt2',
   \ 'deno': 'typescript',
   \ 'ts-node': 'typescript',
+  \ 'zsh': 'zsh',
   \ }
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 

@@ -1,3 +1,5 @@
+filetype on
+
 function! TestExtension(filetype, filename, content)
   call Log('Detecting ' . a:filetype . ' filetype (' . a:filename . ')...')
 
@@ -388,3 +390,5 @@ call TestExtension("conf", "auto.master", "")
 
 " https://github.com/sheerun/vim-polyglot/issues/579
 call TestExtension("dart", "reminders.dart", "")
+
+filetype off

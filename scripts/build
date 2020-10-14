@@ -22,6 +22,7 @@ def except(hash, *keys)
   h
 end
 
+
 def verify(packages, heuristics)
   extensions_with_heuristics = Set.new(heuristics.flat_map { |e| e["extensions"] })
   no_heuristics = Hash.new { |a, b| a[b] = [] }
@@ -64,7 +65,7 @@ def sort_packages(packages)
   for p in packages
     for f in p["filetypes"]
       for e in f["extensions"]
-        by_extension[e] << p["name"]
+        by_extension[e] << p["name"] unless by_extension[e].include?(p["name"])
       end
     end
   end
@@ -80,6 +81,25 @@ def sort_packages(packages)
               if p["name"] != name
                 implicit_dependencies[p["name"]] |= [name]
               end
+            end
+          end
+        end
+      end
+
+      for e in f["extensions"]
+        if e.count(".") > 0
+          ext = e.split(".").last
+          for name in by_extension[ext]
+            if p["name"] != name
+              implicit_dependencies[p["name"]] |= [name]
+            end
+          end
+        end
+
+        if e.match?(/[A-Z]/) && by_extension[e.downcase].size > 0
+          for name in by_extension[e.downcase]
+            if p["name"] != name
+              implicit_dependencies[p["name"]] |= [name]
             end
           end
         end
@@ -120,6 +140,7 @@ def load_data()
             end
           end
         end
+        filetype.delete("patterns")
       end
       if filetype["linguist"]
         if filetype["extensions"]
@@ -338,7 +359,11 @@ def pattern_to_condition(rule)
 end
 
 def rules_to_code(rules)
-  output = ""
+  output = <<~EOF
+  if a:0 != 1 && did_filetype()
+    return
+  endif
+  EOF
 
   vars = []
   each_hash(rules) do |h|
@@ -595,7 +620,7 @@ def generate_ftdetect(packages, heuristics)
 
       for heuristic in filetype_heuristics.uniq
         extensions = heuristic["extensions"].map { |e| "*.#{e}" }
-        autocommands << "au! BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()"
+        autocommands << "au BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()"
       end
 
       if autocommands.size > 0 && filetype["description"]
@@ -621,7 +646,7 @@ def generate_ftdetect(packages, heuristics)
 
   for heuristic in heuristics
     output << <<~EOS
-      func! polyglot#detect##{camelize(heuristic["extensions"].first)}()
+      func! polyglot#detect##{camelize(heuristic["extensions"].first)}(...)
       #{indent(rules_to_code(heuristic), 2)}
       endfunc
     EOS
@@ -843,8 +868,4 @@ if __FILE__ == $0
   generate_plugins(packages)
   generate_tests(packages)
   puts(" Bye! Have a wonderful time!")
-
-  if !ENV["DEV"]
-    FileUtils.rm_rf("tmp")
-  end
 end

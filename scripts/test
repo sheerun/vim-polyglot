@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 
 def run_script(src)
-  system("bash", "-c", src)
+  if system("bash", "-eo", "pipefail", "-c", src) != true
+    exit(1)
+  end
 end
 
 def run_vimscript(src)
+
   wrapper = <<~EOF
     vim --clean --not-a-term -u <(cat <<- "EOM"
-    let g:polyglot_test = 1
     set nocompatible
-    let &rtp='$PWD,' . &rtp
-    filetype plugin indent on
-    syntax on
+    let &rtp='#{Dir.pwd},' . &rtp
     set t_ti= t_te=
     set shortmess+=F
     set noswapfile
@@ -23,17 +23,35 @@ def run_vimscript(src)
       endif
     endfunc
     EOM
+  EOF
+
+  wrapper += <<~'EOF'
     ) -S <(cat <<- "EOM"
-      try
       #{src}
-      catch
-        echo v:exception
-        echo v:throwpoint
-      endtry
+
+      redir @q
+      silent function /^NewTest_
+      redir END
+      let s:tests = split(substitute(@q, '\(function\|def\) \(\k*()\)', '\2', 'g'))
+      for test in s:tests
+        echo test
+        %bwipe!
+        exe 'call ' . test
+        set noinsertmode
+        if len(v:errors) > 0
+          for err in v:errors
+            echo err
+          endfor
+          cq!
+        endif
+      endfor
+
       qa!
     EOM
     ) | perl -pe 's/\e\[[0-9;]*[a-zA-Z]//g'
   EOF
+
+  wrapper.gsub!('#{src}') { src }
 
   run_script(wrapper)
 end
@@ -47,6 +65,11 @@ EOF
 
 run_vimscript('source tests/filetypes.vim')
 run_vimscript('source tests/extensions.vim')
+
+if !ENV['DEV']
+  run_vimscript('source tests/native.vim')
+end
+
 run_script(test_helptags)
 
 # run_vimscript("

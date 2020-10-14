@@ -4,7 +4,10 @@ set cpo&vim
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
-func! polyglot#detect#Inp()
+func! polyglot#detect#Inp(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   let line = getline(nextnonblank(1))
   if line =~# '^\*'
     set ft=abaqus | return
@@ -17,14 +20,20 @@ func! polyglot#detect#Inp()
   endfor
 endfunc
 
-func! polyglot#detect#Asa()
+func! polyglot#detect#Asa(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   if exists("g:filetype_asa")
     let &ft = g:filetype_asa | return
   endif
   set ft=aspvbs | return
 endfunc
 
-func! polyglot#detect#Asp()
+func! polyglot#detect#Asp(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   if exists("g:filetype_asp")
     let &ft = g:filetype_asp | return
   endif
@@ -37,7 +46,10 @@ func! polyglot#detect#Asp()
   set ft=aspvbs | return
 endfunc
 
-func! polyglot#detect#H()
+func! polyglot#detect#H(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   for lnum in range(1, min([line("$"), 200]))
     let line = getline(lnum)
     if line =~# '^\s*\(@\(interface\|class\|protocol\|property\|end\|synchronised\|selector\|implementation\)\(\<\|\>\)\|#import\s\+.\+\.h[">]\)'
@@ -56,7 +68,10 @@ func! polyglot#detect#H()
   set ft=cpp | return
 endfunc
 
-func! polyglot#detect#M()
+func! polyglot#detect#M(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   let saw_comment = 0
   for lnum in range(1, min([line("$"), 100]))
     let line = getline(lnum)
@@ -85,7 +100,10 @@ func! polyglot#detect#M()
   set ft=octave | return
 endfunc
 
-func! polyglot#detect#Fs()
+func! polyglot#detect#Fs(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   for lnum in range(1, min([line("$"), 50]))
     let line = getline(lnum)
     if line =~# '^\(: \|new-device\)'
@@ -104,7 +122,10 @@ func! polyglot#detect#Fs()
   set ft=forth | return
 endfunc
 
-func! polyglot#detect#Re()
+func! polyglot#detect#Re(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   for lnum in range(1, min([line("$"), 50]))
     let line = getline(lnum)
     if line =~# '^\s*#\%(\%(if\|ifdef\|define\|pragma\)\s\+\w\|\s*include\s\+[<"]\|template\s*<\)'
@@ -114,7 +135,10 @@ func! polyglot#detect#Re()
   endfor
 endfunc
 
-func! polyglot#detect#Idr()
+func! polyglot#detect#Idr(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   for lnum in range(1, min([line("$"), 5]))
     let line = getline(lnum)
     if line =~# '^\s*--.*[Ii]dris \=1'
@@ -148,7 +172,10 @@ func! polyglot#detect#Idr()
   set ft=idris2 | return
 endfunc
 
-func! polyglot#detect#Lidr()
+func! polyglot#detect#Lidr(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   for lnum in range(1, min([line("$"), 200]))
     let line = getline(lnum)
     if line =~# '^>\s*--.*[Ii]dris \=1'
@@ -158,7 +185,10 @@ func! polyglot#detect#Lidr()
   set ft=lidris2 | return
 endfunc
 
-func! polyglot#detect#Bas()
+func! polyglot#detect#Bas(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   for lnum in range(1, min([line("$"), 5]))
     let line = getline(lnum)
     if line =~? 'VB_Name\|Begin VB\.\(Form\|MDIForm\|UserControl\)'
@@ -168,7 +198,10 @@ func! polyglot#detect#Bas()
   set ft=basic | return
 endfunc
 
-func! polyglot#detect#Pm()
+func! polyglot#detect#Pm(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   let line = getline(nextnonblank(1))
   if line =~# 'XPM2'
     set ft=xpm2 | return
@@ -192,7 +225,10 @@ func! polyglot#detect#Pm()
   set ft=perl | return
 endfunc
 
-func! polyglot#detect#Pl()
+func! polyglot#detect#Pl(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   let line = getline(nextnonblank(1))
   if line =~# '^[^#]*:-' || line =~# '^\s*\%(%\|/\*\)' || line =~# '\.\s*$'
     set ft=prolog | return
@@ -213,7 +249,10 @@ func! polyglot#detect#Pl()
   set ft=perl | return
 endfunc
 
-func! polyglot#detect#T()
+func! polyglot#detect#T(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   for lnum in range(1, min([line("$"), 5]))
     let line = getline(lnum)
     if line =~# '^\.'
@@ -236,7 +275,10 @@ func! polyglot#detect#T()
   set ft=perl | return
 endfunc
 
-func! polyglot#detect#Tt2()
+func! polyglot#detect#Tt2(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   for lnum in range(1, min([line("$"), 3]))
     let line = getline(lnum)
     if line =~? '<\%(!DOCTYPE HTML\|[%?]\|html\)'
@@ -246,7 +288,10 @@ func! polyglot#detect#Tt2()
   set ft=tt2 | return
 endfunc
 
-func! polyglot#detect#Html()
+func! polyglot#detect#Html(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
   let line = getline(nextnonblank(1))
   if line =~# '^\(%\|<[%&].*>\)'
     set ft=mason | return

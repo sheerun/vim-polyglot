@@ -245,19 +245,26 @@ filetypes:
 - name: autohotkey
   linguist: AutoHotkey
 ---
+name: make
+remote: vim/vim:runtime
+glob: '**/make.vim'
+filetypes:
+- name: make
+  filenames:
+  - '*[mM]akefile'
+  extensions:
+  - mak
+  - dsp
+  - mk
+---
 name: automake
 remote: vim/vim:runtime
 glob: '**/automake.vim'
 filetypes:
 - name: automake
   filenames:
-  - Makefile.am
-  - makefile.am
+  - '[mM]akefile.am'
   - GNUmakefile.am
-  extensions:
-  - mak
-  - dsp
-  - mk
 ---
 name: asn
 remote: vim/vim:runtime
@@ -493,15 +500,8 @@ filetypes:
 ---
 name: dockerfile
 remote: ekalinin/Dockerfile.vim
+glob: '**/docker-compose.vim'
 filetypes:
-- name: Dockerfile
-  linguist: Dockerfile
-  extra_extensions:
-  - dock
-  - Dockerfile
-  extra_filenames:
-  - dockerfile
-  - Dockerfile*
 - name: yaml.docker-compose
   filenames:
   - 'docker-compose*.yaml'
@@ -754,8 +754,13 @@ filetypes:
   linguist: HAProxy
   extra_filenames:
   - 'haproxy*.conf*'
+  - 'haproxy*.cfg*'
   ignored_warnings:
   - 'haproxy*.c*'
+  ignored_extensions:
+  - cfg
+  ignored_filenames:
+  - haproxy.cfg
 ---
 name: haskell
 remote: neovimhaskell/haskell-vim
@@ -1471,13 +1476,6 @@ filetypes:
   # handled by sbt plugin
   - sbt
 ---
-name: sbt
-remote: derekwyatt/vim-sbt
-filetypes:
-- name: sbt.scala
-  extensions:
-  - sbt
----
 name: scss
 remote: cakebaker/scss-syntax.vim
 filetypes:
@@ -1497,10 +1495,19 @@ filetypes:
   - '.zlogin'
   - '.zprofile'
   - '.zlogout'
+  - 'zshrc'
+  - 'zshenv'
+  - 'zlogin'
+  - 'zprofile'
+  - 'zlogout'
   # Udev symlinks config
   extra_filenames:
   - '*/etc/udev/cdsymlinks.conf'
+  ignored_interpreters:
+  - zsh
 - name: zsh
+  interpreters:
+  - zsh
   extensions:
   - zsh
   filenames:
@@ -1513,6 +1520,7 @@ filetypes:
   - '.zcompdump*'
   - '.zfbfmarks'
   - '.zsh*'
+  - '*/etc/zprofile'
 ---
 name: zinit
 remote: zinit-zsh/zplugin-vim-syntax
@@ -2321,7 +2329,7 @@ glob: "**/dockerfile.vim"
 filetypes:
 - name: dockerfile
   patterns:
-  - pattern: Containerfile,Dockerfile,*.Dockerfile
+  - pattern: Containerfile,Dockerfile,*.Dockerfile,*.dock,dockerfile,Dockerfile*
     description: Dockerfile; Podman uses the same syntax with name Containerfile
 ---
 name: dcd
@@ -3974,9 +3982,9 @@ glob: "**/pascal.vim"
 filetypes:
 - name: pascal
   patterns:
-  - pattern: "*.pas"
+  - pattern: "*.pas,*.pp"
     description: Pascal (also *.p)
-  - pattern: "*.dpr"
+  - pattern: "*.dpr,*.lpr"
     description: Delphi or Lazarus program file
 ---
 name: pdf
@@ -4624,6 +4632,7 @@ filetypes:
 name: st
 remote: vim/vim:runtime
 glob: "**/st.vim"
+after: html
 filetypes:
 - name: st
   patterns:
@@ -4969,7 +4978,7 @@ glob: "**/tidy.vim"
 filetypes:
 - name: tidy
   patterns:
-  - pattern: ".tidyrc,tidyrc"
+  - pattern: ".tidyrc,tidyrc,tidy.conf"
     description: Tidy config
 ---
 name: tf
@@ -5491,3 +5500,11 @@ name: html5
 remote: sheerun/html5.vim
 dependencies: html
 filetypes: []
+---
+name: xf86conf
+remote: vim/vim:runtime
+glob: "**/xf86conf.vim"
+filetypes:
+- name: xf86conf
+  patterns:
+  - pattern: "XF86Config-4*,XF86Config*,*/xorg.conf.d/*.conf,xorg.conf,xorg.conf-4"
