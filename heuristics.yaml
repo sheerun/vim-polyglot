@@ -188,7 +188,7 @@ rules:
   filetype: mason
 - lines: 50
   rules:
-  - pattern: '{%-?\s*(end.*|extends|block|macro|set|if|for|include|trans)\b|{#\s+'
+  - pattern: '{%-?\s*(end.*|extends|block|macro|set|if|for|include|trans|load)\b|{#\s+'
     filetype: htmldjango
   - pattern: '\bDTD\s+XHTML\s'
     filetype: xhtml

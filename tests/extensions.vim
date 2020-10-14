@@ -371,6 +371,7 @@ call TestExtension("mason", "mason2.html", "<%filter></%filter>")
 call TestExtension("htmldjango", "jinja2.html", "{% for item in navigation %}{% endfor %}")
 call TestExtension("htmldjango", "jinja3.html", "{% block head %}")
 call TestExtension("htmldjango", "jinja4.html", "{# some comment #}")
+call TestExtension("htmldjango", "jinja3.html", "{% load static %}")
 call TestExtension("xhtml", "xhtml.html", "<DTD   XHTML ")
 
 " many html templates use {{ }}, e.g. Angular, we should not assume django
