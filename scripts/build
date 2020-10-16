@@ -531,10 +531,26 @@ def extract(packages)
     end
 
 
+    names = nil
     langs = package["filetypes"].map { |f| f["linguist"] }.compact
     if langs.size > 0
-      output[-1] << " (#{print_and(langs)} syntax highlighting)"
+      names = print_and(langs)
     end
+
+    files = nil
+    extensions = package["filetypes"].flat_map { |f| f["extensions"].reject { |e| e.match?(/_/) } }.compact
+    if extensions.size > 0
+      files = print_and(extensions)
+    end
+
+    if names && files
+      output[-1] << " (#{names} syntax highlighting for #{files} files)"
+    elsif names
+      output[-1] << " (#{names} syntax highlighting)"
+    elsif files
+      output[-1] << " (Syntax highlighting for #{files} files)"
+    end
+
 
     progress
   end
@@ -557,6 +573,8 @@ end
 def print_and(list)
   if list.size == 1
     list[0]
+  elsif list.size > 10
+    list[0...5].join(", ") + " and #{list.size - 5} more"
   else
     list[0..-2].join(", ") + " and " + list[-1]
   end
