@@ -530,10 +530,10 @@ def extract(packages)
       output << "- [#{package["name"]}](https://github.com/#{repo})"
     end
 
-    if package["filetypes"].size > 1
-      output[-1] << " (#{package["filetypes"].map { |f| f["name"] }.join(", ")[0..-2]} and #{package["filetypes"].last["name"]} filetypes)"
-    elsif package["filetypes"].size > 0
-      output[-1] << " (#{package["filetypes"].first["name"]} filetype)"
+
+    langs = package["filetypes"].map { |f| f["linguist"] }.compact
+    if langs.size > 0
+      output[-1] << " (#{print_and(langs)} syntax highlighting)"
     end
 
     progress
@@ -552,6 +552,14 @@ def extract(packages)
   )
 
   File.write('README.md', readme)
+end
+
+def print_and(list)
+  if list.size == 1
+    list[0]
+  else
+    list[0..-2].join(", ") + " and " + list[-1]
+  end
 end
 
 def generate_ftdetect(packages, heuristics)
