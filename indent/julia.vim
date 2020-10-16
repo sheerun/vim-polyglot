@@ -21,7 +21,7 @@ if exists("*GetJuliaIndent")
   finish
 endif
 
-let s:skipPatterns = '\<julia\%(Comprehension\%(For\|If\)\|RangeKeyword\|Comment[LM]\|\%([bsv]\|ip\|big\|MIME\|Shell\|Printf\|Doc\)\=String\|RegEx\|SymbolS\?\)\>'
+let s:skipPatterns = '\<julia\%(Comprehension\%(For\|If\)\|RangeKeyword\|Comment\%([LM]\|Delim\)\|\%([bsv]\|ip\|big\|MIME\|Shell\|Printf\|Doc\)\=String\|RegEx\|SymbolS\?\)\>'
 
 function JuliaMatch(lnum, str, regex, st, ...)
   let s = a:st
@@ -51,7 +51,7 @@ function GetJuliaNestingStruct(lnum, ...)
   let blocks_stack = []
   let num_closed_blocks = 0
   while 1
-    let fb = JuliaMatch(a:lnum, line, '@\@<!\<\%(if\|else\%(if\)\?\|while\|for\|try\|catch\|finally\|\%(staged\)\?function\|macro\|begin\|mutable\s\+struct\|\%(mutable\s\+\)\@<!struct\|\%(abstract\|primitive\)\s\+type\|immutable\|let\|\%(bare\)\?module\|quote\|do\)\>', s, e)
+    let fb = JuliaMatch(a:lnum, line, '@\@<!\<\%(if\|else\%(if\)\?\|while\|for\|try\|catch\|finally\|\%(staged\)\?function\|macro\|begin\|mutable\s\+struct\|\%(mutable\s\+\)\@<!struct\|\%(abstract\|primitive\)\s\+type\|let\|\%(bare\)\?module\|quote\|do\)\>', s, e)
     let fe = JuliaMatch(a:lnum, line, '@\@<!\<end\>', s, e)
 
     if fb < 0 && fe < 0
@@ -255,14 +255,18 @@ function GetJuliaNestingBrackets(lnum, c)
   endwhile
   let first_open_bracket = -1
   let last_open_bracket = -1
+  let infuncargs = 0
   if len(brackets_stack) > 0
     let first_open_bracket = brackets_stack[0][1]
     let last_open_bracket = brackets_stack[-1][1]
+    if brackets_stack[-1][0] == 'par' && IsFunctionArgPar(a:lnum, last_open_bracket)
+      let infuncargs = 1
+    endif
   endif
-  return [first_open_bracket, last_open_bracket, last_closed_bracket]
+  return [first_open_bracket, last_open_bracket, last_closed_bracket, infuncargs]
 endfunction
 
-let s:bracketBlocks = '\<julia\%(\%(\%(Printf\)\?Par\|SqBra\|CurBra\)Block\|ParBlockInRange\|StringVars\%(Par\|SqBra\|CurBra\)\|Dollar\%(Par\|SqBra\)\|QuotedParBlockS\?\)\>'
+let s:bracketBlocks = '\<julia\%(\%(\%(Printf\)\?Par\|SqBra\%(Idx\)\?\|CurBra\)Block\|ParBlockInRange\|StringVars\%(Par\|SqBra\|CurBra\)\|Dollar\%(Par\|SqBra\)\|QuotedParBlockS\?\)\>'
 
 function IsInBrackets(lnum, c)
   let stack = map(synstack(a:lnum, a:c), 'synIDattr(v:val, "name")')
@@ -272,8 +276,38 @@ endfunction
 
 function IsInDocString(lnum)
   let stack = map(synstack(a:lnum, 1), 'synIDattr(v:val, "name")')
-  call filter(stack, 'v:val =~# "\\<juliaDocString\\>"')
+  call filter(stack, 'v:val =~# "\\<juliaDocString\\(Delim\\)\\?\\>"')
   return len(stack) > 0
+endfunction
+
+function IsInContinuationImportLine(lnum)
+  let stack = map(synstack(a:lnum, 1), 'synIDattr(v:val, "name")')
+  call filter(stack, 'v:val =~# "\\<juliaImportLine\\>"')
+  if len(stack) == 0
+    return 0
+  endif
+  return JuliaMatch(a:lnum, getline(a:lnum), '\<\%(import\|using\|export\)\>', indent(a:lnum)) == -1
+endfunction
+
+function IsFunctionArgPar(lnum, c)
+  if a:c == 0
+    return 0
+  endif
+  let stack = map(synstack(a:lnum, a:c-1), 'synIDattr(v:val, "name")')
+  return stack[-1] == 'juliaFunctionBlock'
+endfunction
+
+function JumpToMatch(lnum, last_closed_bracket)
+  " we use the % command to skip back (tries to ues matchit if possible,
+  " otherwise resorts to vim's default, which is buggy but better than
+  " nothing)
+  call cursor(a:lnum, a:last_closed_bracket)
+  let percmap = maparg("%", "n") 
+  if exists("g:loaded_matchit") && percmap =~# 'Match\%(it\|_wrapper\)'
+    normal %
+  else
+    normal! %
+  end
 endfunction
 
 " Auxiliary function to find a line which does not start in the middle of a
@@ -314,30 +348,29 @@ function GetJuliaIndent()
   let lim = -1
 
   " Multiline bracketed expressions take precedence
+  let align_brackets = get(g:, "julia_indent_align_brackets", 1)
+  let align_funcargs = get(g:, "julia_indent_align_funcargs", 0)
   let c = len(getline(lnum)) + 1
   while IsInBrackets(lnum, c)
-    let [first_open_bracket, last_open_bracket, last_closed_bracket] = GetJuliaNestingBrackets(lnum, c)
+    let [first_open_bracket, last_open_bracket, last_closed_bracket, infuncargs] = GetJuliaNestingBrackets(lnum, c)
 
     " First scenario: the previous line has a hanging open bracket:
     " set the indentation to match the opening bracket (plus an extra space)
+    " unless we're in a function arguments list or alignment is disabled, in
+    " which case we just add an extra indent
     if last_open_bracket != -1
-      let st = last_open_bracket
-      let ind = virtcol([lnum, st + 1])
+      if (!infuncargs && align_brackets) || (infuncargs && align_funcargs)
+        let st = last_open_bracket
+        let ind = virtcol([lnum, st + 1])
+      else
+        let ind = indent(lnum) + shiftwidth()
+      endif
 
     " Second scenario: some multiline bracketed expression was closed in the
     " previous line. But since we know we are still in a bracketed expression,
-    " we need to find the line where the bracket was open
+    " we need to find the line where the bracket was opened
     elseif last_closed_bracket != -1
-      " we use the % command to skip back (tries to ues matchit if possible,
-      " otherwise resorts to vim's default, which is buggy but better than
-      " nothing)
-      call cursor(lnum, last_closed_bracket)
-      let percmap = maparg("%", "n") 
-      if exists("g:loaded_matchit") && percmap =~# 'Match\%(it\|_wrapper\)'
-        normal %
-      else
-        normal! %
-      end
+      call JumpToMatch(lnum, last_closed_bracket)
       if line(".") == lnum
         " something wrong here, give up
         let ind = indent(lnum)
@@ -354,15 +387,28 @@ function GetJuliaIndent()
         endif
       endif
 
-    " Third scenario: nothing special, or matchit not available: keep the indentation
+    " Third scenario: nothing special: keep the indentation
     else
       let ind = indent(lnum)
     endif
 
-    " In case the current line starts with a closing bracket, we align it with
-    " the opening one.
+    " Does the current line starts with a closing bracket? Then depending on
+    " the situation we align it with the opening one, or we let the rest of
+    " the code figure it out (the case in which we're closing a function
+    " argument list is special-cased)
     if JuliaMatch(v:lnum, getline(v:lnum), '[])}]', indent(v:lnum)) == indent(v:lnum) && ind > 0
-      return ind - 1
+      if !align_brackets && !align_funcargs
+        let ind = -1
+      elseif (align_brackets && getline(v:lnum)[indent(v:lnum)] != ')') || align_funcargs
+        return ind - 1
+      else " must be a ')' and align_brackets==1 and align_funcargs==0
+        call JumpToMatch(v:lnum, indent(v:lnum))
+        if IsFunctionArgPar(line("."), col("."))
+          let ind = -1
+        else
+          return ind - 1
+        endif
+      endif
     endif
 
     break
@@ -374,7 +420,7 @@ function GetJuliaIndent()
     let [lnum,ind] = LastBlockIndent(lnum)
     let c = len(getline(lnum)) + 1
     if IsInBrackets(lnum, c)
-      let [first_open_bracket, last_open_bracket, last_closed_bracket] = GetJuliaNestingBrackets(lnum, c)
+      let [first_open_bracket, last_open_bracket, last_closed_bracket, infuncargs] = GetJuliaNestingBrackets(lnum, c)
       let lim = first_open_bracket
     endif
   end
@@ -388,6 +434,55 @@ function GetJuliaIndent()
   let [num_open_blocks, num_closed_blocks] = GetJuliaNestingStruct(v:lnum)
   " Decrease indentation for each closed block in the current line
   let ind -= shiftwidth() * num_closed_blocks
+
+  " Additional special case: multiline import/using/export statements
+
+  let prevline = getline(lnum)
+  " Are we in a multiline import/using/export statement, right below the
+  " opening line?
+  if IsInContinuationImportLine(v:lnum) && !IsInContinuationImportLine(lnum)
+    if get(g:, 'julia_indent_align_import', 1)
+      " if the opening line has a colon followed by non-comments, use it as
+      " reference point
+      let cind = JuliaMatch(lnum, prevline, ':', indent(lnum), lim)
+      " echo "cind=".string(cind) | sleep 1
+      if cind >= 0
+        let nonwhiteind = JuliaMatch(lnum, prevline, '\S', cind+1)
+        if nonwhiteind >= 0
+          " return match(prevline, '\S', cind+1) " a bit overkill...
+          return cind + 2
+        endif
+      else
+        " if the opening line is not a naked import/using/export statement, use
+        " it as reference
+        let iind = JuliaMatch(lnum, prevline, '\<import\|using\|export\>', indent(lnum), lim)
+        if iind >= 0
+          " assuming whitespace after using... so no `using(XYZ)` please!
+          let nonwhiteind = JuliaMatch(lnum, prevline, '\S', iind+6)
+          if nonwhiteind >= 0
+            return match(prevline, '\S', iind+6)
+          endif
+        endif
+      endif
+    endif
+    let ind += shiftwidth()
+
+  " Or did we just close a multiline import/using/export statement?
+  elseif !IsInContinuationImportLine(v:lnum) && IsInContinuationImportLine(lnum)
+    " find the starting line of the statement
+    let ilnum = 0
+    for iln in range(lnum-1, 1, -1)
+      if !IsInContinuationImportLine(iln)
+        let ilnum = iln
+        break
+      endif
+    endfor
+    if ilnum == 0
+      " something went horribly wrong, give up
+      let ind = indent(lnum)
+    endif
+    let ind = indent(ilnum)
+  endif
 
   return ind
 endfunction

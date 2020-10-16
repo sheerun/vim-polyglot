@@ -5,6 +5,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'falcon') == -1
 " Author:       Steven Oliver <oliver.steven@gmail.com>
 " Copyright:    Copyright (c) 2009-2013 Steven Oliver
 " License:      You may redistribute this under the same terms as Vim itself
+" Last Update:  2020 Oct 10
 " --------------------------------------------------------------------------
 
 " Only do this when not done yet for this buffer

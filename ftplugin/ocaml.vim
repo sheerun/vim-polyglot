@@ -524,7 +524,7 @@ endfunction
   "c. link this stuff with what the user wants
   " ie. get the expression selected/under the cursor
 
-    let s:ocaml_word_char = '\w|[\u00ac-\uffff]|'''
+    let s:ocaml_word_char = '\w|[\xc0-\xff]|'''
 
       "In:  the current mode (eg. "visual", "normal", etc.)
       "Out: the borders of the expression we are looking for the type

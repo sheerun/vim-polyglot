@@ -349,7 +349,7 @@ julia#function_assign2block()
                 statements are removed; if the result is empty, `nothing` is
                 substituted. Leading macros (e.g. `@inline` or `@compat`) are
                 recognized and preserved by the transformation.
-                
+
                 In order to make this functionality practical, it is advisable
                 to map it to some key combination, e.g.:
 >
@@ -386,6 +386,91 @@ g:julia_highlight_operators
                 Determines whether to apply syntax highlighting to operators.
                 Default: on (set to `1`).
 
+                                              *g:julia_indent_align_import*
+g:julia_indent_align_import
+
+                In a multi-line import/using/export statment, the lines after
+                the first one use some special alignment rules by default,
+                e.g.:
+>
+                import X: one,
+                          two,
+                          three
+                export four,
+                       five,
+                       six
+<
+                When `g:julia_indent_align_import` is `0` instead, the usual
+                indentation is used:
+>
+                import X: one,
+                    two,
+                    three
+                export four,
+                    five,
+                    six
+
+                                              *g:julia_indent_align_brackets*
+g:julia_indent_align_brackets
+
+                In a multi-line bracketed expression (except for function
+                arguments, see |g:julia_indent_align_funcargs|), the lines
+                after the first one use some special alignment rules by
+                default, e.g.:
+>
+                matrix = [1 2 3;
+                          4 5 6]
+                tpl = (
+                       abc = Dict(a=>1,
+                                  b=>2),
+                       def = [1 2;
+                              3 4],
+                       xyz = SubArray{eltype(P),
+                                      N, P, I,
+                                      false}
+                      )
+<
+                When `g:julia_indent_align_brackets` is `0` instead, an extra
+                indent is used:
+>
+                matrix = [1 2 3;
+                    4 5 6]
+                tpl = (
+                    abc = Dict(a=>1,
+                        b=>2),
+                    def = [1 2;
+                        3 4],
+                    xyz = SubArray{eltype(P),
+                        N, P, I,
+                        false}
+                )
+<
+
+                                              *g:julia_indent_align_funcargs*
+g:julia_indent_align_funcargs
+
+                In a function definition, when the arguments span multiple
+                lines, the lines after the first one get an extra indentation
+                step by default, e.g.:
+>
+                function functionanme(
+                        arg1, arg2,
+                        arg3, arg4
+                    )
+                    # function body
+                end
+<
+                By setting `g:julia_indent_align_funcargs` to `1`, the
+                arguments are aligned to the bracket instead (they work as any
+                other bracket with the default value of
+                |g:julia_indent_align_brackets|):
+>
+                function functionanme(arg1, arg2,
+                                      arg3, arg4
+                                     )
+                    # function body
+                end
+<
 
 ==============================================================================
 ABOUT                                                     *julia-vim-about*

@@ -531,9 +531,9 @@ def extract(packages)
     end
 
     if package["filetypes"].size > 1
-      output[-1] << "(#{package["filetypes"].map { |f| f["name"] }.join(", ")[0..-2]} and #{package["filetypes"].last["name"]} filetypes)"
+      output[-1] << " (#{package["filetypes"].map { |f| f["name"] }.join(", ")[0..-2]} and #{package["filetypes"].last["name"]} filetypes)"
     elsif package["filetypes"].size > 0
-      output[-1] << "(#{package["filetypes"].first["name"]} filetype)"
+      output[-1] << " (#{package["filetypes"].first["name"]} filetype)"
     end
 
     progress

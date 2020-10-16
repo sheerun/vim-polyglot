@@ -330,7 +330,7 @@ function! s:download(branch)
     let zip = s:script_root_dir . "fsac.zip"
     call system(
         \ 'curl -fLo ' . zip .  ' --create-dirs ' .
-        \ '"https://ci.appveyor.com/api/projects/fsautocomplete/fsautocomplete/artifacts/bin/pkgs/fsautocomplete.netcore.zip?branch=' . a:branch . '"'
+        \ '"https://github.com/fsharp/FsAutoComplete/releases/latest/download/fsautocomplete.netcore.zip"'
         \ )
     if v:shell_error == 0
         call system('unzip -o -d ' . s:script_root_dir . "/fsac " . zip)

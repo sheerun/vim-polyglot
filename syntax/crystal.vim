@@ -141,7 +141,7 @@ syn match crystalFloat     "\<\d[[:digit:]_]*\%(\.\d[[:digit:]_]*\)\=\%([eE][-+]
 syn match crystalInvalidInteger "\%(\.\|[eE][+-]\)\@2<!\<0\d\+\>" contained containedin=crystalFloat,crystalInteger display
 
 " Identifiers
-syn match crystalLocalVariableOrMethod "\<[_[:lower:]][_[:alnum:]]*[?!=]\=" contains=NONE display transparent
+syn match crystalLocalVariableOrMethod "\<[_[:lower:]][_[:alnum:]]*[?!=]\=" contains=NONE display
 syn match crystalBlockArgument         "&[_[:lower:]][_[:alnum:]]"          contains=NONE display transparent
 
 syn match  crystalTypeName         "\%(\%([.@$]\@1<!\.\)\@1<!\<\|::\)\_s*\zs\u\w*\%(\>\|::\)\@=" contained
