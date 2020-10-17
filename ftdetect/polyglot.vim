@@ -2608,14 +2608,13 @@ au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>:e") == "" |
   \ call polyglot#shebang#Detect() | endif
 
 au BufEnter * if &ft == "" && expand("<afile>:e") == ""  |
-      \ call s:Observe('shebang#Detect') | endif
+  \ call s:Observe('shebang#Detect') | endif
 
 augroup END
 
 if !has_key(s:disabled_packages, 'autoindent')
   " Code below re-implements sleuth for vim-polyglot
   let g:loaded_sleuth = 1
-  let g:loaded_foobar = 1
 
   " Makes shiftwidth to be synchronized with tabstop by default
   if &shiftwidth == &tabstop
@@ -2637,7 +2636,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     for line in a:lines
       let i += 1
 
-      if !len(line) || line =~# '^\W*$'
+      if !len(line) || line =~# '^\S+$'
         continue
       endif
 
