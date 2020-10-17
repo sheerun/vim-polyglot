@@ -13,6 +13,10 @@ if exists("did_load_polyglot")
   finish
 endif
 
+" Line continuation is used here, remove 'C' from 'cpoptions'
+let s:cpo_save = &cpo
+set cpo&vim
+
 let did_load_polyglot = 1
 
 " It can happen vim filetype.vim loads first, then we need a reset
@@ -22,10 +26,6 @@ endif
 
 " Prevent filetype.vim of vim from loading again
 let did_load_filetypes = 1
-
-" Line continuation is used here, remove 'C' from 'cpoptions'
-let s:cpo_save = &cpo
-set cpo&vim
 
 " Be consistent across different systems
 set nofileignorecase
@@ -117,12 +117,12 @@ func! s:StarSetf(ft)
   endif
 endfunc
 
-" Load user-defined filetype.vim
 augroup filetypedetect
-runtime! filetype.vim
-augroup END
 
-augroup filetypedetect
+" Load user-defined filetype.vim and oter plugins ftdetect first
+" This is to use polyglot-defined ftdetect always as fallback to user settings
+runtime! filetype.vim
+runtime! ftdetect/*.vim
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
@@ -3421,15 +3421,18 @@ au BufNewFile,BufRead *.txt
 	\|   setf text
 	\| endif
 
-" Use the filetype detect plugins.  They may overrule any of the previously
-" detected filetypes.
-runtime! ftdetect/*.vim
 
 " NOTE: The above command could have ended the filetypedetect autocmd group
 " and started another one. Let's make sure it has ended to get to a consistent
 " state.
 augroup END
 
+" Use the filetype detect plugins.  They may overrule any of the previously
+" detected filetypes.
+if exists("did_load_filetypes") && exists("g:polyglot_disabled")
+  unlet did_load_filetypes
+  runtime! $VIMRUNTIME/filetype.vim
+endif
 
 " Restore 'cpoptions'
 let &cpo = s:cpo_save
