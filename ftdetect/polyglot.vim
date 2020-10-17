@@ -3431,7 +3431,7 @@ augroup END
 " detected filetypes.
 if exists("did_load_filetypes") && exists("g:polyglot_disabled")
   unlet did_load_filetypes
-  runtime! $VIMRUNTIME/filetype.vim
+  runtime! extras/filetype.vim
 endif
 
 " Restore 'cpoptions'

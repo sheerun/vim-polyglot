@@ -257,9 +257,8 @@ def parse_remote(remote)
   [match[:repo], match[:branch] || "master", match[:path], dir]
 end
 
-def copy_file(package, src, dest)
+def copy_file(name, src, dest)
   FileUtils.mkdir_p(File.dirname(dest))
-  name = package.fetch("name")
 
   if dest.end_with?(".vim")
     header = '" Polyglot metafile'
@@ -509,11 +508,11 @@ def extract(packages)
         globs.each do |glob|
           Dir.glob("#{subdir}/#{glob}", base: subtree).each do |p|
             next unless File.file?("#{subtree}#{p}")
-            copy_file(package, "#{subtree}#{p}", p)
+            copy_file(package["name"], "#{subtree}#{p}", p)
           end
         end
       elsif File.exist?(subpath)
-        copy_file(package, subpath, subdir)
+        copy_file(package["name"], subpath, subdir)
       end
     end
 
@@ -889,6 +888,19 @@ def show_warnings(all_filetypes, expected_filetypes)
   end
 end
 
+def generate_fallback
+  filetype_content = File.read('tmp/vim/vim/runtime/filetype.vim') 
+  filetype_content.gsub!('runtime! ftdetect/*.vim', '')
+  filetype_content.gsub!(/^au BufNewFile,BufRead \*\n.+?runtime!.+?endif/m) {}
+  filetype_content.gsub!(/^au StdinReadPost \* .+?runtime!.+?endif/m) {}
+  filetype_content.gsub!(/^au filetypedetect BufNewFile,BufRead,StdinReadPost \*\n.+?endif/m) {}
+  File.write('extras/filetype.vim', filetype_content)
+
+  autoload_content = File.read('tmp/vim/vim/runtime/autoload/dist/ft.vim') 
+  autoload_content.gsub!('dist#ft#', 'polyglot#ft#')
+  File.write('autoload/polyglot/ft.vim', autoload_content)
+end
+
 
 if __FILE__ == $0
   if !ENV["DEV"]
@@ -900,6 +912,7 @@ if __FILE__ == $0
   packages, heuristics = load_data()
   download(packages)
   extract(packages)
+  generate_fallback()
   generate_ftdetect(packages, heuristics)
   generate_plugins(packages)
   generate_tests(packages)

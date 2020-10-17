@@ -1,7 +1,7 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nim') == -1
 
 " Only load this indent file when no other was loaded.
-if exists("b:did_indent")
+if exists('b:did_indent')
   finish
 endif
 let b:did_indent = 1
@@ -14,7 +14,7 @@ setlocal indentexpr=GetNimIndent(v:lnum)
 setlocal indentkeys=!^F,o,O,<:>,0),0],0},=elif
 
 " Only define the function once.
-if exists("*GetNimIndent")
+if exists('*GetNimIndent')
   finish
 endif
 
@@ -40,7 +40,7 @@ function! GetNimIndent(lnum)
   endif
 
   " If the start of the line is in a string don't change the indent.
-  if has('syntax_items') && synIDattr(synID(a:lnum, 1, 1), "name") =~ "String$"
+  if has('syntax_items') && synIDattr(synID(a:lnum, 1, 1), 'name') =~# 'String$'
     return -1
   endif
 
@@ -56,12 +56,12 @@ function! GetNimIndent(lnum)
     " If the last character in the line is a comment, do a binary search for
     " the start of the comment.  synID() is slow, a linear search would take
     " too long on a long line.
-    if synIDattr(synID(plnum, pline_len, 1), "name") =~ "Comment$"
+    if synIDattr(synID(plnum, pline_len, 1), 'name') =~# 'Comment$'
       let min = 1
       let max = pline_len
       while min < max
         let col = (min + max) / 2
-        if synIDattr(synID(plnum, col, 1), "name") =~ "Comment$"
+        if synIDattr(synID(plnum, col, 1), 'name') =~# 'Comment$'
           let max = col
         else
           let min = col + 1
@@ -80,16 +80,16 @@ function! GetNimIndent(lnum)
     endwhile
   endif
 
-  if cline =~ '^\s*\(if\|when\|for\|while\|case\|of\|try\)\>'
+  if cline =~# '^\s*\(if\|when\|for\|while\|case\|of\|try\)\>'
     " This is a benign line, do nothing
     return -1
   endif
 
   " If the current line begins with a keyword that lines up with "try"
-  if cline =~ '^\s*\(except\|finally\)\>'
+  if cline =~# '^\s*\(except\|finally\)\>'
     let lnum = a:lnum - 1
     while lnum >= 1
-      if getline(lnum) =~ '^\s*\(try\|except\)\>'
+      if getline(lnum) =~# '^\s*\(try\|except\)\>'
         let ind = indent(lnum)
         if ind >= clindent
           return -1     " indent is already less than this
@@ -102,31 +102,31 @@ function! GetNimIndent(lnum)
   endif
 
   " If the current line begins with a header keyword, dedent
-  if cline =~ '^\s*\(elif\|else\)\>'
+  if cline =~# '^\s*\(elif\|else\)\>'
     return s:FindStartLine(a:lnum, '^\s*\(if\|when\|elif\|of\)')
   endif
 
-  if pline =~ ':\s*$'
+  if pline =~# ':\s*$'
     "return s:FindStartLine(plnum, '(^\s*\(if\|when\|else\|elif\|case\|of\|try\|except\|finally\)\>)\|\<do\>') + &sw
     return s:FindStartLine(plnum, '^\s*\(if\|when\|else\|elif\|for\|while\|case\|of\|try\|except\|finally\)\>') + &sw
   endif
 
-  if pline =~ '=\s*$'
+  if pline =~# '=\s*$'
     return s:FindStartLine(plnum, '^\s*\(proc\|template\|macro\|iterator\)\>') + &sw
   endif
 
   " if we got here, this should be the begging of a multi-line if expression for example
-  if pline =~ '^\s*\(if\|when\|proc\|iterator\|macro\|template\|for\|while\)[^:]*$'
+  if pline =~# '^\s*\(if\|when\|proc\|iterator\|macro\|template\|for\|while\)[^:]*$'
     return plindent + &sw
   endif
 
-  if pline =~ '\(type\|import\|const\|var\|let\)\s*$'
-    \ || pline =~ '=\s*\(object\|enum\|tuple\|concept\)'
+  if pline =~# '\(type\|import\|const\|var\|let\)\s*$'
+    \ || pline =~# '=\s*\(object\|enum\|tuple\|concept\)'
     return plindent + &sw
   endif
 
   " If the previous line was a stop-execution statement...
-  if pline =~ '^\s*\(break\|continue\|raise\|return\)\>'
+  if pline =~# '^\s*\(break\|continue\|raise\|return\)\>'
     " See if the user has already dedented
     if indent(a:lnum) > plindent - &sw
       " If not, recommend one dedent
