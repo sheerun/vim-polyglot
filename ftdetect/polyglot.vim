@@ -3,21 +3,15 @@
 " Maintainer:	Adam Stankiewicz <sheerun@sher.pl>
 " URL: https://github.com/sheerun/vim-polyglot
 
-" We are not supporting non-compatible mode
-if &compatible
-  finish
-endif
-
 " Listen very carefully, I will say this only once
 if exists("did_load_polyglot")
   finish
 endif
 
-" Line continuation is used here, remove 'C' from 'cpoptions'
-let s:cpo_save = &cpo
-set cpo&vim
-
 let did_load_polyglot = 1
+
+" We are not supporting non-compatible mode
+set nocompatible
 
 " It can happen vim filetype.vim loads first, then we need a reset
 if exists("did_load_filetypes")
@@ -3433,7 +3427,3 @@ if exists("did_load_filetypes") && exists("g:polyglot_disabled")
   unlet did_load_filetypes
   runtime! extras/filetype.vim
 endif
-
-" Restore 'cpoptions'
-let &cpo = s:cpo_save
-unlet s:cpo_save
