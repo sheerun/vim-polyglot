@@ -31,10 +31,10 @@ set cpo&vim
 set nofileignorecase
 
 func! s:Observe(fn)
-  let b:polyglot_observe = a:fn
+  let b:PolyglotObserve = function("polyglot#" . a:fn)
   augroup polyglot-observer
     au! CursorHold,CursorHoldI,BufWritePost <buffer>
-      \ execute('if polyglot#' . b:polyglot_observe . '() | au! polyglot-observer | endif')
+          \ if b:PolyglotObserve() | au! polyglot-observer | endif
   augroup END
 endfunc
 
