@@ -296,6 +296,7 @@ call TestFiletype('coco')
 call TestFiletype('cf')
 call TestFiletype('config')
 call TestFiletype('cuda')
+call TestFiletype('dockerfile')
 call TestFiletype('dcd')
 call TestFiletype('eterm')
 call TestFiletype('lynx')
@@ -637,6 +638,10 @@ call TestFiletype('svn')
 call TestFiletype('text')
 call TestFiletype('pullrequest')
 call TestFiletype('xf86conf')
+call TestFiletype('man')
+call TestFiletype('xpm')
+call TestFiletype('xpm2')
+call TestFiletype('context')
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 

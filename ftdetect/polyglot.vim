@@ -126,6 +126,23 @@ augroup filetypedetect
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(s:disabled_packages, 'context')
+  au BufNewFile,BufRead *.mkii,*.mkiv,*.mkvi setf context
+endif
+
+if !has_key(s:disabled_packages, 'xpm2')
+  au BufNewFile,BufRead *.xpm2 setf xpm2
+endif
+
+if !has_key(s:disabled_packages, 'xpm')
+  au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
+  au BufNewFile,BufRead *.xpm setf xpm
+endif
+
+if !has_key(s:disabled_packages, 'man')
+  au BufNewFile,BufRead *.1,*.1in,*.1m,*.1x,*.2,*.3,*.3in,*.3m,*.3p,*.3pm,*.3qt,*.3x,*.4,*.5,*.6,*.7,*.8,*.9,*.man,*.mdoc setf man
+endif
+
 if !has_key(s:disabled_packages, 'xf86conf')
   au BufNewFile,BufRead */xorg.conf.d/*.conf,xorg.conf,xorg.conf-4 setf xf86conf
   au BufNewFile,BufRead XF86Config-4* call s:StarSetf('xf86conf')
@@ -1530,6 +1547,11 @@ if !has_key(s:disabled_packages, 'dcd')
   au BufNewFile,BufRead *.dcd setf dcd
 endif
 
+if !has_key(s:disabled_packages, 'dockerfile')
+  au BufNewFile,BufRead *.Dockerfile,*.dock,Containerfile,Dockerfile,dockerfile setf dockerfile
+  au BufNewFile,BufRead Dockerfile* call s:StarSetf('dockerfile')
+endif
+
 if !has_key(s:disabled_packages, 'cuda')
   au BufNewFile,BufRead *.cu,*.cuh setf cuda
 endif
@@ -1572,7 +1594,7 @@ if !has_key(s:disabled_packages, 'chill')
 endif
 
 if !has_key(s:disabled_packages, 'debchangelog')
-  au BufNewFile,BufRead NEWS.Debian,NEWS.dch,changelog.Debian,changelog.dch setf debchangelog
+  au BufNewFile,BufRead */debian/changelog,NEWS.Debian,NEWS.dch,changelog.Debian,changelog.dch setf debchangelog
 endif
 
 if !has_key(s:disabled_packages, 'cterm')
@@ -1919,7 +1941,7 @@ if !has_key(s:disabled_packages, 'rspec')
 endif
 
 if !has_key(s:disabled_packages, 'ruby')
-  au BufNewFile,BufRead *.axlsx,*.builder,*.cap,*.eye,*.fcgi,*.gemspec,*.god,*.jbuilder,*.mspec,*.opal,*.pluginspec,*.podspec,*.rabl,*.rake,*.rant,*.rb,*.rbi,*.rbuild,*.rbw,*.rbx,*.rjs,*.ru,*.ruby,*.rxml,*.spec,*.thor,*.watchr,{.,}Brewfile,{.,}Guardfile,{.,}autotest,{.,}irbrc,{.,}pryrc,{.,}simplecov,Appraisals,Berksfile,Buildfile,Capfile,Cheffile,Dangerfile,Deliverfile,Fastfile,Gemfile,Gemfile.lock,Guardfile,Jarfile,KitchenSink,Mavenfile,Podfile,Puppetfile,Rakefile,Rantfile,Routefile,Snapfile,Thorfile,Vagrantfile,buildfile,vagrantfile setf ruby
+  au BufNewFile,BufRead *.axlsx,*.builder,*.cap,*.eye,*.fcgi,*.gemspec,*.god,*.jbuilder,*.mspec,*.opal,*.pluginspec,*.podspec,*.rabl,*.rake,*.rant,*.rb,*.rbi,*.rbuild,*.rbw,*.rbx,*.rjs,*.ru,*.ruby,*.rxml,*.spec,*.thor,*.watchr,{.,}Brewfile,{.,}Guardfile,{.,}autotest,{.,}irbrc,{.,}pryrc,{.,}simplecov,Appraisals,Berksfile,Buildfile,Capfile,Cheffile,Dangerfile,Deliverfile,Fastfile,Gemfile,Gemfile.lock,Guardfile,Jarfile,KitchenSink,Mavenfile,Podfile,Puppetfile,Rakefile,Routefile,Snapfile,Thorfile,Vagrantfile,[Rr]antfile,buildfile,vagrantfile setf ruby
   au BufNewFile,BufRead [Rr]akefile* call s:StarSetf('ruby')
   au BufNewFile,BufRead *.erb,*.erb.deface,*.rhtml setf eruby
 endif
@@ -2012,7 +2034,7 @@ if !has_key(s:disabled_packages, 'blade')
 endif
 
 if !has_key(s:disabled_packages, 'php')
-  au BufNewFile,BufRead *.aw,*.ctp,*.fcgi,*.inc,*.php,*.php3,*.php4,*.php5,*.phps,*.phpt,*.phtml,{.,}php,{.,}php_cs,{.,}php_cs.dist,Phakefile setf php
+  au BufNewFile,BufRead *.aw,*.ctp,*.fcgi,*.inc,*.php,*.php3,*.php4,*.php5,*.php9,*.phps,*.phpt,*.phtml,{.,}php,{.,}php_cs,{.,}php_cs.dist,Phakefile setf php
 endif
 
 if !has_key(s:disabled_packages, 'cql')
@@ -2333,7 +2355,7 @@ if !has_key(s:disabled_packages, 'elixir')
   au BufNewFile,BufRead *.eex,*.leex setf eelixir
 endif
 
-if !has_key(s:disabled_packages, 'dockerfile')
+if !has_key(s:disabled_packages, 'docker-compose')
   au BufNewFile,BufRead docker-compose*.yaml,docker-compose*.yml setf yaml.docker-compose
 endif
 

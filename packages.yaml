@@ -498,7 +498,7 @@ filetypes:
   extensions:
   - sdl
 ---
-name: dockerfile
+name: docker-compose
 remote: ekalinin/Dockerfile.vim
 glob: '**/docker-compose.vim'
 filetypes:
@@ -1227,6 +1227,7 @@ filetypes:
   linguist: PHP
   extra_extensions:
   - phtml
+  - php9
 ---
 name: blade
 remote: jwalton512/vim-blade
@@ -1417,7 +1418,7 @@ filetypes:
   - cap
   - opal
   extra_filenames:
-  - Rantfile
+  - '[Rr]antfile'
   - ".autotest"
   - Cheffile
   - KitchenSink
@@ -2228,7 +2229,7 @@ glob: "**/debchangelog.vim"
 filetypes:
 - name: debchangelog
   patterns:
-  - pattern: changelog.Debian,changelog.dch,NEWS.Debian,NEWS.dch
+  - pattern: changelog.Debian,changelog.dch,NEWS.Debian,NEWS.dch,*/debian/changelog
 ---
 name: chill
 remote: vim/vim:runtime
@@ -5506,3 +5507,35 @@ filetypes:
 - name: xf86conf
   patterns:
   - pattern: "XF86Config-4*,XF86Config*,*/xorg.conf.d/*.conf,xorg.conf,xorg.conf-4"
+---
+name: man
+remote: vim/vim:runtime
+glob: "**/man.vim"
+filetypes:
+- name: man
+  linguist: Roff Manpage
+---
+name: xpm
+remote: vim/vim:runtime
+glob: "**/xpm.vim"
+filetypes:
+- name: xpm
+  linguist: X PixMap
+---
+name: xpm2
+remote: vim/vim:runtime
+glob: "**/xpm2.vim"
+filetypes:
+- name: xpm2
+  patterns:
+  - pattern: '*.xpm2'
+    description: X PixMap 2
+---
+name: context
+remote: vim/vim:runtime
+glob: "**/context.vim"
+filetypes:
+- name: context
+  patterns:
+  - pattern: '*.mkii,*.mkiv,*.mkvi'
+    description: ConTeXt

@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dockerfile') == -1
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'docker-compose') == -1
 
 " Vim syntax file
 " Language: Dockerfile
