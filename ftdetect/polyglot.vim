@@ -10,9 +10,6 @@ endif
 
 let did_load_polyglot = 1
 
-" We are not supporting non-compatible mode
-set nocompatible
-
 " It can happen vim filetype.vim loads first, then we need a reset
 if exists("did_load_filetypes")
   au! filetypedetect
