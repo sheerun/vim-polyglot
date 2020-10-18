@@ -2629,11 +2629,6 @@ if !has_key(s:disabled_packages, 'autoindent')
   " Code below re-implements sleuth for vim-polyglot
   let g:loaded_sleuth = 1
 
-  " Makes shiftwidth to be synchronized with tabstop by default
-  if &shiftwidth == &tabstop
-    let &shiftwidth = 0
-  endif
-
   function! s:guess(lines) abort
     let options = {}
     let ccomment = 0
@@ -2718,11 +2713,12 @@ if !has_key(s:disabled_packages, 'autoindent')
       if line[0] == "\t"
         setlocal noexpandtab
         let &l:shiftwidth=&tabstop
+        let &l:tabstop=minindent
         let b:sleuth_culprit .= ':' . i
         return 1
       elseif line[0] == " "
         let indent = len(matchstr(line, '^ *'))
-        if (indent % 2 == 0 || indent % 3 == 0) && indent < minindent
+        if indent < minindent && index([2, 3, 4, 8], indent) >= 0
           let minindent = indent
         endif
       endif
@@ -2731,6 +2727,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     if minindent < 10
       setlocal expandtab
       let &l:shiftwidth=minindent
+      let &l:tabstop=minindent
       let b:sleuth_culprit .= ':' . i
       return 1
     endif
@@ -2741,6 +2738,16 @@ if !has_key(s:disabled_packages, 'autoindent')
   function! s:detect_indent() abort
     if &buftype ==# 'help'
       return
+    endif
+
+    if &expandtab
+      " Make tabstop to be synchronized with shiftwidth by default
+      " Some plugins are using &shiftwidth directly or accessing &tabstop
+      if &tabstop != 8 || &shiftwidth == 0
+        let &shiftwidth = &tabstop
+      else
+        let &tabstop = &shiftwidth
+      endif
     endif
 
     let b:sleuth_culprit = expand("<afile>:p")
@@ -2784,7 +2791,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     unlet b:sleuth_culprit
   endfunction
 
-  setglobal smarttab
+  set smarttab
 
   function! SleuthIndicator() abort
     let sw = &shiftwidth ? &shiftwidth : &tabstop
@@ -2799,7 +2806,7 @@ if !has_key(s:disabled_packages, 'autoindent')
 
   augroup polyglot-sleuth
     au!
-    au FileType * call s:detect_indent()
+    au BufEnter * call s:detect_indent()
     au User Flags call Hoist('buffer', 5, 'SleuthIndicator')
   augroup END
 
