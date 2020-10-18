@@ -5509,8 +5509,6 @@ filetypes:
   - pattern: "XF86Config-4*,XF86Config*,*/xorg.conf.d/*.conf,xorg.conf,xorg.conf-4"
 ---
 name: man
-remote: vim/vim:runtime
-glob: "**/man.vim"
 filetypes:
 - name: man
   linguist: Roff Manpage
