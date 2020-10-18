@@ -2713,7 +2713,6 @@ if !has_key(s:disabled_packages, 'autoindent')
       if line[0] == "\t"
         setlocal noexpandtab
         let &l:shiftwidth=&tabstop
-        let &l:tabstop=minindent
         let b:sleuth_culprit .= ':' . i
         return 1
       elseif line[0] == " "
