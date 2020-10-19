@@ -1,3 +1,9 @@
+" Restore 'cpoptions'
+let s:cpo_save = &cpo
+set cpo&vim
+
+" DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
+
 let s:globs = {
   \ '8th': '*.8th',
   \ 'Jenkinsfile': '*.jenkinsfile,*.Jenkinsfile,Jenkinsfile,Jenkinsfile*',
@@ -624,6 +630,13 @@ let s:globs = {
   \ 'zsh': '*.zsh,.zshrc,.zshenv,.zlogin,.zprofile,.zlogout,.zlog*,.zcompdump*,.zfbfmarks,.zsh*',
   \}
 
+
+" DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
+
 func! polyglot#sleuth#GlobForFiletype(type)
   return get(s:globs, a:type, '')
 endfunc
+
+" Restore 'cpoptions'
+let &cpo = s:cpo_save
+unlet s:cpo_save

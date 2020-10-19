@@ -7,7 +7,6 @@ def run_script(src)
 end
 
 def run_vimscript(src)
-
   wrapper = <<~EOF
     vim --clean --not-a-term -u <(cat <<- "EOM"
     set nocompatible

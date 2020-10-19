@@ -10,6 +10,10 @@ endif
 
 let did_load_polyglot = 1
 
+" Switch to compatible mode for the time being
+let s:cpo_save = &cpo
+set cpo&vim
+
 " It can happen vim filetype.vim loads first, then we need a reset
 if exists("did_load_filetypes")
   au! filetypedetect
@@ -2625,6 +2629,7 @@ au BufEnter * if &ft == "" && expand("<afile>:e") == ""  |
 
 augroup END
 
+
 if !has_key(s:disabled_packages, 'autoindent')
   " Code below re-implements sleuth for vim-polyglot
   let g:loaded_sleuth = 1
@@ -3430,3 +3435,7 @@ if exists("did_load_filetypes") && exists("g:polyglot_disabled")
   unlet did_load_filetypes
   runtime! extras/filetype.vim
 endif
+
+" Restore 'cpoptions'
+let &cpo = s:cpo_save
+unlet s:cpo_save

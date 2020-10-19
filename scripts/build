@@ -848,15 +848,7 @@ def generate_plugins(packages)
   end
   output << "  \\}\n\n"
 
-
-  output << <<~EOS
-    func! polyglot#sleuth#GlobForFiletype(type)
-      return get(s:globs, a:type, '')
-    endfunc
-  EOS
-
-
-  File.write('autoload/polyglot/sleuth.vim', output)
+  inject_code('autoload/polyglot/sleuth.vim', output)
 end
 
 def process_list(list, extras)
