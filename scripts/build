@@ -474,10 +474,10 @@ def rule_to_code(rule)
 end
 
 def extract(packages)
-  all_dirs = %w(syntax indent doc compiler ftplugin ctags extras after)
+  all_dirs = %w(syntax indent compiler ftplugin ctags extras after)
 
   default_dirs = %w(
-    syntax indent doc compiler autoload ftplugin ctags extras
+    syntax indent compiler autoload ftplugin ctags extras
     after/syntax after/indent after/ftplugin
   )
 
