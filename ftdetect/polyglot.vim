@@ -2657,9 +2657,8 @@ if !has_key(s:disabled_packages, 'autoindent')
     let minindent = 10
     let spaces_minus_tabs = 0
     let lineno = 0
+    let stack = [0]
     let indents = { '2': 0, '3': 0, '4': 0, '6': 0, '8': 0 }
-    let next_indent_lineno = 1
-    let prev_indent = 0
 
     for line in a:lines
       let lineno += 1
@@ -2733,16 +2732,24 @@ if !has_key(s:disabled_packages, 'autoindent')
       else
         let spaces_minus_tabs += 1
         let indent = len(matchstr(line, '^ *'))
-        let indent_inc = indent - prev_indent
+        while stack[-1] > indent
+          call remove(stack, -1)
+        endwhile
 
-        if indent_inc > 0 && lineno == next_indent_lineno
-          if has_key(indents, indent_inc)
-            let indents[indent_inc] += 1
-          endif
+        let indent_inc = indent - stack[-1]
+
+        if indent_inc == 0 && len(stack) > 1
+          let indent_inc = indent - stack[-2]
         endif
 
-        let next_indent_lineno = lineno + 1
-        let prev_indent = indent
+        if has_key(indents, indent_inc)
+          let indents[indent_inc] += 1
+          let prev_indent = indent
+        endif
+
+        if stack[-1] != indent
+          call add(stack, indent)
+        endif
       endif
     endfor
 
@@ -2777,7 +2784,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     endif
 
     let b:sleuth_culprit = expand("<afile>:p")
-    if s:guess(getline(1, 64))
+    if s:guess(getline(1, 128))
       return
     endif
     if s:guess(getline(1, 1024))
