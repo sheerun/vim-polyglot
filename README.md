@@ -23,7 +23,13 @@ A collection of language packs for Vim.
 For example when using [Plug](https://github.com/junegunn/vim-plug):
 
 ```
+set nocompatible
+
+call plug#begin()
+
 Plug 'sheerun/vim-polyglot'
+
+call plug#end()
 ```
 
 Optionally download one of the [releases](https://github.com/sheerun/vim-polyglot/releases) and unpack it directly under `~/.vim` directory.
@@ -205,7 +211,7 @@ You can either wait for new patch release with updates or run `make` by yourself
 
 ## Troubleshooting
 
-Please make sure you have `syntax on` in your `.vimrc` (or use something like [sheerun/vimrc](https://github.com/sheerun/vimrc))
+Please make sure you have `set nocompatible` in your `.vimrc` (or use something like [sheerun/vimrc](https://github.com/sheerun/vimrc))
 
 Individual language packs can be disabled by setting `g:polyglot_disabled` as follows:
 
