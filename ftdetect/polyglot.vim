@@ -2634,7 +2634,19 @@ if !has_key(s:disabled_packages, 'autoindent')
   " Code below re-implements sleuth for vim-polyglot
   let g:loaded_sleuth = 1
 
-  function! s:guess(lines) abort
+  func! s:get_shiftwidth(indents) abort
+    let shiftwidth = 0
+    let max_count = 0
+    for [indent, indent_count] in items(a:indents)
+      if indent_count > max_count
+        let shiftwidth = indent
+        let max_count = indent_count
+      endif
+    endfor
+    return shiftwidth
+  endfunc
+
+  func! s:guess(lines) abort
     let options = {}
     let ccomment = 0
     let podcomment = 0
@@ -2644,12 +2656,15 @@ if !has_key(s:disabled_packages, 'autoindent')
     let heredoc = ''
     let minindent = 10
     let spaces_minus_tabs = 0
-    let i = 0
+    let lineno = 0
+    let indents = { '2': 0, '3': 0, '4': 0, '6': 0, '8': 0 }
+    let next_indent_lineno = 1
+    let prev_indent = 0
 
     for line in a:lines
-      let i += 1
+      let lineno += 1
 
-      if !len(line) || line =~# '^\S+$'
+      if line =~# '^\s*$'
         continue
       endif
 
@@ -2713,35 +2728,45 @@ if !has_key(s:disabled_packages, 'autoindent')
         let heredoc = herematch[1] . '$'
       endif
 
-      let spaces_minus_tabs += line[0] == "\t" ? 1 : -1
-
       if line[0] == "\t"
-        setlocal noexpandtab
-        let &l:shiftwidth=&tabstop
-        let b:sleuth_culprit .= ':' . i
-        return 1
-      elseif line[0] == " "
+        let spaces_minus_tabs -= 1
+      else
+        let spaces_minus_tabs += 1
         let indent = len(matchstr(line, '^ *'))
-        if indent < minindent && index([2, 3, 4, 6, 8], indent) >= 0
-          let minindent = indent
+        let indent_inc = abs(indent - prev_indent)
+
+        if indent_inc > 0 && lineno == next_indent_lineno
+          if has_key(indents, indent_inc)
+            let indents[indent_inc] += 1
+          endif
         endif
+
+        let next_indent_lineno = lineno + 1
+        let prev_indent = indent
       endif
     endfor
 
-    if minindent < 10
+    if spaces_minus_tabs < 0
+      setlocal noexpandtab
+      let &l:shiftwidth=&tabstop
+      return 1
+    endif
+
+    let shiftwidth = s:get_shiftwidth(indents)
+
+    if shiftwidth > 0
       setlocal expandtab
-      let &l:shiftwidth=minindent
+      let &l:shiftwidth=shiftwidth
       if &tabstop == 8
-        let &l:tabstop=minindent
+        let &l:tabstop=shiftwidth
       endif
-      let b:sleuth_culprit .= ':' . i
       return 1
     endif
 
     return 0
-  endfunction
+  endfunc
 
-  function! s:detect_indent() abort
+  func! s:detect_indent() abort
     if &buftype ==# 'help'
       return
     endif
@@ -2757,7 +2782,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     endif
 
     let b:sleuth_culprit = expand("<afile>:p")
-    if s:guess(getline(1, 32))
+    if s:guess(getline(1, 64))
       return
     endif
     if s:guess(getline(1, 1024))
@@ -2794,12 +2819,18 @@ if !has_key(s:disabled_packages, 'autoindent')
       let level -= 1
     endwhile
 
-    unlet b:sleuth_culprit
-  endfunction
+    setlocal expandtab
+    let &l:shiftwidth = 2
+    if &tabstop == 8
+      let &l:tabstop = 2
+    endif
+
+    let b:sleuth_culprit = "default"
+  endfunc
 
   set smarttab
 
-  function! SleuthIndicator() abort
+  func! SleuthIndicator() abort
     let sw = &shiftwidth ? &shiftwidth : &tabstop
     if &expandtab
       return 'sw='.sw
@@ -2808,7 +2839,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     else
       return 'sw='.sw.',ts='.&tabstop
     endif
-  endfunction
+  endfunc
 
   augroup polyglot-sleuth
     au!
