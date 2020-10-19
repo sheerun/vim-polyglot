@@ -15,22 +15,14 @@ endif
 
 " Code taken from https://github.com/tpope/vim-sensible
 " and (mostly comments) from https://github.com/sheerun/vimrc
+"
+" Only settings that matter for proper editing are left
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible')
 	" Autoindent when starting new line, or using `o` or `O`.
 	set autoindent
 
 	" Allow backspace in insert mode.
 	set backspace=indent,eol,start
-
-	" Don't scan included files. The .tags file is more performant.
-	set complete-=i
-
-	" Use 'shiftwidth' when using `<Tab>` in front of a line.
-	" By default it's used only for shift commands (`<`, `>`).
-	set smarttab
-
-	" Disable octal format for number processing.
-	set nrformats-=octal
 
 	" Allow for mappings including `Esc`, while preserving
 	" zero timeout after pressing it manually.
@@ -43,33 +35,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible')
 	" Enable highlighted case-insensitive incremential search.
 	set incsearch
 
-	" Use <C-L> to clear the highlighting of :set hlsearch.
-	if maparg('<C-L>', 'n') ==# ''
-		nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-	endif
-
-	" Always show window statuses, even if there's only one.
-	set laststatus=2
-
-	" Show the line and column number of the cursor position.
-	set ruler
-
-	" Autocomplete commands using nice menu in place of window status.
-	" Enable `Ctrl-N` and `Ctrl-P` to scroll through matches.
-	set wildmenu
-
-	" Keep 5 columns next to the cursor when scrolling horizontally.
-	if !&scrolloff
-		set scrolloff=1
-	endif
-	if !&sidescrolloff
-		set sidescrolloff=5
-	endif
-
-	" When 'wrap' is on, display last line even if it doesn't fit.
-	set display+=lastline
-
-	" Force utf-8 encoding
+	" Use utf-8 encoding by default
 	set encoding=utf-8
 
 	" Set default whitespace characters when using `:set list`
@@ -82,10 +48,10 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible')
 		set formatoptions+=j
 	endif
 
-	" Search upwards for tags file instead only locally
-	if has('path_extra')
-		setglobal tags-=./tags tags-=./tags; tags^=./tags;
-	endif
+  " Search upwards for tags file instead only locally
+  if has('path_extra')
+     setglobal tags-=./tags tags-=./tags; tags^=./tags;
+  endif
 
 	" Fix issues with fish shell
 	" https://github.com/tpope/vim-sensible/issues/50
