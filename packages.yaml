@@ -1958,6 +1958,7 @@ filetypes:
   filenames:
   - auto.master
   - config
+  - '*/etc/hosts'
 ---
 name: b
 remote: vim/vim:runtime

@@ -2545,7 +2545,7 @@ if !has_key(s:disabled_packages, 'alsaconf')
 endif
 
 if !has_key(s:disabled_packages, 'conf')
-  au BufNewFile,BufRead *.conf,auto.master,config setf conf
+  au BufNewFile,BufRead *.conf,*/etc/hosts,auto.master,config setf conf
 endif
 
 if !has_key(s:disabled_packages, 'master')
