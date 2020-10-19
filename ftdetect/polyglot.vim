@@ -2722,7 +2722,7 @@ if !has_key(s:disabled_packages, 'autoindent')
         return 1
       elseif line[0] == " "
         let indent = len(matchstr(line, '^ *'))
-        if indent < minindent && index([2, 3, 4, 8], indent) >= 0
+        if indent < minindent && index([2, 3, 4, 6, 8], indent) >= 0
           let minindent = indent
         endif
       endif
@@ -2731,7 +2731,9 @@ if !has_key(s:disabled_packages, 'autoindent')
     if minindent < 10
       setlocal expandtab
       let &l:shiftwidth=minindent
-      let &l:tabstop=minindent
+      if &tabstop == 8
+        let &l:tabstop=minindent
+      endif
       let b:sleuth_culprit .= ':' . i
       return 1
     endif
