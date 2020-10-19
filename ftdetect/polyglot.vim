@@ -54,6 +54,8 @@ function! s:SetDefault(name, value)
   endif
 endfunction
 
+call s:SetDefault('g:polyglot_autoindent_guess_lines', [32, 1024])
+
 call s:SetDefault('g:markdown_enable_spell_checking', 0)
 call s:SetDefault('g:markdown_enable_input_abbreviations', 0)
 call s:SetDefault('g:markdown_enable_mappings', 0)
@@ -2757,12 +2759,11 @@ if !has_key(s:disabled_packages, 'autoindent')
     endif
 
     let b:sleuth_culprit = expand("<afile>:p")
-    if s:guess(getline(1, 32))
-      return
-    endif
-    if s:guess(getline(1, 1024))
-      return
-    endif
+    for line_length in g:polyglot_autoindent_guess_lines
+      if s:guess(getline(1, line_length))
+        return
+      endif
+    endfor
     let pattern = polyglot#sleuth#GlobForFiletype(&filetype)
     if len(pattern) == 0
       return
