@@ -22,7 +22,7 @@ A collection of language packs for Vim.
 
 For example when using [Plug](https://github.com/junegunn/vim-plug):
 
-```
+```vim
 set nocompatible
 
 call plug#begin()
