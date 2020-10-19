@@ -2733,7 +2733,7 @@ if !has_key(s:disabled_packages, 'autoindent')
       else
         let spaces_minus_tabs += 1
         let indent = len(matchstr(line, '^ *'))
-        let indent_inc = abs(indent - prev_indent)
+        let indent_inc = indent - prev_indent
 
         if indent_inc > 0 && lineno == next_indent_lineno
           if has_key(indents, indent_inc)
@@ -2771,14 +2771,9 @@ if !has_key(s:disabled_packages, 'autoindent')
       return
     endif
 
-    if &expandtab
-      " Make tabstop to be synchronized with shiftwidth by default
-      " Some plugins are using &shiftwidth directly or accessing &tabstop
-      if &tabstop != 8 || &shiftwidth == 0
-        let &shiftwidth = &tabstop
-      else
-        let &tabstop = &shiftwidth
-      endif
+    " Do not autodetect indent if language sets it
+    if &l:shiftwidth != &g:shiftwidth
+      return
     endif
 
     let b:sleuth_culprit = expand("<afile>:p")
