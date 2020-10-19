@@ -42,7 +42,7 @@ git clone --depth 1 https://github.com/sheerun/vim-polyglot ~/.vim/pack/plugins/
 
 ## Language packs
 
-On top of all language packs from [vim repository](https://github.com/vim/vim/tree/master/runtime), vim-polyglot includes:
+On top of all language packs from [vim repository](https://github.com/vim/vim/tree/master/runtime/syntax), vim-polyglot includes:
 
 <!--Language Packs-->
 - [acpiasl](https://github.com/martinlroth/vim-acpi-asl) (Syntax highlighting for asl and dsl files)
