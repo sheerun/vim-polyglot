@@ -211,13 +211,13 @@ Please make sure you have `set nocompatible` in your `.vimrc` (or use something 
 
 Individual language packs can be disabled by setting `g:polyglot_disabled` as follows:
 
+**Please declare this variable before polyglot is loaded (at the top of .vimrc)**
+
 ```vim
 let g:polyglot_disabled = ['markdown']
 ```
 
 The list of available languages to disable is shown above.
-
-*Please declare this variable before polyglot is loaded (at the top of .vimrc)*
 
 If you wish to use filetype detection by Vim Polyglot but you'd like to use your own syntax-highlighting plugin, you can append `.plugin` to disabled entry, like below. Disabling Vim Polyglot filetype plugin won't disable native Vim filetype plugin.
 
