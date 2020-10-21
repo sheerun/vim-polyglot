@@ -2730,7 +2730,9 @@ if !has_key(s:disabled_packages, 'autoindent')
       if line[0] == "\t"
         let spaces_minus_tabs -= 1
       else
-        let spaces_minus_tabs += 1
+        if line[0] == " "
+          let spaces_minus_tabs += 1
+        endif
         let indent = len(matchstr(line, '^ *'))
         while stack[-1] > indent
           call remove(stack, -1)
