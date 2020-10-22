@@ -2634,6 +2634,10 @@ if !has_key(s:disabled_packages, 'autoindent')
   " Code below re-implements sleuth for vim-polyglot
   let g:loaded_sleuth = 1
 
+  if &tabstop == 8
+    let &tabstop = 2
+  endif
+
   func! s:get_shiftwidth(indents) abort
     let shiftwidth = 0
     let max_count = 0
