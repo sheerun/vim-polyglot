@@ -2766,9 +2766,7 @@ if !has_key(s:disabled_packages, 'autoindent')
     if shiftwidth > 0
       setlocal expandtab
       let &l:shiftwidth=shiftwidth
-      if &tabstop == 8
-        let &l:tabstop=shiftwidth
-      endif
+      let &l:softtabstop=shiftwidth
       return 1
     endif
 
