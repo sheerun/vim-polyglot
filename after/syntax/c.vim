@@ -7,7 +7,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cpp-modern') ==
 "                  http://www.vim.org/scripts/script.php?script_id=3064
 " Maintainer:      bfrg <bfrg@users.noreply.github.com>
 " Website:         https://github.com/bfrg/vim-cpp-modern
-" Last Change:     Oct 17, 2020
+" Last Change:     Oct 22, 2020
 "
 " Extended C syntax highlighting including highlighting of user-defined
 " functions.
@@ -34,6 +34,7 @@ if get(g:, 'cpp_member_highlight', 0)
     syn match cStructMember "\<\h\w*\>\%((\|<\)\@!" contained
     syn cluster cParenGroup add=cStructMember
     syn cluster cPreProcGroup add=cStructMember
+    syn cluster cMultiGroup add=cStructMember
     hi def link cStructMember Identifier
 
     if &filetype ==# 'cpp'
