@@ -2773,11 +2773,10 @@ if !has_key(s:disabled_packages, 'autoindent')
       try
         " Sunchronize tabstop with shiftwidth
         let &l:softtabstop = -1
-      catch /^Vim\%((\a\+)\)\=:E487/ 
+      catch /^Vim\%((\a\+)\)\=:E487/
         " -1 was not supported before Vim 7.4
         let &l:softtabstop = a:num_spaces
       endtry
-      let &l:softtabstop=shiftwidth
       return 1
     endif
 
