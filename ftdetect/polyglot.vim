@@ -2821,12 +2821,6 @@ if !has_key(s:disabled_packages, 'autoindent')
       let level -= 1
     endwhile
 
-    setlocal expandtab
-    let &l:shiftwidth = 2
-    if &tabstop == 8
-      let &l:tabstop = 2
-    endif
-
     let b:sleuth_culprit = "default"
   endfunc
 
