@@ -2638,6 +2638,8 @@ if !has_key(s:disabled_packages, 'autoindent')
     let &tabstop = 2
   endif
 
+  let s:default_shiftwidth = &shiftwidth
+
   func! s:get_shiftwidth(indents) abort
     let shiftwidth = 0
     let max_count = 0
@@ -2788,8 +2790,8 @@ if !has_key(s:disabled_packages, 'autoindent')
       return
     endif
 
-    " Do not autodetect indent if language sets it
-    if &l:shiftwidth != &g:shiftwidth
+    " Do not autodetect indent if language or user sets it
+    if &l:shiftwidth != s:default_shiftwidth
       return
     endif
 
