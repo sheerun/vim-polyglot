@@ -2645,10 +2645,10 @@ if !has_key(s:disabled_packages, 'autoindent')
     let max_count = 0
     let final_counts = {}
     for [indent, indent_count] in items(a:indents)
-      let indent_count *= 1.5
+      let indent_count = indent_count * 1.5
       for [indent2, indent2_count] in items(a:indents)
         if indent2 > indent && indent2 % indent == 0
-          let indent_count += indent2_count
+          let indent_count = indent_count + indent2_count
         endif
       endfor
       let final_counts[indent] = indent_count
