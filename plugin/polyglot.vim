@@ -67,6 +67,17 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -
     set updatetime=300
   endif
 
+  " Automatically reload file if changed somewhere else
+  redir => capture
+  silent autocmd CursorHold
+  redir END
+  if match(capture, 'checktime') == -1
+    augroup polyglot-sensible
+      au!
+      au CursorHold * checktime
+    augroup END
+  endif
+
   " Always save upper case variables to viminfo file.
   if !empty(&viminfo)
     set viminfo^=!

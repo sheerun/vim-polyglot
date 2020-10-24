@@ -3500,12 +3500,6 @@ if !has_key(s:disabled_packages, 'sensible')
   " Disable swap, it doesn't play well with autoread
   set noswapfile
 
-  " Auto reload if file was changed somewhere else (for autoread)
-  augroup polyglot-sensible
-    au!
-    au CursorHold * checktime
-  augroup END
-
   " Enable highlighted case-insensitive incremential search.
   set incsearch
 
