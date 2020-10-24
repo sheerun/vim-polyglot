@@ -18,11 +18,10 @@ endif
 "
 " Only settings that matter for proper editing are left
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -1
-  " Autoindent when starting new line, or using `o` or `O`.
-  set autoindent
-
   " Allow backspace in insert mode.
-  set backspace=indent,eol,start
+  if &backspace == ""
+    set backspace=indent,eol,start
+  endif
 
   " Allow for mappings including `Esc`, while preserving
   " zero timeout after pressing it manually.
@@ -31,12 +30,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -
     set ttimeout
     set ttimeoutlen=100
   endif
-
-  " Enable highlighted case-insensitive incremential search.
-  set incsearch
-
-  " Use utf-8 encoding by default
-  set encoding=utf-8
 
   " Set default whitespace characters when using `:set list`
   if &listchars ==# 'eol:$'
@@ -58,9 +51,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -
   if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
     set shell=/usr/bin/env\ bash
   endif
-
-  " Reload unchanged files automatically.
-  set autoread
 
   " Increase history size to 1000 items.
   if &history < 1000

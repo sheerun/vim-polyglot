@@ -3491,6 +3491,21 @@ if exists("did_load_filetypes") && exists("g:polyglot_disabled")
   runtime! extras/filetype.vim
 endif
 
+
+if !has_key(s:disabled_packages, 'sensible')
+  " Reload unchanged files automatically.
+  set autoread
+
+  " Enable highlighted case-insensitive incremential search.
+  set incsearch
+
+  " Use utf-8 encoding by default
+  set encoding=utf-8
+
+  " Autoindent when starting new line, or using `o` or `O`.
+  set autoindent
+endif
+
 " Restore 'cpoptions'
 let &cpo = s:cpo_save
 unlet s:cpo_save
