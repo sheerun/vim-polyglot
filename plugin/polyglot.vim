@@ -62,6 +62,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -
     set tabpagemax=50
   endif
 
+  " Reduce updatetime from 4000 to 300 to avoid issues with coc.nvim
+  if &updatetime == 4000
+    set updatetime=300
+  endif
+
   " Always save upper case variables to viminfo file.
   if !empty(&viminfo)
     set viminfo^=!

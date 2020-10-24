@@ -8,6 +8,7 @@ if exists("did_load_polyglot")
   finish
 endif
 
+
 let did_load_polyglot = 1
 
 " Switch to compatible mode for the time being
@@ -3495,6 +3496,15 @@ endif
 if !has_key(s:disabled_packages, 'sensible')
   " Reload unchanged files automatically.
   set autoread
+
+  " Disable swap, it doesn't play well with autoread
+  set noswapfile
+
+  " Auto reload if file was changed somewhere else (for autoread)
+  augroup polyglot-sensible
+    au!
+    au CursorHold * checktime
+  augroup END
 
   " Enable highlighted case-insensitive incremential search.
   set incsearch
