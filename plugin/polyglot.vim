@@ -17,7 +17,7 @@ endif
 " and (mostly comments) from https://github.com/sheerun/vimrc
 "
 " Only settings that matter for proper editing are left
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible')
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -1
   " Autoindent when starting new line, or using `o` or `O`.
   set autoindent
 
