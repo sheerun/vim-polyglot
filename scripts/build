@@ -890,6 +890,7 @@ def generate_fallback
   filetype_content.gsub!(/^au BufNewFile,BufRead \*\n.+?runtime!.+?endif/m) {}
   filetype_content.gsub!(/^au StdinReadPost \* .+?runtime!.+?endif/m) {}
   filetype_content.gsub!(/^au filetypedetect BufNewFile,BufRead,StdinReadPost \*\n.+?endif/m) {}
+  filetype_content.gsub!("dist#ft#", "polyglot#ft#")
   File.write('extras/filetype.vim', filetype_content)
   File.write('extras/menu.vim', File.read('tmp/vim/vim/runtime/menu.vim'))
 
