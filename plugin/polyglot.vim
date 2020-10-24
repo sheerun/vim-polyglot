@@ -74,7 +74,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -
   if match(capture, 'checktime') == -1
     augroup polyglot-sensible
       au!
-      au CursorHold * checktime
+      au CursorHold * silent! checktime
     augroup END
   endif
 
