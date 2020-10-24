@@ -25,14 +25,6 @@ let did_load_filetypes = 1
 " Be consistent across different systems
 set nofileignorecase
 
-func! s:Observe(fn)
-  let b:PolyglotObserve = function("polyglot#" . a:fn)
-  augroup polyglot-observer
-    au! CursorHold,CursorHoldI,BufWritePost <buffer>
-          \ if b:PolyglotObserve() | au! polyglot-observer | endif
-  augroup END
-endfunc
-
 let s:disabled_packages = {}
 let s:new_polyglot_disabled = []
 
@@ -111,6 +103,8 @@ func! s:StarSetf(ft)
     exe 'setf ' . a:ft
   endif
 endfunc
+
+augroup polyglot-observer | augroup END
 
 augroup filetypedetect
 
@@ -2621,11 +2615,21 @@ endif
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 
-au! BufNewFile,BufRead,StdinReadPost * if expand("<afile>:e") == "" |
+func! s:Observe(fn)
+  let b:PolyglotObserve = function("polyglot#" . a:fn)
+  augroup polyglot-observer
+    au!
+    au CursorHold,CursorHoldI,BufWritePost <buffer> call b:PolyglotObserve()
+  augroup END
+endfunc
+
+au BufNewFile,BufRead,StdinReadPost * if expand("<afile>:e") == "" |
   \ call polyglot#shebang#Detect() | endif
 
-au BufEnter * if &ft == "" && expand("<afile>:e") == ""  |
+au BufWinEnter * if &ft == "" && expand("<afile>:e") == ""  |
   \ call s:Observe('shebang#Detect') | endif
+
+au FileType * au! polyglot-observer
 
 augroup END
 
