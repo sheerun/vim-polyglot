@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'ftplugin/scss.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'scss') == -1
 
 if exists('b:did_indent') && b:did_indent

@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'autoload/elixir/indent.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
 
 if !exists("g:elixir_indent_max_lookbehind")

@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'ftplugin/puppet_tagbar.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 
 " Puppet set up for Tagbar plugin

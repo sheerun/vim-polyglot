@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'ftplugin/cryptol/folding.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cryptol') == -1
 
 " Copyright © 2013 Edward O'Callaghan. All Rights Reserved.

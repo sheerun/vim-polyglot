@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'syntax/tsalt.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tsalt') == -1
 
 " Vim syntax file

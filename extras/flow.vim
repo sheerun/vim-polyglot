@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'extras/flow.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
 
 syntax region  jsFlowDefinition     contained                        start=/:/    end=/\%(\s*[,=;)\n]\)\@=/ contains=@jsFlowCluster containedin=jsParen

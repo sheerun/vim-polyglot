@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'syntax/json5.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'json5') == -1
 
 " Modified from the original taken from https://github.com/gutenye/json5.vim

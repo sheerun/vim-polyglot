@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'autoload/jsx_pretty/comment.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || (index(g:polyglot_disabled, 'javascript') == -1 && index(g:polyglot_disabled, 'jsx') == -1)
 
 function! jsx_pretty#comment#update_commentstring(original)

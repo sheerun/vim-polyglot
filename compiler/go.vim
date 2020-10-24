@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'compiler/go.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
 
 " Copyright 2013 The Go Authors. All rights reserved.

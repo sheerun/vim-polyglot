@@ -293,6 +293,15 @@ def copy_file(name, src, dest)
 
   open(src, "r") do |input|
     open(dest, "w") do |output|
+      if dest.match?(/\.vim$/) && !dest.match('after/')
+        output << <<~EOF
+        let files = filter(globpath(&rtp, '#{dest}', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+        if len(files) > 0
+          exec 'source ' . files[0]
+          finish
+        endif
+        EOF
+      end
       if name == "jsx"
         output << "if !exists('g:polyglot_disabled') || (index(g:polyglot_disabled, 'javascript') == -1 && index(g:polyglot_disabled, 'jsx') == -1)\n\n"
       else

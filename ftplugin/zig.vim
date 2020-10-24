@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'ftplugin/zig.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zig') == -1
 
 " Only do this when not done yet for this buffer

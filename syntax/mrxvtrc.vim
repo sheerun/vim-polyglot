@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'syntax/mrxvtrc.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mrxvtrc') == -1
 
 " Description	: Vim syntax file for mrxvtrc (for mrxvt-0.5.0 and up)

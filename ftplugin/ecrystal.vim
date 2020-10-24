@@ -1,3 +1,8 @@
+let files = filter(globpath(&rtp, 'ftplugin/ecrystal.vim', 1, 1), { _, v -> v !~ "vim-polyglot" && v !~ $VIMRUNTIME && v !~ "after" })
+if len(files) > 0
+  exec 'source ' . files[0]
+  finish
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
 
 " Filetype plugin for https://crystal-lang.org/api/0.35.1/ECR.html
