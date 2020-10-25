@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'dosbatch')
+if has_key(g:polyglot_is_disabled, 'dosbatch')
   finish
 endif
 

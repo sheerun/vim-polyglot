@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'html5')
+if has_key(g:polyglot_is_disabled, 'html5')
   finish
 endif
 

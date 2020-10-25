@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'tmux')
+if has_key(g:polyglot_is_disabled, 'tmux')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'kotlin')
+if has_key(g:polyglot_is_disabled, 'kotlin')
   finish
 endif
 

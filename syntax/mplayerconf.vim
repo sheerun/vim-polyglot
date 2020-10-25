@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'mplayerconf')
+if has_key(g:polyglot_is_disabled, 'mplayerconf')
   finish
 endif
 

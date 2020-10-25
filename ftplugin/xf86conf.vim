@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'xf86conf')
+if has_key(g:polyglot_is_disabled, 'xf86conf')
   finish
 endif
 

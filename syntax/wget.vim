@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'wget')
+if has_key(g:polyglot_is_disabled, 'wget')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'ipfilter')
+if has_key(g:polyglot_is_disabled, 'ipfilter')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'cdrdaoconf')
+if has_key(g:polyglot_is_disabled, 'cdrdaoconf')
   finish
 endif
 

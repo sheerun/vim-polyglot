@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'fstab')
+if has_key(g:polyglot_is_disabled, 'fstab')
   finish
 endif
 

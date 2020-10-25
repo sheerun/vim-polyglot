@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'viminfo')
+if has_key(g:polyglot_is_disabled, 'viminfo')
   finish
 endif
 

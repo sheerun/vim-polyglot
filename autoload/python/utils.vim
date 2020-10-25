@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'python-compiler')
+if has_key(g:polyglot_is_disabled, 'python-compiler')
   finish
 endif
 

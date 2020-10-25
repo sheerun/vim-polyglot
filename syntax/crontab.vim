@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'crontab')
+if has_key(g:polyglot_is_disabled, 'crontab')
   finish
 endif
 

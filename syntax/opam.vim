@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'ocaml')
+if has_key(g:polyglot_is_disabled, 'ocaml')
   finish
 endif
 

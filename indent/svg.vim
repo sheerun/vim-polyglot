@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'svg-indent')
+if has_key(g:polyglot_is_disabled, 'svg-indent')
   finish
 endif
 

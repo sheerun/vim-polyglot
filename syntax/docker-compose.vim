@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'docker-compose')
+if has_key(g:polyglot_is_disabled, 'docker-compose')
   finish
 endif
 

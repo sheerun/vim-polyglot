@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'ansible')
+if has_key(g:polyglot_is_disabled, 'ansible')
   finish
 endif
 

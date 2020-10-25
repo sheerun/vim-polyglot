@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'debsources')
+if has_key(g:polyglot_is_disabled, 'debsources')
   finish
 endif
 

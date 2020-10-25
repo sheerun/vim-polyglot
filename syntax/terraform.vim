@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'terraform')
+if has_key(g:polyglot_is_disabled, 'terraform')
   finish
 endif
 

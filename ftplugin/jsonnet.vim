@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'jsonnet')
+if has_key(g:polyglot_is_disabled, 'jsonnet')
   finish
 endif
 

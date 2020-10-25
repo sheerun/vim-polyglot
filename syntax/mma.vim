@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'mathematica')
+if has_key(g:polyglot_is_disabled, 'mathematica')
   finish
 endif
 

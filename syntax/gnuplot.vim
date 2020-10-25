@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'gnuplot')
+if has_key(g:polyglot_is_disabled, 'gnuplot')
   finish
 endif
 

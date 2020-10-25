@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'autohotkey')
+if has_key(g:polyglot_is_disabled, 'autohotkey')
   finish
 endif
 

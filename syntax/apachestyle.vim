@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'apachestyle')
+if has_key(g:polyglot_is_disabled, 'apachestyle')
   finish
 endif
 

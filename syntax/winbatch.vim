@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'winbatch')
+if has_key(g:polyglot_is_disabled, 'winbatch')
   finish
 endif
 

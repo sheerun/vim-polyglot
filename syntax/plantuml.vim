@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'plantuml')
+if has_key(g:polyglot_is_disabled, 'plantuml')
   finish
 endif
 

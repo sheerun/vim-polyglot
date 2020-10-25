@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'ora')
+if has_key(g:polyglot_is_disabled, 'ora')
   finish
 endif
 

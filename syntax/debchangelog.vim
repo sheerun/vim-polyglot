@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'debchangelog')
+if has_key(g:polyglot_is_disabled, 'debchangelog')
   finish
 endif
 

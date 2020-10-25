@@ -295,7 +295,7 @@ def copy_file(name, src, dest)
     open(dest, "w") do |output|
       if dest.match?(/\.vim$/)
         output << <<~EOF
-        if !has_key(g:polyglot_is_disabled, '#{name}')
+        if has_key(g:polyglot_is_disabled, '#{name}')
           finish
         endif
 

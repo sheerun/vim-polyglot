@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'aptconf')
+if has_key(g:polyglot_is_disabled, 'aptconf')
   finish
 endif
 

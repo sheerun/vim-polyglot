@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'fortran')
+if has_key(g:polyglot_is_disabled, 'fortran')
   finish
 endif
 

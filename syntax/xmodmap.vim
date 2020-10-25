@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'xmodmap')
+if has_key(g:polyglot_is_disabled, 'xmodmap')
   finish
 endif
 

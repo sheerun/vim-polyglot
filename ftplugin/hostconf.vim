@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'hostconf')
+if has_key(g:polyglot_is_disabled, 'hostconf')
   finish
 endif
 

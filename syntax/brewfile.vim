@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'brewfile')
+if has_key(g:polyglot_is_disabled, 'brewfile')
   finish
 endif
 

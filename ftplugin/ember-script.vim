@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'emberscript')
+if has_key(g:polyglot_is_disabled, 'emberscript')
   finish
 endif
 

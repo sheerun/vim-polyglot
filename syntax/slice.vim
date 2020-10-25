@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'slice')
+if has_key(g:polyglot_is_disabled, 'slice')
   finish
 endif
 

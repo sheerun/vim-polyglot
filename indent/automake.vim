@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'automake')
+if has_key(g:polyglot_is_disabled, 'automake')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'mysql')
+if has_key(g:polyglot_is_disabled, 'mysql')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'dnsmasq')
+if has_key(g:polyglot_is_disabled, 'dnsmasq')
   finish
 endif
 

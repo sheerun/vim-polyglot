@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'powershell')
+if has_key(g:polyglot_is_disabled, 'powershell')
   finish
 endif
 

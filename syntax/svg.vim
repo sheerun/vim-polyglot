@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'svg')
+if has_key(g:polyglot_is_disabled, 'svg')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'rnoweb')
+if has_key(g:polyglot_is_disabled, 'rnoweb')
   finish
 endif
 

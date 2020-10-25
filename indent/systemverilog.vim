@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'systemverilog')
+if has_key(g:polyglot_is_disabled, 'systemverilog')
   finish
 endif
 

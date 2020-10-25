@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'sshconfig')
+if has_key(g:polyglot_is_disabled, 'sshconfig')
   finish
 endif
 

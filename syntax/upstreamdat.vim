@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'upstreamdat')
+if has_key(g:polyglot_is_disabled, 'upstreamdat')
   finish
 endif
 

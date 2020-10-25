@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'chaiscript')
+if has_key(g:polyglot_is_disabled, 'chaiscript')
   finish
 endif
 

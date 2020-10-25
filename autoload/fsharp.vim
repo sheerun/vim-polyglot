@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'fsharp')
+if has_key(g:polyglot_is_disabled, 'fsharp')
   finish
 endif
 

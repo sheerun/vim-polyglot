@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'pinfo')
+if has_key(g:polyglot_is_disabled, 'pinfo')
   finish
 endif
 

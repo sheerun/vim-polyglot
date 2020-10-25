@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'gdscript')
+if has_key(g:polyglot_is_disabled, 'gdscript')
   finish
 endif
 

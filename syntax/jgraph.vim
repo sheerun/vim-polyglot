@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'jgraph')
+if has_key(g:polyglot_is_disabled, 'jgraph')
   finish
 endif
 

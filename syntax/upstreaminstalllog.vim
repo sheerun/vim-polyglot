@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'upstreaminstalllog')
+if has_key(g:polyglot_is_disabled, 'upstreaminstalllog')
   finish
 endif
 

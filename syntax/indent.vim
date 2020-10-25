@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'indent')
+if has_key(g:polyglot_is_disabled, 'indent')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'moonscript')
+if has_key(g:polyglot_is_disabled, 'moonscript')
   finish
 endif
 

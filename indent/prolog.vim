@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'prolog')
+if has_key(g:polyglot_is_disabled, 'prolog')
   finish
 endif
 

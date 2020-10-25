@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'dockerfile')
+if has_key(g:polyglot_is_disabled, 'dockerfile')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'wsh')
+if has_key(g:polyglot_is_disabled, 'wsh')
   finish
 endif
 

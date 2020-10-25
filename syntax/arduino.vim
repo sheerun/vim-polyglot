@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'arduino')
+if has_key(g:polyglot_is_disabled, 'arduino')
   finish
 endif
 

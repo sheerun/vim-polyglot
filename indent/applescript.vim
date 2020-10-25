@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'applescript')
+if has_key(g:polyglot_is_disabled, 'applescript')
   finish
 endif
 

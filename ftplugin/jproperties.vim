@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'jproperties')
+if has_key(g:polyglot_is_disabled, 'jproperties')
   finish
 endif
 

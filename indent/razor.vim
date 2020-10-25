@@ -1,4 +1,4 @@
-if !has_key(g:polyglot_is_disabled, 'razor')
+if has_key(g:polyglot_is_disabled, 'razor')
   finish
 endif
 
