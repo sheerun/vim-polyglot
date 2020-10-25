@@ -10,7 +10,7 @@ if exists('g:polyglot_disabled')
     let base = split(pkg, '\.')
     if len(base) > 0
       let s:disabled_packages[pkg] = 1
-      call add(s:new_polyglot_disabled, base[0]) 
+      call add(s:new_polyglot_disabled, base[0])
     endif
   endfor
 else
@@ -22,7 +22,7 @@ let s:base = expand('<sfile>:p:h:h:h')
 
 func polyglot#util#Filter(idx, val)
   let val = fnamemodify(a:val . '/', ':p:h')
-  return resolve(val) !=? s:base && stridx(val, $VIMRUNTIME) == -1 && val !~? '/after$'
+  return resolve(val) !=? s:base && stridx(val, $VIMRUNTIME) == -1 && val !~? '[/\\]after$'
 endfunc
 
 let s:rtp = join(filter(split(&rtp, ','), function('polyglot#util#Filter')), ',')
