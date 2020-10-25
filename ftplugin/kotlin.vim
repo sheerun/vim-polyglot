@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('kotlin', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'kotlin')
   finish
 endif
 

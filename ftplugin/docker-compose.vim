@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('docker-compose', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'docker-compose')
   finish
 endif
 

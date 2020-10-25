@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('cpp-modern', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'cpp-modern')
   finish
 endif
 

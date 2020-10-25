@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('coffee-script', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'coffee-script')
   finish
 endif
 

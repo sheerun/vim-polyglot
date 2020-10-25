@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('groovy', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'groovy')
   finish
 endif
 

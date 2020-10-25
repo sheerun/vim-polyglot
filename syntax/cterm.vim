@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('cterm', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'cterm')
   finish
 endif
 

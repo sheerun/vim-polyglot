@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('json5', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'json5')
   finish
 endif
 

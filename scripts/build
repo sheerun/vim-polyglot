@@ -295,7 +295,7 @@ def copy_file(name, src, dest)
     open(dest, "w") do |output|
       if dest.match?(/\.vim$/)
         output << <<~EOF
-        if !polyglot#util#IsEnabled('#{name}', expand('<sfile>:p'))
+        if !has_key(g:polyglot_is_disabled, '#{name}')
           finish
         endif
 
@@ -674,7 +674,7 @@ def generate_ftdetect(packages, heuristics)
     end
 
     if package_autocommands.flatten.size > 0
-      output << "if polyglot#util#IsEnabled('#{package["name"]}', 'ftdetect')\n"
+      output << "if !has_key(g:polyglot_is_disabled, '#{package["name"]}')\n"
       output << indent(package_autocommands.map { |pc| pc.reverse.join("\n") }.join("\n\n"), 2)
       output << "\nendif\n\n"
     end

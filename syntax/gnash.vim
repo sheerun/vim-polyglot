@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('gnash', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'gnash')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('passwd', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'passwd')
   finish
 endif
 

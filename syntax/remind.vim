@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('remind', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'remind')
   finish
 endif
 

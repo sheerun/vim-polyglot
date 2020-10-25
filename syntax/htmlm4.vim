@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('htmlm4', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'htmlm4')
   finish
 endif
 

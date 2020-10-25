@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('dictconf', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'dictconf')
   finish
 endif
 

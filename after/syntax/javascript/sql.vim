@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('javascript-sql', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'javascript-sql')
   finish
 endif
 

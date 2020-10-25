@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('webmacro', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'webmacro')
   finish
 endif
 

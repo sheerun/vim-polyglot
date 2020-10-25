@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('dart', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'dart')
   finish
 endif
 

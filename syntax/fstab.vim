@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('fstab', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'fstab')
   finish
 endif
 

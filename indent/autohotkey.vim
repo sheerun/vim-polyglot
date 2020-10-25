@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('autohotkey', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'autohotkey')
   finish
 endif
 

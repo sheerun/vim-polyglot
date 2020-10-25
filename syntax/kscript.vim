@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('kscript', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'kscript')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('slrnsc', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'slrnsc')
   finish
 endif
 

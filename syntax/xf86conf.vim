@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('xf86conf', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'xf86conf')
   finish
 endif
 

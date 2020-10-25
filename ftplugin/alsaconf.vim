@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('alsaconf', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'alsaconf')
   finish
 endif
 

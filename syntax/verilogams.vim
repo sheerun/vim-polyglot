@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('verilogams', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'verilogams')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('puppet', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'puppet')
   finish
 endif
 

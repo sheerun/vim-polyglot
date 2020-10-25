@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('upstreaminstalllog', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'upstreaminstalllog')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('usw2kagtlog', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'usw2kagtlog')
   finish
 endif
 

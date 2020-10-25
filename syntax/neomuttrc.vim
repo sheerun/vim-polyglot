@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('neomuttrc', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'neomuttrc')
   finish
 endif
 

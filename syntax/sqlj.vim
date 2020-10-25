@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('sqlj', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'sqlj')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('python-indent', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'python-indent')
   finish
 endif
 

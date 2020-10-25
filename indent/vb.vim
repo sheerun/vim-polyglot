@@ -1,4 +1,4 @@
-if !polyglot#util#IsEnabled('visual-basic', expand('<sfile>:p'))
+if !has_key(g:polyglot_is_disabled, 'visual-basic')
   finish
 endif
 
