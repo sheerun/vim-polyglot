@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/mel.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('mel', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mel') == -1
 
 " Vim syntax file
 " Language:	MEL (Maya Extension Language)
@@ -115,5 +110,3 @@ hi def link melCommentError melError
 
 
 let b:current_syntax = "mel"
-
-endif

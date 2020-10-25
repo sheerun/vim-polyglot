@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/z8a.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('z8a', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'z8a') == -1
 
 " Vim syntax file
 " Language:	Z80 assembler asz80
@@ -108,5 +103,3 @@ hi def link z8aString		String
 
 let b:current_syntax = "z8a"
 " vim: ts=8
-
-endif

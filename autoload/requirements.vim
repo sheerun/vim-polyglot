@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/requirements.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('requirements', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'requirements') == -1
 
 " the Requirements File Format syntax support for Vim
 " Version: 1.5.3
@@ -39,5 +34,3 @@ set cpo&vim
 let &cpo = s:save_cpo
 unlet s:save_cpo
 " vim: et sw=4 ts=4 sts=4:
-
-endif

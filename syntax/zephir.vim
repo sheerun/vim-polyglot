@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/zephir.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('zephir', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zephir') == -1
 
 " Copyright 2009 The Go Authors. All rights reserved.
 if exists("b:current_syntax")
@@ -140,5 +135,3 @@ syn sync minlines=500
 
 let b:current_syntax = "zephir"
 syn match       zepTypeHits          "<\w+>" contained display
-
-endif

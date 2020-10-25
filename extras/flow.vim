@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'extras/flow.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('javascript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
 
 syntax region  jsFlowDefinition     contained                        start=/:/    end=/\%(\s*[,=;)\n]\)\@=/ contains=@jsFlowCluster containedin=jsParen
 syntax region  jsFlowArgumentDef    contained                        start=/:/    end=/\%(\s*[,)]\|=>\@!\)\@=/ contains=@jsFlowCluster
@@ -115,6 +110,4 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink jsFlowTypeValue          PreProc
   HiLink jsFlowObjectFuncName     jsObjectFuncName
   delcommand HiLink
-endif
-
 endif

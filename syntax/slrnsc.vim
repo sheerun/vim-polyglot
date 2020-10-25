@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/slrnsc.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('slrnsc', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slrnsc') == -1
 
 " Vim syntax file
 " Language:	Slrn score file (based on slrn 0.9.8.0)
@@ -75,5 +70,3 @@ hi def link slrnscInclude		Keyword
 let b:current_syntax = "slrnsc"
 
 "EOF	vim: ts=8 noet tw=200 sw=8 sts=0
-
-endif

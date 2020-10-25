@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/tmux.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('tmux', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
 
 " Language: tmux(1) configuration file
 " Version: 3.1b (git-769ae106)
@@ -126,5 +121,3 @@ syn keyword tmuxCommands
 
 let &cpo = s:original_cpo
 unlet! s:original_cpo s:bg s:i
-
-endif

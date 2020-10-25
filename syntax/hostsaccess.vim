@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/hostsaccess.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('hostsaccess', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'hostsaccess') == -1
 
 " Vim syntax file
 " Language:	hosts.deny, hosts.allow configuration files
@@ -30,5 +25,3 @@ unlet b:current_syntax
 
 let b:current_syntax = "hostsaccess"
 " vim: ts=8 sw=2
-
-endif

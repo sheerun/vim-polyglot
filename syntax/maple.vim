@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/maple.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('maple', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'maple') == -1
 
 " Vim syntax file
 " Language:	Maple V (based on release 4)
@@ -629,5 +624,3 @@ endif
 " Current Syntax: {{{1
 let b:current_syntax = "maple"
 " vim: ts=20 fdm=marker
-
-endif

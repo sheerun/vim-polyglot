@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/vhdl.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('vhdl', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vhdl') == -1
 
 " VHDL filetype plugin
 " Language:    VHDL
@@ -95,5 +90,3 @@ vnoremap <buffer><silent>][ :<C-u>cal <SID>CountWrapper('][')<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

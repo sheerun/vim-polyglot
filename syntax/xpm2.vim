@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/xpm2.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('xpm2', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'xpm2') == -1
 
 " Vim syntax file
 " Language:	X Pixmap v2
@@ -160,5 +155,3 @@ let b:current_syntax = "xpm2"
 let &cpo = s:cpo_save
 unlet s:cpo_save
 " vim: ts=8:sw=2:noet:
-
-endif

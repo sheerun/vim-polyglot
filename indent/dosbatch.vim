@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'indent/dosbatch.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('dosbatch', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dosbatch') == -1
 
 " Vim indent file
 " Language:	MSDOS batch file (with NT command extensions)
@@ -66,5 +61,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim: ts=8 sw=2 sts=2
-
-endif

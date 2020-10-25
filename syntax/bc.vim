@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/bc.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('bc', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'bc') == -1
 
 " Vim syntax file
 " Language:	bc - An arbitrary precision calculator language
@@ -73,5 +68,3 @@ hi def link bcParenError		Error
 
 let b:current_syntax = "bc"
 " vim: ts=8
-
-endif

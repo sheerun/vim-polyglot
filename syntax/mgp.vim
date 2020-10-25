@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/mgp.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('mgp', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mgp') == -1
 
 " Vim syntax file
 " Language:     mgp - MaGic Point
@@ -76,5 +71,3 @@ hi def link mgpDefine	Define
 
 
 let b:current_syntax = "mgp"
-
-endif

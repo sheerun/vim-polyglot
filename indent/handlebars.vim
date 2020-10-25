@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'indent/handlebars.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('handlebars', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'handlebars') == -1
 
 " Mustache & Handlebars syntax
 " Language:	Mustache, Handlebars
@@ -132,5 +127,3 @@ function! GetHandlebarsIndent(...)
 
   return ind
 endfunction
-
-endif

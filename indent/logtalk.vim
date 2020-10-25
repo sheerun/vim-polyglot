@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'indent/logtalk.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('logtalk', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'logtalk') == -1
 
 "  Maintainer:	Paulo Moura <pmoura@logtalk.org>
 "  Revised on:	2018.08.04
@@ -71,5 +66,3 @@ function! GetLogtalkIndent()
 	endif
 	return ind
 endfunction
-
-endif

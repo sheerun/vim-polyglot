@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/yats/es6-array.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('typescript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Array nextgroup=typescriptGlobalArrayDot,typescriptFuncCallArg
 syntax match   typescriptGlobalArrayDot /\./ contained nextgroup=typescriptArrayStaticMethod,typescriptProp
@@ -20,6 +15,4 @@ syntax keyword typescriptArrayMethod contained shift slice some sort splice toLo
 syntax keyword typescriptArrayMethod contained toSource toString unshift nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptArrayMethod
 if exists("did_typescript_hilink") | HiLink typescriptArrayMethod Keyword
-endif
-
 endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/sed.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('sed', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sed') == -1
 
 " Vim syntax file
 " Language:	sed
@@ -117,5 +112,3 @@ unlet __sed_i __sed_last __sed_delimiter __sed_metacharacters
 let b:current_syntax = "sed"
 
 " vim: sts=4 sw=4 ts=8
-
-endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/elixir.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('elixir', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'elixir') == -1
 
 if exists('b:did_ftplugin')
   finish
@@ -58,5 +53,3 @@ onoremap <buffer> <silent> <expr> [] ':silent keeppatterns ?'.b:block_end  .'<CR
 
 let b:undo_ftplugin = 'setlocal sw< sts< et< isk< com< cms< path< inex< sua< def< fo<'.
       \ '| unlet! b:match_ignorecase b:match_words b:block_begin b:block_end'
-
-endif

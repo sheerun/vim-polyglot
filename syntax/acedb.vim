@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/acedb.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('acedb', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'acedb') == -1
 
 " Vim syntax file
 " Language:	AceDB model files
@@ -117,5 +112,3 @@ let b:current_syntax = "acedb"
 " The structure of the model.wrm file is sensitive to mixed tab and space
 " indentation and assumes tabs are 8 so...
 se ts=8
-
-endif

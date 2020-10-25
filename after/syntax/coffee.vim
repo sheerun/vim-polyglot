@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cjsx') == -1
+if !polyglot#util#IsEnabled('cjsx', expand('<sfile>:p'))
+  finish
+endif
 
 if exists('b:current_syntax')
   let s:current_syntax=b:current_syntax
@@ -27,5 +29,3 @@ hi def link cjsxTagName         Function
 hi def link cjsxEntity          Statement
 hi def link cjsxEntityPunct     Type
 hi def link cjsxAttribProperty  Type
-
-endif

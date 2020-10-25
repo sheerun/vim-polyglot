@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/typescript.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('typescript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 " set Vi-incompatible, compiler and commentstring
 
@@ -88,6 +83,4 @@ let g:tagbar_type_typescript = {
 " In case you've updated/customized your ~/.ctags and prefer to use it.
 if get(g:, 'typescript_use_builtin_tagbar_defs', 1)
   let g:tagbar_type_typescript.deffile = expand('<sfile>:p:h:h') . '/ctags/typescript.ctags'
-endif
-
 endif

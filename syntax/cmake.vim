@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/cmake.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('cmake', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cmake') == -1
 
 " Vim syntax file
 " Program:      CMake - Cross-Platform Makefile Generator
@@ -3781,5 +3776,3 @@ let &cpo = s:keepcpo
 unlet s:keepcpo
 
 " vim: set nowrap:
-
-endif

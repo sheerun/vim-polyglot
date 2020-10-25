@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/art.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('art', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'art') == -1
 
 " Vim filetype plugin
 " Language:      ART-IM and ART*Enterprise
@@ -22,5 +17,3 @@ run ftplugin/lisp.vim
 
 setl lw-=if
 setl lw+=def-art-fun,deffacts,defglobal,defrule,defschema,for,schema,while
-
-endif

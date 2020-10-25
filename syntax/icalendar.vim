@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/icalendar.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('icalendar', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'icalendar') == -1
 
 " Vim syntax file
 " Language:      icalendar <http://www.ietf.org/rfc/rfc2445.txt>
@@ -62,5 +57,3 @@ let b:current_syntax = "icalendar"
 "EOF vim: tw=78:ft=vim:ts=8
 
 
-
-endif

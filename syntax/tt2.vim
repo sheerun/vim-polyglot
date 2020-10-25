@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/tt2.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('perl', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
 
 " Language:      TT2 (Perl Template Toolkit)
 " Maintainer:    vim-perl <vim-perl@googlegroups.com>
@@ -217,5 +212,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim:ts=4:sw=4
-
-endif

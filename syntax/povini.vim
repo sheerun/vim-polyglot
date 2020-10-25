@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/povini.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('povini', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'povini') == -1
 
 " Vim syntax file
 " Language: PoV-Ray(tm) 3.7 configuration/initialization files
@@ -63,5 +58,3 @@ hi def link poviniBool Constant
 hi def link poviniNumber Number
 
 let b:current_syntax = "povini"
-
-endif

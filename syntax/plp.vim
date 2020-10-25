@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/plp.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('plp', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plp') == -1
 
 " Vim syntax file
 " Language:	PLP (Perl in HTML)
@@ -44,5 +39,3 @@ syn region  PLPinclude keepend matchgroup=Delimiter start=+<(+ end=+)>+
 
 let b:current_syntax = "plp"
 
-
-endif

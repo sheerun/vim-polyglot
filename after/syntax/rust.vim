@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
+if !polyglot#util#IsEnabled('rust', expand('<sfile>:p'))
+  finish
+endif
 
 scriptencoding utf-8
 
@@ -41,5 +43,3 @@ if !get(g:, 'rust_conceal_mod_path', 0)
 endif
 
 " vim: set et sw=4 sts=4 ts=8:
-
-endif

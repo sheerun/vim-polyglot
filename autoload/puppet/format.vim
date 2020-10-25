@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/puppet/format.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('puppet', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
 
 "
 " Simple format using puppet's l:indents and align hashrockets function
@@ -77,5 +72,3 @@ function! puppet#format#Fallback(start_lnum, end_lnum) abort
 
 endfunction
 
-
-endif

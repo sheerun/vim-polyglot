@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dhall') == -1
+if !polyglot#util#IsEnabled('dhall', expand('<sfile>:p'))
+  finish
+endif
 
 " store and remove current syntax value
 let old_syntax = b:current_syntax
@@ -13,5 +15,3 @@ hi def link quasiQuote Underlined
 
 " restore current syntax value
 let b:current_syntax = old_syntax
-
-endif

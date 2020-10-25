@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/yats/css.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('typescript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 syntax keyword typescriptDOMStyle contained alignContent alignItems alignSelf animation
 syntax keyword typescriptDOMStyle contained animationDelay animationDirection animationDuration
@@ -77,6 +72,4 @@ syntax keyword typescriptDOMStyle contained userSelect userZoom verticalAlign vi
 syntax keyword typescriptDOMStyle contained whiteSpace width willChange wordBreak
 syntax keyword typescriptDOMStyle contained wordSpacing wordWrap writingMode zIndex
 if exists("did_typescript_hilink") | HiLink typescriptDOMStyle Keyword
-endif
-
 endif

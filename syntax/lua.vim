@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/lua.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('lua', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'lua') == -1
 
 " Vim syntax file
 " Language: Lua
@@ -267,6 +262,4 @@ end
 let b:current_syntax = "lua"
 if main_syntax == 'lua'
   unlet main_syntax
-endif
-
 endif

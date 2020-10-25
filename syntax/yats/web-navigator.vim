@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/yats/web-navigator.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('typescript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 syntax keyword typescriptBOMNavigatorProp contained battery buildID connection cookieEnabled
 syntax keyword typescriptBOMNavigatorProp contained doNotTrack maxTouchPoints oscpu
@@ -26,6 +21,4 @@ endif
 syntax keyword typescriptServiceWorkerMethod contained register nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptServiceWorkerMethod
 if exists("did_typescript_hilink") | HiLink typescriptServiceWorkerMethod Keyword
-endif
-
 endif

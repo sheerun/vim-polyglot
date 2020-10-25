@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/nim.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('nim', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'nim') == -1
 
 let g:nim_log = []
 let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
@@ -244,6 +239,4 @@ if exists('g:SyntasticRegistry')
   call g:SyntasticRegistry.CreateAndRegisterChecker({
       \ 'filetype': 'nim',
       \ 'name': 'nim'})
-endif
-
 endif

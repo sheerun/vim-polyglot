@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/slpreg.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('slpreg', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'slpreg') == -1
 
 " Vim syntax file
 " Language:             RFC 2614 - An API for Service Location registration file
@@ -129,5 +124,3 @@ let b:current_syntax = "slpreg"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

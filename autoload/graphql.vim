@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/graphql.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('graphql', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
 
 " Copyright (c) 2016-2020 Jon Parise <jon@indelible.org>
 "
@@ -42,5 +37,3 @@ endfunction
 function! graphql#javascript_tags() abort
   return get(g:, 'graphql_javascript_tags', ['gql', 'graphql', 'Relay.QL'])
 endfunction
-
-endif

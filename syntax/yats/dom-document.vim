@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/yats/dom-document.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('typescript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 syntax keyword typescriptDOMDocProp contained activeElement body cookie defaultView
 syntax keyword typescriptDOMDocProp contained designMode dir domain embeds forms head
@@ -38,6 +33,4 @@ syntax keyword typescriptDOMDocMethod contained queryCommandSupported querySelec
 syntax keyword typescriptDOMDocMethod contained querySelectorAll write writeln nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptDOMDocMethod
 if exists("did_typescript_hilink") | HiLink typescriptDOMDocMethod Keyword
-endif
-
 endif

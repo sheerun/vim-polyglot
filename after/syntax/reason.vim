@@ -1,4 +1,4 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'reason') == -1
-
-
+if !polyglot#util#IsEnabled('reason', expand('<sfile>:p'))
+  finish
 endif
+

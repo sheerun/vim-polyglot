@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/lprolog.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('lprolog', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'lprolog') == -1
 
 " Vim settings file
 " Language:     LambdaProlog (Teyjus)
@@ -43,6 +38,4 @@ if !exists("no_plugin_maps") && !exists("no_lprolog_maps")
   nnoremap <buffer> <Plug>LUncomOff <ESC>:s/^\/\* \(.*\) \*\//\1/<CR>
   vnoremap <buffer> <Plug>BUncomOn <ESC>:'<,'><CR>`<O<ESC>0i/*<ESC>`>o<ESC>0i*/<ESC>`<
   vnoremap <buffer> <Plug>BUncomOff <ESC>:'<,'><CR>`<dd`>dd`<
-endif
-
 endif

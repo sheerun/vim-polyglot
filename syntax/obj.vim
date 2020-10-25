@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/obj.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('obj', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'obj') == -1
 
 " Vim syntax file
 " Language:	3D wavefront's obj file
@@ -90,5 +85,3 @@ hi def link objKeywords        Keyword
 let b:current_syntax = "obj"
 
 " vim: ts=8
-
-endif

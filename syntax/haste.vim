@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/haste.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('haste', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'haste') == -1
 
 " Vim syntax file
 " Language:	HASTE - a language for VLSI IC programming
@@ -149,5 +144,3 @@ hi def link hasteInclude	Include
 let b:current_syntax = "haste"
 
 " vim: ts=8
-
-endif

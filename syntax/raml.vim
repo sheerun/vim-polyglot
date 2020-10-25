@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/raml.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('raml', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'raml') == -1
 
 " Vim syntax file
 " Language:    RAML (RESTful API Modeling Language)
@@ -113,5 +108,3 @@ let b:current_syntax = "raml"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

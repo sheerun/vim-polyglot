@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/pyrex.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('pyrex', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'pyrex') == -1
 
 " Vim syntax file
 " Language:	Pyrex
@@ -58,5 +53,3 @@ hi def link pyrexForFrom		Statement
 
 
 let b:current_syntax = "pyrex"
-
-endif

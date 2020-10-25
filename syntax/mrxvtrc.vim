@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/mrxvtrc.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('mrxvtrc', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mrxvtrc') == -1
 
 " Description	: Vim syntax file for mrxvtrc (for mrxvt-0.5.0 and up)
 " Created	: Wed 26 Apr 2006 01:20:53 AM CDT
@@ -289,5 +284,3 @@ let b:current_syntax = "mrxvtrc"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

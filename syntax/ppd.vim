@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/ppd.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('ppd', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ppd') == -1
 
 " Vim syntax file
 " Language:	PPD (PostScript printer description) file
@@ -42,5 +37,3 @@ hi def link ppdContraints		Special
 let b:current_syntax = "ppd"
 
 " vim: ts=8
-
-endif

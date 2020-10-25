@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/ecrystal.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('crystal', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
 
 " Filetype plugin for https://crystal-lang.org/api/0.35.1/ECR.html
 if exists('b:did_ftplugin')
@@ -104,5 +99,3 @@ let b:undo_ftplugin = 'setlocal comments< commentstring< shiftwidth<' .
       \ '| unlet! b:browsefilter b:match_words ' .
       \ '| unlet! b:AutoPairs ' .
       \ '| ' . s:undo_ftplugin
-
-endif

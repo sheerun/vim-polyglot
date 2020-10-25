@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/python/utils.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('python-compiler', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python-compiler') == -1
 
 " Sometimes Python issues debugging messages
 " which don't belong to a call stack context
@@ -24,5 +19,3 @@ function! python#utils#fix_qflist() " {{{
     call setqflist(l:traceback)
   endif
 endfunction " }}}
-
-endif

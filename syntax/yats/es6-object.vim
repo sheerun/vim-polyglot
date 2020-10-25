@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/yats/es6-object.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('typescript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Object nextgroup=typescriptGlobalObjectDot,typescriptFuncCallArg
 syntax match   typescriptGlobalObjectDot /\./ contained nextgroup=typescriptObjectStaticMethod,typescriptProp
@@ -23,6 +18,4 @@ syntax keyword typescriptObjectMethod contained toLocaleString toString valueOf 
 syntax keyword typescriptObjectMethod contained setPrototypeOf nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptObjectMethod
 if exists("did_typescript_hilink") | HiLink typescriptObjectMethod Keyword
-endif
-
 endif

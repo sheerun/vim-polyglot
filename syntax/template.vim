@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/template.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('template', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'template') == -1
 
 " Vim syntax file
 " Language:	Generic template
@@ -22,5 +17,3 @@ endif
 " If you know how to recognize a more specific type for *.tmpl suggest a
 " change to runtime/scripts.vim.
 runtime! syntax/html.vim
-
-endif

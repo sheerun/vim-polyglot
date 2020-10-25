@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/octave.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('octave', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'octave') == -1
 
 " Vim syntax file
 " Language:             Octave
@@ -735,5 +730,3 @@ endif
 let b:current_syntax = "octave"
 
 "EOF	vim: ts=2 et tw=80 sw=2 sts=0
-
-endif

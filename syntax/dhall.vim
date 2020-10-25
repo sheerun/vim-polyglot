@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/dhall.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('dhall', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dhall') == -1
 
 scriptencoding utf-8
 
@@ -71,5 +66,3 @@ highlight link dhallMultilineComment Comment
 highlight link dhallHash Keyword
 
 let b:current_syntax = 'dhall'
-
-endif

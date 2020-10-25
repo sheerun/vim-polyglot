@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/i3config.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('i3', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'i3') == -1
 
 " Vim syntax file
 " Language: i3 config file
@@ -266,5 +261,3 @@ hi! def link i3ConfigVariable                        Statement
 hi! def link i3ConfigArbitraryCommand                Type
 
 let b:current_syntax = "i3config"
-
-endif

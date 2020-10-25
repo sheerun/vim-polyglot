@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/ipfilter.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('ipfilter', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ipfilter') == -1
 
 " ipfilter syntax file
 " Language: ipfilter configuration file
@@ -61,5 +56,3 @@ hi def link IPFNetmask	String
 hi def link IPFAny		Statement
 hi def link IPFProto	Identifier
 
-
-endif

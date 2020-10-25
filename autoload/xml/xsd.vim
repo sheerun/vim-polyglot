@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/xml/xsd.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('xsd', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'xsd') == -1
 
 " Author: Thomas Barthel
 " Last change: 2007 May 8
@@ -137,5 +132,3 @@ let g:xmldata_xsd = {
 		\ [],
 		\ {'source' : [], 'id' : [], 'xml' : []} ]
 	\ }
-
-endif

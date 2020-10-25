@@ -1,13 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/smhl.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('typescript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 syntax cluster _semantic contains=_semantic1,_semantic2,_semantic3,_semantic4,_semantic5,_semantic6,_semantic7,_semantic8,_semantic9,_semantic10,_semantic11,_semantic12,_semantic13,_semantic14,_semantic15,_semantic16,_semantic17,_semantic18,_semantic19,_semantic20,_semantic21,_semantic22,_semantic23,_semantic24,_semantic25
 
-
-endif

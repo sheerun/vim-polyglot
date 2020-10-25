@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/vala.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('vala', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
 
 if exists('b:did_ftplugin')
   finish
@@ -53,6 +48,4 @@ if (has("browsefilter")) && !exists("b:browsefilter")
   let b:browsefilter = "Vala Source Files (*.vala)\t*.vala\n" .
         \ "Vala Vapi Files (*.vapi)\t*.vapi\n" .
         \ "All Files (*.*)\t*.*\n"
-endif
-
 endif

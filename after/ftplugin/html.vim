@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
+if !polyglot#util#IsEnabled('html5', expand('<sfile>:p'))
+  finish
+endif
 
 " Maintainer:  	othree <othree@gmail.com>
 " URL:		      http://github.com/othree/html5.vim
@@ -9,5 +11,3 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
 " setlocal iskeyword+=-
 
 setlocal commentstring=<!--%s-->
-
-endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/tt2html.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('perl', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'perl') == -1
 
 " Language:      TT2 embedded with HTML
 " Maintainer:    vim-perl <vim-perl@googlegroups.com>
@@ -27,5 +22,3 @@ unlet b:current_syntax
 syn cluster htmlPreProc add=@tt2_top_cluster
 
 let b:current_syntax = "tt2html"
-
-endif

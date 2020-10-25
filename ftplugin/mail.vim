@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/mail.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('mail', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mail') == -1
 
 " Vim filetype plugin file
 " Language:	Mail
@@ -44,6 +39,4 @@ if !exists("no_plugin_maps") && !exists("no_mail_maps")
   endif
   vnoremap <buffer> <Plug>MailQuote :s/^/> /<CR>:noh<CR>``
   nnoremap <buffer> <Plug>MailQuote :.,$s/^/> /<CR>:noh<CR>``
-endif
-
 endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/julia/doc.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('julia', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
 
 " path to the julia binary to communicate with
 if has('win32') || has('win64')
@@ -249,5 +244,3 @@ function! s:likely(str) abort
   let output = systemlist(cmd)
   return split(matchstr(output[0], '\C^search: \zs.*'))
 endfunction
-
-endif

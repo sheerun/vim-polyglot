@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/reva.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('reva', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'reva') == -1
 
 " Vim ftplugin file
 " Language:	Reva Forth
@@ -32,5 +27,3 @@ setlocal com=s1:/*,mb:*,ex:*/,:\|,:\\
 setlocal fo=tcrqol
 setlocal matchpairs+=\::;
 setlocal iskeyword=!,@,33-35,%,$,38-64,A-Z,91-96,a-z,123-126,128-255
-
-endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/upstreamdat.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('upstreamdat', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'upstreamdat') == -1
 
 " Vim syntax file
 " Language:		Innovation Data Processing upstream.dat file
@@ -312,5 +307,3 @@ hi def link upstreamdat_Parameter Type
 hi def link upstreamdat_Comment Comment
 
 let b:current_syntax = "upstreamdat"
-
-endif

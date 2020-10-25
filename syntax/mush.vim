@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/mush.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('mush', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mush') == -1
 
 " MUSHcode syntax file
 " Maintainer: Rick Bird <nveid@nveid.com>
@@ -222,5 +217,3 @@ hi def link mushCommentString mushString
 let b:current_syntax = "mush"
 
 " mush: ts=17
-
-endif

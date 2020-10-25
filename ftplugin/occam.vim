@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/occam.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('occam', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'occam') == -1
 
 " Vim filetype plugin file
 " Language:	occam
@@ -56,5 +51,3 @@ let b:undo_ftplugin = "setlocal shiftwidth< softtabstop< expandtab<"
 
 let &cpo = s:keepcpo
 unlet s:keepcpo
-
-endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/libao.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('libao', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'libao') == -1
 
 " Vim syntax file
 " Language:             libao.conf(5) configuration file
@@ -34,5 +29,3 @@ let b:current_syntax = "libao"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/swiftgyb.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('swiftgyb', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'swiftgyb') == -1
 
 " This source file is part of the Swift.org open source project
 "
@@ -31,5 +26,3 @@ hi def link gybPythonCode CursorLineNr
 
 let b:current_syntax = "swiftgyb"
 
-
-endif

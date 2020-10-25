@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
-
 --langdef=typescript
 --langmap=typescript:.ts
 --regex-typescript=/^[ \t]*(export)?[ \t]*class[ \t]+([a-zA-Z0-9_]+)/\2/c,classes/
@@ -13,5 +11,3 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') ==
 --regex-typescript=/^[ \t]*(export)?[ \t]*(public|private)[ \t]+(static|readonly)?[ \t]*([a-zA-Z0-9_]+)/\4/m,members/
 --regex-typescript=/^[ \t]*(export)?[ \t]*interface[ \t]+([a-zA-Z0-9_]+)/\2/i,interfaces/
 --regex-typescript=/^[ \t]*(export)?[ \t]*enum[ \t]+([a-zA-Z0-9_]+)/\2/e,enums/
-
-endif

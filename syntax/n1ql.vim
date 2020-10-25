@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/n1ql.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('n1ql', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'n1ql') == -1
 
 " Vim syntax file
 " Language:    N1QL / Couchbase Server
@@ -441,5 +436,3 @@ hi def link n1qlTODO       Todo
 hi def link n1qlType       Type
 
 let b:current_syntax = "n1ql"
-
-endif

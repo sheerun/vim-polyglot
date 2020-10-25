@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/xmodmap.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('xmodmap', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'xmodmap') == -1
 
 " Vim syntax file
 " Language:             xmodmap(1) definition file
@@ -684,5 +679,3 @@ let b:current_syntax = "xmodmap"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

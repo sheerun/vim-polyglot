@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/javascript.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('javascript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'javascript') == -1
 
 " Vim syntax file
 " Language:     JavaScript
@@ -399,6 +394,4 @@ hi! def link javaScript              NONE
 let b:current_syntax = "javascript"
 if main_syntax == 'javascript'
   unlet main_syntax
-endif
-
 endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/jsx_pretty/indent.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('jsx', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || (index(g:polyglot_disabled, 'javascript') == -1 && index(g:polyglot_disabled, 'jsx') == -1)
 
 if exists('*shiftwidth')
   function! s:sw()
@@ -309,5 +304,3 @@ function! jsx_pretty#indent#get(js_indent)
 
   return a:js_indent()
 endfunction
-
-endif

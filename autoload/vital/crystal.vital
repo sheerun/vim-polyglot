@@ -1,10 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'crystal') == -1
-
 crystal
 bee84ae23effb0510137ad177e98c94d8b3657a6
 
 Process
 Web.JSON
 ColorEcho
-
-endif

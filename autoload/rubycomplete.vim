@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/rubycomplete.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('ruby', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ruby') == -1
 
 " Vim completion script
 " Language:		Ruby
@@ -878,5 +873,3 @@ call s:DefRuby()
 "}}} ruby-side code
 
 " vim:tw=78:sw=4:ts=8:et:fdm=marker:ft=vim:norl:
-
-endif

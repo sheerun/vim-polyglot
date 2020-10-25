@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/zig/config.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('zig', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'zig') == -1
 
 function! zig#config#ListTypeCommands() abort
   return get(g:, 'zig_list_type_commands', {})
@@ -46,5 +41,3 @@ endfunction
 function! zig#config#Debug() abort
   return get(g:, 'zig_debug', [])
 endfunction
-
-endif

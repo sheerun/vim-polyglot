@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/apache.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('apache', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'apache') == -1
 
 " Vim syntax file
 " Language: Apache configuration (httpd.conf, srm.conf, access.conf, .htaccess)
@@ -210,5 +205,3 @@ hi def link apacheUserID Number
 
 
 let b:current_syntax = "apache"
-
-endif

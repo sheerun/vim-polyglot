@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/blade.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('blade', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'blade') == -1
 
 " Vim filetype plugin
 " Language:     Blade (Laravel)
@@ -39,6 +34,4 @@ if exists('loaded_matchit') && exists('b:match_words')
                 \ ',{:},\[:\],(:)'
     let b:match_skip = 'synIDattr(synID(line("."), col("."), 0), "name") !=# "bladeKeyword"'
     let b:match_ignorecase = 0
-endif
-
 endif

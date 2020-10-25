@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/sisu.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('sisu', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sisu') == -1
 
 " SiSU Vim syntax file
 " SiSU Maintainer: Ralph Amissah <ralph.amissah@gmail.com>
@@ -282,5 +277,3 @@ hi def link sisu_error                 Error
 let b:current_syntax = "sisu"
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

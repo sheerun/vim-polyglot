@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
+if !polyglot#util#IsEnabled('graphql', expand('<sfile>:p'))
+  finish
+endif
 
 " Copyright (c) 2016-2020 Jon Parise <jon@indelible.org>
 "
@@ -42,5 +44,3 @@ function GetTypescriptGraphQLIndent()
 
   return eval(b:indentexpr_base)
 endfunction
-
-endif

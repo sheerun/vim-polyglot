@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/taskdata.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('taskdata', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'taskdata') == -1
 
 " Vim syntax file
 " Language:	task data
@@ -52,5 +47,3 @@ let &cpo = s:keepcpo
 unlet s:keepcpo
 
 " vim:noexpandtab
-
-endif

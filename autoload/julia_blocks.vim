@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/julia_blocks.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('julia', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
 
 " Facilities for moving around Julia blocks (e.g. if/end, function/end etc.)
 " (AKA a collection of horrible hacks)
@@ -801,5 +796,3 @@ function! s:cursor_moved(...)
   let b:jlblk_did_select = b:jlblk_doing_select
   let b:jlblk_doing_select = 0
 endfunction
-
-endif

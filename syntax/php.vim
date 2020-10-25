@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/php.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('php', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'php') == -1
 
 " Vim syntax file
 " Language: PHP 5.3 & up
@@ -1055,5 +1050,3 @@ endif
 " }}}
 
 " vim: ts=8 sts=2 sw=2 fdm=marker expandtab
-
-endif

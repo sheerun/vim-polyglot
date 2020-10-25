@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/dosini.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('dosini', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'dosini') == -1
 
 " Vim syntax file
 " Language:               Configuration File (ini file) for MSDOS/MS Windows
@@ -47,5 +42,3 @@ hi def link dosiniValue    String
 let b:current_syntax = "dosini"
 
 " vim: sts=2 sw=2 et
-
-endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/cryptol/folding.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('cryptol', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cryptol') == -1
 
 " Copyright © 2013 Edward O'Callaghan. All Rights Reserved.
 
@@ -53,5 +48,3 @@ function! GetPotionFold(lnum)
         return '>' . next_indent
     endif
 endfunction
-
-endif

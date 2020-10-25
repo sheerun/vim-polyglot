@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/systemverilog.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('systemverilog', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'systemverilog') == -1
 
 " Vim filetype plugin file
 " Language:    SystemVerilog
@@ -18,5 +13,3 @@ endif
 
 " Behaves just like Verilog
 runtime! ftplugin/verilog.vim
-
-endif

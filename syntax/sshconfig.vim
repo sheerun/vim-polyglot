@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/sshconfig.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('sshconfig', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sshconfig') == -1
 
 " Vim syntax file
 " Language:	OpenSSH client configuration file (ssh_config)
@@ -284,5 +279,3 @@ hi def link sshconfigDeprecated     Error
 let b:current_syntax = "sshconfig"
 
 " vim:set ts=8 sw=2 sts=2:
-
-endif

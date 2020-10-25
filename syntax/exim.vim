@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/exim.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('exim', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'exim') == -1
 
 " Vim syntax file
 " This is a GENERATED FILE. Please always refer to source file at the URI below.
@@ -112,5 +107,3 @@ hi def link eximTransport Identifier
 
 
 let b:current_syntax = "exim"
-
-endif

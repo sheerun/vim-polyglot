@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'yard') == -1
+if !polyglot#util#IsEnabled('yard', expand('<sfile>:p'))
+  finish
+endif
 
 " Ruby syntax extensions for highlighting YARD documentation.
 "
@@ -127,5 +129,3 @@ hi def link yardParametricType yardComment
 hi def link yardArrow yardComment
 hi def link yardHashAngle yardComment
 hi def link yardHashCurly yardComment
-
-endif

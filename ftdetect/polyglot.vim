@@ -26,21 +26,6 @@ let did_load_filetypes = 1
 " Be consistent across different systems
 set nofileignorecase
 
-let s:disabled_packages = {}
-let s:new_polyglot_disabled = []
-
-if exists('g:polyglot_disabled')
-  for pkg in g:polyglot_disabled
-    let base = split(pkg, '\.')
-    if len(base) > 0
-      let s:disabled_packages[pkg] = 1
-      call add(s:new_polyglot_disabled, base[0]) 
-    endif
-  endfor
-else
-  let g:polyglot_disabled_not_set = 1
-endif
-
 function! s:SetDefault(name, value)
   if !exists(a:name)
     let {a:name} = a:value
@@ -116,757 +101,757 @@ runtime! ftdetect/*.vim
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
-if !has_key(s:disabled_packages, 'context')
+if polyglot#util#IsEnabled('context', 'ftdetect')
   au BufNewFile,BufRead *.mkii,*.mkiv,*.mkvi setf context
 endif
 
-if !has_key(s:disabled_packages, 'xpm2')
+if polyglot#util#IsEnabled('xpm2', 'ftdetect')
   au BufNewFile,BufRead *.xpm2 setf xpm2
 endif
 
-if !has_key(s:disabled_packages, 'xpm')
+if polyglot#util#IsEnabled('xpm', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
   au BufNewFile,BufRead *.xpm setf xpm
 endif
 
-if !has_key(s:disabled_packages, 'man')
+if polyglot#util#IsEnabled('man', 'ftdetect')
   au BufNewFile,BufRead *.1,*.1in,*.1m,*.1x,*.2,*.3,*.3in,*.3m,*.3p,*.3pm,*.3qt,*.3x,*.4,*.5,*.6,*.7,*.8,*.9,*.man,*.mdoc setf man
 endif
 
-if !has_key(s:disabled_packages, 'xf86conf')
+if polyglot#util#IsEnabled('xf86conf', 'ftdetect')
   au BufNewFile,BufRead */xorg.conf.d/*.conf,xorg.conf,xorg.conf-4 setf xf86conf
   au BufNewFile,BufRead XF86Config-4* call s:StarSetf('xf86conf')
   au BufNewFile,BufRead XF86Config* call s:StarSetf('xf86conf')
 endif
 
-if !has_key(s:disabled_packages, 'pullrequest')
+if polyglot#util#IsEnabled('pullrequest', 'ftdetect')
   au BufNewFile,BufRead PULLREQ_EDITMSG setf pullrequest
 endif
 
-if !has_key(s:disabled_packages, 'text')
+if polyglot#util#IsEnabled('text', 'ftdetect')
   au BufNewFile,BufRead *.text,README setf text
 endif
 
-if !has_key(s:disabled_packages, 'svn')
+if polyglot#util#IsEnabled('svn', 'ftdetect')
   au BufNewFile,BufRead svn-commit*.tmp setf svn
 endif
 
-if !has_key(s:disabled_packages, 'logcheck')
+if polyglot#util#IsEnabled('logcheck', 'ftdetect')
   au BufNewFile,BufRead */etc/logcheck/*.d*/* call s:StarSetf('logcheck')
 endif
 
-if !has_key(s:disabled_packages, 'fvwm')
+if polyglot#util#IsEnabled('fvwm', 'ftdetect')
   au BufNewFile,BufRead */.fvwm/* call s:StarSetf('fvwm')
 endif
 
-if !has_key(s:disabled_packages, 'crontab')
+if polyglot#util#IsEnabled('crontab', 'ftdetect')
   au BufNewFile,BufRead crontab setf crontab
   au BufNewFile,BufRead crontab.* call s:StarSetf('crontab')
   au BufNewFile,BufRead */etc/cron.d/* call s:StarSetf('crontab')
 endif
 
-if !has_key(s:disabled_packages, 'bzr')
+if polyglot#util#IsEnabled('bzr', 'ftdetect')
   au BufNewFile,BufRead bzr_log.* call s:StarSetf('bzr')
 endif
 
-if !has_key(s:disabled_packages, 'asteriskvm')
+if polyglot#util#IsEnabled('asteriskvm', 'ftdetect')
   au BufNewFile,BufRead *asterisk*/*voicemail.conf* call s:StarSetf('asteriskvm')
 endif
 
-if !has_key(s:disabled_packages, 'asterisk')
+if polyglot#util#IsEnabled('asterisk', 'ftdetect')
   au BufNewFile,BufRead *asterisk/*.conf* call s:StarSetf('asterisk')
 endif
 
-if !has_key(s:disabled_packages, 'apachestyle')
+if polyglot#util#IsEnabled('apachestyle', 'ftdetect')
   au BufNewFile,BufRead proftpd.conf* call s:StarSetf('apachestyle')
   au BufNewFile,BufRead */etc/proftpd/conf.*/* call s:StarSetf('apachestyle')
   au BufNewFile,BufRead */etc/proftpd/*.conf* call s:StarSetf('apachestyle')
 endif
 
-if !has_key(s:disabled_packages, 'z8a')
+if polyglot#util#IsEnabled('z8a', 'ftdetect')
   au BufNewFile,BufRead *.z8a setf z8a
 endif
 
-if !has_key(s:disabled_packages, 'zimbutempl')
+if polyglot#util#IsEnabled('zimbutempl', 'ftdetect')
   au BufNewFile,BufRead *.zut setf zimbutempl
 endif
 
-if !has_key(s:disabled_packages, 'zimbu')
+if polyglot#util#IsEnabled('zimbu', 'ftdetect')
   au BufNewFile,BufRead *.zu setf zimbu
 endif
 
-if !has_key(s:disabled_packages, 'yacc')
+if polyglot#util#IsEnabled('yacc', 'ftdetect')
   au BufNewFile,BufRead *.y++,*.yxx,*.yy setf yacc
 endif
 
-if !has_key(s:disabled_packages, 'xslt')
+if polyglot#util#IsEnabled('xslt', 'ftdetect')
   au BufNewFile,BufRead *.xsl,*.xslt setf xslt
 endif
 
-if !has_key(s:disabled_packages, 'xsd')
+if polyglot#util#IsEnabled('xsd', 'ftdetect')
   au BufNewFile,BufRead *.xsd setf xsd
 endif
 
-if !has_key(s:disabled_packages, 'xquery')
+if polyglot#util#IsEnabled('xquery', 'ftdetect')
   au BufNewFile,BufRead *.xq,*.xql,*.xqm,*.xquery,*.xqy setf xquery
 endif
 
-if !has_key(s:disabled_packages, 'xmodmap')
+if polyglot#util#IsEnabled('xmodmap', 'ftdetect')
   au BufNewFile,BufRead *Xmodmap setf xmodmap
   au BufNewFile,BufRead *xmodmap* call s:StarSetf('xmodmap')
 endif
 
-if !has_key(s:disabled_packages, 'xmath')
+if polyglot#util#IsEnabled('xmath', 'ftdetect')
   au BufNewFile,BufRead *.msc,*.msf setf xmath
 endif
 
-if !has_key(s:disabled_packages, 'xdefaults')
+if polyglot#util#IsEnabled('xdefaults', 'ftdetect')
   au BufNewFile,BufRead *.ad,{.,}Xdefaults,{.,}Xpdefaults,{.,}Xresources,xdm-config setf xdefaults
   au BufNewFile,BufRead Xresources* call s:StarSetf('xdefaults')
   au BufNewFile,BufRead */app-defaults/* call s:StarSetf('xdefaults')
   au BufNewFile,BufRead */Xresources/* call s:StarSetf('xdefaults')
 endif
 
-if !has_key(s:disabled_packages, 'xinetd')
+if polyglot#util#IsEnabled('xinetd', 'ftdetect')
   au BufNewFile,BufRead */etc/xinetd.conf setf xinetd
   au BufNewFile,BufRead */etc/xinetd.d/* call s:StarSetf('xinetd')
 endif
 
-if !has_key(s:disabled_packages, 'xhtml')
+if polyglot#util#IsEnabled('xhtml', 'ftdetect')
   au BufNewFile,BufRead *.xht,*.xhtml setf xhtml
 endif
 
-if !has_key(s:disabled_packages, 'wsh')
+if polyglot#util#IsEnabled('wsh', 'ftdetect')
   au BufNewFile,BufRead *.ws[fc] setf wsh
 endif
 
-if !has_key(s:disabled_packages, 'cvs')
+if polyglot#util#IsEnabled('cvs', 'ftdetect')
   au BufNewFile,BufRead cvs\d\+ setf cvs
 endif
 
-if !has_key(s:disabled_packages, 'cvsrc')
+if polyglot#util#IsEnabled('cvsrc', 'ftdetect')
   au BufNewFile,BufRead {.,}cvsrc setf cvsrc
 endif
 
-if !has_key(s:disabled_packages, 'wvdial')
+if polyglot#util#IsEnabled('wvdial', 'ftdetect')
   au BufNewFile,BufRead {.,}wvdialrc,wvdial.conf setf wvdial
 endif
 
-if !has_key(s:disabled_packages, 'wsml')
+if polyglot#util#IsEnabled('wsml', 'ftdetect')
   au BufNewFile,BufRead *.wsml setf wsml
 endif
 
-if !has_key(s:disabled_packages, 'winbatch')
+if polyglot#util#IsEnabled('winbatch', 'ftdetect')
   au BufNewFile,BufRead *.wbt setf winbatch
 endif
 
-if !has_key(s:disabled_packages, 'wml')
+if polyglot#util#IsEnabled('wml', 'ftdetect')
   au BufNewFile,BufRead *.wml setf wml
 endif
 
-if !has_key(s:disabled_packages, 'wget')
+if polyglot#util#IsEnabled('wget', 'ftdetect')
   au BufNewFile,BufRead {.,}wgetrc,wgetrc setf wget
 endif
 
-if !has_key(s:disabled_packages, 'webmacro')
+if polyglot#util#IsEnabled('webmacro', 'ftdetect')
   au BufNewFile,BufRead *.wm setf webmacro
 endif
 
-if !has_key(s:disabled_packages, 'wast')
+if polyglot#util#IsEnabled('wast', 'ftdetect')
   au BufNewFile,BufRead *.wast,*.wat setf wast
 endif
 
-if !has_key(s:disabled_packages, 'vroom')
+if polyglot#util#IsEnabled('vroom', 'ftdetect')
   au BufNewFile,BufRead *.vroom setf vroom
 endif
 
-if !has_key(s:disabled_packages, 'vrml')
+if polyglot#util#IsEnabled('vrml', 'ftdetect')
   au BufNewFile,BufRead *.wrl setf vrml
 endif
 
-if !has_key(s:disabled_packages, 'vgrindefs')
+if polyglot#util#IsEnabled('vgrindefs', 'ftdetect')
   au BufNewFile,BufRead vgrindefs setf vgrindefs
 endif
 
-if !has_key(s:disabled_packages, 'viminfo')
+if polyglot#util#IsEnabled('viminfo', 'ftdetect')
   au BufNewFile,BufRead {.,}viminfo,_viminfo setf viminfo
 endif
 
-if !has_key(s:disabled_packages, 'vim')
+if polyglot#util#IsEnabled('vim', 'ftdetect')
   au BufNewFile,BufRead *.vba,*.vim,{.,}exrc,_exrc setf vim
   au BufNewFile,BufRead *vimrc* call s:StarSetf('vim')
 endif
 
-if !has_key(s:disabled_packages, 'vhdl')
+if polyglot#util#IsEnabled('vhdl', 'ftdetect')
   au BufNewFile,BufRead *.hdl,*.vbe,*.vhd,*.vhdl,*.vho,*.vst setf vhdl
   au BufNewFile,BufRead *.vhdl_[0-9]* call s:StarSetf('vhdl')
 endif
 
-if !has_key(s:disabled_packages, 'systemverilog')
+if polyglot#util#IsEnabled('systemverilog', 'ftdetect')
   au BufNewFile,BufRead *.sv,*.svh setf systemverilog
 endif
 
-if !has_key(s:disabled_packages, 'verilogams')
+if polyglot#util#IsEnabled('verilogams', 'ftdetect')
   au BufNewFile,BufRead *.va,*.vams setf verilogams
 endif
 
-if !has_key(s:disabled_packages, 'verilog')
+if polyglot#util#IsEnabled('verilog', 'ftdetect')
   au BufNewFile,BufRead *.v setf verilog
 endif
 
-if !has_key(s:disabled_packages, 'vera')
+if polyglot#util#IsEnabled('vera', 'ftdetect')
   au BufNewFile,BufRead *.vr,*.vrh,*.vri setf vera
 endif
 
-if !has_key(s:disabled_packages, 'upstart')
+if polyglot#util#IsEnabled('upstart', 'ftdetect')
   au BufNewFile,BufRead */.config/upstart/*.conf,*/.config/upstart/*.override,*/.init/*.conf,*/.init/*.override,*/etc/init/*.conf,*/etc/init/*.override,*/usr/share/upstart/*.conf,*/usr/share/upstart/*.override setf upstart
 endif
 
-if !has_key(s:disabled_packages, 'updatedb')
+if polyglot#util#IsEnabled('updatedb', 'ftdetect')
   au BufNewFile,BufRead */etc/updatedb.conf setf updatedb
 endif
 
-if !has_key(s:disabled_packages, 'uc')
+if polyglot#util#IsEnabled('uc', 'ftdetect')
   au BufNewFile,BufRead *.uc setf uc
 endif
 
-if !has_key(s:disabled_packages, 'udevperm')
+if polyglot#util#IsEnabled('udevperm', 'ftdetect')
   au BufNewFile,BufRead */etc/udev/permissions.d/*.permissions setf udevperm
 endif
 
-if !has_key(s:disabled_packages, 'udevconf')
+if polyglot#util#IsEnabled('udevconf', 'ftdetect')
   au BufNewFile,BufRead */etc/udev/udev.conf setf udevconf
 endif
 
-if !has_key(s:disabled_packages, 'uil')
+if polyglot#util#IsEnabled('uil', 'ftdetect')
   au BufNewFile,BufRead *.uil,*.uit setf uil
 endif
 
-if !has_key(s:disabled_packages, 'tsscl')
+if polyglot#util#IsEnabled('tsscl', 'ftdetect')
   au BufNewFile,BufRead *.tsscl setf tsscl
 endif
 
-if !has_key(s:disabled_packages, 'tssop')
+if polyglot#util#IsEnabled('tssop', 'ftdetect')
   au BufNewFile,BufRead *.tssop setf tssop
 endif
 
-if !has_key(s:disabled_packages, 'tssgm')
+if polyglot#util#IsEnabled('tssgm', 'ftdetect')
   au BufNewFile,BufRead *.tssgm setf tssgm
 endif
 
-if !has_key(s:disabled_packages, 'trustees')
+if polyglot#util#IsEnabled('trustees', 'ftdetect')
   au BufNewFile,BufRead trustees.conf setf trustees
 endif
 
-if !has_key(s:disabled_packages, 'treetop')
+if polyglot#util#IsEnabled('treetop', 'ftdetect')
   au BufNewFile,BufRead *.treetop setf treetop
 endif
 
-if !has_key(s:disabled_packages, 'tpp')
+if polyglot#util#IsEnabled('tpp', 'ftdetect')
   au BufNewFile,BufRead *.tpp setf tpp
 endif
 
-if !has_key(s:disabled_packages, 'tidy')
+if polyglot#util#IsEnabled('tidy', 'ftdetect')
   au BufNewFile,BufRead {.,}tidyrc,tidy.conf,tidyrc setf tidy
 endif
 
-if !has_key(s:disabled_packages, 'texmf')
+if polyglot#util#IsEnabled('texmf', 'ftdetect')
   au BufNewFile,BufRead texmf.cnf setf texmf
 endif
 
-if !has_key(s:disabled_packages, 'texinfo')
+if polyglot#util#IsEnabled('texinfo', 'ftdetect')
   au BufNewFile,BufRead *.texi,*.texinfo,*.txi setf texinfo
 endif
 
-if !has_key(s:disabled_packages, 'tex')
+if polyglot#util#IsEnabled('tex', 'ftdetect')
   au BufNewFile,BufRead *.bbl,*.dtx,*.latex,*.ltx,*.sty setf tex
 endif
 
-if !has_key(s:disabled_packages, 'terminfo')
+if polyglot#util#IsEnabled('terminfo', 'ftdetect')
   au BufNewFile,BufRead *.ti setf terminfo
 endif
 
-if !has_key(s:disabled_packages, 'teraterm')
+if polyglot#util#IsEnabled('teraterm', 'ftdetect')
   au BufNewFile,BufRead *.ttl setf teraterm
 endif
 
-if !has_key(s:disabled_packages, 'tsalt')
+if polyglot#util#IsEnabled('tsalt', 'ftdetect')
   au BufNewFile,BufRead *.slt setf tsalt
 endif
 
-if !has_key(s:disabled_packages, 'tli')
+if polyglot#util#IsEnabled('tli', 'ftdetect')
   au BufNewFile,BufRead *.tli setf tli
 endif
 
-if !has_key(s:disabled_packages, 'tcl')
+if polyglot#util#IsEnabled('tcl', 'ftdetect')
   au BufNewFile,BufRead *.itcl,*.itk,*.jacl,*.tcl,*.tk setf tcl
 endif
 
-if !has_key(s:disabled_packages, 'taskedit')
+if polyglot#util#IsEnabled('taskedit', 'ftdetect')
   au BufNewFile,BufRead *.task setf taskedit
 endif
 
-if !has_key(s:disabled_packages, 'taskdata')
+if polyglot#util#IsEnabled('taskdata', 'ftdetect')
   au BufNewFile,BufRead {pending,completed,undo}.data setf taskdata
 endif
 
-if !has_key(s:disabled_packages, 'tak')
+if polyglot#util#IsEnabled('tak', 'ftdetect')
   au BufNewFile,BufRead *.tak setf tak
 endif
 
-if !has_key(s:disabled_packages, 'tags')
+if polyglot#util#IsEnabled('tags', 'ftdetect')
   au BufNewFile,BufRead tags setf tags
 endif
 
-if !has_key(s:disabled_packages, 'sudoers')
+if polyglot#util#IsEnabled('sudoers', 'ftdetect')
   au BufNewFile,BufRead */etc/sudoers,sudoers.tmp setf sudoers
 endif
 
-if !has_key(s:disabled_packages, 'sdc')
+if polyglot#util#IsEnabled('sdc', 'ftdetect')
   au BufNewFile,BufRead *.sdc setf sdc
 endif
 
-if !has_key(s:disabled_packages, 'sysctl')
+if polyglot#util#IsEnabled('sysctl', 'ftdetect')
   au BufNewFile,BufRead */etc/sysctl.conf,*/etc/sysctl.d/*.conf setf sysctl
 endif
 
-if !has_key(s:disabled_packages, 'sil')
+if polyglot#util#IsEnabled('sil', 'ftdetect')
   au BufNewFile,BufRead *.sil setf sil
 endif
 
-if !has_key(s:disabled_packages, 'swiftgyb')
+if polyglot#util#IsEnabled('swiftgyb', 'ftdetect')
   au BufNewFile,BufRead *.swift.gyb setf swiftgyb
 endif
 
-if !has_key(s:disabled_packages, 'voscm')
+if polyglot#util#IsEnabled('voscm', 'ftdetect')
   au BufNewFile,BufRead *.cm setf voscm
 endif
 
-if !has_key(s:disabled_packages, 'sml')
+if polyglot#util#IsEnabled('sml', 'ftdetect')
   au BufNewFile,BufRead *.sml setf sml
 endif
 
-if !has_key(s:disabled_packages, 'stp')
+if polyglot#util#IsEnabled('stp', 'ftdetect')
   au BufNewFile,BufRead *.stp setf stp
 endif
 
-if !has_key(s:disabled_packages, 'smcl')
+if polyglot#util#IsEnabled('smcl', 'ftdetect')
   au BufNewFile,BufRead *.hlp,*.ihlp,*.smcl setf smcl
 endif
 
-if !has_key(s:disabled_packages, 'stata')
+if polyglot#util#IsEnabled('stata', 'ftdetect')
   au BufNewFile,BufRead *.ado,*.do,*.imata,*.mata setf stata
 endif
 
-if !has_key(s:disabled_packages, 'sshdconfig')
+if polyglot#util#IsEnabled('sshdconfig', 'ftdetect')
   au BufNewFile,BufRead */etc/ssh/sshd_config.d/*.conf,sshd_config setf sshdconfig
 endif
 
-if !has_key(s:disabled_packages, 'sshconfig')
+if polyglot#util#IsEnabled('sshconfig', 'ftdetect')
   au BufNewFile,BufRead */.ssh/config,*/etc/ssh/ssh_config.d/*.conf,ssh_config setf sshconfig
 endif
 
-if !has_key(s:disabled_packages, 'sqr')
+if polyglot#util#IsEnabled('sqr', 'ftdetect')
   au BufNewFile,BufRead *.sqi,*.sqr setf sqr
 endif
 
-if !has_key(s:disabled_packages, 'sqlj')
+if polyglot#util#IsEnabled('sqlj', 'ftdetect')
   au BufNewFile,BufRead *.sqlj setf sqlj
 endif
 
-if !has_key(s:disabled_packages, 'squid')
+if polyglot#util#IsEnabled('squid', 'ftdetect')
   au BufNewFile,BufRead squid.conf setf squid
 endif
 
-if !has_key(s:disabled_packages, 'spice')
+if polyglot#util#IsEnabled('spice', 'ftdetect')
   au BufNewFile,BufRead *.sp,*.spice setf spice
 endif
 
-if !has_key(s:disabled_packages, 'slice')
+if polyglot#util#IsEnabled('slice', 'ftdetect')
   au BufNewFile,BufRead *.ice setf slice
 endif
 
-if !has_key(s:disabled_packages, 'spup')
+if polyglot#util#IsEnabled('spup', 'ftdetect')
   au BufNewFile,BufRead *.spd,*.spdata,*.speedup setf spup
 endif
 
-if !has_key(s:disabled_packages, 'hog')
+if polyglot#util#IsEnabled('hog', 'ftdetect')
   au BufNewFile,BufRead *.hog,snort.conf,vision.conf setf hog
 endif
 
-if !has_key(s:disabled_packages, 'mib')
+if polyglot#util#IsEnabled('mib', 'ftdetect')
   au BufNewFile,BufRead *.mib,*.my setf mib
 endif
 
-if !has_key(s:disabled_packages, 'snobol4')
+if polyglot#util#IsEnabled('snobol4', 'ftdetect')
   au BufNewFile,BufRead *.sno,*.spt setf snobol4
 endif
 
-if !has_key(s:disabled_packages, 'smith')
+if polyglot#util#IsEnabled('smith', 'ftdetect')
   au BufNewFile,BufRead *.smith,*.smt setf smith
 endif
 
-if !has_key(s:disabled_packages, 'st')
+if polyglot#util#IsEnabled('st', 'ftdetect')
   au BufNewFile,BufRead *.st setf st
 endif
 
-if !has_key(s:disabled_packages, 'slrnsc')
+if polyglot#util#IsEnabled('slrnsc', 'ftdetect')
   au BufNewFile,BufRead *.score setf slrnsc
 endif
 
-if !has_key(s:disabled_packages, 'slrnrc')
+if polyglot#util#IsEnabled('slrnrc', 'ftdetect')
   au BufNewFile,BufRead {.,}slrnrc setf slrnrc
 endif
 
-if !has_key(s:disabled_packages, 'skill')
+if polyglot#util#IsEnabled('skill', 'ftdetect')
   au BufNewFile,BufRead *.cdf,*.il,*.ils setf skill
 endif
 
-if !has_key(s:disabled_packages, 'sisu')
+if polyglot#util#IsEnabled('sisu', 'ftdetect')
   au BufNewFile,BufRead *.-sst,*.-sst.meta,*._sst,*._sst.meta,*.ssi,*.ssm,*.sst,*.sst.meta setf sisu
 endif
 
-if !has_key(s:disabled_packages, 'sinda')
+if polyglot#util#IsEnabled('sinda', 'ftdetect')
   au BufNewFile,BufRead *.s85,*.sin setf sinda
 endif
 
-if !has_key(s:disabled_packages, 'simula')
+if polyglot#util#IsEnabled('simula', 'ftdetect')
   au BufNewFile,BufRead *.sim setf simula
 endif
 
-if !has_key(s:disabled_packages, 'screen')
+if polyglot#util#IsEnabled('screen', 'ftdetect')
   au BufNewFile,BufRead {.,}screenrc,screenrc setf screen
 endif
 
-if !has_key(s:disabled_packages, 'scheme')
+if polyglot#util#IsEnabled('scheme', 'ftdetect')
   au BufNewFile,BufRead *.rkt,*.scm,*.ss setf scheme
 endif
 
-if !has_key(s:disabled_packages, 'catalog')
+if polyglot#util#IsEnabled('catalog', 'ftdetect')
   au BufNewFile,BufRead catalog setf catalog
   au BufNewFile,BufRead sgml.catalog* call s:StarSetf('catalog')
 endif
 
-if !has_key(s:disabled_packages, 'setserial')
+if polyglot#util#IsEnabled('setserial', 'ftdetect')
   au BufNewFile,BufRead */etc/serial.conf setf setserial
 endif
 
-if !has_key(s:disabled_packages, 'slpspi')
+if polyglot#util#IsEnabled('slpspi', 'ftdetect')
   au BufNewFile,BufRead */etc/slp.spi setf slpspi
 endif
 
-if !has_key(s:disabled_packages, 'spyce')
+if polyglot#util#IsEnabled('spyce', 'ftdetect')
   au BufNewFile,BufRead *.spi,*.spy setf spyce
 endif
 
-if !has_key(s:disabled_packages, 'slpreg')
+if polyglot#util#IsEnabled('slpreg', 'ftdetect')
   au BufNewFile,BufRead */etc/slp.reg setf slpreg
 endif
 
-if !has_key(s:disabled_packages, 'slpconf')
+if polyglot#util#IsEnabled('slpconf', 'ftdetect')
   au BufNewFile,BufRead */etc/slp.conf setf slpconf
 endif
 
-if !has_key(s:disabled_packages, 'services')
+if polyglot#util#IsEnabled('services', 'ftdetect')
   au BufNewFile,BufRead */etc/services setf services
 endif
 
-if !has_key(s:disabled_packages, 'sm')
+if polyglot#util#IsEnabled('sm', 'ftdetect')
   au BufNewFile,BufRead sendmail.cf setf sm
 endif
 
-if !has_key(s:disabled_packages, 'sieve')
+if polyglot#util#IsEnabled('sieve', 'ftdetect')
   au BufNewFile,BufRead *.sieve,*.siv setf sieve
 endif
 
-if !has_key(s:disabled_packages, 'sdl')
+if polyglot#util#IsEnabled('sdl', 'ftdetect')
   au BufNewFile,BufRead *.pr,*.sdl setf sdl
 endif
 
-if !has_key(s:disabled_packages, 'sd')
+if polyglot#util#IsEnabled('sd', 'ftdetect')
   au BufNewFile,BufRead *.sd setf sd
 endif
 
-if !has_key(s:disabled_packages, 'scilab')
+if polyglot#util#IsEnabled('scilab', 'ftdetect')
   au BufNewFile,BufRead *.sce,*.sci setf scilab
 endif
 
-if !has_key(s:disabled_packages, 'sbt')
+if polyglot#util#IsEnabled('sbt', 'ftdetect')
   au BufNewFile,BufRead *.sbt setf sbt
 endif
 
-if !has_key(s:disabled_packages, 'sather')
+if polyglot#util#IsEnabled('sather', 'ftdetect')
   au BufNewFile,BufRead *.sa setf sather
 endif
 
-if !has_key(s:disabled_packages, 'sass')
+if polyglot#util#IsEnabled('sass', 'ftdetect')
   au BufNewFile,BufRead *.sass setf sass
 endif
 
-if !has_key(s:disabled_packages, 'sas')
+if polyglot#util#IsEnabled('sas', 'ftdetect')
   au BufNewFile,BufRead *.sas setf sas
 endif
 
-if !has_key(s:disabled_packages, 'samba')
+if polyglot#util#IsEnabled('samba', 'ftdetect')
   au BufNewFile,BufRead smb.conf setf samba
 endif
 
-if !has_key(s:disabled_packages, 'slang')
+if polyglot#util#IsEnabled('slang', 'ftdetect')
   au BufNewFile,BufRead *.sl setf slang
 endif
 
-if !has_key(s:disabled_packages, 'rtf')
+if polyglot#util#IsEnabled('rtf', 'ftdetect')
   au BufNewFile,BufRead *.rtf setf rtf
 endif
 
-if !has_key(s:disabled_packages, 'rpcgen')
+if polyglot#util#IsEnabled('rpcgen', 'ftdetect')
   au BufNewFile,BufRead *.x setf rpcgen
 endif
 
-if !has_key(s:disabled_packages, 'robots')
+if polyglot#util#IsEnabled('robots', 'ftdetect')
   au BufNewFile,BufRead robots.txt setf robots
 endif
 
-if !has_key(s:disabled_packages, 'rpl')
+if polyglot#util#IsEnabled('rpl', 'ftdetect')
   au BufNewFile,BufRead *.rpl setf rpl
 endif
 
-if !has_key(s:disabled_packages, 'rng')
+if polyglot#util#IsEnabled('rng', 'ftdetect')
   au BufNewFile,BufRead *.rng setf rng
 endif
 
-if !has_key(s:disabled_packages, 'rnc')
+if polyglot#util#IsEnabled('rnc', 'ftdetect')
   au BufNewFile,BufRead *.rnc setf rnc
 endif
 
-if !has_key(s:disabled_packages, 'resolv')
+if polyglot#util#IsEnabled('resolv', 'ftdetect')
   au BufNewFile,BufRead resolv.conf setf resolv
 endif
 
-if !has_key(s:disabled_packages, 'remind')
+if polyglot#util#IsEnabled('remind', 'ftdetect')
   au BufNewFile,BufRead *.rem,*.remind,{.,}reminders setf remind
   au BufNewFile,BufRead .reminders* call s:StarSetf('remind')
 endif
 
-if !has_key(s:disabled_packages, 'rrst')
+if polyglot#util#IsEnabled('rrst', 'ftdetect')
   au BufNewFile,BufRead *.rrst,*.srst setf rrst
 endif
 
-if !has_key(s:disabled_packages, 'rmd')
+if polyglot#util#IsEnabled('rmd', 'ftdetect')
   au BufNewFile,BufRead *.rmd,*.smd setf rmd
 endif
 
-if !has_key(s:disabled_packages, 'rnoweb')
+if polyglot#util#IsEnabled('rnoweb', 'ftdetect')
   au BufNewFile,BufRead *.rnw,*.snw setf rnoweb
 endif
 
-if !has_key(s:disabled_packages, 'rexx')
+if polyglot#util#IsEnabled('rexx', 'ftdetect')
   au BufNewFile,BufRead *.jrexx,*.orx,*.rex,*.rexx,*.rexxj,*.rxj,*.rxo,*.testGroup,*.testUnit setf rexx
 endif
 
-if !has_key(s:disabled_packages, 'rego')
+if polyglot#util#IsEnabled('rego', 'ftdetect')
   au BufNewFile,BufRead *.rego setf rego
 endif
 
-if !has_key(s:disabled_packages, 'rib')
+if polyglot#util#IsEnabled('rib', 'ftdetect')
   au BufNewFile,BufRead *.rib setf rib
 endif
 
-if !has_key(s:disabled_packages, 'readline')
+if polyglot#util#IsEnabled('readline', 'ftdetect')
   au BufNewFile,BufRead {.,}inputrc,inputrc setf readline
 endif
 
-if !has_key(s:disabled_packages, 'rcs')
+if polyglot#util#IsEnabled('rcs', 'ftdetect')
   au BufNewFile,BufRead *\,v setf rcs
 endif
 
-if !has_key(s:disabled_packages, 'ratpoison')
+if polyglot#util#IsEnabled('ratpoison', 'ftdetect')
   au BufNewFile,BufRead {.,}ratpoisonrc,ratpoisonrc setf ratpoison
 endif
 
-if !has_key(s:disabled_packages, 'radiance')
+if polyglot#util#IsEnabled('radiance', 'ftdetect')
   au BufNewFile,BufRead *.mat,*.rad setf radiance
 endif
 
-if !has_key(s:disabled_packages, 'pyrex')
+if polyglot#util#IsEnabled('pyrex', 'ftdetect')
   au BufNewFile,BufRead *.pxd,*.pyx setf pyrex
 endif
 
-if !has_key(s:disabled_packages, 'protocols')
+if polyglot#util#IsEnabled('protocols', 'ftdetect')
   au BufNewFile,BufRead */etc/protocols setf protocols
 endif
 
-if !has_key(s:disabled_packages, 'promela')
+if polyglot#util#IsEnabled('promela', 'ftdetect')
   au BufNewFile,BufRead *.pml setf promela
 endif
 
-if !has_key(s:disabled_packages, 'psf')
+if polyglot#util#IsEnabled('psf', 'ftdetect')
   au BufNewFile,BufRead *.psf setf psf
 endif
 
-if !has_key(s:disabled_packages, 'procmail')
+if polyglot#util#IsEnabled('procmail', 'ftdetect')
   au BufNewFile,BufRead {.,}procmail,{.,}procmailrc setf procmail
 endif
 
-if !has_key(s:disabled_packages, 'privoxy')
+if polyglot#util#IsEnabled('privoxy', 'ftdetect')
   au BufNewFile,BufRead *.action setf privoxy
 endif
 
-if !has_key(s:disabled_packages, 'proc')
+if polyglot#util#IsEnabled('proc', 'ftdetect')
   au BufNewFile,BufRead *.pc setf proc
 endif
 
-if !has_key(s:disabled_packages, 'obj')
+if polyglot#util#IsEnabled('obj', 'ftdetect')
   au BufNewFile,BufRead *.obj setf obj
 endif
 
-if !has_key(s:disabled_packages, 'ppwiz')
+if polyglot#util#IsEnabled('ppwiz', 'ftdetect')
   au BufNewFile,BufRead *.ih,*.it setf ppwiz
 endif
 
-if !has_key(s:disabled_packages, 'pccts')
+if polyglot#util#IsEnabled('pccts', 'ftdetect')
   au BufNewFile,BufRead *.g setf pccts
 endif
 
-if !has_key(s:disabled_packages, 'povini')
+if polyglot#util#IsEnabled('povini', 'ftdetect')
   au BufNewFile,BufRead {.,}povrayrc setf povini
 endif
 
-if !has_key(s:disabled_packages, 'pov')
+if polyglot#util#IsEnabled('pov', 'ftdetect')
   au BufNewFile,BufRead *.pov setf pov
 endif
 
-if !has_key(s:disabled_packages, 'ppd')
+if polyglot#util#IsEnabled('ppd', 'ftdetect')
   au BufNewFile,BufRead *.ppd setf ppd
 endif
 
-if !has_key(s:disabled_packages, 'postscr')
+if polyglot#util#IsEnabled('postscr', 'ftdetect')
   au BufNewFile,BufRead *.afm,*.ai,*.eps,*.epsf,*.epsi,*.pfa,*.ps setf postscr
 endif
 
-if !has_key(s:disabled_packages, 'pfmain')
+if polyglot#util#IsEnabled('pfmain', 'ftdetect')
   au BufNewFile,BufRead main.cf setf pfmain
 endif
 
-if !has_key(s:disabled_packages, 'po')
+if polyglot#util#IsEnabled('po', 'ftdetect')
   au BufNewFile,BufRead *.po,*.pot setf po
 endif
 
-if !has_key(s:disabled_packages, 'plp')
+if polyglot#util#IsEnabled('plp', 'ftdetect')
   au BufNewFile,BufRead *.plp setf plp
 endif
 
-if !has_key(s:disabled_packages, 'plsql')
+if polyglot#util#IsEnabled('plsql', 'ftdetect')
   au BufNewFile,BufRead *.pls,*.plsql setf plsql
 endif
 
-if !has_key(s:disabled_packages, 'plm')
+if polyglot#util#IsEnabled('plm', 'ftdetect')
   au BufNewFile,BufRead *.p36,*.pac,*.plm setf plm
 endif
 
-if !has_key(s:disabled_packages, 'pli')
+if polyglot#util#IsEnabled('pli', 'ftdetect')
   au BufNewFile,BufRead *.pl1,*.pli setf pli
 endif
 
-if !has_key(s:disabled_packages, 'pine')
+if polyglot#util#IsEnabled('pine', 'ftdetect')
   au BufNewFile,BufRead {.,}pinerc,{.,}pinercex,pinerc,pinercex setf pine
 endif
 
-if !has_key(s:disabled_packages, 'pilrc')
+if polyglot#util#IsEnabled('pilrc', 'ftdetect')
   au BufNewFile,BufRead *.rcp setf pilrc
 endif
 
-if !has_key(s:disabled_packages, 'pinfo')
+if polyglot#util#IsEnabled('pinfo', 'ftdetect')
   au BufNewFile,BufRead */.pinforc,*/etc/pinforc setf pinfo
 endif
 
-if !has_key(s:disabled_packages, 'cmod')
+if polyglot#util#IsEnabled('cmod', 'ftdetect')
   au BufNewFile,BufRead *.cmod setf cmod
 endif
 
-if !has_key(s:disabled_packages, 'pike')
+if polyglot#util#IsEnabled('pike', 'ftdetect')
   au BufNewFile,BufRead *.pike,*.pmod setf pike
 endif
 
-if !has_key(s:disabled_packages, 'pcmk')
+if polyglot#util#IsEnabled('pcmk', 'ftdetect')
   au BufNewFile,BufRead *.pcmk setf pcmk
 endif
 
-if !has_key(s:disabled_packages, 'pdf')
+if polyglot#util#IsEnabled('pdf', 'ftdetect')
   au BufNewFile,BufRead *.pdf setf pdf
 endif
 
-if !has_key(s:disabled_packages, 'pascal')
+if polyglot#util#IsEnabled('pascal', 'ftdetect')
   au BufNewFile,BufRead *.dpr,*.lpr,*.pas,*.pp setf pascal
 endif
 
-if !has_key(s:disabled_packages, 'passwd')
+if polyglot#util#IsEnabled('passwd', 'ftdetect')
   au BufNewFile,BufRead */etc/passwd,*/etc/passwd-,*/etc/passwd.edit,*/etc/shadow,*/etc/shadow-,*/etc/shadow.edit,*/var/backups/passwd.bak,*/var/backups/shadow.bak setf passwd
 endif
 
-if !has_key(s:disabled_packages, 'papp')
+if polyglot#util#IsEnabled('papp', 'ftdetect')
   au BufNewFile,BufRead *.papp,*.pxml,*.pxsl setf papp
 endif
 
-if !has_key(s:disabled_packages, 'pamenv')
+if polyglot#util#IsEnabled('pamenv', 'ftdetect')
   au BufNewFile,BufRead {.,}pam_environment,pam_env.conf setf pamenv
 endif
 
-if !has_key(s:disabled_packages, 'pamconf')
+if polyglot#util#IsEnabled('pamconf', 'ftdetect')
   au BufNewFile,BufRead */etc/pam.conf setf pamconf
   au BufNewFile,BufRead */etc/pam.d/* call s:StarSetf('pamconf')
 endif
 
-if !has_key(s:disabled_packages, 'pf')
+if polyglot#util#IsEnabled('pf', 'ftdetect')
   au BufNewFile,BufRead pf.conf setf pf
 endif
 
-if !has_key(s:disabled_packages, 'ora')
+if polyglot#util#IsEnabled('ora', 'ftdetect')
   au BufNewFile,BufRead *.ora setf ora
 endif
 
-if !has_key(s:disabled_packages, 'opl')
+if polyglot#util#IsEnabled('opl', 'ftdetect')
   au BufNewFile,BufRead *.[Oo][Pp][Ll] setf opl
 endif
 
-if !has_key(s:disabled_packages, 'openroad')
+if polyglot#util#IsEnabled('openroad', 'ftdetect')
   au BufNewFile,BufRead *.or setf openroad
 endif
 
-if !has_key(s:disabled_packages, 'omnimark')
+if polyglot#util#IsEnabled('omnimark', 'ftdetect')
   au BufNewFile,BufRead *.xin,*.xom setf omnimark
 endif
 
-if !has_key(s:disabled_packages, 'occam')
+if polyglot#util#IsEnabled('occam', 'ftdetect')
   au BufNewFile,BufRead *.occ setf occam
 endif
 
-if !has_key(s:disabled_packages, 'nsis')
+if polyglot#util#IsEnabled('nsis', 'ftdetect')
   au BufNewFile,BufRead *.nsh,*.nsi setf nsis
 endif
 
-if !has_key(s:disabled_packages, 'nqc')
+if polyglot#util#IsEnabled('nqc', 'ftdetect')
   au BufNewFile,BufRead *.nqc setf nqc
 endif
 
-if !has_key(s:disabled_packages, 'nroff')
+if polyglot#util#IsEnabled('nroff', 'ftdetect')
   au BufNewFile,BufRead *.mom,*.nr,*.roff,*.tmac,*.tr setf nroff
   au BufNewFile,BufRead tmac.* call s:StarSetf('nroff')
 endif
 
-if !has_key(s:disabled_packages, 'ncf')
+if polyglot#util#IsEnabled('ncf', 'ftdetect')
   au BufNewFile,BufRead *.ncf setf ncf
 endif
 
-if !has_key(s:disabled_packages, 'ninja')
+if polyglot#util#IsEnabled('ninja', 'ftdetect')
   au BufNewFile,BufRead *.ninja setf ninja
 endif
 
-if !has_key(s:disabled_packages, 'netrc')
+if polyglot#util#IsEnabled('netrc', 'ftdetect')
   au BufNewFile,BufRead {.,}netrc setf netrc
 endif
 
-if !has_key(s:disabled_packages, 'neomuttrc')
+if polyglot#util#IsEnabled('neomuttrc', 'ftdetect')
   au BufNewFile,BufRead Neomuttrc setf neomuttrc
   au BufNewFile,BufRead neomuttrc* call s:StarSetf('neomuttrc')
   au BufNewFile,BufRead Neomuttrc* call s:StarSetf('neomuttrc')
@@ -874,27 +859,27 @@ if !has_key(s:disabled_packages, 'neomuttrc')
   au BufNewFile,BufRead */.neomutt/neomuttrc* call s:StarSetf('neomuttrc')
 endif
 
-if !has_key(s:disabled_packages, 'natural')
+if polyglot#util#IsEnabled('natural', 'ftdetect')
   au BufNewFile,BufRead *.NS[ACGLMNPS] setf natural
 endif
 
-if !has_key(s:disabled_packages, 'nanorc')
+if polyglot#util#IsEnabled('nanorc', 'ftdetect')
   au BufNewFile,BufRead *.nanorc,*/etc/nanorc setf nanorc
 endif
 
-if !has_key(s:disabled_packages, 'n1ql')
+if polyglot#util#IsEnabled('n1ql', 'ftdetect')
   au BufNewFile,BufRead *.n1ql,*.nql setf n1ql
 endif
 
-if !has_key(s:disabled_packages, 'mush')
+if polyglot#util#IsEnabled('mush', 'ftdetect')
   au BufNewFile,BufRead *.mush setf mush
 endif
 
-if !has_key(s:disabled_packages, 'mupad')
+if polyglot#util#IsEnabled('mupad', 'ftdetect')
   au BufNewFile,BufRead *.mu setf mupad
 endif
 
-if !has_key(s:disabled_packages, 'muttrc')
+if polyglot#util#IsEnabled('muttrc', 'ftdetect')
   au BufNewFile,BufRead Mutt{ng,}rc setf muttrc
   au BufNewFile,BufRead mutt{ng,}rc* call s:StarSetf('muttrc')
   au BufNewFile,BufRead Mutt{ng,}rc* call s:StarSetf('muttrc')
@@ -903,1006 +888,1006 @@ if !has_key(s:disabled_packages, 'muttrc')
   au BufNewFile,BufRead */.mutt{ng,}/mutt{ng,}rc* call s:StarSetf('muttrc')
 endif
 
-if !has_key(s:disabled_packages, 'msql')
+if polyglot#util#IsEnabled('msql', 'ftdetect')
   au BufNewFile,BufRead *.msql setf msql
 endif
 
-if !has_key(s:disabled_packages, 'mrxvtrc')
+if polyglot#util#IsEnabled('mrxvtrc', 'ftdetect')
   au BufNewFile,BufRead {.,}mrxvtrc,mrxvtrc setf mrxvtrc
 endif
 
-if !has_key(s:disabled_packages, 'srec')
+if polyglot#util#IsEnabled('srec', 'ftdetect')
   au BufNewFile,BufRead *.mot,*.s19,*.s28,*.s37,*.srec setf srec
 endif
 
-if !has_key(s:disabled_packages, 'mplayerconf')
+if polyglot#util#IsEnabled('mplayerconf', 'ftdetect')
   au BufNewFile,BufRead */.mplayer/config,mplayer.conf setf mplayerconf
 endif
 
-if !has_key(s:disabled_packages, 'modconf')
+if polyglot#util#IsEnabled('modconf', 'ftdetect')
   au BufNewFile,BufRead */etc/conf.modules,*/etc/modules,*/etc/modules.conf setf modconf
   au BufNewFile,BufRead */etc/modprobe.* call s:StarSetf('modconf')
 endif
 
-if !has_key(s:disabled_packages, 'moo')
+if polyglot#util#IsEnabled('moo', 'ftdetect')
   au BufNewFile,BufRead *.moo setf moo
 endif
 
-if !has_key(s:disabled_packages, 'monk')
+if polyglot#util#IsEnabled('monk', 'ftdetect')
   au BufNewFile,BufRead *.isc,*.monk,*.ssc,*.tsc setf monk
 endif
 
-if !has_key(s:disabled_packages, 'modula3')
+if polyglot#util#IsEnabled('modula3', 'ftdetect')
   au BufNewFile,BufRead *.[mi][3g] setf modula3
 endif
 
-if !has_key(s:disabled_packages, 'modula2')
+if polyglot#util#IsEnabled('modula2', 'ftdetect')
   au BufNewFile,BufRead *.DEF,*.MOD,*.m2,*.mi setf modula2
 endif
 
-if !has_key(s:disabled_packages, 'mmp')
+if polyglot#util#IsEnabled('mmp', 'ftdetect')
   au BufNewFile,BufRead *.mmp setf mmp
 endif
 
-if !has_key(s:disabled_packages, 'mix')
+if polyglot#util#IsEnabled('mix', 'ftdetect')
   au BufNewFile,BufRead *.mix,*.mixal setf mix
 endif
 
-if !has_key(s:disabled_packages, 'mgl')
+if polyglot#util#IsEnabled('mgl', 'ftdetect')
   au BufNewFile,BufRead *.mgl setf mgl
 endif
 
-if !has_key(s:disabled_packages, 'mp')
+if polyglot#util#IsEnabled('mp', 'ftdetect')
   au BufNewFile,BufRead *.mp setf mp
 endif
 
-if !has_key(s:disabled_packages, 'mf')
+if polyglot#util#IsEnabled('mf', 'ftdetect')
   au BufNewFile,BufRead *.mf setf mf
 endif
 
-if !has_key(s:disabled_packages, 'messages')
+if polyglot#util#IsEnabled('messages', 'ftdetect')
   au BufNewFile,BufRead */log/{auth,cron,daemon,debug,kern,lpr,mail,messages,news/news,syslog,user}{,.log,.err,.info,.warn,.crit,.notice}{,.[0-9]*,-[0-9]*} setf messages
 endif
 
-if !has_key(s:disabled_packages, 'hgcommit')
+if polyglot#util#IsEnabled('hgcommit', 'ftdetect')
   au BufNewFile,BufRead hg-editor-*.txt setf hgcommit
 endif
 
-if !has_key(s:disabled_packages, 'mel')
+if polyglot#util#IsEnabled('mel', 'ftdetect')
   au BufNewFile,BufRead *.mel setf mel
 endif
 
-if !has_key(s:disabled_packages, 'map')
+if polyglot#util#IsEnabled('map', 'ftdetect')
   au BufNewFile,BufRead *.map setf map
 endif
 
-if !has_key(s:disabled_packages, 'maple')
+if polyglot#util#IsEnabled('maple', 'ftdetect')
   au BufNewFile,BufRead *.mpl,*.mv,*.mws setf maple
 endif
 
-if !has_key(s:disabled_packages, 'manconf')
+if polyglot#util#IsEnabled('manconf', 'ftdetect')
   au BufNewFile,BufRead */etc/man.conf,man.config setf manconf
 endif
 
-if !has_key(s:disabled_packages, 'mallard')
+if polyglot#util#IsEnabled('mallard', 'ftdetect')
   au BufNewFile,BufRead *.page setf mallard
 endif
 
-if !has_key(s:disabled_packages, 'ist')
+if polyglot#util#IsEnabled('ist', 'ftdetect')
   au BufNewFile,BufRead *.ist,*.mst setf ist
 endif
 
-if !has_key(s:disabled_packages, 'mailcap')
+if polyglot#util#IsEnabled('mailcap', 'ftdetect')
   au BufNewFile,BufRead {.,}mailcap,mailcap setf mailcap
 endif
 
-if !has_key(s:disabled_packages, 'mailaliases')
+if polyglot#util#IsEnabled('mailaliases', 'ftdetect')
   au BufNewFile,BufRead */etc/aliases,*/etc/mail/aliases setf mailaliases
 endif
 
-if !has_key(s:disabled_packages, 'mail')
+if polyglot#util#IsEnabled('mail', 'ftdetect')
   au BufNewFile,BufRead *.eml,{.,}article,{.,}article.\d\+,{.,}followup,{.,}letter,{.,}letter.\d\+,/tmp/SLRN[0-9A-Z.]\+,ae\d\+.txt,mutt[[:alnum:]_-]\\\{6\},mutt{ng,}-*-\w\+,neomutt-*-\w\+,neomutt[[:alnum:]_-]\\\{6\},pico.\d\+,snd.\d\+,{neo,}mutt[[:alnum:]._-]\\\{6\} setf mail
   au BufNewFile,BufRead reportbug-* call s:StarSetf('mail')
 endif
 
-if !has_key(s:disabled_packages, 'mgp')
+if polyglot#util#IsEnabled('mgp', 'ftdetect')
   au BufNewFile,BufRead *.mgp setf mgp
 endif
 
-if !has_key(s:disabled_packages, 'lss')
+if polyglot#util#IsEnabled('lss', 'ftdetect')
   au BufNewFile,BufRead *.lss setf lss
 endif
 
-if !has_key(s:disabled_packages, 'lsl')
+if polyglot#util#IsEnabled('lsl', 'ftdetect')
   au BufNewFile,BufRead *.lsl setf lsl
 endif
 
-if !has_key(s:disabled_packages, 'lout')
+if polyglot#util#IsEnabled('lout', 'ftdetect')
   au BufNewFile,BufRead *.lou,*.lout setf lout
 endif
 
-if !has_key(s:disabled_packages, 'lotos')
+if polyglot#util#IsEnabled('lotos', 'ftdetect')
   au BufNewFile,BufRead *.lot,*.lotos setf lotos
 endif
 
-if !has_key(s:disabled_packages, 'logtalk')
+if polyglot#util#IsEnabled('logtalk', 'ftdetect')
   au BufNewFile,BufRead *.lgt setf logtalk
 endif
 
-if !has_key(s:disabled_packages, 'logindefs')
+if polyglot#util#IsEnabled('logindefs', 'ftdetect')
   au BufNewFile,BufRead */etc/login.defs setf logindefs
 endif
 
-if !has_key(s:disabled_packages, 'loginaccess')
+if polyglot#util#IsEnabled('loginaccess', 'ftdetect')
   au BufNewFile,BufRead */etc/login.access setf loginaccess
 endif
 
-if !has_key(s:disabled_packages, 'litestep')
+if polyglot#util#IsEnabled('litestep', 'ftdetect')
   au BufNewFile,BufRead */LiteStep/*/*.rc setf litestep
 endif
 
-if !has_key(s:disabled_packages, 'lite')
+if polyglot#util#IsEnabled('lite', 'ftdetect')
   au BufNewFile,BufRead *.lite,*.lt setf lite
 endif
 
-if !has_key(s:disabled_packages, 'liquid')
+if polyglot#util#IsEnabled('liquid', 'ftdetect')
   au BufNewFile,BufRead *.liquid setf liquid
 endif
 
-if !has_key(s:disabled_packages, 'lisp')
+if polyglot#util#IsEnabled('lisp', 'ftdetect')
   au BufNewFile,BufRead *.cl,*.el,*.lisp,*.lsp,{.,}emacs,{.,}sawfishrc,{.,}sbclrc,sbclrc setf lisp
 endif
 
-if !has_key(s:disabled_packages, 'lilo')
+if polyglot#util#IsEnabled('lilo', 'ftdetect')
   au BufNewFile,BufRead lilo.conf setf lilo
   au BufNewFile,BufRead lilo.conf* call s:StarSetf('lilo')
 endif
 
-if !has_key(s:disabled_packages, 'lifelines')
+if polyglot#util#IsEnabled('lifelines', 'ftdetect')
   au BufNewFile,BufRead *.ll setf lifelines
 endif
 
-if !has_key(s:disabled_packages, 'lftp')
+if polyglot#util#IsEnabled('lftp', 'ftdetect')
   au BufNewFile,BufRead *lftp/rc,{.,}lftprc,lftp.conf setf lftp
 endif
 
-if !has_key(s:disabled_packages, 'sensors')
+if polyglot#util#IsEnabled('sensors', 'ftdetect')
   au BufNewFile,BufRead */etc/sensors.conf,*/etc/sensors3.conf setf sensors
 endif
 
-if !has_key(s:disabled_packages, 'libao')
+if polyglot#util#IsEnabled('libao', 'ftdetect')
   au BufNewFile,BufRead */.libao,*/etc/libao.conf setf libao
 endif
 
-if !has_key(s:disabled_packages, 'lex')
+if polyglot#util#IsEnabled('lex', 'ftdetect')
   au BufNewFile,BufRead *.l,*.l++,*.lex,*.lxx setf lex
 endif
 
-if !has_key(s:disabled_packages, 'ld')
+if polyglot#util#IsEnabled('ld', 'ftdetect')
   au BufNewFile,BufRead *.ld setf ld
 endif
 
-if !has_key(s:disabled_packages, 'ldif')
+if polyglot#util#IsEnabled('ldif', 'ftdetect')
   au BufNewFile,BufRead *.ldif setf ldif
 endif
 
-if !has_key(s:disabled_packages, 'lprolog')
+if polyglot#util#IsEnabled('lprolog', 'ftdetect')
   au BufNewFile,BufRead *.sig setf lprolog
 endif
 
-if !has_key(s:disabled_packages, 'limits')
+if polyglot#util#IsEnabled('limits', 'ftdetect')
   au BufNewFile,BufRead */etc/*limits.conf,*/etc/*limits.d/*.conf,*/etc/limits setf limits
 endif
 
-if !has_key(s:disabled_packages, 'latte')
+if polyglot#util#IsEnabled('latte', 'ftdetect')
   au BufNewFile,BufRead *.latte,*.lte setf latte
 endif
 
-if !has_key(s:disabled_packages, 'lace')
+if polyglot#util#IsEnabled('lace', 'ftdetect')
   au BufNewFile,BufRead *.ACE,*.ace setf lace
 endif
 
-if !has_key(s:disabled_packages, 'kconfig')
+if polyglot#util#IsEnabled('kconfig', 'ftdetect')
   au BufNewFile,BufRead Kconfig,Kconfig.debug setf kconfig
   au BufNewFile,BufRead Kconfig.* call s:StarSetf('kconfig')
 endif
 
-if !has_key(s:disabled_packages, 'kscript')
+if polyglot#util#IsEnabled('kscript', 'ftdetect')
   au BufNewFile,BufRead *.ks setf kscript
 endif
 
-if !has_key(s:disabled_packages, 'kivy')
+if polyglot#util#IsEnabled('kivy', 'ftdetect')
   au BufNewFile,BufRead *.kv setf kivy
 endif
 
-if !has_key(s:disabled_packages, 'kwt')
+if polyglot#util#IsEnabled('kwt', 'ftdetect')
   au BufNewFile,BufRead *.k setf kwt
 endif
 
-if !has_key(s:disabled_packages, 'kix')
+if polyglot#util#IsEnabled('kix', 'ftdetect')
   au BufNewFile,BufRead *.kix setf kix
 endif
 
-if !has_key(s:disabled_packages, 'jovial')
+if polyglot#util#IsEnabled('jovial', 'ftdetect')
   au BufNewFile,BufRead *.j73,*.jov,*.jovial setf jovial
 endif
 
-if !has_key(s:disabled_packages, 'jgraph')
+if polyglot#util#IsEnabled('jgraph', 'ftdetect')
   au BufNewFile,BufRead *.jgr setf jgraph
 endif
 
-if !has_key(s:disabled_packages, 'jess')
+if polyglot#util#IsEnabled('jess', 'ftdetect')
   au BufNewFile,BufRead *.clp setf jess
 endif
 
-if !has_key(s:disabled_packages, 'jproperties')
+if polyglot#util#IsEnabled('jproperties', 'ftdetect')
   au BufNewFile,BufRead *.properties,*.properties_??,*.properties_??_?? setf jproperties
   au BufNewFile,BufRead *.properties_??_??_* call s:StarSetf('jproperties')
 endif
 
-if !has_key(s:disabled_packages, 'jsp')
+if polyglot#util#IsEnabled('jsp', 'ftdetect')
   au BufNewFile,BufRead *.jsp setf jsp
 endif
 
-if !has_key(s:disabled_packages, 'javacc')
+if polyglot#util#IsEnabled('javacc', 'ftdetect')
   au BufNewFile,BufRead *.jj,*.jjt setf javacc
 endif
 
-if !has_key(s:disabled_packages, 'java')
+if polyglot#util#IsEnabled('java', 'ftdetect')
   au BufNewFile,BufRead *.jav,*.java setf java
 endif
 
-if !has_key(s:disabled_packages, 'jam')
+if polyglot#util#IsEnabled('jam', 'ftdetect')
   au BufNewFile,BufRead *.jpl,*.jpr setf jam
   au BufNewFile,BufRead Prl*.* call s:StarSetf('jam')
   au BufNewFile,BufRead JAM*.* call s:StarSetf('jam')
 endif
 
-if !has_key(s:disabled_packages, 'jal')
+if polyglot#util#IsEnabled('jal', 'ftdetect')
   au BufNewFile,BufRead *.JAL,*.jal setf jal
 endif
 
-if !has_key(s:disabled_packages, 'j')
+if polyglot#util#IsEnabled('j', 'ftdetect')
   au BufNewFile,BufRead *.ijs setf j
 endif
 
-if !has_key(s:disabled_packages, 'iss')
+if polyglot#util#IsEnabled('iss', 'ftdetect')
   au BufNewFile,BufRead *.iss setf iss
 endif
 
-if !has_key(s:disabled_packages, 'inittab')
+if polyglot#util#IsEnabled('inittab', 'ftdetect')
   au BufNewFile,BufRead inittab setf inittab
 endif
 
-if !has_key(s:disabled_packages, 'fgl')
+if polyglot#util#IsEnabled('fgl', 'ftdetect')
   au BufNewFile,BufRead *.4gh,*.4gl,*.m4gl setf fgl
 endif
 
-if !has_key(s:disabled_packages, 'ipfilter')
+if polyglot#util#IsEnabled('ipfilter', 'ftdetect')
   au BufNewFile,BufRead ipf.conf,ipf.rules,ipf6.conf setf ipfilter
 endif
 
-if !has_key(s:disabled_packages, 'usw2kagtlog')
+if polyglot#util#IsEnabled('usw2kagtlog', 'ftdetect')
   au BufNewFile,BufRead *.usw2kagt.log\c,usw2kagt.*.log\c,usw2kagt.log\c setf usw2kagtlog
 endif
 
-if !has_key(s:disabled_packages, 'usserverlog')
+if polyglot#util#IsEnabled('usserverlog', 'ftdetect')
   au BufNewFile,BufRead *.usserver.log\c,usserver.*.log\c,usserver.log\c setf usserverlog
 endif
 
-if !has_key(s:disabled_packages, 'upstreaminstalllog')
+if polyglot#util#IsEnabled('upstreaminstalllog', 'ftdetect')
   au BufNewFile,BufRead *.upstreaminstall.log\c,upstreaminstall.*.log\c,upstreaminstall.log\c setf upstreaminstalllog
 endif
 
-if !has_key(s:disabled_packages, 'upstreamlog')
+if polyglot#util#IsEnabled('upstreamlog', 'ftdetect')
   au BufNewFile,BufRead *.upstream.log\c,UPSTREAM-*.log\c,fdrupstream.log,upstream.*.log\c,upstream.log\c setf upstreamlog
 endif
 
-if !has_key(s:disabled_packages, 'upstreamdat')
+if polyglot#util#IsEnabled('upstreamdat', 'ftdetect')
   au BufNewFile,BufRead *.upstream.dat\c,upstream.*.dat\c,upstream.dat\c setf upstreamdat
 endif
 
-if !has_key(s:disabled_packages, 'initng')
+if polyglot#util#IsEnabled('initng', 'ftdetect')
   au BufNewFile,BufRead *.ii,*/etc/initng/*/*.i setf initng
 endif
 
-if !has_key(s:disabled_packages, 'inform')
+if polyglot#util#IsEnabled('inform', 'ftdetect')
   au BufNewFile,BufRead *.INF,*.inf setf inform
 endif
 
-if !has_key(s:disabled_packages, 'indent')
+if polyglot#util#IsEnabled('indent', 'ftdetect')
   au BufNewFile,BufRead {.,}indent.pro,indentrc setf indent
 endif
 
-if !has_key(s:disabled_packages, 'icemenu')
+if polyglot#util#IsEnabled('icemenu', 'ftdetect')
   au BufNewFile,BufRead */.icewm/menu setf icemenu
 endif
 
-if !has_key(s:disabled_packages, 'msidl')
+if polyglot#util#IsEnabled('msidl', 'ftdetect')
   au BufNewFile,BufRead *.mof,*.odl setf msidl
 endif
 
-if !has_key(s:disabled_packages, 'icon')
+if polyglot#util#IsEnabled('icon', 'ftdetect')
   au BufNewFile,BufRead *.icn setf icon
 endif
 
-if !has_key(s:disabled_packages, 'httest')
+if polyglot#util#IsEnabled('httest', 'ftdetect')
   au BufNewFile,BufRead *.htb,*.htt setf httest
 endif
 
-if !has_key(s:disabled_packages, 'hb')
+if polyglot#util#IsEnabled('hb', 'ftdetect')
   au BufNewFile,BufRead *.hb setf hb
 endif
 
-if !has_key(s:disabled_packages, 'hostsaccess')
+if polyglot#util#IsEnabled('hostsaccess', 'ftdetect')
   au BufNewFile,BufRead */etc/hosts.allow,*/etc/hosts.deny setf hostsaccess
 endif
 
-if !has_key(s:disabled_packages, 'hostconf')
+if polyglot#util#IsEnabled('hostconf', 'ftdetect')
   au BufNewFile,BufRead */etc/host.conf setf hostconf
 endif
 
-if !has_key(s:disabled_packages, 'template')
+if polyglot#util#IsEnabled('template', 'ftdetect')
   au BufNewFile,BufRead *.tmpl setf template
 endif
 
-if !has_key(s:disabled_packages, 'htmlm4')
+if polyglot#util#IsEnabled('htmlm4', 'ftdetect')
   au BufNewFile,BufRead *.html.m4 setf htmlm4
 endif
 
-if !has_key(s:disabled_packages, 'tilde')
+if polyglot#util#IsEnabled('tilde', 'ftdetect')
   au BufNewFile,BufRead *.t.html setf tilde
 endif
 
-if !has_key(s:disabled_packages, 'html')
+if polyglot#util#IsEnabled('html', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.html call polyglot#detect#Html()
   au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.st,*.xht,*.xhtml setf html
 endif
 
-if !has_key(s:disabled_packages, 'hollywood')
+if polyglot#util#IsEnabled('hollywood', 'ftdetect')
   au BufNewFile,BufRead *.hws setf hollywood
 endif
 
-if !has_key(s:disabled_packages, 'hex')
+if polyglot#util#IsEnabled('hex', 'ftdetect')
   au BufNewFile,BufRead *.h32,*.hex setf hex
 endif
 
-if !has_key(s:disabled_packages, 'hercules')
+if polyglot#util#IsEnabled('hercules', 'ftdetect')
   au BufNewFile,BufRead *.errsum,*.ev,*.sum,*.vc setf hercules
 endif
 
-if !has_key(s:disabled_packages, 'hastepreproc')
+if polyglot#util#IsEnabled('hastepreproc', 'ftdetect')
   au BufNewFile,BufRead *.htpp setf hastepreproc
 endif
 
-if !has_key(s:disabled_packages, 'haste')
+if polyglot#util#IsEnabled('haste', 'ftdetect')
   au BufNewFile,BufRead *.ht setf haste
 endif
 
-if !has_key(s:disabled_packages, 'chaskell')
+if polyglot#util#IsEnabled('chaskell', 'ftdetect')
   au BufNewFile,BufRead *.chs setf chaskell
 endif
 
-if !has_key(s:disabled_packages, 'lhaskell')
+if polyglot#util#IsEnabled('lhaskell', 'ftdetect')
   au BufNewFile,BufRead *.lhs setf lhaskell
 endif
 
-if !has_key(s:disabled_packages, 'gtkrc')
+if polyglot#util#IsEnabled('gtkrc', 'ftdetect')
   au BufNewFile,BufRead {.,}gtkrc,gtkrc setf gtkrc
   au BufNewFile,BufRead gtkrc* call s:StarSetf('gtkrc')
   au BufNewFile,BufRead .gtkrc* call s:StarSetf('gtkrc')
 endif
 
-if !has_key(s:disabled_packages, 'group')
+if polyglot#util#IsEnabled('group', 'ftdetect')
   au BufNewFile,BufRead */etc/group,*/etc/group-,*/etc/group.edit,*/etc/gshadow,*/etc/gshadow-,*/etc/gshadow.edit,*/var/backups/group.bak,*/var/backups/gshadow.bak setf group
 endif
 
-if !has_key(s:disabled_packages, 'gsp')
+if polyglot#util#IsEnabled('gsp', 'ftdetect')
   au BufNewFile,BufRead *.gsp setf gsp
 endif
 
-if !has_key(s:disabled_packages, 'gretl')
+if polyglot#util#IsEnabled('gretl', 'ftdetect')
   au BufNewFile,BufRead *.gretl setf gretl
 endif
 
-if !has_key(s:disabled_packages, 'grads')
+if polyglot#util#IsEnabled('grads', 'ftdetect')
   au BufNewFile,BufRead *.gs setf grads
 endif
 
-if !has_key(s:disabled_packages, 'gitolite')
+if polyglot#util#IsEnabled('gitolite', 'ftdetect')
   au BufNewFile,BufRead gitolite.conf setf gitolite
   au BufNewFile,BufRead */gitolite-admin/conf/* call s:StarSetf('gitolite')
 endif
 
-if !has_key(s:disabled_packages, 'gnash')
+if polyglot#util#IsEnabled('gnash', 'ftdetect')
   au BufNewFile,BufRead {.,}gnashpluginrc,{.,}gnashrc,gnashpluginrc,gnashrc setf gnash
 endif
 
-if !has_key(s:disabled_packages, 'gpg')
+if polyglot#util#IsEnabled('gpg', 'ftdetect')
   au BufNewFile,BufRead */.gnupg/gpg.conf,*/.gnupg/options,*/usr/*/gnupg/options.skel setf gpg
 endif
 
-if !has_key(s:disabled_packages, 'gp')
+if polyglot#util#IsEnabled('gp', 'ftdetect')
   au BufNewFile,BufRead *.gp,{.,}gprc setf gp
 endif
 
-if !has_key(s:disabled_packages, 'gkrellmrc')
+if polyglot#util#IsEnabled('gkrellmrc', 'ftdetect')
   au BufNewFile,BufRead gkrellmrc,gkrellmrc_? setf gkrellmrc
 endif
 
-if !has_key(s:disabled_packages, 'gedcom')
+if polyglot#util#IsEnabled('gedcom', 'ftdetect')
   au BufNewFile,BufRead *.ged,lltxxxxx.txt setf gedcom
   au BufNewFile,BufRead */tmp/lltmp* call s:StarSetf('gedcom')
 endif
 
-if !has_key(s:disabled_packages, 'gdmo')
+if polyglot#util#IsEnabled('gdmo', 'ftdetect')
   au BufNewFile,BufRead *.gdmo,*.mo setf gdmo
 endif
 
-if !has_key(s:disabled_packages, 'gdb')
+if polyglot#util#IsEnabled('gdb', 'ftdetect')
   au BufNewFile,BufRead {.,}gdbinit setf gdb
 endif
 
-if !has_key(s:disabled_packages, 'fstab')
+if polyglot#util#IsEnabled('fstab', 'ftdetect')
   au BufNewFile,BufRead fstab,mtab setf fstab
 endif
 
-if !has_key(s:disabled_packages, 'framescript')
+if polyglot#util#IsEnabled('framescript', 'ftdetect')
   au BufNewFile,BufRead *.fsl setf framescript
 endif
 
-if !has_key(s:disabled_packages, 'fortran')
+if polyglot#util#IsEnabled('fortran', 'ftdetect')
   au BufNewFile,BufRead *.f,*.f03,*.f08,*.f77,*.f90,*.f95,*.for,*.fortran,*.fpp,*.ftn setf fortran
 endif
 
-if !has_key(s:disabled_packages, 'reva')
+if polyglot#util#IsEnabled('reva', 'ftdetect')
   au BufNewFile,BufRead *.frt setf reva
 endif
 
-if !has_key(s:disabled_packages, 'focexec')
+if polyglot#util#IsEnabled('focexec', 'ftdetect')
   au BufNewFile,BufRead *.fex,*.focexec setf focexec
 endif
 
-if !has_key(s:disabled_packages, 'fetchmail')
+if polyglot#util#IsEnabled('fetchmail', 'ftdetect')
   au BufNewFile,BufRead {.,}fetchmailrc setf fetchmail
 endif
 
-if !has_key(s:disabled_packages, 'factor')
+if polyglot#util#IsEnabled('factor', 'ftdetect')
   au BufNewFile,BufRead *.factor setf factor
 endif
 
-if !has_key(s:disabled_packages, 'fan')
+if polyglot#util#IsEnabled('fan', 'ftdetect')
   au BufNewFile,BufRead *.fan,*.fwt setf fan
 endif
 
-if !has_key(s:disabled_packages, 'falcon')
+if polyglot#util#IsEnabled('falcon', 'ftdetect')
   au BufNewFile,BufRead *.fal setf falcon
 endif
 
-if !has_key(s:disabled_packages, 'exports')
+if polyglot#util#IsEnabled('exports', 'ftdetect')
   au BufNewFile,BufRead exports setf exports
 endif
 
-if !has_key(s:disabled_packages, 'expect')
+if polyglot#util#IsEnabled('expect', 'ftdetect')
   au BufNewFile,BufRead *.exp setf expect
 endif
 
-if !has_key(s:disabled_packages, 'exim')
+if polyglot#util#IsEnabled('exim', 'ftdetect')
   au BufNewFile,BufRead exim.conf setf exim
 endif
 
-if !has_key(s:disabled_packages, 'csc')
+if polyglot#util#IsEnabled('csc', 'ftdetect')
   au BufNewFile,BufRead *.csc setf csc
 endif
 
-if !has_key(s:disabled_packages, 'esterel')
+if polyglot#util#IsEnabled('esterel', 'ftdetect')
   au BufNewFile,BufRead *.strl setf esterel
 endif
 
-if !has_key(s:disabled_packages, 'esqlc')
+if polyglot#util#IsEnabled('esqlc', 'ftdetect')
   au BufNewFile,BufRead *.EC,*.ec setf esqlc
 endif
 
-if !has_key(s:disabled_packages, 'esmtprc')
+if polyglot#util#IsEnabled('esmtprc', 'ftdetect')
   au BufNewFile,BufRead *esmtprc setf esmtprc
 endif
 
-if !has_key(s:disabled_packages, 'elmfilt')
+if polyglot#util#IsEnabled('elmfilt', 'ftdetect')
   au BufNewFile,BufRead filter-rules setf elmfilt
 endif
 
-if !has_key(s:disabled_packages, 'elinks')
+if polyglot#util#IsEnabled('elinks', 'ftdetect')
   au BufNewFile,BufRead elinks.conf setf elinks
 endif
 
-if !has_key(s:disabled_packages, 'ecd')
+if polyglot#util#IsEnabled('ecd', 'ftdetect')
   au BufNewFile,BufRead *.ecd setf ecd
 endif
 
-if !has_key(s:disabled_packages, 'edif')
+if polyglot#util#IsEnabled('edif', 'ftdetect')
   au BufNewFile,BufRead *.ed\(f\|if\|o\) setf edif
 endif
 
-if !has_key(s:disabled_packages, 'dts')
+if polyglot#util#IsEnabled('dts', 'ftdetect')
   au BufNewFile,BufRead *.dts,*.dtsi setf dts
 endif
 
-if !has_key(s:disabled_packages, 'dtd')
+if polyglot#util#IsEnabled('dtd', 'ftdetect')
   au BufNewFile,BufRead *.dtd setf dtd
 endif
 
-if !has_key(s:disabled_packages, 'dsl')
+if polyglot#util#IsEnabled('dsl', 'ftdetect')
   au BufNewFile,BufRead *.dsl setf dsl
 endif
 
-if !has_key(s:disabled_packages, 'datascript')
+if polyglot#util#IsEnabled('datascript', 'ftdetect')
   au BufNewFile,BufRead *.ds setf datascript
 endif
 
-if !has_key(s:disabled_packages, 'dracula')
+if polyglot#util#IsEnabled('dracula', 'ftdetect')
   au BufNewFile,BufRead *.drac,*.drc,*lpe,*lvs setf dracula
   au BufNewFile,BufRead drac.* call s:StarSetf('dracula')
 endif
 
-if !has_key(s:disabled_packages, 'def')
+if polyglot#util#IsEnabled('def', 'ftdetect')
   au BufNewFile,BufRead *.def setf def
 endif
 
-if !has_key(s:disabled_packages, 'dylan')
+if polyglot#util#IsEnabled('dylan', 'ftdetect')
   au BufNewFile,BufRead *.dylan setf dylan
 endif
 
-if !has_key(s:disabled_packages, 'dylanintr')
+if polyglot#util#IsEnabled('dylanintr', 'ftdetect')
   au BufNewFile,BufRead *.intr setf dylanintr
 endif
 
-if !has_key(s:disabled_packages, 'dylanlid')
+if polyglot#util#IsEnabled('dylanlid', 'ftdetect')
   au BufNewFile,BufRead *.lid setf dylanlid
 endif
 
-if !has_key(s:disabled_packages, 'dot')
+if polyglot#util#IsEnabled('dot', 'ftdetect')
   au BufNewFile,BufRead *.dot,*.gv setf dot
 endif
 
-if !has_key(s:disabled_packages, 'dircolors')
+if polyglot#util#IsEnabled('dircolors', 'ftdetect')
   au BufNewFile,BufRead */etc/DIR_COLORS,{.,}dir_colors,{.,}dircolors setf dircolors
 endif
 
-if !has_key(s:disabled_packages, 'diff')
+if polyglot#util#IsEnabled('diff', 'ftdetect')
   au BufNewFile,BufRead *.diff,*.rej setf diff
 endif
 
-if !has_key(s:disabled_packages, 'dictdconf')
+if polyglot#util#IsEnabled('dictdconf', 'ftdetect')
   au BufNewFile,BufRead dictd.conf setf dictdconf
 endif
 
-if !has_key(s:disabled_packages, 'dictconf')
+if polyglot#util#IsEnabled('dictconf', 'ftdetect')
   au BufNewFile,BufRead {.,}dictrc,dict.conf setf dictconf
 endif
 
-if !has_key(s:disabled_packages, 'desktop')
+if polyglot#util#IsEnabled('desktop', 'ftdetect')
   au BufNewFile,BufRead *.desktop,*.directory setf desktop
 endif
 
-if !has_key(s:disabled_packages, 'desc')
+if polyglot#util#IsEnabled('desc', 'ftdetect')
   au BufNewFile,BufRead *.desc setf desc
 endif
 
-if !has_key(s:disabled_packages, 'dnsmasq')
+if polyglot#util#IsEnabled('dnsmasq', 'ftdetect')
   au BufNewFile,BufRead */etc/dnsmasq.conf setf dnsmasq
   au BufNewFile,BufRead */etc/dnsmasq.d/* call s:StarSetf('dnsmasq')
 endif
 
-if !has_key(s:disabled_packages, 'denyhosts')
+if polyglot#util#IsEnabled('denyhosts', 'ftdetect')
   au BufNewFile,BufRead denyhosts.conf setf denyhosts
 endif
 
-if !has_key(s:disabled_packages, 'debsources')
+if polyglot#util#IsEnabled('debsources', 'ftdetect')
   au BufNewFile,BufRead */etc/apt/sources.list,*/etc/apt/sources.list.d/*.list setf debsources
 endif
 
-if !has_key(s:disabled_packages, 'debcopyright')
+if polyglot#util#IsEnabled('debcopyright', 'ftdetect')
   au BufNewFile,BufRead */debian/copyright setf debcopyright
 endif
 
-if !has_key(s:disabled_packages, 'debcontrol')
+if polyglot#util#IsEnabled('debcontrol', 'ftdetect')
   au BufNewFile,BufRead */debian/control setf debcontrol
 endif
 
-if !has_key(s:disabled_packages, 'cuplsim')
+if polyglot#util#IsEnabled('cuplsim', 'ftdetect')
   au BufNewFile,BufRead *.si setf cuplsim
 endif
 
-if !has_key(s:disabled_packages, 'cupl')
+if polyglot#util#IsEnabled('cupl', 'ftdetect')
   au BufNewFile,BufRead *.pld setf cupl
 endif
 
-if !has_key(s:disabled_packages, 'csp')
+if polyglot#util#IsEnabled('csp', 'ftdetect')
   au BufNewFile,BufRead *.csp,*.fdr setf csp
 endif
 
-if !has_key(s:disabled_packages, 'quake')
+if polyglot#util#IsEnabled('quake', 'ftdetect')
   au BufNewFile,BufRead *baseq[2-3]/*.cfg,*id1/*.cfg,*quake[1-3]/*.cfg setf quake
 endif
 
-if !has_key(s:disabled_packages, 'lynx')
+if polyglot#util#IsEnabled('lynx', 'ftdetect')
   au BufNewFile,BufRead lynx.cfg setf lynx
 endif
 
-if !has_key(s:disabled_packages, 'eterm')
+if polyglot#util#IsEnabled('eterm', 'ftdetect')
   au BufNewFile,BufRead *Eterm/*.cfg setf eterm
 endif
 
-if !has_key(s:disabled_packages, 'dcd')
+if polyglot#util#IsEnabled('dcd', 'ftdetect')
   au BufNewFile,BufRead *.dcd setf dcd
 endif
 
-if !has_key(s:disabled_packages, 'dockerfile')
+if polyglot#util#IsEnabled('dockerfile', 'ftdetect')
   au BufNewFile,BufRead *.Dockerfile,*.dock,Containerfile,Dockerfile,dockerfile setf dockerfile
   au BufNewFile,BufRead Dockerfile* call s:StarSetf('dockerfile')
 endif
 
-if !has_key(s:disabled_packages, 'cuda')
+if polyglot#util#IsEnabled('cuda', 'ftdetect')
   au BufNewFile,BufRead *.cu,*.cuh setf cuda
 endif
 
-if !has_key(s:disabled_packages, 'config')
+if polyglot#util#IsEnabled('config', 'ftdetect')
   au BufNewFile,BufRead Pipfile,configure.ac,configure.in setf config
   au BufNewFile,BufRead /etc/hostname.* call s:StarSetf('config')
 endif
 
-if !has_key(s:disabled_packages, 'cf')
+if polyglot#util#IsEnabled('cf', 'ftdetect')
   au BufNewFile,BufRead *.cfc,*.cfi,*.cfm setf cf
 endif
 
-if !has_key(s:disabled_packages, 'coco')
+if polyglot#util#IsEnabled('coco', 'ftdetect')
   au BufNewFile,BufRead *.atg setf coco
 endif
 
-if !has_key(s:disabled_packages, 'cobol')
+if polyglot#util#IsEnabled('cobol', 'ftdetect')
   au BufNewFile,BufRead *.cbl,*.cob,*.lib setf cobol
 endif
 
-if !has_key(s:disabled_packages, 'cmusrc')
+if polyglot#util#IsEnabled('cmusrc', 'ftdetect')
   au BufNewFile,BufRead */.cmus/{autosave,rc,command-history,*.theme},*/cmus/{rc,*.theme} setf cmusrc
 endif
 
-if !has_key(s:disabled_packages, 'cl')
+if polyglot#util#IsEnabled('cl', 'ftdetect')
   au BufNewFile,BufRead *.eni setf cl
 endif
 
-if !has_key(s:disabled_packages, 'clean')
+if polyglot#util#IsEnabled('clean', 'ftdetect')
   au BufNewFile,BufRead *.dcl,*.icl setf clean
 endif
 
-if !has_key(s:disabled_packages, 'chordpro')
+if polyglot#util#IsEnabled('chordpro', 'ftdetect')
   au BufNewFile,BufRead *.cho,*.chopro,*.chordpro,*.crd,*.crdpro setf chordpro
 endif
 
-if !has_key(s:disabled_packages, 'chill')
+if polyglot#util#IsEnabled('chill', 'ftdetect')
   au BufNewFile,BufRead *..ch setf chill
 endif
 
-if !has_key(s:disabled_packages, 'debchangelog')
+if polyglot#util#IsEnabled('debchangelog', 'ftdetect')
   au BufNewFile,BufRead */debian/changelog,NEWS.Debian,NEWS.dch,changelog.Debian,changelog.dch setf debchangelog
 endif
 
-if !has_key(s:disabled_packages, 'cterm')
+if polyglot#util#IsEnabled('cterm', 'ftdetect')
   au BufNewFile,BufRead *.con setf cterm
 endif
 
-if !has_key(s:disabled_packages, 'css')
+if polyglot#util#IsEnabled('css', 'ftdetect')
   au BufNewFile,BufRead *.css setf css
 endif
 
-if !has_key(s:disabled_packages, 'ch')
+if polyglot#util#IsEnabled('ch', 'ftdetect')
   au BufNewFile,BufRead *.chf setf ch
 endif
 
-if !has_key(s:disabled_packages, 'cynpp')
+if polyglot#util#IsEnabled('cynpp', 'ftdetect')
   au BufNewFile,BufRead *.cyn setf cynpp
 endif
 
-if !has_key(s:disabled_packages, 'crm')
+if polyglot#util#IsEnabled('crm', 'ftdetect')
   au BufNewFile,BufRead *.crm setf crm
 endif
 
-if !has_key(s:disabled_packages, 'conaryrecipe')
+if polyglot#util#IsEnabled('conaryrecipe', 'ftdetect')
   au BufNewFile,BufRead *.recipe setf conaryrecipe
 endif
 
-if !has_key(s:disabled_packages, 'cdl')
+if polyglot#util#IsEnabled('cdl', 'ftdetect')
   au BufNewFile,BufRead *.cdl setf cdl
 endif
 
-if !has_key(s:disabled_packages, 'chaiscript')
+if polyglot#util#IsEnabled('chaiscript', 'ftdetect')
   au BufNewFile,BufRead *.chai setf chaiscript
 endif
 
-if !has_key(s:disabled_packages, 'cfengine')
+if polyglot#util#IsEnabled('cfengine', 'ftdetect')
   au BufNewFile,BufRead cfengine.conf setf cfengine
 endif
 
-if !has_key(s:disabled_packages, 'cdrdaoconf')
+if polyglot#util#IsEnabled('cdrdaoconf', 'ftdetect')
   au BufNewFile,BufRead */etc/cdrdao.conf,*/etc/default/cdrdao,*/etc/defaults/cdrdao,{.,}cdrdao setf cdrdaoconf
 endif
 
-if !has_key(s:disabled_packages, 'cdrtoc')
+if polyglot#util#IsEnabled('cdrtoc', 'ftdetect')
   au BufNewFile,BufRead *.toc setf cdrtoc
 endif
 
-if !has_key(s:disabled_packages, 'cabal')
+if polyglot#util#IsEnabled('cabal', 'ftdetect')
   au BufNewFile,BufRead *.cabal setf cabal
 endif
 
-if !has_key(s:disabled_packages, 'csdl')
+if polyglot#util#IsEnabled('csdl', 'ftdetect')
   au BufNewFile,BufRead *.csdl setf csdl
 endif
 
-if !has_key(s:disabled_packages, 'cs')
+if polyglot#util#IsEnabled('cs', 'ftdetect')
   au BufNewFile,BufRead *.cs setf cs
 endif
 
-if !has_key(s:disabled_packages, 'calendar')
+if polyglot#util#IsEnabled('calendar', 'ftdetect')
   au BufNewFile,BufRead calendar setf calendar
   au BufNewFile,BufRead */share/calendar/calendar.* call s:StarSetf('calendar')
   au BufNewFile,BufRead */share/calendar/*/calendar.* call s:StarSetf('calendar')
   au BufNewFile,BufRead */.calendar/* call s:StarSetf('calendar')
 endif
 
-if !has_key(s:disabled_packages, 'lpc')
+if polyglot#util#IsEnabled('lpc', 'ftdetect')
   au BufNewFile,BufRead *.lpc,*.ulpc setf lpc
 endif
 
-if !has_key(s:disabled_packages, 'bsdl')
+if polyglot#util#IsEnabled('bsdl', 'ftdetect')
   au BufNewFile,BufRead *.bsdl,*bsd setf bsdl
 endif
 
-if !has_key(s:disabled_packages, 'blank')
+if polyglot#util#IsEnabled('blank', 'ftdetect')
   au BufNewFile,BufRead *.bl setf blank
 endif
 
-if !has_key(s:disabled_packages, 'bindzone')
+if polyglot#util#IsEnabled('bindzone', 'ftdetect')
   au BufNewFile,BufRead named.root setf bindzone
   au BufNewFile,BufRead */named/db.* call s:StarSetf('bindzone')
   au BufNewFile,BufRead */bind/db.* call s:StarSetf('bindzone')
 endif
 
-if !has_key(s:disabled_packages, 'named')
+if polyglot#util#IsEnabled('named', 'ftdetect')
   au BufNewFile,BufRead named*.conf,rndc*.conf,rndc*.key setf named
 endif
 
-if !has_key(s:disabled_packages, 'bst')
+if polyglot#util#IsEnabled('bst', 'ftdetect')
   au BufNewFile,BufRead *.bst setf bst
 endif
 
-if !has_key(s:disabled_packages, 'bib')
+if polyglot#util#IsEnabled('bib', 'ftdetect')
   au BufNewFile,BufRead *.bib setf bib
 endif
 
-if !has_key(s:disabled_packages, 'bdf')
+if polyglot#util#IsEnabled('bdf', 'ftdetect')
   au BufNewFile,BufRead *.bdf setf bdf
 endif
 
-if !has_key(s:disabled_packages, 'bc')
+if polyglot#util#IsEnabled('bc', 'ftdetect')
   au BufNewFile,BufRead *.bc setf bc
 endif
 
-if !has_key(s:disabled_packages, 'dosbatch')
+if polyglot#util#IsEnabled('dosbatch', 'ftdetect')
   au BufNewFile,BufRead *.bat,*.sys setf dosbatch
 endif
 
-if !has_key(s:disabled_packages, 'hamster')
+if polyglot#util#IsEnabled('hamster', 'ftdetect')
   au BufNewFile,BufRead *.hsc,*.hsm setf hamster
 endif
 
-if !has_key(s:disabled_packages, 'freebasic')
+if polyglot#util#IsEnabled('freebasic', 'ftdetect')
   au BufNewFile,BufRead *.bi,*.fb setf freebasic
 endif
 
-if !has_key(s:disabled_packages, 'ibasic')
+if polyglot#util#IsEnabled('ibasic', 'ftdetect')
   au BufNewFile,BufRead *.iba,*.ibi setf ibasic
 endif
 
-if !has_key(s:disabled_packages, 'b')
+if polyglot#util#IsEnabled('b', 'ftdetect')
   au BufNewFile,BufRead *.imp,*.mch,*.ref setf b
 endif
 
-if !has_key(s:disabled_packages, 'sql')
+if polyglot#util#IsEnabled('sql', 'ftdetect')
   au BufNewFile,BufRead *.bdy,*.ddl,*.fnc,*.pck,*.pkb,*.pks,*.plb,*.pls,*.plsql,*.prc,*.spc,*.sql,*.tpb,*.tps,*.trg,*.tyb,*.tyc,*.typ,*.vw setf sql
 endif
 
-if !has_key(s:disabled_packages, 'gitignore')
+if polyglot#util#IsEnabled('gitignore', 'ftdetect')
   au BufNewFile,BufRead *.git/info/exclude,*/.config/git/ignore,{.,}gitignore setf gitignore
 endif
 
-if !has_key(s:disabled_packages, 'tads')
+if polyglot#util#IsEnabled('tads', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
 endif
 
-if !has_key(s:disabled_packages, 'prolog')
+if polyglot#util#IsEnabled('prolog', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.pdb,*.pro,*.prolog,*.yap setf prolog
 endif
 
-if !has_key(s:disabled_packages, 'bzl')
+if polyglot#util#IsEnabled('bzl', 'ftdetect')
   au BufNewFile,BufRead *.BUILD,*.bazel,*.bzl,BUCK,BUILD,BUILD.bazel,Tiltfile,WORKSPACE setf bzl
 endif
 
-if !has_key(s:disabled_packages, 'odin')
+if polyglot#util#IsEnabled('odin', 'ftdetect')
   au BufNewFile,BufRead *.odin setf odin
 endif
 
-if !has_key(s:disabled_packages, 'dosini')
+if polyglot#util#IsEnabled('dosini', 'ftdetect')
   au BufNewFile,BufRead *.dof,*.ini,*.lektorproject,*.prefs,*.pro,*.properties,*/etc/pacman.conf,*/etc/yum.conf,{.,}editorconfig,{.,}npmrc,buildozer.spec setf dosini
   au BufNewFile,BufRead php.ini-* call s:StarSetf('dosini')
   au BufNewFile,BufRead */etc/yum.repos.d/* call s:StarSetf('dosini')
 endif
 
-if !has_key(s:disabled_packages, 'spec')
+if polyglot#util#IsEnabled('spec', 'ftdetect')
   au BufNewFile,BufRead *.spec setf spec
 endif
 
-if !has_key(s:disabled_packages, 'visual-basic')
+if polyglot#util#IsEnabled('visual-basic', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.bas call polyglot#detect#Bas()
   au BufNewFile,BufRead *.cls,*.ctl,*.dsm,*.frm,*.frx,*.sba,*.vba,*.vbs setf vb
 endif
 
-if !has_key(s:disabled_packages, 'basic')
+if polyglot#util#IsEnabled('basic', 'ftdetect')
   au BufNewFile,BufRead *.basic setf basic
 endif
 
-if !has_key(s:disabled_packages, 'trasys')
+if polyglot#util#IsEnabled('trasys', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
 endif
 
-if !has_key(s:disabled_packages, 'zig')
+if polyglot#util#IsEnabled('zig', 'ftdetect')
   au BufNewFile,BufRead *.zir setf zir
   au BufNewFile,BufRead *.zig,*.zir setf zig
 endif
 
-if !has_key(s:disabled_packages, 'zephir')
+if polyglot#util#IsEnabled('zephir', 'ftdetect')
   au BufNewFile,BufRead *.zep setf zephir
 endif
 
-if !has_key(s:disabled_packages, 'help')
+if polyglot#util#IsEnabled('help', 'ftdetect')
   au BufNewFile,BufRead $VIMRUNTIME/doc/*.txt setf help
 endif
 
-if !has_key(s:disabled_packages, 'helm')
+if polyglot#util#IsEnabled('helm', 'ftdetect')
   au BufNewFile,BufRead */templates/*.tpl,*/templates/*.yaml setf helm
 endif
 
-if !has_key(s:disabled_packages, 'smarty')
+if polyglot#util#IsEnabled('smarty', 'ftdetect')
   au BufNewFile,BufRead *.tpl setf smarty
 endif
 
-if !has_key(s:disabled_packages, 'ansible')
+if polyglot#util#IsEnabled('ansible', 'ftdetect')
   au BufNewFile,BufRead handlers.*.y{a,}ml,local.y{a,}ml,main.y{a,}ml,playbook.y{a,}ml,requirements.y{a,}ml,roles.*.y{a,}ml,site.y{a,}ml,tasks.*.y{a,}ml setf yaml.ansible
   au BufNewFile,BufRead host_vars/* call s:StarSetf('yaml.ansible')
   au BufNewFile,BufRead group_vars/* call s:StarSetf('yaml.ansible')
 endif
 
-if !has_key(s:disabled_packages, 'xsl')
+if polyglot#util#IsEnabled('xsl', 'ftdetect')
   au BufNewFile,BufRead *.xsl,*.xslt setf xsl
 endif
 
-if !has_key(s:disabled_packages, 'xdc')
+if polyglot#util#IsEnabled('xdc', 'ftdetect')
   au BufNewFile,BufRead *.xdc setf xdc
 endif
 
-if !has_key(s:disabled_packages, 'vue')
+if polyglot#util#IsEnabled('vue', 'ftdetect')
   au BufNewFile,BufRead *.vue,*.wpy setf vue
 endif
 
-if !has_key(s:disabled_packages, 'vmasm')
+if polyglot#util#IsEnabled('vmasm', 'ftdetect')
   au BufNewFile,BufRead *.mar setf vmasm
 endif
 
-if !has_key(s:disabled_packages, 'velocity')
+if polyglot#util#IsEnabled('velocity', 'ftdetect')
   au BufNewFile,BufRead *.vm setf velocity
 endif
 
-if !has_key(s:disabled_packages, 'vcl')
+if polyglot#util#IsEnabled('vcl', 'ftdetect')
   au BufNewFile,BufRead *.vcl setf vcl
 endif
 
-if !has_key(s:disabled_packages, 'vbnet')
+if polyglot#util#IsEnabled('vbnet', 'ftdetect')
   au BufNewFile,BufRead *.vb,*.vbhtml setf vbnet
 endif
 
-if !has_key(s:disabled_packages, 'vala')
+if polyglot#util#IsEnabled('vala', 'ftdetect')
   au BufNewFile,BufRead *.vala,*.valadoc,*.vapi setf vala
 endif
 
-if !has_key(s:disabled_packages, 'v')
+if polyglot#util#IsEnabled('v', 'ftdetect')
   au BufNewFile,BufRead *.v,*.vsh,*.vv setf vlang
 endif
 
-if !has_key(s:disabled_packages, 'unison')
+if polyglot#util#IsEnabled('unison', 'ftdetect')
   au BufNewFile,BufRead *.u,*.uu setf unison
 endif
 
-if !has_key(s:disabled_packages, 'typescript')
+if polyglot#util#IsEnabled('typescript', 'ftdetect')
   au BufNewFile,BufRead *.ts setf typescript
   au BufNewFile,BufRead *.tsx setf typescriptreact
 endif
 
-if !has_key(s:disabled_packages, 'twig')
+if polyglot#util#IsEnabled('twig', 'ftdetect')
   au BufNewFile,BufRead *.twig setf html.twig
   au BufNewFile,BufRead *.xml.twig setf xml.twig
 endif
 
-if !has_key(s:disabled_packages, 'tptp')
+if polyglot#util#IsEnabled('tptp', 'ftdetect')
   au BufNewFile,BufRead *.ax,*.p,*.tptp setf tptp
 endif
 
-if !has_key(s:disabled_packages, 'toml')
+if polyglot#util#IsEnabled('toml', 'ftdetect')
   au BufNewFile,BufRead *.toml,*/.cargo/config,*/.cargo/credentials,Cargo.lock,Gopkg.lock,Pipfile,poetry.lock setf toml
 endif
 
-if !has_key(s:disabled_packages, 'tmux')
+if polyglot#util#IsEnabled('tmux', 'ftdetect')
   au BufNewFile,BufRead {.,}tmux*.conf setf tmux
 endif
 
-if !has_key(s:disabled_packages, 'thrift')
+if polyglot#util#IsEnabled('thrift', 'ftdetect')
   au BufNewFile,BufRead *.thrift setf thrift
 endif
 
-if !has_key(s:disabled_packages, 'textile')
+if polyglot#util#IsEnabled('textile', 'ftdetect')
   au BufNewFile,BufRead *.textile setf textile
 endif
 
-if !has_key(s:disabled_packages, 'terraform')
+if polyglot#util#IsEnabled('terraform', 'ftdetect')
   au BufNewFile,BufRead *.tf,*.tfvars setf terraform
 endif
 
-if !has_key(s:disabled_packages, 'tf')
+if polyglot#util#IsEnabled('tf', 'ftdetect')
   au BufNewFile,BufRead *.tf,{.,}tfrc,tfrc setf tf
 endif
 
-if !has_key(s:disabled_packages, 'systemd')
+if polyglot#util#IsEnabled('systemd', 'ftdetect')
   au BufNewFile,BufRead *.automount,*.dnssd,*.link,*.mount,*.netdev,*.network,*.nspawn,*.path,*.service,*.slice,*.socket,*.swap,*.target,*.timer,*/systemd/*.conf setf systemd
   au BufNewFile,BufRead *.#* call s:StarSetf('systemd')
 endif
 
-if !has_key(s:disabled_packages, 'sxhkd')
+if polyglot#util#IsEnabled('sxhkd', 'ftdetect')
   au BufNewFile,BufRead *.sxhkdrc,sxhkdrc setf sxhkdrc
 endif
 
-if !has_key(s:disabled_packages, 'swift')
+if polyglot#util#IsEnabled('swift', 'ftdetect')
   au BufNewFile,BufRead *.swift setf swift
 endif
 
-if !has_key(s:disabled_packages, 'svg')
+if polyglot#util#IsEnabled('svg', 'ftdetect')
   au BufNewFile,BufRead *.svg setf svg
 endif
 
-if !has_key(s:disabled_packages, 'svelte')
+if polyglot#util#IsEnabled('svelte', 'ftdetect')
   au BufNewFile,BufRead *.svelte setf svelte
 endif
 
-if !has_key(s:disabled_packages, 'stylus')
+if polyglot#util#IsEnabled('stylus', 'ftdetect')
   au BufNewFile,BufRead *.styl,*.stylus setf stylus
 endif
 
-if !has_key(s:disabled_packages, 'solidity')
+if polyglot#util#IsEnabled('solidity', 'ftdetect')
   au BufNewFile,BufRead *.sol setf solidity
 endif
 
-if !has_key(s:disabled_packages, 'smt2')
+if polyglot#util#IsEnabled('smt2', 'ftdetect')
   au BufNewFile,BufRead *.smt,*.smt2 setf smt2
 endif
 
-if !has_key(s:disabled_packages, 'slime')
+if polyglot#util#IsEnabled('slime', 'ftdetect')
   au BufNewFile,BufRead *.slime setf slime
 endif
 
-if !has_key(s:disabled_packages, 'slim')
+if polyglot#util#IsEnabled('slim', 'ftdetect')
   au BufNewFile,BufRead *.slim setf slim
 endif
 
-if !has_key(s:disabled_packages, 'sh')
+if polyglot#util#IsEnabled('sh', 'ftdetect')
   au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,login,man,profile setf sh
   au BufNewFile,BufRead *.zsh,*/etc/zprofile,{.,}zfbfmarks,{.,}zlogin,{.,}zlogout,{.,}zprofile,{.,}zshenv,{.,}zshrc setf zsh
   au BufNewFile,BufRead .zsh* call s:StarSetf('zsh')
@@ -1910,132 +1895,132 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead .zcompdump* call s:StarSetf('zsh')
 endif
 
-if !has_key(s:disabled_packages, 'scss')
+if polyglot#util#IsEnabled('scss', 'ftdetect')
   au BufNewFile,BufRead *.scss setf scss
 endif
 
-if !has_key(s:disabled_packages, 'scala')
+if polyglot#util#IsEnabled('scala', 'ftdetect')
   au BufNewFile,BufRead *.kojo,*.sc,*.scala setf scala
 endif
 
-if !has_key(s:disabled_packages, 'rust')
+if polyglot#util#IsEnabled('rust', 'ftdetect')
   au BufNewFile,BufRead *.rs,*.rs.in setf rust
 endif
 
-if !has_key(s:disabled_packages, 'brewfile')
+if polyglot#util#IsEnabled('brewfile', 'ftdetect')
   au BufNewFile,BufRead Brewfile setf brewfile
 endif
 
-if !has_key(s:disabled_packages, 'rspec')
+if polyglot#util#IsEnabled('rspec', 'ftdetect')
   au BufNewFile,BufRead *_spec.rb set ft=ruby syntax=rspec
 endif
 
-if !has_key(s:disabled_packages, 'ruby')
+if polyglot#util#IsEnabled('ruby', 'ftdetect')
   au BufNewFile,BufRead *.axlsx,*.builder,*.cap,*.eye,*.fcgi,*.gemspec,*.god,*.jbuilder,*.mspec,*.opal,*.pluginspec,*.podspec,*.rabl,*.rake,*.rant,*.rb,*.rbi,*.rbuild,*.rbw,*.rbx,*.rjs,*.ru,*.ruby,*.rxml,*.spec,*.thor,*.watchr,{.,}Brewfile,{.,}Guardfile,{.,}autotest,{.,}irbrc,{.,}pryrc,{.,}simplecov,Appraisals,Berksfile,Buildfile,Capfile,Cheffile,Dangerfile,Deliverfile,Fastfile,Gemfile,Gemfile.lock,Guardfile,Jarfile,KitchenSink,Mavenfile,Podfile,Puppetfile,Rakefile,Routefile,Snapfile,Thorfile,Vagrantfile,[Rr]antfile,buildfile,vagrantfile setf ruby
   au BufNewFile,BufRead [Rr]akefile* call s:StarSetf('ruby')
   au BufNewFile,BufRead *.erb,*.erb.deface,*.rhtml setf eruby
 endif
 
-if !has_key(s:disabled_packages, 'rst')
+if polyglot#util#IsEnabled('rst', 'ftdetect')
   au BufNewFile,BufRead *.rest,*.rest.txt,*.rst,*.rst.txt setf rst
 endif
 
-if !has_key(s:disabled_packages, 'reason')
+if polyglot#util#IsEnabled('reason', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.re call polyglot#detect#Re()
   au BufNewFile,BufRead *.rei setf reason
 endif
 
-if !has_key(s:disabled_packages, 'razor')
+if polyglot#util#IsEnabled('razor', 'ftdetect')
   au BufNewFile,BufRead *.cshtml,*.razor setf razor
 endif
 
-if !has_key(s:disabled_packages, 'raml')
+if polyglot#util#IsEnabled('raml', 'ftdetect')
   au BufNewFile,BufRead *.raml setf raml
 endif
 
-if !has_key(s:disabled_packages, 'raku')
+if polyglot#util#IsEnabled('raku', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
   au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
   au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.6pl,*.6pm,*.nqp,*.p6,*.p6l,*.p6m,*.pl6,*.pm6,*.pod6,*.raku,*.rakudoc,*.rakumod,*.rakutest,*.t6 setf raku
 endif
 
-if !has_key(s:disabled_packages, 'ragel')
+if polyglot#util#IsEnabled('ragel', 'ftdetect')
   au BufNewFile,BufRead *.rl setf ragel
 endif
 
-if !has_key(s:disabled_packages, 'racket')
+if polyglot#util#IsEnabled('racket', 'ftdetect')
   au BufNewFile,BufRead *.rkt,*.rktd,*.rktl,*.scrbl setf racket
 endif
 
-if !has_key(s:disabled_packages, 'r-lang')
+if polyglot#util#IsEnabled('r-lang', 'ftdetect')
   au BufNewFile,BufRead *.S,*.r,*.rsx,*.s,{.,}Rprofile,expr-dist setf r
   au BufNewFile,BufRead *.rd setf rhelp
 endif
 
-if !has_key(s:disabled_packages, 'qml')
+if polyglot#util#IsEnabled('qml', 'ftdetect')
   au BufNewFile,BufRead *.qbs,*.qml setf qml
 endif
 
-if !has_key(s:disabled_packages, 'qmake')
+if polyglot#util#IsEnabled('qmake', 'ftdetect')
   au BufNewFile,BufRead *.pri,*.pro setf qmake
 endif
 
-if !has_key(s:disabled_packages, 'requirements')
+if polyglot#util#IsEnabled('requirements', 'ftdetect')
   au BufNewFile,BufRead *.pip,*require.{txt,in},*requirements.{txt,in},constraints.{txt,in} setf requirements
 endif
 
-if !has_key(s:disabled_packages, 'python')
+if polyglot#util#IsEnabled('python', 'ftdetect')
   au BufNewFile,BufRead *.cgi,*.fcgi,*.gyp,*.gypi,*.lmi,*.ptl,*.py,*.py3,*.pyde,*.pyi,*.pyp,*.pyt,*.pyw,*.rpy,*.smk,*.spec,*.tac,*.wsgi,*.xpy,{.,}gclient,{.,}pythonrc,{.,}pythonstartup,DEPS,SConscript,SConstruct,Snakefile,wscript setf python
 endif
 
-if !has_key(s:disabled_packages, 'purescript')
+if polyglot#util#IsEnabled('purescript', 'ftdetect')
   au BufNewFile,BufRead *.purs setf purescript
 endif
 
-if !has_key(s:disabled_packages, 'puppet')
+if polyglot#util#IsEnabled('puppet', 'ftdetect')
   au BufNewFile,BufRead *.pp,Modulefile setf puppet
   au BufNewFile,BufRead *.epp setf embeddedpuppet
 endif
 
-if !has_key(s:disabled_packages, 'pug')
+if polyglot#util#IsEnabled('pug', 'ftdetect')
   au BufNewFile,BufRead *.jade,*.pug setf pug
 endif
 
-if !has_key(s:disabled_packages, 'protobuf')
+if polyglot#util#IsEnabled('protobuf', 'ftdetect')
   au BufNewFile,BufRead *.proto setf proto
 endif
 
-if !has_key(s:disabled_packages, 'powershell')
+if polyglot#util#IsEnabled('powershell', 'ftdetect')
   au BufNewFile,BufRead *.ps1,*.psd1,*.psm1,*.pssc setf ps1
   au BufNewFile,BufRead *.ps1xml setf ps1xml
 endif
 
-if !has_key(s:disabled_packages, 'pony')
+if polyglot#util#IsEnabled('pony', 'ftdetect')
   au BufNewFile,BufRead *.pony setf pony
 endif
 
-if !has_key(s:disabled_packages, 'plantuml')
+if polyglot#util#IsEnabled('plantuml', 'ftdetect')
   au BufNewFile,BufRead *.iuml,*.plantuml,*.pu,*.puml,*.uml setf plantuml
 endif
 
-if !has_key(s:disabled_packages, 'blade')
+if polyglot#util#IsEnabled('blade', 'ftdetect')
   au BufNewFile,BufRead *.blade,*.blade.php setf blade
 endif
 
-if !has_key(s:disabled_packages, 'php')
+if polyglot#util#IsEnabled('php', 'ftdetect')
   au BufNewFile,BufRead *.aw,*.ctp,*.fcgi,*.inc,*.php,*.php3,*.php4,*.php5,*.php9,*.phps,*.phpt,*.phtml,{.,}php,{.,}php_cs,{.,}php_cs.dist,Phakefile setf php
 endif
 
-if !has_key(s:disabled_packages, 'cql')
+if polyglot#util#IsEnabled('cql', 'ftdetect')
   au BufNewFile,BufRead *.cql setf cql
 endif
 
-if !has_key(s:disabled_packages, 'pgsql')
+if polyglot#util#IsEnabled('pgsql', 'ftdetect')
   au BufNewFile,BufRead *.pgsql let b:sql_type_override='pgsql' | set ft=sql
 endif
 
-if !has_key(s:disabled_packages, 'perl')
+if polyglot#util#IsEnabled('perl', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
   au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
   au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
@@ -2047,20 +2032,20 @@ if !has_key(s:disabled_packages, 'perl')
   au BufNewFile,BufRead *.xs setf xs
 endif
 
-if !has_key(s:disabled_packages, 'rc')
+if polyglot#util#IsEnabled('rc', 'ftdetect')
   au BufNewFile,BufRead *.rc,*.rch setf rc
 endif
 
-if !has_key(s:disabled_packages, 'opencl')
+if polyglot#util#IsEnabled('opencl', 'ftdetect')
   au BufNewFile,BufRead *.cl,*.opencl setf opencl
 endif
 
-if !has_key(s:disabled_packages, 'octave')
+if polyglot#util#IsEnabled('octave', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
   au BufNewFile,BufRead *.oct setf octave
 endif
 
-if !has_key(s:disabled_packages, 'ocaml')
+if polyglot#util#IsEnabled('ocaml', 'ftdetect')
   au BufNewFile,BufRead *.eliom,*.eliomi,*.ml,*.ml.cppo,*.ml4,*.mli,*.mli.cppo,*.mlip,*.mll,*.mlp,*.mlt,*.mly,{.,}ocamlinit setf ocaml
   au BufNewFile,BufRead *.om,OMakefile,OMakeroot,OMakeroot.in setf omake
   au BufNewFile,BufRead *.opam,*.opam.template,opam setf opam
@@ -2072,48 +2057,48 @@ if !has_key(s:disabled_packages, 'ocaml')
   au BufNewFile,BufRead *.sexp setf sexplib
 endif
 
-if !has_key(s:disabled_packages, 'objc')
+if polyglot#util#IsEnabled('objc', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
   au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
 endif
 
-if !has_key(s:disabled_packages, 'nix')
+if polyglot#util#IsEnabled('nix', 'ftdetect')
   au BufNewFile,BufRead *.nix setf nix
 endif
 
-if !has_key(s:disabled_packages, 'nim')
+if polyglot#util#IsEnabled('nim', 'ftdetect')
   au BufNewFile,BufRead *.nim,*.nim.cfg,*.nimble,*.nimrod,*.nims,nim.cfg setf nim
 endif
 
-if !has_key(s:disabled_packages, 'nginx')
+if polyglot#util#IsEnabled('nginx', 'ftdetect')
   au BufNewFile,BufRead *.nginx,*.nginxconf,*.vhost,*/nginx/*.conf,*nginx.conf,nginx*.conf,nginx.conf setf nginx
   au BufNewFile,BufRead */usr/local/nginx/conf/* call s:StarSetf('nginx')
   au BufNewFile,BufRead */etc/nginx/* call s:StarSetf('nginx')
 endif
 
-if !has_key(s:disabled_packages, 'murphi')
+if polyglot#util#IsEnabled('murphi', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
 endif
 
-if !has_key(s:disabled_packages, 'moonscript')
+if polyglot#util#IsEnabled('moonscript', 'ftdetect')
   au BufNewFile,BufRead *.moon setf moon
 endif
 
-if !has_key(s:disabled_packages, 'meson')
+if polyglot#util#IsEnabled('meson', 'ftdetect')
   au BufNewFile,BufRead meson.build,meson_options.txt setf meson
   au BufNewFile,BufRead *.wrap setf dosini
 endif
 
-if !has_key(s:disabled_packages, 'mdx')
+if polyglot#util#IsEnabled('mdx', 'ftdetect')
   au BufNewFile,BufRead *.mdx setf markdown.mdx
 endif
 
-if !has_key(s:disabled_packages, 'mathematica')
+if polyglot#util#IsEnabled('mathematica', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
   au BufNewFile,BufRead *.cdf,*.ma,*.mathematica,*.mma,*.mt,*.nb,*.nbp,*.wl,*.wls,*.wlt setf mma
 endif
 
-if !has_key(s:disabled_packages, 'mako')
+if polyglot#util#IsEnabled('mako', 'ftdetect')
   au BufNewFile,BufRead *.mako,*.mao setf mako
   au BufReadPre *.*.mao execute "do BufRead filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
   au BufNewFile *.*.mao execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
@@ -2121,172 +2106,172 @@ if !has_key(s:disabled_packages, 'mako')
   au BufNewFile *.*.mako execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
 endif
 
-if !has_key(s:disabled_packages, 'm4')
+if polyglot#util#IsEnabled('m4', 'ftdetect')
   au BufNewFile,BufRead *.at,*.m4 setf m4
 endif
 
-if !has_key(s:disabled_packages, 'lua')
+if polyglot#util#IsEnabled('lua', 'ftdetect')
   au BufNewFile,BufRead *.fcgi,*.lua,*.nse,*.p8,*.pd_lua,*.rbxs,*.rockspec,*.wlua,{.,}luacheckrc setf lua
 endif
 
-if !has_key(s:disabled_packages, 'log')
+if polyglot#util#IsEnabled('log', 'ftdetect')
   au BufNewFile,BufRead *.LOG,*.log,*_LOG,*_log setf log
 endif
 
-if !has_key(s:disabled_packages, 'llvm')
+if polyglot#util#IsEnabled('llvm', 'ftdetect')
   au BufNewFile,BufRead *.ll setf llvm
   au BufNewFile,BufRead *.td setf tablegen
 endif
 
-if !has_key(s:disabled_packages, 'livescript')
+if polyglot#util#IsEnabled('livescript', 'ftdetect')
   au BufNewFile,BufRead *._ls,*.ls,Slakefile setf livescript
 endif
 
-if !has_key(s:disabled_packages, 'lilypond')
+if polyglot#util#IsEnabled('lilypond', 'ftdetect')
   au BufNewFile,BufRead *.ily,*.ly setf lilypond
 endif
 
-if !has_key(s:disabled_packages, 'less')
+if polyglot#util#IsEnabled('less', 'ftdetect')
   au BufNewFile,BufRead *.less setf less
 endif
 
-if !has_key(s:disabled_packages, 'ledger')
+if polyglot#util#IsEnabled('ledger', 'ftdetect')
   au BufNewFile,BufRead *.journal,*.ldg,*.ledger setf ledger
 endif
 
-if !has_key(s:disabled_packages, 'kotlin')
+if polyglot#util#IsEnabled('kotlin', 'ftdetect')
   au BufNewFile,BufRead *.kt,*.ktm,*.kts setf kotlin
 endif
 
-if !has_key(s:disabled_packages, 'julia')
+if polyglot#util#IsEnabled('julia', 'ftdetect')
   au BufNewFile,BufRead *.jl setf julia
 endif
 
-if !has_key(s:disabled_packages, 'jst')
+if polyglot#util#IsEnabled('jst', 'ftdetect')
   au BufNewFile,BufRead *.ect,*.ejs,*.jst setf jst
 endif
 
-if !has_key(s:disabled_packages, 'jsonnet')
+if polyglot#util#IsEnabled('jsonnet', 'ftdetect')
   au BufNewFile,BufRead *.jsonnet,*.libsonnet setf jsonnet
 endif
 
-if !has_key(s:disabled_packages, 'json')
+if polyglot#util#IsEnabled('json', 'ftdetect')
   au BufNewFile,BufRead *.JSON-tmLanguage,*.avsc,*.geojson,*.gltf,*.har,*.ice,*.json,*.jsonl,*.jsonp,*.mcmeta,*.template,*.tfstate,*.tfstate.backup,*.topojson,*.webapp,*.webmanifest,*.yy,*.yyp,{.,}arcconfig,{.,}htmlhintrc,{.,}tern-config,{.,}tern-project,{.,}watchmanconfig,Pipfile.lock,composer.lock,mcmod.info setf json
 endif
 
-if !has_key(s:disabled_packages, 'json5')
+if polyglot#util#IsEnabled('json5', 'ftdetect')
   au BufNewFile,BufRead *.json5 setf json5
 endif
 
-if !has_key(s:disabled_packages, 'jq')
+if polyglot#util#IsEnabled('jq', 'ftdetect')
   au BufNewFile,BufRead *.jq,{.,}jqrc setf jq
   au BufNewFile,BufRead .jqrc* call s:StarSetf('jq')
 endif
 
-if !has_key(s:disabled_packages, 'htmldjango')
+if polyglot#util#IsEnabled('htmldjango', 'ftdetect')
   au BufNewFile,BufRead *.j2,*.jinja,*.jinja2,*.njk setf htmldjango
 endif
 
-if !has_key(s:disabled_packages, 'jenkins')
+if polyglot#util#IsEnabled('jenkins', 'ftdetect')
   au BufNewFile,BufRead *.Jenkinsfile,*.jenkinsfile,Jenkinsfile setf Jenkinsfile
   au BufNewFile,BufRead Jenkinsfile* call s:StarSetf('Jenkinsfile')
 endif
 
-if !has_key(s:disabled_packages, 'ion')
+if polyglot#util#IsEnabled('ion', 'ftdetect')
   au BufNewFile,BufRead *.ion,~/.config/ion/initrc setf ion
 endif
 
-if !has_key(s:disabled_packages, 'idris2')
+if polyglot#util#IsEnabled('idris2', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
   au BufNewFile,BufRead *.ipkg,idris-response setf idris2
   au BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
 endif
 
-if !has_key(s:disabled_packages, 'idris')
+if polyglot#util#IsEnabled('idris', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
   au BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
   au BufNewFile,BufRead idris-response setf idris
 endif
 
-if !has_key(s:disabled_packages, 'icalendar')
+if polyglot#util#IsEnabled('icalendar', 'ftdetect')
   au BufNewFile,BufRead *.ics setf icalendar
 endif
 
-if !has_key(s:disabled_packages, 'i3')
+if polyglot#util#IsEnabled('i3', 'ftdetect')
   au BufNewFile,BufRead *.i3.config,*.i3config,{.,}i3.config,{.,}i3config,i3.config,i3config setf i3config
 endif
 
-if !has_key(s:disabled_packages, 'hive')
+if polyglot#util#IsEnabled('hive', 'ftdetect')
   au BufNewFile,BufRead *.hql,*.q,*.ql setf hive
 endif
 
-if !has_key(s:disabled_packages, 'hcl')
+if polyglot#util#IsEnabled('hcl', 'ftdetect')
   au BufNewFile,BufRead *.hcl,*.nomad,*.workflow,Appfile setf hcl
 endif
 
-if !has_key(s:disabled_packages, 'haxe')
+if polyglot#util#IsEnabled('haxe', 'ftdetect')
   au BufNewFile,BufRead *.hx,*.hxsl setf haxe
 endif
 
-if !has_key(s:disabled_packages, 'haskell')
+if polyglot#util#IsEnabled('haskell', 'ftdetect')
   au BufNewFile,BufRead *.bpk,*.hs,*.hs-boot,*.hsc,*.hsig setf haskell
 endif
 
-if !has_key(s:disabled_packages, 'haproxy')
+if polyglot#util#IsEnabled('haproxy', 'ftdetect')
   au BufNewFile,BufRead haproxy*.conf* call s:StarSetf('haproxy')
   au BufNewFile,BufRead haproxy*.cfg* call s:StarSetf('haproxy')
 endif
 
-if !has_key(s:disabled_packages, 'handlebars')
+if polyglot#util#IsEnabled('handlebars', 'ftdetect')
   au BufNewFile,BufRead *.hjs,*.hogan,*.hulk,*.mustache setf html.mustache
   au BufNewFile,BufRead *.handlebars,*.hb,*.hbs,*.hdbs setf html.handlebars
 endif
 
-if !has_key(s:disabled_packages, 'haml')
+if polyglot#util#IsEnabled('haml', 'ftdetect')
   au BufNewFile,BufRead *.haml,*.haml.deface,*.hamlbars,*.hamlc setf haml
 endif
 
-if !has_key(s:disabled_packages, 'grub')
+if polyglot#util#IsEnabled('grub', 'ftdetect')
   au BufNewFile,BufRead */boot/grub/grub.conf,*/boot/grub/menu.lst,*/etc/grub.conf setf grub
 endif
 
-if !has_key(s:disabled_packages, 'groovy')
+if polyglot#util#IsEnabled('groovy', 'ftdetect')
   au BufNewFile,BufRead *.gradle,*.groovy,*.grt,*.gtpl,*.gvy,Jenkinsfile setf groovy
 endif
 
-if !has_key(s:disabled_packages, 'graphql')
+if polyglot#util#IsEnabled('graphql', 'ftdetect')
   au BufNewFile,BufRead *.gql,*.graphql,*.graphqls setf graphql
 endif
 
-if !has_key(s:disabled_packages, 'jsx')
+if polyglot#util#IsEnabled('jsx', 'ftdetect')
   au BufNewFile,BufRead *.jsx setf javascriptreact
 endif
 
-if !has_key(s:disabled_packages, 'javascript')
+if polyglot#util#IsEnabled('javascript', 'ftdetect')
   au BufNewFile,BufRead *._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.javascript,*.js,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile setf javascript
   au BufNewFile,BufRead *.flow setf flow
 endif
 
-if !has_key(s:disabled_packages, 'go')
+if polyglot#util#IsEnabled('go', 'ftdetect')
   au BufNewFile,BufRead *.go setf go
   au BufNewFile,BufRead go.mod setf gomod
   au BufNewFile,BufRead *.tmpl setf gohtmltmpl
 endif
 
-if !has_key(s:disabled_packages, 'gnuplot')
+if polyglot#util#IsEnabled('gnuplot', 'ftdetect')
   au BufNewFile,BufRead *.gnu,*.gnuplot,*.gp,*.gpi,*.p,*.plot,*.plt setf gnuplot
 endif
 
-if !has_key(s:disabled_packages, 'gmpl')
+if polyglot#util#IsEnabled('gmpl', 'ftdetect')
   au BufNewFile,BufRead *.mod setf gmpl
 endif
 
-if !has_key(s:disabled_packages, 'glsl')
+if polyglot#util#IsEnabled('glsl', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
 endif
 
-if !has_key(s:disabled_packages, 'git')
+if polyglot#util#IsEnabled('git', 'ftdetect')
   au BufNewFile,BufRead *.gitconfig,*.git/config,*.git/modules/*/config,*/.config/git/config,*/git/config,{.,}gitconfig,{.,}gitmodules setf gitconfig
   au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')
   au BufNewFile,BufRead git-rebase-todo setf gitrebase
@@ -2294,74 +2279,74 @@ if !has_key(s:disabled_packages, 'git')
   au BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,TAG_EDITMSG setf gitcommit
 endif
 
-if !has_key(s:disabled_packages, 'gdscript')
+if polyglot#util#IsEnabled('gdscript', 'ftdetect')
   au BufNewFile,BufRead *.gd setf gdscript3
 endif
 
-if !has_key(s:disabled_packages, 'fsharp')
+if polyglot#util#IsEnabled('fsharp', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.fsi,*.fsx setf fsharp
 endif
 
-if !has_key(s:disabled_packages, 'forth')
+if polyglot#util#IsEnabled('forth', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.ft,*.fth setf forth
 endif
 
-if !has_key(s:disabled_packages, 'flatbuffers')
+if polyglot#util#IsEnabled('flatbuffers', 'ftdetect')
   au BufNewFile,BufRead *.fbs setf fbs
 endif
 
-if !has_key(s:disabled_packages, 'fish')
+if polyglot#util#IsEnabled('fish', 'ftdetect')
   au BufNewFile,BufRead *.fish setf fish
 endif
 
-if !has_key(s:disabled_packages, 'ferm')
+if polyglot#util#IsEnabled('ferm', 'ftdetect')
   au BufNewFile,BufRead *.ferm,ferm.conf setf ferm
 endif
 
-if !has_key(s:disabled_packages, 'fennel')
+if polyglot#util#IsEnabled('fennel', 'ftdetect')
   au BufNewFile,BufRead *.fnl setf fennel
 endif
 
-if !has_key(s:disabled_packages, 'erlang')
+if polyglot#util#IsEnabled('erlang', 'ftdetect')
   au BufNewFile,BufRead *.app,*.app.src,*.erl,*.es,*.escript,*.hrl,*.xrl,*.yaws,*.yrl,Emakefile,rebar.config,rebar.config.lock,rebar.lock setf erlang
 endif
 
-if !has_key(s:disabled_packages, 'emblem')
+if polyglot#util#IsEnabled('emblem', 'ftdetect')
   au BufNewFile,BufRead *.em,*.emblem setf emblem
 endif
 
-if !has_key(s:disabled_packages, 'emberscript')
+if polyglot#util#IsEnabled('emberscript', 'ftdetect')
   au BufNewFile,BufRead *.em,*.emberscript setf ember-script
 endif
 
-if !has_key(s:disabled_packages, 'elm')
+if polyglot#util#IsEnabled('elm', 'ftdetect')
   au BufNewFile,BufRead *.elm setf elm
 endif
 
-if !has_key(s:disabled_packages, 'elixir')
+if polyglot#util#IsEnabled('elixir', 'ftdetect')
   au BufNewFile,BufRead *.ex,*.exs,mix.lock setf elixir
   au BufNewFile,BufRead *.eex,*.leex setf eelixir
 endif
 
-if !has_key(s:disabled_packages, 'docker-compose')
+if polyglot#util#IsEnabled('docker-compose', 'ftdetect')
   au BufNewFile,BufRead docker-compose*.yaml,docker-compose*.yml setf yaml.docker-compose
 endif
 
-if !has_key(s:disabled_packages, 'yaml')
+if polyglot#util#IsEnabled('yaml', 'ftdetect')
   au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,fish_history,fish_read_history,glide.lock,yarn.lock setf yaml
 endif
 
-if !has_key(s:disabled_packages, 'mysql')
+if polyglot#util#IsEnabled('mysql', 'ftdetect')
   au BufNewFile,BufRead *.mysql setf mysql
 endif
 
-if !has_key(s:disabled_packages, 'sed')
+if polyglot#util#IsEnabled('sed', 'ftdetect')
   au BufNewFile,BufRead *.sed setf sed
 endif
 
-if !has_key(s:disabled_packages, 'dlang')
+if polyglot#util#IsEnabled('dlang', 'ftdetect')
   au BufNewFile,BufRead *.d,*.di setf d
   au BufNewFile,BufRead *.lst setf dcov
   au BufNewFile,BufRead *.dd setf dd
@@ -2369,138 +2354,138 @@ if !has_key(s:disabled_packages, 'dlang')
   au BufNewFile,BufRead *.sdl setf dsdl
 endif
 
-if !has_key(s:disabled_packages, 'dhall')
+if polyglot#util#IsEnabled('dhall', 'ftdetect')
   au BufNewFile,BufRead *.dhall setf dhall
 endif
 
-if !has_key(s:disabled_packages, 'dart')
+if polyglot#util#IsEnabled('dart', 'ftdetect')
   au BufNewFile,BufRead *.dart,*.drt setf dart
 endif
 
-if !has_key(s:disabled_packages, 'cue')
+if polyglot#util#IsEnabled('cue', 'ftdetect')
   au BufNewFile,BufRead *.cue setf cuesheet
 endif
 
-if !has_key(s:disabled_packages, 'cucumber')
+if polyglot#util#IsEnabled('cucumber', 'ftdetect')
   au BufNewFile,BufRead *.feature,*.story setf cucumber
 endif
 
-if !has_key(s:disabled_packages, 'crystal')
+if polyglot#util#IsEnabled('crystal', 'ftdetect')
   au BufNewFile,BufRead *.cr,Projectfile setf crystal
   au BufNewFile,BufRead *.ecr setf ecrystal
 endif
 
-if !has_key(s:disabled_packages, 'cryptol')
+if polyglot#util#IsEnabled('cryptol', 'ftdetect')
   au BufNewFile,BufRead *.cry,*.cyl,*.lcry,*.lcyl setf cryptol
 endif
 
-if !has_key(s:disabled_packages, 'coffee-script')
+if polyglot#util#IsEnabled('coffee-script', 'ftdetect')
   au BufNewFile,BufRead *._coffee,*.cake,*.cjsx,*.coffee,*.coffeekup,*.iced,Cakefile setf coffee
   au BufNewFile,BufRead *.coffee.md,*.litcoffee setf litcoffee
 endif
 
-if !has_key(s:disabled_packages, 'markdown')
+if polyglot#util#IsEnabled('markdown', 'ftdetect')
   au BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mdwn,*.mkd,*.mkdn,*.mkdown,*.ronn,*.workbook,contents.lr setf markdown
 endif
 
-if !has_key(s:disabled_packages, 'cmake')
+if polyglot#util#IsEnabled('cmake', 'ftdetect')
   au BufNewFile,BufRead *.cmake,*.cmake.in,CMakeLists.txt setf cmake
 endif
 
-if !has_key(s:disabled_packages, 'clojure')
+if polyglot#util#IsEnabled('clojure', 'ftdetect')
   au BufNewFile,BufRead *.boot,*.cl2,*.clj,*.cljc,*.cljs,*.cljs.hl,*.cljscm,*.cljx,*.edn,*.hic,build.boot,profile.boot,riemann.config setf clojure
 endif
 
-if !has_key(s:disabled_packages, 'carp')
+if polyglot#util#IsEnabled('carp', 'ftdetect')
   au BufNewFile,BufRead *.carp setf carp
 endif
 
-if !has_key(s:disabled_packages, 'caddyfile')
+if polyglot#util#IsEnabled('caddyfile', 'ftdetect')
   au BufNewFile,BufRead Caddyfile setf caddyfile
 endif
 
-if !has_key(s:disabled_packages, 'awk')
+if polyglot#util#IsEnabled('awk', 'ftdetect')
   au BufNewFile,BufRead *.awk,*.gawk setf awk
 endif
 
-if !has_key(s:disabled_packages, 'ave')
+if polyglot#util#IsEnabled('ave', 'ftdetect')
   au BufNewFile,BufRead *.ave setf ave
 endif
 
-if !has_key(s:disabled_packages, 'autoit')
+if polyglot#util#IsEnabled('autoit', 'ftdetect')
   au BufNewFile,BufRead *.au3 setf autoit
 endif
 
-if !has_key(s:disabled_packages, 'atlas')
+if polyglot#util#IsEnabled('atlas', 'ftdetect')
   au BufNewFile,BufRead *.as,*.atl setf atlas
 endif
 
-if !has_key(s:disabled_packages, 'aspperl')
+if polyglot#util#IsEnabled('aspperl', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
 endif
 
-if !has_key(s:disabled_packages, 'aspvbs')
+if polyglot#util#IsEnabled('aspvbs', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
   au BufNewFile,BufRead,BufWritePost *.asa call polyglot#detect#Asa()
 endif
 
-if !has_key(s:disabled_packages, 'asn')
+if polyglot#util#IsEnabled('asn', 'ftdetect')
   au BufNewFile,BufRead *.asn,*.asn1 setf asn
 endif
 
-if !has_key(s:disabled_packages, 'automake')
+if polyglot#util#IsEnabled('automake', 'ftdetect')
   au BufNewFile,BufRead GNUmakefile.am,[mM]akefile.am setf automake
 endif
 
-if !has_key(s:disabled_packages, 'elf')
+if polyglot#util#IsEnabled('elf', 'ftdetect')
   au BufNewFile,BufRead *.am setf elf
 endif
 
-if !has_key(s:disabled_packages, 'make')
+if polyglot#util#IsEnabled('make', 'ftdetect')
   au BufNewFile,BufRead *.dsp,*.mak,*.mk,*[mM]akefile setf make
 endif
 
-if !has_key(s:disabled_packages, 'autohotkey')
+if polyglot#util#IsEnabled('autohotkey', 'ftdetect')
   au BufNewFile,BufRead *.ahk,*.ahkl setf autohotkey
 endif
 
-if !has_key(s:disabled_packages, 'asciidoc')
+if polyglot#util#IsEnabled('asciidoc', 'ftdetect')
   au BufNewFile,BufRead *.adoc,*.asc,*.asciidoc setf asciidoc
 endif
 
-if !has_key(s:disabled_packages, 'art')
+if polyglot#util#IsEnabled('art', 'ftdetect')
   au BufNewFile,BufRead *.art setf art
 endif
 
-if !has_key(s:disabled_packages, 'arduino')
+if polyglot#util#IsEnabled('arduino', 'ftdetect')
   au BufNewFile,BufRead *.ino,*.pde setf arduino
 endif
 
-if !has_key(s:disabled_packages, 'c/c++')
+if polyglot#util#IsEnabled('c/c++', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
   au BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.moc,*.tcc,*.tlh,*.tpp setf cpp
   au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
   au BufNewFile,BufRead *.c,*.cats,*.idc,*.qc,*enlightenment/*.cfg setf c
 endif
 
-if !has_key(s:disabled_packages, 'arch')
+if polyglot#util#IsEnabled('arch', 'ftdetect')
   au BufNewFile,BufRead {.,}arch-inventory,=tagging-method setf arch
 endif
 
-if !has_key(s:disabled_packages, 'aptconf')
+if polyglot#util#IsEnabled('aptconf', 'ftdetect')
   au BufNewFile,BufRead */.aptitude/config,*/etc/apt/apt.conf.d/*.conf,apt.conf setf aptconf
   au BufNewFile,BufRead */etc/apt/apt.conf.d/[^.]* call s:StarSetf('aptconf')
 endif
 
-if !has_key(s:disabled_packages, 'applescript')
+if polyglot#util#IsEnabled('applescript', 'ftdetect')
   au BufNewFile,BufRead *.applescript,*.scpt setf applescript
 endif
 
-if !has_key(s:disabled_packages, 'apiblueprint')
+if polyglot#util#IsEnabled('apiblueprint', 'ftdetect')
   au BufNewFile,BufRead *.apib setf apiblueprint
 endif
 
-if !has_key(s:disabled_packages, 'apache')
+if polyglot#util#IsEnabled('apache', 'ftdetect')
   au BufNewFile,BufRead */etc/apache2/sites-*/*.com,*/etc/httpd/*.conf,{.,}htaccess setf apache
   au BufNewFile,BufRead srm.conf* call s:StarSetf('apache')
   au BufNewFile,BufRead httpd.conf* call s:StarSetf('apache')
@@ -2514,101 +2499,101 @@ if !has_key(s:disabled_packages, 'apache')
   au BufNewFile,BufRead */etc/apache2/*.conf* call s:StarSetf('apache')
 endif
 
-if !has_key(s:disabled_packages, 'ant')
+if polyglot#util#IsEnabled('ant', 'ftdetect')
   au BufNewFile,BufRead build.xml setf ant
 endif
 
-if !has_key(s:disabled_packages, 'xml')
+if polyglot#util#IsEnabled('xml', 'ftdetect')
   au BufNewFile,BufRead *.adml,*.admx,*.ant,*.axml,*.builds,*.ccproj,*.ccxml,*.cdxml,*.clixml,*.cproject,*.cscfg,*.csdef,*.csl,*.csproj,*.csproj.user,*.ct,*.depproj,*.dita,*.ditamap,*.ditaval,*.dll.config,*.dotsettings,*.filters,*.fsproj,*.fxml,*.glade,*.gml,*.gmx,*.grxml,*.gst,*.iml,*.ivy,*.jelly,*.jsproj,*.kml,*.launch,*.mdpolicy,*.mjml,*.mm,*.mod,*.mxml,*.natvis,*.ncl,*.ndproj,*.nproj,*.nuspec,*.odd,*.osm,*.pkgproj,*.pluginspec,*.proj,*.props,*.psc1,*.pt,*.rdf,*.resx,*.rss,*.sch,*.scxml,*.sfproj,*.shproj,*.srdf,*.storyboard,*.sublime-snippet,*.targets,*.tml,*.tpm,*.ui,*.urdf,*.ux,*.vbproj,*.vcxproj,*.vsixmanifest,*.vssettings,*.vstemplate,*.vxml,*.wixproj,*.workflow,*.wpl,*.wsdl,*.wsf,*.wxi,*.wxl,*.wxs,*.x3d,*.xacro,*.xaml,*.xib,*.xlf,*.xliff,*.xmi,*.xml,*.xml.dist,*.xproj,*.xsd,*.xspec,*.xul,*.zcml,*/etc/blkid.tab,*/etc/blkid.tab.old,*/etc/xdg/menus/*.menu,*fglrxrc,{.,}classpath,{.,}cproject,{.,}project,App.config,NuGet.config,Settings.StyleCop,Web.Debug.config,Web.Release.config,Web.config,packages.config setf xml
 endif
 
-if !has_key(s:disabled_packages, 'csv')
+if polyglot#util#IsEnabled('csv', 'ftdetect')
   au BufNewFile,BufRead *.csv,*.tab,*.tsv setf csv
 endif
 
-if !has_key(s:disabled_packages, 'ampl')
+if polyglot#util#IsEnabled('ampl', 'ftdetect')
   " AMPL
   au BufNewFile,BufRead *.run setf ampl
 endif
 
-if !has_key(s:disabled_packages, 'aml')
+if polyglot#util#IsEnabled('aml', 'ftdetect')
   au BufNewFile,BufRead *.aml setf aml
 endif
 
-if !has_key(s:disabled_packages, 'alsaconf')
+if polyglot#util#IsEnabled('alsaconf', 'ftdetect')
   au BufNewFile,BufRead */etc/asound.conf,*/usr/share/alsa/alsa.conf,{.,}asoundrc setf alsaconf
 endif
 
-if !has_key(s:disabled_packages, 'conf')
+if polyglot#util#IsEnabled('conf', 'ftdetect')
   au BufNewFile,BufRead *.conf,*/etc/hosts,auto.master,config setf conf
 endif
 
-if !has_key(s:disabled_packages, 'master')
+if polyglot#util#IsEnabled('master', 'ftdetect')
   au BufNewFile,BufRead *.mas,*.master setf master
 endif
 
-if !has_key(s:disabled_packages, 'aidl')
+if polyglot#util#IsEnabled('aidl', 'ftdetect')
   " AIDL
   au BufNewFile,BufRead *.aidl setf aidl
 endif
 
-if !has_key(s:disabled_packages, 'ahdl')
+if polyglot#util#IsEnabled('ahdl', 'ftdetect')
   " AHDL
   au BufNewFile,BufRead *.tdf setf ahdl
 endif
 
-if !has_key(s:disabled_packages, 'ada')
+if polyglot#util#IsEnabled('ada', 'ftdetect')
   " Ada (83, 9X, 95)
   au BufNewFile,BufRead *.ada,*.ada_m,*.adb,*.adc,*.ads,*.gpr setf ada
 endif
 
-if !has_key(s:disabled_packages, 'acpiasl')
+if polyglot#util#IsEnabled('acpiasl', 'ftdetect')
   au BufNewFile,BufRead *.asl,*.dsl setf asl
 endif
 
-if !has_key(s:disabled_packages, 'acedb')
+if polyglot#util#IsEnabled('acedb', 'ftdetect')
   " AceDB
   au BufNewFile,BufRead *.wrm setf acedb
 endif
 
-if !has_key(s:disabled_packages, 'abel')
+if polyglot#util#IsEnabled('abel', 'ftdetect')
   " ABEL
   au BufNewFile,BufRead *.abl setf abel
 endif
 
-if !has_key(s:disabled_packages, 'abc')
+if polyglot#util#IsEnabled('abc', 'ftdetect')
   " ABC music notation
   au BufNewFile,BufRead *.abc setf abc
 endif
 
-if !has_key(s:disabled_packages, 'abaqus')
+if polyglot#util#IsEnabled('abaqus', 'ftdetect')
   au BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
 endif
 
-if !has_key(s:disabled_packages, 'abap')
+if polyglot#util#IsEnabled('abap', 'ftdetect')
   " ABAB/4
   au BufNewFile,BufRead *.abap setf abap
 endif
 
-if !has_key(s:disabled_packages, 'aap')
+if polyglot#util#IsEnabled('aap', 'ftdetect')
   " A-A-P recipe
   au BufNewFile,BufRead *.aap setf aap
 endif
 
-if !has_key(s:disabled_packages, 'a65')
+if polyglot#util#IsEnabled('a65', 'ftdetect')
   " XA65 MOS6510 cross assembler
   au BufNewFile,BufRead *.a65 setf a65
 endif
 
-if !has_key(s:disabled_packages, 'a2ps')
+if polyglot#util#IsEnabled('a2ps', 'ftdetect')
   au BufNewFile,BufRead */etc/a2ps.cfg,*/etc/a2ps/*.cfg,{.,}a2psrc,a2psrc setf a2ps
 endif
 
-if !has_key(s:disabled_packages, 'cfg')
+if polyglot#util#IsEnabled('cfg', 'ftdetect')
   au BufNewFile,BufRead *.cfg,*.hgrc,*hgrc setf cfg
 endif
 
-if !has_key(s:disabled_packages, '8th')
+if polyglot#util#IsEnabled('8th', 'ftdetect')
   " 8th (Firth-derivative)
   au BufNewFile,BufRead *.8th setf 8th
 endif
@@ -2635,7 +2620,7 @@ au FileType * au! polyglot-observer
 augroup END
 
 
-if !has_key(s:disabled_packages, 'autoindent')
+if polyglot#util#IsEnabled('autoindent', 'ftdetect')
   " Code below re-implements sleuth for vim-polyglot
   let g:loaded_sleuth = 1
 
@@ -2873,24 +2858,7 @@ if !has_key(s:disabled_packages, 'autoindent')
   command! -bar -bang Sleuth call s:detect_indent()
 endif
 
-func! s:verify()
-  if exists("g:polyglot_disabled_not_set")
-    if exists("g:polyglot_disabled")
-      echohl WarningMsg
-      echo "vim-polyglot: g:polyglot_disabled should be defined before loading vim-polyglot"
-      echohl None
-    endif
-
-    unlet g:polyglot_disabled_not_set
-  endif
-endfunc
-
-au VimEnter * call s:verify()
-
-" Save polyglot_disabled without postfixes
-if exists('g:polyglot_disabled')
-  let g:polyglot_disabled = s:new_polyglot_disabled
-endif
+au VimEnter * call polyglot#util#Verify()
 
 augroup filetypedetect
 
@@ -3486,14 +3454,14 @@ au BufNewFile,BufRead *.txt
 augroup END
 
 " Use the filetype detect plugins.  They may overrule any of the previously
-" detected filetypes.
+" detected filetypes. No need to load if everything is enabled
 if exists("did_load_filetypes") && exists("g:polyglot_disabled")
   unlet did_load_filetypes
   runtime! extras/filetype.vim
 endif
 
 
-if !has_key(s:disabled_packages, 'sensible')
+if polyglot#util#IsEnabled('sensible', 'ftdetect')
   " Reload unchanged files automatically.
   set autoread
 

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'autoload/jsx_pretty/comment.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('jsx', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || (index(g:polyglot_disabled, 'javascript') == -1 && index(g:polyglot_disabled, 'jsx') == -1)
 
 function! jsx_pretty#comment#update_commentstring(original)
   let line = getline(".")
@@ -44,5 +39,3 @@ function! s:syn_contains(lnum, cnum, syn_name)
   let syn_names = map(stack, 'synIDattr(v:val, "name")')
   return index(syn_names, a:syn_name) >= 0
 endfunction
-
-endif

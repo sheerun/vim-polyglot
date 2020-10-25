@@ -1,5 +1,5 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'idris') == -1
+if !polyglot#util#IsEnabled('idris', expand('<sfile>:p'))
+  finish
+endif
 
 setlocal iskeyword+='
-
-endif

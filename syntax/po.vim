@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/po.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('po', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'po') == -1
 
 " Vim syntax file
 " Language:	po (gettext)
@@ -140,5 +135,3 @@ let &cpo = s:keepcpo
 unlet s:keepcpo
 
 " vim:set ts=8 sts=2 sw=2 noet:
-
-endif

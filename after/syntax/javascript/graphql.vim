@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
+if !polyglot#util#IsEnabled('graphql', expand('<sfile>:p'))
+  finish
+endif
 
 " Copyright (c) 2016-2020 Jon Parise <jon@indelible.org>
 "
@@ -59,6 +61,4 @@ elseif graphql#has_syntax_group('javaScriptStringT')
   syn cluster htmlJavaScript add=graphqlTaggedTemplate
   syn cluster javaScriptEmbededExpr add=graphqlTaggedTemplate
   syn cluster graphqlTaggedTemplate add=graphqlTemplateString
-endif
-
 endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/gitignore.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('gitignore', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'gitignore') == -1
 
 scriptencoding utf-8
 
@@ -36,5 +31,3 @@ highlight default link gitignoreSet Character
 let b:current_syntax = 'gitignore'
 
 " vim: ts=2 et sw=2
-
-endif

@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'llvm') == -1
+if !polyglot#util#IsEnabled('llvm', expand('<sfile>:p'))
+  finish
+endif
 
 " Copyright (c) 2018 rhysd
 "
@@ -482,6 +484,4 @@ endfunction
 
 if !exists(':LLI')
     command! -buffer -nargs=? -bar -complete=file LLI call <SID>run_lli(<f-args>)
-endif
-
 endif

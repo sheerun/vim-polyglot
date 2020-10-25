@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/abap.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('abap', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'abap') == -1
 
 " Vim ABAP syntax file
 "    Language: SAP - ABAP/R4
@@ -203,4 +198,3 @@ hi def link abapHex            Number
 let b:current_syntax = "abap"
 
 " vim: ts=8 sw=2
-endif

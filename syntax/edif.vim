@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/edif.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('edif', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'edif') == -1
 
 " Vim syntax file
 " Language:     EDIF (Electronic Design Interchange Format)
@@ -52,5 +47,3 @@ hi def link edifError		Error
 hi def link edifString		String
 
 let b:current_syntax = "edif"
-
-endif

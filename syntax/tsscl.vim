@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/tsscl.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('tsscl', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tsscl') == -1
 
 " Vim syntax file
 " Language:     TSS (Thermal Synthesizer System) Command Line
@@ -211,5 +206,3 @@ hi def link tssclScientific	Number
 let b:current_syntax = "tsscl"
 
 " vim: ts=8 sw=2
-
-endif

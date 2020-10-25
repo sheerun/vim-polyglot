@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'graphql') == -1
+if !polyglot#util#IsEnabled('graphql', expand('<sfile>:p'))
+  finish
+endif
 
 " Copyright (c) 2016-2020 Jon Parise <jon@indelible.org>
 "
@@ -33,5 +35,3 @@ if exists('s:current_syntax')
 endif
 
 syntax region graphqlExtensionPoint matchgroup=Noise start=+\[%graphql\_s*{|+lc=10 end=+|}\_s*]+he=s+1 contains=@GraphQLSyntax keepend
-
-endif

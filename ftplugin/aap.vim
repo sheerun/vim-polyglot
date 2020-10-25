@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/aap.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('aap', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'aap') == -1
 
 " Vim filetype plugin file
 " Language:	Aap recipe
@@ -32,5 +27,3 @@ setlocal comments=s:#\ -,m:#\ \ ,e:#,n:#,fb:-
 
 " Expand tabs to spaces to avoid trouble.
 setlocal expandtab
-
-endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/logtalk.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('logtalk', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'logtalk') == -1
 
 " Logtalk filetype plugin file
 " Language:         Logtalk
@@ -26,5 +21,3 @@ setlocal fdn=10
 setlocal fdc=2
 setlocal autoindent
 setlocal dict=$VIMRUNTIME/ftplugin/logtalk.dict
-
-endif

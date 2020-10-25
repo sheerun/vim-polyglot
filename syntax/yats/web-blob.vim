@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/yats/web-blob.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('typescript', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
 
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Blob BlobBuilder
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName File FileReader
@@ -43,6 +38,4 @@ if exists("did_typescript_hilink") | HiLink typescriptURLUtilsProp Keyword
 endif
 syntax keyword typescriptURLStaticMethod contained createObjectURL revokeObjectURL nextgroup=typescriptFuncCallArg
 if exists("did_typescript_hilink") | HiLink typescriptURLStaticMethod Keyword
-endif
-
 endif

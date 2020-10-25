@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/fennel.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('fennel', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fennel') == -1
 
 " Vim syntax file
 " Language: FENNEL
@@ -290,5 +285,3 @@ let b:current_syntax = "fennel"
 
 let &cpo = s:cpo_sav
 unlet! s:cpo_sav
-
-endif

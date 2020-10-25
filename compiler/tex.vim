@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'compiler/tex.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('tex', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tex') == -1
 
 " Vim compiler file
 " Compiler:     TeX
@@ -74,5 +69,3 @@ CompilerSet errorformat=%E!\ LaTeX\ %trror:\ %m,
 
 let &cpo = s:keepcpo
 unlet s:keepcpo
-
-endif

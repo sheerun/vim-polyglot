@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'indent/vhdl.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('vhdl', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vhdl') == -1
 
 " VHDL indent ('93 syntax)
 " Language:    VHDL
@@ -442,5 +437,3 @@ function GetVHDLindent()
   " return leftover filtered indent
   return ind
 endfunction
-
-endif

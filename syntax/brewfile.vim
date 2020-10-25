@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/brewfile.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('brewfile', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'brewfile') == -1
 
 " Vim syntax file
 " Language:    Brewfile
@@ -26,5 +21,3 @@ syn keyword brewfileDirective brew cask tap mas cask_args
 hi def link brewfileDirective Keyword
 
 let b:current_syntax = "brewfile"
-
-endif

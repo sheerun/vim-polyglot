@@ -293,33 +293,26 @@ def copy_file(name, src, dest)
 
   open(src, "r") do |input|
     open(dest, "w") do |output|
-      if dest.match?(/\.vim$/) && !dest.match('after/')
+      if dest.match?(/\.vim$/)
         output << <<~EOF
-        let s:base = expand("<sfile>:h:h")
-        let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-        let files = filter(globpath(&rtp, '#{dest}', 1, 1), Filter)
-        if len(files) > 0
-          exec 'source ' . files[0]
+        if !polyglot#util#IsEnabled('#{name}', expand('<sfile>:p'))
           finish
         endif
+
         EOF
       end
-      if name == "jsx"
-        output << "if !exists('g:polyglot_disabled') || (index(g:polyglot_disabled, 'javascript') == -1 && index(g:polyglot_disabled, 'jsx') == -1)\n\n"
-      else
-        output << "if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, '#{name}') == -1\n\n"
-      end
       contents = File.read(input)
-      # fix encoding if required
-      contents.gsub!(/!@#%#/, "") rescue contents = contents.force_encoding('iso-8859-1').encode('utf-8')
-      # ..= is feature of new vims...
-      contents.gsub!(' ..= ', ' .= ')
-      # https://github.com/vim/vim/pull/7091 
-      contents.gsub!(/set(local)? fileencoding=utf-8/, '')
-      contents.gsub!(/ fileencoding=utf-8/, '')
-      contents.gsub!('À-ÿ', '\u00ac-\uffff')
+      if dest.match?(/\.vim$/)
+        # fix encoding if required
+        contents.gsub!(/!@#%#/, "") rescue contents = contents.force_encoding('iso-8859-1').encode('utf-8')
+        # ..= is feature of new vims...
+        contents.gsub!(' ..= ', ' .= ')
+        # https://github.com/vim/vim/pull/7091 
+        contents.gsub!(/set(local)? fileencoding=utf-8/, '')
+        contents.gsub!(/ fileencoding=utf-8/, '')
+        contents.gsub!('À-ÿ', '\u00ac-\uffff')
+      end
       output << contents
-      output << "\nendif\n"
     end
   end
 end
@@ -681,7 +674,7 @@ def generate_ftdetect(packages, heuristics)
     end
 
     if package_autocommands.flatten.size > 0
-      output << "if !has_key(s:disabled_packages, '#{package["name"]}')\n"
+      output << "if polyglot#util#IsEnabled('#{package["name"]}', 'ftdetect')\n"
       output << indent(package_autocommands.map { |pc| pc.reverse.join("\n") }.join("\n\n"), 2)
       output << "\nendif\n\n"
     end

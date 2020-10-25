@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/ninja.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('ninja', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ninja') == -1
 
 " ninja build file syntax.
 " Language: ninja build file as described at
@@ -94,5 +89,3 @@ let b:current_syntax = "ninja"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-endif

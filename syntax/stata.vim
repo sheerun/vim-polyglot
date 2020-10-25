@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/stata.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('stata', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'stata') == -1
 
 " stata.vim -- Vim syntax file for Stata do, ado, and class files.
 " Language:	Stata and/or Mata
@@ -457,5 +452,3 @@ hi def link stataString		String
 let b:current_syntax = "stata"
 
 " vim: ts=8
-
-endif

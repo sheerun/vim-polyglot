@@ -17,7 +17,7 @@ endif
 " and (mostly comments) from https://github.com/sheerun/vimrc
 "
 " Only settings that matter for proper editing are left
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -1
+if polyglot#util#IsEnabled('sensible', 'ftdetect')
   " Allow backspace in insert mode.
   if &backspace == ""
     set backspace=indent,eol,start

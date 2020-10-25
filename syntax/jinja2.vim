@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/jinja2.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('ansible', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'ansible') == -1
 
 " Vim syntax file
 " Language: Jinja2 - with special modifications for compound-filetype
@@ -104,5 +99,3 @@ if !exists("did_jinja_syn_inits")
 endif
 
 let b:current_syntax = "jinja2"
-
-endif

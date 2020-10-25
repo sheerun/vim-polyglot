@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
-
 --langdef=puppet
     --map-puppet=+.pp
     --regex-puppet=/^[[:space:]]*node[[:space:]]*[\'|\"]*([a-zA-Z0-9_\.\-]+)[\'|\"]*/\1/n,node/{scope=set}
@@ -12,5 +10,3 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'puppet') == -1
     --regex-puppet=/^[[:space:]]*site[[:space:]]*([a-zA-Z0-9_\-]+)/\1/s,site/
     --regex-puppet=/^[[:space:]]*type[[:space:]]*([A-Z][a-zA-Z0-9_:]*)[[:space:]]*=/\1/t,type/
     --regex-puppet=/^[[:space:]]*function[[:space:]]*([a-zA-Z0-9_:]*)[[:space:]]*/\1/u,function/
-
-endif

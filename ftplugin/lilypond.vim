@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'ftplugin/lilypond.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('lilypond', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'lilypond') == -1
 
 " LilyPond filetype plugin
 " Language:     LilyPond (ft=ly)
@@ -64,5 +59,3 @@ setlocal dictionary-=$VIM/syntax/lilypond-words dictionary+=$VIM/syntax/lilypond
 setlocal complete-=k complete+=k
 "
 setlocal showmatch
-
-endif

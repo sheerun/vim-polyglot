@@ -1,4 +1,6 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'cpp-modern') == -1
+if !polyglot#util#IsEnabled('cpp-modern', expand('<sfile>:p'))
+  finish
+endif
 
 " ==============================================================================
 " Vim syntax file
@@ -65,6 +67,4 @@ if get(g:, 'cpp_simple_highlight', 0)
     hi link cStructure    Statement
     hi link cTypedef      Statement
     hi link cLabel        Statement
-endif
-
 endif

@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/toml.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('toml', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
 
 " Language:   TOML
 " Maintainer: Caleb Spare <cespare@gmail.com>
@@ -83,5 +78,3 @@ hi def link tomlComment Comment
 syn sync minlines=500
 
 let b:current_syntax = 'toml'
-
-endif

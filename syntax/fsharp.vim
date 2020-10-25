@@ -1,11 +1,6 @@
-let s:base = expand("<sfile>:h:h")
-let Filter = { _, v -> stridx(v, s:base) == -1 && stridx(v, $VIMRUNTIME) == -1 && v !~ "after" }
-let files = filter(globpath(&rtp, 'syntax/fsharp.vim', 1, 1), Filter)
-if len(files) > 0
-  exec 'source ' . files[0]
+if !polyglot#util#IsEnabled('fsharp', expand('<sfile>:p'))
   finish
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'fsharp') == -1
 
 " Vim syntax file
 " Language:     F#
@@ -281,5 +276,3 @@ endif
 let b:current_syntax = 'fsharp'
 
 " vim: sw=4 et sts=4
-
-endif
