@@ -3522,7 +3522,7 @@ func! s:process_rtp(rtp)
   " Then vim-polyglot after path
   call add(result, s:base . '/after')
   " Then all other after paths
-  for path in rtp[i:-2]
+  for path in rtp[i:-1]
     call add(result, path)
   endfor
   " User's after directory is always last
