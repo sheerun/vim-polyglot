@@ -3864,6 +3864,8 @@ remote: vim/vim:runtime
 glob: "**/nroff.vim"
 filetypes:
 - name: nroff
+  linguist: Roff Manpage
+- name: nroff
   patterns:
   - pattern: "*.tr,*.nr,*.roff,*.tmac,*.mom"
     description: Nroff/Troff (*.ms and *.t are checked below)
@@ -5508,11 +5510,6 @@ filetypes:
 - name: xf86conf
   patterns:
   - pattern: "XF86Config-4*,XF86Config*,*/xorg.conf.d/*.conf,xorg.conf,xorg.conf-4"
----
-name: man
-filetypes:
-- name: man
-  linguist: Roff Manpage
 ---
 name: xpm
 remote: vim/vim:runtime

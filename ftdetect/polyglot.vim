@@ -145,10 +145,6 @@ if !has_key(g:polyglot_is_disabled, 'xpm')
   au BufNewFile,BufRead *.xpm setf xpm
 endif
 
-if !has_key(g:polyglot_is_disabled, 'man')
-  au BufNewFile,BufRead *.1,*.1in,*.1m,*.1x,*.2,*.3,*.3in,*.3m,*.3p,*.3pm,*.3qt,*.3x,*.4,*.5,*.6,*.7,*.8,*.9,*.man,*.mdoc setf man
-endif
-
 if !has_key(g:polyglot_is_disabled, 'xf86conf')
   au BufNewFile,BufRead */xorg.conf.d/*.conf,xorg.conf,xorg.conf-4 setf xf86conf
   au BufNewFile,BufRead XF86Config-4* call s:StarSetf('xf86conf')
@@ -866,6 +862,7 @@ if !has_key(g:polyglot_is_disabled, 'nqc')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'nroff')
+  au BufNewFile,BufRead *.1,*.1in,*.1m,*.1x,*.2,*.3,*.3in,*.3m,*.3p,*.3pm,*.3qt,*.3x,*.4,*.5,*.6,*.7,*.8,*.9,*.man,*.mdoc setf nroff
   au BufNewFile,BufRead *.mom,*.nr,*.roff,*.tmac,*.tr setf nroff
   au BufNewFile,BufRead tmac.* call s:StarSetf('nroff')
 endif
