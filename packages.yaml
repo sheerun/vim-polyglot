@@ -1236,6 +1236,13 @@ filetypes:
 - name: blade
   linguist: Blade
 ---
+name: pest
+remote: pest-parser/pest.vim
+filetypes:
+- name: pest
+  extensions:
+  - pest
+---
 name: plantuml
 remote: aklt/plantuml-syntax
 filetypes:
