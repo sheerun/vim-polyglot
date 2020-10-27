@@ -1998,6 +1998,10 @@ if !has_key(g:polyglot_is_disabled, 'requirements')
   au BufNewFile,BufRead *.pip,*require.{txt,in},*requirements.{txt,in},constraints.{txt,in} setf requirements
 endif
 
+if !has_key(g:polyglot_is_disabled, 'pest')
+  au BufNewFile,BufRead *.pest setf pest
+endif
+
 if !has_key(g:polyglot_is_disabled, 'python')
   au BufNewFile,BufRead *.cgi,*.fcgi,*.gyp,*.gypi,*.lmi,*.ptl,*.py,*.py3,*.pyde,*.pyi,*.pyp,*.pyt,*.pyw,*.rpy,*.smk,*.spec,*.tac,*.wsgi,*.xpy,{.,}gclient,{.,}pythonrc,{.,}pythonstartup,DEPS,SConscript,SConstruct,Snakefile,wscript setf python
 endif
