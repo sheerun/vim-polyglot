@@ -11,7 +11,7 @@ endif
 let did_load_polyglot = 1
 
 " Switch to compatible mode for the time being
-let s:polyglot_cpo_save = &cpo
+let s:cpo_save = &cpo
 set cpo&vim
 
 " It can happen vim filetype.vim loads first, then we need a reset
@@ -3565,5 +3565,5 @@ if !has_key(g:polyglot_is_disabled, 'sensible')
 endif
 
 " Restore 'cpoptions'
-let &cpo = s:polyglot_cpo_save
-unlet s:polyglot_cpo_save
+let &cpo = s:cpo_save
+unlet s:cpo_save
