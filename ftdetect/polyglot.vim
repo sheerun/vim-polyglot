@@ -120,6 +120,10 @@ endfunc
 
 augroup polyglot-observer | augroup END
 
+" Restore 'cpoptions'
+let &cpo = s:cpo_save
+unlet s:cpo_save
+
 " Load user-defined filetype.vim and oter plugins ftdetect first
 " This is to use polyglot-defined ftdetect always as fallback to user settings
 augroup filetypedetect
@@ -129,6 +133,10 @@ augroup END
 
 
 augroup filetypedetect
+
+" Switch to compatible mode for the time being
+let s:cpo_save = &cpo
+set cpo&vim
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
