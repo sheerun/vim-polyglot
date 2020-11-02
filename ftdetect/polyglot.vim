@@ -3506,7 +3506,7 @@ func! s:process_rtp(rtp)
   let result = [a:rtp[0]]
   " Then all other stuff (until vimruntime)
   let i = 0
-  for path in rtp[0:-1]
+  for path in rtp[0:len(rtp)-1]
     if path == s:runtime
       break
     endif
@@ -3516,7 +3516,7 @@ func! s:process_rtp(rtp)
   " Then vim-polyglot
   call add(result, s:base)
   " Then all other files, until after-files
-  for path in rtp[i:-1]
+  for path in rtp[i:len(rtp)-1]
     if match(path, '[/\\]after$') > -1
       break
     endif
@@ -3526,11 +3526,11 @@ func! s:process_rtp(rtp)
   " Then vim-polyglot after path
   call add(result, s:base . '/after')
   " Then all other after paths
-  for path in rtp[i:-1]
+  for path in rtp[i:len(rtp)-1]
     call add(result, path)
   endfor
   " User's after directory is always last
-  call add(result, a:rtp[-1])
+  call add(result, a:rtp[len(a:rtp)-1])
   return result
 endfunc
 
