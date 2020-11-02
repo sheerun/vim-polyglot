@@ -19,7 +19,6 @@ setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetTypescriptIndent()
-setlocal formatexpr=Fixedgq(v:lnum,v:count)
 setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
 
 " Only define the function once.
@@ -40,12 +39,6 @@ let s:syng_strcom = 'string\|regex\|comment\c'
 
 " Regex of syntax group names that are strings.
 let s:syng_string = 'regex\c'
-
-" Regex of syntax group names that are strings or documentation.
-let s:syng_multiline = 'comment\c'
-
-" Regex of syntax group names that are line comment.
-let s:syng_linecom = 'linecomment\c'
 
 " Expression used to check whether we should skip a match with searchpair().
 let s:skip_expr = "synIDattr(synID(line('.'),col('.'),1),'name') =~ '".s:syng_strcom."'"
@@ -83,16 +76,6 @@ endfunction
 " Check if the character at lnum:col is inside a string.
 function s:IsInString(lnum, col)
   return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_string
-endfunction
-
-" Check if the character at lnum:col is inside a multi-line comment.
-function s:IsInMultilineComment(lnum, col)
-  return !s:IsLineComment(a:lnum, a:col) && synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_multiline
-endfunction
-
-" Check if the character at lnum:col is a line comment.
-function s:IsLineComment(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_linecom
 endfunction
 
 " Find line above 'lnum' that isn't empty, in a comment, or in a string.
@@ -356,7 +339,7 @@ function GetTypescriptIndent()
   endif
 
   " If we are in a multi-line comment, cindent does the right thing.
-  if s:IsInMultilineComment(v:lnum, 1) && !s:IsLineComment(v:lnum, 1)
+  if yats#IsInMultilineComment(v:lnum, 1) && !yats#IsLineComment(v:lnum, 1)
     return cindent(v:lnum)
   endif
 
@@ -442,64 +425,3 @@ endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-function! Fixedgq(lnum, count)
-    let l:tw = &tw ? &tw : 80;
-
-    let l:count = a:count
-    let l:first_char = indent(a:lnum) + 1
-
-    if mode() == 'i' " gq was not pressed, but tw was set
-        return 1
-    endif
-
-    " This gq is only meant to do code with strings, not comments
-    if s:IsLineComment(a:lnum, l:first_char) || s:IsInMultilineComment(a:lnum, l:first_char)
-        return 1
-    endif
-
-    if len(getline(a:lnum)) < l:tw && l:count == 1 " No need for gq
-        return 1
-    endif
-
-    " Put all the lines on one line and do normal spliting after that
-    if l:count > 1
-        while l:count > 1
-            let l:count -= 1
-            normal! J
-        endwhile
-    endif
-
-    let l:winview = winsaveview()
-
-    call cursor(a:lnum, l:tw + 1)
-    let orig_breakpoint = searchpairpos(' ', '', '\.', 'bcW', '', a:lnum)
-    call cursor(a:lnum, l:tw + 1)
-    let breakpoint = searchpairpos(' ', '', '\.', 'bcW', s:skip_expr, a:lnum)
-
-    " No need for special treatment, normal gq handles edgecases better
-    if breakpoint[1] == orig_breakpoint[1]
-        call winrestview(l:winview)
-        return 1
-    endif
-
-    " Try breaking after string
-    if breakpoint[1] <= indent(a:lnum)
-        call cursor(a:lnum, l:tw + 1)
-        let breakpoint = searchpairpos('\.', '', ' ', 'cW', s:skip_expr, a:lnum)
-    endif
-
-
-    if breakpoint[1] != 0
-        call feedkeys("r\<CR>")
-    else
-        let l:count = l:count - 1
-    endif
-
-    " run gq on new lines
-    if l:count == 1
-        call feedkeys("gqq")
-    endif
-
-    return 0
-endfunction

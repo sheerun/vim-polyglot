@@ -73,7 +73,7 @@ syn match ktComment "/\*\*/"
 syn match ktSpecialCharError "\v\\." contained
 syn match ktSpecialChar "\v\\([tbnr'"$\\]|u\x{4})" contained
 syn region ktString start='"' skip='\\"' end='"' contains=ktSimpleInterpolation,ktComplexInterpolation,ktSpecialChar,ktSpecialCharError
-syn region ktString start='"""' end='""""*' contains=ktSimpleInterpolation,ktComplexInterpolation,ktSpecialChar,ktSpecialCharError
+syn region ktString start='"""' end='""""*' contains=ktSimpleInterpolation,ktComplexInterpolation
 syn match ktCharacter "\v'[^']*'" contains=ktSpecialChar,ktSpecialCharError
 syn match ktCharacter "\v'\\''" contains=ktSpecialChar
 syn match ktCharacter "\v'[^\\]'"
