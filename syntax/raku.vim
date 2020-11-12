@@ -70,7 +70,7 @@ syn match rakuIdentifier display "\%([A-Za-z_\xC0-\xFF]\%([A-Za-z_\xC0-\xFF0-9]\
 
 let s:keywords = {
  \ "rakuInclude": [
- \   "use require unit",
+ \   "use require import unit",
  \ ],
  \ "rakuConditional": [
  \   "if else elsif unless with orwith without once",
@@ -80,16 +80,16 @@ let s:keywords = {
  \ ],
  \ "rakuRepeat": [
  \   "for loop repeat while until gather given",
- \   "supply react race hyper quietly",
+ \   "supply react race hyper lazy quietly",
  \ ],
  \ "rakuFlowControl": [
- \   "take do when next last redo return return-rw",
+ \   "take take-rw do when next last redo return return-rw",
  \   "start default exit make continue break goto leave",
- \   "proceed succeed whenever done",
+ \   "proceed succeed whenever emit done",
  \ ],
  \ "rakuClosureTrait": [
- \   "BEGIN CHECK INIT START FIRST ENTER LEAVE KEEP",
- \   "UNDO NEXT LAST PRE POST END CATCH CONTROL TEMP",
+ \   "BEGIN CHECK INIT FIRST ENTER LEAVE KEEP",
+ \   "UNDO NEXT LAST PRE POST END CATCH CONTROL",
  \   "DOC QUIT CLOSE COMPOSE",
  \ ],
  \ "rakuException": [
@@ -102,13 +102,14 @@ let s:keywords = {
  \ ],
  \ "rakuOperator": [
  \   "div xx x mod also leg cmp before after eq ne le lt not",
- \   "gt ge eqv ff fff and andthen or xor orelse extra lcm gcd o",
+ \   "gt ge eqv ff fff and andthen or xor orelse lcm gcd o",
  \   "unicmp notandthen minmax",
  \ ],
  \ "rakuType": [
  \   "int int1 int2 int4 int8 int16 int32 int64",
  \   "rat rat1 rat2 rat4 rat8 rat16 rat32 rat64",
  \   "buf buf1 buf2 buf4 buf8 buf16 buf32 buf64",
+ \   "blob blob1 blob2 blob4 blob8 blob16 blob32 blob64",
  \   "uint uint1 uint2 uint4 uint8 uint16 uint32 bit bool",
  \   "uint64 utf8 utf16 utf32 bag set mix complex",
  \   "num num32 num64 long longlong Pointer size_t str void",
@@ -461,7 +462,7 @@ syn match rakuQuoteQStart display "\%(:\|\%(sub\|role\)\s\)\@5<![Qq]\@=" nextgro
 syn match rakuQuoteQ      display "Q\%(qq\|ww\|[abcfhpsqvwx]\)\?[A-Za-z(]\@!" nextgroup=rakuPairsQ skipwhite skipempty contained
 syn match rakuQuoteQ_q    display "q[abcfhpsvwx]\?[A-Za-z(]\@!" nextgroup=rakuPairsQ_q skipwhite skipempty contained
 syn match rakuQuoteQ_qww  display "qww[A-Za-z(]\@!" nextgroup=rakuPairsQ_qww skipwhite skipempty contained
-syn match rakuQuoteQ_qq   display "qq[pwx]\?[A-Za-z(]\@!" nextgroup=rakuPairsQ_qq skipwhite skipempty contained
+syn match rakuQuoteQ_qq   display "qq\%([pwx]\|ww\)\?[A-Za-z(]\@!" nextgroup=rakuPairsQ_qq skipwhite skipempty contained
 syn match rakuQuoteQ_to   display "Qto[A-Za-z(]\@!" nextgroup=rakuStringQ_to skipwhite skipempty contained
 syn match rakuQuoteQ_qto  display "qto[A-Za-z(]\@!" nextgroup=rakuStringQ_qto skipwhite skipempty contained
 syn match rakuQuoteQ_qqto display "qqto[A-Za-z(]\@!" nextgroup=rakuStringQ_qqto skipwhite skipempty contained
