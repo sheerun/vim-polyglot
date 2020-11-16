@@ -1856,6 +1856,10 @@ if !has_key(g:polyglot_is_disabled, 'twig')
   au BufNewFile,BufRead *.xml.twig setf xml.twig
 endif
 
+if !has_key(g:polyglot_is_disabled, 'tutor')
+  au BufNewFile,BufRead *.tutor setf tutor
+endif
+
 if !has_key(g:polyglot_is_disabled, 'tptp')
   au BufNewFile,BufRead *.ax,*.p,*.tptp setf tptp
 endif

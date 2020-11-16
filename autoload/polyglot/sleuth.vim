@@ -560,6 +560,7 @@ let s:globs = {
   \ 'tssop': '*.tssop',
   \ 'tt2': '*.tt2',
   \ 'tt2html': '*.tt2',
+  \ 'tutor': '*.tutor',
   \ 'typescript': '*.ts',
   \ 'typescriptreact': '*.tsx',
   \ 'uc': '*.uc',
