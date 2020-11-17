@@ -1672,6 +1672,12 @@ filetypes:
   - tptp
   - ax
 ---
+name: tutor
+filetypes:
+- name: tutor
+  extensions:
+  - tutor
+---
 name: twig
 remote: lumiliet/vim-twig
 filetypes:
