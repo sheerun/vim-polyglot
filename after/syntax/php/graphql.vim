@@ -25,22 +25,14 @@ endif
 " Language: GraphQL
 " Maintainer: Jon Parise <jon@indelible.org>
 
-if exists('*GetJavascriptGraphQLIndent') && !empty(&indentexpr)
-  finish
+if exists('b:current_syntax')
+  let s:current_syntax = b:current_syntax
+  unlet b:current_syntax
+endif
+syn include @GraphQLSyntax syntax/graphql.vim
+if exists('s:current_syntax')
+  let b:current_syntax = s:current_syntax
 endif
 
-runtime! indent/graphql.vim
-
-" Set the indentexpr with our own version that will call GetGraphQLIndent when
-" we're inside of a GraphQL string and otherwise defer to the base function.
-let b:indentexpr_base = &indentexpr
-setlocal indentexpr=GetJavascriptGraphQLIndent()
-
-function GetJavascriptGraphQLIndent()
-  let l:stack = map(synstack(v:lnum, 1), "synIDattr(v:val, 'name')")
-  if get(l:stack, 0, '') ==# 'graphqlTemplateString'
-    return GetGraphQLIndent()
-  endif
-
-  return eval(b:indentexpr_base)
-endfunction
+syn region phpHereDoc matchgroup=Delimiter start="\(<<<\)\@<=\(\"\=\)\z(\(\I\i*\)\=\(gql\)\c\(\i*\)\)\2$" end="^\s*\z1\>" contained contains=@GraphQLSyntax,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpBackslashSequences,phpMethodsVar,@Spell keepend extend
+syntax region phpNowDoc matchgroup=Delimiter start="\(<<<\)\@<='\z(\(\I\i*\)\=\(gql\)\c\(\i*\)\)'$" end="^\s*\z1\>" contained contains=@GraphQLSyntax,@Spell keepend extend

@@ -20,7 +20,7 @@ function! terraform#fmt() abort
   let tmpfile = tempname()
   let shellredir_save = &shellredir
   let &shellredir = '>%s 2>'.tmpfile
-  silent execute '%!terraform fmt -no-color -'
+  silent execute '%!'.g:terraform_binary_path.' fmt -no-color -'
   let &shellredir = shellredir_save
 
   " If there was an error, undo any changes and show stderr.

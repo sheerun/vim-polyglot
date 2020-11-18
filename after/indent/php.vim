@@ -25,7 +25,7 @@ endif
 " Language: GraphQL
 " Maintainer: Jon Parise <jon@indelible.org>
 
-if exists('*GetJavascriptGraphQLIndent') && !empty(&indentexpr)
+if exists('*GetPHPGraphQLIndent') && !empty(&indentexpr)
   finish
 endif
 
@@ -34,11 +34,11 @@ runtime! indent/graphql.vim
 " Set the indentexpr with our own version that will call GetGraphQLIndent when
 " we're inside of a GraphQL string and otherwise defer to the base function.
 let b:indentexpr_base = &indentexpr
-setlocal indentexpr=GetJavascriptGraphQLIndent()
+setlocal indentexpr=GetPHPGraphQLIndent()
 
-function GetJavascriptGraphQLIndent()
+function GetPHPGraphQLIndent()
   let l:stack = map(synstack(v:lnum, 1), "synIDattr(v:val, 'name')")
-  if get(l:stack, 0, '') ==# 'graphqlTemplateString'
+  if get(l:stack, 0, '') ==# 'phpRegion' && count(l:stack, 'graphqlFold') > 0
     return GetGraphQLIndent()
   endif
 

@@ -1,3 +1,7 @@
+if has_key(g:polyglot_is_disabled, 'pest')
+  finish
+endif
+
 " Comments
 syntax keyword pestTodo contained TODO FIXME XXX NOTE
 syntax match pestComment "\/\/.*$" contains=celTodo

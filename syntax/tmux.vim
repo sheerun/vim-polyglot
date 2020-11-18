@@ -3,7 +3,7 @@ if has_key(g:polyglot_is_disabled, 'tmux')
 endif
 
 " Language: tmux(1) configuration file
-" Version: 3.1b (git-769ae106)
+" Version: 3.2-rc (git-e94bd5cc)
 " URL: https://github.com/ericpruitt/tmux.vim/
 " Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
 " License: 2-Clause BSD (http://opensource.org/licenses/BSD-2-Clause)
@@ -59,13 +59,16 @@ hi def link tmuxTodo              Todo
 hi def link tmuxVariable          Identifier
 hi def link tmuxVariableExpansion Identifier
 
-" Make the foreground of colourXXX keywords match the color they represent.
+" Make the foreground of colourXXX keywords match the color they represent
+" when g:tmux_syntax_colors is unset or set to a non-zero value.
 " Darker colors have their background set to white.
-for s:i in range(0, 255)
-    let s:bg = (!s:i || s:i == 16 || (s:i > 231 && s:i < 235)) ? 15 : "none"
-    exec "syn match tmuxColour" . s:i . " /\\<colour" . s:i . "\\>/ display"
-\     " | highlight tmuxColour" . s:i . " ctermfg=" . s:i . " ctermbg=" . s:bg
-endfor
+if get(g:, "tmux_syntax_colors", 1)
+    for s:i in range(0, 255)
+        let s:bg = (!s:i || s:i == 16 || (s:i > 231 && s:i < 235)) ? 15 : "none"
+        exec "syn match tmuxColour" . s:i . " /\\<colour" . s:i . "\\>/ display"
+\         " | highlight tmuxColour" . s:i . " ctermfg=" . s:i . " ctermbg=" . s:bg
+    endfor
+endif
 
 syn keyword tmuxOptions
 \ backspace buffer-limit command-alias copy-command default-terminal editor

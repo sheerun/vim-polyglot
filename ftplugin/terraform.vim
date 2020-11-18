@@ -19,10 +19,10 @@ silent! setlocal formatoptions+=j
 let b:undo_ftplugin = 'setlocal formatoptions<'
 
 if !has('patch-7.4.1142')
-    " Include hyphens as keyword characters so that a keyword appearing as
-    " part of a longer name doesn't get partially highlighted.
-    setlocal iskeyword+=-
-    let b:undo_ftplugin .= ' iskeyword<'
+  " Include hyphens as keyword characters so that a keyword appearing as
+  " part of a longer name doesn't get partially highlighted.
+  setlocal iskeyword+=-
+  let b:undo_ftplugin .= ' iskeyword<'
 endif
 
 if get(g:, 'terraform_fold_sections', 0)
@@ -42,14 +42,20 @@ endif
 let &cpoptions = s:cpo_save
 unlet s:cpo_save
 
-if !executable('terraform')
+if !exists('g:terraform_binary_path')
+  let g:terraform_binary_path='terraform'
+endif
+
+if !executable(g:terraform_binary_path)
   finish
 endif
 
 let s:cpo_save = &cpoptions
 set cpoptions&vim
 
-command! -nargs=+ -complete=custom,terraform#commands -buffer Terraform execute '!terraform '.<q-args>. ' -no-color'
+command! -nargs=+ -complete=custom,terraform#commands -buffer Terraform
+  \ execute '!'.g:terraform_binary_path.' '.<q-args>.' -no-color'
+
 command! -nargs=0 -buffer TerraformFmt call terraform#fmt()
 let b:undo_ftplugin .= '|delcommand Terraform|delcommand TerraformFmt'
 

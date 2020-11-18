@@ -20,7 +20,7 @@ setlocal commentstring=//\ %s
 setlocal formatoptions-=t formatoptions+=croql
 
 if !&l:formatexpr && !&l:formatprg
-    setlocal formatprg=Fixedgq(v:lnum,v:count)
+    setlocal formatexpr=Fixedgq(v:lnum,v:count)
 endif
 
 " setlocal foldmethod=syntax

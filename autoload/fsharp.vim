@@ -467,10 +467,10 @@ function! fsharp#sendFsi(text)
     if fsharp#openFsi(!g:fsharp#fsi_focus_on_send) > 0
         " Neovim
         if has('nvim')
-            call chansend(s:fsi_job, a:text . ";;". "\n")
+            call chansend(s:fsi_job, a:text . "\n" . ";;". "\n")
         " Vim 8
         else
-            call term_sendkeys(s:fsi_buffer, a:text . ";;" . "\<cr>")
+            call term_sendkeys(s:fsi_buffer, a:text . "\<cr>" . ";;" . "\<cr>")
             call term_wait(s:fsi_buffer)
         endif
     endif

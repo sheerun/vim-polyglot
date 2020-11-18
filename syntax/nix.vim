@@ -151,7 +151,8 @@ syn keyword nixNamespacedBuiltin contained
       \ removeAttrs replaceStrings scopedImport seq sort split splitVersion
       \ storeDir storePath stringLength sub substring tail throw toFile toJSON
       \ toPath toString toXML trace tryEval typeOf unsafeDiscardOutputDependency
-      \ unsafeDiscardStringContext unsafeGetAttrPos valueSize fromTOML
+      \ unsafeDiscardStringContext unsafeGetAttrPos valueSize fromTOML bitAnd
+      \ bitOr bitXor
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
