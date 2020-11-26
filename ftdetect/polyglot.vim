@@ -19,7 +19,9 @@ if exists("did_load_filetypes")
   au! filetypedetect
 endif
 
-let g:polyglot_is_disabled = {}
+if !exists('g:polyglot_is_disabled')
+  let g:polyglot_is_disabled = {}
+endif
 let s:new_polyglot_disabled = []
 
 if exists('g:polyglot_disabled')
