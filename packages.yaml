@@ -403,6 +403,7 @@ filetypes:
   extra_extensions:
   # 17 results: https://github.com/search?q=extension%3Acoffeekup+html&type=Code
   - coffeekup
+  - cson
   ignored_warnings:
   # Probably mistake
   - '*Cakefile'
