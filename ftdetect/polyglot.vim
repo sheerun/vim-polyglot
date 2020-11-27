@@ -3563,9 +3563,6 @@ if !has_key(g:polyglot_is_disabled, 'sensible')
 
   " Autoindent when starting new line, or using `o` or `O`.
   set autoindent
-
-  " Enable highlighted case-insensitive incremential search.
-  set incsearch
 endif
 
 " Restore 'cpoptions'
