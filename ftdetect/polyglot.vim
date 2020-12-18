@@ -3558,9 +3558,6 @@ if !has_key(g:polyglot_is_disabled, 'sensible')
   " Reload unchanged files automatically.
   set autoread
 
-  " Disable swap, it doesn't play well with autoread
-  set noswapfile
-
   " Autoindent when starting new line, or using `o` or `O`.
   set autoindent
 endif
