@@ -78,9 +78,10 @@ endif
 
 syn keyword pythonStatement     break continue del return pass yield global assert lambda with
 syn keyword pythonStatement     raise nextgroup=pythonExClass skipwhite
-syn keyword pythonStatement     def class nextgroup=pythonFunction skipwhite
+syn keyword pythonStatement     def nextgroup=pythonFunction skipwhite
+syn keyword pythonStatement     class nextgroup=pythonClass skipwhite
 if s:Enabled('g:python_highlight_class_vars')
-    syn keyword pythonClassVar    self cls
+    syn keyword pythonClassVar    self cls mcs
 endif
 syn keyword pythonRepeat        for while
 syn keyword pythonConditional   if elif else
@@ -104,10 +105,11 @@ else
     syn keyword pythonStatement   as nonlocal
     syn match   pythonStatement   '\v\.@<!<await>'
     syn match   pythonFunction    '\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*' display contained
+    syn match   pythonClass       '\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*' display contained
     syn match   pythonStatement   '\<async\s\+def\>' nextgroup=pythonFunction skipwhite
     syn match   pythonStatement   '\<async\s\+with\>'
     syn match   pythonStatement   '\<async\s\+for\>'
-    syn cluster pythonExpression contains=pythonStatement,pythonRepeat,pythonConditional,pythonOperator,pythonNumber,pythonHexNumber,pythonOctNumber,pythonBinNumber,pythonFloat,pythonString,pythonBytes,pythonBoolean,pythonNone,pythonSingleton,pythonBuiltinObj,pythonBuiltinFunc,pythonBuiltinType
+    syn cluster pythonExpression contains=pythonStatement,pythonRepeat,pythonConditional,pythonOperator,pythonNumber,pythonHexNumber,pythonOctNumber,pythonBinNumber,pythonFloat,pythonString,pythonFString,pythonRawString,pythonRawFString,pythonBytes,pythonBoolean,pythonNone,pythonSingleton,pythonBuiltinObj,pythonBuiltinFunc,pythonBuiltinType,pythonClassVar
 endif
 
 
@@ -116,7 +118,7 @@ endif
 "
 syn keyword pythonOperator      and in is not or
 if s:Enabled('g:python_highlight_operators')
-    syn match pythonOperator        '\V=\|-\|+\|*\|@\|/\|%\|&\||\|^\|~\|<\|>\|!='
+    syn match pythonOperator        '\V=\|-\|+\|*\|@\|/\|%\|&\||\|^\|~\|<\|>\|!=\|:='
 endif
 syn match pythonError           '[$?]\|\([-+@%&|^~]\)\1\{1,}\|\([=*/<>]\)\2\{2,}\|\([+@/%&|^~<>]\)\3\@![-+*@/%&|^~<>]\|\*\*[*@/%&|^<>]\|=[*@/%&|^<>]\|-[+*@/%&|^~<]\|[<!>]\+=\{2,}\|!\{2,}=\+' display
 
@@ -268,8 +270,8 @@ if s:Enabled('g:python_highlight_string_format')
         syn match pythonStrFormat '{\%(\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*\|\d\+\)\=\%(\.\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*\|\[\%(\d\+\|[^!:\}]\+\)\]\)*\%(![rsa]\)\=\%(:\%({\%(\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*\|\d\+\)}\|\%([^}]\=[<>=^]\)\=[ +-]\=#\=0\=\d*,\=\%(\.\d\+\)\=[bcdeEfFgGnosxX%]\=\)\=\)\=}' contained containedin=pythonString,pythonUniString,pythonUniRawString,pythonRawString
     else
         syn match pythonStrFormat "{\%(\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*\|\d\+\)\=\%(\.\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*\|\[\%(\d\+\|[^!:\}]\+\)\]\)*\%(![rsa]\)\=\%(:\%({\%(\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*\|\d\+\)}\|\%([^}]\=[<>=^]\)\=[ +-]\=#\=0\=\d*,\=\%(\.\d\+\)\=[bcdeEfFgGnosxX%]\=\)\=\)\=}" contained containedin=pythonString,pythonRawString
-        syn region pythonStrInterpRegion start="{"he=e+1,rs=e+1 end="\%(![rsa]\)\=\%(:\%({\%(\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*\|\d\+\)}\|\%([^}]\=[<>=^]\)\=[ +-]\=#\=0\=\d*,\=\%(\.\d\+\)\=[bcdeEfFgGnosxX%]\=\)\=\)\=}"hs=s-1,re=s-1 extend contained containedin=pythonFString,pythonRawFString contains=pythonStrInterpRegion,@pythonExpression
-        syn match pythonStrFormat "{{\|}}" contained containedin=pythonString,pythonRawString,pythonFString,pythonRawFString
+        syn region pythonStrInterpRegion matchgroup=pythonStrFormat start="{" end="\%(![rsa]\)\=\%(:\%({\%(\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*\|\d\+\)}\|\%([^}]\=[<>=^]\)\=[ +-]\=#\=0\=\d*,\=\%(\.\d\+\)\=[bcdeEfFgGnosxX%]\=\)\=\)\=}" extend contained containedin=pythonFString,pythonRawFString contains=pythonStrInterpRegion,@pythonExpression
+        syn match pythonStrFormat "{{\|}}" contained containedin=pythonFString,pythonRawFString
     endif
 endif
 
@@ -475,7 +477,6 @@ if v:version >= 508 || !exists('did_python_syn_inits')
         HiLink pythonBytesEscapeError   Error
         HiLink pythonFString            String
         HiLink pythonRawFString         String
-        HiLink pythonStrInterpRegion    Special
     endif
 
     HiLink pythonStrFormatting    Special
@@ -504,6 +505,7 @@ if v:version >= 508 || !exists('did_python_syn_inits')
     HiLink pythonBuiltinType      Structure
 
     HiLink pythonExClass          Structure
+    HiLink pythonClass            Structure
     HiLink pythonClassVar         Identifier
 
     delcommand HiLink

@@ -5546,3 +5546,11 @@ filetypes:
   patterns:
   - pattern: '*.mkii,*.mkiv,*.mkvi'
     description: ConTeXt
+---
+name: mint
+remote: IrenejMarc/vim-mint
+filetypes:
+- name: mint
+  patterns:
+  - pattern: '*.mint'
+    description: Mint

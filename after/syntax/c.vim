@@ -6,13 +6,9 @@ endif
 " Vim syntax file
 " Language:        C Additions
 " Original Author: Mikhail Wolfson <mywolfson@gmail.com>
-"                  http://www.vim.org/scripts/script.php?script_id=3064
-" Maintainer:      bfrg <bfrg@users.noreply.github.com>
+" Maintainer:      bfrg <https://github.com/bfrg>
 " Website:         https://github.com/bfrg/vim-cpp-modern
-" Last Change:     Oct 23, 2020
-"
-" Extended C syntax highlighting including highlighting of user-defined
-" functions.
+" Last Change:     Nov 23, 2020
 "
 " This syntax file is based on:
 " https://github.com/octol/vim-cpp-enhanced-highlight
@@ -63,8 +59,8 @@ hi def link cAnsiName Identifier
 " Highlight all standard C keywords as Statement
 " This is very similar to what other IDEs and editors do
 if get(g:, 'cpp_simple_highlight', 0)
-    hi link cStorageClass Statement
-    hi link cStructure    Statement
-    hi link cTypedef      Statement
-    hi link cLabel        Statement
+    hi! def link cStorageClass Statement
+    hi! def link cStructure    Statement
+    hi! def link cTypedef      Statement
+    hi! def link cLabel        Statement
 endif

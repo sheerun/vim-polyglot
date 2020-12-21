@@ -6,7 +6,7 @@ endif
 " Language:	Diff (context or unified)
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
 "               Translations by Jakson Alves de Aquino.
-" Last Change:	2016 Apr 02
+" Last Change:	2020 Dec 07
 
 " Quit when a (custom) syntax file was already loaded
 if exists("b:current_syntax")
@@ -350,9 +350,11 @@ syn match diffLine	"^---$"
 syn match diffLine	"^\d\+\(,\d\+\)\=[cda]\d\+\>.*"
 
 syn match diffFile	"^diff\>.*"
-syn match diffFile	"^+++ .*"
 syn match diffFile	"^Index: .*"
 syn match diffFile	"^==== .*"
+" Old style diff uses *** for old and --- for new.
+" Unified diff uses --- for old and +++ for new; names are wrong but it works.
+syn match diffOldFile	"^+++ .*"
 syn match diffOldFile	"^\*\*\* .*"
 syn match diffNewFile	"^--- .*"
 

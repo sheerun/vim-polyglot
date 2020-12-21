@@ -355,7 +355,7 @@ function GetTypescriptIndent()
   " If the line is empty and the previous nonblank line was a multi-line
   " comment, use that comment's indent. Deduct one char to account for the
   " space in ' */'.
-  if line =~ '^\s*$' && s:IsInMultilineComment(prevline, 1)
+  if line =~ '^\s*$' && yats#IsInMultilineComment(prevline, 1)
     return indent(prevline) - 1
   endif
 

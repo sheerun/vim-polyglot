@@ -644,6 +644,7 @@ call TestFiletype('xf86conf')
 call TestFiletype('xpm')
 call TestFiletype('xpm2')
 call TestFiletype('context')
+call TestFiletype('mint')
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 
