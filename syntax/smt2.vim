@@ -15,13 +15,14 @@ let b:current_syntax = "smt2"
 " Comments
 syntax match smt2Comment ";.*$"
 
-" Commands
-syntax keyword smt2Commands
+" Keywords
+syntax keyword smt2Keyword
       \ apply
+      \ as
+      \ assert
       \ assert
       \ assert-soft
       \ check-sat
-      \ check-sat-assuming
       \ check-sat-using
       \ declare-const
       \ declare-datatype
@@ -33,46 +34,44 @@ syntax keyword smt2Commands
       \ declare-var
       \ define-const
       \ define-fun
-      \ define-fun-rec
-      \ define-funs-rec
       \ define-sort
       \ display
       \ echo
       \ elim-quantifiers
       \ eval
+      \ exists
       \ exit
-      \ get-assertions
+      \ forall
       \ get-assignment
       \ get-info
       \ get-model
       \ get-option
       \ get-proof
-      \ get-unsat-assumptions
       \ get-unsat-core
       \ get-user-tactics
       \ get-value
       \ help
+      \ let
+      \ match
       \ maximize
       \ minimize
       \ pop
       \ push
       \ query
       \ reset
-      \ reset-assertions
       \ rule
       \ set-info
       \ set-logic
       \ set-option
       \ simplify
-syntax match smt2Commands "!"
+syntax match smt2Keyword "!"
 
 " Operators
-syntax match smt2Operator "[=\|>\|<\|<=\|>=\|=>\|+\|\-\|*\|/\|!]"
+syntax match smt2Operator "[=\|>\|<\|<=\|>=\|=>\|+\|\-\|*\|/]"
 
 " Builtins
 syntax keyword smt2Builtin
       \ and
-      \ as
       \ bit0
       \ bit1
       \ bvadd
@@ -109,20 +108,16 @@ syntax keyword smt2Builtin
       \ const
       \ distinct
       \ div
-      \ exists
       \ extract
       \ false
-      \ forall
+      \ get-assertions
       \ if
       \ is_int
       \ ite
-      \ let
       \ map
-      \ match
       \ mod
       \ not
       \ or
-      \ par
       \ rem
       \ repeat
       \ root-obj
@@ -168,7 +163,7 @@ syntax match smt2Delimiter "[()]"
 syntax keyword smt2Error error
 
 highlight def link smt2Comment     Comment
-highlight def link smt2Commands    Function
+highlight def link smt2Keyword     Function
 highlight def link smt2Operator    Operator
 highlight def link smt2Builtin     Operator
 highlight def link smt2Identifier  Normal

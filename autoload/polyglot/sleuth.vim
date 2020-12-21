@@ -329,7 +329,6 @@ let s:globs = {
   \ 'mgl': '*.mgl',
   \ 'mgp': '*.mgp',
   \ 'mib': '*.mib,*.my',
-  \ 'mint': '*.mint',
   \ 'mix': '*.mix,*.mixal',
   \ 'mma': '*.mathematica,*.cdf,*.m,*.ma,*.mt,*.nb,*.nbp,*.wl,*.wlt,*.wls,*.mma',
   \ 'mmp': '*.mmp',

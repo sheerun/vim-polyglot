@@ -8,7 +8,7 @@ endif
 " Original Author: Jon Haggblad <https://github.com/octol>
 " Maintainer:      bfrg <https://github.com/bfrg>
 " Website:         https://github.com/bfrg/vim-cpp-modern
-" Last Change:     Nov 23, 2020
+" Last Change:     Oct 8, 2020
 "
 " This syntax file is based on:
 " https://github.com/octol/vim-cpp-enhanced-highlight
@@ -201,12 +201,12 @@ hi def link cppSTLvariable     Identifier
 
 " The keywords {inline, virtual, explicit, export, override, final} are
 " standard C++ keywords and NOT types!
-hi! def link cppModifier Statement
+hi link cppModifier Statement
 
 
 " Highlight all standard C++ keywords as Statement
 if get(g:, 'cpp_simple_highlight', 0)
-    hi! def link cppStructure    Statement
-    hi! def link cppExceptions   Statement
-    hi! def link cppStorageClass Statement
+    hi link cppStructure    Statement
+    hi link cppExceptions   Statement
+    hi link cppStorageClass Statement
 endif

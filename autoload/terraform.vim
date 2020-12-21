@@ -48,28 +48,33 @@ endfunction
 
 function! terraform#commands(ArgLead, CmdLine, CursorPos) abort
   let commands = [
-    \ 'init',
-    \ 'validate',
-    \ 'plan',
     \ 'apply',
-    \ 'destroy',
     \ 'console',
+    \ 'destroy',
+    \ 'env',
     \ 'fmt',
-    \ 'force-unlock',
     \ 'get',
     \ 'graph',
     \ 'import',
+    \ 'init',
     \ 'login',
     \ 'logout',
     \ 'output',
+    \ 'plan',
     \ 'providers',
     \ 'refresh',
     \ 'show',
-    \ 'state',
     \ 'taint',
     \ 'untaint',
+    \ 'validate',
     \ 'version',
-    \ 'workspace'
+    \ 'workspace',
+    \ '0.12upgrade',
+    \ '0.13upgrade',
+    \ 'debug',
+    \ 'force-unlock',
+    \ 'push',
+    \ 'state'
   \ ]
   return join(commands, "\n")
 endfunction

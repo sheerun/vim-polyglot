@@ -94,8 +94,6 @@ hi def link graphqlStructure        Structure
 hi def link graphqlType             Type
 hi def link graphqlVariable         Identifier
 
-if !get(b:, 'graphql_nested_syntax')
-    syn sync minlines=500
-endif
+syn sync minlines=500
 
 let b:current_syntax = 'graphql'

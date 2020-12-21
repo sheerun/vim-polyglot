@@ -8,7 +8,7 @@ endif
 " Maintainer:   Marcin Szamotulski <profunctor@pm.me>
 " Previous Maintainer:	Vincent Berthoux <twinside@gmail.com>
 " File Types:   .cabal
-" Last Change:  21 Nov 2020
+" Last Change:  3 Oct 2020
 " v1.5: Incorporated changes from
 "       https://github.com/sdiehl/haskell-vim-proto/blob/master/vim/syntax/cabal.vim
 "       Use `syn keyword` instead of `syn match`.
@@ -82,13 +82,10 @@ syn keyword cabalStatement contained containedin=cabalStatementRegion
 	\ default-extensions
 	\ author
         \ autogen-modules
-        \ asm-sources
-        \ asm-options
 	\ branch
 	\ bug-reports
 	\ build-depends
 	\ build-tools
-        \ build-tools-depends
 	\ build-type
 	\ buildable
 	\ c-sources
@@ -96,46 +93,33 @@ syn keyword cabalStatement contained containedin=cabalStatementRegion
 	\ category
 	\ cc-options
 	\ copyright
-        \ cmm-sources
-        \ cmm-options
 	\ cpp-options
-        \ cxx-sources
 	\ data-dir
 	\ data-files
 	\ default
-        \ default-extensions
 	\ description
 	\ executable
 	\ exposed-modules
 	\ exposed
 	\ extensions
-        \ extra-bundled-libraries
+	\ extra-tmp-files
 	\ extra-doc-files
-	\ extra-dynamic-library-flavours
-        \ extra-framework-dirs
-        \ extra-ghci-libraries
 	\ extra-lib-dirs
 	\ extra-libraries
-	\ extra-library-flavours
 	\ extra-source-files
-	\ extra-tmp-files
+	\ exta-tmp-files
 	\ for example
 	\ frameworks
 	\ ghc-options
 	\ ghc-prof-options
 	\ ghc-shared-options
-        \ ghcjs-options
-        \ ghcjs-prof-options
-        \ ghcjs-shared-options
 	\ homepage
-        \ hs-source-dir
 	\ hs-source-dirs
 	\ hugs-options
 	\ import
 	\ include-dirs
 	\ includes
 	\ install-includes
-        \ js-sources
 	\ ld-options
 	\ license
 	\ license-file
@@ -143,13 +127,10 @@ syn keyword cabalStatement contained containedin=cabalStatementRegion
 	\ main-is
 	\ maintainer
 	\ manual
-        \ mixins
 	\ module
 	\ name
 	\ nhc98-options
 	\ other-extensions
-        \ other-language
-        \ other-languages
 	\ other-modules
 	\ package-url
 	\ pkgconfig-depends

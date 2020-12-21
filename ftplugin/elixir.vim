@@ -32,7 +32,7 @@ let &l:path =
       \   &g:path
       \ ], ',')
 setlocal includeexpr=elixir#util#get_filename(v:fname)
-setlocal suffixesadd=.ex,.exs,.eex,.leex,.sface,.erl,.xrl,.yrl,.hrl
+setlocal suffixesadd=.ex,.exs,.eex,.leex,.erl,.xrl,.yrl,.hrl
 
 let &l:define = 'def\(macro\|guard\|delegate\)\=p\='
 

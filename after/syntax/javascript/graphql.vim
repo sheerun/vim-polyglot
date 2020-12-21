@@ -29,11 +29,7 @@ if exists('b:current_syntax')
   let s:current_syntax = b:current_syntax
   unlet b:current_syntax
 endif
-
-let b:graphql_nested_syntax = 1
 syn include @GraphQLSyntax syntax/graphql.vim
-unlet b:graphql_nested_syntax
-
 if exists('s:current_syntax')
   let b:current_syntax = s:current_syntax
 endif
@@ -52,7 +48,7 @@ if graphql#has_syntax_group('jsTemplateExpression')
   hi def link graphqlTaggedTemplate jsTaggedTemplate
   hi def link graphqlTemplateExpression jsTemplateExpression
 
-  syn cluster jsExpression add=graphqlTemplateString,graphqlTaggedTemplate
+  syn cluster jsExpression add=graphqlTaggedTemplate
   syn cluster graphqlTaggedTemplate add=graphqlTemplateString
 elseif graphql#has_syntax_group('javaScriptStringT')
   " runtime/syntax/javascript.vim

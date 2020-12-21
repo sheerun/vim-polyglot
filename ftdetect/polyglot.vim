@@ -142,10 +142,6 @@ set cpo&vim
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
-if !has_key(g:polyglot_is_disabled, 'mint')
-  au BufNewFile,BufRead *.mint setf mint
-endif
-
 if !has_key(g:polyglot_is_disabled, 'context')
   au BufNewFile,BufRead *.mkii,*.mkiv,*.mkvi setf context
 endif
