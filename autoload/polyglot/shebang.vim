@@ -449,6 +449,11 @@ func! polyglot#shebang#VimDetect()
 
   endif
 
+	if line1 =~ '^# ' || getline(2) =~ '^# ' || getline(3) =~ '^# ' || getline(4) =~ '^# ' || getline(5) =~ '^# '
+    setf FALLBACK conf
+    return 1
+  endif
+
   return 1
 endfunc
 

@@ -2659,13 +2659,13 @@ func! s:Observe(fn)
   augroup END
 endfunc
 
-au BufNewFile,BufRead,StdinReadPost * if expand("<afile>:e") == "" |
+au BufNewFile,BufRead,StdinReadPost,BufWritePost * if expand("<afile>:e") == "" |
   \ call polyglot#shebang#Detect() | endif
 
-au BufWinEnter * if &ft == "" && expand("<afile>:e") == ""  |
+au BufWinEnter * if &ft == "" && expand("<afile>:e") == "" |
   \ call s:Observe('shebang#Detect') | endif
 
-au FileType * au! polyglot-observer
+au BufWritePost * au! polyglot-observer
 
 augroup END
 
@@ -3527,7 +3527,6 @@ if exists("did_load_filetypes") && exists("g:polyglot_disabled")
   unlet did_load_filetypes
   runtime! extras/filetype.vim
 endif
-
 
 let s:runtime = resolve($VIMRUNTIME)
 let s:base = resolve(expand('<sfile>:p:h:h'))

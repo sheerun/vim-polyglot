@@ -113,9 +113,9 @@ def sort_packages(packages)
   each_child = lambda { |n, &b|
     [
       implicit_dependencies[n] || [],
-      packages[n]["dependencies"] || [],
-      packages[n]["after"] || []
-    ].flatten.each(&b)
+      packages[n] ? packages[n]["dependencies"] || [] : [],
+      packages[n] ? packages[n]["after"] || [] : []
+    ].flatten.each { |e| b.call(e) if packages[e] }
   }
 
   TSort.tsort(each_node, each_child).map { |a| packages[a] }
@@ -248,11 +248,11 @@ def load_languages
 end
 
 def load_packages
-  YAML.load_stream(File.read('packages.yaml'))
+  YAML.load_stream(File.read('packages.yaml')) || []
 end
 
 def load_heuristics
-  YAML.load_stream(File.read('heuristics.yaml'))
+  YAML.load_stream(File.read('heuristics.yaml')) || []
 end
 
 def parse_remote(remote)
@@ -486,6 +486,7 @@ def extract(packages)
   )
 
   FileUtils.rm_rf(all_dirs)
+  Dir.mkdir('extras') unless File.exists?('extras')
 
   for dir in Dir.glob("*", base: "autoload")
     if dir != "polyglot"
