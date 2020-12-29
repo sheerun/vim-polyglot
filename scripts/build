@@ -525,7 +525,7 @@ def extract(packages)
       end
     end
 
-    if repo.include?("vim/vim")
+    if repo == "vim/vim"
       next
     end
     if branch != "master" || path

@@ -179,6 +179,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [swift](https://github.com/keith/swift.vim) (Swift syntax highlighting for swift files)
 - [sxhkd](https://github.com/baskerville/vim-sxhkdrc) (Syntax highlighting for sxhkdrc files)
 - [systemd](https://github.com/wgwoods/vim-systemd-syntax) (Syntax highlighting for automount, dnssd, link, mount, netdev and 9 more files)
+- [terraform](https://github.com/hashivim/vim-terraform) (Syntax highlighting for tf and tfvars files)
 - [textile](https://github.com/timcharper/textile.vim) (Textile syntax highlighting for textile files)
 - [thrift](https://github.com/solarnz/thrift.vim) (Thrift syntax highlighting for thrift files)
 - [tmux](https://github.com/ericpruitt/tmux.vim/tree/master/vim)
