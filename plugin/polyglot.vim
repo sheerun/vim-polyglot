@@ -13,6 +13,22 @@ if exists('g:loaded_sensible')
   finish
 endif
 
+if !has('gui_running') && (!has('nvim') || $TERM =~? '^rxvt')
+  let g:focau = extend({
+    \ 'auto': 1,
+    \ 'active': 1,
+    \ 'events' : {'<F25>': "\e[I", '<F26>': "\e[O"},
+    \ 'focuses': ["\e[?1004h", "\e[?1004l"],
+    \ 'screens': ["\e[?1049h", "\e[?1049l"],
+    \ 'cursors': ['', '', ''],
+    \ 'colors' : ['white', 'cyan'],
+    \ 'widgets': [],
+    \ 'clipregs':['+"p', '"+'],
+    \}, get(g:, 'focau', {}))
+
+  call focau#init#main()
+endif
+
 " Code taken from https://github.com/tpope/vim-sensible
 " and (mostly comments) from https://github.com/sheerun/vimrc
 "
@@ -74,7 +90,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -
   if match(capture, 'checktime') == -1
     augroup polyglot-sensible
       au!
-      au CursorHold * silent! checktime
+      au CursorHold,FocusGained * silent! checktime
     augroup END
   endif
 
