@@ -2678,6 +2678,10 @@ if !has_key(g:polyglot_is_disabled, 'autoindent')
     let &tabstop = 2
   endif
 
+  if &shiftwidth > &tabstop
+    let &shiftwidth = &tabstop
+  endif
+
   let s:default_shiftwidth = &shiftwidth
 
   func! s:get_shiftwidth(indents) abort
