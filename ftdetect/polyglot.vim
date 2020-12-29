@@ -2670,17 +2670,33 @@ au FileType * au! polyglot-observer
 augroup END
 
 
-if !has_key(g:polyglot_is_disabled, 'autoindent')
-  " Code below re-implements sleuth for vim-polyglot
-  let g:loaded_sleuth = 1
-
+if !has_key(g:polyglot_is_disabled, 'sensible')
+  " Use 2-spaces tab indentation by default
   if &tabstop == 8
     let &tabstop = 2
   endif
 
+  " Set shiftwidth to proper value as users often mix it with tabstop
   if &shiftwidth > &tabstop
     let &shiftwidth = &tabstop
   endif
+
+  " Use utf-8 encoding by default
+  set encoding=utf-8
+
+  " Reload unchanged files automatically.
+  set autoread
+
+  " Disable swap, it doesn't play well with autoread
+  set noswapfile
+
+  " Autoindent when starting new line, or using `o` or `O`.
+  set autoindent
+endif
+
+if !has_key(g:polyglot_is_disabled, 'autoindent')
+  " Code below re-implements sleuth for vim-polyglot
+  let g:loaded_sleuth = 1
 
   let s:default_shiftwidth = &shiftwidth
 
@@ -3558,20 +3574,6 @@ endfunc
 
 " We want vim-polyglot files to load only as fallback
 let &rtp = join(s:process_rtp(split(&rtp, ',')), ',')
-
-if !has_key(g:polyglot_is_disabled, 'sensible')
-  " Use utf-8 encoding by default
-  set encoding=utf-8
-
-  " Reload unchanged files automatically.
-  set autoread
-
-  " Disable swap, it doesn't play well with autoread
-  set noswapfile
-
-  " Autoindent when starting new line, or using `o` or `O`.
-  set autoindent
-endif
 
 " Restore 'cpoptions'
 let &cpo = s:cpo_save
