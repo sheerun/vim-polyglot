@@ -12,6 +12,16 @@ endif
 
 let b:did_indent = 1
 
+if !exists('g:crystal_indent_assignment_style')
+  " Possible values: 'variable', 'hanging'
+  let g:crystal_indent_assignment_style = 'hanging'
+endif
+
+if !exists('g:crystal_indent_block_style')
+  " Possible values: 'expression', 'do'
+  let g:crystal_indent_block_style = 'expression'
+endif
+
 setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.

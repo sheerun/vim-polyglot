@@ -30,7 +30,6 @@ syn keyword idrisStatement do case of rewrite with
 syn keyword idrisLet let in
 syn keyword idrisForall forall
 syn keyword idrisDataOpt noHints uniqueSearch search external noNewtype containedin=idrisBrackets
-syn match idrisSyntax "\(pattern \+\|term \+\)\?syntax"
 syn keyword idrisConditional if then else
 syn match idrisNumber "\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>"
 syn match idrisFloat "\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
@@ -42,7 +41,7 @@ syn keyword idrisTodo TODO FIXME XXX HACK contained
 syn match idrisLineComment "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$" contains=idrisTodo,@Spell
 syn match idrisDocComment "|||\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$" contains=idrisTodo,@Spell
 syn match idrisMetaVar "?[a-z][A-Za-z0-9_']*"
-syn match idrisPragma "%\(hide\|logging\|auto_lazy\|unbound_implicits\|undotted_record_projections\|amibguity_depth\|pair\|rewrite\|integerLit\|stringLit\|charLit\|name\|start\|allow_overloads\|language\|default\|transform\|hint\|global_hint\|defaulthint\|inline\|extern\|macro\|spec\|foreign\|runElab\|tcinline\)"
+syn match idrisPragma "%\(hide\|logging\|auto_lazy\|unbound_implicits\|undotted_record_projections\|amibguity_depth\|pair\|rewrite\|integerLit\|stringLit\|charLit\|name\|start\|allow_overloads\|language\|default\|transform\|hint\|global_hint\|defaulthint\|inline\|extern\|macro\|spec\|foreign\|runElab\|tcinline\|defaulthint\|auto_implicit_depth\)"
 syn match idrisChar "'[^'\\]'\|'\\.'\|'\\u[0-9a-fA-F]\{4}'"
 syn match idrisBacktick "`[A-Za-z][A-Za-z0-9_']*`"
 syn region idrisString start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=@Spell
@@ -63,7 +62,6 @@ highlight def link idrisAnnotation Statement
 highlight def link idrisWhere Structure
 highlight def link idrisLet Structure
 highlight def link idrisTotality Statement
-highlight def link idrisSyntax Statement
 highlight def link idrisVisibility Statement
 highlight def link idrisConditional Conditional
 highlight def link idrisPragma Statement

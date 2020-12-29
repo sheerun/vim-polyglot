@@ -27,7 +27,10 @@ if !exists("b:eelixir_subtype")
     let b:eelixir_subtype = matchstr(&filetype,'^leex\.\zs\w\+')
   endif
   if b:eelixir_subtype == ''
-    let b:eelixir_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.eex\|\.leex\|\.eelixir\)\+$','',''),'\.\zs\w\+$')
+    let b:eelixir_subtype = matchstr(&filetype,'^sface\.\zs\w\+')
+  endif
+  if b:eelixir_subtype == ''
+    let b:eelixir_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.eex\|\.sface\|\.leex\|\.eelixir\)\+$','',''),'\.\zs\w\+$')
   endif
   if b:eelixir_subtype == 'ex'
     let b:eelixir_subtype = 'elixir'
@@ -52,16 +55,18 @@ endif
 
 syn include @elixirTop syntax/elixir.vim
 
-syn cluster eelixirRegions contains=eelixirBlock,eelixirExpression,eelixirComment
+syn cluster eelixirRegions contains=eelixirBlock,surfaceExpression,eelixirExpression,eelixirComment
 
 exe 'syn region  eelixirExpression matchgroup=eelixirDelimiter start="<%"  end="%\@<!%>" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
 exe 'syn region  eelixirExpression matchgroup=eelixirDelimiter start="<%=" end="%\@<!%>" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
+exe 'syn region  surfaceExpression matchgroup=surfaceDelimiter start="{{" end="}}" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
 exe 'syn region  eelixirQuote      matchgroup=eelixirDelimiter start="<%%" end="%\@<!%>" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
 exe 'syn region  eelixirComment    matchgroup=eelixirDelimiter start="<%#" end="%\@<!%>" contains=elixirTodo,@Spell containedin=ALLBUT,@eelixirRegions keepend'
 
 " Define the default highlighting.
 
 hi def link eelixirDelimiter PreProc
+hi def link surfaceDelimiter PreProc
 hi def link eelixirComment   Comment
 
 let b:current_syntax = 'eelixir'

@@ -45,6 +45,6 @@ syntax region  typescriptStringMember   contained
 
 syntax region  typescriptComputedMember   contained matchgroup=typescriptProperty
   \ start=/\[/rs=s+1 end=/]/
-  \ contains=@typescriptValue,typescriptMember,typescriptMappedIn
+  \ contains=@typescriptValue,typescriptMember,typescriptMappedIn,typescriptCastKeyword
   \ nextgroup=@memberNextGroup
   \ skipwhite skipempty
