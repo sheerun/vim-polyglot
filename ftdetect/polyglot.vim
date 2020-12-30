@@ -2687,8 +2687,25 @@ if !has_key(g:polyglot_is_disabled, 'sensible')
   " Reload unchanged files automatically.
   set autoread
 
-  " Disable swap, it doesn't play well with autoread
-  set noswapfile
+  " This is needed to avoid swapfile warning when auto-reloading
+  set shortmess+=A
+
+  " Avoids swapfiles in current directory
+  if &directory =~# '^\.,'
+    if !empty($HOME)
+      if has('win32')
+        let &directory = expand('$HOME/vimfiles') . '//,' . &directory
+      else
+        let &directory = expand('$HOME/.vim') . '//,' . &directory
+      endif
+    endif
+    if !empty($XDG_DATA_HOME)
+      let &directory = expand('$XDG_DATA_HOME') . '//,' . &directory
+    endif
+    if has('macunix')
+      let &directory = expand('$HOME/Library/Autosave Information') . '//,' . &directory
+    endif
+  endif
 
   " Autoindent when starting new line, or using `o` or `O`.
   set autoindent
