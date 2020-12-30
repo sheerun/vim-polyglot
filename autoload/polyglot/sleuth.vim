@@ -263,6 +263,7 @@ let s:globs = {
   \ 'jq': '*.jq,.jqrc,.jqrc*',
   \ 'json': '*.json,*.avsc,*.geojson,*.gltf,*.har,*.ice,*.JSON-tmLanguage,*.jsonl,*.mcmeta,*.tfstate,*.tfstate.backup,*.topojson,*.webapp,*.webmanifest,*.yy,*.yyp,*.jsonp,*.template,.arcconfig,.htmlhintrc,.tern-config,.tern-project,.watchmanconfig,composer.lock,mcmod.info,Pipfile.lock',
   \ 'json5': '*.json5',
+  \ 'jsonc': '*.cjson,*.jsonc,coc-settings.json,.eslintrc.json,.babelrc,.jshintrc,.jslintrc,.mocharc.json,coffeelint.json,tsconfig.json,jsconfig.json',
   \ 'jsonnet': '*.jsonnet,*.libsonnet',
   \ 'jsp': '*.jsp',
   \ 'jst': '*.ejs,*.ect,*.jst',

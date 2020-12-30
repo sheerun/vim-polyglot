@@ -5554,3 +5554,11 @@ filetypes:
   patterns:
   - pattern: '*.mint'
     description: Mint (https://www.mint-lang.com/)
+---
+name: jsonc
+remote: neoclide/jsonc.vim
+filetypes:
+- name: jsonc
+  patterns:
+  - pattern: '*.cjson,coc-settings.json,*.jsonc,.eslintrc.json,.babelrc,.jshintrc,.jslintrc,.mocharc.json,coffeelint.json,tsconfig.json,jsconfig.json'
+    description: 'JSON with comments (https://komkom.github.io/)'

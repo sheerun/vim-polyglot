@@ -142,6 +142,10 @@ set cpo&vim
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(g:polyglot_is_disabled, 'jsonc')
+  au BufNewFile,BufRead *.cjson,*.jsonc,{.,}babelrc,{.,}eslintrc.json,{.,}jshintrc,{.,}jslintrc,{.,}mocharc.json,coc-settings.json,coffeelint.json,jsconfig.json,tsconfig.json setf jsonc
+endif
+
 if !has_key(g:polyglot_is_disabled, 'mint')
   au BufNewFile,BufRead *.mint setf mint
 endif
