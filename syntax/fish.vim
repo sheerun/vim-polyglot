@@ -7,6 +7,7 @@ if exists('b:current_syntax')
 endif
 
 syntax case match
+syntax iskeyword @,48-57,-,_,.,/
 
 syntax keyword fishKeyword begin function end
 syntax keyword fishConditional if else switch
@@ -16,8 +17,8 @@ syntax keyword fishLabel case
 syntax match fishComment /#.*/
 syntax match fishSpecial /\\$/
 syntax match fishIdentifier /\$[[:alnum:]_]\+/
-syntax region fishString start=/'/ skip=/\\'/ end=/'/
-syntax region fishString start=/"/ skip=/\\"/ end=/"/ contains=fishIdentifier
+syntax region fishString start=/'/ skip=/\v(\\{2})|(\\)'/ end=/'/
+syntax region fishString start=/"/ skip=/\v(\\{2})|(\\)"/ end=/"/ contains=fishIdentifier
 syntax match fishCharacter /\v\\[abefnrtv *?~%#(){}\[\]<>&;"']|\\[xX][0-9a-f]{1,2}|\\o[0-7]{1,2}|\\u[0-9a-f]{1,4}|\\U[0-9a-f]{1,8}|\\c[a-z]/
 syntax match fishStatement /\v;\s*\zs\k+>/
 syntax match fishCommandSub /\v\(\s*\zs\k+>/

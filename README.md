@@ -78,7 +78,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (Erlang syntax highlighting for erl, app.src, es, escript, hrl, xrl, yrl, app and yaws files)
 - [fennel](https://github.com/bakpakin/fennel.vim) (Syntax highlighting for fnl files)
 - [ferm](https://github.com/vim-scripts/ferm.vim) (Syntax highlighting for ferm files)
-- [fish](https://github.com/georgewitteman/vim-fish) (fish syntax highlighting for fish files)
+- [fish](https://github.com/blankname/vim-fish) (fish syntax highlighting for fish files)
 - [flatbuffers](https://github.com/dcharbon/vim-flatbuffers) (Syntax highlighting for fbs files)
 - [fsharp](https://github.com/ionide/Ionide-vim) (F# syntax highlighting for fs, fsi and fsx files)
 - [gdscript](https://github.com/calviken/vim-gdscript3) (GDScript syntax highlighting for gd files)

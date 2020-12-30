@@ -575,7 +575,7 @@ filetypes:
   - ferm.conf
 ---
 name: fish
-remote: georgewitteman/vim-fish
+remote: blankname/vim-fish
 filetypes:
 - name: fish
   linguist: fish
