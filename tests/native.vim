@@ -287,7 +287,7 @@ let s:filename_checks = {
     \ 'mailcap': ['.mailcap', 'mailcap'],
     \ 'make': ['file.mk', 'file.mak', 'file.dsp', 'makefile', 'Makefile', 'makefile-file', 'Makefile-file', 'some-makefile', 'some-Makefile'],
     \ 'mallard': ['file.page'],
-    \ 'man': ['file.man'],
+    \ 'nroff': ['file.man'],
     \ 'manconf': ['/etc/man.conf', 'man.config', 'any/etc/man.conf'],
     \ 'map': ['file.map'],
     \ 'maple': ['file.mv', 'file.mpl', 'file.mws'],
