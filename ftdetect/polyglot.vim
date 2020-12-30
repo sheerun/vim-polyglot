@@ -2325,6 +2325,10 @@ if !has_key(g:polyglot_is_disabled, 'glsl')
   au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
 endif
 
+if !has_key(g:polyglot_is_disabled, 'gleam')
+  au BufNewFile,BufRead *.gleam setf gleam
+endif
+
 if !has_key(g:polyglot_is_disabled, 'git')
   au BufNewFile,BufRead *.gitconfig,*.git/config,*.git/modules/*/config,*/.config/git/config,*/git/config,{.,}gitconfig,{.,}gitmodules setf gitconfig
   au BufNewFile,BufRead */{.,}gitconfig.d/* call s:StarSetf('gitconfig')

@@ -645,6 +645,13 @@ filetypes:
   ignored_warnings:
   - '*.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG'
 ---
+name: gleam
+remote: gleam-lang/gleam.vim
+filetypes:
+  - name: gleam
+    extensions:
+    - gleam
+---
 name: glsl
 remote: tikhomirov/vim-glsl
 ignored_dirs:

@@ -191,6 +191,7 @@ let s:globs = {
   \ 'gitrebase': 'git-rebase-todo',
   \ 'gitsendemail': '.gitsendemail.*',
   \ 'gkrellmrc': 'gkrellmrc,gkrellmrc_?',
+  \ 'gleam': '*.gleam',
   \ 'glsl': '*.glsl,*.fp,*.frag,*.frg,*.fs,*.fsh,*.fshader,*.geo,*.geom,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader,*.comp',
   \ 'gmpl': '*.mod',
   \ 'gnash': 'gnashrc,.gnashrc,gnashpluginrc,.gnashpluginrc',
