@@ -517,7 +517,11 @@ def extract(packages)
         globs.each do |glob|
           Dir.glob("#{subdir}/#{glob}", base: subtree).each do |p|
             next unless File.file?("#{subtree}#{p}")
-            copy_file(package["name"], "#{subtree}#{p}", p)
+            target = p
+            if package["extract_in_after"] == true
+              target = "after/#{target}"
+            end
+            copy_file(package["name"], "#{subtree}#{p}", target)
           end
         end
       elsif File.exist?(subpath)

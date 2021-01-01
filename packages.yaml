@@ -4966,6 +4966,7 @@ filetypes:
 name: tex
 remote: vim/vim:runtime
 glob: "**/tex.vim"
+extract_in_after: true
 filetypes:
 - name: tex
   patterns:
