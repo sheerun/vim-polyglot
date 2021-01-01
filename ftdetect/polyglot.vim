@@ -2662,11 +2662,11 @@ func! s:Observe(fn)
   let b:PolyglotObserve = function("polyglot#" . a:fn)
   augroup polyglot-observer
     au!
-    au CursorHold,CursorHoldI,BufWritePost <buffer> call b:PolyglotObserve()
+    au CursorHold,CursorHoldI <buffer> call b:PolyglotObserve()
   augroup END
 endfunc
 
-au BufNewFile,BufRead,StdinReadPost,BufWritePost * if expand("<afile>:e") == "" |
+au BufNewFile,BufRead,StdinReadPost,BufWritePost * if (&ft == "" || &ft == "conf") && expand("<afile>:e") == "" |
   \ call polyglot#shebang#Detect() | endif
 
 au BufWinEnter * if &ft == "" && expand("<afile>:e") == "" |
