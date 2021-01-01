@@ -3,378 +3,882 @@ if has_key(g:polyglot_is_disabled, 'stylus')
 endif
 
 " Vim syntax file
-" Language:	CSS3
-" Maintainer:	Hsiaoming Yang <lepture@me.com>
-" URL: http://lepture.me/work/css3/
-" Created:	Dec 14, 2011
-" Modified:	Sep 4, 2012
+" Language:	Stylus
+" Author:	Ilia Loginov <iloginow@outlook.com>
+" Created:	Jan 5, 2018
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
 if !exists("main_syntax")
-  if version < 600
-    syntax clear
-  elseif exists("b:current_syntax")
+  if exists("b:current_syntax")
     finish
   endif
-  let main_syntax = 'css'
+  let main_syntax = 'stylus'
 endif
 
-syn case ignore
-syn region cssString start='"' end='"' contained
-syn region cssString start="'" end="'" contained
+syntax case ignore
 
-" HTML4 tags
-syn keyword cssTagName abbr acronym address applet area base a b
-syn keyword cssTagName basefont bdo big blockquote body button br
-syn keyword cssTagName caption cite code col colgroup dd del
-syn keyword cssTagName dfn dir div dl dt em fieldset form frame
-syn keyword cssTagName frameset h1 h2 h3 h4 h5 h6 head hr html img i
-syn keyword cssTagName iframe img input ins isindex kbd label legend li
-syn keyword cssTagName link map menu meta noframes noscript ol optgroup
-syn keyword cssTagName option p param pre q s samp script select
-syn keyword cssTagName span strike strong style sub sup tbody td
-syn keyword cssTagName textarea tfoot th thead title tr tt ul u var
-syn match cssTagName "\*"
-syn match cssTagName /\<table\>/
-syn match cssTagName /\<small\>/
-syn match cssTagName /\<center\>/
-" HTML5 tags
-syn keyword cssTagName article aside audio bb canvas command datagrid
-syn keyword cssTagName datalist details dialog embed figure footer figcaption
-syn keyword cssTagName header hgroup keygen mark meter nav output
-syn keyword cssTagName progress time rt rp section time video
-syn match cssTagName /\<ruby\>/
-" class select
-syn match cssSelector /\.[A-Za-z][A-Za-z0-9_-]\+/
-" id select
-syn match cssSelector /#[A-Za-z][A-Za-z0-9_-]\+/
-syn region cssSelector start='\[' end='\]' contains=cssString
+" First of all define indented and not indented lines
+syntax match stylusNewLine "^\S\@="
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusVariable,stylusExplicitVariable,stylusInterpolationSelectors,stylusFunctionName,stylusConditional,stylusOperatorReturn,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleNamespace,stylusAtRuleSupports,stylusAtRuleDocument,stylusAtRulePage,stylusAtRuleViewport
 
-syn region cssDefineBlock start="{" end="}" transparent contains=TOP
+syntax match stylusNewLineIndented "^\s\+"
+      \ nextgroup=stylusComment,stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusProperty,stylusVariable,stylusExplicitVariable,stylusInterpolation,stylusFunctionName,stylusUnitInt,stylusParenthesised,stylusOperatorReturn,stylusConditional,stylusAtRuleMedia,stylusAtRuleKeyframes,stylusAtRuleKeyframesOffset,stylusAtRuleNamespace,stylusAtRuleSupports,stylusAtRuleDocument,stylusAtRulePageMarginBoxTypes,stylusAtRuleViewport,stylusAtRuleExtends
 
-syn keyword cssCommonVal inherit initial auto both normal hidden none medium contained
+" ===============================================
+" ENCLOSURES
+" ===============================================
+
+syntax match stylusEnclosure "\(\[\|\]\|{\|}\|(\|)\)"
+      \ contained
+
+highlight def link stylusEnclosure SpecialChar
+
+" ===============================================
+" VARIABLES
+" ===============================================
+
+syntax match stylusVariable "\<\(\w\|-\|\$\)*\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusOperatorAssignment,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusSubscript,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorVarDefinition,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional,stylusHashDotGetter
+      \ skipwhite
+
+syntax match stylusExplicitVariable "\$\(\w\|-\|\$\)*\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusOperatorAssignment,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusSubscript,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorVarDefinition,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional,stylusHashDotGetter,stylusOptional
+      \ skipwhite
+
+syntax match stylusExplicitVariable "\<arguments\|block\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusSubscript,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorVarDefinition,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional,stylusHashDotGetter
+      \ skipwhite
+
+highlight def link stylusExplicitVariable Identifier
+
+" ===============================================
+" OPERATORS
+" ===============================================
+
+" Unary
+syntax match stylusOperatorUnary "\([-+\!\~]\+\|\<not\>\)"
+      \ contained
+      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusParenthesised,stylusPropertyLookup,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusOperatorUnary Operator
+
+" Additive
+syntax match stylusOperatorAdditive "[-+]"
+      \ contained
+      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusParenthesised,stylusPropertyLookup,stylusColor,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusOperatorAdditive Operator
+
+" Multiplicative
+syntax match stylusOperatorMultiplicative "\([/\%]\|\*\{1,2}\)"
+      \ contained
+      \ nextgroup=stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusParenthesised,stylusPropertyLookup,stylusFunctionName
+      \ skipwhite
+highlight def link stylusOperatorMultiplicative Operator
+
+" Ternary
+syntax match stylusOperatorTernary "[:?]"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusOperatorTernary Operator
+
+" Assignment
+syntax match stylusOperatorAssignment "[/\*+-:?]\=="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName,stylusHash,stylusAtRuleBlock
+      \ skipwhite
+
+highlight def link stylusOperatorAssignment Operator
+
+" Relational
+syntax match stylusOperatorRelational "\(=\{2}\|\<is\>\(\s\<not\>\)\=\|\!=\|\<isnt\>\|>=\|<=\|>\|<\)"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusVariable,stylusExplicitVariable,stylusParenthesised,stylusPropertyLookup,stylusColor,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusOperatorRelational Operator
+
+" Logical
+syntax match stylusOperatorLogical "\(&&\|||\|\<and\>\|\<or\>\)"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusOperatorLogical Operator
+
+" Existence
+syntax match stylusOperatorExistence "\<in\>"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusOperatorExistence Operator
+
+" Instance
+syntax match stylusOperatorInstance "\<is a\>"
+      \ contained
+      \ skipwhite
+
+highlight def link stylusOperatorInstance Operator
+
+" Variable definition
+syntax match stylusOperatorVarDefinition "\<is defined\>"
+      \ contained
+      \ nextgroup=stylusOperatorLogical,stylusOperatorTernary,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusOperatorVarDefinition Operator
+
+" Return
+syntax match stylusOperatorReturn "\<return\>"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusOperatorReturn Operator
+
+" Comma
+syntax match stylusComma /,\(\s\=\(\a\w\{-}:\|\('\|"\).\{-}\('\|"\):\)\)\@!/
+      \ containedin=ALLBUT,stylusString,stylusComment,stylusHash,stylusAtRuleMediaComma
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+" Range
+syntax match stylusOperatorRange "\.\.\.\="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusVariable,stylusExplicitVariable,stylusFunctionName
+
+highlight def link stylusOperatorRange Operator
+
+" ===============================================
+" CONDITIONALS
+" ===============================================
+
+syntax match stylusConditional "\<\(if\|else\|unless\|for\)\>"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+highlight def link stylusConditional Conditional
+
+" ===============================================
+" SPRINTF
+" ===============================================
+
+syntax match stylusSprintfPlaceholder "%s"
+      \ contained
+
+highlight def link stylusSprintfPlaceholder Operator
+
+syntax match stylusSprintfDefinition "%"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusSprintfDefinition Operator
+
+" ===============================================
+" SUBSCRIPT
+" ===============================================
+
+syntax region stylusSubscript matchgroup=stylusEnclosure start="\[" end="\]"
+      \ contained
+      \ contains=stylusExplicitVariable,stylusVariable,stylusUnitInt,stylusParenthesised,stylusPropertyLookup,stylusFunctionName
+      \ keepend
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional,stylusOperatorAssignment,stylusHashDotGetter
+      \ oneline
+      \ skipwhite
+
+" ===============================================
+" UNITS
+" ===============================================
+
+syntax match stylusUnitInt "[-+]\=\d\+%\="
+      \ contained
+      \ nextgroup=stylusOperatorRange,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+syntax match stylusUnitInt "\<PI\>"
+      \ contained
+      \ nextgroup=stylusOperatorRange,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+highlight def link stylusUnitInt Number
+
+syntax match stylusUnitFloat "[-+]\=\d\=\.\d\+%\="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+highlight def link stylusUnitFloat Number
+
+execute 'syntax match stylusUnitName "\(\<\|\d\@<=\)\(' . join(g:css_units, '\|') . '\)\>"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite'
+
+highlight def link stylusUnitName Number
+
+" Resolve 'in' unit name and operator conflict
+syntax match stylusOperatorExistence "\s\@<=\<in\>"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName
+      \ skipwhite
+
+" ===============================================
+" BOOLEAN
+" ===============================================
+
+syntax match stylusBoolean "\<\(true\|false\|null\)\>"
+      \ contained
+      \ nextgroup=stylusOperatorRelational,stylusOperatorAssignment,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+highlight def link stylusBoolean Boolean
+
+" ===============================================
+" SELECTORS
+" ===============================================
+
+" HTML or SVG elements
+execute 'syn match stylusSelectorElement "\<\(' . join(g:html_elements, '\|') . '\)\(\>\|#\@=\)"
+      \ contained
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
+      \ oneline
+      \ skipwhite'
+
+syn match stylusSelectorElement "\(^\|\s\)\@<=\*\($\|\s\)\@="
+      \ contained
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
+      \ oneline
+      \ skipwhite
+
+highlight def link stylusSelectorElement Statement
+
+" CSS Class
+syntax region stylusSelectorClass start="\." skip="\w-\@=" end="\(\w\|-+\)\(\W\|$\)\@="
+      \ contained
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional,stylusOptional
+      \ oneline
+      \ skipwhite
+
+syntax match stylusSelectorClass "\.{\@="
+      \ contained
+      \ nextgroup=stylusInterpolationSelectors
+
+highlight def link stylusSelectorClass Identifier
+
+" CSS Id
+syntax region stylusSelectorId start="#" skip="\w-\@=" end="\(\w\|-+\)\(\W\|$\)\@="
+      \ contained
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
+      \ oneline
+      \ skipwhite
+
+syntax match stylusSelectorId "#{\@="
+      \ contained
+      \ nextgroup=stylusInterpolationSelectors
+
+highlight def link stylusSelectorId Identifier
+
+" Attribute selectors
+syntax match stylusSelectorAttributeOperator "\(=\|\~=\||=\|\^=\|\$=\|\*=\)"
+      \ contained
+
+highlight def link stylusSelectorAttributeOperator Operator
+
+syntax region stylusSelectorAttribute matchgroup=stylusEnclosure start="\[" skip="{.\{-}}" end="\]"
+      \ contained
+      \ contains=stylusSelectorAttributeOperator,stylusInterpolation
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
+      \ oneline
+      \ skipwhite
+
+highlight def link stylusSelectorAttribute Type
+
+" Parent reference
+syntax match stylusSelectorReference "\(&\|\~/\|\(\.\./\)\+\|/\)"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
+      \ skipwhite
+
+highlight def link stylusSelectorReference Statement
+
+" Partial reference
+syntax region stylusSelectorPartialReference matchgroup=stylusSelectorReference start="\^\[\@=" skip="{.\{-}}" matchgroup=NONE end="\]"
+      \ contained
+      \ contains=stylusEnclosure,stylusUnitInt,stylusInterpolation
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
+      \ oneline
+      \ skipwhite
+
+syntax region stylusSelectorClass start="\(&\|\~/\|\(\.\./\)\+\|/\)" skip="\w[-()]\@=" end="\(\w\|(\|)\)\(\W\|$\)\@="
+      \ contained
+      \ contains=stylusSelectorReference
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusOptional
+      \ oneline
+      \ skipwhite
+
+" CSS pseudo classes and elements
+execute 'syntax match stylusSelectorPseudo ":\(' . join(g:css_pseudo, '\|') . '\)-\@!"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
+      \ skipwhite'
+
+syntax match stylusSelectorPseudo ":\(\(first\|last\|only\)-\(child\|of-type\)\)"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
+      \ skipwhite
+
+syntax match stylusSelectorPseudo ":not(.\{-})"
+      \ contained
+      \ contains=stylusSelectorElement,stylusEnclosure,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
+      \ skipwhite
+
+syntax match stylusSelectorPseudo ":lang(.\{-})"
+      \ contained
+      \ contains=stylusEnclosure,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
+      \ skipwhite
+
+syntax match stylusSelectorPseudo ":\(nth-last-\|nth-\)\(child\|of-type\)(.\{-})"
+      \ contained
+      \ contains=stylusUnitInt,stylusEnclosure,stylusInterpolationSelectors
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
+      \ skipwhite
+
+syntax match stylusSelectorPseudo /::\=\(first-\(line\|letter\)\|before\|after\|selection\|placeholder\)/
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusSelectorPseudo,stylusOptional
+      \ skipwhite
+
+highlight def link stylusSelectorPseudo Define
+
+" CSS Selector operators
+syntax match stylusSelectorCombinator "[>\~+|,]"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusExplicitVariable
+      \ skipwhite
+
+highlight def link stylusSelectorCombinator Operator
+
+" ===============================================
+" PROPERTIES
+" ===============================================
+
+execute 'syntax match stylusProperty "\<\(' . join(g:css_single_props, '\|') . '\)\>-\@!:\="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite'
+
+execute 'syntax match stylusProperty "\<\(' . join(g:css_multi_props, '\|') . '\)\>-\@!:\="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite'
+
+execute 'syntax match stylusProperty "\<\(' . join(g:svg_props, '\|') . '\)\>-\@!:\="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite'
+
+syntax match stylusProperty "\(-webkit-\|-moz-\|-o-\|-ms-\|-khtml-\)\(\w\|-\)*:\="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusProperty Type
+
+" ===============================================
+" PROPERTY LOOKUP
+" ===============================================
+
+execute 'syntax match stylusPropertyLookup "@\(' . join(g:css_props, '\|') . '\)\>-\@!"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite'
+
+execute 'syntax match stylusPropertyLookup "@\(' . join(g:svg_props, '\|') . '\)\>-\@!"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite'
+
+syntax match stylusPropertyLookup "@\(-webkit-\|-moz-\|-o-\|-ms-\|-khtml-\)\(\w\|-\)*"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+highlight def link stylusPropertyLookup Type
+
+" ===============================================
+" VALUES
+" ===============================================
+
+execute 'syntax match stylusValues "\<\(' . join(g:css_values, '\|') . '\)\>-\@!"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName
+      \ skipwhite'
+
+execute 'syntax match stylusValues "\<\(' . join(g:css_animatable_props, '\|') . '\)\>-\@!"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName
+      \ skipwhite'
+
+highlight def link stylusValues PreCondit
+
+" ===============================================
+" COLORS
+" ===============================================
+
+" Named
+execute 'syntax match stylusColor "\<\(' . join(g:css_colors, '\|') . '\)\>-\@!"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusOperatorAdditive,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite'
+
+syntax match stylusColor "\<transparent\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusOperatorAdditive,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+" Hexadecimal
+syntax match stylusColor "#\x\{3,6\}\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusOperatorAdditive,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+highlight stylusColor term=underline ctermfg=133 guifg=#b169b2
+
+" ===============================================
+" FONT
+" ===============================================
+
+" Highlight generic font families
+syntax match stylusFont "\<\(serif\|sans-serif\|monospace\)\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+
+highlight def link stylusFont Directory
+
+" ===============================================
+" Explicitly point out that the word before assignment operator is a variable
+syntax match stylusVariable "\<\(\w\|-\)*\(\s\=[:?]\==[^=]\)\@="
+      \ contained
+      \ nextgroup=stylusOperatorAssignment
+      \ skipwhite
+" ===============================================
+
+" ===============================================
+" IMPORTANT
+" ===============================================
+
+syntax match stylusImportant "!important"
+      \ contained
+
+highlight def link stylusImportant Special
+
+" ===============================================
+" INTERPOLATION
+" ===============================================
+
+" Prepend is always a property
+syntax match stylusProperty "\(\w\|-\)\+{\@="
+      \ contained
+      \ nextgroup=stylusInterpolationProperties
+
+syntax region stylusInterpolation matchgroup=stylusEnclosure start="{" end="}"
+      \ contained
+      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised,stylusConditional,stylusFunctionName
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationSelectorsTail,stylusInterpolationPropertiesTail,stylusFunctionName
+      \ oneline
+      \ skipwhite
+
+syntax region stylusInterpolationSelectors matchgroup=stylusEnclosure start="{" end="}"
+      \ contained
+      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised,stylusConditional,stylusFunctionName
+      \ keepend
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectorsTail
+      \ oneline
+      \ skipwhite
+
+syntax region stylusInterpolationProperties matchgroup=stylusEnclosure start="{" end="}"
+      \ contained
+      \ contains=stylusVariable,stylusExplicitVariable,stylusOperatorUnary,stylusUnitInt,stylusUnitFloat,stylusParenthesised,stylusConditional,stylusFunctionName
+      \ keepend
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationPropertiesTail,stylusFunctionName
+      \ oneline
+      \ skipwhite
+
+syntax match stylusInterpolationPropertiesTail "}\@<=\(\w\|-\)\+"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite
+
+highlight def link stylusInterpolationPropertiesTail Type
+
+" Tail is a selector by default
+syntax match stylusInterpolationSelectorsTail "}\@<=\(\w\|-\)\+"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ skipwhite
+
+highlight def link stylusInterpolationSelectorsTail Identifier
+
+" Tail is a property if followed by anything
+syntax match stylusInterpolationPropertiesTail "}\@<=\(\w\|-\)\+:\=\s\S\@="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite
+
+" Tail is a selector if followed by .#[]$~^&
+syntax match stylusInterpolationSelectorsTail "}\@<=\(\w\|-\)\+:\=\s[\.#\[~^&+|,>]\@="
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ skipwhite
+
+" Tail is a property if followed by float number
+syntax match stylusInterpolationPropertiesTail "}\@<=\(\w\|-\)\+:\=\s\(\.\d\)\@="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite
+
+" Tail is a property if followed by hex color
+syntax match stylusInterpolationPropertiesTail "}\@<=\(\w\|-\)\+:\=\s\(#\x\{3,6}\)\@="
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusProperty,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite
+
+execute 'syntax match stylusInterpolationSelectorsTail "}\@<=\(\w\|-\)\+:\=\s\(' . join(g:html_elements, '\|') . '\)\@="
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors
+      \ skipwhite'
+
+" ===============================================
+" MIXINS & FUNCTIONS
+" ===============================================
+
+syntax match stylusFunctionBlock "+"
+      \ contained
+
+highlight def link stylusFunctionBlock Operator
+
+syntax match stylusFunctionRest "\w\@<=\.\.\."
+      \ contained
+
+highlight def link stylusFunctionRest Operator
+
+syntax match stylusFunctionName "\(\<\|+\)\(\w\|\$\)\(-\|\w\|\$\)\{-}(\@="
+      \ contained
+      \ contains=stylusFunctionBlock
+      \ nextgroup=stylusFunctionProps
+
+syntax match stylusFunctionName "@\{-}(\@="
+      \ contained
+      \ contains=stylusFunctionBlock
+      \ nextgroup=stylusFunctionProps
+
+highlight def link stylusFunctionName Function
+
+syntax region stylusFunctionProps matchgroup=stylusEnclosure start="\S\@<=(" end=")"
+      \ contained
+      \ contains=stylusOperatorUnary,stylusVariable,stylusExplicitVariable,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusColor,stylusFunctionName,stylusFunctionRest,stylusValues
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusSubscript,stylusConditional,stylusOperatorRelational
+      \ skipwhite
 
 
-" Comment
-syn keyword cssTodo FIXME TODO contained
-syn region cssComment start="/\*" end="\*/" contains=cssTodo
-syn match cssImportant "!\s*important\>" contained
+" ===============================================
+" PARENTHESISED EXPRESSIONS
+" ===============================================
 
-syn match cssValueInteger "[-+]\=\d\+" contained
-syn match cssValueNumber "[-+]\=\d\+\(\.\d*\)\="
-syn match cssValueLength "[-+]\=\d\+\(\.\d*\)\=\(%\|mm\|cm\|in\|pt\|pc\|em\|ex\|px\|rem\|vh\|vw\|vm\|fr\|gr\)" contained
-syn match cssValueAngle "[-+]\=\d\+\(\.\d*\)\=\(deg\|grad\|rad\|turn\)" contained
-syn match cssValueTime "+\=\d\+\(\.\d*\)\=\(ms\|s\)" contained
-syn match cssValueFrequency "+\=\d\+\(\.\d*\)\=\(Hz\|kHz\)" contained
+syntax region stylusParenthesised matchgroup=stylusEnclosure start="\W\@<=(" skip=/["'].\{-}["']/ end=")"
+      \ contained
+      \ contains=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ keepend
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusUnitName,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ oneline
+      \ skipwhite
 
+" Resolve '%' unit name and operator conflict
+syntax match stylusUnitName ")\@<=%"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional
+      \ skipwhite
+" ===============================================
+" STRINGS
+" ===============================================
 
-" Properties http://www.w3.org/community/webed/wiki/CSS/Properties
-" background http://www.w3.org/TR/css3-background/
-syn match cssBackgroundProp /\(background-\(color\|image\|repeat\|attachment\|position\)\|background\)/ contained
-syn match cssBackgroundProp /background-\(origin\|\(repeat\|position\)-[xy]\|clip\|size\)/ contained
-syn match cssBackgroundProp /object-\(fit\|position\)/ contained
-" http://www.evotech.net/blog/2010/02/css3-properties-values-browser-support/
-syn keyword cssBackgroundVal tb lr rl snap cover contain widthLength heightLength contained
-syn match cssBackgroundVal /\(scale-down\|from-image\)/ contained
-syn match cssBackgroundVal /repeat-[xy]/ contained
-syn match cssBackgroundVal /no-repeat/ contained
-syn keyword cssBackgroundVal circle ellipse to at contained
-syn match cssBackgroundVal /\(closest\|farthest\)-\(side\|corner\)/ contained
+syntax region stylusString start=/\('\|"\)/ end=/\('\|"\)/
+      \ containedin=ALLBUT,stylusComment,stylusHash,stylusHashStringKey
+      \ contains=stylusSprintfPlaceholder
+      \ keepend
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusOperatorAdditive,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorTernary,stylusSprintfDefinition,stylusImportant,stylusFunctionName,stylusConditional
+      \ oneline
+      \ skipwhite
 
-syn region cssFuncVal start="\(url\|calc\|min\|max\|counter\|cycle(\)" end=")" oneline contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
-syn region cssFuncVal start="\(linear\|radial\|repeating-linear\|repeating-radial\)-gradient(" end=")" oneline contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency,cssVisualProp,cssColorVal
+highlight def link stylusString String
 
-syn match cssBorderProp /\(border-\(color\|style\|width\|radius\)\|border\)/ contained
-syn match cssBorderProp /border-\(image-\(source\|slice\|width\|outset\|repeat\)\|image\)/ contained
-syn match cssBorderProp /border-\(\(top\|right\|bottom\|left\)-\(color\|style\|width\)\|\(top\|right\|bottom\|left\)\)/ contained
-syn match cssBorderProp /border-\(top\|bottom\)-\(left\|right\)-radius/ contained
-syn keyword cssBorderVal dotted dashed solid double groove ridge inset outset contained
-syn match cssBorderVal /\<collapse\>/ contained
-syn match cssBorderVal /\<separate\>/ contained
-syn match cssBorderVal /\<fill\>/ contained
+" ===============================================
+" HASHES
+" ===============================================
 
-" Font
-syn match cssFontProp /\(font-\(family\|style\|variant\|weight\|size-adjust\|size\|stretch\)\|font\)/ contained
-syn match cssFontVal /\(sans-serif\|small-caps\)/ contained
-syn match cssFontVal /\<x\{1,2\}-\(large\|small\)\>/ contained
-syn keyword cssFontVal cursive fantasy monospace italic oblique serif contained
-syn keyword cssFontVal bold bolder lighter larger smaller contained
-syn keyword cssFontVal icon narrower wider contained
+syntax match stylusHashKey "\a\w\{-}:"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName,stylusHash,stylusString
+      \ skipwhite
 
-" Color
-syn match cssColorVal /transparent/ contained
-syn match cssColorVal "#[0-9A-Fa-f]\{3\}\>" contained
-syn match cssColorVal "#[0-9A-Fa-f]\{6\}\>" contained
-syn match cssFuncVal /rgb(\(\d\{1,3\}\s*,\s*\)\{2\}\d\{1,3\})/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
-syn match cssFuncVal /rgba(\(\d\{1,3\}\s*,\s*\)\{3\}\(1\|0\(\.\d\+\)\?\))/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
-syn match cssFuncVal /hsl(\d\{1,3\}\s*,\s*\(100\|\d\{1,2\}\(\.\d\+\)\?\)%\s*,\s*\(100\|\d\{1,2\}\(\.\d\+\)\?\)%)/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
-syn match cssFuncVal /hsla(\d\{1,3\}\s*,\s*\(\(100\|\d\{1,2\}\(\.\d\+\)\?\)%\s*,\s*\)\{2\}\(1\|0\(\.\d\+\)\?\))/ contained contains=cssString,cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency
-syn keyword cssColorVal aliceblue antiquewhite aqua aquamarine azure contained
-syn keyword cssColorVal beige bisque black blanchedalmond blue blueviolet brown burlywood contained
-syn keyword cssColorVal cadetblue chartreuse chocolate coral cornflowerblue cornsilk crimson cyan contained
-syn match cssColorVal /dark\(blue\|cyan\|goldenrod\|gray\|green\|grey\|khaki\)/ contained
-syn match cssColorVal /dark\(magenta\|olivegreen\|orange\|orchid\|red\|salmon\|seagreen\)/ contained
-syn match cssColorVal /darkslate\(blue\|gray\|grey\)/ contained
-syn match cssColorVal /dark\(turquoise\|violet\)/ contained
-syn keyword cssColorVal deeppink deepskyblue dimgray dimgrey dodgerblue firebrick contained
-syn keyword cssColorVal floralwhite forestgreen fuchsia gainsboro ghostwhite gold contained
-syn keyword cssColorVal goldenrod gray green greenyellow grey honeydew hotpink contained
-syn keyword cssColorVal indianred indigo ivory khaki lavender lavenderblush lawngreen contained
-syn keyword cssColorVal lemonchiffon lime limegreen linen magenta maroon contained
-syn match cssColorVal /light\(blue\|coral\|cyan\|goldenrodyellow\|gray\|green\)/ contained
-syn match cssColorVal /light\(grey\|pink\|salmon\|seagreen\|skyblue\|yellow\)/ contained
-syn match cssColorVal /light\(slategray\|slategrey\|steelblue\)/ contained
-syn match cssColorVal /medium\(aquamarine\|blue\|orchid\|purple\|seagreen\)/ contained
-syn match cssColorVal /medium\(slateblue\|springgreen\|turquoise\|violetred\)/ contained
-syn keyword cssColorVal midnightblue mintcream mistyrose moccasin navajowhite contained
-syn keyword cssColorVal navy oldlace olive olivedrab orange orangered orchid contained
-syn match cssColorVal /pale\(goldenrod\|green\|turquoise\|violetred\)/ contained
-syn keyword cssColorVal papayawhip peachpuff peru pink plum powderblue purple contained
-syn keyword cssColorVal red rosybrown royalblue saddlebrown salmon sandybrown contained
-syn keyword cssColorVal seagreen seashell sienna silver skyblue slateblue contained
-syn keyword cssColorVal slategray slategrey snow springgreen steelblue tan contained
-syn keyword cssColorVal teal thistle tomato turquoise violet wheat contained
-syn keyword cssColorVal whitesmoke yellow yellowgreen contained
-syn match cssColorVal "\<white\>" contained
-syn keyword cssColorProp color opaticy contained
-syn match cssColorProp /color-profile/ contained
+highlight def link stylusHashKey NonText
 
-" Box
-syn match cssBoxProp /\(\(margin\|padding\)-\(top\|right\|bottom\|left\)\|\(margin\|padding\)\)/ contained
-syn match cssBoxProp /\(min\|max\)-\(width\|height\)/ contained
-syn match cssBoxProp /box-\(align\|decoration-break\|direction\|flex-group\|flex\|lines\)/ contained
-syn match cssBoxProp /box-\(ordinal-group\|orient\|pack\|shadow\|sizing\)/ contained
-syn match cssBoxProp /\(outline-\(color\|offset\|style\|width\)\|outline\)/ contained
-syn keyword cssBoxProp width height contained
+syntax region stylusHashStringKey start=/\('\|"\)/ end=/\('\|"\):/
+      \ contained
+      \ keepend
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusBoolean,stylusFunctionName,stylusHash,stylusString
+      \ oneline
+      \ skipwhite
 
-" Text
-syn match cssTextProp /text-\(align-last\|align\|decoration\|emphasis\|height\|indent\|justify\|outline\|shadow\|transform\|wrap\|overflow\)\|text/ contained
-syn match cssTextProp /\(line-stacking-\(ruby\|shift\|strategy\)\|line-stacking\|line-height\)/ contained
-syn match cssTextProp /vertical-align/ contained
-syn match cssTextProp /letter-spacing/ contained
-syn match cssTextProp /user-select/ contained
-syn match cssTextProp /white-\(space-collapse\|space\)/ contained
-syn match cssTextProp /word-\(break\|spacing\|wrap\)/ contained
-syn match cssTextProp "\<word-wrap\>" contained
-syn match cssTextVal "\<break-word\>" contained
-syn match cssTextVal "\<break-all\>" contained
-syn match cssTextVal "\<line-through\>" contained
-syn match cssTextVal /text-\(top\|bottom\)/ contained
-syn keyword cssTextVal uppercase lowercase ellipsis middle contained
+highlight def link stylusHashStringKey String
 
-" List
-syn match cssListProp /\(list-style-\(type\|image\|position\)\|list-style\)/ contained
-syn keyword cssListVal armenian circle disc georgian hebrew square contained
-syn match cssListVal /cjk-ideographic/ contained
-syn match cssListVal /\(decimal-leading-zero\|decimal\)/ contained
-syn match cssListVal /\(\(hiragana\|katakana\)-iroha\|\(hiragana\|katakana\)\)/ contained
-syn match cssListVal /\(lower\|upper\)-\(alpha\|latin\|roman\)/ contained
-syn match cssListVal /lower-greek/ contained
+syntax match stylusHashDotGetter "\S\@<=\."
+      \ contained
+      \ nextgroup=stylusHashIdent
 
-" Visual formatting
-syn keyword cssVisualProp display position top right bottom left float clear clip contained
-syn keyword cssVisualProp zoom visibility cursor direction outline resize contained
-syn keyword cssVisualProp opacity contained
-syn match cssVisualProp /z-index/ contained
-syn match cssVisualProp /\(overflow-\(style\|[xy]\)\|overflow\)/ contained
-syn keyword cssVisualVal inline block compact contained
-syn match cssVisualVal '\<table\>' contained
-syn match cssVisualVal /\(inline-\(block\|table\)\|list-item\|run-in\)/ contained
-syn match cssVisualVal /table-\(row-group\|header-group\|footer-group\|row\|column-group\|column\|cell\|caption\)/ contained
-syn match cssVisualVal /\<ruby\>-\(base-group\|text-group\|base\|text\)/  contained
-syn keyword cssVisualVal static relative absolute fixed contained
-syn keyword cssVisualVal ltr rtl embed bidi-override pre nowrap contained
-syn keyword cssVisualVal crosshair help move pointer progress wait contained
-syn keyword cssVisualVal e-resize n-resize ne-resize nw-resize s-resize se-resize sw-resize w-resize contained
+highlight def link stylusHashDotGetter Operator
 
-" Table
-syn match cssTableProp /border-\(collapse\|spacing\)/ contained
-syn match cssTableProp /\(table-layout\|caption-side\|empty-cells\)/ contained
+syntax match stylusHashComma ","
+      \ contained
+      \ nextgroup=stylusHashKey,stylusHashStringKey
+      \ skipwhite
 
-" Generated content
-syn match cssCommonProp /counter-\(reset\|increment\)/ contained
-syn keyword cssCommonProp content quotes contained
+syntax match stylusHashIdent "\<\(\w\|-\|\$\)*\>"
+      \ contained
+      \ nextgroup=stylusColor,stylusUnitInt,stylusUnitFloat,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusOperatorAssignment,stylusPropertyLookup,stylusParenthesised,stylusOperatorAdditive,stylusOperatorMultiplicative,stylusSubscript,stylusOperatorRelational,stylusOperatorLogical,stylusOperatorExistence,stylusOperatorInstance,stylusOperatorVarDefinition,stylusOperatorTernary,stylusImportant,stylusFunctionName,stylusConditional,stylusHashDotGetter
+      \ skipwhite
 
-" Print
-syn match cssPrintProp /break-\(before\|after\|inside\)/
-syn match cssPrintProp /\(page-break-\(before\|after\|inside\)\|page-policy\)/
-syn keyword cssPrintProp orphans windows
+highlight def link stylusHashIdent NonText
 
-" special keywords
-syn match cssSpecialProp /-\(webkit\|moz\|ms\|o\)-/
-syn match cssRuleProp /@\(media\|font-face\|charset\|import\|page\|namespace\)/
-" http://www.w3.org/TR/selectors/
-syn match cssPseudo /:\(link\|visited\|active\|hover\|focus\|before\|after\)/
-syn match cssPseudo /:\(target\|lang\|enabled\|disabled\|checked\|indeterminate\)/
-syn match cssPseudo /:\(root\|\(first\|last\|only\)-\(child\|of-type\)\|empty\)/
-syn match cssPseudo /:\(nth-last-\|nth-\)\(child\|of-type\)(\<\S\+\>)/
-syn match cssPseudo /:not(\<\S*\>)/
-syn match cssPseudo /:first-\(line\|letter\)/
-syn match cssPseudo /::\(first-\(line\|letter\)\|before\|after\|selection\)/
+syntax region stylusHash matchgroup=stylusEnclosure start="{" end="}"
+      \ contained
+      \ contains=stylusHashKey,stylusHashStringKey,stylusHash,stylusHashComma
+      \ skipwhite
 
-" CSS3 Advanced http://meiert.com/en/indices/css-properties/
-syn keyword cssAdvancedProp appearance azimuth binding bleed columns crop hyphens icon
-syn keyword cssAdvancedProp phonemes resize richness size volumne
-syn match cssAdvancedProp /\(animation-\(delay\|direction\|duration\|name\|iteration-count\|play-state\|timing-function\)\|animation\)/
-syn match cssAdvancedProp /alignment-\(adjust\|baseline\)/
-syn match cssAdvancedProp /\(backface-visibility\baseline-shift\)/
-syn match cssAdvancedProp /bookmark-\(label\|level\|state\|target\)/
-syn match cssAdvancedProp /column-\(count\|fill\|gap\|rule-\(color\|style\|width\)\|rule\|span\|width\)/
-syn match cssAdvancedProp /\(cue-\(after\|before\)\|cue\)/
-syn match cssAdvancedProp /dominant-baseline/
-syn match cssAdvancedProp /drop-initial-\(size\|value\|\(after\|before\)-\(adjust\|align\)\)/
-syn match cssAdvancedProp /\(fit-position\|fit\)/
-syn match cssAdvancedProp /\(float-offset\|hanging-punctuation\)/
-syn match cssAdvancedProp /grid-\(columns\|rows\)/
-syn match cssAdvancedProp /hyphenate-\(after\|before\|character\|lines\|resource\)/
-syn match cssAdvancedProp /image-\(orientation\|rendering\|resolution\)/
-syn match cssAdvancedProp /inline-box-align/
-syn match cssAdvancedProp /\(mark-\(after\|before\)\|mark\|marks\)/
-syn match cssAdvancedProp /marquee-\(direction\|loop\|play-count\|speed\|style\)/
-syn match cssAdvancedProp /move-to/
-syn match cssAdvancedProp /nav-\(down\|index\|left\|right\|up\)/
-syn match cssAdvancedProp /\(pause-\(after\|before\)\|pause\)/
-syn match cssAdvancedProp /\(perspective-origin\|perspective\)/
-syn match cssAdvancedProp /\(pitch-range\|pitch\)/
-syn match cssAdvancedProp /presentation-level/
-syn match cssAdvancedProp /punctuation-trim/
-syn match cssAdvancedProp /rendering-intent/
-syn match cssAdvancedProp /pointer-events/
-syn match cssAdvancedProp /\(rest-\(after\|before\)\|rest\)/
-syn match cssAdvancedProp /\(rotation-point\|rotation\)/
-syn match cssAdvancedProp /ruby-\(align\|overhang\|position\|span\)/
-syn match cssAdvancedProp /\(target-\(name\|new\|position\)\|target\)/
-syn match cssAdvancedProp /\(transform-\(origin\|style\)\|transform\)/
-syn match cssAdvancedProp /\(transition-\(delay\|duration\|property\|timing-function\)\|transition\)/
-syn match cssAdvancedProp /voice-\(balance\|duration\|family\|pitch-range\|pitch\|rate\|stress\|volume\)/
+" ===============================================
+" @ RULES
+" ===============================================
 
-syn match cssAdvancedVal /\(ease-\(in\|out\|in-out\)\|ease\)/ contained
+syntax match stylusAtRuleImport "@\(import\|require\)\>"
+      \ containedin=ALLBUT,stylusString,stylusComment
+      \ nextgroup=stylusFunctionName,stylusVariable,stylusExplicitVariable
+      \ skipwhite
 
-" CSS3 Advanced value
-"syn match cssAdvancedVal
+highlight def link stylusAtRuleImport Macro
 
+syntax match stylusAtRuleMedia "@media\>"
+      \ contained
+      \ nextgroup=stylusAtRuleMediaType,stylusAtRuleMediaFeatureExpression
+      \ skipwhite
 
-if main_syntax == "css"
-  syn sync minlines=10
-endif
+highlight def link stylusAtRuleMedia Macro
 
-" Define the default highlighting.
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_css_syn_inits")
-  if version < 508
-    let did_css_syn_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
+syntax match stylusAtRuleMediaType "\<\(all\|print\|screen\|speech\)\>"
+      \ contained
+      \ nextgroup=stylusAtRuleMediaType,stylusAtRuleMediaFeatureExpression,stylusAtRuleMediaLogical
+      \ skipwhite
 
-  HiLink cssString String
-  HiLink cssComment Comment
-  HiLink cssTagName Statement
-  HiLink cssSelector Function
-  HiLink cssBackgroundProp StorageClass
-  HiLink cssTableProp StorageClass
-  HiLink cssBorderProp StorageClass
-  HiLink cssFontProp StorageClass
-  HiLink cssColorProp StorageClass
-  HiLink cssBoxProp StorageClass
-  HiLink cssTextProp StorageClass
-  HiLink cssListProp StorageClass
-  HiLink cssVisualProp StorageClass
-  HiLink cssAdvancedProp StorageClass
-  HiLink cssCommonProp StorageClass
-  HiLink cssSpecialProp Special
-  HiLink cssImportant Special
-  HiLink cssRuleProp PreProc
-  HiLink cssPseudo PreProc
+highlight def link stylusAtRuleMediaType Macro
 
-  HiLink cssColorVal Constant
-  HiLink cssCommonVal Type
-  HiLink cssFontVal Type
-  HiLink cssListVal Type
-  HiLink cssTextVal Type
-  HiLink cssVisualVal Type
-  HiLink cssBorderVal Type
-  HiLink cssBackgroundVal Type
-  HiLink cssFuncVal Function
-  HiLink cssAdvancedVal Function
+syntax match stylusAtRuleMediaLogical "\<\(and\|not\|only\)\>"
+      \ contained
+      \ nextgroup=stylusAtRuleMediaType,stylusAtRuleMediaFeatureExpression,stylusAtRuleMediaLogical
+      \ skipwhite
 
-  HiLink cssValueLength Number
-  HiLink cssValueInteger Number
-  HiLink cssValueNumber Number
-  HiLink cssValueAngle Number
-  HiLink cssValueTime Number
-  HiLink cssValueFrequency Number
-  delcommand HiLink
-endif
+highlight def link stylusAtRuleMediaLogical Operator
 
-" let b:current_syntax = "css"
-"
-if main_syntax == 'css'
-  unlet main_syntax
-endif
+syntax region stylusAtRuleMediaFeatureExpression matchgroup=stylusEnclosure start="(" end=")"
+      \ contained
+      \ contains=stylusAtRuleMediaFeature,stylusInterpolationProperties,stylusInterpolationPropertiesTail
+      \ nextgroup=stylusAtRuleMediaComma,stylusAtRuleMediaLogical
+      \ oneline
+      \ skipwhite
 
-" Vim syntax file
-" Language: Stylus
-" Maintainer: Marc Harter
-" Filenames: *.styl, *.stylus
-" Based On: Tim Pope (sass.vim)
+execute 'syntax match stylusAtRuleMediaFeature "\(min-\|max-\)\=\(' . join(g:css_media_features, '\|') . '\)\>:"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite'
 
-syn case ignore
+syntax match stylusAtRuleMediaFeature "\(\w\|-\)\+{\@="
+      \ contained
+      \ nextgroup=stylusInterpolationProperties
 
-syn cluster stylusCssSelectors contains=cssTagName,cssSelector,cssPseudo
-syn cluster stylusCssValues contains=cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency,cssColorVal,cssCommonVal,cssFontVal,cssListVal,cssTextVal,cssVisualVal,cssBorderVal,cssBackgroundVal,cssFuncVal,cssAdvancedVal
-syn cluster stylusCssProperties contains=cssBackgroundProp,cssTableProp,cssBorderProp,cssFontProp,cssColorProp,cssBoxProp,cssTextProp,cssListProp,cssVisualProp,cssAdvancedProp,cssCommonProp,cssSpecialProp
+syntax match stylusAtRuleMediaFeature "}\@<=:"
+      \ contained
+      \ nextgroup=stylusUnitInt,stylusUnitFloat,stylusColor,stylusValues,stylusFont,stylusVariable,stylusExplicitVariable,stylusPropertyLookup,stylusParenthesised,stylusOperatorUnary,stylusInterpolationProperties,stylusFunctionName
+      \ skipwhite
 
-syn match stylusVariable "$\?[[:alnum:]_-]\+"
-syn match stylusVariableAssignment "\%([[:alnum:]_-]\+\s*\)\@<==" nextgroup=stylusCssAttribute,stylusVariable skipwhite
+highlight def link stylusAtRuleMediaFeature Type
 
-syn match stylusProperty "\%([{};]\s*\|^\)\@<=\%([[:alnum:]-]\|#{[^{}]*}\)\+:" contains=@stylusCssProperties,@stylusCssSelectors skipwhite nextgroup=stylusCssAttribute contained containedin=cssDefineBlock
-syn match stylusProperty "^\s*\zs\s\%(\%([[:alnum:]-]\|#{[^{}]*}\)\+[ :]\|:[[:alnum:]-]\+\)"hs=s+1 contains=@stylusCssProperties,@stylusCssSelectors skipwhite nextgroup=stylusCssAttribute
-syn match stylusProperty "^\s*\zs\s\%(:\=[[:alnum:]-]\+\s*=\)"hs=s+1 contains=@stylusCssProperties,@stylusCssSelectors skipwhite nextgroup=stylusCssAttribute
+syntax match stylusAtRuleMediaComma ","
+      \ contained
+      \ nextgroup=stylusAtRuleMediaFeatureExpression
+      \ skipwhite
 
-syn match stylusCssAttribute +\%("\%([^"]\|\\"\)*"\|'\%([^']\|\\'\)*'\|#{[^{}]*}\|[^{};]\)*+ contained contains=@stylusCssValues,cssImportant,stylusFunction,stylusVariable,stylusControl,stylusUserFunction,stylusInterpolation,cssString,stylusComment,cssComment
+syntax match stylusAtRuleFont "@font-face\>"
+      \ containedin=ALLBUT,stylusString,stylusComment
 
-syn match stylusInterpolation %{[[:alnum:]_-]\+}%
+highlight def link stylusAtRuleFont Macro
 
-syn match stylusFunction "\<\%(red\|green\|blue\|alpha\|dark\|light\)\>(\@=" contained
-syn match stylusFunction "\<\%(hue\|saturation\|lightness\|push\|unshift\|typeof\|unit\|match\)\>(\@=" contained
-syn match stylusFunction "\<\%(hsla\|hsl\|rgba\|rgb\|lighten\|darken\)\>(\@=" contained
-syn match stylusFunction "\<\%(abs\|ceil\|floor\|round\|min\|max\|even\|odd\|sum\|avg\|sin\|cos\|join\)\>(\@=" contained
-syn match stylusFunction "\<\%(desaturate\|saturate\|invert\|unquote\|quote\|s\)\>(\@=" contained
-syn match stylusFunction "\<\%(operate\|length\|warn\|error\|last\|p\|\)\>(\@=" contained
-syn match stylusFunction "\<\%(opposite-position\|image-size\|add-property\)\>(\@=" contained
+syntax match stylusAtRuleKeyframes "@\(-\(o\|webkit\|moz\)-\)\=keyframesi\>"
+      \ contained
+      \ nextgroup=stylusAtRuleKeyframesName,stylusInterpolationSelectors
+      \ skipwhite
 
-syn keyword stylusVariable null true false arguments
-syn keyword stylusControl  if else unless for in return
+highlight def link stylusAtRuleKeyframes Macro
 
-syn match stylusImport "@\%(import\|require\)" nextgroup=stylusImportList
-syn match stylusImportList "[^;]\+" contained contains=cssString.*,cssMediaType,cssURL
+syntax match stylusAtRuleKeyframesName "\<\(\w\|-\|\$\)*\>"
+      \ contained
+      \ nextgroup=stylusInterpolationSelectors
+      \ skipwhite
 
-syn match stylusAmpersand  "&"
-syn match stylusClass      "[[:alnum:]_-]\+" contained
-syn match stylusClassChar  "\.[[:alnum:]_-]\@=" nextgroup=stylusClass
-syn match stylusEscape     "^\s*\zs\\"
-syn match stylusId         "[[:alnum:]_-]\+" contained
-syn match stylusIdChar     "#[[:alnum:]_-]\@=" nextgroup=stylusId
+highlight def link stylusAtRuleKeyframesName Identifier
 
-syn region stylusComment    start="//" end="$" contains=cssTodo,@Spell fold
+syntax match stylusAtRuleKeyframesOffset "\d\{1,3}%"
+      \ contained
 
-hi def link stylusComment               Comment
-hi def link stylusVariable              Identifier
-hi def link stylusControl               PreProc
-hi def link stylusFunction              Function
-hi def link stylusInterpolation         Delimiter
+syntax match stylusAtRuleKeyframesOffset "\<\(from\|to\)\>"
+      \ contained
 
-hi def link stylusAmpersand             Character
-hi def link stylusClass                 Type
-hi def link stylusClassChar             Special
-hi def link stylusEscape                Special
-hi def link stylusId                    Identifier
-hi def link stylusIdChar                Special
+highlight def link stylusAtRuleKeyframesOffset Macro
+
+syntax match stylusAtRuleNamespace "@namespace\>"
+      \ contained
+      \ nextgroup=stylusAtRuleNamespacePrefix,stylusAtRuleNamespaceUrl
+      \ skipwhite
+
+highlight def link stylusAtRuleNamespace Macro
+
+syntax match stylusAtRuleNamespacePrefix "\<\(\w\|-\|\$\)*\>"
+      \ contained
+      \ nextgroup=stylusAtRuleNamespaceUrl
+      \ skipwhite
+
+highlight def link stylusAtRuleNamespacePrefix Macro
+
+syntax match stylusAtRuleNamespaceUrl "\<url(\@="
+      \ contained
+      \ nextgroup=stylusAtRuleNamespaceUrlAdress
+
+highlight def link stylusAtRuleNamespaceUrl Function
+
+syntax region stylusAtRuleNamespaceUrlAdress matchgroup=stylusEnclosure start="(" end=")"
+      \ contained
+
+highlight def link stylusAtRuleNamespaceUrlAdress String
+
+syntax match stylusAtRuleSupports "@supports\>"
+      \ contained
+      \ nextgroup=stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
+      \ skipwhite
+
+highlight def link stylusAtRuleSupports Macro
+
+syntax region stylusAtRuleSupportsDeclaration matchgroup=stylusEnclosure start="(" end=")"
+      \ contained
+      \ contains=stylusProperty,stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
+      \ nextgroup=stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
+      \ oneline
+      \ skipwhite
+
+syntax match stylusAtRuleSupportsLogic "\<\(and\|not\|or\)\>"
+      \ contained
+      \ nextgroup=stylusAtRuleSupportsLogic,stylusAtRuleSupportsDeclaration
+      \ skipwhite
+
+highlight def link stylusAtRuleSupportsLogic Operator
+
+syntax match stylusAtRuleDocument "@document\>"
+      \ contained
+      \ nextgroup=stylusAtRuleDocumentFunc
+      \ skipwhite
+
+highlight def link stylusAtRuleDocument Macro
+
+syntax match stylusAtRuleDocumentFunc "\<\(url\|url-prefix\|domain\|regexp\)(\@="
+      \ contained
+      \ nextgroup=stylusAtRuleNamespaceUrlAdress
+
+highlight def link stylusAtRuleDocumentFunc Function
+
+syntax match stylusAtRulePage "@page\>"
+      \ contained
+      \ nextgroup=stylusAtRulePagePseudo
+      \ skipwhite
+
+highlight def link stylusAtRulePage Macro
+
+syntax match stylusAtRulePagePseudo ":\(left\|right\|first\|blank\)\>"
+      \ contained
+
+highlight def link stylusAtRulePagePseudo Macro
+
+syntax match stylusAtRulePageMarginBoxTypes "@\(top-left-corner\|top-left\|top-center\|top-right\|top-right-corner\|bottom-left-corner\|bottom-left\|bottom-center\|bottom-right\|bottom-right-corner\|left-top\|left-middle\|left-bottom\|right-top\|right-middle\|right-bottom\)\>"
+      \ contained
+
+highlight def link stylusAtRulePageMarginBoxTypes Macro
+
+syntax match stylusAtRuleViewport "@viewport\>"
+      \ contained
+      \ skipwhite
+
+highlight def link stylusAtRuleViewport Macro
+
+syntax match stylusAtRuleBlock "@block\>"
+      \ contained
+
+highlight def link stylusAtRuleBlock Macro
+
+syntax match stylusAtRuleExtends "@extends\=\>"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusExplicitVariable
+      \ skipwhite
+
+highlight def link stylusAtRuleExtends Macro
+
+syntax match stylusOptional "!optional"
+      \ contained
+      \ nextgroup=stylusSelectorClass,stylusSelectorId,stylusSelectorCombinator,stylusSelectorElement,stylusSelectorAttribute,stylusSelectorPseudo,stylusSelectorReference,stylusSelectorPartialReference,stylusInterpolationSelectors,stylusExplicitVariable
+      \ skipwhite
+
+highlight def link stylusOptional Special
+" ===============================================
+" COMMENTS
+" ===============================================
+
+" Single-line
+syntax region stylusComment start="//" end="$"
+      \ containedin=ALLBUT,stylusString
+      \ keepend
+      \ oneline
+
+" Multi-line
+syntax region stylusComment start="/\*" end="\*/"
+      \ containedin=ALLBUT,stylusString
+      \ keepend
+
+highlight def link stylusComment Comment
+
+" ===============================================
 
 let b:current_syntax = "stylus"
-
-" vim:set sw=2:
