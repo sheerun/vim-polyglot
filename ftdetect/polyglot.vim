@@ -14,11 +14,6 @@ let did_load_polyglot = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
-" It can happen vim filetype.vim loads first, then we need a reset
-if exists("did_load_filetypes")
-  au! filetypedetect
-endif
-
 let g:polyglot_is_disabled = {}
 let s:new_polyglot_disabled = []
 
@@ -47,9 +42,6 @@ func! PolyglotVerify()
 endfun
 
 au VimEnter * call PolyglotVerify()
-
-" Prevent filetype.vim of vim from loading again
-let did_load_filetypes = 1
 
 " Be consistent across different systems
 set nofileignorecase
@@ -141,6 +133,15 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 if !has_key(g:polyglot_is_disabled, 'ftdetect')
+
+" It can happen vim filetype.vim loads first, then we need a reset
+if exists("did_load_filetypes")
+  au! filetypedetect
+endif
+
+" Prevent filetype.vim of vim from loading again
+let did_load_filetypes = 1
+
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
@@ -2657,8 +2658,6 @@ endif
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 
-endif
-
 func! s:Observe(fn)
   let b:PolyglotObserve = function("polyglot#" . a:fn)
   augroup polyglot-observer
@@ -2677,6 +2676,7 @@ au BufWritePost * au! polyglot-observer
 
 augroup END
 
+endif
 
 if !has_key(g:polyglot_is_disabled, 'sensible')
   " Use 2-spaces tab indentation by default
