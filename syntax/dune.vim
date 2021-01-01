@@ -2,6 +2,17 @@ if has_key(g:polyglot_is_disabled, 'ocaml')
   finish
 endif
 
+" Vim syntax file
+" Language:    Dune buildsystem
+" Maintainer:  Markus Mottl        <markus.mottl@gmail.com>
+"              Anton Kochkov       <anton.kochkov@gmail.com>
+" URL:         https://github.com/ocaml/vim-ocaml
+" Last Change:
+"              2019 Feb 27 - Add newer keywords to the syntax (Simon Cruanes)
+"              2018 May 8 - Check current_syntax (Kawahara Satoru)
+"              2018 Mar 29 - Extend jbuild syntax with more keywords (Petter A. Urkedal)
+"              2017 Sep 6 - Initial version (Etienne Millon)
+
 if exists("b:current_syntax")
     finish
 endif

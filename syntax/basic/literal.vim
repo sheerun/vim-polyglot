@@ -9,7 +9,7 @@ syntax match   typescriptASCII                 contained /\\\d\d\d/
 
 syntax region  typescriptTemplateSubstitution matchgroup=typescriptTemplateSB
   \ start=/\${/ end=/}/
-  \ contains=@typescriptValue
+  \ contains=@typescriptValue,typescriptCastKeyword
   \ contained
 
 
@@ -33,7 +33,7 @@ syntax region  typescriptTemplate
 "Array
 syntax region  typescriptArray matchgroup=typescriptBraces
   \ start=/\[/ end=/]/
-  \ contains=@typescriptValue,@typescriptComments
+  \ contains=@typescriptValue,@typescriptComments,typescriptCastKeyword
   \ nextgroup=@typescriptSymbols,typescriptDotNotation
   \ skipwhite skipempty fold
 

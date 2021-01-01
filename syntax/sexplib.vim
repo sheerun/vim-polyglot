@@ -6,10 +6,10 @@ endif
 " Language:     S-expressions as used in Sexplib
 " Filenames:    *.sexp
 " Maintainers:  Markus Mottl      <markus.mottl@gmail.com>
-" URL:          http://www.ocaml.info/vim/syntax/sexplib.vim
-" Last Change:  2017 Apr 11 - Improved matching of negative numbers (MM)
+" URL:          https://github.com/ocaml/vim-ocaml
+" Last Change:  2020 Dec 31 - Updated header for Vim contribution (MM)
+"               2017 Apr 11 - Improved matching of negative numbers (MM)
 "               2012 Jun 20 - Fixed a block comment highlighting bug (MM)
-"               2012 Apr 24 - Added support for new comment styles (MM)
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded

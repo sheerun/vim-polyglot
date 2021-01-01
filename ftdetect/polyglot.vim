@@ -145,6 +145,10 @@ let did_load_filetypes = 1
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(g:polyglot_is_disabled, 'gleam')
+  au BufNewFile,BufRead *.gleam setf gleam
+endif
+
 if !has_key(g:polyglot_is_disabled, 'jsonc')
   au BufNewFile,BufRead *.cjson,*.jsonc,{.,}babelrc,{.,}eslintrc.json,{.,}jshintrc,{.,}jslintrc,{.,}mocharc.json,coc-settings.json,coffeelint.json,jsconfig.json,tsconfig.json setf jsonc
 endif

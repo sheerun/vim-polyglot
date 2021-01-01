@@ -2,6 +2,13 @@ if has_key(g:polyglot_is_disabled, 'ocaml')
   finish
 endif
 
+" Vim syntax file
+" Language:    OPAM - OCaml package manager
+" Maintainer:  Markus Mottl        <markus.mottl@gmail.com>
+" URL:         https://github.com/ocaml/vim-ocaml
+" Last Change:
+"              2020 Dec 31 - Added header (Markus Mottl)
+
 if exists("b:current_syntax")
   finish
 endif

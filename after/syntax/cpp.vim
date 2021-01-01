@@ -103,7 +103,7 @@ endif
 
 " C++14 extensions {{{1
 if !exists('cpp_no_cpp14')
-    syntax keyword cppSTLnamespace literals chrono_literals string_literals
+    syntax keyword cppSTLnamespace literals chrono_literals string_literals complex_literals
 
     syntax keyword cppSTLfunction make_unique
 
@@ -117,7 +117,7 @@ endif
 
 " C++17 extensions {{{1
 if !exists('cpp_no_cpp17')
-    syntax keyword cppSTLnamespace filesystem execution
+    syntax keyword cppSTLnamespace filesystem execution string_view_literals
 
     syntax keyword cppSTLtype
             \ any is_execution_policy parallel_policy parallel_unsequenced_policy sequenced_policy directory_entry directory_iterator file_status file_time_type path recursive_directory_iterator space_info default_order default_searcher boyer_moore_searcher boyer_moore_horspool_searcher memory_resource monotonic_buffer_resource polymorphic_allocator pool_options synchronized_pool_resource unsynchronized_pool_resource scoped_lock optional shared_mutex basic_string_view string_view u16string_view u32string_view wstring_view bool_constant conjunction disjunction has_unique_object_representations invoke_result is_aggregate is_callable is_invocable is_invocable_r is_nothrow_invocable is_nothrow_invocable_r is_nothrow_swappable is_nothrow_swappable_with is_nowthrow_callable is_swappable is_swappable_with negation node_type insert_return_type in_place_tag monostate variant variant_size variant_alternative

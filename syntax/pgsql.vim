@@ -5,11 +5,11 @@ endif
 " Vim syntax file
 " Language:     SQL (PostgreSQL dialect), PL/pgSQL, PL/…, PostGIS, …
 " Maintainer:   Lifepillar
-" Version:      2.3.0
+" Version:      2.3.1
 " License:      Vim license (see `:help license`)
 
 " Based on PostgreSQL 13.1
-" Automatically generated on 2020-12-23 at 20:13:28
+" Automatically generated on 2020-12-30 at 10:21:40
 
 if exists("b:current_syntax")
   finish
@@ -20,7 +20,7 @@ syn sync minlines=100
 syn iskeyword @,48-57,192-255,_
 
 syn match sqlIsKeyword  /\<\h\w*\>/   contains=sqlStatement,sqlKeyword,sqlCatalog,sqlConstant,sqlSpecial,sqlOption,sqlErrorCode,sqlType,sqlTable,sqlView
-syn match sqlIsFunction /\<\h\w*\ze(/ contains=sqlFunction,sqlKeyword
+syn match sqlIsFunction /\<\h\w*\ze(/ contains=sqlFunction,sqlKeyword,sqlType
 syn region sqlIsPsql    start=/^\s*\\/ end=/\n/ oneline contains=sqlPsqlCommand,sqlPsqlKeyword,sqlNumber,sqlString
 
 syn keyword sqlSpecial contained false null true
@@ -77,9 +77,9 @@ syn match sqlKeyword /\<on\s\+\%(tables\|sequences\|routines\)\>/
 syn match sqlType /\<text\>/
 syn match sqlKeyword /\<text\s\+search\>/
 " Additional types
-syn keyword sqlType contained array at bigint bigserial bit boolean char character cube decimal
-syn keyword sqlType contained double int integer interval numeric precision real serial serial2
-syn keyword sqlType contained serial4 serial8 smallint smallserial timestamp varchar varying xml zone
+syn keyword sqlType contained array at bigint bigserial bit boolean character cube decimal double
+syn keyword sqlType contained int integer interval numeric precision real serial serial2 serial4
+syn keyword sqlType contained serial8 smallint smallserial timestamp varying xml zone
 " Keywords
 syn keyword sqlKeyword contained absolute access action admin after aggregate all also always
 syn keyword sqlKeyword contained analyse and any as asc assertion assignment asymmetric attach attribute
@@ -203,129 +203,129 @@ syn keyword sqlFunction contained cash_div_int2 cash_div_int4 cash_div_int8 cash
 syn keyword sqlFunction contained cash_in cash_le cash_lt cash_mi cash_mul_flt4 cash_mul_flt8
 syn keyword sqlFunction contained cash_mul_int2 cash_mul_int4 cash_mul_int8 cash_ne cash_out cash_pl
 syn keyword sqlFunction contained cash_recv cash_send cash_words cashlarger cashsmaller cbrt ceil ceiling
-syn keyword sqlFunction contained center char char_length character_length chareq charge chargt
-syn keyword sqlFunction contained charin charle charlt charne charout charrecv charsend chr cideq cidin
-syn keyword sqlFunction contained cidout cidr cidr_in cidr_out cidr_recv cidr_send cidrecv cidsend
-syn keyword sqlFunction contained circle circle_above circle_add_pt circle_below circle_center
+syn keyword sqlFunction contained center char_length character_length chareq charge chargt charin
+syn keyword sqlFunction contained charle charlt charne charout charrecv charsend chr cideq cidin cidout
+syn keyword sqlFunction contained cidr cidr_in cidr_out cidr_recv cidr_send cidrecv cidsend circle
+syn keyword sqlFunction contained circle_above circle_add_pt circle_below circle_center
 syn keyword sqlFunction contained circle_contain circle_contain_pt circle_contained circle_distance
 syn keyword sqlFunction contained circle_div_pt circle_eq circle_ge circle_gt circle_in circle_le
-syn keyword sqlFunction contained circle_left circle_lt circle_mul_pt circle_ne circle_out
-syn keyword sqlFunction contained circle_overabove circle_overbelow circle_overlap circle_overleft
-syn keyword sqlFunction contained circle_overright circle_recv circle_right circle_same circle_send
-syn keyword sqlFunction contained circle_sub_pt clock_timestamp close_lb close_ls close_lseg close_pb
-syn keyword sqlFunction contained close_pl close_ps close_sb close_sl col_description concat concat_ws
-syn keyword sqlFunction contained contjoinsel contsel convert convert_from convert_to corr cos cosd cosh
-syn keyword sqlFunction contained cot cotd count covar_pop covar_samp cstring_in cstring_out
+syn keyword sqlFunction contained circle_left circle_lt circle_mul_pt circle_ne circle_out circle_overabove
+syn keyword sqlFunction contained circle_overbelow circle_overlap circle_overleft
+syn keyword sqlFunction contained circle_overright circle_recv circle_right circle_same circle_send circle_sub_pt
+syn keyword sqlFunction contained clock_timestamp close_lb close_ls close_lseg close_pb close_pl
+syn keyword sqlFunction contained close_ps close_sb close_sl col_description concat concat_ws
+syn keyword sqlFunction contained contjoinsel contsel convert convert_from convert_to corr cos cosd cosh cot
+syn keyword sqlFunction contained cotd count covar_pop covar_samp cstring_in cstring_out
 syn keyword sqlFunction contained cstring_recv cstring_send cume_dist cume_dist_final current_database
 syn keyword sqlFunction contained current_query current_schema current_schemas current_setting
-syn keyword sqlFunction contained current_user currtid currtid2 currval cursor_to_xml
-syn keyword sqlFunction contained cursor_to_xmlschema database_to_xml database_to_xml_and_xmlschema
+syn keyword sqlFunction contained current_user currtid currtid2 currval cursor_to_xml cursor_to_xmlschema
+syn keyword sqlFunction contained database_to_xml database_to_xml_and_xmlschema
 syn keyword sqlFunction contained database_to_xmlschema date date_cmp date_cmp_timestamp date_cmp_timestamptz
 syn keyword sqlFunction contained date_eq date_eq_timestamp date_eq_timestamptz date_ge
 syn keyword sqlFunction contained date_ge_timestamp date_ge_timestamptz date_gt date_gt_timestamp
 syn keyword sqlFunction contained date_gt_timestamptz date_in date_larger date_le date_le_timestamp
-syn keyword sqlFunction contained date_le_timestamptz date_lt date_lt_timestamp date_lt_timestamptz
-syn keyword sqlFunction contained date_mi date_mi_interval date_mii date_ne date_ne_timestamp
-syn keyword sqlFunction contained date_ne_timestamptz date_out date_part date_pl_interval date_pli
-syn keyword sqlFunction contained date_recv date_send date_smaller date_sortsupport date_trunc daterange
-syn keyword sqlFunction contained daterange_canonical daterange_subdiff datetime_pl
-syn keyword sqlFunction contained datetimetz_pl dcbrt decode degrees dense_rank dense_rank_final dexp diagonal
+syn keyword sqlFunction contained date_le_timestamptz date_lt date_lt_timestamp date_lt_timestamptz date_mi
+syn keyword sqlFunction contained date_mi_interval date_mii date_ne date_ne_timestamp
+syn keyword sqlFunction contained date_ne_timestamptz date_out date_part date_pl_interval date_pli date_recv
+syn keyword sqlFunction contained date_send date_smaller date_sortsupport date_trunc daterange
+syn keyword sqlFunction contained daterange_canonical daterange_subdiff datetime_pl datetimetz_pl
+syn keyword sqlFunction contained dcbrt decode degrees dense_rank dense_rank_final dexp diagonal
 syn keyword sqlFunction contained diameter dispell_init dispell_lexize dist_bl dist_bp dist_bs
-syn keyword sqlFunction contained dist_cpoint dist_cpoly dist_lb dist_lp dist_ls dist_pathp dist_pb
-syn keyword sqlFunction contained dist_pc dist_pl dist_polyc dist_polyp dist_ppath dist_ppoly dist_ps
-syn keyword sqlFunction contained dist_sb dist_sl dist_sp div dlog1 dlog10 domain_in domain_recv dpow
-syn keyword sqlFunction contained dround dsimple_init dsimple_lexize dsnowball_init dsnowball_lexize
-syn keyword sqlFunction contained dsqrt dsynonym_init dsynonym_lexize dtrunc
-syn keyword sqlFunction contained elem_contained_by_range encode enum_cmp enum_eq enum_first enum_ge enum_gt enum_in
-syn keyword sqlFunction contained enum_larger enum_last enum_le enum_lt enum_ne enum_out enum_range
-syn keyword sqlFunction contained enum_recv enum_send enum_smaller eqjoinsel eqsel euc_cn_to_mic
+syn keyword sqlFunction contained dist_cpoint dist_cpoly dist_lb dist_lp dist_ls dist_pathp dist_pb dist_pc
+syn keyword sqlFunction contained dist_pl dist_polyc dist_polyp dist_ppath dist_ppoly dist_ps dist_sb
+syn keyword sqlFunction contained dist_sl dist_sp div dlog1 dlog10 domain_in domain_recv dpow dround
+syn keyword sqlFunction contained dsimple_init dsimple_lexize dsnowball_init dsnowball_lexize dsqrt
+syn keyword sqlFunction contained dsynonym_init dsynonym_lexize dtrunc elem_contained_by_range
+syn keyword sqlFunction contained encode enum_cmp enum_eq enum_first enum_ge enum_gt enum_in
+syn keyword sqlFunction contained enum_larger enum_last enum_le enum_lt enum_ne enum_out enum_range enum_recv
+syn keyword sqlFunction contained enum_send enum_smaller eqjoinsel eqsel euc_cn_to_mic
 syn keyword sqlFunction contained euc_cn_to_utf8 euc_jis_2004_to_shift_jis_2004 euc_jis_2004_to_utf8
 syn keyword sqlFunction contained euc_jp_to_mic euc_jp_to_sjis euc_jp_to_utf8 euc_kr_to_mic
 syn keyword sqlFunction contained euc_kr_to_utf8 euc_tw_to_big5 euc_tw_to_mic euc_tw_to_utf8
 syn keyword sqlFunction contained event_trigger_in event_trigger_out every exp factorial family fdw_handler_in
-syn keyword sqlFunction contained fdw_handler_out first_value float4 float48div float48eq
-syn keyword sqlFunction contained float48ge float48gt float48le float48lt float48mi float48mul float48ne
-syn keyword sqlFunction contained float48pl float4_accum float4abs float4div float4eq float4ge
-syn keyword sqlFunction contained float4gt float4in float4larger float4le float4lt float4mi float4mul
-syn keyword sqlFunction contained float4ne float4out float4pl float4recv float4send float4smaller
-syn keyword sqlFunction contained float4um float4up float8 float84div float84eq float84ge float84gt
-syn keyword sqlFunction contained float84le float84lt float84mi float84mul float84ne float84pl
-syn keyword sqlFunction contained float8_accum float8_avg float8_combine float8_corr float8_covar_pop
-syn keyword sqlFunction contained float8_covar_samp float8_regr_accum float8_regr_avgx
-syn keyword sqlFunction contained float8_regr_avgy float8_regr_combine float8_regr_intercept float8_regr_r2
+syn keyword sqlFunction contained fdw_handler_out first_value float4 float48div float48eq float48ge
+syn keyword sqlFunction contained float48gt float48le float48lt float48mi float48mul float48ne
+syn keyword sqlFunction contained float48pl float4_accum float4abs float4div float4eq float4ge float4gt
+syn keyword sqlFunction contained float4in float4larger float4le float4lt float4mi float4mul float4ne
+syn keyword sqlFunction contained float4out float4pl float4recv float4send float4smaller float4um
+syn keyword sqlFunction contained float4up float8 float84div float84eq float84ge float84gt float84le
+syn keyword sqlFunction contained float84lt float84mi float84mul float84ne float84pl float8_accum
+syn keyword sqlFunction contained float8_avg float8_combine float8_corr float8_covar_pop
+syn keyword sqlFunction contained float8_covar_samp float8_regr_accum float8_regr_avgx float8_regr_avgy
+syn keyword sqlFunction contained float8_regr_combine float8_regr_intercept float8_regr_r2
 syn keyword sqlFunction contained float8_regr_slope float8_regr_sxx float8_regr_sxy float8_regr_syy
-syn keyword sqlFunction contained float8_stddev_pop float8_stddev_samp float8_var_pop
-syn keyword sqlFunction contained float8_var_samp float8abs float8div float8eq float8ge float8gt float8in
+syn keyword sqlFunction contained float8_stddev_pop float8_stddev_samp float8_var_pop float8_var_samp
+syn keyword sqlFunction contained float8abs float8div float8eq float8ge float8gt float8in
 syn keyword sqlFunction contained float8larger float8le float8lt float8mi float8mul float8ne float8out
-syn keyword sqlFunction contained float8pl float8recv float8send float8smaller float8um float8up
-syn keyword sqlFunction contained floor flt4_mul_cash flt8_mul_cash fmgr_c_validator
+syn keyword sqlFunction contained float8pl float8recv float8send float8smaller float8um float8up floor
+syn keyword sqlFunction contained flt4_mul_cash flt8_mul_cash fmgr_c_validator
 syn keyword sqlFunction contained fmgr_internal_validator fmgr_sql_validator format format_type gb18030_to_utf8
 syn keyword sqlFunction contained gbk_to_utf8 gcd gen_random_uuid generate_series
 syn keyword sqlFunction contained generate_series_int4_support generate_series_int8_support generate_subscripts
 syn keyword sqlFunction contained get_bit get_byte get_current_ts_config getdatabaseencoding
-syn keyword sqlFunction contained getpgusername gin_clean_pending_list gin_cmp_prefix
-syn keyword sqlFunction contained gin_cmp_tslexeme gin_compare_jsonb gin_consistent_jsonb
-syn keyword sqlFunction contained gin_consistent_jsonb_path gin_extract_jsonb gin_extract_jsonb_path
+syn keyword sqlFunction contained getpgusername gin_clean_pending_list gin_cmp_prefix gin_cmp_tslexeme
+syn keyword sqlFunction contained gin_compare_jsonb gin_consistent_jsonb gin_consistent_jsonb_path
+syn keyword sqlFunction contained gin_extract_jsonb gin_extract_jsonb_path
 syn keyword sqlFunction contained gin_extract_jsonb_query gin_extract_jsonb_query_path gin_extract_tsquery
 syn keyword sqlFunction contained gin_extract_tsvector gin_triconsistent_jsonb
 syn keyword sqlFunction contained gin_triconsistent_jsonb_path gin_tsquery_consistent gin_tsquery_triconsistent
 syn keyword sqlFunction contained ginarrayconsistent ginarrayextract ginarraytriconsistent ginhandler
 syn keyword sqlFunction contained ginqueryarrayextract gist_box_consistent gist_box_distance
 syn keyword sqlFunction contained gist_box_penalty gist_box_picksplit gist_box_same gist_box_union
-syn keyword sqlFunction contained gist_circle_compress gist_circle_consistent
-syn keyword sqlFunction contained gist_circle_distance gist_point_compress gist_point_consistent
-syn keyword sqlFunction contained gist_point_distance gist_point_fetch gist_poly_compress gist_poly_consistent
-syn keyword sqlFunction contained gist_poly_distance gisthandler gtsquery_compress
-syn keyword sqlFunction contained gtsquery_consistent gtsquery_penalty gtsquery_picksplit gtsquery_same
-syn keyword sqlFunction contained gtsquery_union gtsvector_compress gtsvector_consistent
-syn keyword sqlFunction contained gtsvector_decompress gtsvector_options gtsvector_penalty gtsvector_picksplit
+syn keyword sqlFunction contained gist_circle_compress gist_circle_consistent gist_circle_distance
+syn keyword sqlFunction contained gist_point_compress gist_point_consistent gist_point_distance
+syn keyword sqlFunction contained gist_point_fetch gist_poly_compress gist_poly_consistent
+syn keyword sqlFunction contained gist_poly_distance gisthandler gtsquery_compress gtsquery_consistent
+syn keyword sqlFunction contained gtsquery_penalty gtsquery_picksplit gtsquery_same
+syn keyword sqlFunction contained gtsquery_union gtsvector_compress gtsvector_consistent gtsvector_decompress
+syn keyword sqlFunction contained gtsvector_options gtsvector_penalty gtsvector_picksplit
 syn keyword sqlFunction contained gtsvector_same gtsvector_union gtsvectorin gtsvectorout
 syn keyword sqlFunction contained has_any_column_privilege has_column_privilege has_database_privilege
 syn keyword sqlFunction contained has_foreign_data_wrapper_privilege has_function_privilege
 syn keyword sqlFunction contained has_language_privilege has_schema_privilege has_sequence_privilege
-syn keyword sqlFunction contained has_server_privilege has_table_privilege
-syn keyword sqlFunction contained has_tablespace_privilege has_type_privilege hash_aclitem hash_aclitem_extended
+syn keyword sqlFunction contained has_server_privilege has_table_privilege has_tablespace_privilege
+syn keyword sqlFunction contained has_type_privilege hash_aclitem hash_aclitem_extended
 syn keyword sqlFunction contained hash_array hash_array_extended hash_numeric hash_numeric_extended
 syn keyword sqlFunction contained hash_range hash_range_extended hashbpchar hashbpcharextended
 syn keyword sqlFunction contained hashchar hashcharextended hashenum hashenumextended hashfloat4
-syn keyword sqlFunction contained hashfloat4extended hashfloat8 hashfloat8extended hashhandler
-syn keyword sqlFunction contained hashinet hashinetextended hashint2 hashint2extended hashint4
+syn keyword sqlFunction contained hashfloat4extended hashfloat8 hashfloat8extended hashhandler hashinet
+syn keyword sqlFunction contained hashinetextended hashint2 hashint2extended hashint4
 syn keyword sqlFunction contained hashint4extended hashint8 hashint8extended hashmacaddr hashmacaddr8
 syn keyword sqlFunction contained hashmacaddr8extended hashmacaddrextended hashname hashnameextended
-syn keyword sqlFunction contained hashoid hashoidextended hashoidvector hashoidvectorextended
-syn keyword sqlFunction contained hashtext hashtextextended hashtid hashtidextended hashvarlena
+syn keyword sqlFunction contained hashoid hashoidextended hashoidvector hashoidvectorextended hashtext
+syn keyword sqlFunction contained hashtextextended hashtid hashtidextended hashvarlena
 syn keyword sqlFunction contained hashvarlenaextended heap_tableam_handler height host hostmask
 syn keyword sqlFunction contained iclikejoinsel iclikesel icnlikejoinsel icnlikesel icregexeqjoinsel
-syn keyword sqlFunction contained icregexeqsel icregexnejoinsel icregexnesel in_range
-syn keyword sqlFunction contained index_am_handler_in index_am_handler_out inet_client_addr inet_client_port
+syn keyword sqlFunction contained icregexeqsel icregexnejoinsel icregexnesel in_range index_am_handler_in
+syn keyword sqlFunction contained index_am_handler_out inet_client_addr inet_client_port
 syn keyword sqlFunction contained inet_gist_compress inet_gist_consistent inet_gist_fetch
-syn keyword sqlFunction contained inet_gist_penalty inet_gist_picksplit inet_gist_same inet_gist_union
-syn keyword sqlFunction contained inet_in inet_merge inet_out inet_recv inet_same_family inet_send
+syn keyword sqlFunction contained inet_gist_penalty inet_gist_picksplit inet_gist_same inet_gist_union inet_in
+syn keyword sqlFunction contained inet_merge inet_out inet_recv inet_same_family inet_send
 syn keyword sqlFunction contained inet_server_addr inet_server_port inet_spg_choose inet_spg_config
 syn keyword sqlFunction contained inet_spg_inner_consistent inet_spg_leaf_consistent
-syn keyword sqlFunction contained inet_spg_picksplit inetand inetmi inetmi_int8 inetnot inetor inetpl initcap
-syn keyword sqlFunction contained int2 int24div int24eq int24ge int24gt int24le int24lt int24mi
-syn keyword sqlFunction contained int24mul int24ne int24pl int28div int28eq int28ge int28gt int28le int28lt
+syn keyword sqlFunction contained inet_spg_picksplit inetand inetmi inetmi_int8 inetnot inetor inetpl initcap int2
+syn keyword sqlFunction contained int24div int24eq int24ge int24gt int24le int24lt int24mi int24mul
+syn keyword sqlFunction contained int24ne int24pl int28div int28eq int28ge int28gt int28le int28lt
 syn keyword sqlFunction contained int28mi int28mul int28ne int28pl int2_accum int2_accum_inv
-syn keyword sqlFunction contained int2_avg_accum int2_avg_accum_inv int2_mul_cash int2_sum int2abs
-syn keyword sqlFunction contained int2and int2div int2eq int2ge int2gt int2in int2int4_sum int2larger
-syn keyword sqlFunction contained int2le int2lt int2mi int2mod int2mul int2ne int2not int2or int2out int2pl
+syn keyword sqlFunction contained int2_avg_accum int2_avg_accum_inv int2_mul_cash int2_sum int2abs int2and
+syn keyword sqlFunction contained int2div int2eq int2ge int2gt int2in int2int4_sum int2larger int2le
+syn keyword sqlFunction contained int2lt int2mi int2mod int2mul int2ne int2not int2or int2out int2pl
 syn keyword sqlFunction contained int2recv int2send int2shl int2shr int2smaller int2um int2up
 syn keyword sqlFunction contained int2vectorin int2vectorout int2vectorrecv int2vectorsend int2xor int4
 syn keyword sqlFunction contained int42div int42eq int42ge int42gt int42le int42lt int42mi int42mul
-syn keyword sqlFunction contained int42ne int42pl int48div int48eq int48ge int48gt int48le int48lt
-syn keyword sqlFunction contained int48mi int48mul int48ne int48pl int4_accum int4_accum_inv
-syn keyword sqlFunction contained int4_avg_accum int4_avg_accum_inv int4_avg_combine int4_mul_cash int4_sum
-syn keyword sqlFunction contained int4abs int4and int4div int4eq int4ge int4gt int4in int4inc
-syn keyword sqlFunction contained int4larger int4le int4lt int4mi int4mod int4mul int4ne int4not int4or
-syn keyword sqlFunction contained int4out int4pl int4range int4range_canonical int4range_subdiff
-syn keyword sqlFunction contained int4recv int4send int4shl int4shr int4smaller int4um int4up int4xor int8
+syn keyword sqlFunction contained int42ne int42pl int48div int48eq int48ge int48gt int48le int48lt int48mi
+syn keyword sqlFunction contained int48mul int48ne int48pl int4_accum int4_accum_inv int4_avg_accum
+syn keyword sqlFunction contained int4_avg_accum_inv int4_avg_combine int4_mul_cash int4_sum
+syn keyword sqlFunction contained int4abs int4and int4div int4eq int4ge int4gt int4in int4inc int4larger
+syn keyword sqlFunction contained int4le int4lt int4mi int4mod int4mul int4ne int4not int4or int4out
+syn keyword sqlFunction contained int4pl int4range int4range_canonical int4range_subdiff int4recv
+syn keyword sqlFunction contained int4send int4shl int4shr int4smaller int4um int4up int4xor int8
 syn keyword sqlFunction contained int82div int82eq int82ge int82gt int82le int82lt int82mi int82mul
-syn keyword sqlFunction contained int82ne int82pl int84div int84eq int84ge int84gt int84le int84lt
-syn keyword sqlFunction contained int84mi int84mul int84ne int84pl int8_accum int8_accum_inv int8_avg
+syn keyword sqlFunction contained int82ne int82pl int84div int84eq int84ge int84gt int84le int84lt int84mi
+syn keyword sqlFunction contained int84mul int84ne int84pl int8_accum int8_accum_inv int8_avg
 syn keyword sqlFunction contained int8_avg_accum int8_avg_accum_inv int8_avg_combine
-syn keyword sqlFunction contained int8_avg_deserialize int8_avg_serialize int8_mul_cash int8_sum int8abs
-syn keyword sqlFunction contained int8and int8dec int8dec_any int8div int8eq int8ge int8gt int8in int8inc
+syn keyword sqlFunction contained int8_avg_deserialize int8_avg_serialize int8_mul_cash int8_sum int8abs int8and
+syn keyword sqlFunction contained int8dec int8dec_any int8div int8eq int8ge int8gt int8in int8inc
 syn keyword sqlFunction contained int8inc_any int8inc_float8_float8 int8larger int8le int8lt int8mi
 syn keyword sqlFunction contained int8mod int8mul int8ne int8not int8or int8out int8pl int8pl_inet
 syn keyword sqlFunction contained int8range int8range_canonical int8range_subdiff int8recv int8send
@@ -337,11 +337,11 @@ syn keyword sqlFunction contained interval_hash interval_hash_extended interval_
 syn keyword sqlFunction contained interval_le interval_lt interval_mi interval_mul interval_ne
 syn keyword sqlFunction contained interval_out interval_pl interval_pl_date interval_pl_time
 syn keyword sqlFunction contained interval_pl_timestamp interval_pl_timestamptz interval_pl_timetz
-syn keyword sqlFunction contained interval_recv interval_send interval_smaller interval_support
-syn keyword sqlFunction contained interval_um intervaltypmodin intervaltypmodout is_normalized isclosed
-syn keyword sqlFunction contained isempty isfinite ishorizontal iso8859_1_to_utf8 iso8859_to_utf8
-syn keyword sqlFunction contained iso_to_koi8r iso_to_mic iso_to_win1251 iso_to_win866 isopen
-syn keyword sqlFunction contained isparallel isperp isvertical johab_to_utf8 json_agg json_agg_finalfn
+syn keyword sqlFunction contained interval_recv interval_send interval_smaller interval_support interval_um
+syn keyword sqlFunction contained intervaltypmodin intervaltypmodout is_normalized isclosed isempty
+syn keyword sqlFunction contained isfinite ishorizontal iso8859_1_to_utf8 iso8859_to_utf8
+syn keyword sqlFunction contained iso_to_koi8r iso_to_mic iso_to_win1251 iso_to_win866 isopen isparallel
+syn keyword sqlFunction contained isperp isvertical johab_to_utf8 json_agg json_agg_finalfn
 syn keyword sqlFunction contained json_agg_transfn json_array_element json_array_element_text
 syn keyword sqlFunction contained json_array_elements json_array_elements_text json_array_length
 syn keyword sqlFunction contained json_build_array json_build_object json_each json_each_text
@@ -349,70 +349,70 @@ syn keyword sqlFunction contained json_extract_path json_extract_path_text json_
 syn keyword sqlFunction contained json_object_agg json_object_agg_finalfn json_object_agg_transfn
 syn keyword sqlFunction contained json_object_field json_object_field_text json_object_keys json_out
 syn keyword sqlFunction contained json_populate_record json_populate_recordset json_recv json_send
-syn keyword sqlFunction contained json_strip_nulls json_to_record json_to_recordset
-syn keyword sqlFunction contained json_to_tsvector json_typeof jsonb_agg jsonb_agg_finalfn jsonb_agg_transfn
-syn keyword sqlFunction contained jsonb_array_element jsonb_array_element_text
-syn keyword sqlFunction contained jsonb_array_elements jsonb_array_elements_text jsonb_array_length
-syn keyword sqlFunction contained jsonb_build_array jsonb_build_object jsonb_cmp jsonb_concat jsonb_contained
+syn keyword sqlFunction contained json_strip_nulls json_to_record json_to_recordset json_to_tsvector
+syn keyword sqlFunction contained json_typeof jsonb_agg jsonb_agg_finalfn jsonb_agg_transfn
+syn keyword sqlFunction contained jsonb_array_element jsonb_array_element_text jsonb_array_elements
+syn keyword sqlFunction contained jsonb_array_elements_text jsonb_array_length jsonb_build_array
+syn keyword sqlFunction contained jsonb_build_object jsonb_cmp jsonb_concat jsonb_contained
 syn keyword sqlFunction contained jsonb_contains jsonb_delete jsonb_delete_path jsonb_each
 syn keyword sqlFunction contained jsonb_each_text jsonb_eq jsonb_exists jsonb_exists_all jsonb_exists_any
 syn keyword sqlFunction contained jsonb_extract_path jsonb_extract_path_text jsonb_ge jsonb_gt
-syn keyword sqlFunction contained jsonb_hash jsonb_hash_extended jsonb_in jsonb_insert jsonb_le
-syn keyword sqlFunction contained jsonb_lt jsonb_ne jsonb_object jsonb_object_agg
+syn keyword sqlFunction contained jsonb_hash jsonb_hash_extended jsonb_in jsonb_insert jsonb_le jsonb_lt
+syn keyword sqlFunction contained jsonb_ne jsonb_object jsonb_object_agg
 syn keyword sqlFunction contained jsonb_object_agg_finalfn jsonb_object_agg_transfn jsonb_object_field
 syn keyword sqlFunction contained jsonb_object_field_text jsonb_object_keys jsonb_out jsonb_path_exists
 syn keyword sqlFunction contained jsonb_path_exists_opr jsonb_path_exists_tz jsonb_path_match
 syn keyword sqlFunction contained jsonb_path_match_opr jsonb_path_match_tz jsonb_path_query
 syn keyword sqlFunction contained jsonb_path_query_array jsonb_path_query_array_tz jsonb_path_query_first
 syn keyword sqlFunction contained jsonb_path_query_first_tz jsonb_path_query_tz
-syn keyword sqlFunction contained jsonb_populate_record jsonb_populate_recordset jsonb_pretty jsonb_recv
-syn keyword sqlFunction contained jsonb_send jsonb_set jsonb_set_lax jsonb_strip_nulls jsonb_to_record
+syn keyword sqlFunction contained jsonb_populate_record jsonb_populate_recordset jsonb_pretty jsonb_recv jsonb_send
+syn keyword sqlFunction contained jsonb_set jsonb_set_lax jsonb_strip_nulls jsonb_to_record
 syn keyword sqlFunction contained jsonb_to_recordset jsonb_to_tsvector jsonb_typeof jsonpath_in
 syn keyword sqlFunction contained jsonpath_out jsonpath_recv jsonpath_send justify_days justify_hours
 syn keyword sqlFunction contained justify_interval koi8r_to_iso koi8r_to_mic koi8r_to_utf8
-syn keyword sqlFunction contained koi8r_to_win1251 koi8r_to_win866 koi8u_to_utf8 lag
-syn keyword sqlFunction contained language_handler_in language_handler_out last_value lastval latin1_to_mic
+syn keyword sqlFunction contained koi8r_to_win1251 koi8r_to_win866 koi8u_to_utf8 lag language_handler_in
+syn keyword sqlFunction contained language_handler_out last_value lastval latin1_to_mic
 syn keyword sqlFunction contained latin2_to_mic latin2_to_win1250 latin3_to_mic latin4_to_mic lcm lead left
-syn keyword sqlFunction contained length like like_escape likejoinsel likesel line line_distance
-syn keyword sqlFunction contained line_eq line_horizontal line_in line_interpt line_intersect
-syn keyword sqlFunction contained line_out line_parallel line_perp line_recv line_send line_vertical ln
+syn keyword sqlFunction contained length like like_escape likejoinsel likesel line line_distance line_eq
+syn keyword sqlFunction contained line_horizontal line_in line_interpt line_intersect line_out
+syn keyword sqlFunction contained line_parallel line_perp line_recv line_send line_vertical ln
 syn keyword sqlFunction contained lo_close lo_creat lo_create lo_export lo_from_bytea lo_get lo_import
 syn keyword sqlFunction contained lo_lseek lo_lseek64 lo_open lo_put lo_tell lo_tell64 lo_truncate
 syn keyword sqlFunction contained lo_truncate64 lo_unlink log log10 loread lower lower_inc lower_inf
 syn keyword sqlFunction contained lowrite lpad lseg lseg_center lseg_distance lseg_eq lseg_ge lseg_gt
 syn keyword sqlFunction contained lseg_horizontal lseg_in lseg_interpt lseg_intersect lseg_le
-syn keyword sqlFunction contained lseg_length lseg_lt lseg_ne lseg_out lseg_parallel lseg_perp
-syn keyword sqlFunction contained lseg_recv lseg_send lseg_vertical ltrim macaddr macaddr8 macaddr8_and
-syn keyword sqlFunction contained macaddr8_cmp macaddr8_eq macaddr8_ge macaddr8_gt macaddr8_in
-syn keyword sqlFunction contained macaddr8_le macaddr8_lt macaddr8_ne macaddr8_not macaddr8_or
-syn keyword sqlFunction contained macaddr8_out macaddr8_recv macaddr8_send macaddr8_set7bit macaddr_and
+syn keyword sqlFunction contained lseg_length lseg_lt lseg_ne lseg_out lseg_parallel lseg_perp lseg_recv
+syn keyword sqlFunction contained lseg_send lseg_vertical ltrim macaddr macaddr8 macaddr8_and
+syn keyword sqlFunction contained macaddr8_cmp macaddr8_eq macaddr8_ge macaddr8_gt macaddr8_in macaddr8_le
+syn keyword sqlFunction contained macaddr8_lt macaddr8_ne macaddr8_not macaddr8_or macaddr8_out
+syn keyword sqlFunction contained macaddr8_recv macaddr8_send macaddr8_set7bit macaddr_and
 syn keyword sqlFunction contained macaddr_cmp macaddr_eq macaddr_ge macaddr_gt macaddr_in macaddr_le
-syn keyword sqlFunction contained macaddr_lt macaddr_ne macaddr_not macaddr_or macaddr_out
-syn keyword sqlFunction contained macaddr_recv macaddr_send macaddr_sortsupport make_date make_interval
+syn keyword sqlFunction contained macaddr_lt macaddr_ne macaddr_not macaddr_or macaddr_out macaddr_recv
+syn keyword sqlFunction contained macaddr_send macaddr_sortsupport make_date make_interval
 syn keyword sqlFunction contained make_time make_timestamp make_timestamptz makeaclitem masklen
 syn keyword sqlFunction contained matchingjoinsel matchingsel max md5 mic_to_big5 mic_to_euc_cn
 syn keyword sqlFunction contained mic_to_euc_jp mic_to_euc_kr mic_to_euc_tw mic_to_iso mic_to_koi8r
 syn keyword sqlFunction contained mic_to_latin1 mic_to_latin2 mic_to_latin3 mic_to_latin4 mic_to_sjis
 syn keyword sqlFunction contained mic_to_win1250 mic_to_win1251 mic_to_win866 min min_scale mod mode
 syn keyword sqlFunction contained mode_final money mul_d_interval mxid_age name nameconcatoid nameeq
-syn keyword sqlFunction contained nameeqtext namege namegetext namegt namegttext nameiclike
-syn keyword sqlFunction contained nameicnlike nameicregexeq nameicregexne namein namele nameletext
-syn keyword sqlFunction contained namelike namelt namelttext namene namenetext namenlike nameout namerecv
+syn keyword sqlFunction contained nameeqtext namege namegetext namegt namegttext nameiclike nameicnlike
+syn keyword sqlFunction contained nameicregexeq nameicregexne namein namele nameletext namelike
+syn keyword sqlFunction contained namelt namelttext namene namenetext namenlike nameout namerecv
 syn keyword sqlFunction contained nameregexeq nameregexne namesend neqjoinsel neqsel netmask network
 syn keyword sqlFunction contained network_cmp network_eq network_ge network_gt network_larger
 syn keyword sqlFunction contained network_le network_lt network_ne network_overlap network_smaller
-syn keyword sqlFunction contained network_sortsupport network_sub network_subeq
-syn keyword sqlFunction contained network_subset_support network_sup network_supeq networkjoinsel networksel nextval
+syn keyword sqlFunction contained network_sortsupport network_sub network_subeq network_subset_support
+syn keyword sqlFunction contained network_sup network_supeq networkjoinsel networksel nextval
 syn keyword sqlFunction contained nlikejoinsel nlikesel normalize notlike now npoints nth_value ntile
 syn keyword sqlFunction contained num_nonnulls num_nulls numeric numeric_abs numeric_accum
 syn keyword sqlFunction contained numeric_accum_inv numeric_add numeric_avg numeric_avg_accum
-syn keyword sqlFunction contained numeric_avg_combine numeric_avg_deserialize numeric_avg_serialize
-syn keyword sqlFunction contained numeric_cmp numeric_combine numeric_deserialize numeric_div
+syn keyword sqlFunction contained numeric_avg_combine numeric_avg_deserialize numeric_avg_serialize numeric_cmp
+syn keyword sqlFunction contained numeric_combine numeric_deserialize numeric_div
 syn keyword sqlFunction contained numeric_div_trunc numeric_eq numeric_exp numeric_fac numeric_ge numeric_gt
 syn keyword sqlFunction contained numeric_in numeric_inc numeric_larger numeric_le numeric_ln
-syn keyword sqlFunction contained numeric_log numeric_lt numeric_mod numeric_mul numeric_ne
-syn keyword sqlFunction contained numeric_out numeric_poly_avg numeric_poly_combine
-syn keyword sqlFunction contained numeric_poly_deserialize numeric_poly_serialize numeric_poly_stddev_pop
+syn keyword sqlFunction contained numeric_log numeric_lt numeric_mod numeric_mul numeric_ne numeric_out
+syn keyword sqlFunction contained numeric_poly_avg numeric_poly_combine numeric_poly_deserialize
+syn keyword sqlFunction contained numeric_poly_serialize numeric_poly_stddev_pop
 syn keyword sqlFunction contained numeric_poly_stddev_samp numeric_poly_sum numeric_poly_var_pop
 syn keyword sqlFunction contained numeric_poly_var_samp numeric_power numeric_recv numeric_send
 syn keyword sqlFunction contained numeric_serialize numeric_smaller numeric_sortsupport numeric_sqrt
@@ -421,22 +421,22 @@ syn keyword sqlFunction contained numeric_support numeric_uminus numeric_uplus n
 syn keyword sqlFunction contained numeric_var_samp numerictypmodin numerictypmodout numnode numrange
 syn keyword sqlFunction contained numrange_subdiff obj_description octet_length oid oideq oidge oidgt oidin
 syn keyword sqlFunction contained oidlarger oidle oidlt oidne oidout oidrecv oidsend oidsmaller
-syn keyword sqlFunction contained oidvectoreq oidvectorge oidvectorgt oidvectorin oidvectorle
-syn keyword sqlFunction contained oidvectorlt oidvectorne oidvectorout oidvectorrecv oidvectorsend
-syn keyword sqlFunction contained oidvectortypes on_pb on_pl on_ppath on_ps on_sb on_sl
-syn keyword sqlFunction contained ordered_set_transition ordered_set_transition_multi overlaps overlay parse_ident
-syn keyword sqlFunction contained path path_add path_add_pt path_center path_contain_pt path_distance
+syn keyword sqlFunction contained oidvectoreq oidvectorge oidvectorgt oidvectorin oidvectorle oidvectorlt
+syn keyword sqlFunction contained oidvectorne oidvectorout oidvectorrecv oidvectorsend
+syn keyword sqlFunction contained oidvectortypes on_pb on_pl on_ppath on_ps on_sb on_sl ordered_set_transition
+syn keyword sqlFunction contained ordered_set_transition_multi overlaps overlay parse_ident path
+syn keyword sqlFunction contained path_add path_add_pt path_center path_contain_pt path_distance
 syn keyword sqlFunction contained path_div_pt path_in path_inter path_length path_mul_pt path_n_eq
 syn keyword sqlFunction contained path_n_ge path_n_gt path_n_le path_n_lt path_npoints path_out
-syn keyword sqlFunction contained path_recv path_send path_sub_pt pclose percent_rank
-syn keyword sqlFunction contained percent_rank_final percentile_cont percentile_cont_float8_final
+syn keyword sqlFunction contained path_recv path_send path_sub_pt pclose percent_rank percent_rank_final
+syn keyword sqlFunction contained percentile_cont percentile_cont_float8_final
 syn keyword sqlFunction contained percentile_cont_float8_multi_final percentile_cont_interval_final
 syn keyword sqlFunction contained percentile_cont_interval_multi_final percentile_disc
 syn keyword sqlFunction contained percentile_disc_final percentile_disc_multi_final pg_advisory_lock
 syn keyword sqlFunction contained pg_advisory_lock_shared pg_advisory_unlock pg_advisory_unlock_all
 syn keyword sqlFunction contained pg_advisory_unlock_shared pg_advisory_xact_lock
-syn keyword sqlFunction contained pg_advisory_xact_lock_shared pg_available_extension_versions
-syn keyword sqlFunction contained pg_available_extensions pg_backend_pid pg_backup_start_time pg_blocking_pids
+syn keyword sqlFunction contained pg_advisory_xact_lock_shared pg_available_extension_versions pg_available_extensions
+syn keyword sqlFunction contained pg_backend_pid pg_backup_start_time pg_blocking_pids
 syn keyword sqlFunction contained pg_cancel_backend pg_char_to_encoding pg_client_encoding
 syn keyword sqlFunction contained pg_collation_actual_version pg_collation_for pg_collation_is_visible
 syn keyword sqlFunction contained pg_column_is_updatable pg_column_size pg_conf_load_time pg_config
@@ -445,8 +445,8 @@ syn keyword sqlFunction contained pg_control_system pg_conversion_is_visible
 syn keyword sqlFunction contained pg_copy_logical_replication_slot pg_copy_physical_replication_slot
 syn keyword sqlFunction contained pg_create_logical_replication_slot pg_create_physical_replication_slot
 syn keyword sqlFunction contained pg_create_restore_point pg_current_logfile pg_current_snapshot
-syn keyword sqlFunction contained pg_current_wal_flush_lsn pg_current_wal_insert_lsn
-syn keyword sqlFunction contained pg_current_wal_lsn pg_current_xact_id pg_current_xact_id_if_assigned pg_cursor
+syn keyword sqlFunction contained pg_current_wal_flush_lsn pg_current_wal_insert_lsn pg_current_wal_lsn
+syn keyword sqlFunction contained pg_current_xact_id pg_current_xact_id_if_assigned pg_cursor
 syn keyword sqlFunction contained pg_database_size pg_ddl_command_in pg_ddl_command_out
 syn keyword sqlFunction contained pg_ddl_command_recv pg_ddl_command_send pg_dependencies_in
 syn keyword sqlFunction contained pg_dependencies_out pg_dependencies_recv pg_dependencies_send
@@ -454,8 +454,8 @@ syn keyword sqlFunction contained pg_describe_object pg_drop_replication_slot pg
 syn keyword sqlFunction contained pg_encoding_to_char pg_event_trigger_ddl_commands
 syn keyword sqlFunction contained pg_event_trigger_dropped_objects pg_event_trigger_table_rewrite_oid
 syn keyword sqlFunction contained pg_event_trigger_table_rewrite_reason pg_export_snapshot
-syn keyword sqlFunction contained pg_extension_config_dump pg_extension_update_paths pg_file_rename
-syn keyword sqlFunction contained pg_file_sync pg_file_unlink pg_file_write pg_filenode_relation
+syn keyword sqlFunction contained pg_extension_config_dump pg_extension_update_paths pg_file_rename pg_file_sync
+syn keyword sqlFunction contained pg_file_unlink pg_file_write pg_filenode_relation
 syn keyword sqlFunction contained pg_function_is_visible pg_get_constraintdef pg_get_expr
 syn keyword sqlFunction contained pg_get_function_arg_default pg_get_function_arguments
 syn keyword sqlFunction contained pg_get_function_identity_arguments pg_get_function_result pg_get_functiondef
@@ -468,27 +468,27 @@ syn keyword sqlFunction contained pg_get_userbyid pg_get_viewdef pg_has_role pg_
 syn keyword sqlFunction contained pg_identify_object pg_identify_object_as_address
 syn keyword sqlFunction contained pg_import_system_collations pg_index_column_has_property pg_index_has_property
 syn keyword sqlFunction contained pg_indexam_has_property pg_indexam_progress_phasename
-syn keyword sqlFunction contained pg_indexes_size pg_is_in_backup pg_is_in_recovery
-syn keyword sqlFunction contained pg_is_other_temp_schema pg_is_wal_replay_paused
-syn keyword sqlFunction contained pg_isolation_test_session_is_blocked pg_jit_available pg_last_committed_xact
+syn keyword sqlFunction contained pg_indexes_size pg_is_in_backup pg_is_in_recovery pg_is_other_temp_schema
+syn keyword sqlFunction contained pg_is_wal_replay_paused pg_isolation_test_session_is_blocked
+syn keyword sqlFunction contained pg_jit_available pg_last_committed_xact
 syn keyword sqlFunction contained pg_last_wal_receive_lsn pg_last_wal_replay_lsn pg_last_xact_replay_timestamp
 syn keyword sqlFunction contained pg_listening_channels pg_lock_status pg_logdir_ls
 syn keyword sqlFunction contained pg_logical_emit_message pg_logical_slot_get_binary_changes
 syn keyword sqlFunction contained pg_logical_slot_get_changes pg_logical_slot_peek_binary_changes
 syn keyword sqlFunction contained pg_logical_slot_peek_changes pg_ls_archive_statusdir pg_ls_dir pg_ls_logdir
-syn keyword sqlFunction contained pg_ls_tmpdir pg_ls_waldir pg_lsn_cmp pg_lsn_eq pg_lsn_ge
-syn keyword sqlFunction contained pg_lsn_gt pg_lsn_hash pg_lsn_hash_extended pg_lsn_in pg_lsn_larger
+syn keyword sqlFunction contained pg_ls_tmpdir pg_ls_waldir pg_lsn_cmp pg_lsn_eq pg_lsn_ge pg_lsn_gt
+syn keyword sqlFunction contained pg_lsn_hash pg_lsn_hash_extended pg_lsn_in pg_lsn_larger
 syn keyword sqlFunction contained pg_lsn_le pg_lsn_lt pg_lsn_mi pg_lsn_ne pg_lsn_out pg_lsn_recv
 syn keyword sqlFunction contained pg_lsn_send pg_lsn_smaller pg_mcv_list_in pg_mcv_list_items
 syn keyword sqlFunction contained pg_mcv_list_out pg_mcv_list_recv pg_mcv_list_send pg_my_temp_schema
-syn keyword sqlFunction contained pg_ndistinct_in pg_ndistinct_out pg_ndistinct_recv
-syn keyword sqlFunction contained pg_ndistinct_send pg_nextoid pg_node_tree_in pg_node_tree_out
-syn keyword sqlFunction contained pg_node_tree_recv pg_node_tree_send pg_notification_queue_usage pg_notify
-syn keyword sqlFunction contained pg_opclass_is_visible pg_operator_is_visible
-syn keyword sqlFunction contained pg_opfamily_is_visible pg_options_to_table pg_partition_ancestors pg_partition_root
-syn keyword sqlFunction contained pg_partition_tree pg_postmaster_start_time
-syn keyword sqlFunction contained pg_prepared_statement pg_prepared_xact pg_promote pg_read_binary_file
-syn keyword sqlFunction contained pg_read_file pg_read_file_old pg_relation_filenode pg_relation_filepath
+syn keyword sqlFunction contained pg_ndistinct_in pg_ndistinct_out pg_ndistinct_recv pg_ndistinct_send
+syn keyword sqlFunction contained pg_nextoid pg_node_tree_in pg_node_tree_out pg_node_tree_recv
+syn keyword sqlFunction contained pg_node_tree_send pg_notification_queue_usage pg_notify
+syn keyword sqlFunction contained pg_opclass_is_visible pg_operator_is_visible pg_opfamily_is_visible
+syn keyword sqlFunction contained pg_options_to_table pg_partition_ancestors pg_partition_root
+syn keyword sqlFunction contained pg_partition_tree pg_postmaster_start_time pg_prepared_statement
+syn keyword sqlFunction contained pg_prepared_xact pg_promote pg_read_binary_file pg_read_file
+syn keyword sqlFunction contained pg_read_file_old pg_relation_filenode pg_relation_filepath
 syn keyword sqlFunction contained pg_relation_is_publishable pg_relation_is_updatable
 syn keyword sqlFunction contained pg_relation_size pg_reload_conf pg_replication_origin_advance
 syn keyword sqlFunction contained pg_replication_origin_create pg_replication_origin_drop
@@ -502,8 +502,8 @@ syn keyword sqlFunction contained pg_sequence_last_value pg_sequence_parameters 
 syn keyword sqlFunction contained pg_show_all_settings pg_show_replication_origin_status
 syn keyword sqlFunction contained pg_size_bytes pg_size_pretty pg_sleep pg_sleep_for pg_sleep_until
 syn keyword sqlFunction contained pg_snapshot_in pg_snapshot_out pg_snapshot_recv pg_snapshot_send
-syn keyword sqlFunction contained pg_snapshot_xip pg_snapshot_xmax pg_snapshot_xmin
-syn keyword sqlFunction contained pg_start_backup pg_stat_clear_snapshot pg_stat_file pg_stat_get_activity
+syn keyword sqlFunction contained pg_snapshot_xip pg_snapshot_xmax pg_snapshot_xmin pg_start_backup
+syn keyword sqlFunction contained pg_stat_clear_snapshot pg_stat_file pg_stat_get_activity
 syn keyword sqlFunction contained pg_stat_get_analyze_count pg_stat_get_archiver
 syn keyword sqlFunction contained pg_stat_get_autoanalyze_count pg_stat_get_autovacuum_count
 syn keyword sqlFunction contained pg_stat_get_backend_activity pg_stat_get_backend_activity_start
@@ -524,34 +524,34 @@ syn keyword sqlFunction contained pg_stat_get_db_blocks_fetched pg_stat_get_db_b
 syn keyword sqlFunction contained pg_stat_get_db_checksum_failures pg_stat_get_db_checksum_last_failure
 syn keyword sqlFunction contained pg_stat_get_db_conflict_all pg_stat_get_db_conflict_bufferpin
 syn keyword sqlFunction contained pg_stat_get_db_conflict_lock pg_stat_get_db_conflict_snapshot
-syn keyword sqlFunction contained pg_stat_get_db_conflict_startup_deadlock
-syn keyword sqlFunction contained pg_stat_get_db_conflict_tablespace pg_stat_get_db_deadlocks pg_stat_get_db_numbackends
+syn keyword sqlFunction contained pg_stat_get_db_conflict_startup_deadlock pg_stat_get_db_conflict_tablespace
+syn keyword sqlFunction contained pg_stat_get_db_deadlocks pg_stat_get_db_numbackends
 syn keyword sqlFunction contained pg_stat_get_db_stat_reset_time pg_stat_get_db_temp_bytes
 syn keyword sqlFunction contained pg_stat_get_db_temp_files pg_stat_get_db_tuples_deleted
 syn keyword sqlFunction contained pg_stat_get_db_tuples_fetched pg_stat_get_db_tuples_inserted
 syn keyword sqlFunction contained pg_stat_get_db_tuples_returned pg_stat_get_db_tuples_updated
-syn keyword sqlFunction contained pg_stat_get_db_xact_commit pg_stat_get_db_xact_rollback
-syn keyword sqlFunction contained pg_stat_get_dead_tuples pg_stat_get_function_calls pg_stat_get_function_self_time
+syn keyword sqlFunction contained pg_stat_get_db_xact_commit pg_stat_get_db_xact_rollback pg_stat_get_dead_tuples
+syn keyword sqlFunction contained pg_stat_get_function_calls pg_stat_get_function_self_time
 syn keyword sqlFunction contained pg_stat_get_function_total_time pg_stat_get_ins_since_vacuum
-syn keyword sqlFunction contained pg_stat_get_last_analyze_time
-syn keyword sqlFunction contained pg_stat_get_last_autoanalyze_time pg_stat_get_last_autovacuum_time
-syn keyword sqlFunction contained pg_stat_get_last_vacuum_time pg_stat_get_live_tuples pg_stat_get_mod_since_analyze
+syn keyword sqlFunction contained pg_stat_get_last_analyze_time pg_stat_get_last_autoanalyze_time
+syn keyword sqlFunction contained pg_stat_get_last_autovacuum_time pg_stat_get_last_vacuum_time
+syn keyword sqlFunction contained pg_stat_get_live_tuples pg_stat_get_mod_since_analyze
 syn keyword sqlFunction contained pg_stat_get_numscans pg_stat_get_progress_info pg_stat_get_slru
 syn keyword sqlFunction contained pg_stat_get_snapshot_timestamp pg_stat_get_subscription
 syn keyword sqlFunction contained pg_stat_get_tuples_deleted pg_stat_get_tuples_fetched
 syn keyword sqlFunction contained pg_stat_get_tuples_hot_updated pg_stat_get_tuples_inserted
-syn keyword sqlFunction contained pg_stat_get_tuples_returned pg_stat_get_tuples_updated
-syn keyword sqlFunction contained pg_stat_get_vacuum_count pg_stat_get_wal_receiver pg_stat_get_wal_senders
+syn keyword sqlFunction contained pg_stat_get_tuples_returned pg_stat_get_tuples_updated pg_stat_get_vacuum_count
+syn keyword sqlFunction contained pg_stat_get_wal_receiver pg_stat_get_wal_senders
 syn keyword sqlFunction contained pg_stat_get_xact_blocks_fetched pg_stat_get_xact_blocks_hit
 syn keyword sqlFunction contained pg_stat_get_xact_function_calls pg_stat_get_xact_function_self_time
 syn keyword sqlFunction contained pg_stat_get_xact_function_total_time pg_stat_get_xact_numscans
-syn keyword sqlFunction contained pg_stat_get_xact_tuples_deleted
-syn keyword sqlFunction contained pg_stat_get_xact_tuples_fetched pg_stat_get_xact_tuples_hot_updated
+syn keyword sqlFunction contained pg_stat_get_xact_tuples_deleted pg_stat_get_xact_tuples_fetched
+syn keyword sqlFunction contained pg_stat_get_xact_tuples_hot_updated
 syn keyword sqlFunction contained pg_stat_get_xact_tuples_inserted pg_stat_get_xact_tuples_returned
 syn keyword sqlFunction contained pg_stat_get_xact_tuples_updated pg_stat_reset pg_stat_reset_shared
-syn keyword sqlFunction contained pg_stat_reset_single_function_counters
-syn keyword sqlFunction contained pg_stat_reset_single_table_counters pg_stat_reset_slru pg_statistics_obj_is_visible
-syn keyword sqlFunction contained pg_stop_backup pg_switch_wal pg_table_is_visible pg_table_size
+syn keyword sqlFunction contained pg_stat_reset_single_function_counters pg_stat_reset_single_table_counters
+syn keyword sqlFunction contained pg_stat_reset_slru pg_statistics_obj_is_visible pg_stop_backup
+syn keyword sqlFunction contained pg_switch_wal pg_table_is_visible pg_table_size
 syn keyword sqlFunction contained pg_tablespace_databases pg_tablespace_location pg_tablespace_size
 syn keyword sqlFunction contained pg_terminate_backend pg_timezone_abbrevs pg_timezone_names
 syn keyword sqlFunction contained pg_total_relation_size pg_trigger_depth pg_try_advisory_lock
@@ -561,148 +561,148 @@ syn keyword sqlFunction contained pg_ts_parser_is_visible pg_ts_template_is_visi
 syn keyword sqlFunction contained pg_type_is_visible pg_typeof pg_visible_in_snapshot pg_wal_lsn_diff
 syn keyword sqlFunction contained pg_wal_replay_pause pg_wal_replay_resume pg_walfile_name
 syn keyword sqlFunction contained pg_walfile_name_offset pg_xact_commit_timestamp pg_xact_status
-syn keyword sqlFunction contained phraseto_tsquery pi plainto_tsquery plperl_call_handler
-syn keyword sqlFunction contained plperl_inline_handler plperl_validator plperlu_call_handler
-syn keyword sqlFunction contained plperlu_inline_handler plperlu_validator plpgsql_call_handler
-syn keyword sqlFunction contained plpgsql_inline_handler plpgsql_validator pltcl_call_handler pltclu_call_handler
-syn keyword sqlFunction contained point point_above point_add point_below point_distance point_div
-syn keyword sqlFunction contained point_eq point_horiz point_in point_left point_mul point_ne
-syn keyword sqlFunction contained point_out point_recv point_right point_send point_sub point_vert
-syn keyword sqlFunction contained poly_above poly_below poly_center poly_contain poly_contain_pt
+syn keyword sqlFunction contained phraseto_tsquery pi plainto_tsquery plperl_call_handler plperl_inline_handler
+syn keyword sqlFunction contained plperl_validator plperlu_call_handler plperlu_inline_handler
+syn keyword sqlFunction contained plperlu_validator plpgsql_call_handler plpgsql_inline_handler
+syn keyword sqlFunction contained plpgsql_validator pltcl_call_handler pltclu_call_handler point
+syn keyword sqlFunction contained point_above point_add point_below point_distance point_div
+syn keyword sqlFunction contained point_eq point_horiz point_in point_left point_mul point_ne point_out
+syn keyword sqlFunction contained point_recv point_right point_send point_sub point_vert poly_above
+syn keyword sqlFunction contained poly_below poly_center poly_contain poly_contain_pt
 syn keyword sqlFunction contained poly_contained poly_distance poly_in poly_left poly_npoints poly_out
-syn keyword sqlFunction contained poly_overabove poly_overbelow poly_overlap poly_overleft
-syn keyword sqlFunction contained poly_overright poly_recv poly_right poly_same poly_send polygon popen
-syn keyword sqlFunction contained position positionjoinsel positionsel postgresql_fdw_validator pow power
+syn keyword sqlFunction contained poly_overabove poly_overbelow poly_overlap poly_overleft poly_overright
+syn keyword sqlFunction contained poly_recv poly_right poly_same poly_send polygon popen position
+syn keyword sqlFunction contained positionjoinsel positionsel postgresql_fdw_validator pow power
 syn keyword sqlFunction contained prefixjoinsel prefixsel prsd_end prsd_headline prsd_lextype
 syn keyword sqlFunction contained prsd_nexttoken prsd_start pt_contained_circle pt_contained_poly
-syn keyword sqlFunction contained query_to_xml query_to_xml_and_xmlschema query_to_xmlschema
-syn keyword sqlFunction contained querytree quote_ident quote_literal quote_nullable radians radius
-syn keyword sqlFunction contained random range_adjacent range_after range_before range_cmp
+syn keyword sqlFunction contained query_to_xml query_to_xml_and_xmlschema query_to_xmlschema querytree
+syn keyword sqlFunction contained quote_ident quote_literal quote_nullable radians radius random
+syn keyword sqlFunction contained range_adjacent range_after range_before range_cmp
 syn keyword sqlFunction contained range_contained_by range_contains range_contains_elem range_eq range_ge
 syn keyword sqlFunction contained range_gist_consistent range_gist_penalty range_gist_picksplit
 syn keyword sqlFunction contained range_gist_same range_gist_union range_gt range_in range_intersect
 syn keyword sqlFunction contained range_le range_lt range_merge range_minus range_ne range_out
 syn keyword sqlFunction contained range_overlaps range_overleft range_overright range_recv range_send
 syn keyword sqlFunction contained range_typanalyze range_union rangesel rank rank_final record_eq
-syn keyword sqlFunction contained record_ge record_gt record_image_eq record_image_ge
-syn keyword sqlFunction contained record_image_gt record_image_le record_image_lt record_image_ne record_in
+syn keyword sqlFunction contained record_ge record_gt record_image_eq record_image_ge record_image_gt
+syn keyword sqlFunction contained record_image_le record_image_lt record_image_ne record_in
 syn keyword sqlFunction contained record_le record_lt record_ne record_out record_recv record_send
 syn keyword sqlFunction contained regclass regclassin regclassout regclassrecv regclasssend
-syn keyword sqlFunction contained regcollationin regcollationout regcollationrecv regcollationsend
-syn keyword sqlFunction contained regconfigin regconfigout regconfigrecv regconfigsend regdictionaryin
-syn keyword sqlFunction contained regdictionaryout regdictionaryrecv regdictionarysend
-syn keyword sqlFunction contained regexeqjoinsel regexeqsel regexnejoinsel regexnesel regexp_match
-syn keyword sqlFunction contained regexp_matches regexp_replace regexp_split_to_array
-syn keyword sqlFunction contained regexp_split_to_table regnamespacein regnamespaceout regnamespacerecv
-syn keyword sqlFunction contained regnamespacesend regoperatorin regoperatorout regoperatorrecv
-syn keyword sqlFunction contained regoperatorsend regoperin regoperout regoperrecv regopersend regprocedurein
-syn keyword sqlFunction contained regprocedureout regprocedurerecv regproceduresend regprocin
-syn keyword sqlFunction contained regprocout regprocrecv regprocsend regr_avgx regr_avgy regr_count
+syn keyword sqlFunction contained regcollationin regcollationout regcollationrecv regcollationsend regconfigin
+syn keyword sqlFunction contained regconfigout regconfigrecv regconfigsend regdictionaryin
+syn keyword sqlFunction contained regdictionaryout regdictionaryrecv regdictionarysend regexeqjoinsel
+syn keyword sqlFunction contained regexeqsel regexnejoinsel regexnesel regexp_match regexp_matches
+syn keyword sqlFunction contained regexp_replace regexp_split_to_array regexp_split_to_table
+syn keyword sqlFunction contained regnamespacein regnamespaceout regnamespacerecv regnamespacesend
+syn keyword sqlFunction contained regoperatorin regoperatorout regoperatorrecv regoperatorsend
+syn keyword sqlFunction contained regoperin regoperout regoperrecv regopersend regprocedurein
+syn keyword sqlFunction contained regprocedureout regprocedurerecv regproceduresend regprocin regprocout
+syn keyword sqlFunction contained regprocrecv regprocsend regr_avgx regr_avgy regr_count
 syn keyword sqlFunction contained regr_intercept regr_r2 regr_slope regr_sxx regr_sxy regr_syy regrolein
-syn keyword sqlFunction contained regroleout regrolerecv regrolesend regtypein regtypeout
-syn keyword sqlFunction contained regtyperecv regtypesend repeat replace reverse right round row_number
+syn keyword sqlFunction contained regroleout regrolerecv regrolesend regtypein regtypeout regtyperecv
+syn keyword sqlFunction contained regtypesend repeat replace reverse right round row_number
 syn keyword sqlFunction contained row_security_active row_to_json rpad rtrim satisfies_hash_partition
 syn keyword sqlFunction contained scalargejoinsel scalargesel scalargtjoinsel scalargtsel
-syn keyword sqlFunction contained scalarlejoinsel scalarlesel scalarltjoinsel scalarltsel scale
-syn keyword sqlFunction contained schema_to_xml schema_to_xml_and_xmlschema schema_to_xmlschema
-syn keyword sqlFunction contained session_user set_bit set_byte set_config set_masklen setseed setval
-syn keyword sqlFunction contained setweight sha224 sha256 sha384 sha512 shell_in shell_out
+syn keyword sqlFunction contained scalarlejoinsel scalarlesel scalarltjoinsel scalarltsel scale schema_to_xml
+syn keyword sqlFunction contained schema_to_xml_and_xmlschema schema_to_xmlschema session_user
+syn keyword sqlFunction contained set_bit set_byte set_config set_masklen setseed setval setweight
+syn keyword sqlFunction contained sha224 sha256 sha384 sha512 shell_in shell_out
 syn keyword sqlFunction contained shift_jis_2004_to_euc_jis_2004 shift_jis_2004_to_utf8 shobj_description sign
 syn keyword sqlFunction contained similar_escape similar_to_escape sin sind sinh sjis_to_euc_jp
-syn keyword sqlFunction contained sjis_to_mic sjis_to_utf8 slope spg_bbox_quad_config
-syn keyword sqlFunction contained spg_box_quad_choose spg_box_quad_config spg_box_quad_inner_consistent
+syn keyword sqlFunction contained sjis_to_mic sjis_to_utf8 slope spg_bbox_quad_config spg_box_quad_choose
+syn keyword sqlFunction contained spg_box_quad_config spg_box_quad_inner_consistent
 syn keyword sqlFunction contained spg_box_quad_leaf_consistent spg_box_quad_picksplit spg_kd_choose
 syn keyword sqlFunction contained spg_kd_config spg_kd_inner_consistent spg_kd_picksplit
 syn keyword sqlFunction contained spg_poly_quad_compress spg_quad_choose spg_quad_config
 syn keyword sqlFunction contained spg_quad_inner_consistent spg_quad_leaf_consistent spg_quad_picksplit
-syn keyword sqlFunction contained spg_range_quad_choose spg_range_quad_config
-syn keyword sqlFunction contained spg_range_quad_inner_consistent spg_range_quad_leaf_consistent spg_range_quad_picksplit
+syn keyword sqlFunction contained spg_range_quad_choose spg_range_quad_config spg_range_quad_inner_consistent
+syn keyword sqlFunction contained spg_range_quad_leaf_consistent spg_range_quad_picksplit
 syn keyword sqlFunction contained spg_text_choose spg_text_config spg_text_inner_consistent
-syn keyword sqlFunction contained spg_text_leaf_consistent spg_text_picksplit spghandler split_part
-syn keyword sqlFunction contained sqrt starts_with statement_timestamp stddev stddev_pop stddev_samp
-syn keyword sqlFunction contained string_agg string_agg_finalfn string_agg_transfn
-syn keyword sqlFunction contained string_to_array strip strpos substr substring sum
-syn keyword sqlFunction contained suppress_redundant_updates_trigger system table_am_handler_in table_am_handler_out
-syn keyword sqlFunction contained table_to_xml table_to_xml_and_xmlschema table_to_xmlschema tan tand tanh
-syn keyword sqlFunction contained text text_ge text_gt text_larger text_le text_lt text_pattern_ge
+syn keyword sqlFunction contained spg_text_leaf_consistent spg_text_picksplit spghandler split_part sqrt
+syn keyword sqlFunction contained starts_with statement_timestamp stddev stddev_pop stddev_samp
+syn keyword sqlFunction contained string_agg string_agg_finalfn string_agg_transfn string_to_array
+syn keyword sqlFunction contained strip strpos substr substring sum
+syn keyword sqlFunction contained suppress_redundant_updates_trigger system table_am_handler_in table_am_handler_out table_to_xml
+syn keyword sqlFunction contained table_to_xml_and_xmlschema table_to_xmlschema tan tand tanh text
+syn keyword sqlFunction contained text_ge text_gt text_larger text_le text_lt text_pattern_ge
 syn keyword sqlFunction contained text_pattern_gt text_pattern_le text_pattern_lt text_smaller
 syn keyword sqlFunction contained textanycat textcat texteq texteqname textgename textgtname texticlike
-syn keyword sqlFunction contained texticlike_support texticnlike texticregexeq
-syn keyword sqlFunction contained texticregexeq_support texticregexne textin textlen textlename textlike
+syn keyword sqlFunction contained texticlike_support texticnlike texticregexeq texticregexeq_support
+syn keyword sqlFunction contained texticregexne textin textlen textlename textlike
 syn keyword sqlFunction contained textlike_support textltname textne textnename textnlike textout textrecv
 syn keyword sqlFunction contained textregexeq textregexeq_support textregexne textsend thesaurus_init
-syn keyword sqlFunction contained thesaurus_lexize tideq tidge tidgt tidin tidlarger tidle tidlt
-syn keyword sqlFunction contained tidne tidout tidrecv tidsend tidsmaller time time_cmp time_eq time_ge
+syn keyword sqlFunction contained thesaurus_lexize tideq tidge tidgt tidin tidlarger tidle tidlt tidne
+syn keyword sqlFunction contained tidout tidrecv tidsend tidsmaller time time_cmp time_eq time_ge
 syn keyword sqlFunction contained time_gt time_hash time_hash_extended time_in time_larger time_le
 syn keyword sqlFunction contained time_lt time_mi_interval time_mi_time time_ne time_out
 syn keyword sqlFunction contained time_pl_interval time_recv time_send time_smaller time_support timedate_pl
 syn keyword sqlFunction contained timeofday timestamp timestamp_cmp timestamp_cmp_date
 syn keyword sqlFunction contained timestamp_cmp_timestamptz timestamp_eq timestamp_eq_date
-syn keyword sqlFunction contained timestamp_eq_timestamptz timestamp_ge timestamp_ge_date
-syn keyword sqlFunction contained timestamp_ge_timestamptz timestamp_gt timestamp_gt_date timestamp_gt_timestamptz
-syn keyword sqlFunction contained timestamp_hash timestamp_hash_extended timestamp_in
-syn keyword sqlFunction contained timestamp_larger timestamp_le timestamp_le_date timestamp_le_timestamptz
-syn keyword sqlFunction contained timestamp_lt timestamp_lt_date timestamp_lt_timestamptz
-syn keyword sqlFunction contained timestamp_mi timestamp_mi_interval timestamp_ne timestamp_ne_date
+syn keyword sqlFunction contained timestamp_eq_timestamptz timestamp_ge timestamp_ge_date timestamp_ge_timestamptz
+syn keyword sqlFunction contained timestamp_gt timestamp_gt_date timestamp_gt_timestamptz
+syn keyword sqlFunction contained timestamp_hash timestamp_hash_extended timestamp_in timestamp_larger
+syn keyword sqlFunction contained timestamp_le timestamp_le_date timestamp_le_timestamptz
+syn keyword sqlFunction contained timestamp_lt timestamp_lt_date timestamp_lt_timestamptz timestamp_mi
+syn keyword sqlFunction contained timestamp_mi_interval timestamp_ne timestamp_ne_date
 syn keyword sqlFunction contained timestamp_ne_timestamptz timestamp_out timestamp_pl_interval
 syn keyword sqlFunction contained timestamp_recv timestamp_send timestamp_smaller timestamp_sortsupport
-syn keyword sqlFunction contained timestamp_support timestamptypmodin timestamptypmodout
-syn keyword sqlFunction contained timestamptz timestamptz_cmp timestamptz_cmp_date
-syn keyword sqlFunction contained timestamptz_cmp_timestamp timestamptz_eq timestamptz_eq_date
-syn keyword sqlFunction contained timestamptz_eq_timestamp timestamptz_ge timestamptz_ge_date timestamptz_ge_timestamp
+syn keyword sqlFunction contained timestamp_support timestamptypmodin timestamptypmodout timestamptz
+syn keyword sqlFunction contained timestamptz_cmp timestamptz_cmp_date timestamptz_cmp_timestamp
+syn keyword sqlFunction contained timestamptz_eq timestamptz_eq_date timestamptz_eq_timestamp
+syn keyword sqlFunction contained timestamptz_ge timestamptz_ge_date timestamptz_ge_timestamp
 syn keyword sqlFunction contained timestamptz_gt timestamptz_gt_date timestamptz_gt_timestamp
-syn keyword sqlFunction contained timestamptz_in timestamptz_larger timestamptz_le
-syn keyword sqlFunction contained timestamptz_le_date timestamptz_le_timestamp timestamptz_lt
-syn keyword sqlFunction contained timestamptz_lt_date timestamptz_lt_timestamp timestamptz_mi
-syn keyword sqlFunction contained timestamptz_mi_interval timestamptz_ne timestamptz_ne_date
-syn keyword sqlFunction contained timestamptz_ne_timestamp timestamptz_out timestamptz_pl_interval timestamptz_recv
+syn keyword sqlFunction contained timestamptz_in timestamptz_larger timestamptz_le timestamptz_le_date
+syn keyword sqlFunction contained timestamptz_le_timestamp timestamptz_lt timestamptz_lt_date
+syn keyword sqlFunction contained timestamptz_lt_timestamp timestamptz_mi timestamptz_mi_interval
+syn keyword sqlFunction contained timestamptz_ne timestamptz_ne_date timestamptz_ne_timestamp
+syn keyword sqlFunction contained timestamptz_out timestamptz_pl_interval timestamptz_recv
 syn keyword sqlFunction contained timestamptz_send timestamptz_smaller timestamptztypmodin
-syn keyword sqlFunction contained timestamptztypmodout timetypmodin timetypmodout timetz timetz_cmp
-syn keyword sqlFunction contained timetz_eq timetz_ge timetz_gt timetz_hash timetz_hash_extended
-syn keyword sqlFunction contained timetz_in timetz_larger timetz_le timetz_lt timetz_mi_interval
-syn keyword sqlFunction contained timetz_ne timetz_out timetz_pl_interval timetz_recv timetz_send
+syn keyword sqlFunction contained timestamptztypmodout timetypmodin timetypmodout timetz timetz_cmp timetz_eq
+syn keyword sqlFunction contained timetz_ge timetz_gt timetz_hash timetz_hash_extended timetz_in
+syn keyword sqlFunction contained timetz_larger timetz_le timetz_lt timetz_mi_interval timetz_ne
+syn keyword sqlFunction contained timetz_out timetz_pl_interval timetz_recv timetz_send
 syn keyword sqlFunction contained timetz_smaller timetzdate_pl timetztypmodin timetztypmodout timezone
-syn keyword sqlFunction contained to_ascii to_char to_date to_hex to_json to_jsonb to_number
-syn keyword sqlFunction contained to_regclass to_regcollation to_regnamespace to_regoper to_regoperator
-syn keyword sqlFunction contained to_regproc to_regprocedure to_regrole to_regtype to_timestamp
-syn keyword sqlFunction contained to_tsquery to_tsvector transaction_timestamp translate trigger_in
+syn keyword sqlFunction contained to_ascii to_char to_date to_hex to_json to_jsonb to_number to_regclass
+syn keyword sqlFunction contained to_regcollation to_regnamespace to_regoper to_regoperator
+syn keyword sqlFunction contained to_regproc to_regprocedure to_regrole to_regtype to_timestamp to_tsquery
+syn keyword sqlFunction contained to_tsvector transaction_timestamp translate trigger_in
 syn keyword sqlFunction contained trigger_out trim_scale trunc ts_debug ts_delete ts_filter ts_headline
-syn keyword sqlFunction contained ts_lexize ts_match_qv ts_match_tq ts_match_tt ts_match_vq
-syn keyword sqlFunction contained ts_parse ts_rank ts_rank_cd ts_rewrite ts_stat ts_token_type
-syn keyword sqlFunction contained ts_typanalyze tsm_handler_in tsm_handler_out tsmatchjoinsel tsmatchsel
+syn keyword sqlFunction contained ts_lexize ts_match_qv ts_match_tq ts_match_tt ts_match_vq ts_parse
+syn keyword sqlFunction contained ts_rank ts_rank_cd ts_rewrite ts_stat ts_token_type ts_typanalyze
+syn keyword sqlFunction contained tsm_handler_in tsm_handler_out tsmatchjoinsel tsmatchsel
 syn keyword sqlFunction contained tsq_mcontained tsq_mcontains tsquery_and tsquery_cmp tsquery_eq
 syn keyword sqlFunction contained tsquery_ge tsquery_gt tsquery_le tsquery_lt tsquery_ne tsquery_not
 syn keyword sqlFunction contained tsquery_or tsquery_phrase tsqueryin tsqueryout tsqueryrecv
 syn keyword sqlFunction contained tsquerysend tsrange tsrange_subdiff tstzrange tstzrange_subdiff
 syn keyword sqlFunction contained tsvector_cmp tsvector_concat tsvector_eq tsvector_ge tsvector_gt
 syn keyword sqlFunction contained tsvector_le tsvector_lt tsvector_ne tsvector_to_array
-syn keyword sqlFunction contained tsvector_update_trigger tsvector_update_trigger_column tsvectorin
-syn keyword sqlFunction contained tsvectorout tsvectorrecv tsvectorsend txid_current
-syn keyword sqlFunction contained txid_current_if_assigned txid_current_snapshot txid_snapshot_in txid_snapshot_out
+syn keyword sqlFunction contained tsvector_update_trigger tsvector_update_trigger_column tsvectorin tsvectorout
+syn keyword sqlFunction contained tsvectorrecv tsvectorsend txid_current txid_current_if_assigned
+syn keyword sqlFunction contained txid_current_snapshot txid_snapshot_in txid_snapshot_out
 syn keyword sqlFunction contained txid_snapshot_recv txid_snapshot_send txid_snapshot_xip
-syn keyword sqlFunction contained txid_snapshot_xmax txid_snapshot_xmin txid_status
-syn keyword sqlFunction contained txid_visible_in_snapshot uhc_to_utf8 unique_key_recheck unknownin unknownout
-syn keyword sqlFunction contained unknownrecv unknownsend unnest upper upper_inc upper_inf utf8_to_big5
+syn keyword sqlFunction contained txid_snapshot_xmax txid_snapshot_xmin txid_status txid_visible_in_snapshot
+syn keyword sqlFunction contained uhc_to_utf8 unique_key_recheck unknownin unknownout unknownrecv
+syn keyword sqlFunction contained unknownsend unnest upper upper_inc upper_inf utf8_to_big5
 syn keyword sqlFunction contained utf8_to_euc_cn utf8_to_euc_jis_2004 utf8_to_euc_jp utf8_to_euc_kr
 syn keyword sqlFunction contained utf8_to_euc_tw utf8_to_gb18030 utf8_to_gbk utf8_to_iso8859
 syn keyword sqlFunction contained utf8_to_iso8859_1 utf8_to_johab utf8_to_koi8r utf8_to_koi8u
-syn keyword sqlFunction contained utf8_to_shift_jis_2004 utf8_to_sjis utf8_to_uhc utf8_to_win uuid_cmp
-syn keyword sqlFunction contained uuid_eq uuid_ge uuid_gt uuid_hash uuid_hash_extended uuid_in uuid_le
-syn keyword sqlFunction contained uuid_lt uuid_ne uuid_out uuid_recv uuid_send uuid_sortsupport
-syn keyword sqlFunction contained var_pop var_samp varbit varbit_in varbit_out varbit_recv varbit_send
-syn keyword sqlFunction contained varbit_support varbitcmp varbiteq varbitge varbitgt varbitle
-syn keyword sqlFunction contained varbitlt varbitne varbittypmodin varbittypmodout varchar
-syn keyword sqlFunction contained varchar_support varcharin varcharout varcharrecv varcharsend
-syn keyword sqlFunction contained varchartypmodin varchartypmodout variance version void_in void_out void_recv
-syn keyword sqlFunction contained void_send websearch_to_tsquery width width_bucket
-syn keyword sqlFunction contained win1250_to_latin2 win1250_to_mic win1251_to_iso win1251_to_koi8r win1251_to_mic
+syn keyword sqlFunction contained utf8_to_shift_jis_2004 utf8_to_sjis utf8_to_uhc utf8_to_win uuid_cmp uuid_eq
+syn keyword sqlFunction contained uuid_ge uuid_gt uuid_hash uuid_hash_extended uuid_in uuid_le
+syn keyword sqlFunction contained uuid_lt uuid_ne uuid_out uuid_recv uuid_send uuid_sortsupport var_pop
+syn keyword sqlFunction contained var_samp varbit varbit_in varbit_out varbit_recv varbit_send
+syn keyword sqlFunction contained varbit_support varbitcmp varbiteq varbitge varbitgt varbitle varbitlt
+syn keyword sqlFunction contained varbitne varbittypmodin varbittypmodout varchar_support
+syn keyword sqlFunction contained varcharin varcharout varcharrecv varcharsend varchartypmodin
+syn keyword sqlFunction contained varchartypmodout variance version void_in void_out void_recv void_send
+syn keyword sqlFunction contained websearch_to_tsquery width width_bucket win1250_to_latin2
+syn keyword sqlFunction contained win1250_to_mic win1251_to_iso win1251_to_koi8r win1251_to_mic
 syn keyword sqlFunction contained win1251_to_win866 win866_to_iso win866_to_koi8r win866_to_mic
-syn keyword sqlFunction contained win866_to_win1251 win_to_utf8 xid xid8cmp xid8eq xid8ge xid8gt
-syn keyword sqlFunction contained xid8in xid8le xid8lt xid8ne xid8out xid8recv xid8send xideq xideqint4
-syn keyword sqlFunction contained xidin xidneq xidneqint4 xidout xidrecv xidsend xml xml_in
-syn keyword sqlFunction contained xml_is_well_formed xml_is_well_formed_content
-syn keyword sqlFunction contained xml_is_well_formed_document xml_out xml_recv xml_send xmlagg xmlcomment xmlconcat2 xmlexists
-syn keyword sqlFunction contained xmlvalidate xpath xpath_exists
+syn keyword sqlFunction contained win866_to_win1251 win_to_utf8 xid xid8cmp xid8eq xid8ge xid8gt xid8in xid8le
+syn keyword sqlFunction contained xid8lt xid8ne xid8out xid8recv xid8send xideq xideqint4 xidin xidneq
+syn keyword sqlFunction contained xidneqint4 xidout xidrecv xidsend xml xml_in xml_is_well_formed
+syn keyword sqlFunction contained xml_is_well_formed_content xml_is_well_formed_document xml_out
+syn keyword sqlFunction contained xml_recv xml_send xmlagg xmlcomment xmlconcat2 xmlexists xmlvalidate
+syn keyword sqlFunction contained xpath xpath_exists
 " Extensions names
 syn keyword sqlConstant contained address_standardizer address_standardizer_data_us adminpack
 syn keyword sqlConstant contained amcheck autoinc bloom bool_plperl bool_plperlu btree_gin
@@ -713,7 +713,7 @@ syn keyword sqlConstant contained pageinspect pg_buffercache pg_freespacemap pg_
 syn keyword sqlConstant contained pg_stat_statements pg_trgm pg_visibility pgcrypto pgrouting pgrowlocks
 syn keyword sqlConstant contained pgstattuple pgtap plperl plperlu plpgsql pltcl pltclu postgis
 syn keyword sqlConstant contained postgis_raster postgis_sfcgal postgis_tiger_geocoder postgis_topology
-syn keyword sqlConstant contained postgres_fdw refint seg sslinfo tablefunc tcn tsm_system_rows
+syn keyword sqlConstant contained postgres_fdw refint seg sslinfo tablefunc tcn temporal_tables tsm_system_rows
 syn keyword sqlConstant contained tsm_system_time unaccent xml2
 " Legacy extensions names
 syn keyword sqlConstant contained chkpass hstore_plpython2u hstore_plpython3u hstore_plpythonu
@@ -1973,6 +1973,7 @@ syn keyword sqlPsqlKeyword contained unicode_border_linestyle unicode_column_lin
 syn keyword sqlPsqlKeyword contained on off auto unaligned pager
 syn keyword sqlPsqlKeyword contained AUTOCOMMIT HISTCONTROL PROMPT VERBOSITY SHOW_CONTEXT VERSION
 syn keyword sqlPsqlKeyword contained DBNAME USER HOST PORT ENCODING HISTSIZE QUIET
+syn keyword sqlPsqlKeyword contained from program pstdin pstdout stdin stdout to where with
 
 " Todo
 syn keyword sqlTodo contained TODO FIXME XXX DEBUG NOTE
@@ -2010,7 +2011,7 @@ else
 endif
 
 " Folding
-syn region sqlFold start='^\s*\zs\c\(create\|update\|alter\|select\|insert\|do\)\>' end=';$' transparent fold contains=ALL
+syn region sqlFold start='^\s*\zs\c\(create\|update\|alter\|select\|insert\|do\)\>' end=';$' transparent fold contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlIdentifier,sqlNumber,sqlOperator,sqlSpecial,sqlString,sqlTodo,plpgsql
 
 " PL/<any other language>
 fun! s:add_syntax(s)

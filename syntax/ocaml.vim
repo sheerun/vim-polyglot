@@ -8,7 +8,7 @@ endif
 " Maintainers:  Markus Mottl      <markus.mottl@gmail.com>
 "               Karl-Heinz Sylla  <Karl-Heinz.Sylla@gmd.de>
 "               Issac Trotts      <ijtrotts@ucdavis.edu>
-" URL:          http://www.ocaml.info/vim/syntax/ocaml.vim
+" URL:          https://github.com/ocaml/vim-ocaml
 " Last Change:
 "               2018 Nov 08 - Improved highlighting of operators (Maëlan)
 "               2018 Apr 22 - Improved support for PPX (Andrey Popp)

@@ -9,7 +9,7 @@ endif
 "              Pierre Vittet       <pierre-vittet@pvittet.com>
 "              Stefano Zacchiroli  <zack@bononia.it>
 "              Vincent Aravantinos <firstname.name@imag.fr>
-" URL:         http://www.ocaml.info/vim/ftplugin/ocaml.vim
+" URL:         https://github.com/ocaml/vim-ocaml
 " Last Change:
 "              2013 Oct 27 - Added commentstring (MM)
 "              2013 Jul 26 - load default compiler settings (MM)

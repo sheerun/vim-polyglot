@@ -2,9 +2,10 @@ if has_key(g:polyglot_is_disabled, 'ocaml')
   finish
 endif
 
+" Vim filetype plugin file
 " Language:    Sexplib
 " Maintainer:  Markus Mottl        <markus.mottl@gmail.com>
-" URL:         http://www.ocaml.info/vim/ftplugin/sexplib.vim
+" URL:         https://github.com/ocaml/vim-ocaml
 " Last Change:
 "              2017 Apr 12 - First version (MM)
 
