@@ -247,6 +247,15 @@ Vim Polyglot includes vim-sensible plugin, which is usually necessary for editin
 let g:polyglot_disabled = ['sensible']
 ```
 
+## No ftdetect
+
+If you want to use vim-polyglot plugins, but not ftdetect autocommands, the you can disable it as so:
+
+
+```vim
+let g:polyglot_disabled = ['ftdetect']
+```
+
 ## Contributing
 
 Language packs are periodically updated using automated `scripts/build` script.

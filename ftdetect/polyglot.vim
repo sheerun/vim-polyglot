@@ -140,6 +140,8 @@ augroup filetypedetect
 let s:cpo_save = &cpo
 set cpo&vim
 
+if !has_key(g:polyglot_is_disabled, 'ftdetect')
+
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
 if !has_key(g:polyglot_is_disabled, 'jsonc')
@@ -2654,6 +2656,8 @@ endif
 
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
+
+endif
 
 func! s:Observe(fn)
   let b:PolyglotObserve = function("polyglot#" . a:fn)
