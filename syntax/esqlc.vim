@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'esqlc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'esqlc', 'syntax/esqlc.vim')
   finish
 endif
 

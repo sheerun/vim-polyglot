@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'neomuttrc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'neomuttrc', 'ftplugin/neomuttrc.vim')
   finish
 endif
 

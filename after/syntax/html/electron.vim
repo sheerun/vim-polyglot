@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'html5')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'html5', 'after/syntax/html/electron.vim')
   finish
 endif
 

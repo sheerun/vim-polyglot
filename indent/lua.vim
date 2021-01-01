@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'lua')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'lua', 'indent/lua.vim')
   finish
 endif
 

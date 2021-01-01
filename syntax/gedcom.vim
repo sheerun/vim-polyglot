@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'gedcom')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'gedcom', 'syntax/gedcom.vim')
   finish
 endif
 

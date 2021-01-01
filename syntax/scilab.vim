@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'scilab')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'scilab', 'syntax/scilab.vim')
   finish
 endif
 

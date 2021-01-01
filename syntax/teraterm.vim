@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'teraterm')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'teraterm', 'syntax/teraterm.vim')
   finish
 endif
 

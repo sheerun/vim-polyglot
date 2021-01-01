@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'chaiscript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'chaiscript', 'syntax/chaiscript.vim')
   finish
 endif
 

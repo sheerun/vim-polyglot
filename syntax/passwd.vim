@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'passwd')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'passwd', 'syntax/passwd.vim')
   finish
 endif
 

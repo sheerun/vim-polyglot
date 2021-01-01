@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'haskell')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'haskell', 'after/ftplugin/cabal.vim')
   finish
 endif
 

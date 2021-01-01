@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'fortran')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'fortran', 'syntax/fortran.vim')
   finish
 endif
 

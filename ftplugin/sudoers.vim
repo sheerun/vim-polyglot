@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'sudoers')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'sudoers', 'ftplugin/sudoers.vim')
   finish
 endif
 

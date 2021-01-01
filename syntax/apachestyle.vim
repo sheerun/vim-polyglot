@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'apachestyle')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'apachestyle', 'syntax/apachestyle.vim')
   finish
 endif
 

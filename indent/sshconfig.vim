@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'sshconfig')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'sshconfig', 'indent/sshconfig.vim')
   finish
 endif
 

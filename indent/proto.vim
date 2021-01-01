@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'protobuf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'protobuf', 'indent/proto.vim')
   finish
 endif
 

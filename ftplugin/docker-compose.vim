@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'docker-compose')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'docker-compose', 'ftplugin/docker-compose.vim')
   finish
 endif
 

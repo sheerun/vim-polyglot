@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'xf86conf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'xf86conf', 'syntax/xf86conf.vim')
   finish
 endif
 

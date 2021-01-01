@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'jproperties')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'jproperties', 'syntax/jproperties.vim')
   finish
 endif
 

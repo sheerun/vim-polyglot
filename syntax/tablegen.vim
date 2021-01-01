@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'llvm')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'llvm', 'syntax/tablegen.vim')
   finish
 endif
 

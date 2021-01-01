@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'terraform')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'terraform', 'ftplugin/terraform.vim')
   finish
 endif
 

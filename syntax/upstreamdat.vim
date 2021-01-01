@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'upstreamdat')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'upstreamdat', 'syntax/upstreamdat.vim')
   finish
 endif
 

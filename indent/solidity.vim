@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'solidity')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'solidity', 'indent/solidity.vim')
   finish
 endif
 

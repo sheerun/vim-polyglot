@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'upstart')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'upstart', 'syntax/upstart.vim')
   finish
 endif
 

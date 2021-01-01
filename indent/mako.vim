@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'mako')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'mako', 'indent/mako.vim')
   finish
 endif
 

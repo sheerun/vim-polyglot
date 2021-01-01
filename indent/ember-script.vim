@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'emberscript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'emberscript', 'indent/ember-script.vim')
   finish
 endif
 

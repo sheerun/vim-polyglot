@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'caddyfile')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'caddyfile', 'syntax/caddyfile.vim')
   finish
 endif
 

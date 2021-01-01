@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'rspec')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'rspec', 'after/syntax/rspec.vim')
   finish
 endif
 

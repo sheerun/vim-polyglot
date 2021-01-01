@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'applescript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'applescript', 'indent/applescript.vim')
   finish
 endif
 

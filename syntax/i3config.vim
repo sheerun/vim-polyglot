@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'i3')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'i3', 'syntax/i3config.vim')
   finish
 endif
 

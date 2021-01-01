@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'yaml')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'yaml', 'ftplugin/yaml.vim')
   finish
 endif
 

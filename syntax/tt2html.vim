@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'perl')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'perl', 'syntax/tt2html.vim')
   finish
 endif
 

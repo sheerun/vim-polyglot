@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'qml')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'qml', 'ftplugin/qml.vim')
   finish
 endif
 

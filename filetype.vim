@@ -1,1 +1,1 @@
-runtime! ftdetect/polyglot.vim
+call polyglot#init#init()

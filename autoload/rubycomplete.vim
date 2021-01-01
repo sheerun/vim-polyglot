@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'ruby')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'ruby', 'autoload/rubycomplete.vim')
   finish
 endif
 

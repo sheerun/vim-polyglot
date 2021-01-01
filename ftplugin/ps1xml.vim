@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'powershell')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'powershell', 'ftplugin/ps1xml.vim')
   finish
 endif
 

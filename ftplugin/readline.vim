@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'readline')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'readline', 'ftplugin/readline.vim')
   finish
 endif
 

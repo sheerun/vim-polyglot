@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'javascript-sql')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'javascript-sql', 'after/syntax/javascript/sql.vim')
   finish
 endif
 

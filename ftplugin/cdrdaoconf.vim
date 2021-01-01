@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cdrdaoconf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cdrdaoconf', 'ftplugin/cdrdaoconf.vim')
   finish
 endif
 

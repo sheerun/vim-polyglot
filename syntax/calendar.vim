@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'calendar')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'calendar', 'syntax/calendar.vim')
   finish
 endif
 

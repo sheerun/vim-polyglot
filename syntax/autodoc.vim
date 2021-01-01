@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'autodoc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'autodoc', 'syntax/autodoc.vim')
   finish
 endif
 

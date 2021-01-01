@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'gnash')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'gnash', 'syntax/gnash.vim')
   finish
 endif
 

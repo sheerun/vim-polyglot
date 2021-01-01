@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'verilogams')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'verilogams', 'syntax/verilogams.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'xmodmap')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'xmodmap', 'ftplugin/xmodmap.vim')
   finish
 endif
 

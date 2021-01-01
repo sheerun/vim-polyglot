@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'icalendar')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'icalendar', 'syntax/icalendar.vim')
   finish
 endif
 

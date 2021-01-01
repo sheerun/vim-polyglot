@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cmod')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cmod', 'syntax/cmod.vim')
   finish
 endif
 

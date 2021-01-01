@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'asterisk')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'asterisk', 'syntax/asterisk.vim')
   finish
 endif
 

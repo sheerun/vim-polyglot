@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cfg')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cfg', 'ftplugin/cfg.vim')
   finish
 endif
 

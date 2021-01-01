@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'ansible')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'ansible', 'ftplugin/ansible.vim')
   finish
 endif
 

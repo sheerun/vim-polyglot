@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'xinetd')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'xinetd', 'indent/xinetd.vim')
   finish
 endif
 

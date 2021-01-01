@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'wsh')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'wsh', 'syntax/wsh.vim')
   finish
 endif
 

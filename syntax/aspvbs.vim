@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'aspvbs')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'aspvbs', 'syntax/aspvbs.vim')
   finish
 endif
 

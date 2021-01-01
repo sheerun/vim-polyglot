@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'javascript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'javascript', 'syntax/flow.vim')
   finish
 endif
 

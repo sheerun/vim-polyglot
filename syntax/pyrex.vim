@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'pyrex')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'pyrex', 'syntax/pyrex.vim')
   finish
 endif
 

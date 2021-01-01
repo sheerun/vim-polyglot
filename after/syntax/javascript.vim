@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'jsx')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'jsx', 'after/syntax/javascript.vim')
   finish
 endif
 

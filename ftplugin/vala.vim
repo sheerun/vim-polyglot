@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'vala')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'vala', 'ftplugin/vala.vim')
   finish
 endif
 

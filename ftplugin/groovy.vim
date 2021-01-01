@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'groovy')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'groovy', 'ftplugin/groovy.vim')
   finish
 endif
 

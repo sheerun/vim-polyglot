@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'lotos')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'lotos', 'syntax/lotos.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'procmail')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'procmail', 'syntax/procmail.vim')
   finish
 endif
 

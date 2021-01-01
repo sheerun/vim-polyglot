@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'rpcgen')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'rpcgen', 'syntax/rpcgen.vim')
   finish
 endif
 

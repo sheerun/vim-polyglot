@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'xquery')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'xquery', 'syntax/xquery.vim')
   finish
 endif
 

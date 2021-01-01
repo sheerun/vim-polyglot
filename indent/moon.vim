@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'moonscript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'moonscript', 'indent/moon.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'icon')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'icon', 'syntax/icon.vim')
   finish
 endif
 

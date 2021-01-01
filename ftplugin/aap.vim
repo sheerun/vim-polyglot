@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'aap')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'aap', 'ftplugin/aap.vim')
   finish
 endif
 

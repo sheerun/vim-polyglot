@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'razor')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'razor', 'syntax/razor.vim')
   finish
 endif
 

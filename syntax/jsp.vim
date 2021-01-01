@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'jsp')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'jsp', 'syntax/jsp.vim')
   finish
 endif
 

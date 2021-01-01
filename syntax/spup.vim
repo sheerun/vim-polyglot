@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'spup')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'spup', 'syntax/spup.vim')
   finish
 endif
 

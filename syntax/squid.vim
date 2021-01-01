@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'squid')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'squid', 'syntax/squid.vim')
   finish
 endif
 

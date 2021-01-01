@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'edif')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'edif', 'syntax/edif.vim')
   finish
 endif
 

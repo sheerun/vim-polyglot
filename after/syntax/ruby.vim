@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'yard')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'yard', 'after/syntax/ruby.vim')
   finish
 endif
 

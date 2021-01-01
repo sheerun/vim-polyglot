@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'gleam')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'gleam', 'compiler/gleam.vim')
   finish
 endif
 

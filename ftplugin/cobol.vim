@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cobol')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cobol', 'ftplugin/cobol.vim')
   finish
 endif
 

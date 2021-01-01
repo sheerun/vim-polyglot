@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'crontab')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'crontab', 'syntax/crontab.vim')
   finish
 endif
 

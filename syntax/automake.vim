@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'automake')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'automake', 'syntax/automake.vim')
   finish
 endif
 

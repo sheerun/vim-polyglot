@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cjsx')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cjsx', 'after/syntax/coffee.vim')
   finish
 endif
 

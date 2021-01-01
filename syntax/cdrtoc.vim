@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cdrtoc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cdrtoc', 'syntax/cdrtoc.vim')
   finish
 endif
 

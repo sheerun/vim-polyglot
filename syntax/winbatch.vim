@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'winbatch')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'winbatch', 'syntax/winbatch.vim')
   finish
 endif
 

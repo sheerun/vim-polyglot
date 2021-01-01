@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'ldif')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'ldif', 'syntax/ldif.vim')
   finish
 endif
 

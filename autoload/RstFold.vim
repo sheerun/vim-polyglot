@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'rst')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'rst', 'autoload/RstFold.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'fish')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'fish', 'compiler/fish.vim')
   finish
 endif
 

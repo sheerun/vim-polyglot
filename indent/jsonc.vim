@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'jsonc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'jsonc', 'indent/jsonc.vim')
   finish
 endif
 

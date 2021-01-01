@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'tmux')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'tmux', 'syntax/tmux.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'zephir')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'zephir', 'syntax/zephir.vim')
   finish
 endif
 

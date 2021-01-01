@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'csdl')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'csdl', 'syntax/csdl.vim')
   finish
 endif
 

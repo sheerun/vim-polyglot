@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'murphi')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'murphi', 'syntax/murphi.vim')
   finish
 endif
 

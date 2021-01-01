@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'json')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'json', 'indent/json.vim')
   finish
 endif
 

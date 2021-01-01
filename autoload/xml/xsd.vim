@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'xsd')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'xsd', 'autoload/xml/xsd.vim')
   finish
 endif
 

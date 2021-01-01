@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'lynx')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'lynx', 'syntax/lynx.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'conaryrecipe')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'conaryrecipe', 'syntax/conaryrecipe.vim')
   finish
 endif
 

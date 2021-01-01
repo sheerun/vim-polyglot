@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'apiblueprint')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'apiblueprint', 'syntax/apiblueprint.vim')
   finish
 endif
 

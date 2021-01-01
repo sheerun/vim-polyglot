@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cue')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cue', 'syntax/cuesheet.vim')
   finish
 endif
 

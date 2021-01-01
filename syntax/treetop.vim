@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'treetop')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'treetop', 'syntax/treetop.vim')
   finish
 endif
 

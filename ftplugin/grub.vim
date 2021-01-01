@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'grub')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'grub', 'ftplugin/grub.vim')
   finish
 endif
 

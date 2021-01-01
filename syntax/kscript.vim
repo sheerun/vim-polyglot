@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'kscript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'kscript', 'syntax/kscript.vim')
   finish
 endif
 

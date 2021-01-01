@@ -7,6 +7,9 @@ require 'fileutils'
 require 'set'
 require 'json'
 require 'tsort'
+require 'pathname'
+
+BASE_DIR = Pathname.new(File.expand_path('../..', __FILE__))
 
 Dir.chdir(File.dirname(__dir__))
 
@@ -48,7 +51,7 @@ def verify(packages, heuristics)
   extensions = packages.flat_map { |e| e["filetypes"] || [] }
     .flat_map { |e| e["extensions"].map { |e| "*." + e } }
   native_filetypes = detect_filetypes_str(
-    File.read('ftdetect/polyglot.vim').match(/" DO NOT EDIT CODE ABOVE.*/m)[0]
+    File.read('autoload/polyglot/init.vim').match(/" DO NOT EDIT CODE ABOVE.*/m)[0]
   ).flat_map { |e| expand_all(e) }
 
   for e in (native_filetypes & extensions)
@@ -295,7 +298,7 @@ def copy_file(name, src, dest)
     open(dest, "w") do |output|
       if dest.match?(/\.vim$/)
         output << <<~EOF
-        if has_key(g:polyglot_is_disabled, '#{name}')
+        if polyglot#init#is_disabled(expand('<sfile>:p'), '#{name}', '#{dest}')
           finish
         endif
 
@@ -688,7 +691,7 @@ def generate_ftdetect(packages, heuristics)
 
   show_warnings(all_filetypes, expected_filetypes)
 
-  inject_code('ftdetect/polyglot.vim', output)
+  inject_code('autoload/polyglot/init.vim', output)
 
   output = []
 

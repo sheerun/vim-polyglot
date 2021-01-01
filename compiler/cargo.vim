@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'rust')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'rust', 'compiler/cargo.vim')
   finish
 endif
 

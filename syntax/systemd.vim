@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'systemd')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'systemd', 'syntax/systemd.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'xhtml')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'xhtml', 'indent/xhtml.vim')
   finish
 endif
 

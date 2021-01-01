@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'typescript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/yats/es6-object.vim')
   finish
 endif
 

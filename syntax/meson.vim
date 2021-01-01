@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'meson')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'meson', 'syntax/meson.vim')
   finish
 endif
 

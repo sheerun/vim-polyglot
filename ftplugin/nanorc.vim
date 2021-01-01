@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'nanorc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'nanorc', 'ftplugin/nanorc.vim')
   finish
 endif
 

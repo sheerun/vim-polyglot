@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'icemenu')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'icemenu', 'syntax/icemenu.vim')
   finish
 endif
 

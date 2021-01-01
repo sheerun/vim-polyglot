@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'hostconf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'hostconf', 'ftplugin/hostconf.vim')
   finish
 endif
 

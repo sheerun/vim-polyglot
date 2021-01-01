@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'loginaccess')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'loginaccess', 'ftplugin/loginaccess.vim')
   finish
 endif
 

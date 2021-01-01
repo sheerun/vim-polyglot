@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'sql')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'sql', 'ftplugin/sql.vim')
   finish
 endif
 

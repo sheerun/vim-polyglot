@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'xslt')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'xslt', 'ftplugin/xslt.vim')
   finish
 endif
 

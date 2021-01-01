@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'dnsmasq')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'dnsmasq', 'syntax/dnsmasq.vim')
   finish
 endif
 

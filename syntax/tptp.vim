@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'tptp')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'tptp', 'syntax/tptp.vim')
   finish
 endif
 

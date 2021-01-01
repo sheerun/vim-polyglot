@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'handlebars')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'handlebars', 'syntax/handlebars.vim')
   finish
 endif
 

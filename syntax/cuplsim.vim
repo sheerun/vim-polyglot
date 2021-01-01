@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cuplsim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cuplsim', 'syntax/cuplsim.vim')
   finish
 endif
 

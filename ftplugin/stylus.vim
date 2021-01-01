@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'stylus')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'stylus', 'ftplugin/stylus.vim')
   finish
 endif
 

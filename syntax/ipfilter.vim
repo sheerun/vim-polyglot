@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'ipfilter')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'ipfilter', 'syntax/ipfilter.vim')
   finish
 endif
 

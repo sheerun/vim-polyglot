@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'lilypond')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'lilypond', 'ftplugin/lilypond.vim')
   finish
 endif
 

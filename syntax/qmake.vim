@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'qmake')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'qmake', 'syntax/qmake.vim')
   finish
 endif
 

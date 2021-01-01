@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'rnoweb')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'rnoweb', 'syntax/rnoweb-2.vim')
   finish
 endif
 

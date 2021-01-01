@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'updatedb')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'updatedb', 'ftplugin/updatedb.vim')
   finish
 endif
 

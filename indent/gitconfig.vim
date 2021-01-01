@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'git')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'git', 'indent/gitconfig.vim')
   finish
 endif
 

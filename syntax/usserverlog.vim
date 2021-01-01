@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'usserverlog')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'usserverlog', 'syntax/usserverlog.vim')
   finish
 endif
 

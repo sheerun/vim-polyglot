@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'htmldjango')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'htmldjango', 'syntax/htmldjango.vim')
   finish
 endif
 

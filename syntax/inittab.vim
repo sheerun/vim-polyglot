@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'inittab')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'inittab', 'syntax/inittab.vim')
   finish
 endif
 

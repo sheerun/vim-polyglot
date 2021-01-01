@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'dircolors')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'dircolors', 'ftplugin/dircolors.vim')
   finish
 endif
 

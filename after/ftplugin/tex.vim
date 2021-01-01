@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'tex')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'tex', 'after/ftplugin/tex.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'wsml')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'wsml', 'syntax/wsml.vim')
   finish
 endif
 

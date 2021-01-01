@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'nix')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'nix', 'compiler/nix-build.vim')
   finish
 endif
 

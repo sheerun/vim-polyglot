@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'plantuml')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'plantuml', 'ftplugin/plantuml.vim')
   finish
 endif
 

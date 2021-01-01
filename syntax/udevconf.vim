@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'udevconf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'udevconf', 'syntax/udevconf.vim')
   finish
 endif
 

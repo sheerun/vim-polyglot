@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'vhdl')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'vhdl', 'syntax/vhdl.vim')
   finish
 endif
 

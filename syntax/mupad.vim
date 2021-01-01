@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'mupad')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'mupad', 'syntax/mupad.vim')
   finish
 endif
 

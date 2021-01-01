@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'setserial')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'setserial', 'syntax/setserial.vim')
   finish
 endif
 

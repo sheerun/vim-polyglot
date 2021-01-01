@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'coffee-script')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'coffee-script', 'compiler/coffee.vim')
   finish
 endif
 

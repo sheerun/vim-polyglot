@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'dosbatch')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'dosbatch', 'indent/dosbatch.vim')
   finish
 endif
 

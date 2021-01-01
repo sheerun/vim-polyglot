@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'visual-basic')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'visual-basic', 'indent/vb.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'puppet')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'puppet', 'autoload/puppet/align.vim')
   finish
 endif
 

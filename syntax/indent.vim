@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'indent')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'indent', 'syntax/indent.vim')
   finish
 endif
 

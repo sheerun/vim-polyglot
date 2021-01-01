@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'datascript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'datascript', 'syntax/datascript.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'hgcommit')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'hgcommit', 'ftplugin/hgcommit.vim')
   finish
 endif
 

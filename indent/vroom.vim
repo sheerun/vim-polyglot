@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'vroom')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'vroom', 'indent/vroom.vim')
   finish
 endif
 

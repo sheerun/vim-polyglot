@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cpp-modern')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cpp-modern', 'after/syntax/cpp.vim')
   finish
 endif
 

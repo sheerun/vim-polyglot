@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'remind')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'remind', 'syntax/remind.vim')
   finish
 endif
 

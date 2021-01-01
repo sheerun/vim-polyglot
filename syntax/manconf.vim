@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'manconf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'manconf', 'syntax/manconf.vim')
   finish
 endif
 

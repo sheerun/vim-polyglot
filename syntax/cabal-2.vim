@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cabal')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cabal', 'syntax/cabal-2.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'nginx')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'nginx', 'syntax/nginx.vim')
   finish
 endif
 

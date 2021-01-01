@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'abaqus')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'abaqus', 'syntax/abaqus.vim')
   finish
 endif
 

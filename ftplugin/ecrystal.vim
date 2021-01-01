@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'crystal')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'crystal', 'ftplugin/ecrystal.vim')
   finish
 endif
 

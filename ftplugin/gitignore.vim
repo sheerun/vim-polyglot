@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'gitignore')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'gitignore', 'ftplugin/gitignore.vim')
   finish
 endif
 

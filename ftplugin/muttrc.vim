@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'muttrc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'muttrc', 'ftplugin/muttrc.vim')
   finish
 endif
 

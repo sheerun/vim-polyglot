@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'zimbu')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'zimbu', 'indent/zimbu.vim')
   finish
 endif
 

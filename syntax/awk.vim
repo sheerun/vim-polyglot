@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'awk')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'awk', 'syntax/awk.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'elixir')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'elixir', 'compiler/credo.vim')
   finish
 endif
 

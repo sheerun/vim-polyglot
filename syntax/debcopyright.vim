@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'debcopyright')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'debcopyright', 'syntax/debcopyright.vim')
   finish
 endif
 

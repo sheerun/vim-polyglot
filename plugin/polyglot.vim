@@ -1,3 +1,5 @@
+call polyglot#init#init()
+
 " Turn on filetype plugins (:help filetype-plugin).
 if has('autocmd') && !(exists("did_load_filetypes") && exists("did_indent_on"))
   filetype plugin indent on
@@ -17,7 +19,7 @@ endif
 " and (mostly comments) from https://github.com/sheerun/vimrc
 "
 " Only settings that matter for proper editing are left
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'sensible') == -1
+if !has_key(g:polyglot_is_disabled, 'sensible')
   " Allow backspace in insert mode.
   if &backspace == ""
     set backspace=indent,eol,start

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'css')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'css', 'indent/css.vim')
   finish
 endif
 

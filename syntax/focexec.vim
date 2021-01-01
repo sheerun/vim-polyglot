@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'focexec')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'focexec', 'syntax/focexec.vim')
   finish
 endif
 

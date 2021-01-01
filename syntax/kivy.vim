@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'kivy')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'kivy', 'syntax/kivy.vim')
   finish
 endif
 

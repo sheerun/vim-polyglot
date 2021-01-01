@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'privoxy')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'privoxy', 'syntax/privoxy.vim')
   finish
 endif
 

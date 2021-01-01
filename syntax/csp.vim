@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'csp')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'csp', 'syntax/csp.vim')
   finish
 endif
 

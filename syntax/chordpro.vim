@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'chordpro')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'chordpro', 'syntax/chordpro.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'mailcap')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'mailcap', 'syntax/mailcap.vim')
   finish
 endif
 

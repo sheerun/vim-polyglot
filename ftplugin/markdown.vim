@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'markdown')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'markdown', 'ftplugin/markdown.vim')
   finish
 endif
 

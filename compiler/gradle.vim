@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'gradle')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'gradle', 'compiler/gradle.vim')
   finish
 endif
 

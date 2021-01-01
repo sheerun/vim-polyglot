@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'unison')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'unison', 'syntax/unison.vim')
   finish
 endif
 

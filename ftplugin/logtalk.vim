@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'logtalk')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'logtalk', 'ftplugin/logtalk.vim')
   finish
 endif
 

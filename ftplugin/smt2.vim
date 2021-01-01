@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'smt2')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'smt2', 'ftplugin/smt2.vim')
   finish
 endif
 

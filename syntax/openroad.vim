@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'openroad')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'openroad', 'syntax/openroad.vim')
   finish
 endif
 

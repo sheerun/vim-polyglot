@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'gdscript')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'gdscript', 'indent/gdscript3.vim')
   finish
 endif
 

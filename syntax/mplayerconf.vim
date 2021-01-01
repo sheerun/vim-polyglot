@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'mplayerconf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'mplayerconf', 'syntax/mplayerconf.vim')
   finish
 endif
 

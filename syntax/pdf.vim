@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'pdf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'pdf', 'syntax/pdf.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cucumber')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cucumber', 'indent/cucumber.vim')
   finish
 endif
 

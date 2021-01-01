@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'objc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'objc', 'ftplugin/objc.vim')
   finish
 endif
 

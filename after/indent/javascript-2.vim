@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'graphql')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'graphql', 'after/indent/javascript-2.vim')
   finish
 endif
 

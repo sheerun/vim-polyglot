@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'debcontrol')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'debcontrol', 'ftplugin/debcontrol.vim')
   finish
 endif
 

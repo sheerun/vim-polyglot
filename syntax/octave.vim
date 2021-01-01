@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'octave')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'octave', 'syntax/octave.vim')
   finish
 endif
 

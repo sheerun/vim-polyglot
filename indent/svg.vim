@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'svg-indent')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'svg-indent', 'indent/svg.vim')
   finish
 endif
 

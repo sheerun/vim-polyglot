@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'jgraph')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'jgraph', 'syntax/jgraph.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'vgrindefs')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'vgrindefs', 'syntax/vgrindefs.vim')
   finish
 endif
 

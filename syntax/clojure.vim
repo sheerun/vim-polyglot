@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'clojure')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'clojure', 'syntax/clojure.vim')
   finish
 endif
 

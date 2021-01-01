@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'modula3')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'modula3', 'syntax/modula3.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'denyhosts')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'denyhosts', 'syntax/denyhosts.vim')
   finish
 endif
 

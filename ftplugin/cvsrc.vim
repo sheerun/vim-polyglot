@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cvsrc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cvsrc', 'ftplugin/cvsrc.vim')
   finish
 endif
 

@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'asciidoc')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'asciidoc', 'syntax/asciidoc.vim')
   finish
 endif
 

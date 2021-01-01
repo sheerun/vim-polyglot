@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'jsonnet')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'jsonnet', 'autoload/jsonnet.vim')
   finish
 endif
 

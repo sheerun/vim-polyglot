@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'zinit')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'zinit', 'after/syntax/zsh.vim')
   finish
 endif
 

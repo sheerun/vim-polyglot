@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'arduino')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'arduino', 'syntax/arduino.vim')
   finish
 endif
 

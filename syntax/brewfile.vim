@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'brewfile')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'brewfile', 'syntax/brewfile.vim')
   finish
 endif
 

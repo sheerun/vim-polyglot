@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'wvdial')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'wvdial', 'syntax/wvdial.vim')
   finish
 endif
 

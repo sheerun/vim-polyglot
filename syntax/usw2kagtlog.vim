@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'usw2kagtlog')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'usw2kagtlog', 'syntax/usw2kagtlog.vim')
   finish
 endif
 

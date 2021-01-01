@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'chaskell')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'chaskell', 'syntax/chaskell.vim')
   finish
 endif
 

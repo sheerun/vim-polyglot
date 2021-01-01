@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'cryptol')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'cryptol', 'ftplugin/cryptol/folding.vim')
   finish
 endif
 

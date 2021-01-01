@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'bindzone')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'bindzone', 'syntax/bindzone.vim')
   finish
 endif
 

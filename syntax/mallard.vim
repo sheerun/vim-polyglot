@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'mallard')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'mallard', 'syntax/mallard.vim')
   finish
 endif
 

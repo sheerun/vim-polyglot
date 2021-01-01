@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'powershell')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'powershell', 'indent/ps1.vim')
   finish
 endif
 

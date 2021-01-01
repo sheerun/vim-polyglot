@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'lhaskell')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'lhaskell', 'syntax/lhaskell.vim')
   finish
 endif
 

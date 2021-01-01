@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'alsaconf')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'alsaconf', 'syntax/alsaconf.vim')
   finish
 endif
 

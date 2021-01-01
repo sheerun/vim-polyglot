@@ -1,4 +1,4 @@
-if has_key(g:polyglot_is_disabled, 'jq')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'jq', 'ftplugin/jq.vim')
   finish
 endif
 
