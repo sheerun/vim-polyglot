@@ -59,7 +59,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [cjsx](https://github.com/mtscout6/vim-cjsx)
 - [clojure](https://github.com/guns/vim-clojure-static) (Clojure syntax highlighting for clj, boot, cl2, cljc, cljs, cljs.hl, cljscm, cljx, hic and edn files)
 - [cmake](https://github.com/pboettch/vim-cmake-syntax) (CMake syntax highlighting for cmake and cmake.in files)
-- [coffee-script](https://github.com/kchmck/vim-coffee-script) (CoffeeScript and Literate CoffeeScript syntax highlighting for coffee, cake, cjsx, iced, coffeekup, litcoffee and coffee.md files)
+- [coffee-script](https://github.com/kchmck/vim-coffee-script) (CoffeeScript and Literate CoffeeScript syntax highlighting for coffee, cake, cjsx, iced, coffeekup, cson, litcoffee and coffee.md files)
 - [cpp-modern](https://github.com/bfrg/vim-cpp-modern)
 - [cql](https://github.com/elubow/cql-vim) (Syntax highlighting for cql files)
 - [cryptol](https://github.com/victoredwardocallaghan/cryptol.vim) (Syntax highlighting for cry, cyl, lcry and lcyl files)

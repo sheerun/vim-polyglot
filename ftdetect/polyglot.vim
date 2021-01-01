@@ -2441,7 +2441,7 @@ if !has_key(g:polyglot_is_disabled, 'cryptol')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'coffee-script')
-  au BufNewFile,BufRead *._coffee,*.cake,*.cjsx,*.coffee,*.coffeekup,*.iced,Cakefile setf coffee
+  au BufNewFile,BufRead *._coffee,*.cake,*.cjsx,*.coffee,*.coffeekup,*.cson,*.iced,Cakefile setf coffee
   au BufNewFile,BufRead *.coffee.md,*.litcoffee setf litcoffee
 endif
 

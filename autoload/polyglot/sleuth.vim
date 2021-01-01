@@ -81,7 +81,7 @@ let s:globs = {
   \ 'cmusrc': '',
   \ 'cobol': '*.cbl,*.cob,*.lib',
   \ 'coco': '*.atg',
-  \ 'coffee': '*.coffee,*._coffee,*.cake,*.cjsx,*.iced,*.coffeekup,Cakefile',
+  \ 'coffee': '*.coffee,*._coffee,*.cake,*.cjsx,*.iced,*.coffeekup,*.cson,Cakefile',
   \ 'conaryrecipe': '*.recipe',
   \ 'conf': '*.conf,auto.master,config',
   \ 'config': 'configure.in,configure.ac,Pipfile',
