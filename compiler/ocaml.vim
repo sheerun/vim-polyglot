@@ -5,7 +5,7 @@ endif
 " Vim Compiler File
 " Compiler:    ocaml
 " Maintainer:  Markus Mottl <markus.mottl@gmail.com>
-" URL:         http://www.ocaml.info/vim/compiler/ocaml.vim
+" URL:         https://github.com/ocaml/vim-ocaml
 " Last Change:
 "              2020 Mar 28 - Improved error format (Thomas Leonard)
 "              2017 Nov 26 - Improved error format (Markus Mottl)
