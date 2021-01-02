@@ -224,6 +224,7 @@ let s:globs = {
   \ 'hex': '*.hex,*.h32',
   \ 'hgcommit': 'hg-editor-*.txt',
   \ 'hive': '*.q,*.hql,*.ql',
+  \ 'hjson': '*.hjson',
   \ 'hog': '*.hog,snort.conf,vision.conf',
   \ 'hollywood': '*.hws',
   \ 'hostconf': '',
