@@ -5571,3 +5571,11 @@ filetypes:
   - name: gleam
     extensions:
     - gleam
+---
+name: hjson
+remote: hjson/vim-hjson
+filetypes:
+- name: hjson
+  patterns:
+  - pattern: '*.hjson'
+    description: Hjson (https://hjson.github.io)
