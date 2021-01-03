@@ -1564,7 +1564,7 @@ filetypes:
   - sol
 ---
 name: stylus
-remote: iloginow/vim-stylus
+remote: wavded/vim-stylus
 filetypes:
 - name: stylus
   linguist: Stylus

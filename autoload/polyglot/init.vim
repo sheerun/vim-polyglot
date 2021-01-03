@@ -21,19 +21,20 @@ func! polyglot#init#init()
 endfunc
 
 func! polyglot#init#is_disabled(caller, name, path)
-  if g:polyglot_initialized
-    return has_key(g:polyglot_is_disabled, a:name)
-  endif
-  if a:path[0:7] == "autoload"
-    let g:polyglot_initialized = 1
+  if !g:polyglot_initialized
+    if a:path[0:7] == "autoload"
+      let g:polyglot_initialized = 1
 
-    for p in globpath(&rtp, a:path, 0, 1)
-      if p != a:caller
-        exe "source " . p
-        return 1
-      endif
-    endfor
+      for p in globpath(&rtp, a:path, 0, 1)
+        if p != a:caller
+          exe "source " . p
+          return 1
+        endif
+      endfor
+    endif
   endif
+
+  return has_key(g:polyglot_is_disabled, a:name)
 endfunc
 
 let g:polyglot_is_disabled = {}

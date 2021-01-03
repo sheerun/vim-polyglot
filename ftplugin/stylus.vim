@@ -4,8 +4,8 @@ endif
 
 " Vim filetype plugin
 " Language: Stylus
-" Maintainer: Ilia Loginov
-" Credits: Marc Harter, Tim Pope
+" Maintainer: Marc Harter
+" Credits: Tim Pope
 
 " Only do this when not done yet for this buffer
 if exists("b:did_ftplugin")
@@ -47,14 +47,14 @@ if exists("loaded_matchit")
   let b:match_words = s:match_words
 endif
 
+setlocal comments= commentstring=//\ %s
+
 setlocal suffixesadd=.styl
 
 " Add '-' and '#' to the what makes up a keyword.
 " This means that 'e' and 'w' work properly now, for properties
 " and valid variable names.
-setlocal iskeyword+=#,-
-
-setlocal omnifunc=stylcomplete#CompleteStyl
+setl iskeyword+=#,-
 
 let b:undo_ftplugin = "setl cms< com< "
       \ " | unlet! b:browsefilter b:match_words | " . s:undo_ftplugin
