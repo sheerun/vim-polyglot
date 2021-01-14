@@ -2693,7 +2693,7 @@ func! s:Observe(fn)
   let b:PolyglotObserve = function("polyglot#" . a:fn)
   augroup polyglot-observer
     au!
-    au CursorHold,CursorHoldI <buffer> call b:PolyglotObserve()
+    au CursorHold,CursorHoldI <buffer> if (&ft == "" || &ft == "conf") | call b:PolyglotObserve() | endif
   augroup END
 endfunc
 
