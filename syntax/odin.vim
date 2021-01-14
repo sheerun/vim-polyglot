@@ -8,6 +8,7 @@ endif
 
 syntax keyword odinUsing using
 syntax keyword odinTransmute transmute
+syntax keyword odinCast cast
 syntax keyword odinDistinct distinct
 syntax keyword odinOpaque opaque
 
@@ -68,7 +69,6 @@ syntax match odinFunction "\v<\w*>(\s*::\s*proc)@="
 
 syntax match odinTagNote "@\<\w\+\>" display
 
-syntax match odinClass "\v<[A-Z]\w+>" display
 syntax match odinConstant "\v<[A-Z0-9,_]+>" display
 syntax match odinRange "\.\." display
 syntax match odinHalfRange "\.\.\<" display
@@ -79,7 +79,11 @@ syntax match odinReturnOp "->" display
 
 syntax match odinInteger "\-\?\<\d\+\>" display
 syntax match odinFloat "\-\?\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\%([eE][+-]\=[0-9_]\+\)\=" display
-syntax match odinHex "\-\?\<0x[0-9A-Fa-f]\+\>" display
+syntax match odinHex "\<0[xX][0-9A-Fa-f]\+\>" display
+syntax match odinDoz "\<0[zZ][0-9a-bA-B]\+\>" display
+syntax match odinOct "\<0[oO][0-7]\+\>" display
+syntax match odinBin "\<0[bB][01]\+\>" display
+
 syntax match odinAddressOf "&" display
 syntax match odinDeref "\^" display
 
@@ -93,6 +97,7 @@ syntax region odinBlockComment start=/\v\/\*/ end=/\v\*\// contains=odinBlockCom
 
 highlight link odinUsing Keyword
 highlight link odinTransmute Keyword
+highlight link odinCast Keyword
 highlight link odinDistinct Keyword
 highlight link odinOpaque Keyword
 highlight link odinReturn Keyword
@@ -162,8 +167,6 @@ highlight link odinFixMe Todo
 highlight link odinNoCheckin Todo
 highlight link odinHack Todo
 
-highlight link odinClass Type
-
 highlight link odinTemplate Constant
 
 highlight link odinTagNote Identifier
@@ -174,5 +177,8 @@ highlight link odinNull Type
 highlight link odinInteger Number
 highlight link odinFloat Float
 highlight link odinHex Number
+highlight link odinOct Number
+highlight link odinBin Number
+highlight link odinDoz Number
 
 let b:current_syntax = "odin"

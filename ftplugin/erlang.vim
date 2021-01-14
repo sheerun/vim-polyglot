@@ -3,14 +3,15 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'erlang', 'ftplugin/erlang.vim
 endif
 
 " Vim ftplugin file
-" Language:     Erlang
+" Language:     Erlang (http://www.erlang.org)
 " Maintainer:   Csaba Hoch <csaba.hoch@gmail.com>
 " Author:       Oscar Hellström <oscar@oscarh.net>
 " Contributors: Ricardo Catalinas Jiménez <jimenezrick@gmail.com>
 "               Eduardo Lopez (http://github.com/tapichu)
 "               Arvid Bjurklint (http://github.com/slarwise)
+" Last Update:  2021-Jan-08
 " License:      Vim license
-" Version:      2012/01/25
+" URL:          https://github.com/vim-erlang/vim-erlang-runtime
 
 if exists('b:did_ftplugin')
   finish

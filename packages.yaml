@@ -942,7 +942,9 @@ remote: MaxMEllon/vim-jsx-pretty
 dependencies: javascript
 filetypes:
 - name: javascriptreact
-  linguist: JSX
+  patterns:
+  - pattern: '*.jsx'
+    description: Syntax Extension to JavaScript
 ---
 name: julia
 remote: JuliaEditorSupport/julia-vim
