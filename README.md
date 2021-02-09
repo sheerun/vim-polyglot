@@ -240,6 +240,17 @@ Vim Polyglot tries to automatically detect indentation settings (just like vim-s
 let g:polyglot_disabled = ['autoindent']
 ```
 
+## Reindent
+
+If you want to disable reindening of the current line in insert mode (see vim 'indentkeys') you can turn it off with:
+
+```vim
+autocmd BufEnter * set indentexpr=
+```
+
+This will not affect smart autoindenting when starting a new line.
+
+
 ## Default settings
 
 Vim Polyglot includes vim-sensible plugin, which is usually necessary for editing any language. This can be disabled with:
