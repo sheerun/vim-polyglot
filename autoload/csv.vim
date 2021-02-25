@@ -2200,7 +2200,15 @@ fu! csv#CSVMappings() "{{{3
         call csv#Map('nnoremap', 'W', ':<C-U>call csv#MoveCol(1, line("."))<CR>')
         call csv#Map('nnoremap', '<C-Right>', ':<C-U>call csv#MoveCol(1, line("."))<CR>')
         call csv#Map('nnoremap', 'L', ':<C-U>call csv#MoveCol(1, line("."))<CR>')
-        call csv#Map('nnoremap', 'E', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
+        try
+            if g:csv_bind_B == 1
+                call csv#Map('nnoremap', 'B', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
+            else
+                call csv#Map('nnoremap', 'E', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
+            endif
+        catch
+            call csv#Map('nnoremap', 'E', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
+        endtry
         call csv#Map('nnoremap', '<C-Left>', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
         call csv#Map('nnoremap', 'H', ':<C-U>call csv#MoveCol(-1, line("."), 1)<CR>')
         call csv#Map('nnoremap', 'K', ':<C-U>call csv#MoveCol(0, line(".")-v:count1)<CR>')
