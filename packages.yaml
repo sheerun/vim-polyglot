@@ -5581,3 +5581,10 @@ filetypes:
   patterns:
   - pattern: '*.hjson'
     description: Hjson (https://hjson.github.io)
+---
+name: kitty
+remote: fladson/vim-kitty
+filetypes:
+- name: kitty config
+  filenames:
+    - kitty.conf
