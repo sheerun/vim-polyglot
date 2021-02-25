@@ -240,6 +240,26 @@ Vim Polyglot tries to automatically detect indentation settings (just like vim-s
 let g:polyglot_disabled = ['autoindent']
 ```
 
+## CSV only : map `B` instead of `E` to jump back to previous column
+
+In the csv.vim plugin : mapping E to go back a cell has no logic ; this feature lets the user choose
+to map B instead with the `g:csv_bind_B` variable (boolean) defined anywhere
+in his vim configuration. If it is not set, falls back to mapping E to
+previous column. Added by @lapingenieur ([lapingenieur over github](https://github.com/lapingenieur),
+email: lapingenieur@gmail.com).
+
+Exemple : I want to remap `B` to go to the previous column (comma) instead of `E`.
+Just put this in your counfig file :
+
+```vim
+    let g:csv_bind_B = 1
+```
+
+If you don't want this feature, you can just leave this variable without
+defining it : the script will automatically map `E`.
+
+See [this pull request](https://github.com/chrisbra/csv.vim/pull/191) over [csv.vim](https://github.com/chrisbra/csv.vim/)'s repo.
+
 ## Default settings
 
 Vim Polyglot includes vim-sensible plugin, which is usually necessary for editing any language. This can be disabled with:
