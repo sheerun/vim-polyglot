@@ -1,4 +1,4 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'puppet', 'syntax/embeddedpuppet.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'puppet', 'syntax/epuppet.vim')
   finish
 endif
 
@@ -29,5 +29,5 @@ syn region  ePuppetComment    matchgroup=ePuppetDelimiter start="<%-\=#"    end=
 hi def link ePuppetDelimiter              PreProc
 hi def link ePuppetComment                Comment
 
-let b:current_syntax = "embeddedpuppet"
+let b:current_syntax = "epuppet"
 

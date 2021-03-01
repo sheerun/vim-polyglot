@@ -193,13 +193,13 @@ function! GetHaskellIndent()
 
   " operator at end of previous line
   if l:prevline =~ '[!#$%&*+./<>?@\\^|~-]\s*$'
-    return indent(v:lnum - 1) + &shiftwidth
+    return indent(v:lnum - 1) + shiftwidth()
   endif
 
   " let foo =
   " >>>>>>bar
   if l:prevline =~ '\C\<let\>\s\+[^=]\+=\s*$'
-    return match(l:prevline, '\C\<let\>') + g:haskell_indent_let + &shiftwidth
+    return match(l:prevline, '\C\<let\>') + g:haskell_indent_let + shiftwidth()
   endif
 
   " let x = 1 in
@@ -247,7 +247,7 @@ function! GetHaskellIndent()
   " >>foo
   "
   if l:prevline =~ '\C\<where\>\s*$'
-    return indent(v:lnum - 1) + get(g:, 'haskell_indent_after_bare_where', &shiftwidth)
+    return indent(v:lnum - 1) + get(g:, 'haskell_indent_after_bare_where', shiftwidth())
   endif
 
   " do
@@ -256,7 +256,7 @@ function! GetHaskellIndent()
   " foo =
   " >>bar
   if l:prevline =~ '\C\(\<do\>\|=\)\s*$'
-    return indent(v:lnum - 1) + &shiftwidth
+    return indent(v:lnum - 1) + shiftwidth()
   endif
 
   " do foo
@@ -272,7 +272,7 @@ function! GetHaskellIndent()
   " >>bar -> quux
   if l:prevline =~ '\C\<case\>.\+\<of\>\s*$'
     if get(g:,'haskell_indent_case_alternative', 0)
-      return indent(v:lnum - 1) + &shiftwidth
+      return indent(v:lnum - 1) + shiftwidth()
     else
       return match(l:prevline, '\C\<case\>') + g:haskell_indent_case
     endif
@@ -305,7 +305,7 @@ function! GetHaskellIndent()
   " newtype Foo = Foo
   " >>deriving
   if l:prevline =~ '\C^\s*\<\(newtype\|data\)\>[^{]\+' && l:line =~ '\C^\s*\<deriving\>'
-    return indent(v:lnum - 1) + &shiftwidth
+    return indent(v:lnum - 1) + shiftwidth()
   endif
 
   " foo :: Int
@@ -318,7 +318,7 @@ function! GetHaskellIndent()
     if l:line =~ '^\s*[-=]>'
       return match(l:prevline, '::\s')
     elseif match(l:prevline, '^\s\+::') > -1
-      return match(l:prevline, '::\s') - &shiftwidth
+      return match(l:prevline, '::\s') - shiftwidth()
     endif
   endif
 
@@ -398,13 +398,13 @@ function! GetHaskellIndent()
   ">>>>>=> Int
   if l:prevline =~ '^\s*)' && l:line =~ '^\s*=>'
     let l:s = match(l:prevline, ')')
-    return l:s - (&shiftwidth + 1)
+    return l:s - (shiftwidth() + 1)
   endif
 
   " module Foo
   " >>( bar
   if l:prevline =~ '\C^\<module\>'
-    return &shiftwidth
+    return shiftwidth()
   endif
 
   " foo
@@ -412,7 +412,7 @@ function! GetHaskellIndent()
   if l:line =~ '^\s*{'
     let l:s = indent(v:lnum - 1)
     if l:s >= 0
-      return l:s + &shiftwidth
+      return l:s + shiftwidth()
     endif
   endif
 
@@ -428,7 +428,7 @@ function! GetHaskellIndent()
       return match(l:prevline, 'in') - g:haskell_indent_in
     endif
 
-    return indent(v:lnum - 1) + get(g:, 'haskell_indent_before_where', &shiftwidth)
+    return indent(v:lnum - 1) + get(g:, 'haskell_indent_before_where', shiftwidth())
   endif
 
   " let x = 1
@@ -462,13 +462,13 @@ function! GetHaskellIndent()
   " >>=
   if l:line =~ '^\s*='
     if l:prevline =~ '\C^\<data\>\s\+[^=]\+\s*$'
-      return match(l:prevline, '\C\<data\>') + &shiftwidth
+      return match(l:prevline, '\C\<data\>') + shiftwidth()
     else
       let l:s = s:indentGuard(match(l:line, '='), l:prevline)
       if l:s > 0
         return l:s
       else
-        return &shiftwidth
+        return shiftwidth()
       endif
     endif
   endif
@@ -493,7 +493,7 @@ function! GetHaskellIndent()
   " foo
   " >>:: Int
   if l:line =~ '^\s*::\s'
-    return indent(v:lnum - 1) + &shiftwidth
+    return indent(v:lnum - 1) + shiftwidth()
   endif
 
   " indent closing brace, paren or bracket

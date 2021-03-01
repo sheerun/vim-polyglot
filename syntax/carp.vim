@@ -33,6 +33,7 @@ syn keyword carpSyntax str* println* break doc sig hidden private
 syn keyword carpSyntax while-do const-assert save-docs defproject
 syn keyword carpSyntax relative-include not-on-windows load-and-use
 syn keyword carpSyntax deftest
+syn keyword carpSyntax quasiquote unquote unquote-splicing
 syn match carpSyntax "\vc(a|d){1,4}r"
 
 syn keyword carpFunc λ
@@ -55,7 +56,7 @@ syn keyword carpFunc string-join free sleep-seconds sleep-micros substitute
 syn keyword carpFunc neg to-float match matches? find global-match match-str
 syn keyword carpFunc from-float tan asin atan cosh sinh tanh exp frexp ldexp
 syn keyword carpFunc log log10 modf pow ceil clamp approx refstr foreach
-syn keyword carpFunc => ==> repeat nth replicate range raw aset aset!
+syn keyword carpFunc -> --> => ==> repeat nth replicate range raw aset aset!
 syn keyword carpFunc push-back pop-back sort index-of element-count
 syn keyword carpFunc apply unsafe-from from just? nothing? ptr from-ptr 
 syn keyword carpFunc map and-then unwrap-or-zero or-else unwrap-or-else
@@ -125,6 +126,13 @@ syn match carpComment /;.*$/ contains=@Spell
 
 syn region carpQuoted matchgroup=Delimiter start="#['`]"rs=s+2 end=![ \t()\[\]";]!re=e-1,me=e-1 contains=@carpQuotedStuff,@carpQuotedOrNormal
 syn region carpQuoted matchgroup=Delimiter start="#['`]("rs=s+3 matchgroup=Delimiter end=")"re=e-1 contains=@carpQuotedStuff,@carpQuotedOrNormal
+
+syn region carpUnquote matchgroup=Delimiter start="%"rs=s+1 end=![ \t\[\]()";]!re=e-1,me=e-1 contained contains=@carpNormal
+syn region carpUnquote matchgroup=Delimiter start="%@"rs=s+2 end=![ \t\[\]()";]!re=e-1,me=e-1 contained contains=@carpNormal
+syn region carpUnquote matchgroup=Delimiter start="%@("rs=s+2 end=")"re=e-1 contained contains=@carpNormal
+syn region carpUnquote matchgroup=Delimiter start="%("rs=s+2 end=")"re=e-1 contained contains=@carpNormal
+
+syn cluster carpQuotedStuff add=carpUnquote
 
 syn cluster carpNormal  add=carpQuoted,carpComment
 syn cluster carpQuotedOrNormal  add=carpComment

@@ -132,7 +132,7 @@ syntax region typescriptGenericFunc matchgroup=typescriptTypeBrackets
   \ contained skipwhite skipnl
 
 syntax region typescriptFuncType matchgroup=typescriptParens
-  \ start=/(/ end=/)\s*=>/me=e-2
+  \ start=/(\(\k\+:\|)\)\@=/ end=/)\s*=>/me=e-2
   \ contains=@typescriptParameterList
   \ nextgroup=typescriptFuncTypeArrow
   \ contained skipwhite skipnl oneline
@@ -141,7 +141,6 @@ syntax match typescriptFuncTypeArrow /=>/
   \ nextgroup=@typescriptType
   \ containedin=typescriptFuncType
   \ contained skipwhite skipnl
-
 
 syntax keyword typescriptConstructorType new
   \ nextgroup=@typescriptFunctionType

@@ -88,10 +88,10 @@ syn cluster  ocamlContained contains=ocamlTodo,ocamlPreDef,ocamlModParam,ocamlMo
 
 
 " Enclosing delimiters
-syn region   ocamlEncl transparent matchgroup=ocamlKeyword start="(" matchgroup=ocamlKeyword end=")" contains=ALLBUT,@ocamlContained,ocamlParenErr
-syn region   ocamlEncl transparent matchgroup=ocamlKeyword start="{" matchgroup=ocamlKeyword end="}"  contains=ALLBUT,@ocamlContained,ocamlBraceErr
-syn region   ocamlEncl transparent matchgroup=ocamlKeyword start="\[" matchgroup=ocamlKeyword end="\]" contains=ALLBUT,@ocamlContained,ocamlBrackErr
-syn region   ocamlEncl transparent matchgroup=ocamlKeyword start="\[|" matchgroup=ocamlKeyword end="|\]" contains=ALLBUT,@ocamlContained,ocamlArrErr
+syn region   ocamlEncl transparent matchgroup=ocamlKeywordDelimiter start="(" matchgroup=ocamlKeywordDelimiter end=")" contains=ALLBUT,@ocamlContained,ocamlParenErr
+syn region   ocamlEncl transparent matchgroup=ocamlKeywordDelimiter start="{" matchgroup=ocamlKeywordDelimiter end="}"  contains=ALLBUT,@ocamlContained,ocamlBraceErr
+syn region   ocamlEncl transparent matchgroup=ocamlKeywordDelimiter start="\[" matchgroup=ocamlKeywordDelimiter end="\]" contains=ALLBUT,@ocamlContained,ocamlBrackErr
+syn region   ocamlEncl transparent matchgroup=ocamlKeywordDelimiter start="\[|" matchgroup=ocamlKeywordDelimiter end="|\]" contains=ALLBUT,@ocamlContained,ocamlArrErr
 
 
 " Comments
@@ -196,10 +196,10 @@ syn keyword  ocamlType     array bool char exn float format format4
 syn keyword  ocamlType     int int32 int64 lazy_t list nativeint option
 syn keyword  ocamlType     bytes string unit
 
-syn match    ocamlConstructor  "(\s*)"
-syn match    ocamlConstructor  "\[\s*\]"
-syn match    ocamlConstructor  "\[|\s*>|]"
-syn match    ocamlConstructor  "\[<\s*>\]"
+syn match    ocamlConstructorDelimiter  "(\s*)"
+syn match    ocamlConstructorDelimiter  "\[\s*\]"
+syn match    ocamlConstructorDelimiter  "\[|\s*>|]"
+syn match    ocamlConstructorDelimiter  "\[<\s*>\]"
 syn match    ocamlConstructor  "\u\(\w\|'\)*\>"
 
 " Polymorphic variants
@@ -343,11 +343,13 @@ hi def link ocamlStructEncl	   ocamlModule
 hi def link ocamlScript	   Include
 
 hi def link ocamlConstructor  Constant
+hi def link ocamlConstructorDelimiter  ocamlConstructor
 
 hi def link ocamlVal          Keyword
 hi def link ocamlModPreRHS    Keyword
 hi def link ocamlMPRestr2	   Keyword
 hi def link ocamlKeyword	   Keyword
+hi def link ocamlKeywordDelimiter	   ocamlKeyword
 hi def link ocamlMethod	   Include
 hi def link ocamlArrow	   Keyword
 hi def link ocamlKeyChar	   Keyword

@@ -12,6 +12,11 @@ let b:did_ftplugin = 1
 let s:cpo_orig = &cpo
 set cpo&vim
 
+compiler zig_build
+
+" Match Zig builtin fns
+setlocal iskeyword+=@-@
+
 " Recomended code style, no tabs and 4-space indentation
 setlocal expandtab
 setlocal tabstop=8
@@ -21,7 +26,6 @@ setlocal shiftwidth=4
 setlocal formatoptions-=t formatoptions+=croql
 
 setlocal suffixesadd=.zig,.zir
-setlocal makeprg=zig\ build
 
 if has('comments')
     setlocal comments=:///,://!,://,:\\\\
@@ -44,7 +48,7 @@ if exists("*json_decode") && executable('zig')
 endif
 
 let b:undo_ftplugin =
-    \ 'setl et< ts< sts< sw< fo< sua< mp< com< cms< inex< inc< pa<'
+    \ 'setl isk< et< ts< sts< sw< fo< sua< mp< com< cms< inex< inc< pa<'
 
 let &cpo = s:cpo_orig
 unlet s:cpo_orig

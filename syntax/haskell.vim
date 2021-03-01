@@ -40,7 +40,12 @@ syn match haskellTypeSig
   \ haskellParens
 syn keyword haskellWhere where
 syn keyword haskellLet let
-syn match HaskellDerive "\<deriving\>\(\s\+\<\(anyclass\|instance\|newtype\|stock\)\>\)\?"
+syn keyword haskellDeriveKeyword deriving anyclass instance newtype stock via contained
+syn match haskellDerive "deriving\(\s\+instance\)\?\(\s\+anyclass\|\s\+newtype\|\s\+stock\|\s\+.\{-}\_s\+via\)\?"
+  \ contains=
+  \ haskellDeriveKeyword,
+  \ haskellParens,
+  \ haskellType
 syn keyword haskellDeclKeyword module class instance newtype in
 syn match haskellDecl "\<\(type\|data\)\>\s\+\(\<family\>\)\?"
 syn keyword haskellDefault default
@@ -67,8 +72,8 @@ if get(g:, 'haskell_enable_static_pointers', 0)
   syn keyword haskellStatic static
 endif
 syn keyword haskellConditional if then else
-syn match haskellNumber "\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>\|\<0[bB][10]\+\>"
-syn match haskellFloat "\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
+syn match haskellNumber "\<[0-9]\+\>\|\<[0-9_]\+\>\|\<0[xX][0-9a-fA-F_]\+\>\|\<0[oO][0-7_]\+\>\|\<0[bB][10_]\+\>"
+syn match haskellFloat "\<[0-9]\+\.[0-9_]\+\([eE][-+]\=[0-9_]\+\)\=\>"
 syn match haskellSeparator  "[,;]"
 syn region haskellParens matchgroup=haskellDelimiter start="(" end=")" contains=TOP,haskellTypeSig,@Spell
 syn region haskellBrackets matchgroup=haskellDelimiter start="\[" end="]" contains=TOP,haskellTypeSig,@Spell
@@ -94,7 +99,7 @@ syn match haskellLineComment "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$"
 syn match haskellBacktick "`[A-Za-z_][A-Za-z0-9_\.']*#\?`"
 syn region haskellString start=+"+ skip=+\\\\\|\\"+ end=+"+
   \ contains=@Spell
-syn match haskellIdentifier "[_a-z][a-zA-z0-9_']*" contained
+syn match haskellIdentifier "[_a-z][a-zA-Z0-9_']*" contained
 syn match haskellChar "\<'[^'\\]'\|'\\.'\|'\\u[0-9a-fA-F]\{4}'\>"
 syn match haskellType "\<[A-Z][a-zA-Z0-9_']*\>"
 syn region haskellBlockComment start="{-" end="-}"
@@ -110,7 +115,7 @@ syn keyword haskellTodo TODO FIXME contained
 syn match haskellShebang "\%^#!.*$"
 if !get(g:, 'haskell_disable_TH', 0)
     syn match haskellQuasiQuoted "." containedin=haskellQuasiQuote contained
-    syn region haskellQuasiQuote matchgroup=haskellTH start="\[[_a-zA-Z][a-zA-z0-9._']*|" end="|\]"
+    syn region haskellQuasiQuote matchgroup=haskellTH start="\[[_a-zA-Z][a-zA-Z0-9._']*|" end="|\]"
     syn region haskellTHBlock matchgroup=haskellTH start="\[\(d\|t\|p\)\?|" end="|]" contains=TOP
     syn region haskellTHDoubleBlock matchgroup=haskellTH start="\[||" end="||]" contains=TOP
 endif
@@ -165,13 +170,13 @@ highlight def link haskellType Type
 highlight def link haskellImportKeywords Include
 if get(g:, 'haskell_classic_highlighting', 0)
   highlight def link haskellDeclKeyword Keyword
-  highlight def link HaskellDerive Keyword
+  highlight def link haskellDeriveKeyword Keyword
   highlight def link haskellDecl Keyword
   highlight def link haskellWhere Keyword
   highlight def link haskellLet Keyword
 else
   highlight def link haskellDeclKeyword Structure
-  highlight def link HaskellDerive Structure
+  highlight def link haskellDeriveKeyword Structure
   highlight def link haskellDecl Structure
   highlight def link haskellWhere Structure
   highlight def link haskellLet Structure

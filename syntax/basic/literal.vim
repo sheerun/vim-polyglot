@@ -13,9 +13,11 @@ syntax region  typescriptTemplateSubstitution matchgroup=typescriptTemplateSB
   \ contained
 
 
-syntax region  typescriptString 
+syntax region  typescriptString
   \ start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ end=+$+
   \ contains=typescriptSpecial,@Spell
+  \ nextgroup=@typescriptSymbols
+  \ skipwhite skipempty
   \ extend
 
 syntax match   typescriptSpecial            contained "\v\\%(x\x\x|u%(\x{4}|\{\x{1,6}})|c\u|.)"
@@ -42,4 +44,4 @@ syntax match typescriptNumber /\<0[bB][01][01_]*\>/        nextgroup=@typescript
 syntax match typescriptNumber /\<0[oO][0-7][0-7_]*\>/       nextgroup=@typescriptSymbols skipwhite skipempty
 syntax match typescriptNumber /\<0[xX][0-9a-fA-F][0-9a-fA-F_]*\>/ nextgroup=@typescriptSymbols skipwhite skipempty
 syntax match typescriptNumber /\<\%(\d[0-9_]*\%(\.\d[0-9_]*\)\=\|\.\d[0-9_]*\)\%([eE][+-]\=\d[0-9_]*\)\=\>/
-  \ nextgroup=typescriptSymbols skipwhite skipempty
+  \ nextgroup=@typescriptSymbols skipwhite skipempty

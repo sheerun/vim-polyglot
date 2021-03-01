@@ -261,7 +261,7 @@ function GetJuliaNestingBrackets(lnum, c)
   if len(brackets_stack) > 0
     let first_open_bracket = brackets_stack[0][1]
     let last_open_bracket = brackets_stack[-1][1]
-    if brackets_stack[-1][0] == 'par' && IsFunctionArgPar(a:lnum, last_open_bracket)
+    if brackets_stack[-1][0] == 'par' && IsFunctionArgPar(a:lnum, last_open_bracket+1)
       let infuncargs = 1
     endif
   endif
@@ -295,8 +295,8 @@ function IsFunctionArgPar(lnum, c)
   if a:c == 0
     return 0
   endif
-  let stack = map(synstack(a:lnum, a:c-1), 'synIDattr(v:val, "name")')
-  return stack[-1] == 'juliaFunctionBlock'
+  let stack = map(synstack(a:lnum, a:c), 'synIDattr(v:val, "name")')
+  return len(stack) >= 3 && stack[-3] == 'juliaFunctionDefP'
 endfunction
 
 function JumpToMatch(lnum, last_closed_bracket)
@@ -394,13 +394,14 @@ function GetJuliaIndent()
       let ind = indent(lnum)
     endif
 
-    " Does the current line starts with a closing bracket? Then depending on
+    " Does the current line start with a closing bracket? Then depending on
     " the situation we align it with the opening one, or we let the rest of
     " the code figure it out (the case in which we're closing a function
     " argument list is special-cased)
     if JuliaMatch(v:lnum, getline(v:lnum), '[])}]', indent(v:lnum)) == indent(v:lnum) && ind > 0
       if !align_brackets && !align_funcargs
-        let ind = -1
+        call JumpToMatch(v:lnum, indent(v:lnum))
+        return indent(line("."))
       elseif (align_brackets && getline(v:lnum)[indent(v:lnum)] != ')') || align_funcargs
         return ind - 1
       else " must be a ')' and align_brackets==1 and align_funcargs==0
@@ -447,7 +448,6 @@ function GetJuliaIndent()
       " if the opening line has a colon followed by non-comments, use it as
       " reference point
       let cind = JuliaMatch(lnum, prevline, ':', indent(lnum), lim)
-      " echo "cind=".string(cind) | sleep 1
       if cind >= 0
         let nonwhiteind = JuliaMatch(lnum, prevline, '\S', cind+1)
         if nonwhiteind >= 0
