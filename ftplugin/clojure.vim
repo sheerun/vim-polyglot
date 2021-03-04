@@ -3,13 +3,13 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'clojure', 'ftplugin/clojure.v
 endif
 
 " Vim filetype plugin file
-" Language:     Clojure
-" Author:       Meikel Brandmeyer <mb@kotka.de>
-"
-" Maintainer:   Sung Pae <self@sungpae.com>
-" URL:          https://github.com/guns/vim-clojure-static
-" License:      Same as Vim
-" Last Change:  %%RELEASE_DATE%%
+" Language:           Clojure
+" Maintainer:         Alex Vear <av@axvr.io>
+" Former Maintainers: Sung Pae <self@sungpae.com>
+"                     Meikel Brandmeyer <mb@kotka.de>
+" URL:                https://github.com/clojure-vim/clojure.vim
+" License:            Vim (see :h license)
+" Last Change:        %%RELEASE_DATE%%
 
 if exists("b:did_ftplugin")
 	finish
@@ -21,7 +21,7 @@ set cpo&vim
 
 let b:undo_ftplugin = 'setlocal iskeyword< define< formatoptions< comments< commentstring< lispwords<'
 
-setlocal iskeyword+=?,-,*,!,+,/,=,<,>,.,:,$
+setlocal iskeyword+=?,-,*,!,+,/,=,<,>,.,:,$,%,&,\|
 
 " There will be false positives, but this is better than missing the whole set
 " of user-defined def* definitions.
@@ -47,7 +47,7 @@ setlocal commentstring=;\ %s
 " specially and hence are not indented specially.
 "
 " -*- LISPWORDS -*-
-" Generated from https://github.com/guns/vim-clojure-static/blob/%%RELEASE_TAG%%/clj/src/vim_clojure_static/generate.clj
+" Generated from https://github.com/clojure-vim/clojure.vim/blob/%%RELEASE_TAG%%/clj/src/vim_clojure_static/generate.clj
 setlocal lispwords=as->,binding,bound-fn,case,catch,cond->,cond->>,condp,def,definline,definterface,defmacro,defmethod,defmulti,defn,defn-,defonce,defprotocol,defrecord,defstruct,deftest,deftest-,deftype,doseq,dotimes,doto,extend,extend-protocol,extend-type,fn,for,if,if-let,if-not,if-some,let,letfn,locking,loop,ns,proxy,reify,set-test,testing,when,when-first,when-let,when-not,when-some,while,with-bindings,with-in-str,with-local-vars,with-open,with-precision,with-redefs,with-redefs-fn,with-test
 
 " Provide insert mode completions for special forms and clojure.core. As
@@ -60,21 +60,6 @@ for s:setting in ['omnifunc', 'completefunc']
 		let b:undo_ftplugin .= ' | setlocal ' . s:setting . '<'
 	endif
 endfor
-
-" Take all directories of the CLOJURE_SOURCE_DIRS environment variable
-" and add them to the path option.
-"
-" This is a legacy option for VimClojure users.
-if exists('$CLOJURE_SOURCE_DIRS')
-	for s:dir in split($CLOJURE_SOURCE_DIRS, (has("win32") || has("win64")) ? ';' : ':')
-		let s:dir = fnameescape(s:dir)
-		" Whitespace escaping for Windows
-		let s:dir = substitute(s:dir, '\', '\\\\', 'g')
-		let s:dir = substitute(s:dir, '\ ', '\\ ', 'g')
-		execute "setlocal path+=" . s:dir . "/**"
-	endfor
-	let b:undo_ftplugin .= ' | setlocal path<'
-endif
 
 " Skip brackets in ignored syntax regions when using the % command
 if exists('loaded_matchit')
