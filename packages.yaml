@@ -1558,7 +1558,7 @@ filetypes:
   linguist: SMT
 ---
 name: solidity
-remote: tomlion/vim-solidity
+remote: TovarishFin/vim-solidity
 filetypes:
 - name: solidity
   linguist: Solidity
