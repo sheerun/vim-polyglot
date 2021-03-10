@@ -108,7 +108,7 @@ syntax keyword jsDo                     do              skipwhite skipempty next
 syntax region  jsSwitchCase   contained matchgroup=jsLabel start=/\<\%(case\|default\)\>/ end=/:\@=/ contains=@jsExpression,jsLabel skipwhite skipempty nextgroup=jsSwitchColon keepend
 syntax keyword jsTry                    try             skipwhite skipempty nextgroup=jsTryCatchBlock
 syntax keyword jsFinally      contained finally         skipwhite skipempty nextgroup=jsFinallyBlock
-syntax keyword jsCatch        contained catch           skipwhite skipempty nextgroup=jsParenCatch
+syntax keyword jsCatch        contained catch           skipwhite skipempty nextgroup=jsParenCatch,jsTryCatchBlock
 syntax keyword jsException              throw
 syntax keyword jsAsyncKeyword           async await
 syntax match   jsSwitchColon   contained /::\@!/        skipwhite skipempty nextgroup=jsSwitchBlock

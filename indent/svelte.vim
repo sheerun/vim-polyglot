@@ -12,12 +12,6 @@ if exists("b:did_indent")
   finish
 endif
 
-runtime! indent/html.vim
-unlet! b:did_indent
-
-let s:html_indent = &l:indentexpr
-let b:did_indent = 1
-
 if !exists('g:svelte_indent_script')
   let g:svelte_indent_script = 1
 endif
@@ -25,6 +19,25 @@ endif
 if !exists('g:svelte_indent_style')
   let g:svelte_indent_style = 1
 endif
+
+" Try to mirror Svelte's indent settings so the HTML indenting scripts match.
+if g:svelte_indent_script
+  let b:html_indent_script1 = "inc"
+else
+  let b:html_indent_script1 = "zero"
+endif
+
+if g:svelte_indent_style
+  let b:html_indent_style1 = "inc"
+else
+  let b:html_indent_style1 = "zero"
+endif
+
+runtime! indent/html.vim
+unlet! b:did_indent
+
+let s:html_indent = &l:indentexpr
+let b:did_indent = 1
 
 setlocal indentexpr=GetSvelteIndent()
 setlocal indentkeys=o,O,*<Return>,<>>,{,},0),0],!^F,;,=:else,=:then,=:catch,=/if,=/each,=/await

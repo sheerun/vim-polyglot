@@ -79,6 +79,69 @@ function! ledger#transaction_date_set(lnum, type, ...) abort
   call setline(trans['head'], trans.format_head())
 endf
 
+function! ledger#transaction_post_state_get(lnum) abort
+  " safe view / position
+  let view = winsaveview()
+  call cursor(a:lnum, 0)
+
+  let line = getline('.')
+  if line[0] !~# '[ \t]'
+    " not a post
+    let state = ''
+  else
+    let m = matchlist(line, '^[ \t]\+\([*?!]\)')
+    if len(m) > 1
+      let state = m[1]
+    else
+      let state = ' '
+    endif
+  endif
+
+  call winrestview(view)
+  return state
+endf
+
+function! ledger#transaction_post_state_toggle(lnum, ...) abort
+  if a:0 == 1
+    let chars = a:1
+  else
+    let chars = ' *'
+  endif
+
+  let old = ledger#transaction_post_state_get(a:lnum)
+  if old ==# ''
+    " not a post, probably at the first line of transaction
+    call ledger#transaction_state_toggle(a:lnum, chars)
+    return
+  endif
+  let i = stridx(chars, old) + 1
+  let new = chars[i >= len(chars) ? 0 : i]
+
+  call ledger#transaction_post_state_set(a:lnum, new)
+endf
+
+function! ledger#transaction_post_state_set(lnum, char) abort
+  let state = ledger#transaction_post_state_get(a:lnum)
+  if state ==# ''
+    " not a post, probably at the first line of transaction
+    call ledger#transaction_state_set(a:lnum, a:char)
+    return
+  elseif state == a:char || (state ==# ' ' && a:char ==# '')
+    return
+  endif
+
+  let line = getline('.')
+  if a:char =~# '^\s*$'
+    let newline = substitute(line, '\V' . state . '\m[ \t]', '', '')
+  elseif state ==# ' '
+    let m = matchlist(line, '^\([ \t]\+\)\(.*\)')
+    let newline = m[1] . a:char . ' ' . m[2]
+  else
+    let newline = substitute(line, '\V' . state, a:char, '')
+  endif
+  call setline(a:lnum, newline)
+endf
+
 " == get transactions ==
 
 function! ledger#transaction_from_lnum(lnum) abort
@@ -178,8 +241,10 @@ function! s:transaction.from_lnum(lnum) abort dict "{{{2
 endf "}}}
 
 function! s:transaction.set_state(char) abort dict "{{{2
-  if has_key(self, 'state') && a:char =~# '^\s*$'
-    call remove(self, 'state')
+  if a:char =~# '^\s*$'
+    if has_key(self, 'state')
+      call remove(self, 'state')
+    endif
   else
     let self['state'] = a:char
   endif
@@ -426,7 +491,9 @@ function! ledger#align_commodity() abort
     " Remove everything after the account name (including spaces):
     call setline('.', substitute(l:line, '\m^\s\+[^[:space:]].\{-}\zs\(\t\|  \).*$', '', ''))
     let pos = -1
-    if g:ledger_decimal_sep !=# ''
+    if g:ledger_align_commodity == 1
+      let pos = 0
+    elseif g:ledger_decimal_sep !=# ''
       " Find the position of the first decimal separator:
       let pos = s:decimalpos(rhs)
     endif
@@ -435,7 +502,7 @@ function! ledger#align_commodity() abort
       let pos = matchend(rhs, '\m\d[^[:space:]]*')
     endif
     " Go to the column that allows us to align the decimal separator at g:ledger_align_at:
-    if pos > 0
+    if pos >= 0
       call s:goto_col(g:ledger_align_at - pos - 1, 2)
     else
       call s:goto_col(g:ledger_align_at - strdisplaywidth(rhs) - 2, 2)

@@ -53,8 +53,8 @@ function GetJuliaNestingStruct(lnum, ...)
   let blocks_stack = []
   let num_closed_blocks = 0
   while 1
-    let fb = JuliaMatch(a:lnum, line, '@\@<!\<\%(if\|else\%(if\)\?\|while\|for\|try\|catch\|finally\|\%(staged\)\?function\|macro\|begin\|mutable\s\+struct\|\%(mutable\s\+\)\@<!struct\|\%(abstract\|primitive\)\s\+type\|let\|\%(bare\)\?module\|quote\|do\)\>', s, e)
-    let fe = JuliaMatch(a:lnum, line, '@\@<!\<end\>', s, e)
+    let fb = JuliaMatch(a:lnum, line, '[@.]\@<!\<\%(if\|else\%(if\)\?\|while\|for\|try\|catch\|finally\|\%(staged\)\?function\|macro\|begin\|mutable\s\+struct\|\%(mutable\s\+\)\@<!struct\|\%(abstract\|primitive\)\s\+type\|let\|\%(bare\)\?module\|quote\|do\)\>', s, e)
+    let fe = JuliaMatch(a:lnum, line, '[@.]\@<!\<end\>', s, e)
 
     if fb < 0 && fe < 0
       " No blocks found
@@ -66,13 +66,13 @@ function GetJuliaNestingStruct(lnum, ...)
       " Note: some keywords (elseif,else,catch,finally) are both
       "       closing blocks and opening new ones
 
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<if\>', s)
+      let i = JuliaMatch(a:lnum, line, '[@.]\@<!\<if\>', s)
       if i >= 0 && i == fb
         let s = i+1
         call add(blocks_stack, 'if')
         continue
       endif
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<elseif\>', s)
+      let i = JuliaMatch(a:lnum, line, '[@.]\@<!\<elseif\>', s)
       if i >= 0 && i == fb
         let s = i+1
         if len(blocks_stack) > 0 && blocks_stack[-1] == 'if'
@@ -83,7 +83,7 @@ function GetJuliaNestingStruct(lnum, ...)
         endif
         continue
       endif
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<else\>', s)
+      let i = JuliaMatch(a:lnum, line, '[@.]\@<!\<else\>', s)
       if i >= 0 && i == fb
         let s = i+1
         if len(blocks_stack) > 0 && blocks_stack[-1] =~# '\<\%(else\)\=if\>'
@@ -95,13 +95,13 @@ function GetJuliaNestingStruct(lnum, ...)
         continue
       endif
 
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<try\>', s)
+      let i = JuliaMatch(a:lnum, line, '[@.]\@<!\<try\>', s)
       if i >= 0 && i == fb
         let s = i+1
         call add(blocks_stack, 'try')
         continue
       endif
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<catch\>', s)
+      let i = JuliaMatch(a:lnum, line, '[@.]\@<!\<catch\>', s)
       if i >= 0 && i == fb
         let s = i+1
         if len(blocks_stack) > 0 && blocks_stack[-1] == 'try'
@@ -112,7 +112,7 @@ function GetJuliaNestingStruct(lnum, ...)
         endif
         continue
       endif
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<finally\>', s)
+      let i = JuliaMatch(a:lnum, line, '[@.]\@<!\<finally\>', s)
       if i >= 0 && i == fb
         let s = i+1
         if len(blocks_stack) > 0 && (blocks_stack[-1] == 'try' || blocks_stack[-1] == 'catch')
@@ -124,7 +124,7 @@ function GetJuliaNestingStruct(lnum, ...)
         continue
       endif
 
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<\%(bare\)\?module\>', s)
+      let i = JuliaMatch(a:lnum, line, '[@.]\@<!\<\%(bare\)\?module\>', s)
       if i >= 0 && i == fb
         let s = i+1
         if i == 0
@@ -135,7 +135,7 @@ function GetJuliaNestingStruct(lnum, ...)
         continue
       endif
 
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<\%(while\|for\|\%(staged\)\?function\|macro\|begin\|\%(mutable\s\+\)\?struct\|\%(abstract\|primitive\)\s\+type\|immutable\|let\|quote\|do\)\>', s)
+      let i = JuliaMatch(a:lnum, line, '[@.]\@<!\<\%(while\|for\|\%(staged\)\?function\|macro\|begin\|\%(mutable\s\+\)\?struct\|\%(abstract\|primitive\)\s\+type\|immutable\|let\|quote\|do\)\>', s)
       if i >= 0 && i == fb
         if match(line, '\C\<\%(mutable\|abstract\|primitive\)', i) != -1
           let s = i+11
@@ -278,7 +278,7 @@ endfunction
 
 function IsInDocString(lnum)
   let stack = map(synstack(a:lnum, 1), 'synIDattr(v:val, "name")')
-  call filter(stack, 'v:val =~# "\\<juliaDocString\\(Delim\\)\\?\\>"')
+  call filter(stack, 'v:val =~# "\\<juliaDocString\\(Delim\\|M\\)\\?\\>"')
   return len(stack) > 0
 endfunction
 

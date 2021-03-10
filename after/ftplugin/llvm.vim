@@ -329,7 +329,7 @@ function! s:extract_identifier(word) abort
             return ''
         endif
 
-        if a:word[1] == '"'
+        if a:word[1] ==# '"'
             let idx = stridx(a:word, '"', 2)
             if idx == -1
                 return ''
@@ -343,7 +343,7 @@ function! s:extract_identifier(word) abort
     endif
 
     if prefix ==# '#'
-        return matchstr(a:word, '^#\d\+')
+        return matchstr(a:word, '^#\d\+\>')
     endif
 
     return ''
@@ -478,8 +478,14 @@ function! s:run_lli(...) abort
     let tmpfile = tempname()
     call writefile(getline(1, '$'), tmpfile)
     let Cleanup = {ch -> filereadable(tmpfile) ? delete(tmpfile) : 0}
-    let bufnr = term_start([g:llvm_ext_lli_executable, tmpfile], {'close_cb': Cleanup, 'exit_cb': Cleanup})
-    echo 'Run lli in termnal buffer(' . bufnr . ')'
+    try
+        let bufnr = term_start([g:llvm_ext_lli_executable, tmpfile], {'close_cb': Cleanup, 'exit_cb': Cleanup})
+        echo 'Run lli in termnal buffer(' . bufnr . ')'
+    catch
+        if filereadable(tmpfile)
+            delete(tmpfile)
+        endif
+    endtry
 endfunction
 
 if !exists(':LLI')

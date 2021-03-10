@@ -35,8 +35,6 @@ syntax keyword svelteKeyword slot contained containedin=htmlTag
 "   https://github.com/mxw/vim-jsx/blob/master/after/syntax/jsx.vim
 syntax region svelteExpression start="{" end="" contains=jsBlock,javascriptBlock containedin=htmlString,htmlTag,htmlArg,htmlValue,htmlH1,htmlH2,htmlH3,htmlH4,htmlH5,htmlH6,htmlHead,htmlTitle,htmlBoldItalicUnderline,htmlUnderlineBold,htmlUnderlineItalicBold,htmlUnderlineBoldItalic,htmlItalicUnderline,htmlItalicBold,htmlItalicBoldUnderline,htmlItalicUnderlineBold,htmlLink,htmlLeadingSpace,htmlBold,htmlBoldUnderline,htmlBoldItalic,htmlBoldUnderlineItalic,htmlUnderline,htmlUnderlineItalic,htmlItalic,htmlStrike,javaScript
 
-syntax region svelteSurroundingTag contained start=+<\(script\|style\|template\)+ end=+>+ fold contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent
-
 " Block conditionals.
 syntax match svelteConditional "#if" contained containedin=jsBlock,javascriptBlock
 syntax match svelteConditional "/if" contained containedin=jsBlock,javascriptBlock
@@ -116,6 +114,8 @@ for s:language in s:languages
           \ 'fold'
   endif
 endfor
+
+syntax region svelteSurroundingTag contained start=+<\(script\|style\|template\)+ end=+>+ fold contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent
 
 " Cybernetically enhanced web apps.
 let b:current_syntax = "svelte"

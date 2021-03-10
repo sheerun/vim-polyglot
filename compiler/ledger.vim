@@ -30,7 +30,7 @@ if !g:ledger_is_hledger
 	CompilerSet errorformat+=%tarning:\ \"%f\"\\,\ line\ %l:\ %m
 	" Skip all other lines:
 	CompilerSet errorformat+=%-G%.%#
-	exe 'CompilerSet makeprg='.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . shellescape(expand(g:ledger_main)) . '\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ source\ ' . shellescape(expand(g:ledger_main))
+	exe 'CompilerSet makeprg='.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . expand('g:ledger_main::S') . '\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ source\ ' . expand('g:ledger_main::S')
 else
-	exe 'CompilerSet makeprg=('.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . shellescape(expand(g:ledger_main)) . '\ print\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ >\ /dev/null)'
+	exe 'CompilerSet makeprg=('.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . expand('g:ledger_main::S') . '\ print\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g') . '\ >\ /dev/null)'
 endif

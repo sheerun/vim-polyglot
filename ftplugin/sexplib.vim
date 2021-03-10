@@ -16,4 +16,4 @@ let b:did_ftplugin=1
 
 " Comment string
 setl commentstring=;\ %s
-setl comments=:;
+setl comments=n:;

@@ -26,7 +26,7 @@ setlocal fo-=t fo+=croql
 let b:julia_vim_loaded = 1
 
 let b:undo_ftplugin = "setlocal include< suffixesadd< comments< commentstring<"
-      \ . " define< fo< shiftwidth< expandtab< indentexpr< indentkeys< cinoptions< omnifunc<"
+      \ . " define< fo< shiftwidth< expandtab< indentexpr< indentkeys< cinoptions< completefunc<"
       \ . " | unlet! b:commentary_format"
       \ . " | unlet! b:smartcomment_force_linemode"
       \ . " | unlet! b:julia_vim_loaded"

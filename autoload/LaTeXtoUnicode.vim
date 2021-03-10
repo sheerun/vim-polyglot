@@ -42,10 +42,6 @@ function! s:L2U_Setup()
   let b:l2u_found_completion = 0
   " Is the cursor just after a single backslash
   let b:l2u_singlebslash = 0
-  " Backup value of the completeopt settings
-  " (since we temporarily add the 'longest' setting while
-  "  attempting LaTeX-to-Unicode)
-  let b:l2u_backup_commpleteopt = &completeopt
   " Are we in the middle of a L2U tab completion?
   let b:l2u_tab_completing = 0
   " Are we calling the tab fallback?
@@ -68,7 +64,7 @@ function! s:L2U_SetupGlobal()
   call s:L2U_deprecated_options()
 
   if v:version < 704
-      let g:latex_to_unicode_tab = 0
+      let g:latex_to_unicode_tab = "off"
       let g:latex_to_unicode_auto = 0
   endif
 
@@ -161,6 +157,14 @@ function! s:L2U_deprecated_options()
       exec "let g:" . new . " = g:" . old
     endif
   endfor
+
+  if has_key(g:, "latex_to_unicode_tab")
+    if g:latex_to_unicode_tab is# 1
+      let g:latex_to_unicode_tab = "on"
+    elseif g:latex_to_unicode_tab is# 0
+      let g:latex_to_unicode_tab = "off"
+    endif
+  endif
 endfunction
 
 function! s:L2U_file_type_regex(ft)
@@ -239,22 +243,23 @@ function! s:L2U_longest_common_prefix(partmatches)
   return common
 endfunction
 
-" Omnicompletion function. Besides the usual two-stage omnifunc behaviour,
+" Completion function. Besides the usual two-stage completefunc behaviour,
 " it has the following peculiar features:
 "  *) keeps track of the previous completion attempt
 "  *) sets some info to be used by the fallback function
 "  *) either returns a list of completions if a partial match is found, or a
 "     Unicode char if an exact match is found
 "  *) forces its way out of completion mode through a hack in some cases
-function! LaTeXtoUnicode#omnifunc(findstart, base)
+function! LaTeXtoUnicode#completefunc(findstart, base)
   if a:findstart
     " first stage
-    " avoid infinite loop if the fallback happens to call omnicompletion
+    " avoid infinite loop if the fallback happens to call completion
     if b:l2u_in_fallback
       let b:l2u_in_fallback = 0
       return -3
     endif
-    let b:l2u_in_fallback = 0
+    call s:L2U_SetCompleteopt()
+    call s:L2U_InsertCompleteDoneAutocommand()
     " set info for the callback
     let b:l2u_found_completion = 1
     " analyse current line
@@ -385,27 +390,20 @@ function! LaTeXtoUnicode#Tab()
   " reset the in_fallback info
   let b:l2u_in_fallback = 0
   let b:l2u_tab_completing = 1
-  " temporary change to completeopt to use the `longest` setting, which is
-  " probably the only one which makes sense given that the goal of the
-  " completion is to substitute the final string
-  let b:l2u_backup_commpleteopt = &completeopt
-  set completeopt+=longest
-  set completeopt-=noinsert
-  " invoke omnicompletion; failure to perform LaTeX-to-Unicode completion is
+  " invoke completion; failure to perform LaTeX-to-Unicode completion is
   " handled by the CompleteDone autocommand.
-  call feedkeys("\<C-X>\<C-O>", 'n')
+  call feedkeys("\<C-X>\<C-U>", 'n')
   return ""
 endfunction
 
 " This function is called at every CompleteDone event, and is meant to handle
 " the failures of LaTeX-to-Unicode completion by calling a fallback
 function! LaTeXtoUnicode#FallbackCallback()
+  call s:L2U_RemoveCompleteDoneAutocommand()
+  call s:L2U_RestoreCompleteopt()
   if !b:l2u_tab_completing
     " completion was not initiated by L2U, nothing to do
     return
-  else
-    " completion was initiated by L2U, restore completeopt
-    let &completeopt = b:l2u_backup_commpleteopt
   endif
   " at this point L2U tab completion is over
   let b:l2u_tab_completing = 0
@@ -467,9 +465,56 @@ function! LaTeXtoUnicode#CmdTab(trigger)
   return ''
 endfunction
 
+function! s:L2U_SetCompleteopt()
+  " temporary change completeopt to use settings which make sense
+  " for L2U
+  let backup_new = 0
+  if !exists('b:l2u_backup_completeopt')
+    let b:l2u_backup_completeopt = &completeopt
+    let backup_new = 1
+  endif
+  noautocmd set completeopt+=longest
+  noautocmd set completeopt-=noinsert
+  noautocmd set completeopt-=noselect
+  noautocmd set completeopt-=menuone
+  if backup_new
+    let b:l2u_modified_completeopt = &completeopt
+  endif
+endfunction
+
+function! s:L2U_RestoreCompleteopt()
+  " restore completeopt, but only if nothing else has
+  " messed with it in the meanwhile
+  if exists('b:l2u_backup_completeopt')
+    if exists('b:l2u_modified_completeopt')
+      if &completeopt ==# b:l2u_modified_completeopt
+        noautocmd let &completeopt = b:l2u_backup_completeopt
+      endif
+      unlet b:l2u_modified_completeopt
+    endif
+    unlet b:l2u_backup_completeopt
+  endif
+endfunction
+
+function! s:L2U_InsertCompleteDoneAutocommand()
+  augroup L2UTab
+    autocmd! * <buffer>
+    " Every time a L2U completion finishes, the fallback may be invoked
+    autocmd CompleteDone <buffer> call LaTeXtoUnicode#FallbackCallback()
+  augroup END
+endfunction
+
+function! s:L2U_RemoveCompleteDoneAutocommand()
+  augroup L2UTab
+    autocmd! * <buffer>
+  augroup END
+endfunction
+
 " Setup the L2U tab mapping
 function! s:L2U_SetTab(wait_insert_enter)
-  if !b:l2u_cmdtab_set && get(g:, "latex_to_unicode_tab", 1) && b:l2u_enabled
+  let opt_do_cmdtab = index(["on", "command", "cmd"], get(g:, "latex_to_unicode_tab", "on")) != -1
+  let opt_do_instab = index(["on", "insert", "ins"], get(g:, "latex_to_unicode_tab", "on")) != -1
+  if !b:l2u_cmdtab_set && opt_do_cmdtab && b:l2u_enabled
     let b:l2u_cmdtab_keys = get(g:, "latex_to_unicode_cmd_mapping", ['<Tab>','<S-Tab>'])
     if type(b:l2u_cmdtab_keys) != type([]) " avoid using v:t_list for backward compatibility
       let b:l2u_cmdtab_keys = [b:l2u_cmdtab_keys]
@@ -487,25 +532,19 @@ function! s:L2U_SetTab(wait_insert_enter)
   if a:wait_insert_enter && !get(g:, "did_insert_enter", 0)
     return
   endif
-  if !get(g:, "latex_to_unicode_tab", 1) || !b:l2u_enabled
+  if !opt_do_instab || !b:l2u_enabled
     return
   endif
 
-  " Backup the previous omnifunc (the check is probably not really needed)
-  if get(b:, "prev_omnifunc", "") != "LaTeXtoUnicode#omnifunc"
-    let b:prev_omnifunc = &omnifunc
+  " Backup the previous completefunc (the check is probably not really needed)
+  if get(b:, "prev_completefunc", "") != "LaTeXtoUnicode#completefunc"
+    let b:prev_completefunc = &completefunc
   endif
-  setlocal omnifunc=LaTeXtoUnicode#omnifunc
+  setlocal completefunc=LaTeXtoUnicode#completefunc
 
   call s:L2U_SetFallbackMapping('<Tab>', s:l2u_fallback_trigger)
   imap <buffer> <Tab> <Plug>L2UTab
   inoremap <buffer><expr> <Plug>L2UTab LaTeXtoUnicode#Tab()
-
-  augroup L2UTab
-    autocmd! * <buffer>
-    " Every time a completion finishes, the fallback may be invoked
-    autocmd CompleteDone <buffer> call LaTeXtoUnicode#FallbackCallback()
-  augroup END
 
   let b:l2u_tab_set = 1
 endfunction
@@ -521,16 +560,13 @@ function! s:L2U_UnsetTab()
   if !b:l2u_tab_set
     return
   endif
-  exec "setlocal omnifunc=" . get(b:, "prev_omnifunc", "")
+  exec "setlocal completefunc=" . get(b:, "prev_completefunc", "")
   iunmap <buffer> <Tab>
   if empty(maparg("<Tab>", "i"))
     call s:L2U_SetFallbackMapping(s:l2u_fallback_trigger, '<Tab>')
   endif
   iunmap <buffer> <Plug>L2UTab
   exe 'iunmap <buffer> ' . s:l2u_fallback_trigger
-  augroup L2UTab
-    autocmd! * <buffer>
-  augroup END
   let b:l2u_tab_set = 0
 endfunction
 

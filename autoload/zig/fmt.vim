@@ -31,7 +31,11 @@ function! zig#fmt#Format() abort
     try | silent undojoin | catch | endtry
 
     " Replace the file content with the formatted version.
-    call deletebufline(current_buf, len(out), line('$'))
+    if exists('*deletebufline')
+      call deletebufline(current_buf, len(out), line('$'))
+    else
+      silent execute ':' . len(out) . ',' . line('$') . ' delete _'
+    endif
     call setline(1, out)
 
     " No errors detected, close the loclist.
