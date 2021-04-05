@@ -40,6 +40,8 @@ syn match    fsharpSingleLineComment "//.*$" contains=fsharpTodo,@Spell
 syn region   fsharpDocComment start="///" end="$" contains=fsharpTodo,fsharpXml,@Spell keepend oneline
 syn region   fsharpXml matchgroup=fsharpXmlDoc start="<[^>]\+>" end="</[^>]\+>" contained contains=fsharpXml
 
+setlocal commentstring=//\ %s
+
 " Double-backtick identifiers
 syn region   fsharpDoubleBacktick start="``" end="``" keepend oneline
 
