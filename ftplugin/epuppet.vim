@@ -1,4 +1,4 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'puppet', 'ftplugin/embeddedpuppet.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'puppet', 'ftplugin/epuppet.vim')
   finish
 endif
 

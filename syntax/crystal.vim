@@ -95,8 +95,6 @@ syn match crystalStringEscape "\%(\\M-\\C-\|\\C-\\M-\|\\M-\\c\|\\c\\M-\|\\c\|\\C
 syn region crystalInterpolation      matchgroup=crystalInterpolationDelim start="#{" end="}" contained contains=TOP
 syn region crystalNoInterpolation    start="\\#{" end="}" contained
 syn match  crystalNoInterpolation    "\\#{" display contained
-syn match  crystalNoInterpolation    "\\#\%(\$\|@@\=\)\w\+" display contained
-syn match  crystalNoInterpolation    "\\#\$\W" display contained
 
 syn match crystalDelimEscape "\\[(<{\[)>}\]]" transparent display contained contains=NONE
 
@@ -261,10 +259,10 @@ syn cluster crystalDeclaration contains=crystalAliasDeclaration,crystalAliasDecl
 " Note: the following keywords have already been defined:
 " begin case class def do end for if module unless until while
 syn match crystalControl        "\<\%(break\|next\|rescue\|return\)\>[?!]\@!"
-syn match crystalKeyword        "\<\%(super\|previous_def\|yield\|of\|with\|uninitialized\|union\)\>[?!]\@!"
+syn match crystalKeyword        "\<\%(super\|previous_def\|yield\|of\|with\|uninitialized\|union\|out\)\>[?!]\@!"
 syn match crystalBoolean        "\<\%(true\|false\)\>[?!]\@!"
 syn match crystalPseudoVariable "\<\%(nil\|__DIR__\|__FILE__\|__LINE__\|__END_LINE__\)\>[?!]\@!" " TODO: reorganise
-syn match crystalPseudoVariable "\<self\>"
+syn match crystalPseudoVariable "\<self\>[?!]\@!"
 
 " Expensive Mode - match 'end' with the appropriate opening keyword for syntax
 " based folding and special highlighting of module/class/method definitions

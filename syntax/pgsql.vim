@@ -9,7 +9,7 @@ endif
 " License:      Vim license (see `:help license`)
 
 " Based on PostgreSQL 13.1
-" Automatically generated on 2021-01-13 at 20:54:21
+" Automatically generated on 2021-02-07 at 10:45:10
 
 if exists("b:current_syntax")
   finish
@@ -17,7 +17,11 @@ endif
 
 syn case ignore
 syn sync minlines=100
-syn iskeyword @,48-57,192-255,_
+if has('patch-7.4.1142')
+  syn iskeyword @,48-57,192-255,_
+else
+  setlocal iskeyword=@,48-57,192-255,_
+endif
 
 syn match sqlIsKeyword  /\<\h\w*\>/   contains=sqlStatement,sqlKeyword,sqlCatalog,sqlConstant,sqlSpecial,sqlOption,sqlErrorCode,sqlType,sqlTable,sqlView
 syn match sqlIsFunction /\<\h\w*\ze(/ contains=sqlFunction,sqlKeyword,sqlType
@@ -723,7 +727,7 @@ syn keyword sqlConstant contained ltree_plpythonu pldbgapi plpython2u plpython3u
 if index(get(g:, 'pgsql_disabled_extensions', []), 'refint') == -1
   syn keyword sqlFunction contained check_foreign_key check_primary_key
 endif " refint
-" Extension: postgis (v3.1.0)
+" Extension: postgis (v3.1.1)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis') == -1
   syn keyword sqlFunction contained addauth addgeometrycolumn box
   syn keyword sqlFunction contained box2d box2d_in box2d_out box2df_in
@@ -1018,7 +1022,7 @@ endif " dict_xsyn
 if index(get(g:, 'pgsql_disabled_extensions', []), 'bool_plperlu') == -1
   syn keyword sqlFunction contained bool_to_plperlu plperlu_to_bool
 endif " bool_plperlu
-" Extension: address_standardizer (v3.1.0)
+" Extension: address_standardizer (v3.1.1)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'address_standardizer') == -1
   syn keyword sqlFunction contained parse_address standardize_address
   syn keyword sqlType contained stdaddr
@@ -1077,7 +1081,7 @@ if index(get(g:, 'pgsql_disabled_extensions', []), 'cube') == -1
   syn keyword sqlType contained cube
   syn keyword sqlFunction contained g_cube_compress g_cube_decompress
 endif " cube
-" Extension: postgis_tiger_geocoder (v3.1.0)
+" Extension: postgis_tiger_geocoder (v3.1.1)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_tiger_geocoder') == -1
   syn keyword sqlFunction contained count_words create_census_base_tables
   syn keyword sqlFunction contained cull_null diff_zip
@@ -1181,11 +1185,11 @@ endif " pgstattuple
 if index(get(g:, 'pgsql_disabled_extensions', []), 'autoinc') == -1
   syn keyword sqlFunction contained autoinc
 endif " autoinc
-" Extension: address_standardizer_data_us (v3.1.0)
+" Extension: address_standardizer_data_us (v3.1.1)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'address_standardizer_data_us') == -1
   syn keyword sqlTable contained us_gaz us_lex us_rules
 endif " address_standardizer_data_us
-" Extension: postgis_topology (v3.1.0)
+" Extension: postgis_topology (v3.1.1)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_topology') == -1
   syn keyword sqlFunction contained addedge addface addnode
   syn keyword sqlFunction contained addtopogeometrycolumn addtosearchpath asgml
@@ -1218,7 +1222,7 @@ if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_topology') == -1
   syn keyword sqlType contained topoelementarray topogeometry
   syn keyword sqlType contained validatetopology_returntype
 endif " postgis_topology
-" Extension: postgis_raster (v3.1.0)
+" Extension: postgis_raster (v3.1.1)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_raster') == -1
   syn keyword sqlFunction contained addoverviewconstraints addrasterconstraints
   syn keyword sqlFunction contained box3d bytea dropoverviewconstraints
@@ -1566,7 +1570,7 @@ if index(get(g:, 'pgsql_disabled_extensions', []), 'fuzzystrmatch') == -1
   syn keyword sqlFunction contained levenshtein levenshtein_less_equal
   syn keyword sqlFunction contained metaphone soundex text_soundex
 endif " fuzzystrmatch
-" Extension: pgrouting (v3.1.1)
+" Extension: pgrouting (v3.1.3)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'pgrouting') == -1
   syn keyword sqlFunction contained pgr_alphashape pgr_analyzegraph
   syn keyword sqlFunction contained pgr_analyzeoneway pgr_articulationpoints pgr_astar
@@ -1610,7 +1614,7 @@ if index(get(g:, 'pgsql_disabled_extensions', []), 'pgcrypto') == -1
   syn keyword sqlFunction contained pgp_sym_decrypt_bytea pgp_sym_encrypt
   syn keyword sqlFunction contained pgp_sym_encrypt_bytea
 endif " pgcrypto
-" Extension: postgis_sfcgal (v3.1.0)
+" Extension: postgis_sfcgal (v3.1.1)
 if index(get(g:, 'pgsql_disabled_extensions', []), 'postgis_sfcgal') == -1
   syn keyword sqlFunction contained postgis_sfcgal_noop
   syn keyword sqlFunction contained postgis_sfcgal_scripts_installed postgis_sfcgal_version st_3darea
@@ -2025,8 +2029,17 @@ for pl in get(b:, 'pgsql_pl', get(g:, 'pgsql_pl', []))
 endfor
 
 " Folding
-execute "syn region sqlFold start='^\s*\zs\c\(create\|update\|alter\|select\|insert\|do\)\>' end=';$' transparent fold "
-      \ .. "contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlIdentifier,sqlNumber,sqlOperator,sqlSpecial,sqlString,sqlTodo," .. s:plgroups
+if get(g:, 'pgsql_fold_functions_only', 0)
+
+    execute 'syn region sqlFold start=/^\s*\zs\c\%(create\s\+[a-z ]*\%(function\|procedure\)\|do\)\>/ end=/;$/ transparent fold '
+        \ .. "contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlIdentifier,sqlNumber,sqlOperator,sqlSpecial,sqlString,sqlTodo," .. s:plgroups
+
+else
+
+    execute 'syn region sqlFold start=/^\s*\zs\c\(create\|update\|alter\|select\|insert\|do\)\>/ end=/;$/ transparent fold '
+        \ .. "contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlIdentifier,sqlNumber,sqlOperator,sqlSpecial,sqlString,sqlTodo," .. s:plgroups
+
+endif
 
 unlet s:plgroups
 
@@ -2058,4 +2071,3 @@ hi def link sqlCreateOperatorKeyword sqlKeyword
 hi def link sqlCreateTextSearchKeyword sqlKeyword
 
 let b:current_syntax = "sql"
-

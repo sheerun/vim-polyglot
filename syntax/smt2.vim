@@ -13,7 +13,7 @@ endif
 let b:current_syntax = "smt2"
 
 " Comments
-syntax match smt2Comment ";.*$"
+syntax match smt2Comment "\m\C;.*$"
 
 " Commands
 syntax keyword smt2Commands
@@ -64,10 +64,10 @@ syntax keyword smt2Commands
       \ set-logic
       \ set-option
       \ simplify
-syntax match smt2Commands "!"
+syntax match smt2Commands "\m\C!"
 
 " Operators
-syntax match smt2Operator "[=\|>\|<\|<=\|>=\|=>\|+\|\-\|*\|/\|!]"
+syntax match smt2Operator "\m\C[=\|>\|<\|<=\|>=\|=>\|+\|\-\|*\|/\|!]"
 
 " Builtins
 syntax keyword smt2Builtin
@@ -140,29 +140,29 @@ syntax keyword smt2Builtin
       \ unsat
       \ xor
       \ zero_extend
-syntax match smt2Builtin "[\^\~]"
+syntax match smt2Builtin "\m\C[\^\~]"
 
 " Identifier
-syntax match smt2Identifier "\<[a-z_][a-zA-Z0-9_\-\.']*\>"
+syntax match smt2Identifier "\m\C\<[a-z_][a-zA-Z0-9_\-\.']*\>"
 
 " Types
-syntax match smt2Type "\<[A-Z][a-zA-Z0-9_\-\.']*\>"
+syntax match smt2Type "\m\C\<[A-Z][a-zA-Z0-9_\-\.']*\>"
 
 " Strings
 syntax region smt2String start=+"+ skip=+\\\\\|\\"+ end=+"+
-syntax match smt2Option "\<:[a-zA-Z0-9_\-\.']*\>"
+syntax match smt2Option "\m\C\<:[a-zA-Z0-9_\-\.']*\>"
 
 " Constructors
-syntax match smt2Constructor "\<\$[a-zA-Z0-9_\-\.']*\>"
+syntax match smt2Constructor "\m\C\<\$[a-zA-Z0-9_\-\.']*\>"
 
 " Number
-syntax match smt2Int "\<[0-9]\+\>"
-syntax match smt2Hex "\<[0#][xX][0-9a-fA-F]\+\>"
-syntax match smt2Binary "\<#b[01]\+\>"
-syntax match smt2Float "\<[0-9]\+\.[0-9]\+\([eE][\-+]\=[0-9]\+\)\=\>"
+syntax match smt2Int "\m\C\<[0-9]\+\>"
+syntax match smt2Hex "\m\C\<[0#][xX][0-9a-fA-F]\+\>"
+syntax match smt2Binary "\m\C\<#b[01]\+\>"
+syntax match smt2Float "\m\C\<[0-9]\+\.[0-9]\+\([eE][\-+]\=[0-9]\+\)\=\>"
 
 " Delimiter
-syntax match smt2Delimiter "[()]"
+syntax match smt2Delimiter "\m\C[()]"
 
 " Error
 syntax keyword smt2Error error

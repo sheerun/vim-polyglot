@@ -10,99 +10,283 @@ endif
 if exists("b:current_syntax")
   finish
 endif
-let b:current_syntax = "zig"
 
-syn keyword zigStorage const var extern packed export pub noalias inline noinline comptime callconv volatile allowzero align linksection threadlocal anytype
-syn keyword zigStructure struct enum union error opaque
-syn keyword zigStatement break return continue asm defer errdefer unreachable try catch async nosuspend await suspend resume
-syn keyword zigConditional if else switch and or orelse
-syn keyword zigRepeat while for
+let s:cpo_save = &cpo
+set cpo&vim
 
-syn keyword zigConstant null undefined
-syn keyword zigKeyword fn usingnamespace test
-syn keyword zigType bool f16 f32 f64 f128 void noreturn type anyerror anyframe
-syn keyword zigType i0 u0 isize  usize comptime_int comptime_float
-syn keyword zigType c_short c_ushort c_int c_uint c_long c_ulong c_longlong c_ulonglong c_longdouble c_void
+let s:zig_syntax_keywords = {
+    \   'zigBoolean': ["true"
+    \ ,                "false"]
+    \ , 'zigNull': ["null"]
+    \ , 'zigType': ["bool"
+    \ ,             "f16"
+    \ ,             "f32"
+    \ ,             "f64"
+    \ ,             "f128"
+    \ ,             "void"
+    \ ,             "type"
+    \ ,             "anytype"
+    \ ,             "anyerror"
+    \ ,             "anyframe"
+    \ ,             "volatile"
+    \ ,             "linksection"
+    \ ,             "noreturn"
+    \ ,             "allowzero"
+    \ ,             "i0"
+    \ ,             "u0"
+    \ ,             "isize"
+    \ ,             "usize"
+    \ ,             "comptime_int"
+    \ ,             "comptime_float"
+    \ ,             "c_short"
+    \ ,             "c_ushort"
+    \ ,             "c_int"
+    \ ,             "c_uint"
+    \ ,             "c_long"
+    \ ,             "c_ulong"
+    \ ,             "c_longlong"
+    \ ,             "c_ulonglong"
+    \ ,             "c_longdouble"
+    \ ,             "c_void"]
+    \ , 'zigConstant': ["undefined"
+    \ ,                 "unreachable"]
+    \ , 'zigConditional': ["if"
+    \ ,                    "else"
+    \ ,                    "switch"]
+    \ , 'zigRepeat': ["while"
+    \ ,               "for"]
+    \ , 'zigComparatorWord': ["and"
+    \ ,                       "or"
+    \ ,                       "orelse"]
+    \ , 'zigStructure': ["struct"
+    \ ,                  "enum"
+    \ ,                  "union"
+    \ ,                  "error"
+    \ ,                  "packed"
+    \ ,                  "opaque"]
+    \ , 'zigException': ["error"]
+    \ , 'zigVarDecl': ["var"
+    \ ,                "const"
+    \ ,                "comptime"
+    \ ,                "threadlocal"]
+    \ , 'zigDummyVariable': ["_"]
+    \ , 'zigKeyword': ["fn"
+    \ ,                "try"
+    \ ,                "test"
+    \ ,                "pub"
+    \ ,                "usingnamespace"]
+    \ , 'zigExecution': ["return"
+    \ ,                  "break"
+    \ ,                  "continue"]
+    \ , 'zigMacro': ["defer"
+    \ ,              "errdefer"
+    \ ,              "async"
+    \ ,              "nosuspend"
+    \ ,              "await"
+    \ ,              "suspend"
+    \ ,              "resume"
+    \ ,              "export"
+    \ ,              "extern"]
+    \ , 'zigPreProc': ["catch"
+    \ ,                "inline"
+    \ ,                "noinline"
+    \ ,                "asm"
+    \ ,                "callconv"
+    \ ,                "noalias"]
+    \ , 'zigBuiltinFn': ["align"
+    \ ,                  "@add"
+    \ ,                  "@WithOverflow"
+    \ ,                  "@as"
+    \ ,                  "@atomicLoad"
+    \ ,                  "@atomicStore"
+    \ ,                  "@bitCast"
+    \ ,                  "@breakpoint"
+    \ ,                  "@alignCast"
+    \ ,                  "@alignOf"
+    \ ,                  "@cDefine"
+    \ ,                  "@cImport"
+    \ ,                  "@cInclude"
+    \ ,                  "@cUndef"
+    \ ,                  "@canImplicitCast"
+    \ ,                  "@clz"
+    \ ,                  "@cmpxchgWeak"
+    \ ,                  "@cmpxchgStrong"
+    \ ,                  "@compileError"
+    \ ,                  "@compileLog"
+    \ ,                  "@ctz"
+    \ ,                  "@popCount"
+    \ ,                  "@divExact"
+    \ ,                  "@divFloor"
+    \ ,                  "@divTrunc"
+    \ ,                  "@embedFile"
+    \ ,                  "@export"
+    \ ,                  "@tagName"
+    \ ,                  "@TagType"
+    \ ,                  "@errorName"
+    \ ,                  "@call"
+    \ ,                  "@errorReturnTrace"
+    \ ,                  "@fence"
+    \ ,                  "@fieldParentPtr"
+    \ ,                  "@field"
+    \ ,                  "@unionInit"
+    \ ,                  "@frameAddress"
+    \ ,                  "@import"
+    \ ,                  "@newStackCall"
+    \ ,                  "@asyncCall"
+    \ ,                  "@intToPtr"
+    \ ,                  "@memcpy"
+    \ ,                  "@memset"
+    \ ,                  "@mod"
+    \ ,                  "@mulWithOverflow"
+    \ ,                  "@splat"
+    \ ,                  "@src"
+    \ ,                  "@bitOffsetOf"
+    \ ,                  "@byteOffsetOf"
+    \ ,                  "@OpaqueType"
+    \ ,                  "@panic"
+    \ ,                  "@ptrCast"
+    \ ,                  "@ptrToInt"
+    \ ,                  "@rem"
+    \ ,                  "@returnAddress"
+    \ ,                  "@setCold"
+    \ ,                  "@Type"
+    \ ,                  "@shuffle"
+    \ ,                  "@reduce"
+    \ ,                  "@setRuntimeSafety"
+    \ ,                  "@setEvalBranchQuota"
+    \ ,                  "@setFloatMode"
+    \ ,                  "@setGlobalLinkage"
+    \ ,                  "@setGlobalSection"
+    \ ,                  "@shlExact"
+    \ ,                  "@This"
+    \ ,                  "@hasDecl"
+    \ ,                  "@hasField"
+    \ ,                  "@shlWithOverflow"
+    \ ,                  "@shrExact"
+    \ ,                  "@sizeOf"
+    \ ,                  "@bitSizeOf"
+    \ ,                  "@sqrt"
+    \ ,                  "@byteSwap"
+    \ ,                  "@subWithOverflow"
+    \ ,                  "@intCast"
+    \ ,                  "@floatCast"
+    \ ,                  "@intToFloat"
+    \ ,                  "@floatToInt"
+    \ ,                  "@boolToInt"
+    \ ,                  "@errSetCast"
+    \ ,                  "@truncate"
+    \ ,                  "@typeInfo"
+    \ ,                  "@typeName"
+    \ ,                  "@TypeOf"
+    \ ,                  "@atomicRmw"
+    \ ,                  "@bytesToSlice"
+    \ ,                  "@sliceToBytes"
+    \ ,                  "@intToError"
+    \ ,                  "@errorToInt"
+    \ ,                  "@intToEnum"
+    \ ,                  "@enumToInt"
+    \ ,                  "@setAlignStack"
+    \ ,                  "@frame"
+    \ ,                  "@Frame"
+    \ ,                  "@frameSize"
+    \ ,                  "@bitReverse"
+    \ ,                  "@Vector"
+    \ ,                  "@sin"
+    \ ,                  "@cos"
+    \ ,                  "@exp"
+    \ ,                  "@exp2"
+    \ ,                  "@log"
+    \ ,                  "@log2"
+    \ ,                  "@log10"
+    \ ,                  "@fabs"
+    \ ,                  "@floor"
+    \ ,                  "@ceil"
+    \ ,                  "@trunc"
+    \ ,                  "@round"]
+    \ }
 
-syn keyword zigBoolean true false
+function! s:syntax_keyword(dict)
+  for key in keys(a:dict)
+    execute 'syntax keyword' key join(a:dict[key], ' ')
+  endfor
+endfunction
 
-syn match zigType "\v<[iu][1-9]\d*>"
+call s:syntax_keyword(s:zig_syntax_keywords)
 
-syn match zigOperator display "\V\[-+/*=^&?|!><%~]"
-syn match zigArrowCharacter display "\V->"
-
-syn match zigBuiltinFn "\v\@(addWithOverflow|as|atomicLoad|atomicStore|bitCast|breakpoint)>"
-syn match zigBuiltinFn "\v\@(alignCast|alignOf|cDefine|cImport|cInclude)>"
-syn match zigBuiltinFn "\v\@(cUndef|canImplicitCast|clz|cmpxchgWeak|cmpxchgStrong|compileError)>"
-syn match zigBuiltinFn "\v\@(compileLog|ctz|popCount|divExact|divFloor|divTrunc)>"
-syn match zigBuiltinFn "\v\@(embedFile|export|tagName|TagType|errorName|call)>"
-syn match zigBuiltinFn "\v\@(errorReturnTrace|fence|fieldParentPtr|field|unionInit)>"
-syn match zigBuiltinFn "\v\@(frameAddress|import|newStackCall|asyncCall|intToPtr)>"
-syn match zigBuiltinFn "\v\@(memcpy|memset|mod|mulWithOverflow|splat|src)>"
-syn match zigBuiltinFn "\v\@(bitOffsetOf|byteOffsetOf|OpaqueType|panic|ptrCast)>"
-syn match zigBuiltinFn "\v\@(ptrToInt|rem|returnAddress|setCold|Type|shuffle|reduce)>"
-syn match zigBuiltinFn "\v\@(setRuntimeSafety|setEvalBranchQuota|setFloatMode)>"
-syn match zigBuiltinFn "\v\@(setGlobalLinkage|setGlobalSection|shlExact|This|hasDecl|hasField)>"
-syn match zigBuiltinFn "\v\@(shlWithOverflow|shrExact|sizeOf|bitSizeOf|sqrt|byteSwap|subWithOverflow|intCast|floatCast|intToFloat|floatToInt|boolToInt|errSetCast)>"
-syn match zigBuiltinFn "\v\@(truncate|typeInfo|typeName|TypeOf|atomicRmw|bytesToSlice|sliceToBytes)>"
-syn match zigBuiltinFn "\v\@(intToError|errorToInt|intToEnum|enumToInt|setAlignStack|frame|Frame|frameSize|bitReverse|Vector)>"
-syn match zigBuiltinFn "\v\@(sin|cos|exp|exp2|log|log2|log10|fabs|floor|ceil|trunc|round)>"
+syntax match zigType "\v<[iu][1-9]\d*>"
+syntax match zigOperator display "\V\[-+/*=^&?|!><%~]"
+syntax match zigArrowCharacter display "\V->"
 
 "                                     12_34  (. but not ..)? (12_34)?     (exponent  12_34)?
-syn match zigDecNumber display   "\v<\d%(_?\d)*%(\.\.@!)?%(\d%(_?\d)*)?%([eE][+-]?\d%(_?\d)*)?"
-syn match zigHexNumber display "\v<0x\x%(_?\x)*%(\.\.@!)?%(\x%(_?\x)*)?%([pP][+-]?\d%(_?\d)*)?"
-syn match zigOctNumber display "\v<0o\o%(_?\o)*"
-syn match zigBinNumber display "\v<0b[01]%(_?[01])*"
+syntax match zigDecNumber display   "\v<\d%(_?\d)*%(\.\.@!)?%(\d%(_?\d)*)?%([eE][+-]?\d%(_?\d)*)?"
+syntax match zigHexNumber display "\v<0x\x%(_?\x)*%(\.\.@!)?%(\x%(_?\x)*)?%([pP][+-]?\d%(_?\d)*)?"
+syntax match zigOctNumber display "\v<0o\o%(_?\o)*"
+syntax match zigBinNumber display "\v<0b[01]%(_?[01])*"
 
-syn match zigCharacterInvalid display contained /b\?'\zs[\n\r\t']\ze'/
-syn match zigCharacterInvalidUnicode display contained /b'\zs[^[:cntrl:][:graph:][:alnum:][:space:]]\ze'/
-syn match zigCharacter /b'\([^\\]\|\\\(.\|x\x\{2}\)\)'/ contains=zigEscape,zigEscapeError,zigCharacterInvalid,zigCharacterInvalidUnicode
-syn match zigCharacter /'\([^\\]\|\\\(.\|x\x\{2}\|u\x\{4}\|U\x\{6}\)\)'/ contains=zigEscape,zigEscapeUnicode,zigEscapeError,zigCharacterInvalid
+syntax match zigCharacterInvalid display contained /b\?'\zs[\n\r\t']\ze'/
+syntax match zigCharacterInvalidUnicode display contained /b'\zs[^[:cntrl:][:graph:][:alnum:][:space:]]\ze'/
+syntax match zigCharacter /b'\([^\\]\|\\\(.\|x\x\{2}\)\)'/ contains=zigEscape,zigEscapeError,zigCharacterInvalid,zigCharacterInvalidUnicode
+syntax match zigCharacter /'\([^\\]\|\\\(.\|x\x\{2}\|u\x\{4}\|U\x\{6}\)\)'/ contains=zigEscape,zigEscapeUnicode,zigEscapeError,zigCharacterInvalid
 
-syn region zigBlock start="{" end="}" transparent fold
+syntax region zigBlock start="{" end="}" transparent fold
 
-syn region zigCommentLine start="//" end="$" contains=zigTodo,@Spell
-syn region zigCommentLineDoc start="//[/!]/\@!" end="$" contains=zigTodo,@Spell
+syntax region zigCommentLine start="//" end="$" contains=zigTodo,@Spell
+syntax region zigCommentLineDoc start="//[/!]/\@!" end="$" contains=zigTodo,@Spell
 
-" TODO: match only the first '\\' within the zigMultilineString as zigMultilineStringPrefix
-syn match zigMultilineStringPrefix display contained /c\?\\\\/
-syn region zigMultilineString start="c\?\\\\" end="$" contains=zigMultilineStringPrefix
+syntax match zigMultilineStringPrefix /c\?\\\\/ contained containedin=zigMultilineString
+syntax region zigMultilineString matchgroup=zigMultilineStringDelimiter start="c\?\\\\" end="$" contains=zigMultilineStringPrefix display
 
-syn keyword zigTodo contained TODO
+syntax keyword zigTodo contained TODO
 
-syn match     zigEscapeError   display contained /\\./
-syn match     zigEscape        display contained /\\\([nrt\\'"]\|x\x\{2}\)/
-syn match     zigEscapeUnicode display contained /\\\(u\x\{4}\|U\x\{6}\)/
-syn region    zigString      start=+c\?"+ skip=+\\\\\|\\"+ end=+"+ oneline contains=zigEscape,zigEscapeUnicode,zigEscapeError,@Spell
+syntax region zigString matchgroup=zigStringDelimiter start=+c\?"+ skip=+\\\\\|\\"+ end=+"+ oneline contains=zigEscape,zigEscapeUnicode,zigEscapeError,@Spell
+syntax match zigEscapeError   display contained /\\./
+syntax match zigEscape        display contained /\\\([nrt\\'"]\|x\x\{2}\)/
+syntax match zigEscapeUnicode display contained /\\\(u\x\{4}\|U\x\{6}\)/
 
-hi def link zigDecNumber zigNumber
-hi def link zigHexNumber zigNumber
-hi def link zigOctNumber zigNumber
-hi def link zigBinNumber zigNumber
+highlight default link zigDecNumber zigNumber
+highlight default link zigHexNumber zigNumber
+highlight default link zigOctNumber zigNumber
+highlight default link zigBinNumber zigNumber
 
-hi def link zigBuiltinFn Function
-hi def link zigKeyword Keyword
-hi def link zigType Type
-hi def link zigCommentLine Comment
-hi def link zigCommentLineDoc SpecialComment
-hi def link zigTodo Todo
-hi def link zigString String
-hi def link zigMultilineString String
-hi def link zigMultilineStringContent String
-hi def link zigMultilineStringPrefix Comment
-hi def link zigCharacterInvalid Error
-hi def link zigCharacterInvalidUnicode zigCharacterInvalid
-hi def link zigCharacter Character
-hi def link zigEscape Special
-hi def link zigEscapeUnicode zigEscape
-hi def link zigEscapeError Error
-hi def link zigBoolean Boolean
-hi def link zigConstant Constant
-hi def link zigNumber Number
-hi def link zigArrowCharacter zigOperator
-hi def link zigOperator Operator
-hi def link zigStorage StorageClass
-hi def link zigStructure Structure
-hi def link zigStatement Statement
-hi def link zigConditional Conditional
-hi def link zigRepeat Repeat
+highlight default link zigBuiltinFn Statement
+highlight default link zigKeyword Keyword
+highlight default link zigType Type
+highlight default link zigCommentLine Comment
+highlight default link zigCommentLineDoc Comment
+highlight default link zigDummyVariable Comment
+highlight default link zigTodo Todo
+highlight default link zigString String
+highlight default link zigStringDelimiter Delimiter
+highlight default link zigMultilineString String
+highlight default link zigMultilineStringContent String
+highlight default link zigMultilineStringPrefix String
+highlight default link zigMultilineStringDelimiter Ignore
+highlight default link zigCharacterInvalid Error
+highlight default link zigCharacterInvalidUnicode zigCharacterInvalid
+highlight default link zigCharacter Character
+highlight default link zigEscape Special
+highlight default link zigEscapeUnicode zigEscape
+highlight default link zigEscapeError Error
+highlight default link zigBoolean Boolean
+highlight default link zigNull Boolean
+highlight default link zigConstant Constant
+highlight default link zigNumber Number
+highlight default link zigArrowCharacter zigOperator
+highlight default link zigOperator Operator
+highlight default link zigStructure Structure
+highlight default link zigExecution Special
+highlight default link zigMacro Macro
+highlight default link zigConditional Conditional
+highlight default link zigComparatorWord Operator
+highlight default link zigRepeat Repeat
+highlight default link zigSpecial Special
+highlight default link zigVarDecl Function
+highlight default link zigPreProc PreProc
+highlight default link zigException Exception
+
+delfunction s:syntax_keyword
+
+let b:current_syntax = "zig"
+
+let &cpo = s:cpo_save
+unlet! s:cpo_save

@@ -105,11 +105,16 @@ function! GetPuppetIndent(...)
         let ind = indent(s:PrevNonMultilineString(pnum - 1))
     endif
 
-    if pline =~ '\({\|\[\|(\|:\)\s*\(#.*\)\?$'
+    let l:bracketAtEndOfLinePattern = '\({\|\[\|(\|:\)\s*\(#.*\)\?$'
+    if pline =~ l:bracketAtEndOfLinePattern
+    let l:i = match(pline, l:bracketAtEndOfLinePattern)
+    let l:syntaxType = synIDattr(synID(pnum, l:i + 1, 0), 'name')
+    if l:syntaxType !~# '\(Comment\|String\)$'
         let ind += &sw
+    endif
     elseif pline =~ ';$' && pline !~ '[^:]\+:.*[=+]>.*'
         let ind -= &sw
-    elseif pline =~ '^\s*include\s\+.*,$' && pline !~ '[=+]>'
+    elseif pline =~# '^\s*include\s\+.*,$' && pline !~ '[=+]>'
         let ind += &sw
     endif
 

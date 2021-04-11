@@ -5,7 +5,7 @@ endif
 " Vim syntax file
 " Language: Kotlin
 " Maintainer: Alexander Udalov
-" Latest Revision: 13 July 2020
+" Latest Revision: 17 February 2021
 
 if exists('b:current_syntax')
     finish
@@ -33,21 +33,21 @@ syn keyword ktType ExperimentalTime ExperimentalTypeInference ExperimentalUnsign
 syn keyword ktType FileWalkDirection Float FloatArray FloatIterator Function Function0 Function1 Function10 Function11 Function12 Function13 Function14 Function15 Function16
 syn keyword ktType Function17 Function18 Function19 Function2 Function20 Function21 Function22 Function3 Function4 Function5 Function6 Function7 Function8 Function9 FunctionN
 syn keyword ktType Getter Grouping HashMap HashSet IllegalArgumentException IllegalStateException IndexOutOfBoundsException IndexedValue Int IntArray IntIterator IntProgression
-syn keyword ktType IntRange InvocationKind Iterable Iterator JsExport JsName JvmDefault JvmDefaultWithoutCompatibility JvmField JvmMultifileClass JvmName JvmOverloads JvmStatic
-syn keyword ktType JvmSuppressWildcards JvmSynthetic JvmWildcard KAnnotatedElement KCallable KClass KClassifier KDeclarationContainer KFunction KMutableProperty KMutableProperty0
-syn keyword ktType KMutableProperty1 KMutableProperty2 KParameter KProperty KProperty0 KProperty1 KProperty2 KType KTypeParameter KTypeProjection KVariance KVisibility Key Kind
-syn keyword ktType KotlinNullPointerException KotlinReflectionNotSupportedError KotlinVersion Lazy LazyThreadSafetyMode Level LinkedHashMap LinkedHashSet List ListIterator Long
-syn keyword ktType LongArray LongIterator LongProgression LongRange Map MatchGroup MatchGroupCollection MatchNamedGroupCollection MatchResult Metadata Monotonic MustBeDocumented
-syn keyword ktType MutableCollection MutableEntry MutableIterable MutableIterator MutableList MutableListIterator MutableMap MutableSet NoSuchElementException NoSuchFileException
-syn keyword ktType NoWhenBranchMatchedException NotImplementedError Nothing NullPointerException Number NumberFormatException ObservableProperty OnErrorAction OptIn
-syn keyword ktType OptionalExpectation OverloadResolutionByLambdaReturnType Pair ParameterName PropertyDelegateProvider PublishedApi PurelyImplements Random RandomAccess
+syn keyword ktType IntRange InvocationKind Iterable Iterator JsExport JsName JvmDefault JvmDefaultWithoutCompatibility JvmField JvmInline JvmMultifileClass JvmName JvmOverloads
+syn keyword ktType JvmRecord JvmStatic JvmSuppressWildcards JvmSynthetic JvmWildcard KAnnotatedElement KCallable KClass KClassifier KDeclarationContainer KFunction KMutableProperty
+syn keyword ktType KMutableProperty0 KMutableProperty1 KMutableProperty2 KParameter KProperty KProperty0 KProperty1 KProperty2 KType KTypeParameter KTypeProjection KVariance
+syn keyword ktType KVisibility Key Kind KotlinNullPointerException KotlinReflectionNotSupportedError KotlinVersion Lazy LazyThreadSafetyMode Level LinkedHashMap LinkedHashSet List
+syn keyword ktType ListIterator Long LongArray LongIterator LongProgression LongRange Map MatchGroup MatchGroupCollection MatchNamedGroupCollection MatchResult Metadata Monotonic
+syn keyword ktType MustBeDocumented MutableCollection MutableEntry MutableIterable MutableIterator MutableList MutableListIterator MutableMap MutableSet NoSuchElementException
+syn keyword ktType NoSuchFileException NoWhenBranchMatchedException NotImplementedError Nothing NullPointerException Number NumberFormatException ObservableProperty OnErrorAction
+syn keyword ktType OptIn OptionalExpectation OverloadResolutionByLambdaReturnType Pair ParameterName PropertyDelegateProvider PublishedApi PurelyImplements Random RandomAccess
 syn keyword ktType ReadOnlyProperty ReadWriteProperty Regex RegexOption Repeatable ReplaceWith RequiresOptIn RestrictsSuspension Result Retention Returns ReturnsNotNull
 syn keyword ktType RuntimeException Sequence SequenceScope Set Setter SharedImmutable Short ShortArray ShortIterator SimpleEffect SinceKotlin Strictfp String StringBuilder Suppress
 syn keyword ktType Synchronized Target TestTimeSource ThreadLocal Throwable Throws TimeMark TimeSource TimedValue Transient Triple TypeCastException Typography UByte UByteArray
 syn keyword ktType UByteIterator UInt UIntArray UIntIterator UIntProgression UIntRange ULong ULongArray ULongIterator ULongProgression ULongRange UShort UShortArray UShortIterator
 syn keyword ktType UninitializedPropertyAccessException Unit UnsafeVariance UnsupportedOperationException UseExperimental Volatile
 
-syn keyword ktModifier annotation companion enum inner internal private protected public abstract final open override sealed vararg dynamic expect actual
+syn keyword ktModifier annotation companion enum inner abstract final open override sealed vararg dynamic expect actual
 syn keyword ktStructure class object interface typealias fun val var constructor init
 
 syn keyword ktReservedKeyword typeof
@@ -55,7 +55,13 @@ syn keyword ktReservedKeyword typeof
 syn keyword ktBoolean true false
 syn keyword ktConstant null
 
-syn keyword ktModifier data tailrec lateinit reified external inline noinline crossinline const operator infix suspend
+syn keyword ktModifier reified external inline noinline crossinline
+
+syn match ktModifier "\v<(data|value)>\ze\@=.*<class>"
+syn match ktModifier "\v<(tailrec|operator|infix|suspend)>\ze\@=.*<fun>"
+syn match ktModifier "\v<(const)>\ze\@=.*<val>"
+syn match ktModifier "\v<(lateinit)>\ze\@=.*<var>"
+syn match ktModifier "\v<(internal|private|protected|public)>\ze\@=.*<(class|fun|val|var|typealias)>"
 
 syn match ktOperator "\v\?:|::|\<\=? | \>\=?|[!=]\=\=?|<as>\??|[-!%&*+/|]"
 

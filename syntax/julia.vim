@@ -143,7 +143,7 @@ exec 'syntax region  juliaConditionalEBlock	matchgroup=juliaConditional transpar
 exec 'syntax region  juliaWhileBlock		matchgroup=juliaRepeat start="'.s:nodot.'\<while\>" end="'.s:nodot.'\<end\>" contains=@juliaExpressions fold'
 exec 'syntax region  juliaForBlock		matchgroup=juliaRepeat start="'.s:nodot.'\<for\>" end="'.s:nodot.'\<end\>" contains=@juliaExpressions,juliaOuter fold'
 exec 'syntax region  juliaBeginBlock		matchgroup=juliaBlKeyword start="'.s:nodot.'\<begin\>" end="'.s:nodot.'\<end\>" contains=@juliaExpressions fold'
-exec 'syntax region  juliaFunctionBlock		matchgroup=juliaBlKeyword start="'.s:nodot.'\<function\>" end="'.s:nodot.'\<end\>" contains=@juliaExpressions fold'
+exec 'syntax region  juliaFunctionBlock		matchgroup=juliaBlKeyword start="'.s:nodot.'\<function\>" end="'.s:nodot.'\<end\>" contains=@juliaExpressions,juliaFunctionDef,juliaFunctionDefP fold'
 exec 'syntax region  juliaMacroBlock		matchgroup=juliaBlKeyword start="'.s:nodot.'\<macro\>" end="'.s:nodot.'\<end\>" contains=@juliaExpressions fold'
 exec 'syntax region  juliaQuoteBlock		matchgroup=juliaBlKeyword start="'.s:nodot.'\<quote\>" end="'.s:nodot.'\<end\>" contains=@juliaExpressions fold'
 exec 'syntax region  juliaStructBlock		matchgroup=juliaBlKeyword start="'.s:nodot.'\<struct\>" end="'.s:nodot.'\<end\>" contains=@juliaExpressions fold'
@@ -200,6 +200,10 @@ syntax match   juliaConstEnv		display "\<\%(ARGS\|ENV\|ENDIAN_BOM\|LOAD_PATH\|VE
 syntax match   juliaConstIO		display "\<\%(std\%(out\|in\|err\)\|devnull\)\>"
 syntax match   juliaConstC		display "\<\%(C_NULL\)\>"
 syntax match   juliaConstGeneric	display "\<\%(nothing\|Main\|undef\|missing\)\>"
+
+exec 'syntax match   juliaFunctionDef	contained transparent "\%(\<function\s\+\)\@'.s:d(20).'<=' . s:idregex . '\%(\.' . s:idregex . '\)*\ze\s\+\%(end\>\|$\)" contains=juliaFunctionName'
+exec 'syntax region  juliaFunctionDefP	contained transparent start="\%(\<function\s\+\)\@'.s:d(20).'<=' . s:idregex . '\%(\.' . s:idregex . '\)*\s*(" end=")\@'.s:d(1).'<=" contains=juliaFunctionName,juliaParBlock'
+exec 'syntax match   juliaFunctionName	contained "\%(\<function\s\+\)\@'.s:d(20).'<=' . s:idregex . '\%(\.' . s:idregex . '\)*"'
 
 syntax match   juliaPossibleMacro	transparent "@" contains=juliaMacroCall,juliaMacroCallP,juliaPrintfMacro
 
@@ -369,7 +373,8 @@ hi def link juliaComma			juliaNone
 
 hi def link juliaColon			juliaOperator
 
-hi def link juliaMacroName     		juliaMacro
+hi def link juliaFunctionName		juliaFunction
+hi def link juliaMacroName		juliaMacro
 
 
 hi def link juliaKeyword		Keyword
@@ -423,6 +428,7 @@ hi def link juliaComprehensionIf	Keyword
 
 hi def link juliaDollarVar		Identifier
 
+hi def link juliaFunction		Function
 hi def link juliaMacro			Macro
 hi def link juliaSymbol			Identifier
 hi def link juliaSymbolS		Identifier

@@ -7,127 +7,70 @@ endif
 " Copyright 2011 The Go Authors. All rights reserved.
 " Use of this source code is governed by a BSD-style
 " license that can be found in the LICENSE file.
-"
+
 function! zig#fmt#Format() abort
-  if zig#config#FmtExperimental()
-    " Using winsaveview to save/restore cursor state has the problem of
-    " closing folds on save:
-    "   https://github.com/fatih/vim-go/issues/502
-    " One fix is to use mkview instead. Unfortunately, this sometimes causes
-    " other bad side effects:
-    "   https://github.com/fatih/vim-go/issues/728
-    " and still closes all folds if foldlevel>0:
-    "   https://github.com/fatih/vim-go/issues/732
-    let l:curw = {}
-    try
-      mkview!
-    catch
-      let l:curw = winsaveview()
-    endtry
-
-    " save our undo file to be restored after we are done. This is needed to
-    " prevent an additional undo jump due to BufWritePre auto command and also
-    " restore 'redo' history because it's getting being destroyed every
-    " BufWritePre
-    let tmpundofile = tempname()
-    exe 'wundo! ' . tmpundofile
-  else
-    " Save cursor position and many other things.
-    let l:curw = winsaveview()
-  endif
-
   " Save cursor position and many other things.
-  let l:curw = winsaveview()
+  let view = winsaveview()
 
-  let bin_name = zig#config#FmtCommand()
+  let current_buf = bufnr('')
 
-  " Get current position in file
-  let current_col = col('.')
-  let orig_line_count = line('$')
+  let bin_path = get(g:, 'zig_bin_path', 'zig')
+  let stderr_file = tempname()
+  let cmdline = printf('%s fmt --stdin 2> %s', bin_path, stderr_file)
 
-  " Save current buffer first, else fmt will run on the original file and we
-  " will lose our changes.
-  silent! execute 'write' expand('%')
-
-  let [l:out, l:err] = zig#fmt#run(bin_name, expand('%'))
-
-  if l:err == 0
-    call zig#fmt#update_file(expand('%'))
-  elseif !zig#config#FmtFailSilently()
-    let errors = s:parse_errors(expand('%'), out)
-    call s:show_errors(errors)
-  endif
-
-  let diff_offset = line('$') - orig_line_count
-
-  if zig#config#FmtExperimental()
-    " restore our undo history
-    silent! exe 'rundo ' . tmpundofile
-    call delete(tmpundofile)
-
-    " Restore our cursor/windows positions, folds, etc.
-    if empty(l:curw)
-      silent! loadview
-    else
-      call winrestview(l:curw)
-    endif
+  " The formatted code is output on stdout, the errors go on stderr.
+  if exists('*systemlist')
+    silent let out = systemlist(cmdline, current_buf)
   else
-    " Restore our cursor/windows positions.
-    call winrestview(l:curw)
+    silent let out = split(system(cmdline, current_buf))
+  endif
+  let err = v:shell_error
+
+  if err == 0
+    " remove undo point caused via BufWritePre.
+    try | silent undojoin | catch | endtry
+
+    " Replace the file content with the formatted version.
+    call deletebufline(current_buf, len(out), line('$'))
+    call setline(1, out)
+
+    " No errors detected, close the loclist.
+    call setloclist(0, [], 'r')
+    lclose
+  elseif get(g:, 'zig_fmt_parse_errors', 1)
+    let errors = s:parse_errors(expand('%'), readfile(stderr_file))
+
+    call setloclist(0, [], 'r', {
+        \ 'title': 'Errors',
+        \ 'items': errors,
+        \ })
+
+    let max_win_height = get(g:, 'zig_fmt_max_window_height', 5)
+    " Prevent the loclist from becoming too long.
+    let win_height = min([max_win_height, len(errors)])
+    " Open the loclist, but only if there's at least one error to show.
+    execute 'lwindow ' . win_height
   endif
 
-  " be smart and jump to the line the new statement was added/removed
-  call cursor(line('.') + diff_offset, current_col)
+  call delete(stderr_file)
 
-  " Syntax highlighting breaks less often.
+  call winrestview(view)
+
+  if err != 0
+    echohl Error | echomsg "zig fmt returned error" | echohl None
+    return
+  endif
+
+  " Run the syntax highlighter on the updated content and recompute the folds if
+  " needed.
   syntax sync fromstart
 endfunction
 
-" update_file updates the target file with the given formatted source
-function! zig#fmt#update_file(target)
-  " remove undo point caused via BufWritePre
-  try | silent undojoin | catch | endtry
-
-  " reload buffer to reflect latest changes
-  silent edit!
-
-  let l:listtype = zig#list#Type("ZigFmt")
-
-  " the title information was introduced with 7.4-2200
-  " https://github.com/vim/vim/commit/d823fa910cca43fec3c31c030ee908a14c272640
-  if has('patch-7.4.2200')
-    " clean up previous list
-    if l:listtype == "quickfix"
-      let l:list_title = getqflist({'title': 1})
-    else
-      let l:list_title = getloclist(0, {'title': 1})
-    endif
-  else
-    " can't check the title, so assume that the list was for go fmt.
-    let l:list_title = {'title': 'Format'}
-  endif
-
-  if has_key(l:list_title, "title") && l:list_title['title'] == "Format"
-    call zig#list#Clean(l:listtype)
-  endif
-endfunction
-
-" run runs the gofmt/goimport command for the given source file and returns
-" the output of the executed command. Target is the real file to be formatted.
-function! zig#fmt#run(bin_name, target)
-  let l:cmd = []
-  call extend(cmd, a:bin_name)
-  call extend(cmd, [a:target])
-  return zig#util#Exec(l:cmd)
-endfunction
-
 " parse_errors parses the given errors and returns a list of parsed errors
-function! s:parse_errors(filename, content) abort
-  let splitted = split(a:content, '\n')
-
+function! s:parse_errors(filename, lines) abort
   " list of errors to be put into location list
   let errors = []
-  for line in splitted
+  for line in a:lines
     let tokens = matchlist(line, '^\(.\{-}\):\(\d\+\):\(\d\+\)\s*\(.*\)')
     if !empty(tokens)
       call add(errors,{
@@ -141,30 +84,4 @@ function! s:parse_errors(filename, content) abort
 
   return errors
 endfunction
-
-" show_errors opens a location list and shows the given errors. If the given
-" errors is empty, it closes the the location list
-function! s:show_errors(errors) abort
-  let l:listtype = zig#list#Type("ZigFmt")
-  if !empty(a:errors)
-    call zig#list#Populate(l:listtype, a:errors, 'Format')
-    echohl Error | echomsg "zig fmt returned error" | echohl None
-  endif
-
-  " this closes the window if there are no errors or it opens
-  " it if there is any
-  call zig#list#Window(l:listtype, len(a:errors))
-endfunction
-
-function! zig#fmt#ToggleFmtAutoSave() abort
-  if zig#config#FmtAutosave()
-    call zig#config#SetFmtAutosave(0)
-    call zig#util#EchoProgress("auto fmt disabled")
-    return
-  end
-
-  call zig#config#SetFmtAutosave(1)
-  call zig#util#EchoProgress("auto fmt enabled")
-endfunction
-
 " vim: sw=2 ts=2 et
