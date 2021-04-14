@@ -66,9 +66,6 @@ endfun
 
 au VimEnter * call PolyglotVerify()
 
-" Be consistent across different systems
-set nofileignorecase
-
 function! s:SetDefault(name, value)
   if !exists(a:name)
     let {a:name} = a:value
