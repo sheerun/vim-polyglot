@@ -3,14 +3,13 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'clojure', 'indent/clojure.vim
 endif
 
 " Vim indent file
-" Language:     Clojure
-" Author:       Meikel Brandmeyer <mb@kotka.de>
-" URL:          http://kotka.de/projects/clojure/vimclojure.html
-"
-" Maintainer:   Sung Pae <self@sungpae.com>
-" URL:          https://github.com/guns/vim-clojure-static
-" License:      Same as Vim
-" Last Change:  %%RELEASE_DATE%%
+" Language:           Clojure
+" Maintainer:         Alex Vear <av@axvr.io>
+" Former Maintainers: Sung Pae <self@sungpae.com>
+"                     Meikel Brandmeyer <mb@kotka.de>
+" URL:                https://github.com/clojure-vim/clojure.vim
+" License:            Vim (see :h license)
+" Last Change:        %%RELEASE_DATE%%
 
 if exists("b:did_indent")
 	finish
@@ -29,7 +28,7 @@ setlocal indentkeys=!,o,O
 if exists("*searchpairpos")
 
 	if !exists('g:clojure_maxlines')
-		let g:clojure_maxlines = 100
+		let g:clojure_maxlines = 300
 	endif
 
 	if !exists('g:clojure_fuzzy_indent')
@@ -61,7 +60,8 @@ if exists("*searchpairpos")
 	endfunction
 
 	function! s:ignored_region()
-		return s:syn_id_name() =~? '\vstring|regex|comment|character'
+		let name = s:syn_id_name()
+		return (name =~? '\vstring|regex|comment|character') && (name !~# '^clojureCommentReaderMacro\(Form\)\?$')
 	endfunction
 
 	function! s:current_char()
@@ -174,7 +174,35 @@ if exists("*searchpairpos")
 
 		call search('\S', 'W')
 		let w = s:strip_namespace_and_macro_chars(s:current_word())
+
 		if g:clojure_special_indent_words =~# '\V\<' . w . '\>'
+
+			" `letfn` is a special-special-case.
+			if w ==# 'letfn'
+				" Earlier code left the cursor at:
+				"     (letfn [...] ...)
+				"      ^
+
+				" Search and get coordinates of first `[`
+				"     (letfn [...] ...)
+				"            ^
+				call search('\[', 'W')
+				let pos = getcurpos()
+				let letfn_bracket = [pos[1], pos[2]]
+
+				" Move cursor to start of the form this function was
+				" initially called on.  Grab the coordinates of the
+				" closest outer `[`.
+				call cursor(a:position)
+				let outer_bracket = s:match_pairs('\[', '\]', 0)
+
+				" If the located square brackets are not the same,
+				" don't use special-case formatting.
+				if outer_bracket != letfn_bracket
+					return 0
+				endif
+			endif
+
 			return 1
 		endif
 
@@ -192,9 +220,10 @@ if exists("*searchpairpos")
 	endfunction
 
 	" Check if form is a reader conditional, that is, it is prefixed by #?
-	" or @#?
+	" or #?@
 	function! s:is_reader_conditional_special_case(position)
 		return getline(a:position[0])[a:position[1] - 3 : a:position[1] - 2] == "#?"
+			\|| getline(a:position[0])[a:position[1] - 4 : a:position[1] - 2] == "#?@"
 	endfunction
 
 	" Returns 1 for opening brackets, -1 for _anything else_.

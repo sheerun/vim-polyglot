@@ -376,7 +376,7 @@ filetypes:
   - carp
 ---
 name: clojure
-remote: guns/vim-clojure-static
+remote: clojure-vim/clojure.vim
 filetypes:
 - name: clojure
   linguist: Clojure
