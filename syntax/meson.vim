@@ -123,6 +123,7 @@ syn keyword mesonBuiltin
   \ test
   \ vcs_tag
   \ warning
+  \ range
 
 if exists("meson_space_error_highlight")
   " trailing whitespace

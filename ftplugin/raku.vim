@@ -31,7 +31,7 @@ setlocal commentstring=#%s
 "---------------------------------------------
 setlocal include=\\<\\(use\\\|require\\)\\>
 setlocal includeexpr=substitute(v:fname,'::','/','g')
-setlocal suffixesadd=.pm6,.pm,.raku,.rakutest,.t6
+setlocal suffixesadd=.rakumod,.rakudoc,.pm6,.pm
 setlocal define=[^A-Za-z_]
 
 " The following line changes a global variable but is necessary to make
@@ -42,39 +42,23 @@ setlocal define=[^A-Za-z_]
 set isfname+=:
 setlocal iskeyword=@,48-57,_,192-255,-
 
-" Set this once, globally.
-if !exists("perlpath")
-    if executable("perl6")
-        try
-            if &shellxquote != '"'
-                let perlpath = system('perl6 -e  "@*INC.join(q/,/).say"')
-            else
-                let perlpath = system("perl6 -e  '@*INC.join(q/,/).say'")
-            endif
-            let perlpath = substitute(perlpath,',.$',',,','')
-        catch /E145:/
-            let perlpath = ".,,"
-        endtry
-    else
-        " If we can't call perl to get its path, just default to using the
-        " current directory and the directory of the current file.
-        let perlpath = ".,,"
-    endif
-endif
+" Raku exposes its CompUnits through $*REPO, but mapping module names to
+" compunit paths is nontrivial. Probably it's more convenient to rely on
+" people using zef, which has a handy store of sources for modules it has
+" installed.
+func s:compareReverseFtime(a, b)
+    let atime = getftime(a:a)
+    let btime = getftime(a:b)
+    return atime > btime ? -1 : atime == btime ? 0 : 1
+endfunc
 
-" Append perlpath to the existing path value, if it is set.  Since we don't
-" use += to do it because of the commas in perlpath, we have to handle the
-" global / local settings, too.
-if &l:path == ""
-    if &g:path == ""
-        let &l:path=perlpath
-    else
-        let &l:path=&g:path.",".perlpath
-    endif
-else
-    let &l:path=&l:path.",".perlpath
+let &l:path = "lib,."
+if exists('$RAKULIB')
+    let &l:path = &l:path . "," . $RAKULIB
 endif
-"---------------------------------------------
+let &l:path = &l:path . "," . join(
+            \ sort(glob("~/.zef/store/*/*/lib", 0, 1), "s:compareReverseFtime"),
+            \ ',')
 
 " Convert ascii-based ops into their single-character unicode equivalent
 if get(g:, 'raku_unicode_abbrevs', 0)

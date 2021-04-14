@@ -295,8 +295,8 @@ function IsFunctionArgPar(lnum, c)
   if a:c == 0
     return 0
   endif
-  let stack = map(synstack(a:lnum, a:c), 'synIDattr(v:val, "name")')
-  return len(stack) >= 3 && stack[-3] == 'juliaFunctionDefP'
+  let stack = map(synstack(a:lnum, a:c-1), 'synIDattr(v:val, "name")')
+  return len(stack) >= 2 && stack[-2] ==# 'juliaFunctionDef'
 endfunction
 
 function JumpToMatch(lnum, last_closed_bracket)

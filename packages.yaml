@@ -887,7 +887,7 @@ globs:
 - '**/htmldjango.vim'
 filetypes:
 - name: htmldjango
-  linguist: HTML+Django
+  linguist: Jinja 
   ignore_warnings:
   # handled by mustache plugin
   - mustache

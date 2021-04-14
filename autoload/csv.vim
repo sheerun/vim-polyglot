@@ -1989,7 +1989,6 @@ fu! csv#AnalyzeColumn(...) "{{{3
     endif
 
     let  title="Nr\tCount\t % \tValue"
-    endif
     echohl Title
     echo printf("%s", title)
     echohl Normal
@@ -2311,7 +2310,7 @@ fu! csv#CommandDefinitions() "{{{3
     call csv#LocalCmd("NewDelimiter", ':call csv#NewDelimiter(<q-args>, 1, line(''$''))',
         \ '-nargs=1')
     call csv#LocalCmd("Duplicates", ':call csv#CheckDuplicates(<q-args>)',
-        \ '-nargs=1 -complete=custom,csv#CompleteColumnNr')
+        \ '-nargs=? -complete=custom,csv#CompleteColumnNr')
     call csv#LocalCmd('Transpose', ':call csv#Transpose(<line1>, <line2>)',
         \ '-range=%')
     call csv#LocalCmd('CSVTabularize', ':call csv#Tabularize(<bang>0,<line1>,<line2>)',
@@ -2499,12 +2498,16 @@ fu! csv#CompleteColumnNr(A,L,P) "{{{3
     return join(range(1,csv#MaxColumns()), "\n")
 endfu
 fu! csv#CheckDuplicates(list) "{{{3
-    let string = a:list
-    if string =~ '\d\s\?-\s\?\d'
-        let string = substitute(string, '\(\d\+\)\s\?-\s\?\(\d\+\)',
-            \ '\=join(range(submatch(1),submatch(2)), ",")', '')
+    if empty(a:list)
+        let list=[csv#WColumn()]
+    else
+        let string = a:list
+        if string =~ '\d\s\?-\s\?\d'
+            let string = substitute(string, '\(\d\+\)\s\?-\s\?\(\d\+\)',
+                \ '\=join(range(submatch(1),submatch(2)), ",")', '')
+        endif
+        let list=split(string, ',')
     endif
-    let list=split(string, ',')
     call csv#DuplicateRows(list)
 endfu
 fu! csv#Transpose(line1, line2) "{{{3

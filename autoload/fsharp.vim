@@ -336,6 +336,7 @@ function! s:download(branch)
         \ )
     if v:shell_error == 0
         call system('unzip -o -d ' . s:script_root_dir . "/fsac " . zip)
+        call system('find ' . s:script_root_dir . '/fsac' . ' -type f -exec chmod 777 \{\} \;')
         echom "[FSAC] Updated FsAutoComplete to version " . a:branch . "" 
     else
         echom "[FSAC] Failed to update FsAutoComplete"
