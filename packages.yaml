@@ -1574,7 +1574,7 @@ filetypes:
   - stylus
 ---
 name: svelte
-remote: evanleck/vim-svelte@main
+remote: leafOfTree/vim-svelte-plugin
 filetypes:
 - name: svelte
   linguist: Svelte

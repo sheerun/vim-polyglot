@@ -176,7 +176,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [smt2](https://github.com/bohlender/vim-smt2) (SMT syntax highlighting for smt2 and smt files)
 - [solidity](https://github.com/TovarishFin/vim-solidity) (Solidity syntax highlighting for sol files)
 - [stylus](https://github.com/wavded/vim-stylus) (Stylus syntax highlighting for styl and stylus files)
-- [svelte](https://github.com/evanleck/vim-svelte/tree/main) (Svelte syntax highlighting for svelte files)
+- [svelte](https://github.com/leafOfTree/vim-svelte-plugin) (Svelte syntax highlighting for svelte files)
 - [svg-indent](https://github.com/jasonshell/vim-svg-indent)
 - [svg](https://github.com/vim-scripts/svg.vim) (SVG syntax highlighting for svg files)
 - [swift](https://github.com/keith/swift.vim) (Swift syntax highlighting for swift files)
