@@ -1791,6 +1791,7 @@ filetypes:
   - tsx
   # handled by powershell plugin
   - ps1xml
+  - mm
 ---
 name: xsl
 remote: vim-scripts/XSLT-syntax
