@@ -1786,6 +1786,7 @@ filetypes:
   - '*/etc/xdg/menus/*.menu'
   - '*fglrxrc'
   ignored_extensions:
+  - rs
   - ts
   - tsx
   # handled by powershell plugin

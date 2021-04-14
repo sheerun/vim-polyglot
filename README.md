@@ -198,7 +198,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [velocity](https://github.com/lepture/vim-velocity) (Syntax highlighting for vm files)
 - [vue](https://github.com/posva/vim-vue) (Vue syntax highlighting for vue and wpy files)
 - [xdc](https://github.com/amal-khailtash/vim-xdc-syntax) (Syntax highlighting for xdc files)
-- [xml](https://github.com/amadeus/vim-xml) (XML syntax highlighting for xml, adml, admx, ant, axml and 96 more files)
+- [xml](https://github.com/amadeus/vim-xml) (XML syntax highlighting for xml, adml, admx, ant, axml and 95 more files)
 - [xsl](https://github.com/vim-scripts/XSLT-syntax) (XSLT syntax highlighting for xslt and xsl files)
 - [yard](https://github.com/noprompt/vim-yardoc)
 - [zephir](https://github.com/xwsoul/vim-zephir) (Zephir syntax highlighting for zep files)
