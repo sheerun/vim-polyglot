@@ -525,6 +525,7 @@ let s:globs = {
   \ 'svelte': '*.svelte',
   \ 'svg': '*.svg',
   \ 'svn': 'svn-commit*.tmp',
+  \ 'sway': '',
   \ 'swift': '*.swift',
   \ 'swiftgyb': '*.swift.gyb',
   \ 'sxhkdrc': '*.sxhkdrc,sxhkdrc',

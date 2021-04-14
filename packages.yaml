@@ -5583,3 +5583,11 @@ filetypes:
   patterns:
   - pattern: '*.hjson'
     description: Hjson (https://hjson.github.io)
+---
+name: sway
+remote: aouelete/sway-vim-syntax
+filetypes:
+- name: sway
+  patterns:
+  - pattern: '*sway/config'
+    description: Sway Configuration

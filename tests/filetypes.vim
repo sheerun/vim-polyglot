@@ -648,6 +648,7 @@ call TestFiletype('mint')
 call TestFiletype('jsonc')
 call TestFiletype('gleam')
 call TestFiletype('hjson')
+call TestFiletype('sway')
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 

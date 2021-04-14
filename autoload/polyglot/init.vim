@@ -168,6 +168,10 @@ let did_load_filetypes = 1
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(g:polyglot_is_disabled, 'sway')
+  au BufNewFile,BufRead *sway/config setf sway
+endif
+
 if !has_key(g:polyglot_is_disabled, 'hjson')
   au BufNewFile,BufRead *.hjson setf hjson
 endif
