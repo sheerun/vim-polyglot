@@ -52,7 +52,7 @@ function GetMarkdownIndent()
     if v:lnum > 2 && s:IsBlankLine(getline(v:lnum - 1)) && s:IsBlankLine(getline(v:lnum - 2))
         return 0
     endif
-    let list_ind = get(g:, "vim_markdown_new_list_item_indent", 4)
+    let list_ind = get(g:, "vim_markdown_new_list_item_indent", shiftwidth())
     " Find a non-blank line above the current line.
     let lnum = s:PrevNonBlank(v:lnum - 1)
     " At the start of the file use zero indent.
