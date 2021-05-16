@@ -211,7 +211,6 @@ call TestExtension("cpp", "foobar.inl", "")
 call TestExtension("htmldjango", "foobar.j2", "")
 call TestExtension("htmldjango", "foobar.jinja", "")
 call TestExtension("htmldjango", "foobar.jinja2", "")
-call TestExtension("htmldjango", "foobar.njk", "")
 
 " vim-polyglot only
 call TestExtension("blade", "test.blade.php", "")
