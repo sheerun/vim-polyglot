@@ -5591,3 +5591,12 @@ filetypes:
   patterns:
   - pattern: '*sway/config'
     description: Sway Configuration
+---
+name: nftables
+remote: nfnty/vim-nftables
+filetypes:
+- name: nftables
+  extensions:
+  - nft
+  patterns:
+  - '*/etc/nftables.conf'
