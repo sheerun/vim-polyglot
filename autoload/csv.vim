@@ -1195,7 +1195,7 @@ endfun
 fu! csv#Sort(bang, line1, line2, colnr) range "{{{3
     " :Sort command
     let wsv  = winsaveview()
-    let flag = matchstr(a:colnr, '[nixo]')
+    let flag = matchstr(a:colnr, '[nixof]')
     call csv#CheckHeaderLine()
     let line1 = a:line1
     let line2 = a:line2
@@ -2199,7 +2199,15 @@ fu! csv#CSVMappings() "{{{3
         call csv#Map('nnoremap', 'W', ':<C-U>call csv#MoveCol(1, line("."))<CR>')
         call csv#Map('nnoremap', '<C-Right>', ':<C-U>call csv#MoveCol(1, line("."))<CR>')
         call csv#Map('nnoremap', 'L', ':<C-U>call csv#MoveCol(1, line("."))<CR>')
-        call csv#Map('nnoremap', 'E', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
+        try
+            if g:csv_bind_B == 1
+                call csv#Map('nnoremap', 'B', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
+            else
+                call csv#Map('nnoremap', 'E', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
+            endif
+        catch
+            call csv#Map('nnoremap', 'E', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
+        endtry
         call csv#Map('nnoremap', '<C-Left>', ':<C-U>call csv#MoveCol(-1, line("."))<CR>')
         call csv#Map('nnoremap', 'H', ':<C-U>call csv#MoveCol(-1, line("."), 1)<CR>')
         call csv#Map('nnoremap', 'K', ':<C-U>call csv#MoveCol(0, line(".")-v:count1)<CR>')

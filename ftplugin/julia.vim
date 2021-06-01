@@ -83,7 +83,7 @@ if exists("loaded_matchit")
   " the 'begin' and 'end' keywords when they are used as a range rather than as
   " the delimiter of a block
   let b:match_skip = 'synIDattr(synID(line("."),col("."),1),"name") =~ '
-        \ . '"\\<julia\\%(Comprehension\\%(For\\|If\\)\\|RangeKeyword\\|SymbolS\\?\\|Comment[LM]\\|\\%([bsvr]\\|ip\\|MIME\\|big\\|raw\\|test\\|html\\|int128\\|Printf\\|Shell\\|Doc\\)\\?String\\|StringPrefixed\\|RegEx\\)\\>"'
+        \ . '"\\<julia\\%(Comprehension\\%(For\\|If\\)\\|RangeKeyword\\|Comment\\%([LM]\\|Delim\\)\\|\\%([bs]\\|Shell\\|Printf\\|Doc\\)\\?String\\|StringPrefixed\\|DocStringM\\(Raw\\)\\?\\|RegEx\\|SymbolS\\?\\|Macro\\|Dotted\\)\\>"'
 
   let b:undo_ftplugin = b:undo_ftplugin
         \ . " | unlet! b:match_words b:match_skip b:match_ignorecase"

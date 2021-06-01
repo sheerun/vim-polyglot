@@ -59,8 +59,8 @@ syntax match  solNumber           '\v\c<%(\d+%(e[+-]=\d+)=|0b[01]+|0o\o+|0x\x+)>
 syntax match  solNumber           '\v\c<%(\d+.\d+|\d+.|.\d+)%(e[+-]=\d+)=>'
 
 " Strings
-syntax region solString           start=/\v"/ skip=/\v\\./ end=/\v"/
-syntax region solString           start="\v'" skip="\v\\." end="\v'"
+syntax region solString           start=/\v"/ skip=/\v\\./ end=/\v"/ contains=@Spell
+syntax region solString           start="\v'" skip="\v\\." end="\v'" contains=@Spell
 
 hi def link   solNumber           Number
 hi def link   solString           String
@@ -127,7 +127,7 @@ syn region    solFuncBody         contained contains=solDestructure,solComment,s
       \ end='}' 
 syn match     solFuncCall         contained skipempty skipwhite nextgroup=solCallOptions,solFuncCallParens
       \ '\v%(%(<if>|<uint>|<int>|<ufixed>|<bytes>|<address>|<string>|<bool>)\s*)@<!<[a-zA-Z_][0-9a-zA-Z_]*\s*%((\{(\n|.|\s)*\})?\s*(\((\n|.|\s)*\)))@='
-syn region    solFuncCallParens   contained transparent contains=solString,solFuncCall,solConstant,solNumber,solMethod,solTypeCast,solComma,solOperator
+syn region    solFuncCallParens   contained transparent contains=solComment,solString,solFuncCall,solConstant,solNumber,solMethod,solTypeCast,solComma,solOperator
       \ start='('
       \ end=')'
 
@@ -304,8 +304,8 @@ hi def link   solLoop             Keyword
 
 " Comments
 syn keyword   solTodo             TODO FIXME XXX TBD contained
-syn region    solComment          start=/\/\// end=/$/ contains=solTodo
-syn region    solComment          start=/\/\*/ end=/\*\// contains=solTodo
+syn region    solComment          start=/\/\// end=/$/ contains=solTodo,@Spell
+syn region    solComment          start=/\/\*/ end=/\*\// contains=solTodo,@Spell
 
 hi def link   solTodo             Todo
 hi def link   solComment          Comment
@@ -318,8 +318,8 @@ syn match     solNatspecTag       /@notice\>/ contained
 syn match     solNatspecTag       /@param\>/ contained
 syn match     solNatspecTag       /@return\>/ contained
 syn match     solNatspecParam     /\(@param\s*\)\@<=\<[a-zA-Z_][0-9a-zA-Z_]*/
-syn region    solNatspecBlock     start=/\/\/\// end=/$/ contains=solTodo,solNatspecTag,solNatspecParam
-syn region    solNatspecBlock     start=/\/\*\{2}/ end=/\*\// contains=solTodo,solNatspecTag,solNatspecParam
+syn region    solNatspecBlock     start=/\/\/\// end=/$/ contains=solTodo,solNatspecTag,solNatspecParam,@Spell
+syn region    solNatspecBlock     start=/\/\*\{2}/ end=/\*\// contains=solTodo,solNatspecTag,solNatspecParam,@Spell
 
 hi def link   solNatspecTag       SpecialComment
 hi def link   solNatspecBlock     Comment

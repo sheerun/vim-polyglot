@@ -10,9 +10,7 @@ syntax keyword typescriptAsyncFuncKeyword      await
   \ nextgroup=@typescriptValue
   \ skipwhite
 
-syntax keyword typescriptFuncKeyword           function
-  \ nextgroup=typescriptAsyncFunc,typescriptFuncName,@typescriptCallSignature
-  \ skipwhite skipempty
+exec 'syntax keyword typescriptFuncKeyword '.(exists('g:typescript_conceal_function') ? 'conceal cchar='.g:typescript_conceal_function : '').' function nextgroup=typescriptAsyncFunc,typescriptFuncName,@typescriptCallSignature skipwhite skipempty'
 
 syntax match   typescriptAsyncFunc             contained /*/
   \ nextgroup=typescriptFuncName,@typescriptCallSignature

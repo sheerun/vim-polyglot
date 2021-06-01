@@ -24,7 +24,7 @@ function! _VFormatFile()
 		else
 			let [_, lnum, colnum, _] = getpos('.')
 			%delete
-			call append(0, split(substitution, "\n"))
+			call setline(1, split(substitution, "\n"))
 			call cursor(lnum, colnum)
 		endif
 	endif
