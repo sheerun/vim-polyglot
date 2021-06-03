@@ -5599,4 +5599,5 @@ filetypes:
   extensions:
   - nft
   patterns:
-  - '*/etc/nftables.conf'
+  - pattern: '*/nftables.conf'
+    description: nftables configuration
