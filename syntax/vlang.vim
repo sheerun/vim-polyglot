@@ -78,7 +78,7 @@ hi def link     vShebang            Include
 syn keyword     vStatement          defer go goto return break continue
 hi def link     vStatement          Statement
 
-syn keyword     vConditional        if else match or
+syn keyword     vConditional        if else match or select
 hi def link     vConditional        Conditional
 
 syn keyword     vRepeat             for in
