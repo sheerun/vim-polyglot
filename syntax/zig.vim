@@ -277,7 +277,7 @@ highlight default link zigStructure Structure
 highlight default link zigExecution Special
 highlight default link zigMacro Macro
 highlight default link zigConditional Conditional
-highlight default link zigComparatorWord Operator
+highlight default link zigComparatorWord Keyword
 highlight default link zigRepeat Repeat
 highlight default link zigSpecial Special
 highlight default link zigVarDecl Function

@@ -263,7 +263,7 @@ let s:globs = {
   \ 'jovial': '*.jov,*.j73,*.jovial',
   \ 'jproperties': '*.properties,*.properties_??,*.properties_??_??,*.properties_??_??_*',
   \ 'jq': '*.jq,.jqrc,.jqrc*',
-  \ 'json': '*.json,*.avsc,*.geojson,*.gltf,*.har,*.ice,*.JSON-tmLanguage,*.jsonl,*.mcmeta,*.tfstate,*.tfstate.backup,*.topojson,*.webapp,*.webmanifest,*.yy,*.yyp,*.jsonp,*.template,.arcconfig,.htmlhintrc,.tern-config,.tern-project,.watchmanconfig,Pipfile.lock,composer.lock,mcmod.info',
+  \ 'json': '*.json,*.avsc,*.geojson,*.gltf,*.har,*.ice,*.JSON-tmLanguage,*.jsonl,*.mcmeta,*.tfstate,*.tfstate.backup,*.topojson,*.webapp,*.webmanifest,*.yy,*.yyp,*.jsonp,*.template,.arcconfig,.htmlhintrc,.imgbotconfig,.tern-config,.tern-project,.watchmanconfig,Pipfile.lock,composer.lock,mcmod.info',
   \ 'json5': '*.json5',
   \ 'jsonc': '*.cjson,*.jsonc,coc-settings.json,.eslintrc.json,.babelrc,.jshintrc,.jslintrc,.mocharc.json,coffeelint.json,tsconfig.json,jsconfig.json',
   \ 'jsonnet': '*.jsonnet,*.libsonnet',
