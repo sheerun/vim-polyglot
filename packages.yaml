@@ -4585,7 +4585,7 @@ glob: "**/scheme.vim"
 filetypes:
 - name: scheme
   patterns:
-  - pattern: "*.scm,*.ss,*.rkt"
+  - pattern: "*.scm,*.ss"
     description: Scheme
 ---
 name: screen

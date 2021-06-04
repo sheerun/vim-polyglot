@@ -604,7 +604,7 @@ if !has_key(g:polyglot_is_disabled, 'screen')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'scheme')
-  au BufNewFile,BufRead *.rkt,*.scm,*.ss setf scheme
+  au BufNewFile,BufRead *.scm,*.ss setf scheme
 endif
 
 if !has_key(g:polyglot_is_disabled, 'catalog')

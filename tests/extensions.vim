@@ -396,4 +396,6 @@ call TestExtension("nftables", "foo.nft", "")
 call TestExtension("nftables", "nftables.conf", "")
 call TestExtension("nftables", "foo", "#!/usr/bin/env nft")
 
+call TestExtension("racket", "empty.rkt", "")
+
 filetype off
