@@ -391,4 +391,6 @@ call TestExtension("conf", "auto.master", "")
 " https://github.com/sheerun/vim-polyglot/issues/579
 call TestExtension("dart", "reminders.dart", "")
 
+call TestExtension("racket", "empty.rkt", "")
+
 filetype off

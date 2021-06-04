@@ -470,7 +470,7 @@ let s:globs = {
   \ 'sather': '*.sa',
   \ 'sbt': '*.sbt',
   \ 'scala': '*.scala,*.kojo,*.sc',
-  \ 'scheme': '*.scm,*.ss,*.rkt',
+  \ 'scheme': '*.scm,*.ss',
   \ 'scilab': '*.sci,*.sce',
   \ 'screen': '.screenrc,screenrc',
   \ 'scss': '*.scss',
