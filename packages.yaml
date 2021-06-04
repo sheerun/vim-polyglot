@@ -5591,3 +5591,11 @@ filetypes:
   patterns:
   - pattern: '*sway/config'
     description: Sway Configuration
+---
+name: mermaid
+remote: mracos/mermaid.vim
+filetypes:
+- name: mermaid
+  patterns:
+  - pattern: '*.mermaid,*.mm,*.mmd'
+    description: Mermaid (https://mermaid-js.github.io/)
