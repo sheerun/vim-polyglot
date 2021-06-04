@@ -326,6 +326,7 @@ let s:globs = {
   \ 'mason': '*.mason,*.mhtml,*.comp',
   \ 'master': '*.mas,*.master',
   \ 'mel': '*.mel',
+  \ 'mermaid': '*.mermaid,*.mm,*.mmd',
   \ 'meson': 'meson.build,meson_options.txt',
   \ 'messages': '',
   \ 'mf': '*.mf',

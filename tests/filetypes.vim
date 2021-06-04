@@ -649,6 +649,7 @@ call TestFiletype('jsonc')
 call TestFiletype('gleam')
 call TestFiletype('hjson')
 call TestFiletype('sway')
+call TestFiletype('mermaid')
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 
