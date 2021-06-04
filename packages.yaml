@@ -1945,7 +1945,7 @@ filetypes:
   - t
 ---
 name: gitignore
-remote: fszymanski/fzf-gitignore
+remote: SirJson/fzf-gitignore 
 filetypes:
 - name: gitignore
   filenames:

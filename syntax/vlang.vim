@@ -92,6 +92,7 @@ hi def link     vCodeGen            Identifier
 
 " Predefined types
 syn keyword     vType               chan map bool string error voidptr
+syn match       vOptionalType       "\%(\<?\)\@<=\(chan\|map\|bool\|string\|error\|voidptr\)"
 syn keyword     vSignedInts         int i8 i16 i64 rune intptr
 syn keyword     vUnsignedInts       byte u16 u32 u64 byteptr
 syn keyword     vFloats             f32 f64 floatptr
@@ -99,6 +100,7 @@ syn keyword     vFloats             f32 f64 floatptr
 " syn keyword    	vComplexes          complex64 complex128
 
 hi def link     vType               Type
+hi def link     vOptionalType       Type
 hi def link     vSignedInts         Type
 hi def link     vUnsignedInts       Type
 hi def link     vFloats             Type
