@@ -169,8 +169,12 @@ if !has_key(g:polyglot_is_disabled, 'mermaid')
   au BufNewFile,BufRead *.mermaid,*.mm,*.mmd setf mermaid
 endif
 
-if !has_key(g:polyglot_is_disabled, 'sway')
-  au BufNewFile,BufRead *sway/config setf sway
+if !has_key(g:polyglot_is_disabled, 'nftables')
+  au BufNewFile,BufRead *.nft,*/nftables.conf setf nftables
+endif
+
+if !has_key(g:polyglot_is_disabled, 'just')
+  au BufNewFile,BufRead *.just,justfile setf just
 endif
 
 if !has_key(g:polyglot_is_disabled, 'hjson')
@@ -2292,6 +2296,10 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'i3')
   au BufNewFile,BufRead *.i3.config,*.i3config,{.,}i3.config,{.,}i3config,i3.config,i3config setf i3config
+endif
+
+if !has_key(g:polyglot_is_disabled, 'sway')
+  au BufNewFile,BufRead *.i3.config,*.i3config,*.sway.config,*.swayconfig,*sway/config,i3.config,sway.config setf i3config
 endif
 
 if !has_key(g:polyglot_is_disabled, 'hive')

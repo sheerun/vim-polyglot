@@ -5585,12 +5585,38 @@ filetypes:
     description: Hjson (https://hjson.github.io)
 ---
 name: sway
-remote: aouelete/sway-vim-syntax
+remote: jamespeapen/swayconfig.vim/tree/i3sway
 filetypes:
-- name: sway
+- name: i3config
   patterns:
-  - pattern: '*sway/config'
-    description: Sway Configuration
+  - pattern: 'i3.config,*.i3config,*.i3.config,*sway/config,*.swayconfig,*.sway.config,sway.config'
+    description: Sway/i3 Configuration
+---
+name: just
+remote: NoahTheDuke/vim-just
+filetypes:
+- name: just
+  patterns:
+  - pattern: 'justfile,*.just'
+    description: 'Just a task runner (https://github.com/casey/just)'
+---
+name: nftables
+remote: nfnty/vim-nftables
+filetypes:
+- name: nftables
+  extensions:
+  - nft
+  patterns:
+  - pattern: '*/nftables.conf'
+    description: nftables configuration
+---
+name: openscad
+remote: sirtaj/vim-openscad
+filetypes:
+- name: openscad
+  patterns:
+  - pattern: '*.scad'
+    description: OpenSCAD 3D modeling language
 ---
 name: mermaid
 remote: mracos/mermaid.vim
