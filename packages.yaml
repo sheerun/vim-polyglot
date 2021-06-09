@@ -5592,3 +5592,11 @@ filetypes:
   patterns:
   - pattern: '*sway/config'
     description: Sway Configuration
+---
+name: openscad
+remote: sirtaj/vim-openscad
+filetypes:
+- name: openscad
+  patterns:
+  - pattern: '*.scad'
+    description: OpenSCAD 3D modeling language

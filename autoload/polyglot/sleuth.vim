@@ -382,6 +382,7 @@ let s:globs = {
   \ 'opam': '*.opam,*.opam.template,opam',
   \ 'opencl': '*.cl,*.opencl',
   \ 'openroad': '*.or',
+  \ 'openscad': '*.scad',
   \ 'opl': '*.[Oo][Pp][Ll]',
   \ 'ora': '*.ora',
   \ 'pamconf': '',
