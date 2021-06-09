@@ -245,7 +245,7 @@ let g:polyglot_disabled = ['autoindent']
 
 ## Reindent
 
-If you want to disable reindening of the current line in insert mode (see vim 'indentkeys') you can turn it off with:
+If you want to disable reindenting of the current line in insert mode (see vim 'indentkeys') you can turn it off with:
 
 ```vim
 autocmd BufEnter * set indentexpr=
