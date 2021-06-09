@@ -1,4 +1,4 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'html5', 'after/syntax/javascript/html5.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'html5', 'syntax/javascript/html5.vim')
   finish
 endif
 

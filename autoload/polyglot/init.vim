@@ -28,7 +28,6 @@ func! polyglot#init#is_disabled(caller, name, path)
       for p in globpath(&rtp, a:path, 0, 1)
         if p != a:caller
           exe "source " . p
-          return 1
         endif
       endfor
     endif
@@ -82,6 +81,9 @@ call s:SetDefault('g:jsx_ext_required', 0)
 " Needed for sql highlighting
 call s:SetDefault('g:javascript_sql_dialect', 'sql')
 
+" Enable jsdoc highlighting by default
+call s:SetDefault('g:javascript_plugin_jsdoc', 1)
+
 " Make csv loading faster
 call s:SetDefault('g:csv_start', 1)
 call s:SetDefault('g:csv_end', 2)
@@ -111,6 +113,8 @@ if !exists('g:python_highlight_all')
   call s:SetDefault('g:python_highlight_file_headers_as_comments', 1)
   call s:SetDefault('g:python_slow_sync', 1)
 endif
+
+" Some variables are needed for haxe loading
 
 " We need it because scripts.vim in vim uses "set ft=" which cannot be
 " overridden with setf (and we can't use set ft= so our scripts.vim work)
@@ -165,6 +169,14 @@ let did_load_filetypes = 1
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(g:polyglot_is_disabled, 'openscad')
+  au BufNewFile,BufRead *.scad setf openscad
+endif
+
+if !has_key(g:polyglot_is_disabled, 'nftables')
+  au BufNewFile,BufRead *.nft,*/nftables.conf setf nftables
+endif
+
 if !has_key(g:polyglot_is_disabled, 'sway')
   au BufNewFile,BufRead *sway/config setf sway
 endif
@@ -194,7 +206,7 @@ if !has_key(g:polyglot_is_disabled, 'xpm2')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'xpm')
-  au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
+  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
   au BufNewFile,BufRead *.xpm setf xpm
 endif
 
@@ -604,7 +616,7 @@ if !has_key(g:polyglot_is_disabled, 'screen')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'scheme')
-  au BufNewFile,BufRead *.rkt,*.scm,*.ss setf scheme
+  au BufNewFile,BufRead *.scm,*.ss setf scheme
 endif
 
 if !has_key(g:polyglot_is_disabled, 'catalog')
@@ -1320,11 +1332,6 @@ if !has_key(g:polyglot_is_disabled, 'tilde')
   au BufNewFile,BufRead *.t.html setf tilde
 endif
 
-if !has_key(g:polyglot_is_disabled, 'html')
-  au BufNewFile,BufRead,BufWritePost *.html call polyglot#detect#Html()
-  au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.xht,*.xhtml setf html
-endif
-
 if !has_key(g:polyglot_is_disabled, 'hollywood')
   au BufNewFile,BufRead *.hws setf hollywood
 endif
@@ -1783,11 +1790,11 @@ if !has_key(g:polyglot_is_disabled, 'gitignore')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'tads')
-  au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
 endif
 
 if !has_key(g:polyglot_is_disabled, 'prolog')
-  au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
+  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.pdb,*.pro,*.prolog,*.yap setf prolog
 endif
 
@@ -1810,7 +1817,7 @@ if !has_key(g:polyglot_is_disabled, 'spec')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'visual-basic')
-  au BufNewFile,BufRead,BufWritePost *.bas call polyglot#detect#Bas()
+  au! BufNewFile,BufRead,BufWritePost *.bas call polyglot#detect#Bas()
   au BufNewFile,BufRead *.cls,*.ctl,*.dsm,*.frm,*.frx,*.sba,*.vba,*.vbs setf vb
 endif
 
@@ -1819,7 +1826,7 @@ if !has_key(g:polyglot_is_disabled, 'basic')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'trasys')
-  au BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
+  au! BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
 endif
 
 if !has_key(g:polyglot_is_disabled, 'zig')
@@ -2011,7 +2018,7 @@ if !has_key(g:polyglot_is_disabled, 'rst')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'reason')
-  au BufNewFile,BufRead,BufWritePost *.re call polyglot#detect#Re()
+  au! BufNewFile,BufRead,BufWritePost *.re call polyglot#detect#Re()
   au BufNewFile,BufRead *.rei setf reason
 endif
 
@@ -2024,9 +2031,9 @@ if !has_key(g:polyglot_is_disabled, 'raml')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'raku')
-  au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
-  au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
-  au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
+  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
+  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.6pl,*.6pm,*.nqp,*.p6,*.p6l,*.p6m,*.pl6,*.pm6,*.pod6,*.raku,*.rakudoc,*.rakumod,*.rakutest,*.t6 setf raku
 endif
 
@@ -2110,14 +2117,14 @@ if !has_key(g:polyglot_is_disabled, 'pgsql')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'perl')
-  au BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
-  au BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
-  au BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
+  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
+  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.al,*.cgi,*.fcgi,*.perl,*.ph,*.plx,*.psgi,{.,}gitolite.rc,Makefile.PL,Rexfile,ack,cpanfile,example.gitolite.rc setf perl
   au BufNewFile,BufRead *.pod setf pod
   au BufNewFile,BufRead *.comp,*.mason,*.mhtml setf mason
-  au BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
-  au BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
+  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
+  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
   au BufNewFile,BufRead *.xs setf xs
 endif
 
@@ -2130,7 +2137,7 @@ if !has_key(g:polyglot_is_disabled, 'opencl')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'octave')
-  au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
+  au! BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
   au BufNewFile,BufRead *.oct setf octave
 endif
 
@@ -2147,8 +2154,8 @@ if !has_key(g:polyglot_is_disabled, 'ocaml')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'objc')
-  au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
-  au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
+  au! BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
+  au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
 endif
 
 if !has_key(g:polyglot_is_disabled, 'nix')
@@ -2166,7 +2173,7 @@ if !has_key(g:polyglot_is_disabled, 'nginx')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'murphi')
-  au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
+  au! BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
 endif
 
 if !has_key(g:polyglot_is_disabled, 'moonscript')
@@ -2183,7 +2190,7 @@ if !has_key(g:polyglot_is_disabled, 'mdx')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'mathematica')
-  au BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
+  au! BufNewFile,BufRead,BufWritePost *.m call polyglot#detect#M()
   au BufNewFile,BufRead *.cdf,*.ma,*.mathematica,*.mma,*.mt,*.nb,*.nbp,*.wl,*.wls,*.wlt setf mma
 endif
 
@@ -2213,7 +2220,7 @@ if !has_key(g:polyglot_is_disabled, 'llvm')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'livescript')
-  au BufNewFile,BufRead *._ls,*.ls,Slakefile setf livescript
+  au BufNewFile,BufRead *._ls,*.ls,Slakefile setf ls
 endif
 
 if !has_key(g:polyglot_is_disabled, 'lilypond')
@@ -2271,14 +2278,14 @@ if !has_key(g:polyglot_is_disabled, 'ion')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'idris2')
-  au BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
+  au! BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
   au BufNewFile,BufRead *.ipkg,idris-response setf idris2
-  au BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
+  au! BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
 endif
 
 if !has_key(g:polyglot_is_disabled, 'idris')
-  au BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
-  au BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
+  au! BufNewFile,BufRead,BufWritePost *.lidr call polyglot#detect#Lidr()
+  au! BufNewFile,BufRead,BufWritePost *.idr call polyglot#detect#Idr()
   au BufNewFile,BufRead idris-response setf idris
 endif
 
@@ -2300,6 +2307,8 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'haxe')
   au BufNewFile,BufRead *.hx,*.hxsl setf haxe
+  au BufNewFile,BufRead *.hxml setf hxml
+  au BufNewFile,BufRead *.hss setf hss
 endif
 
 if !has_key(g:polyglot_is_disabled, 'haskell')
@@ -2356,7 +2365,7 @@ if !has_key(g:polyglot_is_disabled, 'gmpl')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'glsl')
-  au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
+  au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
 endif
 
@@ -2373,12 +2382,12 @@ if !has_key(g:polyglot_is_disabled, 'gdscript')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'fsharp')
-  au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
+  au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.fsi,*.fsx setf fsharp
 endif
 
 if !has_key(g:polyglot_is_disabled, 'forth')
-  au BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
+  au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
   au BufNewFile,BufRead *.ft,*.fth setf forth
 endif
 
@@ -2510,12 +2519,12 @@ if !has_key(g:polyglot_is_disabled, 'atlas')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'aspperl')
-  au BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
+  au! BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
 endif
 
 if !has_key(g:polyglot_is_disabled, 'aspvbs')
-  au BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
-  au BufNewFile,BufRead,BufWritePost *.asa call polyglot#detect#Asa()
+  au! BufNewFile,BufRead,BufWritePost *.asp call polyglot#detect#Asp()
+  au! BufNewFile,BufRead,BufWritePost *.asa call polyglot#detect#Asa()
 endif
 
 if !has_key(g:polyglot_is_disabled, 'asn')
@@ -2551,9 +2560,9 @@ if !has_key(g:polyglot_is_disabled, 'arduino')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'c/c++')
-  au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
+  au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
   au BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.moc,*.tcc,*.tlh,*.tpp setf cpp
-  au BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
+  au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
   au BufNewFile,BufRead *.c,*.cats,*.idc,*.qc,*enlightenment/*.cfg setf c
 endif
 
@@ -2656,7 +2665,7 @@ if !has_key(g:polyglot_is_disabled, 'abc')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'abaqus')
-  au BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
+  au! BufNewFile,BufRead,BufWritePost *.inp call polyglot#detect#Inp()
 endif
 
 if !has_key(g:polyglot_is_disabled, 'abap')
