@@ -2301,14 +2301,6 @@ if !has_key(g:polyglot_is_disabled, 'icalendar')
   au BufNewFile,BufRead *.ics setf icalendar
 endif
 
-if !has_key(g:polyglot_is_disabled, 'i3')
-  au BufNewFile,BufRead *.i3.config,*.i3config,{.,}i3.config,{.,}i3config,i3.config,i3config setf i3config
-endif
-
-if !has_key(g:polyglot_is_disabled, 'sway')
-  au BufNewFile,BufRead *.i3.config,*.i3config,*.sway.config,*.swayconfig,*sway/config,i3.config,sway.config setf i3config
-endif
-
 if !has_key(g:polyglot_is_disabled, 'hive')
   au BufNewFile,BufRead *.hql,*.q,*.ql setf hive
 endif
