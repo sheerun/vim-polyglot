@@ -5518,16 +5518,8 @@ glob: "**/autodoc.vim"
 # Needed by c, cmod, and pike
 filetypes: []
 ---
-name: html
-remote: vim/vim:runtime
-glob: "**/html.vim"
-filetypes:
-- name: html
-  linguist: HTML
----
-# TODO: change after https://github.com/othree/html5.vim/pull/106 is merged
 name: html5
-remote: sheerun/html5.vim
+remote: othree/html5.vim
 dependencies: html
 filetypes: []
 ---

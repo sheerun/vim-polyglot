@@ -230,7 +230,6 @@ let s:globs = {
   \ 'hostconf': '',
   \ 'hostsaccess': '',
   \ 'hss': '*.hss',
-  \ 'html': '*.html,*.htm,*.html.hl,*.inc,*.xht,*.xhtml',
   \ 'html.handlebars': '*.handlebars,*.hbs,*.hdbs,*.hb',
   \ 'html.mustache': '*.mustache,*.hogan,*.hulk,*.hjs',
   \ 'html.twig': '*.twig',

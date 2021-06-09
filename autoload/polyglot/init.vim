@@ -1324,11 +1324,6 @@ if !has_key(g:polyglot_is_disabled, 'tilde')
   au BufNewFile,BufRead *.t.html setf tilde
 endif
 
-if !has_key(g:polyglot_is_disabled, 'html')
-  au! BufNewFile,BufRead,BufWritePost *.html call polyglot#detect#Html()
-  au BufNewFile,BufRead *.htm,*.html.hl,*.inc,*.xht,*.xhtml setf html
-endif
-
 if !has_key(g:polyglot_is_disabled, 'hollywood')
   au BufNewFile,BufRead *.hws setf hollywood
 endif

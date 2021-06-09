@@ -1,12 +1,13 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'html', 'indent/html.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'html5', 'indent/html.vim')
   finish
 endif
 
 " Vim indent script for HTML
+" Header: "{{{
 " Maintainer:	Bram Moolenaar
 " Original Author: Andy Wokula <anwoku@yahoo.de>
-" Last Change:	2021 Jan 26
-" Version:	1.0 "{{{
+" Last Change:	2017 Jun 13
+" Version:	1.0
 " Description:	HTML indent script with cached state for faster indenting on a
 "		range of lines.
 "		Supports template systems through hooks.
@@ -58,9 +59,6 @@ endif
 let s:cpo_save = &cpo
 set cpo-=C
 "}}}
-
-" Pattern to match the name of a tag, including custom elements.
-let s:tagname = '\w\+\(-\w\+\)*'
 
 " Check and process settings from b:html_indent and g:html_indent... variables.
 " Prefer using buffer-local settings over global settings, so that there can
@@ -220,27 +218,25 @@ endfunc "}}}
 " Self-closing tags and tags that are sometimes {{{
 " self-closing (e.g., <p>) are not here (when encountering </p> we can find
 " the matching <p>, but not the other way around).
-" Known self-closing tags: " 'p', 'img', 'source', 'area', 'keygen', 'track',
-" 'wbr'.
 " Old HTML tags:
 call s:AddITags(s:indent_tags, [
     \ 'a', 'abbr', 'acronym', 'address', 'b', 'bdo', 'big',
     \ 'blockquote', 'body', 'button', 'caption', 'center', 'cite', 'code',
-    \ 'colgroup', 'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'fieldset', 'font',
+    \ 'colgroup', 'del', 'dfn', 'dir', 'div', 'dl', 'em', 'fieldset', 'font',
     \ 'form', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'html',
     \ 'i', 'iframe', 'ins', 'kbd', 'label', 'legend', 'li',
     \ 'map', 'menu', 'noframes', 'noscript', 'object', 'ol',
-    \ 'optgroup', 'q', 's', 'samp', 'select', 'small', 'span', 'strong', 'sub',
+    \ 'optgroup', 'p', 'q', 's', 'samp', 'select', 'small', 'span', 'strong', 'sub',
     \ 'sup', 'table', 'textarea', 'title', 'tt', 'u', 'ul', 'var', 'th', 'td',
     \ 'tr', 'tbody', 'tfoot', 'thead'])
 
 " New HTML5 elements:
 call s:AddITags(s:indent_tags, [
-    \ 'article', 'aside', 'audio', 'bdi', 'canvas', 'command', 'data',
-    \ 'datalist', 'details', 'dialog', 'embed', 'figcaption', 'figure',
-    \ 'footer', 'header', 'hgroup', 'main', 'mark', 'meter', 'nav', 'output',
-    \ 'picture', 'progress', 'rp', 'rt', 'ruby', 'section', 'summary',
-    \ 'svg', 'time', 'video'])
+    \ 'area', 'article', 'aside', 'audio', 'bdi', 'canvas',
+    \ 'command', 'data', 'datalist', 'details', 'dislog', 'embed', 'figcaption',
+    \ 'figure', 'footer', 'header', 'keygen', 'main', 'mark', 'meter', 'nav', 'output',
+    \ 'picture', 'progress', 'rp', 'rt', 'ruby', 'section', 'source', 'summary', 'svg', 
+    \ 'time', 'track', 'video', 'wbr'])
 
 " Tags added for web components:
 call s:AddITags(s:indent_tags, [
@@ -288,7 +284,7 @@ func! s:CountITags(text)
   let s:nextrel = 0  " relative indent steps for next line [unit &sw]:
   let s:block = 0		" assume starting outside of a block
   let s:countonly = 1	" don't change state
-  call substitute(a:text, '<\zs/\=' . s:tagname . '\>\|<!--\[\|\[endif\]-->\|<!--\|-->', '\=s:CheckTag(submatch(0))', 'g')
+  call substitute(a:text, '<\zs/\=\w\+\(-\w\+\)*\>\|<!--\[\|\[endif\]-->\|<!--\|-->', '\=s:CheckTag(submatch(0))', 'g')
   let s:countonly = 0
 endfunc "}}}
 
@@ -300,7 +296,7 @@ func! s:CountTagsAndState(text)
   let s:nextrel = 0  " relative indent steps for next line [unit &sw]:
 
   let s:block = b:hi_newstate.block
-  let tmp = substitute(a:text, '<\zs/\=' . s:tagname . '\>\|<!--\[\|\[endif\]-->\|<!--\|-->', '\=s:CheckTag(submatch(0))', 'g')
+  let tmp = substitute(a:text, '<\zs/\=\w\+\(-\w\+\)*\>\|<!--\[\|\[endif\]-->\|<!--\|-->', '\=s:CheckTag(submatch(0))', 'g')
   if s:block == 3
     let b:hi_newstate.scripttype = s:GetScriptType(matchstr(tmp, '\C.*<SCRIPT\>\zs[^>]*'))
   endif
@@ -538,7 +534,7 @@ func! s:FreshState(lnum)
   let swendtag = match(text, '^\s*</') >= 0
 
   " If previous line ended in a closing tag, line up with the opening tag.
-  if !swendtag && text =~ '</' . s:tagname . '\s*>\s*$'
+  if !swendtag && text =~ '</\w\+\s*>\s*$'
     call cursor(state.lnum, 99999)
     normal! F<
     let start_lnum = HtmlIndent_FindStartTag()
@@ -590,7 +586,7 @@ func! s:Alien3()
     return eval(b:hi_js1indent)
   endif
   if b:hi_indent.scripttype == "javascript"
-    return eval(b:hi_js1indent) + GetJavascriptIndent()
+    return GetJavascriptIndent()
   else
     return -1
   endif
@@ -629,7 +625,7 @@ func! s:CSSIndent()
     return eval(b:hi_css1indent)
   endif
 
-  " If the current line starts with "}" align with its match.
+  " If the current line starts with "}" align with it's match.
   if curtext =~ '^\s*}'
     call cursor(v:lnum, 1)
     try
@@ -667,7 +663,7 @@ func! s:CSSIndent()
     else
       let cur_hasfield = curtext =~ '^\s*[a-zA-Z0-9-]\+:'
       let prev_unfinished = s:CssUnfinished(prev_text)
-      if prev_unfinished
+      if !cur_hasfield && (prev_hasfield || prev_unfinished)
         " Continuation line has extra indent if the previous line was not a
         " continuation line.
         let extra = shiftwidth()
@@ -720,13 +716,9 @@ func! s:CSSIndent()
 endfunc "}}}
 
 " Inside <style>: Whether a line is unfinished.
-" 	tag:
-" 	tag: blah
-" 	tag: blah &&
-" 	tag: blah ||
 func! s:CssUnfinished(text)
   "{{{
-  return a:text =~ '\(||\|&&\|:\|\k\)\s*$'
+  return a:text =~ '\s\(||\|&&\|:\)\s*$'
 endfunc "}}}
 
 " Search back for the first unfinished line above "lnum".
@@ -819,7 +811,7 @@ func! s:Alien5()
   let idx = match(prevtext, '^\s*\zs<!--')
   if idx >= 0
     " just below comment start, add a shiftwidth
-    return indent(prevlnum) + shiftwidth()
+    return idx + shiftwidth()
   endif
 
   " Some files add 4 spaces just below a TODO line.  It's difficult to detect
@@ -853,12 +845,11 @@ func! HtmlIndent_FindTagStart(lnum)
   " - a flag indicating whether we found the end of a tag.
   " This method is global so that HTML-like indenters can use it.
   " To avoid matching " > " or " < " inside a string require that the opening
-  " "<" is followed by a word character and the closing ">" comes after a
-  " non-white character.
+  " "<" is followed by a word character
   let idx = match(getline(a:lnum), '\S>\s*$')
   if idx > 0
     call cursor(a:lnum, idx)
-    let lnum = searchpair('<\w', '' , '\S>', 'bW', '', max([a:lnum - b:html_indent_line_limit, 0]))
+    let lnum = searchpair('<\w', '' , '>', 'bW', '', max([a:lnum - b:html_indent_line_limit, 0]))
     if lnum > 0
       return [lnum, 1]
     endif
@@ -872,7 +863,7 @@ func! HtmlIndent_FindStartTag()
   " The cursor must be on or before a closing tag.
   " If found, positions the cursor at the match and returns the line number.
   " Otherwise returns 0.
-  let tagname = matchstr(getline('.')[col('.') - 1:], '</\zs' . s:tagname . '\ze')
+  let tagname = matchstr(getline('.')[col('.') - 1:], '</\zs\w\+\(-\w\+\)*\ze')
   let start_lnum = searchpair('<' . tagname . '\>', '', '</' . tagname . '\>', 'bW')
   if start_lnum > 0
     return start_lnum
@@ -888,7 +879,7 @@ func! HtmlIndent_FindTagEnd()
   " a self-closing tag, to the matching ">".
   " Limited to look up to b:html_indent_line_limit lines away.
   let text = getline('.')
-  let tagname = matchstr(text, s:tagname . '\|!--', col('.'))
+  let tagname = matchstr(text, '\w\+\(-\w\+\)*\|!--', col('.'))
   if tagname == '!--'
     call search('--\zs>')
   elseif s:get_tag('/' . tagname) != 0
@@ -905,18 +896,11 @@ func! s:InsideTag(foundHtmlString)
   "{{{
   if a:foundHtmlString
     " Inside an attribute string.
-    " Align with the opening quote or use an external function.
+    " Align with the previous line or use an external function.
     let lnum = v:lnum - 1
     if lnum > 1
       if exists('b:html_indent_tag_string_func')
         return b:html_indent_tag_string_func(lnum)
-      endif
-      " If there is a double quote in the previous line, indent with the
-      " character after it.
-      if getline(lnum) =~ '"'
-	call cursor(lnum, 0)
-	normal f"
-	return virtcol('.')
       endif
       return indent(lnum)
     endif
@@ -941,21 +925,17 @@ func! s:InsideTag(foundHtmlString)
       let idx = match(text, '\s\zs[_a-zA-Z0-9-]\+="')
     endif
     if idx == -1
-      " try <tag attr
-      let idx = match(text, '<' . s:tagname . '\s\+\zs\w')
+      let idx = match(text, '<\w\+\(-\w\+\)*\s\zs\w')
     endif
     if idx == -1
-      " after just "<tag" indent two levels more
-      let idx = match(text, '<' . s:tagname . '$')
+      let idx = match(text, '<\w\+\(-\w\+\)*')
       if idx >= 0
-	call cursor(lnum, idx + 1)
-	return virtcol('.') - 1 + shiftwidth() * 2
+        let idx = idx + shiftwidth()
       endif
     endif
     if idx > 0
-      " Found the attribute to align with.
-      call cursor(lnum, idx)
-      return virtcol('.')
+      " Found the attribute.  TODO: assumes spaces, no Tabs.
+      return idx
     endif
   endwhile
   return -1
