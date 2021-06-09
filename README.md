@@ -118,6 +118,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [jst](https://github.com/briancollins/vim-jst) (EJS syntax highlighting for ejs, ect and jst files)
 - [jsx](https://github.com/MaxMEllon/vim-jsx-pretty) (Syntax highlighting for jsx files)
 - [julia](https://github.com/JuliaEditorSupport/julia-vim) (Julia syntax highlighting for jl files)
+- [just](https://github.com/NoahTheDuke/vim-just) (Syntax highlighting for justfile and *.just files)
 - [kotlin](https://github.com/udalov/kotlin-vim) (Kotlin syntax highlighting for kt, ktm and kts files)
 - [ledger](https://github.com/ledger/vim-ledger) (Syntax highlighting for ldg, ledger and journal files)
 - [lilypond](https://github.com/anowlcalledjosh/vim-lilypond) (LilyPond syntax highlighting for ly and ily files)
