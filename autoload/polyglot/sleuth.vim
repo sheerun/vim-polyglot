@@ -388,6 +388,7 @@ let s:globs = {
   \ 'openscad': '*.scad',
   \ 'opl': '*.[Oo][Pp][Ll]',
   \ 'ora': '*.ora',
+  \ 'org': '*.org',
   \ 'pamconf': '',
   \ 'pamenv': 'pam_env.conf,.pam_environment',
   \ 'papp': '*.papp,*.pxml,*.pxsl',

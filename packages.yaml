@@ -5613,3 +5613,11 @@ filetypes:
   patterns:
   - pattern: '*.mermaid,*.mm,*.mmd'
     description: Mermaid (https://mermaid-js.github.io/)
+---
+name: org
+remote: axvr/org.vim
+filetypes:
+- name: org
+  patterns:
+  - pattern: '*.org'
+    description: GNU Emacs' Org mode

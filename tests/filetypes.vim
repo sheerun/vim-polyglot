@@ -653,6 +653,7 @@ call TestFiletype('just')
 call TestFiletype('nftables')
 call TestFiletype('openscad')
 call TestFiletype('mermaid')
+call TestFiletype('org')
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 
