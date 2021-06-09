@@ -83,7 +83,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [fsharp](https://github.com/ionide/Ionide-vim) (F# syntax highlighting for fs, fsi and fsx files)
 - [gdscript](https://github.com/calviken/vim-gdscript3) (GDScript syntax highlighting for gd files)
 - [git](https://github.com/tpope/vim-git) (Git Config syntax highlighting for gitconfig files)
-- [gitignore](https://github.com/fszymanski/fzf-gitignore)
+- [gitignore](https://github.com/SirJson/fzf-gitignore)
 - [gleam](https://github.com/gleam-lang/gleam.vim) (Syntax highlighting for gleam files)
 - [glsl](https://github.com/tikhomirov/vim-glsl) (GLSL syntax highlighting for glsl, fp, frag, frg, fs and 16 more files)
 - [gmpl](https://github.com/maelvalais/gmpl.vim) (Syntax highlighting for mod files)
