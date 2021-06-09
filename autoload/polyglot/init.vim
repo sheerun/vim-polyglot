@@ -173,6 +173,10 @@ if !has_key(g:polyglot_is_disabled, 'openscad')
   au BufNewFile,BufRead *.scad setf openscad
 endif
 
+if !has_key(g:polyglot_is_disabled, 'nftables')
+  au BufNewFile,BufRead *.nft,*/nftables.conf setf nftables
+endif
+
 if !has_key(g:polyglot_is_disabled, 'sway')
   au BufNewFile,BufRead *sway/config setf sway
 endif

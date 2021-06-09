@@ -650,6 +650,7 @@ call TestFiletype('jsonc')
 call TestFiletype('gleam')
 call TestFiletype('hjson')
 call TestFiletype('sway')
+call TestFiletype('nftables')
 call TestFiletype('openscad')
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE

@@ -360,6 +360,7 @@ let s:globs = {
   \ 'ncf': '*.ncf',
   \ 'neomuttrc': 'Neomuttrc,.neomuttrc*,neomuttrc*,Neomuttrc*',
   \ 'netrc': '.netrc',
+  \ 'nftables': '*.nft',
   \ 'nginx': '*.nginx,*.nginxconf,*.vhost,nginx.conf,nginx*.conf,*nginx.conf',
   \ 'nim': '*.nim,*.nim.cfg,*.nimble,*.nimrod,*.nims,nim.cfg',
   \ 'ninja': '*.ninja',
