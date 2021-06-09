@@ -28,7 +28,6 @@ func! polyglot#init#is_disabled(caller, name, path)
       for p in globpath(&rtp, a:path, 0, 1)
         if p != a:caller
           exe "source " . p
-          return 1
         endif
       endfor
     endif
