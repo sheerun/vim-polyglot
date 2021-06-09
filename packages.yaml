@@ -807,19 +807,6 @@ filetypes:
   extra_extensions:
   - ql
 ---
-name: i3
-remote: mboughaba/i3config.vim
-filetypes:
-- name: i3config
-  filenames:
-  - i3.config
-  - i3config
-  - .i3.config
-  - .i3config
-  extensions:
-  - i3.config
-  - i3config
----
 name: icalendar
 remote: chutzpah/icalendar.vim
 filetypes:
@@ -5586,12 +5573,12 @@ filetypes:
     description: Hjson (https://hjson.github.io)
 ---
 name: sway
-remote: aouelete/sway-vim-syntax
+remote: jamespeapen/swayconfig.vim/tree/i3sway
 filetypes:
-- name: sway
+- name: i3config
   patterns:
-  - pattern: '*sway/config'
-    description: Sway Configuration
+  - pattern: 'i3.config,*.i3config,*.i3.config,*sway/config,*.swayconfig,*.sway.config,sway.config'
+    description: Sway/i3 Configuration
 ---
 name: just
 remote: NoahTheDuke/vim-just
