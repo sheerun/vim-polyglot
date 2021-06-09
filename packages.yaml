@@ -994,7 +994,7 @@ filetypes:
 name: livescript
 remote: gkz/vim-ls
 filetypes:
-- name: livescript
+- name: ls
   linguist: LiveScript
 ---
 name: llvm

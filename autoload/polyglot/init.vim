@@ -2215,7 +2215,7 @@ if !has_key(g:polyglot_is_disabled, 'llvm')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'livescript')
-  au BufNewFile,BufRead *._ls,*.ls,Slakefile setf livescript
+  au BufNewFile,BufRead *._ls,*.ls,Slakefile setf ls
 endif
 
 if !has_key(g:polyglot_is_disabled, 'lilypond')
