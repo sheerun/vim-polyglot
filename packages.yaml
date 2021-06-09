@@ -773,10 +773,19 @@ filetypes:
   - hsig
 ---
 name: haxe
-remote: yaymukund/vim-haxe
+remote: jdonaldson/vaxe
 filetypes:
 - name: haxe
   linguist: Haxe
+- name: hxml
+  linguist: HXML
+- name: hss
+  extensions:
+    - hss
+ignored_dirs:
+  - ftplugin
+  - autoload
+  - compiler
 ---
 name: hcl
 remote: b4b4r07/vim-hcl

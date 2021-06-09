@@ -95,7 +95,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [handlebars](https://github.com/mustache/vim-mustache-handlebars) (Mustache and Handlebars syntax highlighting for mustache, hogan, hulk, hjs, handlebars, hbs, hdbs and hb files)
 - [haproxy](https://github.com/CH-DanReif/haproxy.vim) (HAProxy syntax highlighting)
 - [haskell](https://github.com/neovimhaskell/haskell-vim) (Haskell syntax highlighting for hs, hs-boot, hsc, bpk and hsig files)
-- [haxe](https://github.com/yaymukund/vim-haxe) (Haxe syntax highlighting for hx and hxsl files)
+- [haxe](https://github.com/jdonaldson/vaxe) (Haxe and HXML syntax highlighting for hx, hxsl, hxml and hss files)
 - [hcl](https://github.com/b4b4r07/vim-hcl) (HCL syntax highlighting for hcl, nomad and workflow files)
 - [helm](https://github.com/towolf/vim-helm)
 - [help](https://github.com/neovim/neovim/tree/master/runtime)

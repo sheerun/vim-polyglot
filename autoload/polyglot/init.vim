@@ -112,6 +112,8 @@ if !exists('g:python_highlight_all')
   call s:SetDefault('g:python_slow_sync', 1)
 endif
 
+" Some variables are needed for haxe loading
+
 " We need it because scripts.vim in vim uses "set ft=" which cannot be
 " overridden with setf (and we can't use set ft= so our scripts.vim work)
 func! s:Setf(ft)
@@ -2300,6 +2302,8 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'haxe')
   au BufNewFile,BufRead *.hx,*.hxsl setf haxe
+  au BufNewFile,BufRead *.hxml setf hxml
+  au BufNewFile,BufRead *.hss setf hss
 endif
 
 if !has_key(g:polyglot_is_disabled, 'haskell')
