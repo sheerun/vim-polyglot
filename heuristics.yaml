@@ -28,12 +28,12 @@ rules:
 - lines: 200
   pattern: '^\s*(@(interface|class|protocol|property|end|synchronised|selector|implementation)\b|#import\s+.+\.h[">])'
   rules:
-  - if_exists: "g:c_syntax_for_h"
+  - if: "exists('g:c_syntax_for_h')"
     filetype: objc
   - filetype: objcpp
-- if_exists: "g:c_syntax_for_h"
+- if: "exists('g:c_syntax_for_h')"
   filetype: c
-- if_exists: "g:ch_syntax_for_h"
+- if: "exists('g:ch_syntax_for_h')"
   filetype: ch
 - filetype: cpp
 ---
@@ -46,16 +46,23 @@ rules:
   - pattern: '^\s*(@(interface|class|protocol|property|end|synchronised|selector|implementation)\b|#import\s+.+\.h[">])'
     filetype: objc
   - pattern: '^\s*%'
+    if: "!has_key(g:polyglot_is_disabled, 'octave')"
     filetype: octave
+  - pattern: '^\s*%'
+    if: "has_key(g:polyglot_is_disabled, 'octave')"
+    filetype: matlab
   - pattern: '^\s*\(\*'
     filetype: mma
   - pattern: '^\s*((type|var)\b|--)'
     ignore_case: true
     filetype: murphi
-- if_set: "saw_comment"
+- if: "saw_comment"
   filetype: objc
 - override: true
 - filetype: octave
+  if: "!has_key(g:polyglot_is_disabled, 'octave')"
+- filetype: matlab
+  if: "has_key(g:polyglot_is_disabled, 'octave')"
 ---
 extensions: [fs]
 rules:
