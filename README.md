@@ -83,7 +83,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [fsharp](https://github.com/ionide/Ionide-vim) (F# syntax highlighting for fs, fsi and fsx files)
 - [gdscript](https://github.com/calviken/vim-gdscript3) (GDScript syntax highlighting for gd files)
 - [git](https://github.com/tpope/vim-git) (Git Config syntax highlighting for gitconfig files)
-- [gitignore](https://github.com/fszymanski/fzf-gitignore)
+- [gitignore](https://github.com/SirJson/fzf-gitignore)
 - [gleam](https://github.com/gleam-lang/gleam.vim) (Syntax highlighting for gleam files)
 - [glsl](https://github.com/tikhomirov/vim-glsl) (GLSL syntax highlighting for glsl, fp, frag, frg, fs and 16 more files)
 - [gmpl](https://github.com/maelvalais/gmpl.vim) (Syntax highlighting for mod files)
@@ -95,14 +95,13 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [handlebars](https://github.com/mustache/vim-mustache-handlebars) (Mustache and Handlebars syntax highlighting for mustache, hogan, hulk, hjs, handlebars, hbs, hdbs and hb files)
 - [haproxy](https://github.com/CH-DanReif/haproxy.vim) (HAProxy syntax highlighting)
 - [haskell](https://github.com/neovimhaskell/haskell-vim) (Haskell syntax highlighting for hs, hs-boot, hsc, bpk and hsig files)
-- [haxe](https://github.com/yaymukund/vim-haxe) (Haxe syntax highlighting for hx and hxsl files)
+- [haxe](https://github.com/jdonaldson/vaxe) (Haxe and HXML syntax highlighting for hx, hxsl, hxml and hss files)
 - [hcl](https://github.com/b4b4r07/vim-hcl) (HCL syntax highlighting for hcl, nomad and workflow files)
 - [helm](https://github.com/towolf/vim-helm)
 - [help](https://github.com/neovim/neovim/tree/master/runtime)
 - [hive](https://github.com/zebradil/hive.vim) (HiveQL syntax highlighting for q, hql and ql files)
 - [hjson](https://github.com/hjson/vim-hjson) (Syntax highlighting for hjson files)
-- [html5](https://github.com/sheerun/html5.vim)
-- [i3](https://github.com/mboughaba/i3config.vim) (Syntax highlighting for i3.config and i3config files)
+- [html5](https://github.com/othree/html5.vim)
 - [icalendar](https://github.com/chutzpah/icalendar.vim) (Syntax highlighting for ics files)
 - [idris2](https://github.com/edwinb/idris2-vim) (Syntax highlighting for idr, ipkg and lidr files)
 - [idris](https://github.com/idris-hackers/idris-vim) (Idris syntax highlighting for idr and lidr files)
@@ -143,6 +142,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [octave](https://github.com/McSinyx/vim-octave) (Syntax highlighting for oct and m files)
 - [odin](https://github.com/Tetralux/odin.vim) (Odin syntax highlighting for odin files)
 - [opencl](https://github.com/petRUShka/vim-opencl) (OpenCL syntax highlighting for cl and opencl files)
+- [openscad](https://github.com/sirtaj/vim-openscad) (Syntax highlighting for scad files)
 - [perl](https://github.com/vim-perl/vim-perl) (Perl syntax highlighting for pl, al, cgi, fcgi, perl and 12 more files)
 - [pest](https://github.com/pest-parser/pest.vim) (Syntax highlighting for pest files)
 - [pgsql](https://github.com/lifepillar/pgsql.vim) (PLpgSQL syntax highlighting for pgsql files)
@@ -246,7 +246,7 @@ let g:polyglot_disabled = ['autoindent']
 
 ## Reindent
 
-If you want to disable reindening of the current line in insert mode (see vim 'indentkeys') you can turn it off with:
+If you want to disable reindenting of the current line in insert mode (see vim 'indentkeys') you can turn it off with:
 
 ```vim
 autocmd BufEnter * set indentexpr=
@@ -257,12 +257,29 @@ This will not affect smart autoindenting when starting a new line.
 
 ## Default settings
 
-Vim Polyglot includes vim-sensible plugin, which is usually necessary for editing any language. This can be disabled with:
+Vim Polyglot sets defaults of some settings that are relevant for good language support. You can disable them by:
 
 
 ```vim
 let g:polyglot_disabled = ['sensible']
 ```
+
+These defaults include:
+- Use utf-8 encoding by default
+- Automatically reload file if changed somewhere else
+- Disable existing swapfile warnings, instead just create multiple swapfiles
+- Don't create swapfiles in current directory, instead in data directory
+- Whitespace characters when using `:set list`
+- Delete comment character when joining commented lines
+- Search upwards for tags file(s) instead only locally
+- Fix issues with fish shell
+- Increase history size to 1000 items
+- Allow for up to 50 opened tabs on Vim start.
+- Reduce updatetime from 4000 to 300 to avoid issues with coc.nvim
+- Always save upper case variables to viminfo file
+- Don't save options in sessions and views
+- Allow color schemes to do bright colors without forcing bold
+- Load vim's built-in matchit plugin
 
 ## No ftdetect
 

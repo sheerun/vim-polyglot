@@ -773,10 +773,19 @@ filetypes:
   - hsig
 ---
 name: haxe
-remote: yaymukund/vim-haxe
+remote: jdonaldson/vaxe
 filetypes:
 - name: haxe
   linguist: Haxe
+- name: hxml
+  linguist: HXML
+- name: hss
+  extensions:
+    - hss
+ignored_dirs:
+  - ftplugin
+  - autoload
+  - compiler
 ---
 name: hcl
 remote: b4b4r07/vim-hcl
@@ -797,19 +806,6 @@ filetypes:
   linguist: HiveQL
   extra_extensions:
   - ql
----
-name: i3
-remote: mboughaba/i3config.vim
-filetypes:
-- name: i3config
-  filenames:
-  - i3.config
-  - i3config
-  - .i3.config
-  - .i3config
-  extensions:
-  - i3.config
-  - i3config
 ---
 name: icalendar
 remote: chutzpah/icalendar.vim
@@ -985,7 +981,7 @@ filetypes:
 name: livescript
 remote: gkz/vim-ls
 filetypes:
-- name: livescript
+- name: ls
   linguist: LiveScript
 ---
 name: llvm
@@ -1945,7 +1941,7 @@ filetypes:
   - t
 ---
 name: gitignore
-remote: fszymanski/fzf-gitignore
+remote: SirJson/fzf-gitignore 
 filetypes:
 - name: gitignore
   filenames:
@@ -4585,7 +4581,7 @@ glob: "**/scheme.vim"
 filetypes:
 - name: scheme
   patterns:
-  - pattern: "*.scm,*.ss,*.rkt"
+  - pattern: "*.scm,*.ss"
     description: Scheme
 ---
 name: screen
@@ -5509,16 +5505,8 @@ glob: "**/autodoc.vim"
 # Needed by c, cmod, and pike
 filetypes: []
 ---
-name: html
-remote: vim/vim:runtime
-glob: "**/html.vim"
-filetypes:
-- name: html
-  linguist: HTML
----
-# TODO: change after https://github.com/othree/html5.vim/pull/106 is merged
 name: html5
-remote: sheerun/html5.vim
+remote: othree/html5.vim
 dependencies: html
 filetypes: []
 ---
