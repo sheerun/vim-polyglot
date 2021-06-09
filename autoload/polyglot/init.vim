@@ -169,6 +169,10 @@ let did_load_filetypes = 1
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(g:polyglot_is_disabled, 'mermaid')
+  au BufNewFile,BufRead *.mermaid,*.mm,*.mmd setf mermaid
+endif
+
 if !has_key(g:polyglot_is_disabled, 'openscad')
   au BufNewFile,BufRead *.scad setf openscad
 endif
@@ -2295,6 +2299,14 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'icalendar')
   au BufNewFile,BufRead *.ics setf icalendar
+endif
+
+if !has_key(g:polyglot_is_disabled, 'i3')
+  au BufNewFile,BufRead *.i3.config,*.i3config,{.,}i3.config,{.,}i3config,i3.config,i3config setf i3config
+endif
+
+if !has_key(g:polyglot_is_disabled, 'sway')
+  au BufNewFile,BufRead *.i3.config,*.i3config,*.sway.config,*.swayconfig,*sway/config,i3.config,sway.config setf i3config
 endif
 
 if !has_key(g:polyglot_is_disabled, 'hive')

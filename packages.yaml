@@ -5605,3 +5605,11 @@ filetypes:
   patterns:
   - pattern: '*.scad'
     description: OpenSCAD 3D modeling language
+---
+name: mermaid
+remote: mracos/mermaid.vim
+filetypes:
+- name: mermaid
+  patterns:
+  - pattern: '*.mermaid,*.mm,*.mmd'
+    description: Mermaid (https://mermaid-js.github.io/)
