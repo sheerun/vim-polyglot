@@ -5593,6 +5593,16 @@ filetypes:
   - pattern: '*sway/config'
     description: Sway Configuration
 ---
+name: nftables
+remote: nfnty/vim-nftables
+filetypes:
+- name: nftables
+  extensions:
+  - nft
+  patterns:
+  - pattern: '*/nftables.conf'
+    description: nftables configuration
+---
 name: openscad
 remote: sirtaj/vim-openscad
 filetypes:

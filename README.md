@@ -132,6 +132,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [meson](https://github.com/mesonbuild/meson/tree/master/data/syntax-highlighting/vim) (Meson syntax highlighting for wrap files)
 - [mint](https://github.com/IrenejMarc/vim-mint) (Syntax highlighting for mint files)
 - [moonscript](https://github.com/leafo/moonscript-vim) (MoonScript syntax highlighting for moon files)
+- [nftables](https://github.com/nfnty/vim-nftables) (Syntax highlighting for nftables config files)
 - [nginx](https://github.com/chr4/nginx.vim) (Nginx syntax highlighting for nginx, nginxconf and vhost files)
 - [nim](https://github.com/zah/nim.vim) (Nim syntax highlighting for nim, nim.cfg, nimble, nimrod and nims files)
 - [nix](https://github.com/LnL7/vim-nix) (Nix syntax highlighting for nix files)

@@ -391,6 +391,11 @@ call TestExtension("conf", "auto.master", "")
 " https://github.com/sheerun/vim-polyglot/issues/579
 call TestExtension("dart", "reminders.dart", "")
 
+" nftables
+call TestExtension("nftables", "foo.nft", "")
+call TestExtension("nftables", "nftables.conf", "")
+call TestExtension("nftables", "foo", "#!/usr/bin/env nft")
+
 call TestExtension("racket", "empty.rkt", "")
 
 filetype off
