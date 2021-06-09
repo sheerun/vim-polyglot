@@ -82,6 +82,9 @@ call s:SetDefault('g:jsx_ext_required', 0)
 " Needed for sql highlighting
 call s:SetDefault('g:javascript_sql_dialect', 'sql')
 
+" Enable jsdoc highlighting by default
+call s:SetDefault('g:javascript_plugin_jsdoc', 1)
+
 " Make csv loading faster
 call s:SetDefault('g:csv_start', 1)
 call s:SetDefault('g:csv_end', 2)
