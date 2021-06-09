@@ -671,7 +671,7 @@ def generate_ftdetect(packages, heuristics)
 
       for heuristic in filetype_heuristics.uniq
         extensions = heuristic["extensions"].map { |e| "*.#{e}" }
-        autocommands << "au BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()"
+        autocommands << "au! BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()"
       end
 
       if autocommands.size > 0 && filetype["description"]
