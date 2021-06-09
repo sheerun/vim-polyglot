@@ -8,8 +8,8 @@ endif
 " Version:      2.3.1
 " License:      Vim license (see `:help license`)
 
-" Based on PostgreSQL 13.1
-" Automatically generated on 2021-02-07 at 10:45:10
+" Based on PostgreSQL 13.2
+" Automatically generated on 2021-04-22 at 08:36:13
 
 if exists("b:current_syntax")
   finish
@@ -717,8 +717,8 @@ syn keyword sqlConstant contained pageinspect pg_buffercache pg_freespacemap pg_
 syn keyword sqlConstant contained pg_stat_statements pg_trgm pg_visibility pgcrypto pgrouting pgrowlocks
 syn keyword sqlConstant contained pgstattuple pgtap plperl plperlu plpgsql pltcl pltclu postgis
 syn keyword sqlConstant contained postgis_raster postgis_sfcgal postgis_tiger_geocoder postgis_topology
-syn keyword sqlConstant contained postgres_fdw refint seg sslinfo tablefunc tcn temporal_tables tsm_system_rows
-syn keyword sqlConstant contained tsm_system_time unaccent xml2
+syn keyword sqlConstant contained postgres_fdw refint seg sslinfo tablefunc tcn temporal_tables
+syn keyword sqlConstant contained tsm_system_rows tsm_system_time unaccent xml2
 " Legacy extensions names
 syn keyword sqlConstant contained chkpass hstore_plpython2u hstore_plpython3u hstore_plpythonu
 syn keyword sqlConstant contained jsonb_plpython3u ltree_plpython2u ltree_plpython3u
@@ -2018,10 +2018,10 @@ let s:plgroups = 'plpgsql'
 
 " PL/<any other language>
 fun! s:add_syntax(s)
-  execute 'syn include @PL' .. a:s .. ' syntax/' .. a:s .. '.vim'
+  execute 'syn include @PL' . a:s . ' syntax/' . a:s . '.vim'
   unlet b:current_syntax
-  execute 'syn region pgsqlpl' .. a:s .. ' matchgroup=sqlString start=+\$' .. a:s .. '\$+ end=+\$' .. a:s .. '\$+ keepend contains=@PL' .. a:s
-  let s:plgroups .= ',pgsqlpl' .. a:s
+  execute 'syn region pgsqlpl' . a:s . ' matchgroup=sqlString start=+\$' . a:s . '\$+ end=+\$' . a:s . '\$+ keepend contains=@PL' .. a:s
+  let s:plgroups .= ',pgsqlpl' . a:s
 endf
 
 for pl in get(b:, 'pgsql_pl', get(g:, 'pgsql_pl', []))
@@ -2032,12 +2032,12 @@ endfor
 if get(g:, 'pgsql_fold_functions_only', 0)
 
     execute 'syn region sqlFold start=/^\s*\zs\c\%(create\s\+[a-z ]*\%(function\|procedure\)\|do\)\>/ end=/;$/ transparent fold '
-        \ .. "contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlIdentifier,sqlNumber,sqlOperator,sqlSpecial,sqlString,sqlTodo," .. s:plgroups
+        \ . "contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlIdentifier,sqlNumber,sqlOperator,sqlSpecial,sqlString,sqlTodo," . s:plgroups
 
 else
 
     execute 'syn region sqlFold start=/^\s*\zs\c\(create\|update\|alter\|select\|insert\|do\)\>/ end=/;$/ transparent fold '
-        \ .. "contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlIdentifier,sqlNumber,sqlOperator,sqlSpecial,sqlString,sqlTodo," .. s:plgroups
+        \ . "contains=sqlIsKeyword,sqlIsFunction,sqlComment,sqlIdentifier,sqlNumber,sqlOperator,sqlSpecial,sqlString,sqlTodo," . s:plgroups
 
 endif
 
@@ -2071,3 +2071,4 @@ hi def link sqlCreateOperatorKeyword sqlKeyword
 hi def link sqlCreateTextSearchKeyword sqlKeyword
 
 let b:current_syntax = "sql"
+

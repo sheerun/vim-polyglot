@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'tmux', 'syntax/tmux.vim')
 endif
 
 " Language: tmux(1) configuration file
-" Version: 3.2-rc (git-e94bd5cc)
+" Version: to_merge (git-c03b5746)
 " URL: https://github.com/ericpruitt/tmux.vim/
 " Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
 " License: 2-Clause BSD (http://opensource.org/licenses/BSD-2-Clause)
@@ -77,22 +77,22 @@ syn keyword tmuxOptions
 \ detach-on-destroy display-panes-active-colour display-panes-colour
 \ display-panes-time display-time exit-unattached extended-keys focus-events
 \ history-file history-limit key-table lock-after-time lock-command
-\ message-command-style message-limit aggressive-resize allow-rename
-\ alternate-screen automatic-rename automatic-rename-format
+\ message-command-style message-limit message-style aggressive-resize
+\ allow-rename alternate-screen automatic-rename automatic-rename-format
 \ clock-mode-colour clock-mode-style copy-mode-current-match-style
 \ copy-mode-mark-style copy-mode-match-style main-pane-height
-\ main-pane-width message-style mode-keys mode-style monitor-activity
-\ monitor-bell monitor-silence mouse other-pane-height other-pane-width
+\ main-pane-width mode-keys mode-style monitor-activity monitor-bell
+\ monitor-silence mouse other-pane-height other-pane-width
 \ pane-active-border-style pane-base-index pane-border-format
 \ pane-border-lines pane-border-status pane-border-style prefix prefix2
-\ remain-on-exit renumber-windows repeat-time set-clipboard set-titles
-\ set-titles-string silence-action status status-bg status-fg status-format
-\ status-interval status-justify status-keys status-left status-left-length
-\ status-left-style status-position status-right status-right-length
-\ status-right-style status-style synchronize-panes terminal-features
-\ terminal-overrides update-environment user-keys visual-activity
-\ visual-bell visual-silence window-active-style window-size
-\ window-status-activity-style window-status-bell-style
+\ prompt-history-limit remain-on-exit renumber-windows repeat-time
+\ set-clipboard set-titles set-titles-string silence-action status status-bg
+\ status-fg status-format status-interval status-justify status-keys
+\ status-left status-left-length status-left-style status-position
+\ status-right status-right-length status-right-style status-style
+\ synchronize-panes terminal-features terminal-overrides update-environment
+\ user-keys visual-activity visual-bell visual-silence window-active-style
+\ window-size window-status-activity-style window-status-bell-style
 \ window-status-current-format window-status-current-style
 \ window-status-format window-status-last-style window-status-separator
 \ window-status-style window-style word-separators wrap-search
@@ -108,18 +108,19 @@ syn keyword tmuxCommands
 \ list-panes list-sessions list-windows load-buffer loadb lock lock-client
 \ lock-server lock-session lockc last-pane lastp locks ls last last-window
 \ lsb delete-buffer deleteb lsc lscm lsk lsp lsw menu move-pane move-window
-\ movep movew new new-session new-window neww next next-layout next-window
-\ nextl paste-buffer pasteb pipe-pane pipep popup prev previous-layout
-\ previous-window prevl refresh refresh-client rename rename-session
-\ rename-window renamew resize-pane resize-window resizep resizew
-\ respawn-pane respawn-window respawnp respawnw rotate-window rotatew run
-\ run-shell save-buffer saveb select-layout select-pane select-window
-\ selectl selectp selectw send send-keys send-prefix set set-buffer
-\ set-environment set-hook set-option set-window-option setb setenv setw
-\ show show-buffer show-environment show-hooks show-messages show-options
-\ show-window-options showb showenv showmsgs showw source source-file
-\ split-window splitw start start-server suspend-client suspendc swap-pane
-\ swap-window swapp swapw switch-client switchc unbind unbind-key
+\ clear-prompt-history clearphist movep movew new new-session new-window
+\ neww next next-layout next-window nextl paste-buffer pasteb pipe-pane
+\ pipep popup prev previous-layout previous-window prevl refresh
+\ refresh-client rename rename-session rename-window renamew resize-pane
+\ resize-window resizep resizew respawn-pane respawn-window respawnp
+\ respawnw rotate-window rotatew run run-shell save-buffer saveb
+\ select-layout select-pane select-window selectl selectp selectw send
+\ send-keys send-prefix set set-buffer set-environment set-hook set-option
+\ set-window-option setb setenv setw show show-buffer show-environment
+\ show-hooks show-messages show-options show-prompt-history
+\ show-window-options showb showenv showmsgs showphist showw source
+\ source-file split-window splitw start start-server suspend-client suspendc
+\ swap-pane swap-window swapp swapw switch-client switchc unbind unbind-key
 \ unlink-window unlinkw wait wait-for
 
 let &cpo = s:original_cpo

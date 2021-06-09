@@ -427,18 +427,10 @@ def rule_to_code(rule)
     end.join("\n")
   end
 
-  if rule.has_key?("if_set")
+  if rule.has_key?("if")
     return <<~EOS
-      if #{rule["negative"] ? "!" : ""}#{rule["if_set"]}
-      #{indent(rule_to_code(except(rule, "if_set", "negative")), 2)}
-      endif
-    EOS
-  end
-
-  if rule.has_key?("if_exists")
-    return <<~EOS
-      if #{rule["negative"] ? "!" : ""}exists("#{rule["if_exists"]}")
-      #{indent(rule_to_code(except(rule, "if_exists", "negative")), 2)}
+      if #{rule["if"]}
+      #{indent(rule_to_code(except(rule, "if")), 2)}
       endif
     EOS
   end
@@ -671,7 +663,7 @@ def generate_ftdetect(packages, heuristics)
 
       for heuristic in filetype_heuristics.uniq
         extensions = heuristic["extensions"].map { |e| "*.#{e}" }
-        autocommands << "au BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()"
+        autocommands << "au! BufNewFile,BufRead,BufWritePost #{extensions.join(",")} call polyglot#detect##{camelize(heuristic["extensions"].first)}()"
       end
 
       if autocommands.size > 0 && filetype["description"]

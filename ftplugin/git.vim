@@ -37,7 +37,7 @@ if exists('*shellescape') && exists('b:git_dir') && b:git_dir != ''
 else
   setlocal keywordprg=git\ show
 endif
-if has('gui_running')
+if has('gui_running') && &guioptions !~# '!'
   let &l:keywordprg = substitute(&l:keywordprg,'^git\>','git --no-pager','')
 endif
 
