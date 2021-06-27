@@ -4,11 +4,11 @@ endif
 
 " Vim syntax file for GNU Emacs' Org mode
 "
-" Maintainer:   Alex Vear <av@axvr.io>
+" Maintainer:   Alex Vear <alex@vear.uk>
 " License:      Vim (see `:help license`)
 " Location:     syntax/org.vim
 " Website:      https://github.com/axvr/org.vim
-" Last Change:  2020-01-05
+" Last Change:  2021-03-11
 "
 " Reference Specification: Org mode manual
 "   GNU Info: `$ info Org`

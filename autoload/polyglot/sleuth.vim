@@ -257,7 +257,7 @@ let s:globs = {
   \ 'jam': '*.jpl,*.jpr,Prl*.*,JAM*.*',
   \ 'java': '*.java,*.jav',
   \ 'javacc': '*.jj,*.jjt',
-  \ 'javascript': '*.js,*._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.jsx,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,*.javascript,Jakefile',
+  \ 'javascript': '*.js,*._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.javascript,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.jsx,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile',
   \ 'javascriptreact': '*.jsx',
   \ 'jess': '*.clp',
   \ 'jgraph': '*.jgr',

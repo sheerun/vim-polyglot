@@ -275,7 +275,7 @@ endfunction
 function! go#config#MetalinterAutosaveEnabled() abort
   let l:default = []
   if get(g:, 'go_metalinter_command', s:default_metalinter) == 'golangci-lint'
-    let l:default = ['govet', 'golint']
+    let l:default = ['govet', 'revive']
   endif
 
   return get(g:, 'go_metalinter_autosave_enabled', l:default)
@@ -284,14 +284,14 @@ endfunction
 function! go#config#MetalinterEnabled() abort
   let l:default = []
   if get(g:, 'go_metalinter_command', s:default_metalinter) == 'golangci-lint'
-    let l:default = ['vet', 'golint', 'errcheck']
+    let l:default = ['vet', 'revive', 'errcheck']
   endif
 
   return get(g:, 'go_metalinter_enabled', l:default)
 endfunction
 
 function! go#config#GolintBin() abort
-  return get(g:, "go_golint_bin", "golint")
+  return get(g:, "go_golint_bin", "revive")
 endfunction
 
 function! go#config#ErrcheckBin() abort
@@ -613,6 +613,10 @@ function! go#config#DebugMappings() abort
   let l:user = deepcopy(get(g:, 'go_debug_mappings', {}))
 
   return extend(l:user, l:default, 'keep')
+endfunction
+
+function! go#config#DocBalloon() abort
+  return get(g:, 'go_doc_balloon', 0)
 endfunction
 
 " Set the default value. A value of "1" is a shortcut for this, for

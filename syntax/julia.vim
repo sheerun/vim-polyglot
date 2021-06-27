@@ -124,8 +124,8 @@ syntax match   juliaColon		display ":"
 " A dot can introduce a sort of 'environment' such that words after it are not
 " recognized as keywords. This has low precedence so that it can be overridden
 " by operators
-syntax match   juliaDotted		transparent "\.\s*[^.]" contains=@juliaExprsNodot
-syntax match   juliaDottedT		contained transparent "\.\s*[^.]" contains=@juliaExprsNodot,juliaType
+syntax match   juliaDotted		transparent "\.\s*[^])}.]" contains=@juliaExprsNodot
+syntax match   juliaDottedT		contained transparent "\.\s*[^])}.]" contains=@juliaExprsNodot,juliaType
 
 syntax match   juliaErrorPar		display "[])}]"
 syntax match   juliaErrorEnd		display "\<end\>"

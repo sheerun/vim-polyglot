@@ -172,6 +172,17 @@ func polyglot#ft#FTent()
   setf dtd
 endfunc
 
+func polyglot#ft#ExCheck()
+  let lines = getline(1, min([line("$"), 100]))
+  if exists('g:filetype_euphoria')
+    exe 'setf ' . g:filetype_euphoria
+  elseif match(lines, '^--\|^ifdef\>\|^include\>') > -1
+    setf euphoria3
+  else
+    setf elixir
+  endif
+endfunc
+
 func polyglot#ft#EuphoriaCheck()
   if exists('g:filetype_euphoria')
     exe 'setf ' . g:filetype_euphoria

@@ -47,10 +47,8 @@ if exists("*json_decode") && executable('zig')
     unlet! s:env
 endif
 
-let &l:formatprg = 'zig fmt --stdin'
-
 let b:undo_ftplugin =
-    \ 'setl isk< et< ts< sts< sw< fo< sua< mp< com< cms< inex< inc< pa< fp<'
+    \ 'setl isk< et< ts< sts< sw< fo< sua< mp< com< cms< inex< inc< pa<'
 
 let &cpo = s:cpo_orig
 unlet s:cpo_orig

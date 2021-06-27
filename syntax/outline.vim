@@ -4,11 +4,11 @@ endif
 
 " Vim syntax file for GNU Emacs' Outline mode
 "
-" Maintainer:   Alex Vear <av@axvr.io>
+" Maintainer:   Alex Vear <alex@vear.uk>
 " License:      Vim (see `:help license`)
 " Location:     syntax/outline.vim
 " Website:      https://github.com/axvr/org.vim
-" Last Change:  2019-09-28
+" Last Change:  2020-08-24
 "
 " Reference Specification: GNU Emacs Manual, section 'Outline Mode'
 "   GNU Info: `$ info Emacs Outline Mode`

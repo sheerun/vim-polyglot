@@ -4,7 +4,7 @@ endif
 
 " Vim indent file
 " Language:           Clojure
-" Maintainer:         Alex Vear <av@axvr.io>
+" Maintainer:         Alex Vear <alex@vear.uk>
 " Former Maintainers: Sung Pae <self@sungpae.com>
 "                     Meikel Brandmeyer <mb@kotka.de>
 "                     Toralf Wittner <toralf.wittner@gmail.com>

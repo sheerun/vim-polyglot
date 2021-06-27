@@ -49,10 +49,10 @@ function! GetZigIndent(lnum)
     let prevLineNum = prevnonblank(a:lnum-1)
     let prevLine = getline(prevLineNum)
 
-    " for lines that look line
+    " for lines that look like
     "   },
     "   };
-    " try treat them the same as a }
+    " try treating them the same as a }
     if prevLine =~ '\v^\s*},$'
         if currentLine =~ '\v^\s*};$' || currentLine =~ '\v^\s*}$'
             return indent(prevLineNum) - 4
