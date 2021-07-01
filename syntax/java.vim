@@ -158,7 +158,7 @@ if !exists("java_ignore_javadoc") && main_syntax != 'jsp'
   syntax case ignore
   " syntax coloring for javadoc comments (HTML)
   syntax include @javaHtml <sfile>:p:h/html.vim
-  unlet b:current_syntax
+  unlet! b:current_syntax
   " HTML enables spell checking for all text that is not in a syntax item. This
   " is wrong for Java (all identifiers would be spell-checked), so it's undone
   " here.
