@@ -3207,8 +3207,6 @@ filetypes:
   - pattern: Prl*.*,JAM*.*
 ---
 name: java
-remote: vim/vim:runtime
-glob: "**/java.vim"
 filetypes:
 - name: java
   patterns:
