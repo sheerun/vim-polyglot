@@ -217,7 +217,7 @@ let s:globs = {
   \ 'hastepreproc': '*.htpp',
   \ 'haxe': '*.hx,*.hxsl',
   \ 'hb': '*.hb',
-  \ 'hcl': '*.hcl,*.nomad,*.workflow,Appfile',
+  \ 'hcl': '*.hcl,*.nomad,*.workflow,Appfile,.terraformrc,terraform.rc',
   \ 'helm': '',
   \ 'help': '',
   \ 'hercules': '*.vc,*.ev,*.sum,*.errsum',

@@ -55,6 +55,12 @@ fu! <sid>CheckSaneSearchPattern() "{{{3
         let b:csv_cmt = [g:csv_comment]
     endif
 
+    " Make sure, b:csv_cmt always has 2 items
+    " can happen with e.g. :set cms="#%s
+    if b:csv_cmt == []
+        let b:csv_cmt = ['', '']
+    endif
+
 
     " Second: Check for sane defaults for the column pattern
     " Not necessary to check for fixed width columns
@@ -131,9 +137,11 @@ fu! <sid>DoHighlight() "{{{3
         endfor
     endif
     " Comment regions
-    exe 'syn match CSVComment /'. s:cmts. '.*'.
-        \ (!empty(s:cmte) ? '\%('. s:cmte. '\)\?'
-        \: '').  '/'
+    if !empty(s:cmts)
+        exe 'syn match CSVComment /'. s:cmts. '.*'.
+            \ (!empty(s:cmte) ? '\%('. s:cmte. '\)\?'
+            \: '').  '/'
+    endif
     hi def link CSVComment Comment
 endfun
 

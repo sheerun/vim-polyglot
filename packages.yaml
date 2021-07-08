@@ -787,18 +787,6 @@ ignored_dirs:
   - autoload
   - compiler
 ---
-name: hcl
-remote: b4b4r07/vim-hcl
-filetypes:
-- name: hcl
-  linguist: HCL
-  extra_filenames:
-  - Appfile
-  ignored_extensions:
-  # handled by vim-terraform
-  - tf
-  - tfvars
----
 name: hive
 remote: zebradil/hive.vim
 filetypes:
@@ -1630,6 +1618,16 @@ after: tf
 filetypes:
 - name: terraform
   extensions:
+  - tf
+  - tfvars
+- name: hcl
+  linguist: HCL
+  extra_filenames:
+  - Appfile
+  - .terraformrc
+  - terraform.rc
+  ignored_extensions:
+  # handled by vim-terraform
   - tf
   - tfvars
 ---

@@ -122,7 +122,7 @@ function! s:documentationSymbol(xmlSig, assembly, cont)
 endfunction
 
 " FSharpConfigDto from https://github.com/fsharp/FsAutoComplete/blob/master/src/FsAutoComplete/LspHelpers.fs
-" 
+"
 " * The following options seems not working with workspace/didChangeConfiguration
 "   since the initialization has already completed?
 "     'AutomaticWorkspaceInit',
@@ -153,7 +153,7 @@ let s:config_keys_camel =
     \     {'key': 'EnableAnalyzers', 'default': 0},
     \     {'key': 'AnalyzersPath'},
     \     {'key': 'DisableInMemoryProjectReferences', 'default': 0},
-    \     {'key': 'LineLens', 'default': {'enabled': 'replaceCodeLens', 'prefix': '//'}},
+    \     {'key': 'LineLens', 'default': {'enabled': 'never', 'prefix': ''}},
     \     {'key': 'UseSdkScripts', 'default': 1},
     \     {'key': 'dotNetRoot'},
     \     {'key': 'fsiExtraParameters', 'default': []},
@@ -182,7 +182,7 @@ endfunction
 
 function! g:fsharp#getServerConfig()
     let fsharp = {}
-    call s:buildConfigKeys() 
+    call s:buildConfigKeys()
     for key in s:config_keys
         if exists('g:fsharp#' . key.snake)
             let fsharp[key.camel] = g:fsharp#{key.snake}
@@ -323,11 +323,17 @@ endfunction
 let s:script_root_dir = expand('<sfile>:p:h') . "/../"
 let s:fsac = fnamemodify(s:script_root_dir . "fsac/fsautocomplete.dll", ":p")
 let g:fsharp#languageserver_command =
-    \ ['dotnet', s:fsac, 
+    \ ['dotnet', s:fsac,
         \ '--background-service-enabled'
     \ ]
 
-function! s:download(branch)
+function! s:update_win()
+    echom "[FSAC] Downloading FSAC. This may take a while..."
+    let script = s:script_root_dir . "install.ps1"
+    call system('powershell -ExecutionPolicy Unrestricted ' . script . " update")
+endfunction
+
+function! s:update_unix()
     echom "[FSAC] Downloading FSAC. This may take a while..."
     let zip = s:script_root_dir . "fsac.zip"
     call system(
@@ -337,19 +343,18 @@ function! s:download(branch)
     if v:shell_error == 0
         call system('unzip -o -d ' . s:script_root_dir . "/fsac " . zip)
         call system('find ' . s:script_root_dir . '/fsac' . ' -type f -exec chmod 777 \{\} \;')
-        echom "[FSAC] Updated FsAutoComplete to version " . a:branch . "" 
+        echom "[FSAC] Updated FsAutoComplete"
     else
         echom "[FSAC] Failed to update FsAutoComplete"
     endif
 endfunction
 
 function! fsharp#updateFSAC(...)
-    if len(a:000) == 0
-        let branch = "master"
+    if has('win32') && !has('win32unix')
+        call s:update_win()
     else
-        let branch = a:000[0]
+        call s:update_unix()
     endif
-    call s:download(branch)
 endfunction
 
 let s:fsi_buffer = -1

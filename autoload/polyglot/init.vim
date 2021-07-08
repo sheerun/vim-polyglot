@@ -1944,6 +1944,7 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'terraform')
   au BufNewFile,BufRead *.tf,*.tfvars setf terraform
+  au BufNewFile,BufRead *.hcl,*.nomad,*.workflow,{.,}terraformrc,Appfile,terraform.rc setf hcl
 endif
 
 if !has_key(g:polyglot_is_disabled, 'tf')
@@ -2307,10 +2308,6 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'hive')
   au BufNewFile,BufRead *.hql,*.q,*.ql setf hive
-endif
-
-if !has_key(g:polyglot_is_disabled, 'hcl')
-  au BufNewFile,BufRead *.hcl,*.nomad,*.workflow,Appfile setf hcl
 endif
 
 if !has_key(g:polyglot_is_disabled, 'haxe')

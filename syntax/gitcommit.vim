@@ -14,6 +14,7 @@ endif
 
 syn case match
 syn sync minlines=50
+syn sync linebreaks=1
 
 if has("spell")
   syn spell toplevel

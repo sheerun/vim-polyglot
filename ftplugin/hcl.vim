@@ -1,41 +1,43 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'hcl', 'ftplugin/hcl.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'terraform', 'ftplugin/hcl.vim')
   finish
 endif
 
-" File: ftplugin/hcl.vim
-" Author: BABAROT <b4b4r07@gmail.com>
-" Description: FileType Plugin for HCL
-" Last Change: Nob 05, 2015
+" hcl.vim - basic vim/hcl integration
+" Maintainer: HashiVim <https://github.com/hashivim>
 
-if exists('b:did_ftplugin')
-    finish
+if exists('b:did_ftplugin') || v:version < 700 || &compatible
+  finish
 endif
 let b:did_ftplugin = 1
 
-let s:save_cpo = &cpo
-set cpo&vim
+let s:cpo_save = &cpoptions
+set cpoptions&vim
 
-setlocal commentstring=#\ %s
+" j is a relatively recent addition; silence warnings when setting it.
+setlocal formatoptions-=t formatoptions+=croql
+silent! setlocal formatoptions+=j
+let b:undo_ftplugin = 'setlocal formatoptions<'
 
-" Add NERDCommenter delimiters
-
-let s:delims = { 'left': '#' }
-if exists('g:NERDDelimiterMap')
-    if !has_key(g:NERDDelimiterMap, 'hcl')
-        let g:NERDDelimiterMap.hcl = s:delims
-    endif
-elseif exists('g:NERDCustomDelimiters')
-    if !has_key(g:NERDCustomDelimiters, 'hcl')
-        let g:NERDCustomDelimiters.hcl = s:delims
-    endif
-else
-    let g:NERDCustomDelimiters = { 'hcl': s:delims }
+if !has('patch-7.4.1142')
+  " Include hyphens as keyword characters so that a keyword appearing as
+  " part of a longer name doesn't get partially highlighted.
+  setlocal iskeyword+=-
+  let b:undo_ftplugin .= ' iskeyword<'
 endif
-unlet s:delims
 
-let b:undo_ftplugin = ""
+if get(g:, 'hcl_fold_sections', 0)
+  setlocal foldmethod=syntax
+  let b:undo_ftplugin .= ' foldmethod<'
+endif
 
-let &cpo = s:save_cpo
-unlet s:save_cpo
+" Set the commentstring
+setlocal commentstring=#%s
+let b:undo_ftplugin .= ' commentstring<'
 
-" vim: set et sw=4 ts=4:
+if get(g:, 'hcl_align', 0) && exists(':Tabularize')
+  inoremap <buffer> <silent> = =<Esc>:call hcl#align()<CR>a
+  let b:undo_ftplugin .= '|iunmap <buffer> ='
+endif
+
+let &cpoptions = s:cpo_save
+unlet s:cpo_save

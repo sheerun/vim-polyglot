@@ -33,7 +33,7 @@ syn match gitDiffAdded "{+[^}]*+}" contained containedin=gitDiff
 syn match gitDiffRemoved "^ \+-.*" contained containedin=gitDiffMerge
 syn match gitDiffRemoved "\[-[^]]*-\]" contained containedin=gitDiff
 
-syn match  gitKeyword /^\%(object\|type\|tag\|commit\|tree\|parent\|encoding\|summary\|boundary\|filename\|previous\)\>/ contained containedin=gitHead nextgroup=gitHash,gitType skipwhite contains=@NoSpell
+syn match  gitKeyword /^\%(object\|type\|tag\|commit\|tree\|parent\|encoding\|gpgsig\|summary\|boundary\|filename\|previous\)\>/ contained containedin=gitHead nextgroup=gitHash,gitType skipwhite contains=@NoSpell
 syn match  gitKeyword /^\%(tag\>\|ref:\)/ contained containedin=gitHead nextgroup=gitReference skipwhite contains=@NoSpell
 syn match  gitKeyword /^Merge:/  contained containedin=gitHead nextgroup=gitHashAbbrev skipwhite contains=@NoSpell
 syn match  gitMode    /^\d\{6\}\>/ contained containedin=gitHead nextgroup=gitType,gitHash skipwhite

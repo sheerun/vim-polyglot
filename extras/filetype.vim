@@ -1,7 +1,7 @@
 " Vim support file to detect file types
 "
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last Change:	2021 Jun 13
+" Last Change:	2021 Jul 03
 
 " Listen very carefully, I will say this only once
 if exists("did_load_filetypes")
@@ -650,6 +650,9 @@ au BufNewFile,BufRead *.mo,*.gdmo		setf gdmo
 " Gedcom
 au BufNewFile,BufRead *.ged,lltxxxxx.txt	setf gedcom
 
+" Gemtext
+au BufNewFile,BufRead *.gmi,*.gemini		setf gemtext
+
 " Gift (Moodle)
 autocmd BufRead,BufNewFile *.gift		setf gift
 
@@ -867,6 +870,9 @@ au BufNewFile,BufRead *.json-patch			setf json
 
 " Jupyter Notebook is also json
 au BufNewFile,BufRead *.ipynb				setf json
+
+" JSONC
+au BufNewFile,BufRead *.jsonc			setf jsonc
 
 " Kixtart
 au BufNewFile,BufRead *.kix			setf kix

@@ -327,15 +327,15 @@ exec 'syntax match   juliaStringVarsPla	contained "\$' . s:idregex . '"'
 " TODO improve RegEx
 syntax region  juliaRegEx		matchgroup=juliaStringDelim start=+\<r\z("\(""\)\?\)+ skip=+\%(\\\\\)*\\"+ end=+\z1[imsx]*+
 
-syntax cluster juliaSpecialChars	contains=juliaSpecialChar,juliaOctalEscapeChar,juliaHexEscapeChar,juliaUniCharSmall,juliaUniCharLarge
+syntax cluster juliaSpecialChars	contains=juliaSpecialChar,juliaDoubleBackslash,juliaEscapedQuote,juliaOctalEscapeChar,juliaHexEscapeChar,juliaUniCharSmall,juliaUniCharLarge
 syntax match   juliaSpecialChar		display contained "\\."
 syntax match   juliaOctalEscapeChar	display contained "\\\o\{3\}"
 syntax match   juliaHexEscapeChar	display contained "\\x\x\{2\}"
 syntax match   juliaUniCharSmall	display contained "\\u\x\{1,4\}"
 syntax match   juliaUniCharLarge	display contained "\\U\x\{1,8\}"
 syntax cluster juliaSpecialCharsRaw	contains=juliaDoubleBackslash,juliaEscapedQuote
-syntax match   juliaDoubleBackslash	display contained "\\\\"
-syntax match   juliaEscapedQuote	display contained "\\\""
+syntax match   juliaDoubleBackslash	contained "\\\\"
+syntax match   juliaEscapedQuote	contained "\\\""
 
 syntax cluster juliaPrintfChars		contains=juliaErrorPrintfFmt,juliaPrintfFmt
 syntax match   juliaErrorPrintfFmt	display contained "\\\?%."
