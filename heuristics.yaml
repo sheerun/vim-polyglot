@@ -77,6 +77,13 @@ rules:
 - override: true
 - filetype: forth
 ---
+extensions: [frag]
+rules:
+- lines: 50
+  rules:
+  - pattern: '\s*(#version|precision|uniform|varying|vec[234])'
+    filetype: glsl
+---
 extensions: [re]
 rules:
 - lines: 50
