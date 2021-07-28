@@ -10,9 +10,9 @@ endif
 let s:ctags_options_dir = expand('<sfile>:p:h:h:h') . '/ctags/'
 
 " Return full path to option file for ctags application
-function! puppet#ctags#OptionFile()
+function! puppet#ctags#OptionFile() abort
 
-  if puppet#ctags#Type() == 'universal'
+  if puppet#ctags#Type() ==? 'universal'
     let l:ctags_options = 'puppet_u.ctags'
   else
     let l:ctags_options = 'puppet.ctags'
@@ -22,13 +22,13 @@ endfunction
 
 " Return type of installed ctags application,
 " can be 'universal' or 'exuberant'
-function! puppet#ctags#Type()
+function! puppet#ctags#Type() abort
 
   if !s:ctags_type
     let l:version = system('ctags --version')
-    if l:version =~ 'Universal Ctags'
+    if l:version =~? 'Universal Ctags'
       let s:ctags_type = 'universal'
-    elseif l:version =~ 'Exuberant Ctags'
+    elseif l:version =~? 'Exuberant Ctags'
       let s:ctags_type = 'exuberant'
     else
        echoerr 'Unknown version of Ctags'

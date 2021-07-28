@@ -2,11 +2,11 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'puppet', 'autoload/puppet/ali
   finish
 endif
 
-function! puppet#align#IndentLevel(lnum)
+function! puppet#align#IndentLevel(lnum) abort
     return indent(a:lnum) / &shiftwidth
 endfunction
 
-function! puppet#align#LinesInBlock(lnum)
+function! puppet#align#LinesInBlock(lnum) abort
     let lines = []
     let indent_level = puppet#align#IndentLevel(a:lnum)
 

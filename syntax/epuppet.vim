@@ -9,7 +9,7 @@ endif
 " Last Change:          2019-09-01
 
 " quit when a syntax file was already loaded {{{1
-if exists("b:current_syntax")
+if exists('b:current_syntax')
   finish
 endif
 
@@ -29,5 +29,5 @@ syn region  ePuppetComment    matchgroup=ePuppetDelimiter start="<%-\=#"    end=
 hi def link ePuppetDelimiter              PreProc
 hi def link ePuppetComment                Comment
 
-let b:current_syntax = "epuppet"
+let b:current_syntax = 'epuppet'
 

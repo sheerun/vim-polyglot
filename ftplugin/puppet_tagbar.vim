@@ -25,7 +25,7 @@ let g:tagbar_type_puppet = {
   \],
 \}
 
-if puppet#ctags#Type() == 'universal'
+if puppet#ctags#Type() ==? 'universal'
     " There no sense to split objects by colon
     let g:tagbar_type_puppet.sro = '__'
     let g:tagbar_type_puppet.kind2scope = {

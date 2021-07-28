@@ -10,7 +10,7 @@ endif
 " and heredoc was copied from ruby and then modified to comply with Puppet syntax.
 
 " Prelude {{{1
-if exists("b:current_syntax")
+if exists('b:current_syntax')
   finish
 endif
 
@@ -437,4 +437,4 @@ HiLink puppetComment              Comment
 
 delcommand HiLink
 
-let b:current_syntax = "puppet"
+let b:current_syntax = 'puppet'

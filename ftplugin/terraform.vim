@@ -30,9 +30,6 @@ if exists('s:hcl_fold_sections_save')
   let g:hcl_fold_sections = s:hcl_fold_sections_save
 end
 
-let s:cpo_save = &cpoptions
-set cpoptions&vim
-
 if !exists('g:terraform_binary_path')
   let g:terraform_binary_path='terraform'
 endif

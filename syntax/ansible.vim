@@ -92,7 +92,7 @@ if exists("g:ansible_extra_keywords_highlight")
               \ debugger always_run check_mode diff no_log args tags force_handlers
               \ vars vars_files vars_prompt delegate_facts delegate_to
               \ any_errors_fatal ignore_errors ignore_unreachable max_fail_percentage
-              \ connection hosts port remote_user module_defaults
+              \ connection children hosts port remote_user module_defaults
               \ environment fact_path gather_facts gather_subset gather_timeout
               \ async poll throttle timeout order run_once serial strategy
               \ containedin='.s:yamlKey.' contained'
