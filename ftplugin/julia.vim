@@ -13,7 +13,7 @@ endif
 let b:did_ftplugin = 1
 
 let s:save_cpo = &cpo
-set cpo-=C
+set cpo&vim
 
 setlocal include=^\\s*\\%(reload\\\|include\\)\\>
 setlocal suffixesadd=.jl
@@ -89,7 +89,6 @@ if exists("loaded_matchit")
         \ . " | unlet! b:match_words b:match_skip b:match_ignorecase"
         \ . " | unlet! b:julia_begin_keywords b:julia_end_keywords"
         \ . " | delfunction JuliaGetMatchWords"
-        \ . " | call julia_blocks#remove_mappings()"
 
   if get(g:, "julia_blocks", 1)
     call julia_blocks#init_mappings()

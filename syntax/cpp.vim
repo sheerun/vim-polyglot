@@ -64,7 +64,7 @@ if !exists("cpp_no_cpp14")
   syn match cppFloat		display contained "\<\d\+\.\d*\(e[-+]\=\d\+\)\=\([FfLl]\|i[fl]\=\|h\|min\|s\|ms\|us\|ns\|_\i*\)\=\>"
   syn match cppFloat		display contained "\<\.\d\+\(e[-+]\=\d\+\)\=\([FfLl]\|i[fl]\=\|h\|min\|s\|ms\|us\|ns\|_\i*\)\=\>"
   syn match cppFloat		display contained "\<\d\+e[-+]\=\d\+\([FfLl]\|i[fl]\=\|h\|min\|s\|ms\|us\|ns\|_\i*\)\=\>"
-  syn region cppString		start=+\(L\|u\|u8\|U\|R\|LR\|u8R\|uR\|UR\)\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"\(sv\|s\|_\i*\)\=+ end='$' contains=cSpecial,cFormat,@Spell
+  syn region cppString		start=+\(L\|u\|u8\|U\)\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"\(sv\|s\|_\i*\)\=+ end='$' contains=cSpecial,cFormat,@Spell
 endif
 
 " C++ 17 extensions
@@ -73,6 +73,20 @@ if !exists("cpp_no_cpp17")
   syn match cppCast		"\<reinterpret_pointer_cast\s*$"
   syn match cppFloat		display contained "\<0x\x*\.\x\+p[-+]\=\d\+\([FfLl]\|i[fl]\=\|h\|min\|s\|ms\|us\|ns\|_\i*\)\=\>"
   syn match cppFloat		display contained "\<0x\x\+\.\=p[-+]\=\d\+\([FfLl]\|i[fl]\=\|h\|min\|s\|ms\|us\|ns\|_\i*\)\=\>"
+
+  " TODO: push this up to c.vim if/when supported in C23
+  syn match cppCharacter	"u8'[^\\]'"
+  syn match cppCharacter	"u8'[^']*'" contains=cSpecial
+  if exists("c_gnu")
+    syn match cppSpecialError	  "u8'\\[^'\"?\\abefnrtv]'"
+    syn match cppSpecialCharacter "u8'\\['\"?\\abefnrtv]'"
+  else
+    syn match cppSpecialError	  "u8'\\[^'\"?\\abfnrtv]'"
+    syn match cppSpecialCharacter "u8'\\['\"?\\abfnrtv]'"
+  endif
+  syn match cppSpecialCharacter display "u8'\\\o\{1,3}'"
+  syn match cppSpecialCharacter display "u8'\\x\x\+'"
+
 endif
 
 " C++ 20 extensions
@@ -93,23 +107,26 @@ endif
 syn match cppMinMax "[<>]?"
 
 " Default highlighting
-hi def link cppAccess		cppStatement
-hi def link cppCast		cppStatement
+hi def link cppAccess			cppStatement
+hi def link cppCast			cppStatement
 hi def link cppExceptions		Exception
-hi def link cppOperator		Operator
+hi def link cppOperator			Operator
 hi def link cppStatement		Statement
-hi def link cppModifier		Type
-hi def link cppType		Type
-hi def link cppStorageClass	StorageClass
+hi def link cppModifier			Type
+hi def link cppType			Type
+hi def link cppStorageClass		StorageClass
 hi def link cppStructure		Structure
-hi def link cppBoolean		Boolean
-hi def link cppConstant		Constant
+hi def link cppBoolean			Boolean
+hi def link cppCharacter		cCharacter
+hi def link cppSpecialCharacter		cSpecialCharacter
+hi def link cppSpecialError		cSpecialError
+hi def link cppConstant			Constant
 hi def link cppRawStringDelimiter	Delimiter
 hi def link cppRawString		String
-hi def link cppString		String
-hi def link cppNumber		Number
-hi def link cppFloat		Number
-hi def link cppModule		Include
+hi def link cppString			String
+hi def link cppNumber			Number
+hi def link cppFloat			Number
+hi def link cppModule			Include
 
 let b:current_syntax = "cpp"
 

@@ -11,7 +11,7 @@ endif
 let b:did_ftplugin = 1
 
 let s:save_cpo = &cpo
-set cpo-=C
+set cpo&vim
 
 setlocal conceallevel=2
 setlocal concealcursor=nc

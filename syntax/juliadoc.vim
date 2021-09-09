@@ -9,6 +9,9 @@ if exists('b:current_syntax')
   finish
 endif
 
+let s:cpo_save = &cpo
+set cpo&vim
+
 syntax sync fromstart
 
 syntax region juliadocCode matchgroup=juliadocCodeDelimiter start="`" end="`" concealends display oneline
@@ -67,3 +70,6 @@ highlight default link juliadocAdmonitionsType Todo
 highlight default link juliadocAdmonitionsTitle Title
 
 let b:current_syntax = "juliadoc"
+
+let &cpo = s:cpo_save
+unlet s:cpo_save

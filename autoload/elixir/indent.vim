@@ -24,6 +24,7 @@ function! elixir#indent#indent(lnum)
   call cursor(lnum, 0)
 
   let handlers = [
+        \'inside_embedded_view',
         \'top_of_file',
         \'starts_with_string_continuation',
         \'following_trailing_binary_operator',
@@ -67,6 +68,17 @@ endfunction
 
 function! s:prev_starts_with(context, expr)
   return s:_starts_with(a:context.prev_nb_text, a:expr, a:context.prev_nb_lnum)
+endfunction
+
+function! s:in_embedded_view()
+  let groups = map(synstack(line('.'), col('.')), "synIDattr(v:val, 'name')")
+  for group in ['elixirPhoenixESigil', 'elixirLiveViewSigil', 'elixirSurfaceSigil']
+    if index(groups, group) >= 0
+      return 1
+    endif
+  endfor
+
+  return 0
 endfunction
 
 " Returns 0 or 1 based on whether or not the text starts with the given
@@ -156,6 +168,104 @@ function! s:find_last_pos(lnum, text, match)
     end
     let c -= 1
   endwhile
+
+  return -1
+endfunction
+
+function! elixir#indent#handle_inside_embedded_view(context)
+  if !s:in_embedded_view()
+    return -1
+  endif
+
+  " Multi-line Surface data delimiters
+  let pair_lnum = searchpair('{{', '', '}}', 'bW', "line('.') == ".a:context.lnum." || s:is_string_or_comment(line('.'), col('.'))", max([0, a:context.lnum - g:elixir_indent_max_lookbehind]))
+  if pair_lnum
+    if a:context.text =~ '}}$'
+      return indent(pair_lnum)
+    elseif a:context.text =~ '}}*>$'
+      return -1
+    elseif s:prev_ends_with(a:context, '[\|%{')
+      return indent(a:context.prev_nb_lnum) + s:sw()
+    elseif a:context.prev_nb_text =~ ',$'
+      return indent(a:context.prev_nb_lnum)
+    else
+      return indent(pair_lnum) + s:sw()
+    endif
+  endif
+
+  " Multi-line opening tag -- >, />, or %> are on a different line that their opening <
+  let pair_lnum = searchpair('^\s\+<.*[^>]$', '', '^[^<]*[/%}]\?>$', 'bW', "line('.') == ".a:context.lnum." || s:is_string_or_comment(line('.'), col('.'))", max([0, a:context.lnum - g:elixir_indent_max_lookbehind]))
+  if pair_lnum
+    if a:context.text =~ '^\s\+\%\(>\|\/>\|%>\|}}>\)$'
+      call s:debug("current line is a lone >, />, or %>")
+      return indent(pair_lnum)
+    elseif a:context.text =~ '\%\(>\|\/>\|%>\|}}>\)$'
+      call s:debug("current line ends in >, />, or %>")
+      if s:prev_ends_with(a:context, ',')
+        return indent(a:context.prev_nb_lnum)
+      else
+        return -1
+      endif
+    else
+      call s:debug("in the body of a multi-line opening tag")
+      return indent(pair_lnum) + s:sw()
+    endif
+  endif
+
+  " Special cases
+  if s:prev_ends_with(a:context, '^[^<]*do\s%>')
+    call s:debug("prev line closes a multi-line do block")
+    return indent(a:context.prev_nb_lnum)
+  elseif a:context.prev_nb_text =~ 'do\s*%>$'
+    call s:debug("prev line opens a do block")
+    return indent(a:context.prev_nb_lnum) + s:sw()
+  elseif a:context.text =~ '^\s\+<\/[a-zA-Z0-9\.\-_]\+>\|<% end %>'
+    call s:debug("a single closing tag")
+    if a:context.prev_nb_text =~ '^\s\+<[^%\/]*[^/]>.*<\/[a-zA-Z0-9\.\-_]\+>$'
+      call s:debug("opening and closing tags are on the same line")
+      return indent(a:context.prev_nb_lnum) - s:sw()
+    elseif a:context.prev_nb_text =~ '^\s\+<[^%\/]*[^/]>\|\s\+>' 
+      call s:debug("prev line is opening html tag or single >")
+      return indent(a:context.prev_nb_lnum)
+    elseif s:prev_ends_with(a:context, '^[^<]*\%\(do\s\)\@<!%>')
+      call s:debug("prev line closes a multi-line eex tag")
+      return indent(a:context.prev_nb_lnum) - 2 * s:sw()
+    else
+      return indent(a:context.prev_nb_lnum) - s:sw()
+    endif
+  elseif a:context.text =~ '^\s*<%\s*\%(end\|else\|catch\|rescue\)\>.*%>'
+    call s:debug("eex middle or closing eex tag")
+    return indent(a:context.prev_nb_lnum) - s:sw()
+  elseif a:context.prev_nb_text =~ '\s*<\/\|<% end %>$'
+    call s:debug("prev is closing tag")
+    return indent(a:context.prev_nb_lnum)
+  elseif a:context.prev_nb_text =~ '^\s\+<[^%\/]*[^/]>.*<\/[a-zA-Z0-9\.\-_]\+>$'
+    call s:debug("opening and closing tags are on the same line")
+    return indent(a:context.prev_nb_lnum)
+  elseif s:prev_ends_with(a:context, '\s\+\/>')
+    call s:debug("prev ends with a single \>")
+    return indent(a:context.prev_nb_lnum)
+  elseif s:prev_ends_with(a:context, '^[^<]*\/>')
+    call s:debug("prev line is closing a multi-line self-closing tag")
+    return indent(a:context.prev_nb_lnum) - s:sw()
+  elseif s:prev_ends_with(a:context, '^\s\+<.*\/>')
+    call s:debug("prev line is closing self-closing tag")
+    return indent(a:context.prev_nb_lnum)
+  elseif a:context.prev_nb_text =~ '^\s\+%\?>$'
+    call s:debug("prev line is a single > or %>")
+    return indent(a:context.prev_nb_lnum) + s:sw()
+  endif
+
+  " Simple HTML (ie, opening tag is not split across lines)
+  let pair_lnum = searchpair('^\s\+<[^%\/].*[^\/>]>$', '', '^\s\+<\/\w\+>$', 'bW', "line('.') == ".a:context.lnum." || s:is_string_or_comment(line('.'), col('.'))", max([0, a:context.lnum - g:elixir_indent_max_lookbehind]))
+  if pair_lnum
+    call s:debug("simple HTML")
+    if a:context.text =~ '^\s\+<\/\w\+>$'
+      return indent(pair_lnum)
+    else
+      return indent(pair_lnum) + s:sw()
+    endif
+  endif
 
   return -1
 endfunction

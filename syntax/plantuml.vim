@@ -49,9 +49,11 @@ syntax keyword plantumlKeyword split start stereotype stop title top up while
 " Not in 'java - jar plantuml.jar - language' results
 syntax keyword plantumlKeyword endlegend sprite then
 " gantt
-syntax keyword plantumlTypeKeyword project monday tuesday wednesday thursday friday saturday sunday
-syntax keyword plantumlKeyword starts ends start end closed day after colored lasts happens in at are to the and
-
+syntax keyword plantumlTypeKeyword monday tuesday wednesday thursday friday saturday sunday today
+syntax keyword plantumlTypeKeyword project Project labels Labels last first column
+syntax keyword plantumlKeyword starts ends start end closed after colored lasts happens in at are to the and
+syntax keyword plantumlKeyword printscale ganttscale projectscale daily weekly monthly quarterly yearly zoom
+syntax keyword plantumlKeyword day days week weeks today then complete displays same row pauses
 
 syntax keyword plantumlCommentTODO XXX TODO FIXME NOTE contained
 syntax match plantumlColor /#[0-9A-Fa-f]\{6\}\>/

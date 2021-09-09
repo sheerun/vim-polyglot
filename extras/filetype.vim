@@ -1,7 +1,7 @@
 " Vim support file to detect file types
 "
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last Change:	2021 Jul 03
+" Last Change:	2021 Aug 23
 
 " Listen very carefully, I will say this only once
 if exists("did_load_filetypes")
@@ -537,8 +537,13 @@ au BufNewFile,BufRead *.drac,*.drc,*lvs,*lpe	setf dracula
 " Datascript
 au BufNewFile,BufRead *.ds			setf datascript
 
-" dsl
-au BufNewFile,BufRead *.dsl			setf dsl
+" dsl: DSSSL or Structurizr
+au BufNewFile,BufRead *.dsl
+	\ if getline(1) =~ '^\s*<\!' |
+	\   setf dsl |
+	\ else |
+	\   setf structurizr |
+	\ endif
 
 " DTD (Document Type Definition for XML)
 au BufNewFile,BufRead *.dtd			setf dtd
@@ -874,6 +879,9 @@ au BufNewFile,BufRead *.ipynb				setf json
 " JSONC
 au BufNewFile,BufRead *.jsonc			setf jsonc
 
+" Julia
+au BufNewFile,BufRead *.jl			setf julia
+
 " Kixtart
 au BufNewFile,BufRead *.kix			setf kix
 
@@ -1021,7 +1029,7 @@ au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md  setf markdown
 " Mason
 au BufNewFile,BufRead *.mason,*.mhtml,*.comp	setf mason
 
-" Mathematica, Matlab, Murphi or Objective C
+" Mathematica, Matlab, Murphi, Objective C or Octave
 au BufNewFile,BufRead *.m			call polyglot#ft#FTm()
 
 " Mathematica notebook
@@ -1166,6 +1174,9 @@ au BufNewFile,BufRead *.ml,*.mli,*.mll,*.mly,.ocamlinit,*.mlt,*.mlp,*.mlip,*.mli
 
 " Occam
 au BufNewFile,BufRead *.occ			setf occam
+
+" Octave
+au BufNewFile,BufRead octave.conf,.octaverc,octaverc	setf octave
 
 " Omnimark
 au BufNewFile,BufRead *.xom,*.xin		setf omnimark
@@ -1375,6 +1386,9 @@ au BufNewFile,BufRead *.pk			setf poke
 " Protocols
 au BufNewFile,BufRead */etc/protocols		setf protocols
 
+" Pyret
+au BufNewFile,BufRead *.arr			setf pyret
+
 " Pyrex
 au BufNewFile,BufRead *.pyx,*.pxd		setf pyrex
 
@@ -1523,6 +1537,9 @@ au BufNewFile,BufRead *.sbt			setf sbt
 " Scilab
 au BufNewFile,BufRead *.sci,*.sce		setf scilab
 
+" scdoc
+au BufNewFile,BufRead *.scd			setf scdoc
+
 " SCSS
 au BufNewFile,BufRead *.scss			setf scss
 
@@ -1612,7 +1629,7 @@ au BufNewFile,BufRead .zshrc,.zshenv,.zlogin,.zlogout,.zcompdump setf zsh
 au BufNewFile,BufRead *.zsh			setf zsh
 
 " Scheme
-au BufNewFile,BufRead *.scm,*.ss,*.rkt		setf scheme
+au BufNewFile,BufRead *.scm,*.ss,*.rkt,*.rktd,*.rktl 	setf scheme
 
 " Screen RC
 au BufNewFile,BufRead .screenrc,screenrc	setf screen

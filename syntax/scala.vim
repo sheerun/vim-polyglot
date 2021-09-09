@@ -70,11 +70,13 @@ syn match scalaChar /'\\u[A-Fa-f0-9]\{4}'/ contains=scalaUnicodeChar
 syn match scalaEscapedChar /\\[\\"'ntbrf]/
 syn match scalaUnicodeChar /\\u[A-Fa-f0-9]\{4}/
 hi link scalaChar Character
-hi link scalaEscapedChar Function
+hi link scalaEscapedChar Special
 hi link scalaUnicodeChar Special
 
 syn match scalaOperator "||"
 syn match scalaOperator "&&"
+syn match scalaOperator "|"
+syn match scalaOperator "&"
 hi link scalaOperator Special
 
 syn match scalaNameDefinition /\<[_A-Za-z0-9$]\+\>/ contained nextgroup=scalaPostNameDefinition,scalaVariableDeclarationList
@@ -122,7 +124,7 @@ hi link scalaTypePostExtension Keyword
 
 syn match scalaTypeAnnotation /\%([_a-zA-Z0-9$\s]:\_s*\)\ze[_=(\.A-Za-z0-9$]\+/ skipwhite nextgroup=scalaTypeDeclaration contains=scalaRoundBrackets
 syn match scalaTypeAnnotation /)\_s*:\_s*\ze[_=(\.A-Za-z0-9$]\+/ skipwhite nextgroup=scalaTypeDeclaration
-hi link scalaTypeAnnotation Normal
+hi clear scalaTypeAnnotation
 
 syn match scalaCaseFollowing /\<[_\.A-Za-z0-9$]\+\>/ contained contains=scalaCapitalWord
 syn match scalaCaseFollowing /`[^`]\+`/ contained contains=scalaCapitalWord
@@ -148,21 +150,21 @@ hi link scalaString String
 hi link scalaStringEmbeddedQuote String
 
 syn region scalaIString matchgroup=scalaInterpolationBrackets start=/\<[a-zA-Z][a-zA-Z0-9_]*"/ skip=/\\"/ end=/"/ contains=scalaInterpolation,scalaInterpolationB,scalaEscapedChar,scalaUnicodeChar
-syn region scalaTripleIString matchgroup=scalaInterpolationBrackets start=/\<[a-zA-Z][a-zA-Z0-9_]*"""/ end=/"""\%([^"]\|$\)/ contains=scalaInterpolation,scalaInterpolationB,scalaEscapedChar,scalaUnicodeChar
+syn region scalaTripleIString matchgroup=scalaInterpolationBrackets start=/\<[a-zA-Z][a-zA-Z0-9_]*"""/ end=/"""\ze\%([^"]\|$\)/ contains=scalaInterpolation,scalaInterpolationB,scalaEscapedChar,scalaUnicodeChar
 hi link scalaIString String
 hi link scalaTripleIString String
 
 syn match scalaInterpolation /\$[a-zA-Z0-9_$]\+/ contained
 exe 'syn region scalaInterpolationB matchgroup=scalaInterpolationBoundary start=/\${/ end=/}/ contained contains=' . s:ContainedGroup()
 hi link scalaInterpolation Function
-hi link scalaInterpolationB Normal
+hi clear scalaInterpolationB
 
 syn region scalaFString matchgroup=scalaInterpolationBrackets start=/f"/ skip=/\\"/ end=/"/ contains=scalaFInterpolation,scalaFInterpolationB,scalaEscapedChar,scalaUnicodeChar
 syn match scalaFInterpolation /\$[a-zA-Z0-9_$]\+\(%[-A-Za-z0-9\.]\+\)\?/ contained
 exe 'syn region scalaFInterpolationB matchgroup=scalaInterpolationBoundary start=/${/ end=/}\(%[-A-Za-z0-9\.]\+\)\?/ contained contains=' . s:ContainedGroup()
 hi link scalaFString String
 hi link scalaFInterpolation Function
-hi link scalaFInterpolationB Normal
+hi clear scalaFInterpolationB
 
 syn region scalaTripleString start=/"""/ end=/"""\%([^"]\|$\)/ contains=scalaEscapedChar,scalaUnicodeChar
 syn region scalaTripleFString matchgroup=scalaInterpolationBrackets start=/f"""/ end=/"""\%([^"]\|$\)/ contains=scalaFInterpolation,scalaFInterpolationB,scalaEscapedChar,scalaUnicodeChar
