@@ -190,7 +190,7 @@ if !has_key(g:polyglot_is_disabled, 'just')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'sway')
-  au BufNewFile,BufRead *.i3.config,*.i3config,*.sway.config,*.swayconfig,*sway/config,i3.config,sway.config setf i3config
+  au BufNewFile,BufRead *.sway.config,*.swayconfig,*sway/config,swayconfig setf swayconfig
 endif
 
 if !has_key(g:polyglot_is_disabled, 'hjson')
@@ -226,10 +226,6 @@ if !has_key(g:polyglot_is_disabled, 'xf86conf')
   au BufNewFile,BufRead */xorg.conf.d/*.conf,xorg.conf,xorg.conf-4 setf xf86conf
   au BufNewFile,BufRead XF86Config-4* call s:StarSetf('xf86conf')
   au BufNewFile,BufRead XF86Config* call s:StarSetf('xf86conf')
-endif
-
-if !has_key(g:polyglot_is_disabled, 'pullrequest')
-  au BufNewFile,BufRead PULLREQ_EDITMSG setf pullrequest
 endif
 
 if !has_key(g:polyglot_is_disabled, 'text')
@@ -274,10 +270,6 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'z8a')
   au BufNewFile,BufRead *.z8a setf z8a
-endif
-
-if !has_key(g:polyglot_is_disabled, 'zimbutempl')
-  au BufNewFile,BufRead *.zut setf zimbutempl
 endif
 
 if !has_key(g:polyglot_is_disabled, 'zimbu')
@@ -801,10 +793,6 @@ if !has_key(g:polyglot_is_disabled, 'privoxy')
   au BufNewFile,BufRead *.action setf privoxy
 endif
 
-if !has_key(g:polyglot_is_disabled, 'proc')
-  au BufNewFile,BufRead *.pc setf proc
-endif
-
 if !has_key(g:polyglot_is_disabled, 'obj')
   au BufNewFile,BufRead *.obj setf obj
 endif
@@ -875,10 +863,6 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'pike')
   au BufNewFile,BufRead *.pike,*.pmod setf pike
-endif
-
-if !has_key(g:polyglot_is_disabled, 'pcmk')
-  au BufNewFile,BufRead *.pcmk setf pcmk
 endif
 
 if !has_key(g:polyglot_is_disabled, 'pdf')
@@ -1060,10 +1044,6 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'mel')
   au BufNewFile,BufRead *.mel setf mel
-endif
-
-if !has_key(g:polyglot_is_disabled, 'map')
-  au BufNewFile,BufRead *.map setf map
 endif
 
 if !has_key(g:polyglot_is_disabled, 'maple')
@@ -1316,10 +1296,6 @@ if !has_key(g:polyglot_is_disabled, 'icon')
   au BufNewFile,BufRead *.icn setf icon
 endif
 
-if !has_key(g:polyglot_is_disabled, 'httest')
-  au BufNewFile,BufRead *.htb,*.htt setf httest
-endif
-
 if !has_key(g:polyglot_is_disabled, 'hb')
   au BufNewFile,BufRead *.hb setf hb
 endif
@@ -1450,10 +1426,6 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'fetchmail')
   au BufNewFile,BufRead {.,}fetchmailrc setf fetchmail
-endif
-
-if !has_key(g:polyglot_is_disabled, 'factor')
-  au BufNewFile,BufRead *.factor setf factor
 endif
 
 if !has_key(g:polyglot_is_disabled, 'fan')
@@ -1702,10 +1674,6 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'chaiscript')
   au BufNewFile,BufRead *.chai setf chaiscript
-endif
-
-if !has_key(g:polyglot_is_disabled, 'cfengine')
-  au BufNewFile,BufRead cfengine.conf setf cfengine
 endif
 
 if !has_key(g:polyglot_is_disabled, 'cdrdaoconf')

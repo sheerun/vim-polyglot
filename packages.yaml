@@ -961,7 +961,7 @@ filetypes:
   linguist: Less
 ---
 name: lilypond
-remote: anowlcalledjosh/vim-lilypond
+remote: anowlcalledjosh/vim-lilypond@main
 filetypes:
 - name: lilypond
   linguist: LilyPond
@@ -1651,7 +1651,7 @@ filetypes:
   - '.tmux*.conf'
 ---
 name: toml
-remote: cespare/vim-toml
+remote: cespare/vim-toml@main
 filetypes:
 - name: toml
   linguist: TOML
@@ -2154,15 +2154,6 @@ filetypes:
   patterns:
   - pattern: "*/etc/cdrdao.conf,*/etc/defaults/cdrdao,*/etc/default/cdrdao,.cdrdao"
     description: Cdrdao config
----
-name: cfengine
-remote: vim/vim:runtime
-glob: "**/cfengine.vim"
-filetypes:
-- name: cfengine
-  patterns:
-  - pattern: cfengine.conf
-    description: Cfengine
 ---
 name: chaiscript
 remote: vim/vim:runtime
@@ -2728,15 +2719,6 @@ filetypes:
   - pattern: "*.fan,*.fwt"
     description: Fantom
 ---
-name: factor
-remote: vim/vim:runtime
-glob: "**/factor.vim"
-filetypes:
-- name: factor
-  patterns:
-  - pattern: "*.factor"
-    description: Factor
----
 name: fetchmail
 remote: vim/vim:runtime
 glob: "**/fetchmail.vim"
@@ -3036,15 +3018,6 @@ filetypes:
   patterns:
   - pattern: "*.hb"
     description: Hyper Builder
----
-name: httest
-remote: vim/vim:runtime
-glob: "**/httest.vim"
-filetypes:
-- name: httest
-  patterns:
-  - pattern: "*.htt,*.htb"
-    description: Httest
 ---
 name: icon
 remote: vim/vim:runtime
@@ -3596,15 +3569,6 @@ filetypes:
   - pattern: "*.mv,*.mpl,*.mws"
     description: Maple V
 ---
-name: map
-remote: vim/vim:runtime
-glob: "**/map.vim"
-filetypes:
-- name: map
-  patterns:
-  - pattern: "*.map"
-    description: Map (UMN mapserver config file)
----
 name: mel
 remote: vim/vim:runtime
 glob: "**/mel.vim"
@@ -4010,15 +3974,6 @@ filetypes:
   - pattern: "*.pdf"
     description: PDF
 ---
-name: pcmk
-remote: vim/vim:runtime
-glob: "**/pcmk.vim"
-filetypes:
-- name: pcmk
-  patterns:
-  - pattern: "*.pcmk"
-    description: PCMK - HAE - crm configure edit
----
 name: pike
 remote: vim/vim:runtime
 glob: "**/pike.vim"
@@ -4182,15 +4137,6 @@ filetypes:
   patterns:
   - pattern: "*.obj"
     description: 'TODO: is there a way to avoid MS-Windows Object files?'
----
-name: proc
-remote: vim/vim:runtime
-glob: "**/proc.vim"
-filetypes:
-- name: proc
-  patterns:
-  - pattern: "*.pc"
-    description: Oracle Pro*C/C++
 ---
 name: privoxy
 remote: vim/vim:runtime
@@ -5394,15 +5340,6 @@ filetypes:
   - pattern: "*.zu"
     description: Zimbu
 ---
-name: zimbutempl
-remote: vim/vim:runtime
-glob: "**/zimbutempl.vim"
-filetypes:
-- name: zimbutempl
-  patterns:
-  - pattern: "*.zut"
-    description: Zimbu Templates
----
 name: z8a
 remote: vim/vim:runtime
 glob: "**/z8a.vim"
@@ -5487,14 +5424,6 @@ filetypes:
   - pattern: "*.text,README"
     description: the "conf" type being used if there is a line starting with '#'.
 ---
-name: pullrequest
-remote: vim/vim:runtime
-glob: "**/pullrequest.vim"
-filetypes:
-- name: pullrequest
-  patterns:
-  - pattern: PULLREQ_EDITMSG
----
 name: autodoc
 remote: vim/vim:runtime
 glob: "**/autodoc.vim"
@@ -5569,12 +5498,12 @@ filetypes:
     description: Hjson (https://hjson.github.io)
 ---
 name: sway
-remote: jamespeapen/swayconfig.vim/tree/i3sway
+remote: jamespeapen/swayconfig.vim
 filetypes:
-- name: i3config
+- name: swayconfig
   patterns:
-  - pattern: 'i3.config,*.i3config,*.i3.config,*sway/config,*.swayconfig,*.sway.config,sway.config'
-    description: Sway/i3 Configuration
+  - pattern: '*sway/config,*.swayconfig,*.sway.config,swayconfig'
+    description: Sway Configuration
 ---
 name: just
 remote: NoahTheDuke/vim-just
@@ -5603,7 +5532,7 @@ filetypes:
     description: OpenSCAD 3D modeling language
 ---
 name: mermaid
-remote: mracos/mermaid.vim
+remote: mracos/mermaid.vim@main
 filetypes:
 - name: mermaid
   patterns:

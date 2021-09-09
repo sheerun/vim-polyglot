@@ -491,6 +491,7 @@ def extract(packages)
 
   output = []
   packages.map do |package|
+    copied_something = false
     if !package["remote"]
       next
     end
@@ -516,12 +517,18 @@ def extract(packages)
             if package["extract_in_after"] == true
               target = "after/#{target}"
             end
+            copied_something = true
             copy_file(package["name"], "#{subtree}#{p}", target)
           end
         end
       elsif File.exist?(subpath)
+        copied_something = true
         copy_file(package["name"], subpath, subdir)
       end
+    end
+
+    if !copied_something
+      raise StandardError.new("No files in: #{package["name"]}")
     end
 
     if repo == "vim/vim"
