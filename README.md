@@ -70,7 +70,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [dart](https://github.com/dart-lang/dart-vim-plugin) (Dart syntax highlighting for dart and drt files)
 - [dhall](https://github.com/vmchale/dhall-vim) (Dhall syntax highlighting for dhall files)
 - [dlang](https://github.com/JesseKPhillips/d.vim) (D syntax highlighting for d, di, lst, dd, ddoc and sdl files)
-- [docker-compose](https://github.com/ekalinin/Dockerfile.vim)
+- [docker](https://github.com/ekalinin/Dockerfile.vim)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (Elixir and HTML+EEX syntax highlighting for ex, exs, eex, html.leex and leex files)
 - [elm](https://github.com/andys8/vim-elm-syntax) (Elm syntax highlighting for elm files)
 - [emberscript](https://github.com/yalesov/vim-ember-script) (EmberScript syntax highlighting for em and emberscript files)
