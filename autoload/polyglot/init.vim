@@ -2672,11 +2672,16 @@ endif
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 
-func! s:Observe(fn)
-  let b:PolyglotObserve = function("polyglot#" . a:fn)
+let s:detect_func = 'shebang#Detect'
+
+func! s:PolyglotObserve(fn)
+  call function("polyglot#" . a:fn)
+endfunc
+
+func! s:Observe()
   augroup polyglot-observer
     au!
-    au CursorHold,CursorHoldI <buffer> if (&ft == "" || &ft == "conf") | call b:PolyglotObserve() | endif
+    au CursorHold,CursorHoldI <buffer> if (&ft == "" || &ft == "conf") | call s:PolyglotObserve(s:detect_func) | endif
   augroup END
 endfunc
 
@@ -2684,7 +2689,7 @@ au BufNewFile,BufRead,StdinReadPost,BufWritePost * if (&ft == "" || &ft == "conf
   \ call polyglot#shebang#Detect() | endif
 
 au BufWinEnter * if &ft == "" && expand("<afile>:e") == "" |
-  \ call s:Observe('shebang#Detect') | endif
+  \ call s:Observe() | endif
 
 au BufWritePost * au! polyglot-observer
 
