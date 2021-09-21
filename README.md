@@ -131,6 +131,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [mermaid](https://github.com/mracos/mermaid.vim/tree/main) (Syntax highlighting for mermaid, mm and mmd files)
 - [meson](https://github.com/mesonbuild/meson/tree/master/data/syntax-highlighting/vim) (Meson syntax highlighting for wrap files)
 - [mint](https://github.com/IrenejMarc/vim-mint) (Syntax highlighting for mint files)
+- [mips](https://github.com/harenome/vim-mipssyntax/) (Syntax highlighting for mips files)
 - [moonscript](https://github.com/leafo/moonscript-vim) (MoonScript syntax highlighting for moon files)
 - [nftables](https://github.com/nfnty/vim-nftables) (Syntax highlighting for nft files)
 - [nginx](https://github.com/chr4/nginx.vim) (Nginx syntax highlighting for nginx, nginxconf and vhost files)

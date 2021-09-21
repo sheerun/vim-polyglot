@@ -1054,6 +1054,13 @@ filetypes:
   extensions:
   - wrap
 ---
+name: mips
+remote: harenome/vim-mipssyntax
+filetypes:
+- name: mips
+  extensions:
+  - asm
+---
 name: moonscript
 remote: leafo/moonscript-vim
 filetypes:
