@@ -2674,10 +2674,9 @@ endif
 
 func! s:Observe(fn)
   let b:PolyglotObserve = function("polyglot#" . a:fn)
-  augroup polyglot-observer
-    au!
-    au CursorHold,CursorHoldI <buffer> if (&ft == "" || &ft == "conf") | call b:PolyglotObserve() | endif
-  augroup END
+  if (&ft == "" || &ft == "conf") 
+    call b:PolyglotObserve()
+  endif
 endfunc
 
 au BufNewFile,BufRead,StdinReadPost,BufWritePost * if (&ft == "" || &ft == "conf") && expand("<afile>:e") == "" |
