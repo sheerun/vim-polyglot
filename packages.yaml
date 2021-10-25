@@ -5510,7 +5510,7 @@ remote: NoahTheDuke/vim-just
 filetypes:
 - name: just
   patterns:
-  - pattern: 'justfile,*.just'
+  - pattern: 'justfile,.justfile,*.just'
     description: 'Just a task runner (https://github.com/casey/just)'
 ---
 name: nftables
