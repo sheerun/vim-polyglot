@@ -4618,6 +4618,14 @@ filetypes:
   - pattern: "*.smt,*.smith"
     description: SMITH
 ---
+name: smithy
+remote: jasdel/vim-smithy
+filetypes:
+- name: smithy
+  patterns:
+  - pattern: "*.smithy"
+    description: Smithy IDL
+---
 name: snobol4
 native: true
 glob: "**/snobol4.vim"
