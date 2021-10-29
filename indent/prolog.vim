@@ -3,9 +3,10 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'prolog', 'indent/prolog.vim')
 endif
 
 "  vim: set sw=4 sts=4:
-"  Maintainer	: Gergely Kontra <kgergely@mcl.hu>
-"  Revised on	: 2002.02.18. 23:34:05
-"  Language	: Prolog
+"  Language:	Prolog
+"  Maintainer:	Gergely Kontra <kgergely@mcl.hu> (Invalid email address)
+" 		Doug Kearns <dougkearns@gmail.com>
+"  Revised on:	2002.02.18. 23:34:05
 "  Last change by: Takuya Fujiwara, 2018 Sep 23
 
 " TODO:

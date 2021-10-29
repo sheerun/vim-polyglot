@@ -3,9 +3,10 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'framescript', 'indent/framesc
 endif
 
 " Vim indent file
-" Language:             FrameScript
-" Previous Maintainer:  Nikolai Weibull <now@bitwi.se>
-" Latest Revision:      2008-07-19
+" Language:		FrameScript
+" Maintainer:		Doug Kearns <dougkearns@gmail.com>
+" Previous Maintainer:	Nikolai Weibull <now@bitwi.se>
+" Last Change:		24 Sep 2021
 
 if exists("b:did_indent")
   finish
@@ -15,6 +16,8 @@ let b:did_indent = 1
 setlocal indentexpr=GetFrameScriptIndent()
 setlocal indentkeys=!^F,o,O,0=~Else,0=~EndIf,0=~EndLoop,0=~EndSub
 setlocal nosmartindent
+
+let b:undo_indent = "setl inde< indk< si<"
 
 if exists("*GetFrameScriptIndent")
   finish

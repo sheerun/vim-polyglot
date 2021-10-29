@@ -28,6 +28,8 @@ setlocal indentkeys+=0=and,0=class,0=constraint,0=done,0=else,0=end,0=exception,
 setlocal nolisp
 setlocal nosmartindent
 
+let b:undo_indent = "setl et< inde< indk< lisp< si<"
+
 " At least Marc Weber and Markus Mottl do not like this:
 " setlocal textwidth=80
 
@@ -37,6 +39,7 @@ if !exists("no_ocaml_comments")
    setlocal comments=sr:(*\ ,mb:\ ,ex:*)
    setlocal comments^=sr:(**,mb:\ \ ,ex:*)
    setlocal fo=cqort
+  let b:undo_indent .= " | setl com< fo<"
  endif
 endif
 

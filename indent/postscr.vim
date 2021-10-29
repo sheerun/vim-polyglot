@@ -3,9 +3,10 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'postscr', 'indent/postscr.vim
 endif
 
 " PostScript indent file
-" Language:    PostScript
-" Maintainer:  Mike Williams <mrw@netcomuk.co.uk>
-" Last Change: 2nd July 2001
+" Language:	PostScript
+" Maintainer:	Mike Williams <mrw@netcomuk.co.uk> (Invalid email address)
+" 		Doug Kearns <dougkearns@gmail.com>
+" Last Change:	2nd July 2001
 "
 
 " Only load this indent file when no other was loaded.

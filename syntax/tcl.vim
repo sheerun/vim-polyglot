@@ -10,9 +10,9 @@ endif
 "		(previously Matt Neumann <mattneu@purpleturtle.com>)
 "		(previously Allan Kelly <allan@fruitloaf.co.uk>)
 " Original:	Robin Becker <robin@jessikat.demon.co.uk>
-" Last Change:	2014-02-12
+" Last Change:	2021 Oct 03
 " Version:	1.14
-" URL:		http://bitbucket.org/taylor_venable/metasyntax/src/tip/Config/vim/syntax/tcl.vim
+" URL:		(removed, no longer worked)
 
 " quit when a syntax file was already loaded
 if exists("b:current_syntax")
@@ -172,7 +172,7 @@ syn region tcltkCommand matchgroup=tcltkCommandColor start="\<format\>" matchgro
 
 " PACK
 " commands associated with pack
-syn keyword tcltkPackSwitch	contained	forget info propogate slaves
+syn keyword tcltkPackSwitch	contained	forget info propagate slaves
 syn keyword tcltkPackConfSwitch	contained	after anchor before expand fill in ipadx ipady padx pady side
 syn region tcltkCommand matchgroup=tcltkCommandColor start="\<pack\>" matchgroup=NONE skip="^\s*$" end="]\|[^\\]*\s*$"he=e-1  contains=tclLineContinue,tcltkPackSwitch,tcltkPackConf,tcltkPackConfSwitch,tclNumber,tclVarRef,tclString,tcltkCommand keepend
 

@@ -46,6 +46,8 @@ setlocal comments=sr:(*\ ,mb:\ ,ex:*)
 setlocal comments^=sr:(**,mb:\ \ ,ex:*)
 setlocal commentstring=(*%s*)
 
+let b:undo_ftplugin = "setlocal com< cms<"
+
 " Add mappings, unless the user didn't want this.
 if !exists("no_plugin_maps") && !exists("no_ocaml_maps")
   " (un)commenting
@@ -54,6 +56,11 @@ if !exists("no_plugin_maps") && !exists("no_ocaml_maps")
     xmap <buffer> <LocalLeader>c <Plug>BUncomOn
     nmap <buffer> <LocalLeader>C <Plug>LUncomOff
     xmap <buffer> <LocalLeader>C <Plug>BUncomOff
+    let b:undo_ftplugin .=
+	  \ " | silent! execute 'nunmap <buffer> <LocalLeader>c'" .
+	  \ " | silent! execute 'xunmap <buffer> <LocalLeader>c'" .
+	  \ " | silent! execute 'nunmap <buffer> <LocalLeader>C'" .
+	  \ " | silent! execute 'xunmap <buffer> <LocalLeader>C'"
   endif
 
   nnoremap <buffer> <Plug>LUncomOn gI(* <End> *)<ESC>
@@ -66,17 +73,27 @@ if !exists("no_plugin_maps") && !exists("no_ocaml_maps")
 
   nmap <buffer> <LocalLeader>t <Plug>OCamlPrintType
   xmap <buffer> <LocalLeader>t <Plug>OCamlPrintType
+
+  let b:undo_ftplugin .=
+	\ " | silent! execute 'nunmap <buffer> <LocalLeader>s'" .
+	\ " | silent! execute 'nunmap <buffer> <LocalLeader>S'" .
+	\ " | silent! execute 'nunmap <buffer> <LocalLeader>t'" .
+	\ " | silent! execute 'xunmap <buffer> <LocalLeader>t'"
 endif
 
-" Let % jump between structure elements (due to Issac Trotts)
-let b:mw =         '\<let\>:\<and\>:\(\<in\>\|;;\)'
-let b:mw = b:mw . ',\<if\>:\<then\>:\<else\>'
-let b:mw = b:mw . ',\<\(for\|while\)\>:\<do\>:\<done\>'
-let b:mw = b:mw . ',\<\(object\|sig\|struct\|begin\)\>:\<end\>'
-let b:mw = b:mw . ',\<\(match\|try\)\>:\<with\>'
-let b:match_words = b:mw
+if exists("loaded_matchit") && !exists("b:match_words")
+  " Let % jump between structure elements (due to Issac Trotts)
+  let b:mw =         '\<let\>:\<and\>:\(\<in\>\|;;\)'
+  let b:mw = b:mw . ',\<if\>:\<then\>:\<else\>'
+  let b:mw = b:mw . ',\<\(for\|while\)\>:\<do\>:\<done\>'
+  let b:mw = b:mw . ',\<\(object\|sig\|struct\|begin\)\>:\<end\>'
+  let b:mw = b:mw . ',\<\(match\|try\)\>:\<with\>'
+  let b:match_words = b:mw
 
-let b:match_ignorecase=0
+  let b:match_ignorecase=0
+
+  let b:undo_ftplugin .= " | unlet! b:match_ignorecase b:match_words"
+endif
 
 function! s:OcpGrep(bang,args) abort
   let grepprg = &l:grepprg
@@ -154,11 +171,8 @@ endif
 if exists("g:ocaml_folding")
   setlocal foldmethod=expr
   setlocal foldexpr=OMLetFoldLevel(v:lnum)
+  let b:undo_ftplugin .= " | setlocal fdm< fde<"
 endif
-
-let b:undo_ftplugin = "setlocal efm< foldmethod< foldexpr<"
-	\ . "| unlet! b:mw b:match_words b:match_ignorecase"
-
 
 " - Only definitions below, executed once -------------------------------------
 

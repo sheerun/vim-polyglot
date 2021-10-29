@@ -3,9 +3,10 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'make', 'indent/make.vim')
 endif
 
 " Vim indent file
-" Language:             Makefile
-" Previous Maintainer:  Nikolai Weibull <now@bitwi.se>
-" Latest Revision:      2007-05-07
+" Language:		Makefile
+" Maintainer:		Doug Kearns <dougkearns@gmail.com>
+" Previous Maintainer:	Nikolai Weibull <now@bitwi.se>
+" Last Change:		24 Sep 2021
 
 if exists("b:did_indent")
   finish
@@ -15,6 +16,8 @@ let b:did_indent = 1
 setlocal indentexpr=GetMakeIndent()
 setlocal indentkeys=!^F,o,O,<:>,=else,=endif
 setlocal nosmartindent
+
+let b:undo_indent = "setl ai< inde< indk<"
 
 if exists("*GetMakeIndent")
   finish

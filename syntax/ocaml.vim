@@ -172,6 +172,7 @@ syn match    ocamlMTDef "=\s*\w\(\w\|'\)*\>"hs=s+1,me=s+1 skipwhite skipempty ne
 
 " Quoted strings
 syn region ocamlString matchgroup=ocamlQuotedStringDelim start="{\z\([a-z_]*\)|" end="|\z1}" contains=@Spell
+syn region ocamlString matchgroup=ocamlQuotedStringDelim start="{%[a-z_]\+\(\.[a-z_]\+\)\?\( \z\([a-z_]\+\)\)\?|" end="|\z1}" contains=@Spell
 
 syn keyword  ocamlKeyword  and as assert class
 syn keyword  ocamlKeyword  constraint else

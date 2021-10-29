@@ -439,6 +439,10 @@ if !has_key(g:polyglot_is_disabled, 'trustees')
   au BufNewFile,BufRead trustees.conf setf trustees
 endif
 
+if !has_key(g:polyglot_is_disabled, 'tridactyl')
+  au BufNewFile,BufRead *tridactylrc setf tridactyl
+endif
+
 if !has_key(g:polyglot_is_disabled, 'treetop')
   au BufNewFile,BufRead *.treetop setf treetop
 endif
@@ -2339,7 +2343,7 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'glsl')
   au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
-  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
+  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.rchit,*.rmiss,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
 endif
 
 if !has_key(g:polyglot_is_disabled, 'git')
@@ -2406,7 +2410,7 @@ if !has_key(g:polyglot_is_disabled, 'docker-compose')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'yaml')
-  au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,fish_history,fish_read_history,glide.lock,yarn.lock setf yaml
+  au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,CITATION.cff,fish_history,fish_read_history,glide.lock,yarn.lock setf yaml
 endif
 
 if !has_key(g:polyglot_is_disabled, 'mysql')

@@ -232,6 +232,8 @@ syntax keyword swiftStructure
 syntax keyword swiftDebugIdentifier
       \ #column
       \ #file
+      \ #fileID
+      \ #filePath
       \ #function
       \ #line
       \ __COLUMN__
