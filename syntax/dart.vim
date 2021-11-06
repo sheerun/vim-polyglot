@@ -27,15 +27,16 @@ syntax keyword dartConditional    if else switch
 syntax keyword dartRepeat         do while for
 syntax keyword dartBoolean        true false
 syntax keyword dartConstant       null
-syntax keyword dartTypedef        this super class typedef enum mixin extension
+syntax keyword dartReserved       typedef extends final class void
+syntax keyword dartTypedef        this super enum mixin extension
 syntax keyword dartOperator       new is as in
 syntax match   dartOperator       "+=\=\|-=\=\|*=\=\|/=\=\|%=\=\|\~/=\=\|<<=\=\|>>=\=\|[<>]=\=\|===\=\|\!==\=\|&=\=\|\^=\=\||=\=\|||\|&&\|\[\]=\=\|=>\|!\|\~\|?\|:"
-syntax keyword dartCoreType       void var dynamic
+syntax keyword dartCoreType       var dynamic
 syntax keyword dartStatement      return
-syntax keyword dartStorageClass   static abstract final const factory late
+syntax keyword dartStorageClass   static abstract const factory late
 syntax keyword dartExceptions     throw rethrow try on catch finally
 syntax keyword dartAssert         assert
-syntax keyword dartClassDecl      extends with implements
+syntax keyword dartClassDecl      with implements
 syntax keyword dartBranch         break continue nextgroup=dartUserLabelRef skipwhite
 syntax keyword dartKeyword        get set operator call external async await
     \ yield sync native covariant required
@@ -132,6 +133,7 @@ highlight default link dartMetadata        PreProc
 highlight default link dartSdkTypedef      Typedef
 highlight default link dartTypedef         Typedef
 highlight default link dartSdkException    Exception
+highlight default link dartReserved        Keyword
 highlight default link dartSdkClass        dartType
 highlight default link dartCoreType        dartType
 highlight default link dartUserType        dartType
