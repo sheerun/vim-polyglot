@@ -1518,7 +1518,7 @@ filetypes:
   - '*/etc/zprofile'
 ---
 name: zinit
-remote: zinit-zsh/zplugin-vim-syntax
+remote: zdharma-continuum/zinit-vim-syntax
 # just adds to zsh filetype
 filetypes: []
 ---
