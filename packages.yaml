@@ -357,11 +357,13 @@ filetypes:
   - '*enlightenment/*.cfg'
 ---
 name: caddyfile
-remote: isobit/vim-caddyfile
+remote: 0az/vim-caddyfile
 filetypes:
 - name: caddyfile
   filenames:
   - Caddyfile
+  - Caddyfile.*
+  - *.Caddyfile
 ---
 name: cpp-modern
 remote: bfrg/vim-cpp-modern
