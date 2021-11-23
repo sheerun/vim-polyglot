@@ -5,7 +5,7 @@ endif
 " Vim indent file
 " Language:	SDL
 " Maintainer:	Michael Piefel <entwurf@piefel.de>
-" Last Change:	10 December 2011
+" Last Change:	2021 Oct 03
 
 " Shamelessly stolen from the Vim-Script indent file
 
@@ -17,6 +17,8 @@ let b:did_indent = 1
 
 setlocal indentexpr=GetSDLIndent()
 setlocal indentkeys+==~end,=~state,*<Return>
+
+let b:undo_indent = "setl inde< indk<"
 
 " Only define the function once.
 if exists("*GetSDLIndent")

@@ -18,6 +18,8 @@ setlocal autoindent
 setlocal indentexpr=GetHamlIndent()
 setlocal indentkeys=o,O,*<Return>,},],0),!^F,=end,=else,=elsif,=rescue,=ensure,=when
 
+let b:undo_indent = "setl ai< inde< indk<"
+
 " Only define the function once.
 if exists("*GetHamlIndent")
   finish

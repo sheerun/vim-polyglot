@@ -4969,6 +4969,14 @@ filetypes:
   - pattern: "*.treetop"
     description: Treetop
 ---
+name: tridactyl
+remote:  tridactyl/vim-tridactyl
+filetypes:
+- name: tridactyl
+  patterns:
+  - pattern: "*tridactylrc"
+    description: Configuration file for Tridactyl (A Vim-like interface for Firefox, inspired by Vimperator/Pentadactyl)
+---
 name: trustees
 remote: vim/vim:runtime
 glob: "**/trustees.vim"

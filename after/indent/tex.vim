@@ -292,7 +292,7 @@ function! GetTeXIndent() " {{{
             let ind = ind - shiftwidth()
             let stay = 0
         endif
-        " lines following to '\item' are intented once again:
+        " lines following to '\item' are indented once again:
         if line =~ g:tex_items
             let ind = ind + shiftwidth()
             let stay = 0

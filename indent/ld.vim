@@ -3,9 +3,10 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'ld', 'indent/ld.vim')
 endif
 
 " Vim indent file
-" Language:             ld(1) script
-" Previous Maintainer:  Nikolai Weibull <now@bitwi.se>
-" Latest Revision:      2006-12-20
+" Language:		ld(1) script
+" Maintainer:		Doug Kearns <dougkearns@gmail.com>
+" Previous Maintainer:	Nikolai Weibull <now@bitwi.se>
+" Last Change:		24 Sep 2021
 
 if exists("b:did_indent")
   finish
@@ -15,6 +16,8 @@ let b:did_indent = 1
 setlocal indentexpr=GetLDIndent()
 setlocal indentkeys=0{,0},!^F,o,O
 setlocal nosmartindent
+
+let b:undo_indent = "setl inde< indk< si<"
 
 if exists("*GetLDIndent")
   finish

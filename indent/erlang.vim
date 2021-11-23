@@ -36,6 +36,8 @@ endif
 setlocal indentexpr=ErlangIndent()
 setlocal indentkeys+=0=end,0=of,0=catch,0=after,0=when,0=),0=],0=},0=>>
 
+let b:undo_indent = "setl inde< indk<"
+
 " Only define the functions once
 if exists("*ErlangIndent")
   finish

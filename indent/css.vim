@@ -3,10 +3,12 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'css', 'indent/css.vim')
 endif
 
 " Vim indent file
-" Language:	    CSS
-" Maintainer:	    Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2012-05-30
-"		    Use of shiftwidth() added by Oleg Zubchenko.	
+" Language:		CSS
+" Maintainer:		Doug Kearns <dougkearns@gmail.com>
+" Previous Maintainer:	Nikolai Weibull <now@bitwi.se>
+" Last Change:		24 Sep 2021
+
+" Use of shiftwidth() added by Oleg Zubchenko.
 
 if exists("b:did_indent")
   finish
@@ -17,7 +19,7 @@ setlocal indentexpr=GetCSSIndent()
 setlocal indentkeys=0{,0},!^F,o,O
 setlocal nosmartindent
 
-let b:undo_indent = "setl smartindent< indentkeys< indentexpr<"
+let b:undo_indent = "setl inde< indk< si<"
 
 if exists("*GetCSSIndent")
   finish

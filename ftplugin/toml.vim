@@ -2,13 +2,15 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'toml', 'ftplugin/toml.vim')
   finish
 endif
 
-" File: ftplugin/toml.vim
-" Author: Kevin Ballard <kevin@sb.org>
-" Description: FileType Plugin for Toml
-" Last Change: Feb 12, 2019
+" Vim filetype plugin
+" Language:    TOML
+" Homepage:    https://github.com/cespare/vim-toml
+" Maintainer:  Aman Verma
+" Author:      Kevin Ballard <kevin@sb.org>
+" Last Change: Sep 21, 2021
 
 if exists('b:did_ftplugin')
-    finish
+  finish
 endif
 let b:did_ftplugin = 1
 
@@ -22,4 +24,4 @@ setlocal comments=:#
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sw=4 ts=4:
+" vim: et sw=2 sts=2

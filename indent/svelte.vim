@@ -183,7 +183,7 @@ function! GetSvelteIndent()
     call s:Log('... or current line is pug template tag')
     let ind = 0
   elseif s:has_init_indent
-    if s:SynSvelteScriptOrStyle(cursyn) && ind < 1
+    if s:SynSvelteScriptOrStyle(cursyn) && ind == 0
       call s:Log('add initial indent')
       let ind = &sw
     endif

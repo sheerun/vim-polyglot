@@ -18,6 +18,8 @@ setlocal indentkeys-=0{
 setlocal indentkeys-=0}
 setlocal nosmartindent
 
+let b:undo_indent = "setl ai< inde< indk< si<"
+
 " Only define the function once.
 if exists("*GetJuliaIndent")
   finish

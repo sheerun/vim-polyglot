@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'dosbatch', 'syntax/dosbatch.v
 endif
 
 " Vim syntax file
-" Language:	MSDOS batch file (with NT command extensions)
+" Language:	MS-DOS batch file (with NT command extensions)
 " Maintainer:	Mike Williams <mrw@eandem.co.uk>
 " Filenames:    *.bat
 " Last Change:	6th September 2009

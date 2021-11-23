@@ -36,7 +36,7 @@ if exists("loaded_matchit")
     \ '\<checker\>:\<endchecker\>,' .
     \ '\<class\>:\<endclass\>,' .
     \ '\<clocking\>:\<endclocking\>,' .
-    \ '\<gruop\>:\<endgruop\>,' .
+    \ '\<group\>:\<endgroup\>,' .
     \ '\<interface\>:\<endinterface\>,' .
     \ '\<package\>:\<endpackage\>,' .
     \ '\<program\>:\<endprogram\>,' .
