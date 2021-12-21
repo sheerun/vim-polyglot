@@ -5541,3 +5541,8 @@ filetypes:
   patterns:
   - pattern: '*.org'
     description: GNU Emacs' Org mode
+---
+name: zinit
+remote: zdharma-continuum/zinit-vim-syntax@main
+# just adds to zsh filetype
+filetypes: []
