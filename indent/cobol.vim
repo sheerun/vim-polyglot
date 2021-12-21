@@ -11,6 +11,7 @@ endif
 " Ankit Jain      22.03.2019     Changes & fixes:
 "                                Allow chars in 1st 6 columns
 "                                #C22032019
+" Ankit Jain      24.09.2021     add b:undo_indent (request by tpope)
 
 if exists("b:did_indent")
     finish
@@ -21,6 +22,8 @@ setlocal expandtab
 setlocal indentexpr=GetCobolIndent(v:lnum)
 setlocal indentkeys&
 setlocal indentkeys+=0<*>,0/,0$,0=01,=~division,=~section,0=~end,0=~then,0=~else,0=~when,*<Return>,.
+
+let b:undo_indent = "setlocal expandtab< indentexpr< indentkeys<"
 
 " Only define the function once.
 if exists("*GetCobolIndent")

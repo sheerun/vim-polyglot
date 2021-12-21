@@ -1769,10 +1769,6 @@ if !has_key(g:polyglot_is_disabled, 'gitignore')
   au BufNewFile,BufRead *.git/info/exclude,*/.config/git/ignore,{.,}gitignore setf gitignore
 endif
 
-if !has_key(g:polyglot_is_disabled, 'tads')
-  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
-endif
-
 if !has_key(g:polyglot_is_disabled, 'prolog')
   au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
   au BufNewFile,BufRead *.pdb,*.pro,*.prolog,*.yap setf prolog
@@ -1787,7 +1783,7 @@ if !has_key(g:polyglot_is_disabled, 'odin')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'dosini')
-  au BufNewFile,BufRead *.dof,*.ini,*.lektorproject,*.prefs,*.pro,*.properties,*/etc/pacman.conf,*/etc/yum.conf,{.,}editorconfig,{.,}npmrc,buildozer.spec setf dosini
+  au BufNewFile,BufRead *.dof,*.ini,*.lektorproject,*.prefs,*.pro,*.properties,*/etc/pacman.conf,*/etc/yum.conf,{.,}editorconfig,{.,}flake8,{.,}npmrc,buildozer.spec setf dosini
   au BufNewFile,BufRead php.ini-* call s:StarSetf('dosini')
   au BufNewFile,BufRead */etc/yum.repos.d/* call s:StarSetf('dosini')
 endif
@@ -1961,7 +1957,7 @@ if !has_key(g:polyglot_is_disabled, 'slim')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'sh')
-  au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,login,man,profile setf sh
+  au BufNewFile,BufRead *.bash,*.bats,*.cgi,*.command,*.env,*.fcgi,*.ksh,*.sh,*.sh.in,*.tmux,*.tool,*/etc/udev/cdsymlinks.conf,{.,}bash_aliases,{.,}bash_history,{.,}bash_logout,{.,}bash_profile,{.,}bashrc,{.,}cshrc,{.,}env,{.,}env.example,{.,}flaskenv,{.,}kshrc,{.,}login,{.,}profile,9fs,PKGBUILD,bash_aliases,bash_logout,bash_profile,bashrc,cshrc,gradlew,kshrc,login,man,profile setf sh
   au BufNewFile,BufRead *.zsh,*/etc/zprofile,{.,}zfbfmarks,{.,}zlogin,{.,}zlogout,{.,}zprofile,{.,}zshenv,{.,}zshrc setf zsh
   au BufNewFile,BufRead .zsh* call s:StarSetf('zsh')
   au BufNewFile,BufRead .zlog* call s:StarSetf('zsh')
@@ -2009,13 +2005,6 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'raml')
   au BufNewFile,BufRead *.raml setf raml
-endif
-
-if !has_key(g:polyglot_is_disabled, 'raku')
-  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
-  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
-  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
-  au BufNewFile,BufRead *.6pl,*.6pm,*.nqp,*.p6,*.p6l,*.p6m,*.pl6,*.pm6,*.pod6,*.raku,*.rakudoc,*.rakumod,*.rakutest,*.t6 setf raku
 endif
 
 if !has_key(g:polyglot_is_disabled, 'ragel')
@@ -2095,22 +2084,6 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'pgsql')
   au BufNewFile,BufRead *.pgsql let b:sql_type_override='pgsql' | set ft=sql
-endif
-
-if !has_key(g:polyglot_is_disabled, 'perl')
-  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
-  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
-  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
-  au BufNewFile,BufRead *.al,*.cgi,*.fcgi,*.perl,*.ph,*.plx,*.psgi,{.,}gitolite.rc,Makefile.PL,Rexfile,ack,cpanfile,example.gitolite.rc setf perl
-  au BufNewFile,BufRead *.pod setf pod
-  au BufNewFile,BufRead *.comp,*.mason,*.mhtml setf mason
-  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
-  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
-  au BufNewFile,BufRead *.xs setf xs
-endif
-
-if !has_key(g:polyglot_is_disabled, 'rc')
-  au BufNewFile,BufRead *.rc,*.rch setf rc
 endif
 
 if !has_key(g:polyglot_is_disabled, 'opencl')
@@ -2225,7 +2198,34 @@ if !has_key(g:polyglot_is_disabled, 'julia')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'jst')
-  au BufNewFile,BufRead *.ect,*.ejs,*.jst setf jst
+  au BufNewFile,BufRead *.ect,*.ejs,*.ejs.t,*.jst setf jst
+endif
+
+if !has_key(g:polyglot_is_disabled, 'tads')
+  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+endif
+
+if !has_key(g:polyglot_is_disabled, 'raku')
+  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
+  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
+  au BufNewFile,BufRead *.6pl,*.6pm,*.nqp,*.p6,*.p6l,*.p6m,*.pl6,*.pm6,*.pod6,*.raku,*.rakudoc,*.rakumod,*.rakutest,*.t6 setf raku
+endif
+
+if !has_key(g:polyglot_is_disabled, 'perl')
+  au! BufNewFile,BufRead,BufWritePost *.t call polyglot#detect#T()
+  au! BufNewFile,BufRead,BufWritePost *.pm call polyglot#detect#Pm()
+  au! BufNewFile,BufRead,BufWritePost *.pl call polyglot#detect#Pl()
+  au BufNewFile,BufRead *.al,*.cgi,*.fcgi,*.perl,*.ph,*.plx,*.psgi,{.,}gitolite.rc,Makefile.PL,Rexfile,ack,cpanfile,example.gitolite.rc setf perl
+  au BufNewFile,BufRead *.pod setf pod
+  au BufNewFile,BufRead *.comp,*.mason,*.mhtml setf mason
+  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
+  au! BufNewFile,BufRead,BufWritePost *.tt2 call polyglot#detect#Tt2()
+  au BufNewFile,BufRead *.xs setf xs
+endif
+
+if !has_key(g:polyglot_is_disabled, 'rc')
+  au BufNewFile,BufRead *.rc,*.rch setf rc
 endif
 
 if !has_key(g:polyglot_is_disabled, 'jsonnet')
@@ -2339,7 +2339,7 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'glsl')
   au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
-  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
+  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.rchit,*.rmiss,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
 endif
 
 if !has_key(g:polyglot_is_disabled, 'git')
@@ -2398,7 +2398,7 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'elixir')
   au BufNewFile,BufRead *.ex,*.exs,mix.lock setf elixir
-  au BufNewFile,BufRead *.eex,*.html.leex,*.leex setf eelixir
+  au BufNewFile,BufRead *.eex,*.html.heex,*.html.leex,*.leex setf eelixir
 endif
 
 if !has_key(g:polyglot_is_disabled, 'docker-compose')
@@ -2406,7 +2406,7 @@ if !has_key(g:polyglot_is_disabled, 'docker-compose')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'yaml')
-  au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,fish_history,fish_read_history,glide.lock,yarn.lock setf yaml
+  au BufNewFile,BufRead *.mir,*.reek,*.rviz,*.sublime-syntax,*.syntax,*.yaml,*.yaml-tmlanguage,*.yaml.sed,*.yml,*.yml.mysql,{.,}clang-format,{.,}clang-tidy,{.,}gemrc,CITATION.cff,fish_history,fish_read_history,glide.lock,yarn.lock setf yaml
 endif
 
 if !has_key(g:polyglot_is_disabled, 'mysql')
@@ -2534,7 +2534,7 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'c/c++')
   au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
-  au BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.moc,*.tcc,*.tlh,*.tpp setf cpp
+  au BufNewFile,BufRead *.c++,*.cc,*.cp,*.cpp,*.cxx,*.h++,*.hh,*.hpp,*.hxx,*.inc,*.inl,*.ipp,*.ixx,*.moc,*.tcc,*.tlh,*.tpp setf cpp
   au! BufNewFile,BufRead,BufWritePost *.h call polyglot#detect#H()
   au BufNewFile,BufRead *.c,*.cats,*.idc,*.qc,*enlightenment/*.cfg setf c
 endif
@@ -2575,7 +2575,7 @@ if !has_key(g:polyglot_is_disabled, 'ant')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'xml')
-  au BufNewFile,BufRead *.adml,*.admx,*.ant,*.axml,*.builds,*.ccproj,*.ccxml,*.cdxml,*.clixml,*.cproject,*.cscfg,*.csdef,*.csl,*.csproj,*.csproj.user,*.ct,*.depproj,*.dita,*.ditamap,*.ditaval,*.dll.config,*.dotsettings,*.filters,*.fsproj,*.fxml,*.glade,*.gml,*.gmx,*.grxml,*.gst,*.iml,*.ivy,*.jelly,*.jsproj,*.kml,*.launch,*.mdpolicy,*.mjml,*.mod,*.mxml,*.natvis,*.ncl,*.ndproj,*.nproj,*.nuspec,*.odd,*.osm,*.pkgproj,*.pluginspec,*.proj,*.props,*.psc1,*.pt,*.rdf,*.res,*.resx,*.rss,*.sch,*.scxml,*.sfproj,*.shproj,*.srdf,*.storyboard,*.sublime-snippet,*.targets,*.tml,*.tpm,*.ui,*.urdf,*.ux,*.vbproj,*.vcxproj,*.vsixmanifest,*.vssettings,*.vstemplate,*.vxml,*.wixproj,*.workflow,*.wpl,*.wsdl,*.wsf,*.wxi,*.wxl,*.wxs,*.x3d,*.xacro,*.xaml,*.xib,*.xlf,*.xliff,*.xmi,*.xml,*.xml.dist,*.xmp,*.xproj,*.xsd,*.xspec,*.xul,*.zcml,*/etc/blkid.tab,*/etc/blkid.tab.old,*/etc/xdg/menus/*.menu,*fglrxrc,{.,}classpath,{.,}cproject,{.,}project,App.config,NuGet.config,Settings.StyleCop,Web.Debug.config,Web.Release.config,Web.config,packages.config setf xml
+  au BufNewFile,BufRead *.adml,*.admx,*.ant,*.axml,*.builds,*.ccproj,*.ccxml,*.cdxml,*.clixml,*.cproject,*.cscfg,*.csdef,*.csl,*.csproj,*.csproj.user,*.ct,*.depproj,*.dita,*.ditamap,*.ditaval,*.dll.config,*.dotsettings,*.filters,*.fsproj,*.fxml,*.glade,*.gml,*.gmx,*.grxml,*.gst,*.hzp,*.iml,*.ivy,*.jelly,*.jsproj,*.kml,*.launch,*.mdpolicy,*.mjml,*.mod,*.mxml,*.natvis,*.ncl,*.ndproj,*.nproj,*.nuspec,*.odd,*.osm,*.pkgproj,*.pluginspec,*.proj,*.props,*.psc1,*.pt,*.rdf,*.res,*.resx,*.rss,*.sch,*.scxml,*.sfproj,*.shproj,*.srdf,*.storyboard,*.sublime-snippet,*.targets,*.tml,*.tpm,*.ui,*.urdf,*.ux,*.vbproj,*.vcxproj,*.vsixmanifest,*.vssettings,*.vstemplate,*.vxml,*.wixproj,*.workflow,*.wpl,*.wsdl,*.wsf,*.wxi,*.wxl,*.wxs,*.x3d,*.xacro,*.xaml,*.xib,*.xlf,*.xliff,*.xmi,*.xml,*.xml.dist,*.xmp,*.xproj,*.xsd,*.xspec,*.xul,*.zcml,*/etc/blkid.tab,*/etc/blkid.tab.old,*/etc/xdg/menus/*.menu,*fglrxrc,{.,}classpath,{.,}cproject,{.,}project,App.config,NuGet.config,Settings.StyleCop,Web.Debug.config,Web.Release.config,Web.config,packages.config setf xml
 endif
 
 if !has_key(g:polyglot_is_disabled, 'csv')

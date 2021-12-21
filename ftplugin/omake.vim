@@ -26,3 +26,5 @@ setlocal expandtab
 
 " Including files.
 let &l:include = '^\s*include'
+
+let b:undo_ftplugin = "fo< com< cms< et< inc<"

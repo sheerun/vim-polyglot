@@ -22,7 +22,7 @@ syntax match   typescriptProp contained /\K\k*!\?/
   \ nextgroup=@afterIdentifier
   \ skipwhite skipempty
 
-syntax region  typescriptIndexExpr      contained matchgroup=typescriptProperty start=/\[/rs=s+1 end=/]/he=e-1 contains=@typescriptValue,typescriptCastKeyword nextgroup=@typescriptSymbols,typescriptDotNotation,typescriptFuncCallArg skipwhite skipempty
+syntax region  typescriptIndexExpr      contained matchgroup=typescriptProperty start=/\[/ end=/]/ contains=@typescriptValue,typescriptCastKeyword nextgroup=@typescriptSymbols,typescriptDotNotation,typescriptFuncCallArg skipwhite skipempty
 
 syntax match   typescriptDotNotation           /\.\|?\.\|!\./ nextgroup=typescriptProp skipnl
 syntax match   typescriptDotStyleNotation      /\.style\./ nextgroup=typescriptDOMStyle transparent

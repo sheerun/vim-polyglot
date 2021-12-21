@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'tmux', 'syntax/tmux.vim')
 endif
 
 " Language: tmux(1) configuration file
-" Version: 3.2a (git-44ada9cd)
+" Version: 3.3-rc (git-77fc7ac3)
 " URL: https://github.com/ericpruitt/tmux.vim/
 " Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
 " License: 2-Clause BSD (http://opensource.org/licenses/BSD-2-Clause)
@@ -12,7 +12,7 @@ if exists("b:current_syntax")
     finish
 endif
 
-" Explicitly change compatiblity options to Vim's defaults because this file
+" Explicitly change compatibility options to Vim's defaults because this file
 " uses line continuations.
 let s:original_cpo = &cpo
 set cpo&vim
@@ -71,21 +71,23 @@ if get(g:, "tmux_syntax_colors", 1)
 endif
 
 syn keyword tmuxOptions
-\ backspace buffer-limit command-alias copy-command default-terminal editor
-\ escape-time exit-empty activity-action assume-paste-time base-index
-\ bell-action default-command default-shell default-size destroy-unattached
-\ detach-on-destroy display-panes-active-colour display-panes-colour
-\ display-panes-time display-time exit-unattached extended-keys focus-events
+\ backspace buffer-limit command-alias copy-command cursor-colour
+\ cursor-style default-terminal editor escape-time activity-action
+\ assume-paste-time base-index bell-action default-command default-shell
+\ default-size destroy-unattached detach-on-destroy
+\ display-panes-active-colour display-panes-colour display-panes-time
+\ display-time exit-empty exit-unattached extended-keys focus-events
 \ history-file history-limit key-table lock-after-time lock-command
-\ message-command-style message-limit message-style aggressive-resize
-\ allow-rename alternate-screen automatic-rename automatic-rename-format
+\ message-command-style message-limit aggressive-resize allow-rename
+\ alternate-screen automatic-rename automatic-rename-format
 \ clock-mode-colour clock-mode-style copy-mode-current-match-style
 \ copy-mode-mark-style copy-mode-match-style main-pane-height
-\ main-pane-width mode-keys mode-style monitor-activity monitor-bell
-\ monitor-silence mouse other-pane-height other-pane-width
+\ main-pane-width message-style mode-keys mode-style monitor-activity
+\ monitor-bell monitor-silence mouse other-pane-height other-pane-width
 \ pane-active-border-style pane-base-index pane-border-format
-\ pane-border-lines pane-border-status pane-border-style pane-colours prefix
-\ prefix2 prompt-history-limit remain-on-exit renumber-windows repeat-time
+\ pane-border-lines pane-border-status pane-border-style pane-colours
+\ popup-border-lines popup-border-style popup-style prefix prefix2
+\ prompt-history-limit remain-on-exit renumber-windows repeat-time
 \ set-clipboard set-titles set-titles-string silence-action status status-bg
 \ status-fg status-format status-interval status-justify status-keys
 \ status-left status-left-length status-left-style status-position

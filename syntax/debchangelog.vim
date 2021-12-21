@@ -7,7 +7,7 @@ endif
 " Maintainer:  Debian Vim Maintainers
 " Former Maintainers: Gerfried Fuchs <alfie@ist.org>
 "                     Wichert Akkerman <wakkerma@debian.org>
-" Last Change: 2021 Aug 03
+" Last Change: 2021 Oct 19
 " URL: https://salsa.debian.org/vim-team/vim-debian/blob/master/syntax/debchangelog.vim
 
 " Standard syntax initialization
@@ -28,7 +28,8 @@ let s:supported = [
       \ 'jessie', 'stretch', 'buster', 'bullseye', 'bookworm',
       \ 'trixie', 'sid', 'rc-buggy',
       \
-      \ 'trusty', 'xenial', 'bionic', 'focal', 'hirsute', 'impish', 'devel'
+      \ 'trusty', 'xenial', 'bionic', 'focal', 'hirsute', 'impish', 'jammy',
+      \ 'devel'
       \ ]
 let s:unsupported = [
       \ 'frozen', 'buzz', 'rex', 'bo', 'hamm', 'slink', 'potato',

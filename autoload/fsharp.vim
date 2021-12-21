@@ -3,7 +3,6 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'fsharp', 'autoload/fsharp.vim
 endif
 
 " Vim autoload functions
-
 if exists('g:loaded_autoload_fsharp')
     finish
 endif
@@ -240,14 +239,6 @@ function! fsharp#loadConfig()
 
     if !exists('g:fsharp#fsautocomplete_command')
         let s:fsac = fnamemodify(s:script_root_dir . "fsac/fsautocomplete.dll", ":p")
-
-        " check if FSAC exists
-        if empty(glob(s:fsac))
-            echoerr "FSAC not found. :FSharpUpdateFSAC to download."
-            let &cpo = s:cpo_save
-            finish
-        endif
-
         let g:fsharp#fsautocomplete_command =
             \ ['dotnet', s:fsac,
                 \ '--background-service-enabled'
@@ -331,6 +322,29 @@ function! fsharp#loadConfig()
         endif
     endif
 
+    " FSI keymaps
+    if g:fsharp#fsi_keymap == "vscode"
+        if has('nvim')
+            let g:fsharp#fsi_keymap_send   = "<M-cr>"
+            let g:fsharp#fsi_keymap_toggle = "<M-@>"
+        else
+            let g:fsharp#fsi_keymap_send   = "<esc><cr>"
+            let g:fsharp#fsi_keymap_toggle = "<esc>@"
+        endif
+    elseif g:fsharp#fsi_keymap == "vim-fsharp"
+        let g:fsharp#fsi_keymap_send   = "<leader>i"
+        let g:fsharp#fsi_keymap_toggle = "<leader>e"
+    elseif g:fsharp#fsi_keymap == "custom"
+        let g:fsharp#fsi_keymap = "none"
+        if !exists('g:fsharp#fsi_keymap_send')
+            echoerr "g:fsharp#fsi_keymap_send is not set"
+        elseif !exists('g:fsharp#fsi_keymap_toggle')
+            echoerr "g:fsharp#fsi_keymap_toggle is not set"
+        else
+            let g:fsharp#fsi_keymap = "custom"
+        endif
+    endif
+
     let s:config_is_loaded = 1
 endfunction
 
@@ -397,39 +411,6 @@ endfunction
 
 
 " .NET/F# specific operations
-
-function! s:findWorkspace(dir, cont)
-    let s:cont_findWorkspace = a:cont
-    function! s:callback_findWorkspace(result)
-        let result = a:result
-        let content = json_decode(result.result.content)
-        if len(content.Data.Found) < 1
-            return []
-        endif
-        let workspace = { 'Type': 'none' }
-        for found in content.Data.Found
-            if workspace.Type == 'none'
-                let workspace = found
-            elseif found.Type == 'solution'
-                if workspace.Type == 'project'
-                    let workspace = found
-                else
-                    let curLen = len(workspace.Data.Items)
-                    let newLen = len(found.Data.Items)
-                    if newLen > curLen
-                        let workspace = found
-                    endif
-                endif
-            endif
-        endfor
-        if workspace.Type == 'solution'
-            call s:cont_findWorkspace([workspace.Data.Path])
-        else
-            call s:cont_findWorkspace(workspace.Data.Fsprojs)
-        endif
-    endfunction
-    call s:workspacePeek(a:dir, g:fsharp#workspace_mode_peek_deep_level, g:fsharp#exclude_project_directories, function("s:callback_findWorkspace"))
-endfunction
 
 let s:workspace = []
 

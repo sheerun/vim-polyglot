@@ -132,9 +132,12 @@ let s:zig_syntax_keywords = {
     \ ,                  "@newStackCall"
     \ ,                  "@asyncCall"
     \ ,                  "@intToPtr"
+    \ ,                  "@maximum"
+    \ ,                  "@minimum"
     \ ,                  "@memcpy"
     \ ,                  "@memset"
     \ ,                  "@mod"
+    \ ,                  "@mulAdd"
     \ ,                  "@mulWithOverflow"
     \ ,                  "@splat"
     \ ,                  "@src"
@@ -251,11 +254,11 @@ highlight default link zigCommentLineDoc Comment
 highlight default link zigDummyVariable Comment
 highlight default link zigTodo Todo
 highlight default link zigString String
-highlight default link zigStringDelimiter Delimiter
+highlight default link zigStringDelimiter String
 highlight default link zigMultilineString String
 highlight default link zigMultilineStringContent String
 highlight default link zigMultilineStringPrefix String
-highlight default link zigMultilineStringDelimiter Ignore
+highlight default link zigMultilineStringDelimiter Delimiter
 highlight default link zigCharacterInvalid Error
 highlight default link zigCharacterInvalidUnicode zigCharacterInvalid
 highlight default link zigCharacter Character

@@ -157,7 +157,7 @@ def ParseSExpr(scanner: dict<any>): dict<any>
     scanner->ParseLParen()
 
     # Expr*
-    var exprs: list<any>
+    var exprs: list<dict<any>>
     while scanner->AtStartOfExpr()
         exprs->add(scanner->ParseExpr())
     endwhile

@@ -23,8 +23,8 @@ fun! nim#init() abort
   if !v:shell_error && expand('%:e') ==# 'nim'
     let false = 0 " Needed for eval of json
     let true = 1 " Needed for eval of json
-    let dumpdata = eval(substitute(raw_dumpdata, "\n", '', 'g'))
-    
+    let dumpdata = json_decode(raw_dumpdata)
+
     let b:nim_project_root = dumpdata['project_path']
     let b:nim_defined_symbols = dumpdata['defined_symbols']
     let b:nim_caas_enabled = g:nim_caas_enabled || index(dumpdata['defined_symbols'], 'forcecaas') != -1
@@ -211,7 +211,9 @@ fun! GotoDefinition_nim_ready(def_output) abort
   let defBits = split(rawDef, '\t')
   let file = defBits[4]
   let line = defBits[5]
+  let column = defBits[6]
   exe printf('e +%d %s', line, file)
+  call cursor(line, column + 1)
   return 1
 endf
 

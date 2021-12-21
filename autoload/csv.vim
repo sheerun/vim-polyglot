@@ -2724,7 +2724,7 @@ fu! csv#Tabularize(bang, first, last) "{{{3
     if getline(a:first)[-1:] isnot? b:delimiter
         let b:col_width[-1] += 1
     endif
-    let marginline = s:td.scol. join(map(copy(b:col_width), 'repeat(s:td.hbar, v:val)'), s:td.cros). s:td.ecol
+    let marginline = s:td.scol. join(map(copy(b:col_width), 'repeat(s:td.hbar, v:val-1)'), s:td.cros). s:td.ecol
 
     call csv#NewDelimiter(s:td.vbar, 1, line('$'))
     "exe printf('sil %d,%ds/%s/%s/ge', a:first, (a:last+adjust_last),

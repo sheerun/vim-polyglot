@@ -454,6 +454,7 @@ syn keyword glslBuiltinVariable gl_TextureMatrixInverseTranspose
 syn keyword glslBuiltinVariable gl_TextureMatrixTranspose
 syn keyword glslBuiltinVariable gl_Vertex
 syn keyword glslBuiltinVariable gl_VertexID
+syn keyword glslBuiltinVariable gl_VertexIndex
 syn keyword glslBuiltinVariable gl_ViewportIndex
 syn keyword glslBuiltinVariable gl_WorkGroupID
 syn keyword glslBuiltinVariable gl_WorkGroupSize

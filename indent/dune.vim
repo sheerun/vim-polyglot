@@ -15,3 +15,5 @@ let b:did_indent = 1
 
 " dune format-dune-file uses 1 space to indent
 setlocal softtabstop=1 shiftwidth=1 expandtab
+
+let b:undo_indent = "setl et< sts< sw<"

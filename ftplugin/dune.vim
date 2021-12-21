@@ -15,10 +15,12 @@ if exists("b:did_ftplugin")
 endif
 let b:did_ftplugin=1
 
-set lisp
+setl lisp
 
 " Comment string
 setl commentstring=;\ %s
 setl comments=n:;
 
 setl iskeyword+=#,?,.,/
+
+let b:undo_ftplugin = "setlocal lisp< cms< com< isk<"

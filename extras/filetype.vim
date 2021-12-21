@@ -1,7 +1,7 @@
 " Vim support file to detect file types
 "
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last Change:	2021 Aug 23
+" Last Change:	2021 Dec 14
 
 " Listen very carefully, I will say this only once
 if exists("did_load_filetypes")
@@ -123,7 +123,7 @@ au BufNewFile,BufRead *.aml			setf aml
 " APT config file
 au BufNewFile,BufRead apt.conf		       setf aptconf
 au BufNewFile,BufRead */.aptitude/config       setf aptconf
-au BufNewFile,BufRead */etc/apt/apt.conf.d/{[-_[:alnum:]]\+,[-_.[:alnum:]]\+.conf} setf aptconf
+" more generic pattern far down
 
 " Arch Inventory file
 au BufNewFile,BufRead .arch-inventory,=tagging-method	setf arch
@@ -260,7 +260,7 @@ au BufNewFile,BufRead *.lpc,*.ulpc		setf lpc
 au BufNewFile,BufRead calendar			setf calendar
 
 " C#
-au BufNewFile,BufRead *.cs			setf cs
+au BufNewFile,BufRead *.cs,*.csx		setf cs
 
 " CSDL
 au BufNewFile,BufRead *.csdl			setf csdl
@@ -488,7 +488,10 @@ au BufNewFile,BufRead *.desktop,*.directory	setf desktop
 au BufNewFile,BufRead dict.conf,.dictrc		setf dictconf
 
 " Dictd config
-au BufNewFile,BufRead dictd.conf		setf dictdconf
+au BufNewFile,BufRead dictd*.conf		setf dictdconf
+
+" DEP3 formatted patch files
+au BufNewFile,BufRead */debian/patches/*	call polyglot#ft#Dep3patch()
 
 " Diff files
 au BufNewFile,BufRead *.diff,*.rej		setf diff
@@ -617,6 +620,9 @@ autocmd BufRead,BufNewFile *.fnl		setf fennel
 " Fetchmail RC file
 au BufNewFile,BufRead .fetchmailrc		setf fetchmail
 
+" Fish shell
+au BufNewFile,BufRead *.fish			setf fish
+
 " FlexWiki - disabled, because it has side effects when a .wiki file
 " is not actually FlexWiki
 "au BufNewFile,BufRead *.wiki			setf flexwiki
@@ -629,7 +635,7 @@ au BufNewFile,BufRead auto.master		setf conf
 au BufNewFile,BufRead *.mas,*.master		setf master
 
 " Forth
-au BufNewFile,BufRead *.fs,*.ft,*.fth		setf forth
+au BufNewFile,BufRead *.ft,*.fth		setf forth
 
 " Reva Forth
 au BufNewFile,BufRead *.frt			setf reva
@@ -646,8 +652,14 @@ au BufNewFile,BufRead *.fsl			setf framescript
 " FStab
 au BufNewFile,BufRead fstab,mtab		setf fstab
 
+" F# or Forth
+au BufNewFile,BufRead *.fs			call polyglot#ft#FTfs()
+
+" F#
+au BufNewFile,BufRead *.fsi,*.fsx		setf fsharp
+
 " GDB command files
-au BufNewFile,BufRead .gdbinit			setf gdb
+au BufNewFile,BufRead .gdbinit,gdbinit		setf gdb
 
 " GDMO
 au BufNewFile,BufRead *.mo,*.gdmo		setf gdmo
@@ -707,6 +719,7 @@ au BufNewFile,BufRead *.gpi			setf gnuplot
 
 " Go (Google)
 au BufNewFile,BufRead *.go			setf go
+au BufNewFile,BufRead Gopkg.lock		setf toml
 
 " GrADS scripts
 au BufNewFile,BufRead *.gs			setf grads
@@ -779,6 +792,10 @@ au BufNewFile,BufRead *.hb			setf hb
 
 " Httest
 au BufNewFile,BufRead *.htt,*.htb		setf httest
+
+" i3 (and sway)
+au BufNewFile,BufRead */i3/config,*/sway/config		setf i3config
+au BufNewFile,BufRead */.i3/config,*/.sway/config	setf i3config
 
 " Icon
 au BufNewFile,BufRead *.icn			setf icon
@@ -875,6 +892,9 @@ au BufNewFile,BufRead *.json-patch			setf json
 
 " Jupyter Notebook is also json
 au BufNewFile,BufRead *.ipynb				setf json
+
+" Other files that look like json
+au BufNewFile,BufRead .babelrc,.eslintrc,.prettierrc,.firebaserc  setf json
 
 " JSONC
 au BufNewFile,BufRead *.jsonc			setf jsonc
@@ -1092,6 +1112,9 @@ au BufNewFile,BufRead *.moo			setf moo
 " Modconf
 au BufNewFile,BufRead */etc/modules.conf,*/etc/modules,*/etc/conf.modules setf modconf
 
+" MPD is based on XML
+au BufNewFile,BufRead *.mpd			setf xml
+
 " Mplayer config
 au BufNewFile,BufRead mplayer.conf,*/.mplayer/config	setf mplayerconf
 
@@ -1107,11 +1130,15 @@ au BufNewFile,BufRead *.msql			setf msql
 " Mysql
 au BufNewFile,BufRead *.mysql			setf mysql
 
-" Mutt setup files (must be before catch *.rc)
-au BufNewFile,BufRead */etc/Muttrc.d/*		call s:StarSetf('muttrc')
+" Tcl Shell RC file
+au BufNewFile,BufRead tclsh.rc			setf tcl
 
 " M$ Resource files
-au BufNewFile,BufRead *.rc,*.rch		setf rc
+" /etc/Muttrc.d/file.rc is muttrc
+au BufNewFile,BufRead *.rc,*.rch
+	\ if expand("<afile>") !~ "/etc/Muttrc.d/" |
+	\   setf rc |
+	\ endif
 
 " MuPAD source
 au BufRead,BufNewFile *.mu			setf mupad
@@ -1139,6 +1166,9 @@ au BufNewFile,BufRead Neomuttrc			setf neomuttrc
 
 " Netrc
 au BufNewFile,BufRead .netrc			setf netrc
+
+" Nginx
+au BufNewFile,BufRead *.nginx,nginx*.conf,*nginx.conf,*/etc/nginx/*,*/usr/local/nginx/conf/*,*/nginx/*.conf			setf nginx
 
 " Ninja file
 au BufNewFile,BufRead *.ninja			setf ninja
@@ -1278,7 +1308,7 @@ au BufNewFile,BufRead *.rcp			setf pilrc
 au BufNewFile,BufRead .pinerc,pinerc,.pinercex,pinercex		setf pine
 
 " Pipenv Pipfiles
-au BufNewFile,BufRead Pipfile			setf config
+au BufNewFile,BufRead Pipfile			setf toml
 au BufNewFile,BufRead Pipfile.lock		setf json
 
 " PL/1, PL/I
@@ -1400,7 +1430,7 @@ au BufNewFile,BufRead *.ptl,*.pyi,SConstruct		   setf python
 " Radiance
 au BufNewFile,BufRead *.rad,*.mat		setf radiance
 
-" Raku (formelly Perl6)
+" Raku (formerly Perl6)
 au BufNewFile,BufRead *.pm6,*.p6,*.t6,*.pod6,*.raku,*.rakumod,*.rakudoc,*.rakutest  setf raku
 
 " Ratpoison config/command files
@@ -1480,6 +1510,9 @@ au BufNewFile,BufRead robots.txt		setf robots
 " Rpcgen
 au BufNewFile,BufRead *.x			setf rpcgen
 
+" MikroTik RouterOS script
+au BufRead,BufNewFile *.rsc			setf routeros
+
 " reStructuredText Documentation Format
 au BufNewFile,BufRead *.rst			setf rst
 
@@ -1512,6 +1545,7 @@ au BufNewFile,BufRead [rR]antfile,*.rant,[rR]akefile,*.rake	setf ruby
 
 " Rust
 au BufNewFile,BufRead *.rs			setf rust
+au BufNewFile,BufRead Cargo.lock,*/.cargo/config,*/.cargo/credentials	setf toml
 
 " S-lang (or shader language, or SmallLisp)
 au BufNewFile,BufRead *.sl			setf slang
@@ -1623,6 +1657,9 @@ au BufNewFile,BufRead .tcshrc,*.tcsh,tcsh.tcshrc,tcsh.login	call polyglot#ft#Set
 " (patterns ending in a start further below)
 au BufNewFile,BufRead .login,.cshrc,csh.cshrc,csh.login,csh.logout,*.csh,.alias  call polyglot#ft#CSH()
 
+" Zig
+au BufNewFile,BufRead *.zig			setf zig
+
 " Z-Shell script (patterns ending in a star further below)
 au BufNewFile,BufRead .zprofile,*/etc/zprofile,.zfbfmarks  setf zsh
 au BufNewFile,BufRead .zshrc,.zshenv,.zlogin,.zlogout,.zcompdump setf zsh
@@ -1709,6 +1746,9 @@ au BufNewFile,BufRead *.speedup,*.spdata,*.spd	setf spup
 " Slice
 au BufNewFile,BufRead *.ice			setf slice
 
+" Microsoft Visual Studio Solution
+au BufNewFile,BufRead *.sln			setf solution
+
 " Spice
 au BufNewFile,BufRead *.sp,*.spice		setf spice
 
@@ -1729,6 +1769,9 @@ au BufNewFile,BufRead *.sqlj			setf sqlj
 
 " SQR
 au BufNewFile,BufRead *.sqr,*.sqi		setf sqr
+
+" Squirrel
+au BufNewFile,BufRead *.nut			setf squirrel
 
 " OpenSSH configuration
 au BufNewFile,BufRead ssh_config,*/.ssh/config		setf sshconfig
@@ -1802,7 +1845,7 @@ au BufRead,BufNewFile {pending,completed,undo}.data  setf taskdata
 au BufRead,BufNewFile *.task			setf taskedit
 
 " Tcl (JACL too)
-au BufNewFile,BufRead *.tcl,*.tk,*.itcl,*.itk,*.jacl	setf tcl
+au BufNewFile,BufRead *.tcl,*.tm,*.tk,*.itcl,*.itk,*.jacl,.tclshrc,.wishrc	setf tcl
 
 " TealInfo
 au BufNewFile,BufRead *.tli			setf tli
@@ -1996,14 +2039,15 @@ au BufNewFile,BufRead *.ws[fc]			setf wsh
 " XHTML
 au BufNewFile,BufRead *.xhtml,*.xht		setf xhtml
 
-" X Pixmap (dynamically sets colors, use BufEnter to make it work better)
-au BufEnter *.xpm
+" X Pixmap (dynamically sets colors, this used to trigger on BufEnter to make
+" it work better, but that breaks setting 'filetype' manually)
+au BufNewFile,BufRead *.xpm
 	\ if getline(1) =~ "XPM2" |
 	\   setf xpm2 |
 	\ else |
 	\   setf xpm |
 	\ endif
-au BufEnter *.xpm2				setf xpm2
+au BufNewFile,BufRead *.xpm2			setf xpm2
 
 " XFree86 config
 au BufNewFile,BufRead XF86Config
@@ -2038,8 +2082,14 @@ au BufNewFile,BufRead *.xml			call polyglot#ft#FTxml()
 " XMI (holding UML models) is also XML
 au BufNewFile,BufRead *.xmi			setf xml
 
-" CSPROJ files are Visual Studio.NET's XML-based project config files
+" CSPROJ files are Visual Studio.NET's XML-based C# project config files
 au BufNewFile,BufRead *.csproj,*.csproj.user	setf xml
+
+" FSPROJ files are Visual Studio.NET's XML-based F# project config files
+au BufNewFile,BufRead *.fsproj,*.fsproj.user	setf xml
+
+" VBPROJ files are Visual Studio.NET's XML-based Visual Basic project config files
+au BufNewFile,BufRead *.vbproj,*.vbproj.user	setf xml
 
 " Qt Linguist translation source and Qt User Interface Files are XML
 " However, for .ts Typescript is more common.
@@ -2124,6 +2174,12 @@ augroup filetypedetect
 
 
 
+" Plain text files, needs to be far down to not override others.  This avoids
+" the "conf" type being used if there is a line starting with '#'.
+" But before patterns matching everything in a directory.
+au BufNewFile,BufRead *.text,README,LICENSE,COPYING,AUTHORS	setf text
+
+
 " Extra checks for when no filetype has been detected now.  Mostly used for
 " patterns that end in "*".  E.g., "zsh*" matches "zsh.vim", but that's a Vim
 " script file.
@@ -2136,7 +2192,10 @@ au BufNewFile,BufRead proftpd.conf*					call s:StarSetf('apachestyle')
 
 " More Apache config files
 au BufNewFile,BufRead access.conf*,apache.conf*,apache2.conf*,httpd.conf*,srm.conf*	call s:StarSetf('apache')
-au BufNewFile,BufRead */etc/apache2/*.conf*,*/etc/apache2/conf.*/*,*/etc/apache2/mods-*/*,*/etc/apache2/sites-*/*,*/etc/httpd/conf.d/*.conf*		call s:StarSetf('apache')
+au BufNewFile,BufRead */etc/apache2/*.conf*,*/etc/apache2/conf.*/*,*/etc/apache2/mods-*/*,*/etc/apache2/sites-*/*,*/etc/httpd/conf.*/*,*/etc/httpd/mods-*/*,*/etc/httpd/sites-*/*,*/etc/httpd/conf.d/*.conf*		call s:StarSetf('apache')
+
+" APT config file
+au BufNewFile,BufRead */etc/apt/apt.conf.d/{[-_[:alnum:]]\+,[-_.[:alnum:]]\+.conf} call s:StarSetf('aptconf')
 
 " Asterisk config file
 au BufNewFile,BufRead *asterisk/*.conf*		call s:StarSetf('asterisk')
@@ -2239,6 +2298,9 @@ au BufNewFile,BufRead */etc/modutils/*
 	\|endif
 au BufNewFile,BufRead */etc/modprobe.*		call s:StarSetf('modconf')
 
+" Mutt setup files (must be before catch *.rc)
+au BufNewFile,BufRead */etc/Muttrc.d/*		call s:StarSetf('muttrc')
+
 " Mutt setup file
 au BufNewFile,BufRead .mutt{ng,}rc*,*/.mutt{ng,}/mutt{ng,}rc*	call s:StarSetf('muttrc')
 au BufNewFile,BufRead mutt{ng,}rc*,Mutt{ng,}rc*		call s:StarSetf('muttrc')
@@ -2284,11 +2346,17 @@ au BufNewFile,BufRead .bashrc*,.bash[_-]profile*,.bash[_-]logout*,.bash[_-]alias
 au BufNewFile,BufRead .kshrc* call polyglot#ft#SetFileTypeSH("ksh")
 au BufNewFile,BufRead .profile* call polyglot#ft#SetFileTypeSH(getline(1))
 
+" Sudoers
+au BufNewFile,BufRead */etc/sudoers.d/*		call s:StarSetf('sudoers')
+
 " tcsh scripts ending in a star
 au BufNewFile,BufRead .tcshrc*	call polyglot#ft#SetFileTypeShell("tcsh")
 
 " csh scripts ending in a star
 au BufNewFile,BufRead .login*,.cshrc*  call polyglot#ft#CSH()
+
+" tmux configuration with arbitrary extension
+au BufNewFile,BufRead {.,}tmux*.conf*		setf tmux
 
 " VHDL
 au BufNewFile,BufRead *.vhdl_[0-9]*		call s:StarSetf('vhdl')
@@ -2324,10 +2392,6 @@ au BufNewFile,BufRead */etc/yum.repos.d/*	call s:StarSetf('dosini')
 au BufNewFile,BufRead .zsh*,.zlog*,.zcompdump*  call s:StarSetf('zsh')
 au BufNewFile,BufRead zsh*,zlog*		call s:StarSetf('zsh')
 
-
-" Plain text files, needs to be far down to not override others.  This avoids
-" the "conf" type being used if there is a line starting with '#'.
-au BufNewFile,BufRead *.text,README		setf text
 
 " Help files match *.txt but should have a last line that is a modeline.
 au BufNewFile,BufRead *.txt

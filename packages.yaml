@@ -1517,11 +1517,6 @@ filetypes:
   - '.zsh*'
   - '*/etc/zprofile'
 ---
-name: zinit
-remote: zinit-zsh/zplugin-vim-syntax
-# just adds to zsh filetype
-filetypes: []
----
 name: slim
 remote: slim-template/vim-slim
 filetypes:

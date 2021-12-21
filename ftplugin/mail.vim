@@ -5,7 +5,7 @@ endif
 " Vim filetype plugin file
 " Language:	Mail
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last Change:	2012 Nov 20
+" Last Change:	2021 Oct 23
 
 " Only do this when not done yet for this buffer
 if exists("b:did_ftplugin")
@@ -29,6 +29,14 @@ setlocal fo+=tcql
 
 " Add n:> to 'comments, in case it was removed elsewhere
 setlocal comments+=n:>
+
+" .eml files are universally formatted with DOS line-endings, per RFC5322.
+" If the file was not DOS the it will be marked as changed, which is probably
+" a good thing.
+if expand('%:e') ==? 'eml'
+  let b:undo_ftplugin .= " fileformat=" .. &fileformat
+  setlocal fileformat=dos
+endif
 
 " Add mappings, unless the user doesn't want this.
 if !exists("no_plugin_maps") && !exists("no_mail_maps")

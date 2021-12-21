@@ -3,9 +3,10 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'eterm', 'indent/eterm.vim')
 endif
 
 " Vim indent file
-" Language:             Eterm configuration file
-" Previous Maintainer:  Nikolai Weibull <now@bitwi.se>
-" Latest Revision:      2006-12-20
+" Language:		Eterm configuration file
+" Maintainer:		Doug Kearns <dougkearns@gmail.com>
+" Previous Maintainer:	Nikolai Weibull <now@bitwi.se>
+" Last Change:		24 Sep 2021
 
 if exists("b:did_indent")
   finish
@@ -15,6 +16,8 @@ let b:did_indent = 1
 setlocal indentexpr=GetEtermIndent()
 setlocal indentkeys=!^F,o,O,=end
 setlocal nosmartindent
+
+let b:undo_indent = "setl inde< indk< si<"
 
 if exists("*GetEtermIndent")
   finish

@@ -91,10 +91,10 @@ syn match       vCodeGen            /$if\>/
 hi def link     vCodeGen            Identifier
 
 " Predefined types
-syn keyword     vType               chan map bool string error voidptr
+syn keyword     vType               any chan char map bool string error voidptr
 syn match       vOptionalType       "\%(\<?\)\@<=\(chan\|map\|bool\|string\|error\|voidptr\)"
-syn keyword     vSignedInts         int i8 i16 i64 rune intptr
-syn keyword     vUnsignedInts       byte u16 u32 u64 byteptr
+syn keyword     vSignedInts         int i8 i16 i64 isize rune intptr
+syn keyword     vUnsignedInts       byte u16 u32 u64 usize byteptr
 syn keyword     vFloats             f32 f64 floatptr
 " XXX Enable when complex numbers are implemented in V
 " syn keyword    	vComplexes          complex64 complex128
@@ -160,8 +160,8 @@ syn cluster     vStringGroup        contains=@vCharacterGroup,vStringError
 syn region      vString             start=+"+ skip=+\\\\\|\\'+ end=+"+ contains=@vStringGroup
 syn region      vString             start=+'+ skip=+\\\\\|\\'+ end=+'+ contains=@vStringGroup
 
-syn region      vRawString          start=+r"+ skip=+\\\\\|\\'+ end=+"+
-syn region      vRawString          start=+r'+ skip=+\\\\\|\\'+ end=+'+
+syn region      vRawString          start=+r"+ end=+"+
+syn region      vRawString          start=+r'+ end=+'+
 
 hi def link     vString             String
 hi def link     vRawString          String
@@ -173,9 +173,15 @@ syn region      vParen              start='(' end=')' transparent
 " Integers
 syn match       vDecimalInt         "\<\d\+\([Ee]\d\+\)\?\>"
 syn match       vOctalInt           "\<0o\o\+\>"
+syn match       vHexInt             "\<0x\x\+\>"
+syn match       vBinaryInt          "\<0b[01]\+\>"
+syn match       vSnakeInt           "\<[0-9_]\+\>"
 
 hi def link     vDecimalInt         Integer
 hi def link     vOctalInt           Integer
+hi def link     vHexInt             Integer
+hi def link     vBinaryInt          Integer
+hi def link     vSnakeInt           Integer
 hi def link     Integer             Number
 
 " Floating point

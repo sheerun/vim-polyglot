@@ -52,39 +52,39 @@ syn match gitDiffRemoved "\[-[^]]*-\]" contained containedin=gitDiff
 syn match  gitKeyword /^commit \@=/ contained containedin=gitHead nextgroup=gitHashAbbrev skipwhite contains=@NoSpell
 syn match  gitKeyword /^\%(object\|tree\|parent\|encoding\|gpgsig\%(-\w\+\)\=\|previous\) \@=/ contained containedin=gitHead nextgroup=gitHash skipwhite contains=@NoSpell
 syn match  gitKeyword /^Merge:/  contained containedin=gitHead nextgroup=gitHashAbbrev skipwhite contains=@NoSpell
-syn match  gitIdentityKeyword /^\%(author\|committer\|tagger\) \@=/ contained containedin=gitHead nextgroup=gitIdentity skipwhite
-syn match  gitIdentityHeader /^\%(Author\|Commit\|Tagger\):/ contained containedin=gitHead nextgroup=gitIdentity skipwhite
-syn match  gitDateHeader /^\%(AuthorDate\|CommitDate\|Date\):/ contained containedin=gitHead nextgroup=gitDate skipwhite
+syn match  gitIdentityKeyword /^\%(author\|committer\|tagger\) \@=/ contained containedin=gitHead nextgroup=gitIdentity skipwhite contains=@NoSpell
+syn match  gitIdentityHeader /^\%(Author\|Commit\|Tagger\):/ contained containedin=gitHead nextgroup=gitIdentity skipwhite contains=@NoSpell
+syn match  gitDateHeader /^\%(AuthorDate\|CommitDate\|Date\):/ contained containedin=gitHead nextgroup=gitDate skipwhite contains=@NoSpell
 
 syn match  gitKeyword /^[*|\/\\_ ]\+\zscommit \@=/ contained containedin=gitGraph nextgroup=gitHashAbbrev skipwhite contains=@NoSpell
 syn match  gitKeyword /^[|\/\\_ ]\+\zs\%(object\|tree\|parent\|encoding\|gpgsig\%(-\w\+\)\=\|previous\) \@=/ contained containedin=gitGraph nextgroup=gitHash skipwhite contains=@NoSpell
 syn match  gitKeyword /^[|\/\\_ ]\+\zsMerge:/  contained containedin=gitGraph nextgroup=gitHashAbbrev skipwhite contains=@NoSpell
-syn match  gitIdentityKeyword /^[|\/\\_ ]\+\zs\%(author\|committer\|tagger\) \@=/ contained containedin=gitGraph nextgroup=gitIdentity skipwhite
-syn match  gitIdentityHeader /^[|\/\\_ ]\+\zs\%(Author\|Commit\|Tagger\):/ contained containedin=gitGraph nextgroup=gitIdentity skipwhite
-syn match  gitDateHeader /^[|\/\\_ ]\+\zs\%(AuthorDate\|CommitDate\|Date\):/ contained containedin=gitGraph nextgroup=gitDate skipwhite
+syn match  gitIdentityKeyword /^[|\/\\_ ]\+\zs\%(author\|committer\|tagger\) \@=/ contained containedin=gitGraph nextgroup=gitIdentity skipwhite contains=@NoSpell
+syn match  gitIdentityHeader /^[|\/\\_ ]\+\zs\%(Author\|Commit\|Tagger\):/ contained containedin=gitGraph nextgroup=gitIdentity skipwhite contains=@NoSpell
+syn match  gitDateHeader /^[|\/\\_ ]\+\zs\%(AuthorDate\|CommitDate\|Date\):/ contained containedin=gitGraph nextgroup=gitDate skipwhite contains=@NoSpell
 
 syn match  gitKeyword /^type \@=/ contained containedin=gitHead nextgroup=gitType skipwhite contains=@NoSpell
 syn match  gitKeyword /^\%(summary\|boundary\|filename\|\%(author\|committer\)-\%(time\|tz\)\) \@=/ contained containedin=gitHead skipwhite contains=@NoSpell
 syn match  gitKeyword /^tag \@=/ contained containedin=gitHead nextgroup=gitReference skipwhite contains=@NoSpell
-syn match  gitIdentityKeyword /^\%(author\|committer\)-mail \@=/ contained containedin=gitHead nextgroup=gitEmail skipwhite
-syn match  gitReflogHeader /^Reflog:/ contained containedin=gitHead nextgroup=gitReflogMiddle skipwhite
-syn match  gitReflogHeader /^Reflog message:/ contained containedin=gitHead skipwhite
-syn match  gitReflogMiddle /\S\+@{\d\+} (/he=e-2 nextgroup=gitIdentity
+syn match  gitIdentityKeyword /^\%(author\|committer\)-mail \@=/ contained containedin=gitHead nextgroup=gitEmail skipwhite contains=@NoSpell
+syn match  gitReflogHeader /^Reflog:/ contained containedin=gitHead nextgroup=gitReflogMiddle skipwhite contains=@NoSpell
+syn match  gitReflogHeader /^Reflog message:/ contained containedin=gitHead skipwhite contains=@NoSpell
+syn match  gitReflogMiddle /\S\+@{\d\+} (/he=e-2 nextgroup=gitIdentity contains=@NoSpell
 
-syn match  gitIdentity /\S.\{-\} <[^>]*>/ contained nextgroup=gitDate skipwhite
-syn region gitEmail matchgroup=gitEmailDelimiter start=/</ end=/>/ keepend oneline contained containedin=gitIdentity
-syn match  gitDate      /\<\u\l\l \u\l\l \d\=\d \d\d:\d\d:\d\d \d\d\d\d [+-]\d\d\d\d/ contained
-syn match  gitDate      /-\=\d\+ [+-]\d\d\d\d\>/               contained
-syn match  gitDate      /\<\d\+ \l\+ ago\>/                    contained
-syn match  gitType      /\<\%(tag\|commit\|tree\|blob\)\>/     contained nextgroup=gitHashAbbrev skipwhite
-syn match  gitReference /\S\+\S\@!/                            contained
+syn match  gitIdentity /\S.\{-\} <[^>]*>/ contained nextgroup=gitDate skipwhite contains=@NoSpell
+syn region gitEmail matchgroup=gitEmailDelimiter start=/</ end=/>/ keepend oneline contained containedin=gitIdentity contains=@NoSpell
+syn match  gitDate      /\<\u\l\l \u\l\l \d\=\d \d\d:\d\d:\d\d \d\d\d\d [+-]\d\d\d\d/ contained contains=@NoSpell
+syn match  gitDate      /-\=\d\+ [+-]\d\d\d\d\>/               contained contains=@NoSpell
+syn match  gitDate      /\<\d\+ \l\+ ago\>/                    contained contains=@NoSpell
+syn match  gitType      /\<\%(tag\|commit\|tree\|blob\)\>/     contained nextgroup=gitHashAbbrev skipwhite contains=@NoSpell
+syn match  gitReference /\S\+\S\@!/                            contained contains=@NoSpell
 syn match  gitHash      /\<\x\{40,\}\>/             contained nextgroup=gitIdentity,gitHash skipwhite contains=@NoSpell
 syn match  gitReflogOld /^\x\{40,\} \@=/            contained nextgroup=gitReflogNew skipwhite contains=@NoSpell
 syn match  gitReflogNew /\<\x\{40,\} \@=/           contained nextgroup=gitIdentity skipwhite contains=@NoSpell
 syn match  gitHashAbbrev /\<\x\{4,\}\>/             contained nextgroup=gitHashAbbrev skipwhite contains=@NoSpell
 syn match  gitHashAbbrev /\<\x\{4,39\}\.\.\./he=e-3 contained nextgroup=gitHashAbbrev skipwhite contains=@NoSpell
 syn match  gitHashStage /\<\x\{4,\}\>/              contained nextgroup=gitStage skipwhite contains=@NoSpell
-syn match  gitStage     /\<\d\t\@=/                 contained
+syn match  gitStage     /\<\d\t\@=/                 contained contains=@NoSpell
 
 
 syn match  gitNotesHeader /^Notes:\ze\n    /

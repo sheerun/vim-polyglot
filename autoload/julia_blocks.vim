@@ -339,7 +339,7 @@ function! s:on_begin()
   let [l,c] = [line('.'), col('.')]
   normal! ^
   let patt = '\%<'.(c+1).'c\(' . b:julia_begin_keywordsm . '\)\%>'.(c-1).'c'
-  let n = search(patt, 'Wnc', l)
+  let n = search('\C' . patt, 'Wnc', l)
   call cursor(l, c)
   return n > 0
 endfunction
@@ -350,7 +350,7 @@ function! s:matchit()
 endfunction
 
 function! s:move_before_begin()
-  call search(b:julia_begin_keywordsm, 'Wbc')
+  call search('\C' . b:julia_begin_keywordsm, 'Wbc')
   normal! h
 endfunction
 
@@ -382,7 +382,7 @@ function! s:moveto_block_delim(toend, backwards, ...)
       normal! bh
     endif
     while 1
-      let searchret = search(pattern, flags)
+      let searchret = search('\C' . pattern, flags)
       if !searchret
 	return ret
       endif
@@ -473,7 +473,7 @@ function! s:moveto_currentblock_end()
     normal! b
   endif
 
-  let ret = searchpair(b:julia_begin_keywordsm, '', b:julia_end_keywords, flags, b:match_skip)
+  let ret = searchpair('\C' . b:julia_begin_keywordsm, '', '\C' . b:julia_end_keywords, flags, b:match_skip)
   if ret <= 0
     return s:abort()
   endif
@@ -679,7 +679,7 @@ function! s:find_block(current_mode)
     normal! l
     normal! b
   endif
-  let searchret = searchpair(b:julia_begin_keywordsm, '', b:julia_end_keywords, flags, b:match_skip)
+  let searchret = searchpair('\C' . b:julia_begin_keywordsm, '', '\C' . b:julia_end_keywords, flags, b:match_skip)
   if searchret <= 0
     if !b:jlblk_did_select
       return s:abort()

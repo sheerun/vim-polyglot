@@ -3,9 +3,10 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'kotlin', 'indent/kotlin.vim')
 endif
 
 " Vim indent file
-" Language: Kotlin
-" Maintainer: Alexander Udalov
-" Latest Revision: 26 May 2019
+" Language:     Kotlin
+" Maintainer:   Alexander Udalov
+" URL:          https://github.com/udalov/kotlin-vim
+" Last Change:  7 November 2021
 
 if exists('b:did_indent')
     finish
@@ -49,11 +50,11 @@ function! GetKotlinIndent()
     let cur_close_brace = cur =~ '^\s*}.*$'
 
     if prev_open_paren && !cur_close_paren || prev_open_brace && !cur_close_brace
-        return prev_indent + &shiftwidth
+        return prev_indent + shiftwidth()
     endif
 
     if cur_close_paren && !prev_open_paren || cur_close_brace && !prev_open_brace
-        return prev_indent - &shiftwidth
+        return prev_indent - shiftwidth()
     endif
 
     return prev_indent
