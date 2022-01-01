@@ -2319,7 +2319,8 @@ if !has_key(g:polyglot_is_disabled, 'jsx')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'javascript')
-  au BufNewFile,BufRead *._js,*.bones,*.cjs,*.es,*.es6,*.frag,*.gs,*.jake,*.javascript,*.js,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.jsx,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile setf javascript
+  au! BufNewFile,BufRead,BufWritePost *.frag call polyglot#detect#Frag()
+  au BufNewFile,BufRead *._js,*.bones,*.cjs,*.es,*.es6,*.gs,*.jake,*.javascript,*.js,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.jsx,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile setf javascript
   au BufNewFile,BufRead *.flow setf flow
 endif
 
@@ -2339,7 +2340,8 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'glsl')
   au! BufNewFile,BufRead,BufWritePost *.fs call polyglot#detect#Fs()
-  au BufNewFile,BufRead *.comp,*.fp,*.frag,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.rchit,*.rmiss,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
+  au! BufNewFile,BufRead,BufWritePost *.frag call polyglot#detect#Frag()
+  au BufNewFile,BufRead *.comp,*.fp,*.frg,*.fsh,*.fshader,*.geo,*.geom,*.glsl,*.glslf,*.glslv,*.gs,*.gshader,*.rchit,*.rmiss,*.shader,*.tesc,*.tese,*.vert,*.vrx,*.vsh,*.vshader setf glsl
 endif
 
 if !has_key(g:polyglot_is_disabled, 'git')

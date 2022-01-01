@@ -136,7 +136,7 @@ hi def link     vComment            Comment
 " V escapes
 syn match       vStringVar          display contained +\$[0-9A-Za-z\._]*\([(][^)]*[)]\)\?+
 syn match       vStringVar          display contained "\${[^}]*}"
-syn match       vStringSpeChar      display contained +\\[abfnrtv\\'"]+
+syn match       vStringSpeChar      display contained +\\[abfnrtv\\'"`]+
 syn match       vStringX            display contained "\\x\x\{1,2}"
 syn match       vStringU            display contained "\\u\x\{4}"
 syn match       vStringBigU         display contained "\\U\x\{8}"

@@ -134,6 +134,18 @@ func! polyglot#detect#Fs(...)
   set ft=forth | return
 endfunc
 
+func! polyglot#detect#Frag(...)
+  if a:0 != 1 && did_filetype()
+    return
+  endif
+  for lnum in range(1, min([line("$"), 50]))
+    let line = getline(lnum)
+    if line =~# '\s*\(#version\|precision\|uniform\|varying\|vec[234]\)'
+      set ft=glsl | return
+    endif
+  endfor
+endfunc
+
 func! polyglot#detect#Re(...)
   if a:0 != 1 && did_filetype()
     return
