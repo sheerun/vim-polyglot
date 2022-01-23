@@ -1,6 +1,6 @@
 This is my top-starred repository on Github, so I've decided to put this ad here:
 
-If you seek consultation, please visit following repository: https://github.com/sheerun/consultation
+If you work for big corp and seek consulting, please visit following repository: https://github.com/sheerun/consultation
 
 ![vim-polyglot](https://i.imgur.com/9RxQK6k.png)
 
