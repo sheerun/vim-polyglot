@@ -1,4 +1,4 @@
-This is my top-rater repository, so I've decided to put this "ad" here:
+This is my top-starred repository on Github, so I've decided to put this "ad" here:
 
 If you seek consultation, please visit following repository: https://github.com/sheerun/consultation
 
