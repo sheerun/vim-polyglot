@@ -5546,3 +5546,11 @@ name: zinit
 remote: zdharma-continuum/zinit-vim-syntax@main
 # just adds to zsh filetype
 filetypes: []
+---
+name: bicep
+remote: carlsmedstad/vim-bicep
+filetypes:
+- name: bicep
+  patterns:
+  - pattern: '*.bicep'
+    description: Microsoft Bicep
