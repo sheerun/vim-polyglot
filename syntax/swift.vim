@@ -215,6 +215,7 @@ syntax keyword swiftAttributes
       \ @NSCopying
       \ @NSManaged
       \ @objc
+      \ @preconcurrency
       \ @propertyWrapper
       \ @resultBuilder
       \ @Sendable
@@ -223,7 +224,9 @@ syntax keyword swiftAttributes
       \ @usableFromInline
       \ @warn_unused_result
 
-syntax keyword swiftConditionStatement #available
+syntax keyword swiftConditionStatement
+      \ #available
+      \ #unavailable
 
 syntax keyword swiftStructure
       \ struct

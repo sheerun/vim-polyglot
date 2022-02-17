@@ -3,6 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'zinit', 'after/syntax/zsh.vim
 endif
 
 " Copyright (c) 2019 Sebastian Gniazdowski
+" Copyright (c) 2021 Joakim Gottzén
 "
 " Syntax highlighting for Zinit commands in any file of type `zsh'.
 " It adds definitions for the Zinit syntax to the ones from the
@@ -10,117 +11,163 @@ endif
 
 " Main Zinit command.
 " Should be the only TOP rule for the whole syntax.
-syntax match ZinitCommand     /\<zinit\>\s/me=e-1
-            \ skipwhite
-            \ nextgroup=ZinitSubCommands,ZinitPluginSubCommands,ZinitSnippetSubCommands
-            \ contains=ZinitSubCommands,ZinitPluginSubCommands,ZinitSnippetSubCommands
+syn match ZinitCommand '\(^\|\s\)zinit\s'ms=e-5,me=e-1 skipwhite
+            \ nextgroup=ZinitCommand,ZinitIceCommand,ZinitPluginCommand,ZinitSnippetCommand,ZinitForCommand,ZinitContinue,ZinitIceWithParam,ZinitIce
 
-" TODO: add options for e.g. light
-syntax match ZinitSubCommands /\s\<\%(ice\|compinit\|env-whitelist\|cdreplay\|cdclear\|update\)\>\s/ms=s+1,me=e-1
-            \ contained
+syn match ZinitCommand '\s\%(help\|man\)\>'ms=s+1 skipwhite contained
+syn match ZinitCommand '\s\%(unload\)\>'ms=s+1 skipwhite contained " load,light and snippet are handled elsewhere
+syn match ZinitCommand '\s\%(clist\|completions\|cdisable\|cenable\|creinstall\|cuninstall\)\>'ms=s+1 skipwhite contained
+syn match ZinitCommand '\s\%(csearch\|compinit\|cclear\|cdlist\|cdreplay\|cdclear\)\>'ms=s+1 skipwhite contained
+syn match ZinitCommand '\s\%(dtrace\|dstart\|dstop\|dunload\|dreport\|dclear\)\>'ms=s+1 skipwhite contained
+syn match ZinitCommand '\s\%(times\|zstatus\|report\|loaded\|list\|ls\|status\|recently\|bindkeys\)\>'ms=s+1 skipwhite contained
+syn match ZinitCommand '\s\%(compile\|uncompile\|compiled\)\>'ms=s+1 skipwhite contained
+syn match ZinitCommand '\s\%(self-update\|update\|delete\|cd\|edit\|glance\|stress\|changes\|create\)\>'ms=s+1 skipwhite contained
+syn match ZinitCommand '\s\%(srv\|recall\|env-whitelist\|module\|add-fpath\|fpath\|run\)\>'ms=s+1 skipwhite contained
 
-syntax match ZinitPluginSubCommands /\s\<\%(light\|load\)\>\s/ms=s+1,me=e-1
-            \ skipwhite nextgroup=ZinitPlugin1,ZinitPlugin2,ZinitPlugin3
-            \ contains=ZinitPlugin1,ZinitPlugin2,ZinitPlugin3
+syn match ZinitIceCommand '\sice\s'ms=s+1,me=e-1 skipwhite contained nextgroup=ZinitIce,ZinitIceWithParam
 
-syntax match ZinitSnippetSubCommands /\s\<\%(snippet\)\>\s/ms=s+1,me=e-1
-            \ skipwhite
-            \ nextgroup=ZinitSnippetShorthands1,ZinitSnippetShorthands2
-            \ contains=ZinitSnippetShorthands1,ZinitSnippetShorthands2
+syn match ZinitPluginCommand '\s\%(light\|load\)\s'ms=s+1,me=e-1 skipwhite contained nextgroup=ZinitPlugin,ZinitContinue
 
-" "user/plugin"
-syntax match ZinitPlugin1 /\s["]\%([!-_]*\%(\/[!-_]\+\)\+\|[!-_]\+\)["]/ms=s+1,hs=s+2,he=e-1
-            \ contained
-            \ nextgroup=ZinitTrailingWhiteSpace
-            \ contains=ZinitTrailingWhiteSpace
+syn match ZinitSnippetCommand '\s\%(snippet\)\s'ms=s+1,me=e-1 skipwhite contained nextgroup=ZinitSnippet,ZinitContinue
 
-" 'user/plugin'
-syntax match ZinitPlugin2 /\s[']\%([!-_]*\%(\/[!-_]\+\)\+\|[!-_]\+\)[']/ms=s+1,hs=s+2,he=e-1
-            \ contained
-            \ nextgroup=ZinitTrailingWhiteSpace
-            \ contains=ZinitTrailingWhiteSpace
+syn match ZinitForCommand '\sfor\s'ms=s+1,me=e-1 skipwhite contained
+            \ nextgroup=ZinitPlugin,ZinitSnippet,ZinitContinue
 
-" user/plugin
-syntax match ZinitPlugin3 /\s\%([!-_]*\%(\/[!-_]\+\)\+\|[!-_]\+\)/ms=s+1,me=e+2 
-            \ contained
-            \ nextgroup=ZinitTrailingWhiteSpace
-            \ contains=ZinitTrailingWhiteSpace
+syn cluster ZinitLine contains=ZinitIce,ZinitIceWithParam,ZinitPlugin,ZinitSnippet,ZinitForCommand
 
-" OMZ:: or PZT::
-" TODO: 'OMZ:: or 'PZT::
-syntax match ZinitSnippetShorthands1 /\s\<\%(\%(OMZ\|PZT\)\>::\|\)/hs=s+1,he=e-2
-            \ contained
-            \ skipwhite
-            \ nextgroup=ZinitSnippetUrl1,ZinitSnippetUrl2
-            \ contains=ZinitSnippetUrl1,ZinitSnippetUrl2
+syn match ZinitContinue '\s\\\s*$'ms=s+1,me=s+2 skipwhite contained skipnl
+            \ nextgroup=@ZinitLine
 
-" "OMZ:: or "PZT::
-syntax match ZinitSnippetShorthands2 /\s["]\%(\%(OMZ\|PZT\)\>::\|\)/hs=s+2,he=e-2
-            \ contained
-            \ skipwhite
-            \ nextgroup=ZinitSnippetUrl3,ZinitSnippetUrl4
-            \ contains=ZinitSnippetUrl3,ZinitSnippetUrl4
+" user/plugin or @user/plugin
+syn match ZinitPlugin '\s@\?\<[a-zA-Z0-9][a-zA-Z0-9_\-]*\/[a-zA-Z0-9_\-\.]\+\>'ms=s+1 skipwhite contained
+            \ nextgroup=ZinitPlugin,ZinitSnippet,ZinitContinue
 
-syntax match ZinitSnippetUrl3 /\<\%(http:\/\/\|https:\/\/\|ftp:\/\/\|\$HOME\|\/\)[!-_]\+\%(\/[!-_]\+\)*\/\?["]/he=e-1
-            \ contained
-            \ nextgroup=ZinitTrailingWhiteSpace
-            \ contains=ZinitTrailingWhiteSpace
+" shorthands
+syn match ZinitSnippet '\s\%(OMZ[LPT]\?\|PZT[M]\?\)::[a-zA-Z0-9_\-\.\/]\+\>'ms=s+1 skipwhite contained
+            \ nextgroup=ZinitPlugin,ZinitSnippet,ZinitContinue
+" url
+syn match ZinitSnippet '\s\%(http[s]\?\|ftp\):\/\/[[:alnum:]%\/_#.-]*\>'ms=s+1 skipwhite contained
+            \ nextgroup=ZinitPlugin,ZinitSnippet,ZinitContinue
+" "$VAR" local path
+syn match ZinitSnippet +\s"\$\<[a-zA-Z0-9_]\+[^"]*"+ms=s+1 skipwhite contained
+            \ nextgroup=ZinitPlugin,ZinitSnippet,ZinitContinue
+" "${VAR}" local path
+syn match ZinitSnippet +\s"\${\<[a-zA-Z0-9_]\+}[^"]*"+ms=s+1 skipwhite contained
+            \ nextgroup=ZinitPlugin,ZinitSnippet,ZinitContinue
 
-" TODO: Fix ZinitTrailingWhiteSpace not matching
-syntax match ZinitSnippetUrl4 /\%(\%(OMZ\|PZT\)::\)[!-_]\+\%(\/[!-_]\+\)*\/\?["]/hs=s+5,he=e-1
-            \ contained
-            \ nextgroup=ZinitTrailingWhiteSpace
-            \ contains=ZinitTrailingWhiteSpace
+" ices which takes a param enclosed in "
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(proto\|from\|ver\|bpick\|depth\|cloneopts\|pullopts\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(pick\|src\|multisrc\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(wait\|load\|unload\|if\|has\|subscribe\|on-update-of\|trigger-load\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(mv\|cp\|atclone\|atpull\|atinit\|atload\|atdelete\|make\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(as\|id-as\|compile\|nocompile\|service\|bindmap\|wrap-track\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(extract\|subst\|autoload\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(wrap\|ps-on-unload\|ps-on-update\)"+ skip=+\\"+ end=+"+ skipwhite contained
 
-" http://… or https://… or ftp://… or $HOME/… or /…
-" TODO: Fix $HOME/… and /… not matching
-syntax match ZinitSnippetUrl1 /\<\%(http:\/\/\|https:\/\/\|ftp:\/\/\|\$HOME\|\/\)[!-_]\+\%(\/[!-_]\+\)*\/\?/
-            \ contained
-            \ nextgroup=ZinitTrailingWhiteSpace
-            \ contains=ZinitTrailingWhiteSpace
+" zinit packages
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(param\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
 
-" TODO: Fix ZinitTrailingWhiteSpace not matching
-syntax match ZinitSnippetUrl2 /\<\%(\%(OMZ\|PZT\)::\)[!-_]\+\%(\/[!-_]\+\)*\/\?/hs=s+5
-            \ contained
-            \ nextgroup=ZinitTrailingWhiteSpace
-            \ contains=ZinitTrailingWhiteSpace
+" added by the existing annexes
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(fbin\|sbin\|gem\|node\|pip\|fmod\|fsrc\|ferc\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(dl\|patch\|submods\|cargo\|dlink\|dlink0\)"+ skip=+\\"+ end=+"+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceDoubleQuoteParam
 
-syntax match ZinitTrailingWhiteSpace /[[:space:]]\+$/ contained
+syn match ZinitIceDoubleQuoteParam +[^"]*+ contained
 
-" TODO: differentiate the no-value ices
-" TODO: use contained
-syntax match ZinitIceSubCommand /\sice\s/ms=s+1,me=e-1 nextgroup=ZinitIceModifiers
-syntax match ZinitIceModifiers  /\s\<\%(svn\|proto\|from\|teleid\|bindmap\|cloneopts\|id-as\|depth\|if\|wait\|load\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(unload\|blockf\|on-update-of\|subscribe\|pick\|bpick\|src\|as\|ver\|silent\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(lucid\|notify\|mv\|cp\|atinit\|atclone\|atload\|atpull\|nocd\|run-atpull\|has\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(cloneonly\|make\|service\|trackbinds\|multisrc\|compile\|nocompile\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(nocompletions\|reset-prompt\|wrap-track\|reset\|aliases\|sh\|bash\|ksh\|csh\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(\\!sh\|!sh\|\\!bash\|!bash\|\\!ksh\|!ksh\|\\!csh\|!csh\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(blockf\|silent\|lucid\|trackbinds\|cloneonly\|nocd\|run-atpull\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(\|sh\|\!sh\|bash\|\!bash\|ksh\|\!ksh\|csh\|\!csh\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(nocompletions\|svn\|aliases\|trigger-load\)\>/ms=s+1
-syntax match ZinitIceModifiers  /\s\<\%(light-mode\|is-snippet\|countdown\|ps-on-unload\|ps-on-update\)\>/ms=s+1
-            
-" Include also ices added by the existing annexes
-syntax match ZinitIceModifiers  /\s\<\%(test\|zman\|submod\|dl\|patch\|fbin\|sbin\|fsrc\|ferc\|fmod\|gem\|node\|rustup\|cargo\)\>/ms=s+1
-        
-" Additional Zsh and Zinit functions
-syntax match ZshAndZinitFunctions     /\<\%(compdef\|compinit\|zpcdreplay\|zpcdclear\|zpcompinit\|zpcompdef\)\>/
+" ices that takes a param enclosed in '
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(proto\|from\|ver\|bpick\|depth\|cloneopts\|pullopts\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(pick\|src\|multisrc\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(wait\|load\|unload\|if\|has\|subscribe\|on-update-of\|trigger-load\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(mv\|cp\|atclone\|atpull\|atinit\|atload\|atdelete\|make\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(as\|id-as\|compile\|nocompile\|service\|bindmap\|wrap-track\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(extract\|subst\|autoload\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(wrap\|ps-on-unload\|ps-on-update\)'+ skip=+\\'+ end=+'+ skipwhite contained
 
-" Link
-highlight def link ZshAndZinitFunctions    Keyword
-highlight def link ZinitCommand            Statement
-highlight def link ZinitSubCommands        Title
-highlight def link ZinitPluginSubCommands  Title
-highlight def link ZinitSnippetSubCommands Title
-highlight def link ZinitIceModifiers       Type
-highlight def link ZinitSnippetShorthands1 Keyword
-highlight def link ZinitSnippetShorthands2 Keyword
-highlight def link ZinitPlugin1            Macro
-highlight def link ZinitPlugin2            Macro
-highlight def link ZinitPlugin3            Macro
-highlight def link ZinitSnippetUrl1        Macro
-highlight def link ZinitSnippetUrl2        Macro
-highlight def link ZinitSnippetUrl3        Macro
-highlight def link ZinitSnippetUrl4        Macro
-highlight def link ZinitTrailingWhiteSpace Error
+" zinit packages
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(param\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+
+" added by the existing annexes
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(fbin\|sbin\|gem\|node\|pip\|fmod\|fsrc\|ferc\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+syn region ZinitIceWithParam matchgroup=ZinitIce start=+\s\%(dl\|patch\|submods\|cargo\|dlink\|dlink0\)'+ skip=+\\'+ end=+'+ skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+            \ contains=ZinitIceSingleQuoteParam
+
+syn match ZinitIceSingleQuoteParam +[^']*+ contained
+
+" ices that doens't take a param
+syn match ZinitIce '\s\%(teleid\|svn\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+syn match ZinitIce '\s\%(wait\|cloneonly\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+syn match ZinitIce '\s\%(silent\|lucid\|notify\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+syn match ZinitIce '\s\%(blockf\|nocompletions\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+syn match ZinitIce '\s\%(run-atpull\|nocd\|make\|countdown\|reset\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+syn match ZinitIce '\s!\?\%(sh\|bash\|ksh\|csh\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+syn match ZinitIce '\s\%(id-as\|nocompile\|reset-prompt\|trackbinds\|aliases\|light-mode\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+syn match ZinitIce '\s\%(is-snippet\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+
+" ices that doens't take a param, from zinit packages
+syn match ZinitIce '\s\%(pack\|git\|null\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+
+" ices that doens't take a param, added by the existing annexes
+syn match ZinitIce '\s\%(notest\|rustup\|default-ice\|skip\|debug\)\>'ms=s+1 skipwhite contained
+            \ nextgroup=@ZinitLine,ZinitContinue
+
+" additional Zsh and zinit functions
+syn match ZshAndZinitFunctions '\<\%(compdef\|compinit\|zpcdreplay\|zpcdclear\|zpcompinit\|zpcompdef\)\>'
+
+" highlights
+hi def link ZinitCommand             Statement
+hi def link ZinitCommand             Title
+hi def link ZinitIceCommand          Title
+hi def link ZinitPluginCommand       Title
+hi def link ZinitSnippetCommand      Title
+hi def link ZinitForCommand          zshRepeat
+hi def link ZinitContinue            Normal
+hi def link ZinitPlugin              Macro
+hi def link ZinitSnippet             Macro
+hi def link ZinitIce                 Type
+hi def link ZinitIceDoubleQuoteParam Special
+hi def link ZinitIceSingleQuoteParam Special
+hi def link ZshAndZinitFunctions     Keyword
+

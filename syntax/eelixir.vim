@@ -63,6 +63,8 @@ syn cluster eelixirRegions contains=eelixirBlock,surfaceExpression,eelixirExpres
 exe 'syn region  eelixirExpression matchgroup=eelixirDelimiter start="<%"  end="%\@<!%>" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
 exe 'syn region  eelixirExpression matchgroup=eelixirDelimiter start="<%=" end="%\@<!%>" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
 exe 'syn region  surfaceExpression matchgroup=surfaceDelimiter start="{{" end="}}" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
+exe 'syn region  surfaceExpression matchgroup=surfaceDelimiter start="{" end="}" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
+exe 'syn region  surfaceExpression matchgroup=surfaceDelimiter start="{" end="}" skip="#{[^}]*}" contains=@elixirTop  containedin=htmlValue keepend'
 exe 'syn region  eelixirQuote      matchgroup=eelixirDelimiter start="<%%" end="%\@<!%>" contains=@elixirTop  containedin=ALLBUT,@eelixirRegions keepend'
 exe 'syn region  eelixirComment    matchgroup=eelixirDelimiter start="<%#" end="%\@<!%>" contains=elixirTodo,@Spell containedin=ALLBUT,@eelixirRegions keepend'
 

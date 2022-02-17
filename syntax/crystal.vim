@@ -380,13 +380,14 @@ syn cluster crystalMacroGroup add=crystalMacroKeyword
 " Comments and Documentation
 syn match   crystalSharpBang "\%^#!.*" display
 syn keyword crystalTodo      FIXME NOTE TODO OPTIMIZE XXX todo contained
+syn match   crystalCommentDirective ":\%(nodoc\|nodoc\|inherit\):" contained
 
 if exists('g:main_syntax') && g:main_syntax ==# 'ecrystal'
   " eCrystal tags can contain Crystal comments, so we need to modify the
   " pattern for comments so that it does not consume delimiters
-  syn match crystalComment "#.*\ze\%($\|-\=%>\)" contains=crystalSharpBang,crystalSpaceError,crystalTodo,@Spell
+  syn match crystalComment "#.*\ze\%($\|-\=%>\)" contains=crystalSharpBang,crystalSpaceError,crystalTodo,crystalCommentDirective,@Spell
 else
-  syn match crystalComment "#.*" contains=crystalSharpBang,crystalSpaceError,crystalTodo,@Spell
+  syn match crystalComment "#.*" contains=crystalSharpBang,crystalSpaceError,crystalTodo,crystalCommentDirective,@Spell
 endif
 
 SynFold '#' syn region crystalMultilineComment start="\%(\%(^\s*#.*\n\)\@<!\%(^\s*#.*\n\)\)\%(\(^\s*#.*\n\)\{1,}\)\@=" end="\%(^\s*#.*\n\)\@<=\%(^\s*#.*\n\)\%(^\s*#\)\@!" contains=crystalComment transparent keepend
@@ -456,6 +457,7 @@ hi def link crystalPseudoVariable       Constant
 hi def link crystalCharLiteral          Character
 hi def link crystalComment              Comment
 hi def link crystalTodo                 Todo
+hi def link crystalCommentDirective     SpecialComment
 hi def link crystalStringEscape         Special
 hi def link crystalInterpolationDelim   Delimiter
 hi def link crystalNoInterpolation      crystalString

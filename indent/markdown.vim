@@ -2,7 +2,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'markdown', 'indent/markdown.v
   finish
 endif
 
-if exists("b:did_indent") | finish | endif
+if exists('b:did_indent') | finish | endif
 let b:did_indent = 1
 
 setlocal indentexpr=GetMarkdownIndent()
@@ -12,7 +12,7 @@ setlocal autoindent
 " Automatically continue blockquote on line break
 setlocal formatoptions+=r
 setlocal comments=b:>
-if get(g:, "vim_markdown_auto_insert_bullets", 1)
+if get(g:, 'vim_markdown_auto_insert_bullets', 1)
     " Do not automatically insert bullets when auto-wrapping with text-width
     setlocal formatoptions-=c
     " Accept various markers as bullets
@@ -20,24 +20,24 @@ if get(g:, "vim_markdown_auto_insert_bullets", 1)
 endif
 
 " Only define the function once
-if exists("*GetMarkdownIndent") | finish | endif
+if exists('*GetMarkdownIndent') | finish | endif
 
 function! s:IsMkdCode(lnum)
     let name = synIDattr(synID(a:lnum, 1, 0), 'name')
-    return (name =~ '^mkd\%(Code$\|Snippet\)' || name != '' && name !~ '^\%(mkd\|html\)')
+    return (name =~# '^mkd\%(Code$\|Snippet\)' || name !=# '' && name !~? '^\%(mkd\|html\)')
 endfunction
 
 function! s:IsLiStart(line)
-    return a:line !~ '^ *\([*-]\)\%( *\1\)\{2}\%( \|\1\)*$' &&
-      \    a:line =~ '^\s*[*+-] \+'
+    return a:line !~# '^ *\([*-]\)\%( *\1\)\{2}\%( \|\1\)*$' &&
+      \    a:line =~# '^\s*[*+-] \+'
 endfunction
 
 function! s:IsHeaderLine(line)
-    return a:line =~ '^\s*#'
+    return a:line =~# '^\s*#'
 endfunction
 
 function! s:IsBlankLine(line)
-    return a:line =~ '^$'
+    return a:line =~# '^$'
 endfunction
 
 function! s:PrevNonBlank(lnum)
@@ -52,7 +52,7 @@ function GetMarkdownIndent()
     if v:lnum > 2 && s:IsBlankLine(getline(v:lnum - 1)) && s:IsBlankLine(getline(v:lnum - 2))
         return 0
     endif
-    let list_ind = get(g:, "vim_markdown_new_list_item_indent", 4)
+    let list_ind = get(g:, 'vim_markdown_new_list_item_indent', 4)
     " Find a non-blank line above the current line.
     let lnum = s:PrevNonBlank(v:lnum - 1)
     " At the start of the file use zero indent.

@@ -90,18 +90,6 @@ function! s:FindDartFmt() abort
   return []
 endfunction
 
-function! dart#analyzer(q_args) abort
-  call s:error('DartAnalyzer support has been removed. '.
-      \'If this broke your workflow please comment on '.
-      \'https://github.com/dart-lang/dart-vim-plugin/issues/89')
-endfunction
-
-function! dart#tojs(q_args) abort
-  call s:error('Dart2JS support has been removed. '.
-      \'If this broke your workflow please comment on '.
-      \'https://github.com/dart-lang/dart-vim-plugin/issues/89')
-endfunction
-
 " Finds the path to `uri`.
 "
 " If the file is a package: uri, looks for a .packages file to resolve the path.

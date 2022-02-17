@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'glsl', 'indent/glsl.vim')
 endif
 
 " Language: OpenGL Shading Language
-" Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
+" Maintainer: Sergii Tykhomyrov <sergii@tykhomyrov.net>
 
 if exists("b:did_indent")
   finish

@@ -19,7 +19,7 @@ setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetSolidityIndent()
-setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
+setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e,0*
 
 " Only define the function once.
 if exists("*GetSolidityIndent")
@@ -41,7 +41,7 @@ let s:syng_strcom = 'string\|regex\|comment\c'
 let s:syng_string = 'regex\c'
 
 " Regex of syntax group names that are strings or documentation.
-let s:syng_multiline = 'comment\c'
+let s:syng_multiline = 'comment\|natspecblock\c'
 
 " Regex of syntax group names that are line comment.
 let s:syng_linecom = 'linecomment\c'

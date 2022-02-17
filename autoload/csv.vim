@@ -780,8 +780,7 @@ fu! csv#CalculateColumnWidth(row, silent) "{{{3
     " row for the row for which to calculate the width
     let b:col_width=[]
     if has( 'vartabs' ) && b:delimiter == "\t"
-        let vts_save=&vts
-        set vts=
+        setlocal vts=
     endif
     try
         if exists("b:csv_headerline")
@@ -801,9 +800,6 @@ fu! csv#CalculateColumnWidth(row, silent) "{{{3
     " delete buffer content in variable b:csv_list,
     " this was only necessary for calculating the max width
     unlet! b:csv_list s:columnize_count s:decimal_column
-    if has( 'vartabs' ) && b:delimiter == "\t"
-        let &vts=vts_save
-    endif
 endfu
 fu! csv#Columnize(field) "{{{3
     " Internal function, not called from external,

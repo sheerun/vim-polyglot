@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'ocaml', 'syntax/opam.vim')
 endif
 
 " Vim syntax file
-" Language:    OPAM - OCaml package manager
+" Language:    opam - OCaml package manager
 " Maintainer:  Markus Mottl        <markus.mottl@gmail.com>
 " URL:         https://github.com/ocaml/vim-ocaml
 " Last Change:
@@ -15,8 +15,36 @@ endif
 
 " need %{vars}%
 " env: [[CAML_LD_LIBRARY_PATH = "%{lib}%/stublibs"]]
-syn keyword opamKeyword1 remove depends pin-depends depopts conflicts env packages patches version maintainer tags license homepage authors doc install author available name depexts substs synopsis description
-syn match opamKeyword2 "\v(bug-reports|post-messages|ocaml-version|opam-version|dev-repo|build-test|build-doc|build)"
+syn keyword opamKeyword1 author
+syn keyword opamKeyword1 authors
+syn keyword opamKeyword1 available
+syn keyword opamKeyword1 conflicts
+syn keyword opamKeyword1 depends
+syn keyword opamKeyword1 depexts
+syn keyword opamKeyword1 depopts
+syn keyword opamKeyword1 description
+syn keyword opamKeyword1 doc
+syn keyword opamKeyword1 extra-files
+syn keyword opamKeyword1 features
+syn keyword opamKeyword1 flags
+syn keyword opamKeyword1 homepage
+syn keyword opamKeyword1 install
+syn keyword opamKeyword1 libraries
+syn keyword opamKeyword1 license
+syn keyword opamKeyword1 maintainer
+syn keyword opamKeyword1 messages
+syn keyword opamKeyword1 name
+syn keyword opamKeyword1 patches
+syn keyword opamKeyword1 pin-depends
+syn keyword opamKeyword1 remove
+syn keyword opamKeyword1 run-test
+syn keyword opamKeyword1 setenv
+syn keyword opamKeyword1 substs
+syn keyword opamKeyword1 synopsis
+syn keyword opamKeyword1 syntax
+syn keyword opamKeyword1 tags
+syn keyword opamKeyword1 version
+syn match opamKeyword2 "\v(bug-reports|post-messages|opam-version|dev-repo|build)"
 
 syn keyword opamTodo FIXME NOTE NOTES TODO XXX contained
 syn match opamComment "#.*$" contains=opamTodo,@Spell

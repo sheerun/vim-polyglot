@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'glsl', 'syntax/glsl.vim')
 endif
 
 " Language: OpenGL Shading Language
-" Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
+" Maintainer: Sergii Tykhomyrov <sergii@tykhomyrov.net>
 
 if exists("b:current_syntax") && b:current_syntax == "glsl"
   finish
@@ -51,6 +51,7 @@ syn keyword glslStructure struct nextgroup=glslIdentifier skipwhite skipempty
 syn match glslIdentifier contains=glslIdentifierPrime "\%([a-zA-Z_]\)\%([a-zA-Z0-9_]\)*" display contained
 
 " Types
+syn keyword glslType accelerationStructureEXT
 syn keyword glslType atomic_uint
 syn keyword glslType bool
 syn keyword glslType bvec2
@@ -122,6 +123,7 @@ syn keyword glslType mat4
 syn keyword glslType mat4x2
 syn keyword glslType mat4x3
 syn keyword glslType mat4x4
+syn keyword glslType rayQueryEXT
 syn keyword glslType sampler1D
 syn keyword glslType sampler1DArray
 syn keyword glslType sampler1DArrayShadow
@@ -176,6 +178,8 @@ syn keyword glslQualifier align
 syn keyword glslQualifier attribute
 syn keyword glslQualifier binding
 syn keyword glslQualifier buffer
+syn keyword glslQualifier callableDataEXT
+syn keyword glslQualifier callableDataInEXT
 syn keyword glslQualifier ccw
 syn keyword glslQualifier centroid
 syn keyword glslQualifier centroid varying
@@ -193,6 +197,7 @@ syn keyword glslQualifier flat
 syn keyword glslQualifier fractional_even_spacing
 syn keyword glslQualifier fractional_odd_spacing
 syn keyword glslQualifier highp
+syn keyword glslQualifier hitAttributeEXT
 syn keyword glslQualifier in
 syn keyword glslQualifier index
 syn keyword glslQualifier inout
@@ -210,6 +215,7 @@ syn keyword glslQualifier location
 syn keyword glslQualifier lowp
 syn keyword glslQualifier max_vertices
 syn keyword glslQualifier mediump
+syn keyword glslQualifier nonuniformEXT
 syn keyword glslQualifier noperspective
 syn keyword glslQualifier offset
 syn keyword glslQualifier origin_upper_left
@@ -235,6 +241,8 @@ syn keyword glslQualifier r8
 syn keyword glslQualifier r8_snorm
 syn keyword glslQualifier r8i
 syn keyword glslQualifier r8ui
+syn keyword glslQualifier rayPayloadEXT
+syn keyword glslQualifier rayPayloadInEXT
 syn keyword glslQualifier readonly
 syn keyword glslQualifier restrict
 syn keyword glslQualifier rg16
@@ -265,6 +273,7 @@ syn keyword glslQualifier rgba8i
 syn keyword glslQualifier rgba8ui
 syn keyword glslQualifier row_major
 syn keyword glslQualifier sample
+syn keyword glslQualifier shaderRecordEXT
 syn keyword glslQualifier shared
 syn keyword glslQualifier smooth
 syn keyword glslQualifier std140
@@ -279,11 +288,13 @@ syn keyword glslQualifier vertices
 syn keyword glslQualifier volatile
 syn keyword glslQualifier writeonly
 syn keyword glslQualifier xfb_buffer
-syn keyword glslQualifier xfb_stride
 syn keyword glslQualifier xfb_offset
+syn keyword glslQualifier xfb_stride
 
 " Built-in Constants
 syn keyword glslBuiltinConstant gl_CullDistance
+syn keyword glslBuiltinConstant gl_HitKindBackFacingTriangleEXT
+syn keyword glslBuiltinConstant gl_HitKindFrontFacingTriangleEXT
 syn keyword glslBuiltinConstant gl_MaxAtomicCounterBindings
 syn keyword glslBuiltinConstant gl_MaxAtomicCounterBufferSize
 syn keyword glslBuiltinConstant gl_MaxClipDistances
@@ -363,6 +374,20 @@ syn keyword glslBuiltinConstant gl_MaxVertexUniformComponents
 syn keyword glslBuiltinConstant gl_MaxVertexUniformVectors
 syn keyword glslBuiltinConstant gl_MaxViewports
 syn keyword glslBuiltinConstant gl_MinProgramTexelOffset
+syn keyword glslBuiltinConstant gl_RayFlagsCullBackFacingTrianglesEXT
+syn keyword glslBuiltinConstant gl_RayFlagsCullFrontFacingTrianglesEXT
+syn keyword glslBuiltinConstant gl_RayFlagsCullNoOpaqueEXT
+syn keyword glslBuiltinConstant gl_RayFlagsCullOpaqueEXT
+syn keyword glslBuiltinConstant gl_RayFlagsNoOpaqueEXT
+syn keyword glslBuiltinConstant gl_RayFlagsNoneEXT
+syn keyword glslBuiltinConstant gl_RayFlagsOpaqueEXT
+syn keyword glslBuiltinConstant gl_RayFlagsSkipClosestHitShaderEXT
+syn keyword glslBuiltinConstant gl_RayFlagsTerminateOnFirstHitEXT
+syn keyword glslBuiltinConstant gl_RayQueryCandidateIntersectionAABBEXT
+syn keyword glslBuiltinConstant gl_RayQueryCandidateIntersectionTriangleEXT
+syn keyword glslBuiltinConstant gl_RayQueryCommittedIntersectionGeneratedEXT
+syn keyword glslBuiltinConstant gl_RayQueryCommittedIntersectionNoneEXT
+syn keyword glslBuiltinConstant gl_RayQueryCommittedIntersectionTriangleEXT
 
 " Built-in Variables
 syn keyword glslBuiltinVariable gl_BackColor
@@ -393,10 +418,18 @@ syn keyword glslBuiltinVariable gl_FrontLightModelProduct
 syn keyword glslBuiltinVariable gl_FrontLightProduct
 syn keyword glslBuiltinVariable gl_FrontMaterial
 syn keyword glslBuiltinVariable gl_FrontSecondaryColor
+syn keyword glslBuiltinVariable gl_GeometryIndexEXT
 syn keyword glslBuiltinVariable gl_GlobalInvocationID
 syn keyword glslBuiltinVariable gl_HelperInvocation
+syn keyword glslBuiltinVariable gl_HitKindEXT
+syn keyword glslBuiltinVariable gl_HitTEXT
+syn keyword glslBuiltinVariable gl_IncomingRayFlagsEXT
+syn keyword glslBuiltinVariable gl_InstanceCustomIndexEXT
+syn keyword glslBuiltinVariable gl_InstanceID
 syn keyword glslBuiltinVariable gl_InstanceID
 syn keyword glslBuiltinVariable gl_InvocationID
+syn keyword glslBuiltinVariable gl_LaunchIDEXT
+syn keyword glslBuiltinVariable gl_LaunchSizeEXT
 syn keyword glslBuiltinVariable gl_Layer
 syn keyword glslBuiltinVariable gl_LightModel
 syn keyword glslBuiltinVariable gl_LightSource
@@ -427,17 +460,24 @@ syn keyword glslBuiltinVariable gl_ObjectPlaneQ
 syn keyword glslBuiltinVariable gl_ObjectPlaneR
 syn keyword glslBuiltinVariable gl_ObjectPlaneS
 syn keyword glslBuiltinVariable gl_ObjectPlaneT
+syn keyword glslBuiltinVariable gl_ObjectRayDirectionEXT
+syn keyword glslBuiltinVariable gl_ObjectRayOriginEXT
+syn keyword glslBuiltinVariable gl_ObjectToWorld3x4EXT
+syn keyword glslBuiltinVariable gl_ObjectToWorldEXT
 syn keyword glslBuiltinVariable gl_PatchVerticesIn
 syn keyword glslBuiltinVariable gl_Point
 syn keyword glslBuiltinVariable gl_PointCoord
 syn keyword glslBuiltinVariable gl_PointSize
 syn keyword glslBuiltinVariable gl_Position
 syn keyword glslBuiltinVariable gl_PrimitiveID
+syn keyword glslBuiltinVariable gl_PrimitiveID
 syn keyword glslBuiltinVariable gl_PrimitiveIDIn
 syn keyword glslBuiltinVariable gl_ProjectionMatrix
 syn keyword glslBuiltinVariable gl_ProjectionMatrixInverse
 syn keyword glslBuiltinVariable gl_ProjectionMatrixInverseTranspose
 syn keyword glslBuiltinVariable gl_ProjectionMatrixTranspose
+syn keyword glslBuiltinVariable gl_RayTmaxEXT
+syn keyword glslBuiltinVariable gl_RayTminEXT
 syn keyword glslBuiltinVariable gl_SampleID
 syn keyword glslBuiltinVariable gl_SampleMask
 syn keyword glslBuiltinVariable gl_SampleMaskIn
@@ -458,6 +498,10 @@ syn keyword glslBuiltinVariable gl_VertexIndex
 syn keyword glslBuiltinVariable gl_ViewportIndex
 syn keyword glslBuiltinVariable gl_WorkGroupID
 syn keyword glslBuiltinVariable gl_WorkGroupSize
+syn keyword glslBuiltinVariable gl_WorldRayDirectionEXT
+syn keyword glslBuiltinVariable gl_WorldRayOriginEXT
+syn keyword glslBuiltinVariable gl_WorldToObject3x4EXT
+syn keyword glslBuiltinVariable gl_WorldToObjectEXT
 syn keyword glslBuiltinVariable gl_in
 syn keyword glslBuiltinVariable gl_out
 
@@ -507,6 +551,7 @@ syn keyword glslBuiltinFunction determinant
 syn keyword glslBuiltinFunction distance
 syn keyword glslBuiltinFunction dot
 syn keyword glslBuiltinFunction equal
+syn keyword glslBuiltinFunction executeCallableEXT
 syn keyword glslBuiltinFunction exp
 syn keyword glslBuiltinFunction exp2
 syn keyword glslBuiltinFunction faceforward
@@ -525,6 +570,7 @@ syn keyword glslBuiltinFunction fwidthFine
 syn keyword glslBuiltinFunction greaterThan
 syn keyword glslBuiltinFunction greaterThanEqual
 syn keyword glslBuiltinFunction groupMemoryBarrier
+syn keyword glslBuiltinFunction ignoreIntersectionEXT
 syn keyword glslBuiltinFunction imageAtomicAdd
 syn keyword glslBuiltinFunction imageAtomicAnd
 syn keyword glslBuiltinFunction imageAtomicCompSwap
@@ -578,8 +624,32 @@ syn keyword glslBuiltinFunction packUnorm2x16
 syn keyword glslBuiltinFunction packUnorm4x8
 syn keyword glslBuiltinFunction pow
 syn keyword glslBuiltinFunction radians
+syn keyword glslBuiltinFunction rayQueryConfirmIntersectionEXT
+syn keyword glslBuiltinFunction rayQueryGenerateIntersectionEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionBarycentricsEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionCandidateAABBOpaqueEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionFrontFaceEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionGeometryIndexEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionInstanceCustomIndexEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionInstanceIdEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionObjectRayDirectionEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionObjectRayOriginEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionObjectToWorldEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionPrimitiveIndexEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionTEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionTypeEXT
+syn keyword glslBuiltinFunction rayQueryGetIntersectionWorldToObjectEXT
+syn keyword glslBuiltinFunction rayQueryGetRayFlagsEXT
+syn keyword glslBuiltinFunction rayQueryGetRayTMinEXT
+syn keyword glslBuiltinFunction rayQueryGetWorldRayDirectionEXT
+syn keyword glslBuiltinFunction rayQueryGetWorldRayOriginEXT
+syn keyword glslBuiltinFunction rayQueryInitializeEXT
+syn keyword glslBuiltinFunction rayQueryProceedEXT
+syn keyword glslBuiltinFunction rayQueryTerminateEXT
 syn keyword glslBuiltinFunction reflect
 syn keyword glslBuiltinFunction refract
+syn keyword glslBuiltinFunction reportIntersectionEXT
 syn keyword glslBuiltinFunction round
 syn keyword glslBuiltinFunction roundEven
 syn keyword glslBuiltinFunction shadow1D
@@ -598,6 +668,7 @@ syn keyword glslBuiltinFunction sqrt
 syn keyword glslBuiltinFunction step
 syn keyword glslBuiltinFunction tan
 syn keyword glslBuiltinFunction tanh
+syn keyword glslBuiltinFunction terminateRayEXT
 syn keyword glslBuiltinFunction texelFetch
 syn keyword glslBuiltinFunction texelFetchOffset
 syn keyword glslBuiltinFunction texture
@@ -632,6 +703,7 @@ syn keyword glslBuiltinFunction textureProjOffset
 syn keyword glslBuiltinFunction textureQueryLevels
 syn keyword glslBuiltinFunction textureQueryLod
 syn keyword glslBuiltinFunction textureSize
+syn keyword glslBuiltinFunction traceRayEXT
 syn keyword glslBuiltinFunction transpose
 syn keyword glslBuiltinFunction trunc
 syn keyword glslBuiltinFunction uaddCarry

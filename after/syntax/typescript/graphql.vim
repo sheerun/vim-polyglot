@@ -46,6 +46,15 @@ exec 'syntax match graphqlTaggedTemplate +' . s:tags . '\ze`+ nextgroup=graphqlT
 " Support expression interpolation ((${...})) inside template strings.
 syntax region graphqlTemplateExpression start=+${+ end=+}+ contained contains=typescriptTemplateSubstitution containedin=graphqlFold keepend
 
+" support #graphql , #gql comment strings
+syntax region graphqlTemplateString
+      \ start=+`\(#\s\{,4\}\(gql\|graphql\)\)\@=+
+      \ skip=+\\\\\|\\`+
+      \ end=+`+me=s-1
+      \ containedin=typescriptTemplate
+      \ contained
+      \ contains=@GraphQLSyntax,typescriptTemplateSubstitution extend
+
 hi def link graphqlTemplateString typescriptTemplate
 hi def link graphqlTemplateExpression typescriptTemplateSubstitution
 
