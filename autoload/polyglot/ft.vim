@@ -582,15 +582,15 @@ export def SetFileTypeSH(name: string)
   endif
   if name =~ '\<csh\>'
     # Some .sh scripts contain #!/bin/csh.
-    SetFileTypeShell("csh")
+    polyglot#ft#SetFileTypeShell("csh")
     return
   elseif name =~ '\<tcsh\>'
     # Some .sh scripts contain #!/bin/tcsh.
-    SetFileTypeShell("tcsh")
+    polyglot#ft#SetFileTypeShell("tcsh")
     return
   elseif name =~ '\<zsh\>'
     # Some .sh scripts contain #!/bin/zsh.
-    SetFileTypeShell("zsh")
+    polyglot#ft#SetFileTypeShell("zsh")
     return
   elseif name =~ '\<ksh\>'
     b:is_kornshell = 1
@@ -617,7 +617,7 @@ export def SetFileTypeSH(name: string)
       unlet b:is_bash
     endif
   endif
-  SetFileTypeShell("sh")
+  polyglot#ft#SetFileTypeShell("sh")
 enddef
 
 # For shell-like file types, check for an "exec" command hidden in a comment,
@@ -653,11 +653,11 @@ export def CSH()
     return
   endif
   if exists("g:filetype_csh")
-    SetFileTypeShell(g:filetype_csh)
+    polyglot#ft#SetFileTypeShell(g:filetype_csh)
   elseif &shell =~ "tcsh"
-    SetFileTypeShell("tcsh")
+    polyglot#ft#SetFileTypeShell("tcsh")
   else
-    SetFileTypeShell("csh")
+    polyglot#ft#SetFileTypeShell("csh")
   endif
 enddef
 
