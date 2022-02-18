@@ -8,7 +8,7 @@ vim9script
 # These functions are moved here from runtime/filetype.vim to make startup
 # faster.
 
-export def Check_inp()
+export def polyglot#ft#Check_inp()
   if getline(1) =~ '^\*'
     setf abaqus
   else
@@ -26,7 +26,7 @@ enddef
 
 # This function checks for the kind of assembly that is wanted by the user, or
 # can be detected from the first five lines of the file.
-export def FTasm()
+export def polyglot#ft#FTasm()
   # make sure b:asmsyntax exists
   if !exists("b:asmsyntax")
     b:asmsyntax = ""
@@ -48,7 +48,7 @@ export def FTasm()
   exe "setf " .. fnameescape(b:asmsyntax)
 enddef
 
-export def FTasmsyntax()
+export def polyglot#ft#FTasmsyntax()
   # see if the file contains any asmsyntax=foo overrides. If so, change
   # b:asmsyntax appropriately
   var head = " " .. getline(1) .. " " .. getline(2) .. " "
@@ -64,7 +64,7 @@ enddef
 var ft_visual_basic_content = '\cVB_Name\|Begin VB\.\(Form\|MDIForm\|UserControl\)'
 
 # See FTfrm() for Visual Basic form file detection
-export def FTbas()
+export def polyglot#ft#FTbas()
   if exists("g:filetype_bas")
     exe "setf " .. g:filetype_bas
     return
@@ -90,7 +90,7 @@ export def FTbas()
   endif
 enddef
 
-export def FTbtm()
+export def polyglot#ft#FTbtm()
   if exists("g:dosbatch_syntax_for_btm") && g:dosbatch_syntax_for_btm
     setf dosbatch
   else
@@ -98,7 +98,7 @@ export def FTbtm()
   endif
 enddef
 
-export def BindzoneCheck(default = '')
+export def polyglot#ft#BindzoneCheck(default = '')
   if getline(1) .. getline(2) .. getline(3) .. getline(4)
 	  =~ '^; <<>> DiG [0-9.]\+.* <<>>\|$ORIGIN\|$TTL\|IN\s\+SOA'
     setf bindzone
@@ -107,7 +107,7 @@ export def BindzoneCheck(default = '')
   endif
 enddef
 
-export def FTlpc()
+export def polyglot#ft#FTlpc()
   if exists("g:lpc_syntax_for_c")
     var lnum = 1
     while lnum <= 12
@@ -121,7 +121,7 @@ export def FTlpc()
   setf c
 enddef
 
-export def FTheader()
+export def polyglot#ft#FTheader()
   if match(getline(1, min([line("$"), 200])), '^@\(interface\|end\|class\)') > -1
     if exists("g:c_syntax_for_h")
       setf objc
@@ -142,7 +142,7 @@ enddef
 # If the first line starts with # or ! it's probably a ch file.
 # If a line has "main", "include", "//" or "/*" it's probably ch.
 # Otherwise CHILL is assumed.
-export def FTchange()
+export def polyglot#ft#FTchange()
   var lnum = 1
   while lnum <= 10
     if getline(lnum)[0] == '@'
@@ -166,7 +166,7 @@ export def FTchange()
   setf chill
 enddef
 
-export def FTent()
+export def polyglot#ft#FTent()
   # This function checks for valid cl syntax in the first five lines.
   # Look for either an opening comment, '#', or a block start, '{".
   # If not found, assume SGML.
@@ -186,7 +186,7 @@ export def FTent()
   setf dtd
 enddef
 
-export def ExCheck()
+export def polyglot#ft#ExCheck()
   var lines = getline(1, min([line("$"), 100]))
   if exists('g:filetype_euphoria')
     exe 'setf ' .. g:filetype_euphoria
@@ -197,7 +197,7 @@ export def ExCheck()
   endif
 enddef
 
-export def EuphoriaCheck()
+export def polyglot#ft#EuphoriaCheck()
   if exists('g:filetype_euphoria')
     exe 'setf ' .. g:filetype_euphoria
   else
@@ -205,7 +205,7 @@ export def EuphoriaCheck()
   endif
 enddef
 
-export def DtraceCheck()
+export def polyglot#ft#DtraceCheck()
   var lines = getline(1, min([line("$"), 100]))
   if match(lines, '^module\>\|^import\>') > -1
     # D files often start with a module and/or import statement.
@@ -217,7 +217,7 @@ export def DtraceCheck()
   endif
 enddef
 
-export def FTe()
+export def polyglot#ft#FTe()
   if exists('g:filetype_euphoria')
     exe 'setf ' .. g:filetype_euphoria
   else
@@ -233,7 +233,7 @@ export def FTe()
   endif
 enddef
 
-export def FTfrm()
+export def polyglot#ft#FTfrm()
   if exists("g:filetype_frm")
     exe "setf " .. g:filetype_frm
     return
@@ -250,7 +250,7 @@ enddef
 
 # Distinguish between Forth and F#.
 # Provided by Doug Kearns.
-export def FTfs()
+export def polyglot#ft#FTfs()
   if exists("g:filetype_fs")
     exe "setf " .. g:filetype_fs
   else
@@ -266,7 +266,7 @@ export def FTfs()
 enddef
 
 # Distinguish between HTML, XHTML and Django
-export def FThtml()
+export def polyglot#ft#FThtml()
   var n = 1
   while n < 10 && n <= line("$")
     if getline(n) =~ '\<DTD\s\+XHTML\s'
@@ -283,7 +283,7 @@ export def FThtml()
 enddef
 
 # Distinguish between standard IDL and MS-IDL
-export def FTidl()
+export def polyglot#ft#FTidl()
   var n = 1
   while n < 50 && n <= line("$")
     if getline(n) =~ '^\s*import\s\+"\(unknwn\|objidl\)\.idl"'
@@ -296,7 +296,7 @@ export def FTidl()
 enddef
 
 # Distinguish between "default" and Cproto prototype file. */
-export def ProtoCheck(default: string)
+export def polyglot#ft#ProtoCheck(default: string)
   # Cproto files have a comment in the first line and a function prototype in
   # the second line, it always ends in ";".  Indent files may also have
   # comments, thus we can't match comments to see the difference.
@@ -309,7 +309,7 @@ export def ProtoCheck(default: string)
   endif
 enddef
 
-export def FTm()
+export def polyglot#ft#FTm()
   if exists("g:filetype_m")
     exe "setf " .. g:filetype_m
     return
@@ -366,7 +366,7 @@ export def FTm()
   endif
 enddef
 
-export def FTmms()
+export def polyglot#ft#FTmms()
   var n = 1
   while n < 20
     var line = getline(n)
@@ -385,7 +385,7 @@ enddef
 
 # This function checks if one of the first five lines start with a dot.  In
 # that case it is probably an nroff file: 'filetype' is set and 1 is returned.
-export def FTnroff(): number
+export def polyglot#ft#FTnroff(): number
   if getline(1)[0] .. getline(2)[0] .. getline(3)[0]
     			.. getline(4)[0] .. getline(5)[0] =~ '\.'
     setf nroff
@@ -394,7 +394,7 @@ export def FTnroff(): number
   return 0
 enddef
 
-export def FTmm()
+export def polyglot#ft#FTmm()
   var n = 1
   while n < 20
     if getline(n) =~ '^\s*\(#\s*\(include\|import\)\>\|@import\>\|/\*\)'
@@ -406,7 +406,7 @@ export def FTmm()
   setf nroff
 enddef
 
-export def FTpl()
+export def polyglot#ft#FTpl()
   if exists("g:filetype_pl")
     exe "setf " .. g:filetype_pl
   else
@@ -421,7 +421,7 @@ export def FTpl()
   endif
 enddef
 
-export def FTinc()
+export def polyglot#ft#FTinc()
   if exists("g:filetype_inc")
     exe "setf " .. g:filetype_inc
   else
@@ -447,7 +447,7 @@ export def FTinc()
   endif
 enddef
 
-export def FTprogress_cweb()
+export def polyglot#ft#FTprogress_cweb()
   if exists("g:filetype_w")
     exe "setf " .. g:filetype_w
     return
@@ -459,7 +459,7 @@ export def FTprogress_cweb()
   endif
 enddef
 
-export def FTprogress_asm()
+export def polyglot#ft#FTprogress_asm()
   if exists("g:filetype_i")
     exe "setf " .. g:filetype_i
     return
@@ -485,7 +485,7 @@ enddef
 var ft_pascal_comments = '^\s*\%({\|(\*\|//\)'
 var ft_pascal_keywords = '^\s*\%(program\|unit\|library\|uses\|begin\|procedure\|function\|const\|type\|var\)\>'
 
-export def FTprogress_pascal()
+export def polyglot#ft#FTprogress_pascal()
   if exists("g:filetype_p")
     exe "setf " .. g:filetype_p
     return
@@ -509,7 +509,7 @@ export def FTprogress_pascal()
   setf progress
 enddef
 
-export def FTpp()
+export def polyglot#ft#FTpp()
   if exists("g:filetype_pp")
     exe "setf " .. g:filetype_pp
   else
@@ -522,7 +522,7 @@ export def FTpp()
   endif
 enddef
 
-export def FTr()
+export def polyglot#ft#FTr()
   var max = line("$") > 50 ? 50 : line("$")
 
   for n in range(1, max)
@@ -555,7 +555,7 @@ export def FTr()
   endif
 enddef
 
-export def McSetf()
+export def polyglot#ft#McSetf()
   # Rely on the file to start with a comment.
   # MS message text files use ';', Sendmail files use '#' or 'dnl'
   for lnum in range(1, min([line("$"), 20]))
@@ -572,7 +572,7 @@ export def McSetf()
 enddef
 
 # Called from filetype.vim and scripts.vim.
-export def SetFileTypeSH(name: string)
+export def polyglot#ft#SetFileTypeSH(name: string)
   if did_filetype()
     # Filetype was already detected
     return
@@ -623,7 +623,7 @@ enddef
 # For shell-like file types, check for an "exec" command hidden in a comment,
 # as used for Tcl.
 # Also called from scripts.vim, thus can't be local to this script.
-export def SetFileTypeShell(name: string)
+export def polyglot#ft#SetFileTypeShell(name: string)
   if did_filetype()
     # Filetype was already detected
     return
@@ -647,7 +647,7 @@ export def SetFileTypeShell(name: string)
   exe "setf " .. name
 enddef
 
-export def CSH()
+export def polyglot#ft#CSH()
   if did_filetype()
     # Filetype was already detected
     return
@@ -662,7 +662,7 @@ export def CSH()
 enddef
 
 var ft_rules_udev_rules_pattern = '^\s*\cudev_rules\s*=\s*"\([^"]\{-1,}\)/*".*'
-export def FTRules()
+export def polyglot#ft#FTRules()
   var path = expand('<amatch>:p')
   if path =~ '/\(etc/udev/\%(rules\.d/\)\=.*\.rules\|\%(usr/\)\=lib/udev/\%(rules\.d/\)\=.*\.rules\)$'
     setf udevrules
@@ -696,7 +696,7 @@ export def FTRules()
   setf hog
 enddef
 
-export def SQL()
+export def polyglot#ft#SQL()
   if exists("g:filetype_sql")
     exe "setf " .. g:filetype_sql
   else
@@ -710,7 +710,7 @@ enddef
 # file.
 # (Slow test) If a file contains a 'use' statement then it is almost certainly
 # a Perl file.
-export def FTperl(): number
+export def polyglot#ft#FTperl(): number
   var dirname = expand("%:p:h:t")
   if expand("%:e") == 't' && (dirname == 't' || dirname == 'xt')
     setf perl
@@ -735,7 +735,7 @@ enddef
 # 1. Check the first line of the file for "%&<format>".
 # 2. Check the first 1000 non-comment lines for LaTeX or ConTeXt keywords.
 # 3. Default to "plain" or to g:tex_flavor, can be set in user's vimrc.
-export def FTtex()
+export def polyglot#ft#FTtex()
   var firstline = getline(1)
   var format: string
   if firstline =~ '^%&\s*\a\+'
@@ -789,7 +789,7 @@ export def FTtex()
   return
 enddef
 
-export def FTxml()
+export def polyglot#ft#FTxml()
   var n = 1
   while n < 100 && n <= line("$")
     var line = getline(n)
@@ -815,7 +815,7 @@ export def FTxml()
   setf xml
 enddef
 
-export def FTy()
+export def polyglot#ft#FTy()
   var n = 1
   while n < 100 && n <= line("$")
     var line = getline(n)
@@ -832,7 +832,7 @@ export def FTy()
   setf yacc
 enddef
 
-export def Redif()
+export def polyglot#ft#Redif()
   var lnum = 1
   while lnum <= 5 && lnum < line('$')
     if getline(lnum) =~ "^\ctemplate-type:"
@@ -845,7 +845,7 @@ enddef
 
 # This function is called for all files under */debian/patches/*, make sure not
 # to non-dep3patch files, such as README and other text files.
-export def Dep3patch()
+export def polyglot#ft#Dep3patch()
   if expand('%:t') ==# 'series'
     return
   endif
@@ -864,7 +864,7 @@ enddef
 # This function checks the first 15 lines for appearance of 'FoamFile'
 # and then 'object' in a following line.
 # In that case, it's probably an OpenFOAM file
-export def FTfoam()
+export def polyglot#ft#FTfoam()
     var ffile = 0
     var lnum = 1
     while lnum <= 15
@@ -879,7 +879,7 @@ export def FTfoam()
 enddef
 
 # Determine if a *.tf file is TF mud client or terraform
-export def FTtf()
+export def polyglot#ft#FTtf()
   var numberOfLines = line('$')
   for i in range(1, numberOfLines)
     var currentLine = trim(getline(i))
