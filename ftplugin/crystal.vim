@@ -53,7 +53,7 @@ if get(g:, 'crystal_define_mappings', 1)
   nmap <buffer>gsc <Plug>(crystal-spec-run-current)
 endif
 
-if &l:ofu ==# ''
+if &l:ofu ==# '' && get(g:, 'crystal_enable_completion', 1)
   setlocal omnifunc=crystal_lang#complete
 endif
 
