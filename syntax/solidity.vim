@@ -120,11 +120,11 @@ syn region    solFuncModParens    contained contains=solString,solFuncCall,solCo
       \ end=')'
 syn keyword   solFuncReturn       contained nextgroup=solFuncRetParens skipwhite skipempty returns
 syn region    solFuncRetParens    contains=solValueType,solFuncStorageType nextgroup=solFuncBody skipempty skipwhite
-      \ start='(' 
-      \ end=')' 
+      \ start='('
+      \ end=')'
 syn region    solFuncBody         contained contains=solDestructure,solComment,solAssemblyBlock,solEmitEvent,solTypeCast,solMethod,solValueType,solConstant,solKeyword,solRepeat,solLabel,solException,solStructure,solFuncStorageType,solOperator,solNumber,solString,solFuncCall,solIf,solElse,solLoop skipempty skipwhite
-      \ start='{' 
-      \ end='}' 
+      \ start='{'
+      \ end='}'
 syn match     solFuncCall         contained skipempty skipwhite nextgroup=solCallOptions,solFuncCallParens
       \ '\v%(%(<if>|<uint>|<int>|<ufixed>|<bytes>|<address>|<string>|<bool>)\s*)@<!<[a-zA-Z_][0-9a-zA-Z_]*\s*%((\{(\n|.|\s)*\})?\s*(\((\n|.|\s)*\)))@='
 syn region    solFuncCallParens   contained transparent contains=solComment,solString,solFuncCall,solConstant,solNumber,solMethod,solTypeCast,solComma,solOperator
@@ -184,6 +184,12 @@ hi def link   solEvent            Define
 hi def link   solEventName        Function
 hi def link   solEventParamMod    Keyword
 hi def link   solEmitEvent        Special
+
+" Errors
+syn match     solError            /\<error\>/ nextgroup=solErrorName,solFuncParams skipwhite
+syn match     solErrorName        /\<[a-zA-Z_][0-9a-zA-Z_]*/ nextgroup=solFuncParam contained skipwhite
+
+hi def link   solErrorName        Function
 
 " Constants
 syn keyword   solConstant         true false wei szabo finney ether seconds minutes hours days weeks years now super

@@ -1,83 +1,89 @@
-vim9script
+" Vim functions for file type detection
+"
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last Change:	2022 Jan 31
 
-# Vim functions for file type detection
-#
-# Maintainer:	Bram Moolenaar <Bram@vim.org>
-# Last Change:	2022 Feb 05
+" These functions are moved here from runtime/filetype.vim to make startup
+" faster.
 
-# These functions are moved here from runtime/filetype.vim to make startup
-# faster.
+" Line continuation is used here, remove 'C' from 'cpoptions'
+let s:cpo_save = &cpo
+set cpo&vim
 
-export def Check_inp()
+func polyglot#ft#Check_inp()
   if getline(1) =~ '^\*'
     setf abaqus
   else
-    var n = 1
-    var nmax = line("$") > 500 ? 500 : line("$")
+    let n = 1
+    if line("$") > 500
+      let nmax = 500
+    else
+      let nmax = line("$")
+    endif
     while n <= nmax
       if getline(n) =~? "^header surface data"
 	setf trasys
 	break
       endif
-      n += 1
+      let n = n + 1
     endwhile
   endif
-enddef
+endfunc
 
-# This function checks for the kind of assembly that is wanted by the user, or
-# can be detected from the first five lines of the file.
-export def FTasm()
-  # make sure b:asmsyntax exists
+" This function checks for the kind of assembly that is wanted by the user, or
+" can be detected from the first five lines of the file.
+func polyglot#ft#FTasm()
+  " make sure b:asmsyntax exists
   if !exists("b:asmsyntax")
-    b:asmsyntax = ""
+    let b:asmsyntax = ""
   endif
 
   if b:asmsyntax == ""
-    FTasmsyntax()
+    call polyglot#ft#FTasmsyntax()
   endif
 
-  # if b:asmsyntax still isn't set, default to asmsyntax or GNU
+  " if b:asmsyntax still isn't set, default to asmsyntax or GNU
   if b:asmsyntax == ""
     if exists("g:asmsyntax")
-      b:asmsyntax = g:asmsyntax
+      let b:asmsyntax = g:asmsyntax
     else
-      b:asmsyntax = "asm"
+      let b:asmsyntax = "asm"
     endif
   endif
 
-  exe "setf " .. fnameescape(b:asmsyntax)
-enddef
+  exe "setf " . fnameescape(b:asmsyntax)
+endfunc
 
-export def FTasmsyntax()
-  # see if the file contains any asmsyntax=foo overrides. If so, change
-  # b:asmsyntax appropriately
-  var head = " " .. getline(1) .. " " .. getline(2) .. " "
-	.. getline(3) .. " " .. getline(4) ..  " " .. getline(5) .. " "
-  var match = matchstr(head, '\sasmsyntax=\zs[a-zA-Z0-9]\+\ze\s')
+func polyglot#ft#FTasmsyntax()
+  " see if file contains any asmsyntax=foo overrides. If so, change
+  " b:asmsyntax appropriately
+  let head = " ".getline(1)." ".getline(2)." ".getline(3)." ".getline(4).
+	\" ".getline(5)." "
+  let match = matchstr(head, '\sasmsyntax=\zs[a-zA-Z0-9]\+\ze\s')
   if match != ''
-    b:asmsyntax = match
+    let b:asmsyntax = match
   elseif ((head =~? '\.title') || (head =~? '\.ident') || (head =~? '\.macro') || (head =~? '\.subtitle') || (head =~? '\.library'))
-    b:asmsyntax = "vmasm"
+    let b:asmsyntax = "vmasm"
   endif
-enddef
+endfunc
 
-var ft_visual_basic_content = '\cVB_Name\|Begin VB\.\(Form\|MDIForm\|UserControl\)'
+let s:ft_visual_basic_content = '\cVB_Name\|Begin VB\.\(Form\|MDIForm\|UserControl\)'
 
-# See FTfrm() for Visual Basic form file detection
-export def FTbas()
+" See FTfrm() for Visual Basic form file detection
+func polyglot#ft#FTbas()
   if exists("g:filetype_bas")
-    exe "setf " .. g:filetype_bas
+    exe "setf " . g:filetype_bas
     return
   endif
 
-  # most frequent FreeBASIC-specific keywords in distro files
-  var fb_keywords = '\c^\s*\%(extern\|var\|enum\|private\|scope\|union\|byref\|operator\|constructor\|delete\|namespace\|public\|property\|with\|destructor\|using\)\>\%(\s*[:=(]\)\@!'
-  var fb_preproc  = '\c^\s*\%(#\a\+\|option\s\+\%(byval\|dynamic\|escape\|\%(no\)\=gosub\|nokeyword\|private\|static\)\>\)'
-  var fb_comment  = "^\\s*/'"
-  # OPTION EXPLICIT, without the leading underscore, is common to many dialects
-  var qb64_preproc = '\c^\s*\%($\a\+\|option\s\+\%(_explicit\|_\=explicitarray\)\>\)'
+  " most frequent FreeBASIC-specific keywords in distro files
+  let fb_keywords = '\c^\s*\%(extern\|var\|enum\|private\|scope\|union\|byref\|operator\|constructor\|delete\|namespace\|public\|property\|with\|destructor\|using\)\>\%(\s*[:=(]\)\@!'
+  let fb_preproc  = '\c^\s*\%(#\a\+\|option\s\+\%(byval\|dynamic\|escape\|\%(no\)\=gosub\|nokeyword\|private\|static\)\>\)'
+  let fb_comment  = "^\\s*/'"
+  " OPTION EXPLICIT, without the leading underscore, is common to many dialects
+  let qb64_preproc = '\c^\s*\%($\a\+\|option\s\+\%(_explicit\|_\=explicitarray\)\>\)'
 
-  var lines = getline(1, min([line("$"), 100]))
+  let lines = getline(1, min([line("$"), 100]))
 
   if match(lines, fb_preproc) > -1 || match(lines, fb_comment) > -1 || match(lines, fb_keywords) > -1
     setf freebasic
@@ -88,40 +94,39 @@ export def FTbas()
   else
     setf basic
   endif
-enddef
+endfunc
 
-export def FTbtm()
+func polyglot#ft#FTbtm()
   if exists("g:dosbatch_syntax_for_btm") && g:dosbatch_syntax_for_btm
     setf dosbatch
   else
     setf btm
   endif
-enddef
+endfunc
 
-export def BindzoneCheck(default = '')
-  if getline(1) .. getline(2) .. getline(3) .. getline(4)
-	  =~ '^; <<>> DiG [0-9.]\+.* <<>>\|$ORIGIN\|$TTL\|IN\s\+SOA'
+func polyglot#ft#BindzoneCheck(default)
+  if getline(1).getline(2).getline(3).getline(4) =~ '^; <<>> DiG [0-9.]\+.* <<>>\|$ORIGIN\|$TTL\|IN\s\+SOA'
     setf bindzone
-  elseif default != ''
-    exe 'setf ' .. default
+  elseif a:default != ''
+    exe 'setf ' . a:default
   endif
-enddef
+endfunc
 
-export def FTlpc()
+func polyglot#ft#FTlpc()
   if exists("g:lpc_syntax_for_c")
-    var lnum = 1
+    let lnum = 1
     while lnum <= 12
       if getline(lnum) =~# '^\(//\|inherit\|private\|protected\|nosave\|string\|object\|mapping\|mixed\)'
 	setf lpc
 	return
       endif
-      lnum += 1
+      let lnum = lnum + 1
     endwhile
   endif
   setf c
-enddef
+endfunc
 
-export def FTheader()
+func polyglot#ft#FTheader()
   if match(getline(1, min([line("$"), 200])), '^@\(interface\|end\|class\)') > -1
     if exists("g:c_syntax_for_h")
       setf objc
@@ -135,15 +140,15 @@ export def FTheader()
   else
     setf cpp
   endif
-enddef
+endfunc
 
-# This function checks if one of the first ten lines start with a '@'.  In
-# that case it is probably a change file.
-# If the first line starts with # or ! it's probably a ch file.
-# If a line has "main", "include", "//" or "/*" it's probably ch.
-# Otherwise CHILL is assumed.
-export def FTchange()
-  var lnum = 1
+" This function checks if one of the first ten lines start with a '@'.  In
+" that case it is probably a change file.
+" If the first line starts with # or ! it's probably a ch file.
+" If a line has "main", "include", "//" or "/*" it's probably ch.
+" Otherwise CHILL is assumed.
+func polyglot#ft#FTchange()
+  let lnum = 1
   while lnum <= 10
     if getline(lnum)[0] == '@'
       setf change
@@ -161,101 +166,101 @@ export def FTchange()
       setf ch
       return
     endif
-    lnum += 1
+    let lnum = lnum + 1
   endwhile
   setf chill
-enddef
+endfunc
 
-export def FTent()
-  # This function checks for valid cl syntax in the first five lines.
-  # Look for either an opening comment, '#', or a block start, '{".
-  # If not found, assume SGML.
-  var lnum = 1
+func polyglot#ft#FTent()
+  " This function checks for valid cl syntax in the first five lines.
+  " Look for either an opening comment, '#', or a block start, '{".
+  " If not found, assume SGML.
+  let lnum = 1
   while lnum < 6
-    var line = getline(lnum)
+    let line = getline(lnum)
     if line =~ '^\s*[#{]'
       setf cl
       return
     elseif line !~ '^\s*$'
-      # Not a blank line, not a comment, and not a block start,
-      # so doesn't look like valid cl code.
+      " Not a blank line, not a comment, and not a block start,
+      " so doesn't look like valid cl code.
       break
     endif
-    lnum += 1
+    let lnum = lnum + 1
   endw
   setf dtd
-enddef
+endfunc
 
-export def ExCheck()
-  var lines = getline(1, min([line("$"), 100]))
+func polyglot#ft#ExCheck()
+  let lines = getline(1, min([line("$"), 100]))
   if exists('g:filetype_euphoria')
-    exe 'setf ' .. g:filetype_euphoria
+    exe 'setf ' . g:filetype_euphoria
   elseif match(lines, '^--\|^ifdef\>\|^include\>') > -1
     setf euphoria3
   else
     setf elixir
   endif
-enddef
+endfunc
 
-export def EuphoriaCheck()
+func polyglot#ft#EuphoriaCheck()
   if exists('g:filetype_euphoria')
-    exe 'setf ' .. g:filetype_euphoria
+    exe 'setf ' . g:filetype_euphoria
   else
     setf euphoria3
   endif
-enddef
+endfunc
 
-export def DtraceCheck()
-  var lines = getline(1, min([line("$"), 100]))
+func polyglot#ft#DtraceCheck()
+  let lines = getline(1, min([line("$"), 100]))
   if match(lines, '^module\>\|^import\>') > -1
-    # D files often start with a module and/or import statement.
+    " D files often start with a module and/or import statement.
     setf d
   elseif match(lines, '^#!\S\+dtrace\|#pragma\s\+D\s\+option\|:\S\{-}:\S\{-}:') > -1
     setf dtrace
   else
     setf d
   endif
-enddef
+endfunc
 
-export def FTe()
+func polyglot#ft#FTe()
   if exists('g:filetype_euphoria')
-    exe 'setf ' .. g:filetype_euphoria
+    exe 'setf ' . g:filetype_euphoria
   else
-    var n = 1
+    let n = 1
     while n < 100 && n <= line("$")
       if getline(n) =~ "^\\s*\\(<'\\|'>\\)\\s*$"
 	setf specman
 	return
       endif
-      n += 1
+      let n = n + 1
     endwhile
     setf eiffel
   endif
-enddef
+endfunc
 
-export def FTfrm()
+func polyglot#ft#FTfrm()
   if exists("g:filetype_frm")
-    exe "setf " .. g:filetype_frm
+    exe "setf " . g:filetype_frm
     return
   endif
 
-  var lines = getline(1, min([line("$"), 5]))
+  let lines = getline(1, min([line("$"), 5]))
 
   if match(lines, s:ft_visual_basic_content) > -1
     setf vb
   else
     setf form
   endif
-enddef
+endfunc
 
-# Distinguish between Forth and F#.
-# Provided by Doug Kearns.
-export def FTfs()
+" Distinguish between Forth and F#.
+" Provided by Doug Kearns.
+func polyglot#ft#FTfs()
   if exists("g:filetype_fs")
-    exe "setf " .. g:filetype_fs
+    exe "setf " . g:filetype_fs
   else
-    var line = getline(nextnonblank(1))
-    # comments and colon definitions
+    let line = getline(nextnonblank(1))
+    " comments and colon definitions
     if line =~ '^\s*\.\=( ' || line =~ '^\s*\\G\= ' || line =~ '^\\$'
 	  \ || line =~ '^\s*: \S'
       setf forth
@@ -263,11 +268,11 @@ export def FTfs()
       setf fsharp
     endif
   endif
-enddef
+endfunc
 
-# Distinguish between HTML, XHTML and Django
-export def FThtml()
-  var n = 1
+" Distinguish between HTML, XHTML and Django
+func polyglot#ft#FThtml()
+  let n = 1
   while n < 10 && n <= line("$")
     if getline(n) =~ '\<DTD\s\+XHTML\s'
       setf xhtml
@@ -277,58 +282,58 @@ export def FThtml()
       setf htmldjango
       return
     endif
-    n += 1
+    let n = n + 1
   endwhile
   setf FALLBACK html
-enddef
+endfunc
 
-# Distinguish between standard IDL and MS-IDL
-export def FTidl()
-  var n = 1
+" Distinguish between standard IDL and MS-IDL
+func polyglot#ft#FTidl()
+  let n = 1
   while n < 50 && n <= line("$")
     if getline(n) =~ '^\s*import\s\+"\(unknwn\|objidl\)\.idl"'
       setf msidl
       return
     endif
-    n += 1
+    let n = n + 1
   endwhile
   setf idl
-enddef
+endfunc
 
-# Distinguish between "default" and Cproto prototype file. */
-export def ProtoCheck(default: string)
-  # Cproto files have a comment in the first line and a function prototype in
-  # the second line, it always ends in ";".  Indent files may also have
-  # comments, thus we can't match comments to see the difference.
-  # IDL files can have a single ';' in the second line, require at least one
-  # chacter before the ';'.
+" Distinguish between "default" and Cproto prototype file. */
+func polyglot#ft#ProtoCheck(default)
+  " Cproto files have a comment in the first line and a function prototype in
+  " the second line, it always ends in ";".  Indent files may also have
+  " comments, thus we can't match comments to see the difference.
+  " IDL files can have a single ';' in the second line, require at least one
+  " chacter before the ';'.
   if getline(2) =~ '.;$'
     setf cpp
   else
-    exe 'setf ' .. default
+    exe 'setf ' . a:default
   endif
-enddef
+endfunc
 
-export def FTm()
+func polyglot#ft#FTm()
   if exists("g:filetype_m")
-    exe "setf " .. g:filetype_m
+    exe "setf " . g:filetype_m
     return
   endif
 
-  # excluding end(for|function|if|switch|while) common to Murphi
-  var octave_block_terminators = '\<end\%(_try_catch\|classdef\|enumeration\|events\|methods\|parfor\|properties\)\>'
+  " excluding end(for|function|if|switch|while) common to Murphi
+  let octave_block_terminators = '\<end\%(_try_catch\|classdef\|enumeration\|events\|methods\|parfor\|properties\)\>'
 
-  var objc_preprocessor = '^\s*#\s*\%(import\|include\|define\|if\|ifn\=def\|undef\|line\|error\|pragma\)\>'
+  let objc_preprocessor = '^\s*#\s*\%(import\|include\|define\|if\|ifn\=def\|undef\|line\|error\|pragma\)\>'
 
-  var n = 1
-  var saw_comment = 0  # Whether we've seen a multiline comment leader.
+  let n = 1
+  let saw_comment = 0 " Whether we've seen a multiline comment leader.
   while n < 100
-    var line = getline(n)
+    let line = getline(n)
     if line =~ '^\s*/\*'
-      # /* ... */ is a comment in Objective C and Murphi, so we can't conclude
-      # it's either of them yet, but track this as a hint in case we don't see
-      # anything more definitive.
-      saw_comment = 1
+      " /* ... */ is a comment in Objective C and Murphi, so we can't conclude
+      " it's either of them yet, but track this as a hint in case we don't see
+      " anything more definitive.
+      let saw_comment = 1
     endif
     if line =~ '^\s*//' || line =~ '^\s*@import\>' || line =~ objc_preprocessor
       setf objc
@@ -339,7 +344,7 @@ export def FTm()
       setf octave
       return
     endif
-    # TODO: could be Matlab or Octave
+    " TODO: could be Matlab or Octave
     if line =~ '^\s*%'
       setf matlab
       return
@@ -352,24 +357,24 @@ export def FTm()
       setf murphi
       return
     endif
-    n += 1
+    let n = n + 1
   endwhile
 
   if saw_comment
-    # We didn't see anything definitive, but this looks like either Objective C
-    # or Murphi based on the comment leader. Assume the former as it is more
-    # common.
+    " We didn't see anything definitive, but this looks like either Objective C
+    " or Murphi based on the comment leader. Assume the former as it is more
+    " common.
     setf objc
   else
-    # Default is Matlab
+    " Default is Matlab
     setf matlab
   endif
-enddef
+endfunc
 
-export def FTmms()
-  var n = 1
+func polyglot#ft#FTmms()
+  let n = 1
   while n < 20
-    var line = getline(n)
+    let line = getline(n)
     if line =~ '^\s*\(%\|//\)' || line =~ '^\*'
       setf mmix
       return
@@ -378,78 +383,78 @@ export def FTmms()
       setf make
       return
     endif
-    n += 1
+    let n = n + 1
   endwhile
   setf mmix
-enddef
+endfunc
 
-# This function checks if one of the first five lines start with a dot.  In
-# that case it is probably an nroff file: 'filetype' is set and 1 is returned.
-export def FTnroff(): number
-  if getline(1)[0] .. getline(2)[0] .. getline(3)[0]
-    			.. getline(4)[0] .. getline(5)[0] =~ '\.'
+" This function checks if one of the first five lines start with a dot.  In
+" that case it is probably an nroff file: 'filetype' is set and 1 is returned.
+func polyglot#ft#FTnroff()
+  if getline(1)[0] . getline(2)[0] . getline(3)[0] . getline(4)[0] . getline(5)[0] =~ '\.'
     setf nroff
     return 1
   endif
   return 0
-enddef
+endfunc
 
-export def FTmm()
-  var n = 1
+func polyglot#ft#FTmm()
+  let n = 1
   while n < 20
-    if getline(n) =~ '^\s*\(#\s*\(include\|import\)\>\|@import\>\|/\*\)'
+    let line = getline(n)
+    if line =~ '^\s*\(#\s*\(include\|import\)\>\|@import\>\|/\*\)'
       setf objcpp
       return
     endif
-    n += 1
+    let n = n + 1
   endwhile
   setf nroff
-enddef
+endfunc
 
-export def FTpl()
+func polyglot#ft#FTpl()
   if exists("g:filetype_pl")
-    exe "setf " .. g:filetype_pl
+    exe "setf " . g:filetype_pl
   else
-    # recognize Prolog by specific text in the first non-empty line
-    # require a blank after the '%' because Perl uses "%list" and "%translate"
-    var l = getline(nextnonblank(1))
+    " recognize Prolog by specific text in the first non-empty line
+    " require a blank after the '%' because Perl uses "%list" and "%translate"
+    let l = getline(nextnonblank(1))
     if l =~ '\<prolog\>' || l =~ '^\s*\(%\+\(\s\|$\)\|/\*\)' || l =~ ':-'
       setf prolog
     else
       setf perl
     endif
   endif
-enddef
+endfunc
 
-export def FTinc()
+func polyglot#ft#FTinc()
   if exists("g:filetype_inc")
-    exe "setf " .. g:filetype_inc
+    exe "setf " . g:filetype_inc
   else
-    var lines = getline(1) .. getline(2) .. getline(3)
+    let lines = getline(1).getline(2).getline(3)
     if lines =~? "perlscript"
       setf aspperl
     elseif lines =~ "<%"
       setf aspvbs
     elseif lines =~ "<?"
       setf php
-    # Pascal supports // comments but they're vary rarely used for file
-    # headers so assume POV-Ray
+    " Pascal supports // comments but they're vary rarely used for file
+    " headers so assume POV-Ray
     elseif lines =~ '^\s*\%({\|(\*\)' || lines =~? s:ft_pascal_keywords
       setf pascal
     else
-      FTasmsyntax()
+      call polyglot#ft#FTasmsyntax()
       if exists("b:asmsyntax")
-	exe "setf " .. fnameescape(b:asmsyntax)
+	exe "setf " . fnameescape(b:asmsyntax)
       else
 	setf pov
       endif
     endif
   endif
-enddef
+endfunc
 
-export def FTprogress_cweb()
+func polyglot#ft#FTprogress_cweb()
   if exists("g:filetype_w")
-    exe "setf " .. g:filetype_w
+    exe "setf " . g:filetype_w
     return
   endif
   if getline(1) =~ '&ANALYZE' || getline(3) =~ '&GLOBAL-DEFINE'
@@ -457,76 +462,76 @@ export def FTprogress_cweb()
   else
     setf cweb
   endif
-enddef
+endfunc
 
-export def FTprogress_asm()
+func polyglot#ft#FTprogress_asm()
   if exists("g:filetype_i")
-    exe "setf " .. g:filetype_i
+    exe "setf " . g:filetype_i
     return
   endif
-  # This function checks for an assembly comment the first ten lines.
-  # If not found, assume Progress.
-  var lnum = 1
+  " This function checks for an assembly comment the first ten lines.
+  " If not found, assume Progress.
+  let lnum = 1
   while lnum <= 10 && lnum < line('$')
-    var line = getline(lnum)
+    let line = getline(lnum)
     if line =~ '^\s*;' || line =~ '^\*'
-      FTasm()
+      call polyglot#ft#FTasm()
       return
     elseif line !~ '^\s*$' || line =~ '^/\*'
-      # Not an empty line: Doesn't look like valid assembly code.
-      # Or it looks like a Progress /* comment
+      " Not an empty line: Doesn't look like valid assembly code.
+      " Or it looks like a Progress /* comment
       break
     endif
-    lnum += 1
+    let lnum = lnum + 1
   endw
   setf progress
-enddef
+endfunc
 
-var ft_pascal_comments = '^\s*\%({\|(\*\|//\)'
-var ft_pascal_keywords = '^\s*\%(program\|unit\|library\|uses\|begin\|procedure\|function\|const\|type\|var\)\>'
+let s:ft_pascal_comments = '^\s*\%({\|(\*\|//\)'
+let s:ft_pascal_keywords = '^\s*\%(program\|unit\|library\|uses\|begin\|procedure\|function\|const\|type\|var\)\>'
 
-export def FTprogress_pascal()
+func polyglot#ft#FTprogress_pascal()
   if exists("g:filetype_p")
-    exe "setf " .. g:filetype_p
+    exe "setf " . g:filetype_p
     return
   endif
-  # This function checks for valid Pascal syntax in the first ten lines.
-  # Look for either an opening comment or a program start.
-  # If not found, assume Progress.
-  var lnum = 1
+  " This function checks for valid Pascal syntax in the first ten lines.
+  " Look for either an opening comment or a program start.
+  " If not found, assume Progress.
+  let lnum = 1
   while lnum <= 10 && lnum < line('$')
-    var line = getline(lnum)
+    let line = getline(lnum)
     if line =~ s:ft_pascal_comments || line =~? s:ft_pascal_keywords
       setf pascal
       return
     elseif line !~ '^\s*$' || line =~ '^/\*'
-      # Not an empty line: Doesn't look like valid Pascal code.
-      # Or it looks like a Progress /* comment
+      " Not an empty line: Doesn't look like valid Pascal code.
+      " Or it looks like a Progress /* comment
       break
     endif
-    lnum += 1
+    let lnum = lnum + 1
   endw
   setf progress
-enddef
+endfunc
 
-export def FTpp()
+func polyglot#ft#FTpp()
   if exists("g:filetype_pp")
-    exe "setf " .. g:filetype_pp
+    exe "setf " . g:filetype_pp
   else
-    var line = getline(nextnonblank(1))
+    let line = getline(nextnonblank(1))
     if line =~ s:ft_pascal_comments || line =~? s:ft_pascal_keywords
       setf pascal
     else
       setf puppet
     endif
   endif
-enddef
+endfunc
 
-export def FTr()
-  var max = line("$") > 50 ? 50 : line("$")
+func polyglot#ft#FTr()
+  let max = line("$") > 50 ? 50 : line("$")
 
   for n in range(1, max)
-    # Rebol is easy to recognize, check for that first
+    " Rebol is easy to recognize, check for that first
     if getline(n) =~? '\<REBOL\>'
       setf rebol
       return
@@ -534,82 +539,82 @@ export def FTr()
   endfor
 
   for n in range(1, max)
-    # R has # comments
+    " R has # comments
     if getline(n) =~ '^\s*#'
       setf r
       return
     endif
-    # Rexx has /* comments */
+    " Rexx has /* comments */
     if getline(n) =~ '^\s*/\*'
       setf rexx
       return
     endif
   endfor
 
-  # Nothing recognized, use user default or assume Rexx
+  " Nothing recognized, use user default or assume Rexx
   if exists("g:filetype_r")
-    exe "setf " .. g:filetype_r
+    exe "setf " . g:filetype_r
   else
-    # Rexx used to be the default, but R appears to be much more popular.
+    " Rexx used to be the default, but R appears to be much more popular.
     setf r
   endif
-enddef
+endfunc
 
-export def McSetf()
-  # Rely on the file to start with a comment.
-  # MS message text files use ';', Sendmail files use '#' or 'dnl'
+func polyglot#ft#McSetf()
+  " Rely on the file to start with a comment.
+  " MS message text files use ';', Sendmail files use '#' or 'dnl'
   for lnum in range(1, min([line("$"), 20]))
-    var line = getline(lnum)
+    let line = getline(lnum)
     if line =~ '^\s*\(#\|dnl\)'
-      setf m4  # Sendmail .mc file
+      setf m4  " Sendmail .mc file
       return
     elseif line =~ '^\s*;'
-      setf msmessages  # MS Message text file
+      setf msmessages  " MS Message text file
       return
     endif
   endfor
   setf m4  " Default: Sendmail .mc file
-enddef
+endfunc
 
-# Called from filetype.vim and scripts.vim.
-export def SetFileTypeSH(name: string)
+" Called from filetype.vim and scripts.vim.
+func polyglot#ft#SetFileTypeSH(name)
   if did_filetype()
-    # Filetype was already detected
+    " Filetype was already detected
     return
   endif
   if expand("<amatch>") =~ g:ft_ignore_pat
     return
   endif
-  if name =~ '\<csh\>'
-    # Some .sh scripts contain #!/bin/csh.
-    SetFileTypeShell("csh")
+  if a:name =~ '\<csh\>'
+    " Some .sh scripts contain #!/bin/csh.
+    call polyglot#ft#SetFileTypeShell("csh")
     return
-  elseif name =~ '\<tcsh\>'
-    # Some .sh scripts contain #!/bin/tcsh.
-    SetFileTypeShell("tcsh")
+  elseif a:name =~ '\<tcsh\>'
+    " Some .sh scripts contain #!/bin/tcsh.
+    call polyglot#ft#SetFileTypeShell("tcsh")
     return
-  elseif name =~ '\<zsh\>'
-    # Some .sh scripts contain #!/bin/zsh.
-    SetFileTypeShell("zsh")
+  elseif a:name =~ '\<zsh\>'
+    " Some .sh scripts contain #!/bin/zsh.
+    call polyglot#ft#SetFileTypeShell("zsh")
     return
-  elseif name =~ '\<ksh\>'
-    b:is_kornshell = 1
+  elseif a:name =~ '\<ksh\>'
+    let b:is_kornshell = 1
     if exists("b:is_bash")
       unlet b:is_bash
     endif
     if exists("b:is_sh")
       unlet b:is_sh
     endif
-  elseif exists("g:bash_is_sh") || name =~ '\<bash\>' || name =~ '\<bash2\>'
-    b:is_bash = 1
+  elseif exists("g:bash_is_sh") || a:name =~ '\<bash\>' || a:name =~ '\<bash2\>'
+    let b:is_bash = 1
     if exists("b:is_kornshell")
       unlet b:is_kornshell
     endif
     if exists("b:is_sh")
       unlet b:is_sh
     endif
-  elseif name =~ '\<sh\>'
-    b:is_sh = 1
+  elseif a:name =~ '\<sh\>'
+    let b:is_sh = 1
     if exists("b:is_kornshell")
       unlet b:is_kornshell
     endif
@@ -617,76 +622,75 @@ export def SetFileTypeSH(name: string)
       unlet b:is_bash
     endif
   endif
-  SetFileTypeShell("sh")
-enddef
+  call polyglot#ft#SetFileTypeShell("sh")
+endfunc
 
-# For shell-like file types, check for an "exec" command hidden in a comment,
-# as used for Tcl.
-# Also called from scripts.vim, thus can't be local to this script.
-export def SetFileTypeShell(name: string)
+" For shell-like file types, check for an "exec" command hidden in a comment,
+" as used for Tcl.
+" Also called from scripts.vim, thus can't be local to this script.
+func polyglot#ft#SetFileTypeShell(name)
   if did_filetype()
-    # Filetype was already detected
+    " Filetype was already detected
     return
   endif
   if expand("<amatch>") =~ g:ft_ignore_pat
     return
   endif
-  var l = 2
+  let l = 2
   while l < 20 && l < line("$") && getline(l) =~ '^\s*\(#\|$\)'
-    # Skip empty and comment lines.
-    l += 1
+    " Skip empty and comment lines.
+    let l = l + 1
   endwhile
   if l < line("$") && getline(l) =~ '\s*exec\s' && getline(l - 1) =~ '^\s*#.*\\$'
-    # Found an "exec" line after a comment with continuation
-    var n = substitute(getline(l), '\s*exec\s\+\([^ ]*/\)\=', '', '')
+    " Found an "exec" line after a comment with continuation
+    let n = substitute(getline(l),'\s*exec\s\+\([^ ]*/\)\=', '', '')
     if n =~ '\<tclsh\|\<wish'
       setf tcl
       return
     endif
   endif
-  exe "setf " .. name
-enddef
+  exe "setf " . a:name
+endfunc
 
-export def CSH()
+func polyglot#ft#CSH()
   if did_filetype()
-    # Filetype was already detected
+    " Filetype was already detected
     return
   endif
   if exists("g:filetype_csh")
-    SetFileTypeShell(g:filetype_csh)
+    call polyglot#ft#SetFileTypeShell(g:filetype_csh)
   elseif &shell =~ "tcsh"
-    SetFileTypeShell("tcsh")
+    call polyglot#ft#SetFileTypeShell("tcsh")
   else
-    SetFileTypeShell("csh")
+    call polyglot#ft#SetFileTypeShell("csh")
   endif
-enddef
+endfunc
 
-var ft_rules_udev_rules_pattern = '^\s*\cudev_rules\s*=\s*"\([^"]\{-1,}\)/*".*'
-export def FTRules()
-  var path = expand('<amatch>:p')
+let s:ft_rules_udev_rules_pattern = '^\s*\cudev_rules\s*=\s*"\([^"]\{-1,}\)/*".*'
+func polyglot#ft#FTRules()
+  let path = expand('<amatch>:p')
   if path =~ '/\(etc/udev/\%(rules\.d/\)\=.*\.rules\|\%(usr/\)\=lib/udev/\%(rules\.d/\)\=.*\.rules\)$'
     setf udevrules
     return
   endif
   if path =~ '^/etc/ufw/'
-    setf conf  # Better than hog
+    setf conf  " Better than hog
     return
   endif
   if path =~ '^/\(etc\|usr/share\)/polkit-1/rules\.d'
     setf javascript
     return
   endif
-  var config_lines: list<string>
   try
-    config_lines = readfile('/etc/udev/udev.conf')
+    let config_lines = readfile('/etc/udev/udev.conf')
   catch /^Vim\%((\a\+)\)\=:E484/
     setf hog
     return
   endtry
-  var dir = expand('<amatch>:p:h')
+  let dir = expand('<amatch>:p:h')
   for line in config_lines
     if line =~ s:ft_rules_udev_rules_pattern
-      var udev_rules = substitute(line, s:ft_rules_udev_rules_pattern, '\1', "")
+      let udev_rules = substitute(line, s:ft_rules_udev_rules_pattern, '\1', "")
       if dir == udev_rules
 	setf udevrules
       endif
@@ -694,24 +698,24 @@ export def FTRules()
     endif
   endfor
   setf hog
-enddef
+endfunc
 
-export def SQL()
+func polyglot#ft#SQL()
   if exists("g:filetype_sql")
-    exe "setf " .. g:filetype_sql
+    exe "setf " . g:filetype_sql
   else
     setf sql
   endif
-enddef
+endfunc
 
-# If the file has an extension of 't' and is in a directory 't' or 'xt' then
-# it is almost certainly a Perl test file.
-# If the first line starts with '#' and contains 'perl' it's probably a Perl
-# file.
-# (Slow test) If a file contains a 'use' statement then it is almost certainly
-# a Perl file.
-export def FTperl(): number
-  var dirname = expand("%:p:h:t")
+" If the file has an extension of 't' and is in a directory 't' or 'xt' then
+" it is almost certainly a Perl test file.
+" If the first line starts with '#' and contains 'perl' it's probably a Perl
+" file.
+" (Slow test) If a file contains a 'use' statement then it is almost certainly
+" a Perl file.
+func polyglot#ft#FTperl()
+  let dirname = expand("%:p:h:t")
   if expand("%:e") == 't' && (dirname == 't' || dirname == 'xt')
     setf perl
     return 1
@@ -720,88 +724,86 @@ export def FTperl(): number
     setf perl
     return 1
   endif
-  var save_cursor = getpos('.')
-  call cursor(1, 1)
-  var has_use = search('^use\s\s*\k', 'c', 30) > 0
+  let save_cursor = getpos('.')
+  call cursor(1,1)
+  let has_use = search('^use\s\s*\k', 'c', 30)
   call setpos('.', save_cursor)
   if has_use
     setf perl
     return 1
   endif
   return 0
-enddef
+endfunc
 
-# Choose context, plaintex, or tex (LaTeX) based on these rules:
-# 1. Check the first line of the file for "%&<format>".
-# 2. Check the first 1000 non-comment lines for LaTeX or ConTeXt keywords.
-# 3. Default to "plain" or to g:tex_flavor, can be set in user's vimrc.
-export def FTtex()
-  var firstline = getline(1)
-  var format: string
+" Choose context, plaintex, or tex (LaTeX) based on these rules:
+" 1. Check the first line of the file for "%&<format>".
+" 2. Check the first 1000 non-comment lines for LaTeX or ConTeXt keywords.
+" 3. Default to "plain" or to g:tex_flavor, can be set in user's vimrc.
+func polyglot#ft#FTtex()
+  let firstline = getline(1)
   if firstline =~ '^%&\s*\a\+'
-    format = tolower(matchstr(firstline, '\a\+'))
-    format = substitute(format, 'pdf', '', '')
+    let format = tolower(matchstr(firstline, '\a\+'))
+    let format = substitute(format, 'pdf', '', '')
     if format == 'tex'
-      format = 'latex'
+      let format = 'latex'
     elseif format == 'plaintex'
-      format = 'plain'
+      let format = 'plain'
     endif
   elseif expand('%') =~ 'tex/context/.*/.*.tex'
-    format = 'context'
+    let format = 'context'
   else
-    # Default value, may be changed later:
-    format = exists("g:tex_flavor") ? g:tex_flavor : 'plain'
-    # Save position, go to the top of the file, find first non-comment line.
-    var save_cursor = getpos('.')
-    call cursor(1, 1)
-    var firstNC = search('^\s*[^[:space:]%]', 'c', 1000)
-    if firstNC > 0
-      # Check the next thousand lines for a LaTeX or ConTeXt keyword.
-      var lpat = 'documentclass\>\|usepackage\>\|begin{\|newcommand\>\|renewcommand\>'
-      var cpat = 'start\a\+\|setup\a\+\|usemodule\|enablemode\|enableregime\|setvariables\|useencoding\|usesymbols\|stelle\a\+\|verwende\a\+\|stel\a\+\|gebruik\a\+\|usa\a\+\|imposta\a\+\|regle\a\+\|utilisemodule\>'
-      var kwline = search('^\s*\\\%(' .. lpat .. '\)\|^\s*\\\(' .. cpat .. '\)',
-			      'cnp', firstNC + 1000)
-      if kwline == 1		# lpat matched
-	format = 'latex'
-      elseif kwline == 2	# cpat matched
-	format = 'context'
-      endif		# If neither matched, keep default set above.
-      # let lline = search('^\s*\\\%(' . lpat . '\)', 'cn', firstNC + 1000)
-      # let cline = search('^\s*\\\%(' . cpat . '\)', 'cn', firstNC + 1000)
-      # if cline > 0
-      #   let format = 'context'
-      # endif
-      # if lline > 0 && (cline == 0 || cline > lline)
-      #   let format = 'tex'
-      # endif
-    endif # firstNC
+    " Default value, may be changed later:
+    let format = exists("g:tex_flavor") ? g:tex_flavor : 'plain'
+    " Save position, go to the top of the file, find first non-comment line.
+    let save_cursor = getpos('.')
+    call cursor(1,1)
+    let firstNC = search('^\s*[^[:space:]%]', 'c', 1000)
+    if firstNC " Check the next thousand lines for a LaTeX or ConTeXt keyword.
+      let lpat = 'documentclass\>\|usepackage\>\|begin{\|newcommand\>\|renewcommand\>'
+      let cpat = 'start\a\+\|setup\a\+\|usemodule\|enablemode\|enableregime\|setvariables\|useencoding\|usesymbols\|stelle\a\+\|verwende\a\+\|stel\a\+\|gebruik\a\+\|usa\a\+\|imposta\a\+\|regle\a\+\|utilisemodule\>'
+      let kwline = search('^\s*\\\%(' . lpat . '\)\|^\s*\\\(' . cpat . '\)',
+			      \ 'cnp', firstNC + 1000)
+      if kwline == 1	" lpat matched
+	let format = 'latex'
+      elseif kwline == 2	" cpat matched
+	let format = 'context'
+      endif		" If neither matched, keep default set above.
+      " let lline = search('^\s*\\\%(' . lpat . '\)', 'cn', firstNC + 1000)
+      " let cline = search('^\s*\\\%(' . cpat . '\)', 'cn', firstNC + 1000)
+      " if cline > 0
+      "   let format = 'context'
+      " endif
+      " if lline > 0 && (cline == 0 || cline > lline)
+      "   let format = 'tex'
+      " endif
+    endif " firstNC
     call setpos('.', save_cursor)
-  endif # firstline =~ '^%&\s*\a\+'
+  endif " firstline =~ '^%&\s*\a\+'
 
-  # Translation from formats to file types.  TODO:  add AMSTeX, RevTex, others?
+  " Translation from formats to file types.  TODO:  add AMSTeX, RevTex, others?
   if format == 'plain'
     setf plaintex
   elseif format == 'context'
     setf context
-  else # probably LaTeX
+  else " probably LaTeX
     setf tex
   endif
   return
-enddef
+endfunc
 
-export def FTxml()
-  var n = 1
+func polyglot#ft#FTxml()
+  let n = 1
   while n < 100 && n <= line("$")
-    var line = getline(n)
-    # DocBook 4 or DocBook 5.
-    var is_docbook4 = line =~ '<!DOCTYPE.*DocBook'
-    var is_docbook5 = line =~ ' xmlns="http://docbook.org/ns/docbook"'
+    let line = getline(n)
+    " DocBook 4 or DocBook 5.
+    let is_docbook4 = line =~ '<!DOCTYPE.*DocBook'
+    let is_docbook5 = line =~ ' xmlns="http://docbook.org/ns/docbook"'
     if is_docbook4 || is_docbook5
-      b:docbk_type = "xml"
+      let b:docbk_type = "xml"
       if is_docbook5
-	b:docbk_ver = 5
+	let b:docbk_ver = 5
       else
-	b:docbk_ver = 4
+	let b:docbk_ver = 4
       endif
       setf docbk
       return
@@ -810,15 +812,15 @@ export def FTxml()
       setf xbl
       return
     endif
-    n += 1
+    let n += 1
   endwhile
   setf xml
-enddef
+endfunc
 
-export def FTy()
-  var n = 1
+func polyglot#ft#FTy()
+  let n = 1
   while n < 100 && n <= line("$")
-    var line = getline(n)
+    let line = getline(n)
     if line =~ '^\s*%'
       setf yacc
       return
@@ -827,25 +829,25 @@ export def FTy()
       setf racc
       return
     endif
-    n += 1
+    let n = n + 1
   endwhile
   setf yacc
-enddef
+endfunc
 
-export def Redif()
-  var lnum = 1
+func polyglot#ft#Redif()
+  let lnum = 1
   while lnum <= 5 && lnum < line('$')
     if getline(lnum) =~ "^\ctemplate-type:"
       setf redif
       return
     endif
-    lnum += 1
+    let lnum = lnum + 1
   endwhile
-enddef
+endfunc
 
-# This function is called for all files under */debian/patches/*, make sure not
-# to non-dep3patch files, such as README and other text files.
-export def Dep3patch()
+" This function is called for all files under */debian/patches/*, make sure not
+" to non-dep3patch files, such as README and other text files.
+func polyglot#ft#Dep3patch()
   if expand('%:t') ==# 'series'
     return
   endif
@@ -855,43 +857,44 @@ export def Dep3patch()
       setf dep3patch
       return
     elseif ln =~# '^---'
-      # end of headers found. stop processing
+      " end of headers found. stop processing
       return
     endif
   endfor
-enddef
+endfunc
 
-# This function checks the first 15 lines for appearance of 'FoamFile'
-# and then 'object' in a following line.
-# In that case, it's probably an OpenFOAM file
-export def FTfoam()
-    var ffile = 0
-    var lnum = 1
+" This function checks the first 15 lines for appearance of 'FoamFile'
+" and then 'object' in a following line.
+" In that case, it's probably an OpenFOAM file
+func polyglot#ft#FTfoam()
+    let ffile = 0
+    let lnum = 1
     while lnum <= 15
       if getline(lnum) =~# '^FoamFile'
-	ffile = 1
+	let ffile = 1
       elseif ffile == 1 && getline(lnum) =~# '^\s*object'
 	setf foam
 	return
       endif
-      lnum += 1
+      let lnum = lnum + 1
     endwhile
-enddef
+endfunc
 
-# Determine if a *.tf file is TF mud client or terraform
-export def FTtf()
-  var numberOfLines = line('$')
+" Determine if a *.tf file is TF mud client or terraform
+func polyglot#ft#FTtf()
+  let numberOfLines = line('$')
   for i in range(1, numberOfLines)
-    var currentLine = trim(getline(i))
-    var firstCharacter = currentLine[0]
+    let currentLine = trim(getline(i))
+    let firstCharacter = currentLine[0]
     if firstCharacter !=? ";" && firstCharacter !=? "/" && firstCharacter !=? ""
       setf terraform
       return
     endif
   endfor
   setf tf
-enddef
+endfunc
 
 
-# Uncomment this line to check for compilation errors early
-# defcompile
+" Restore 'cpoptions'
+let &cpo = s:cpo_save
+unlet s:cpo_save

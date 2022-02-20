@@ -2,7 +2,6 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'plantuml', 'ftplugin/plantuml
   finish
 endif
 
-scriptencoding utf-8
 " Vim filetype plugin file
 " Language:     PlantUML
 " License:      VIM LICENSE
