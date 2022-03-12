@@ -92,7 +92,7 @@ function GetJuliaNestingStruct(lnum, ...)
       let i = JuliaMatch(a:lnum, line, '\<else\>', s)
       if i >= 0 && i == fb
         let s = i+1
-        if len(blocks_stack) > 0 && blocks_stack[-1] =~# '\<\%(else\)\=if\>'
+        if len(blocks_stack) > 0 && blocks_stack[-1] =~# '\<\%(\%(else\)\=if\|catch\)\>'
           let blocks_stack[-1] = 'else'
         else
           call add(blocks_stack, 'else')
@@ -110,7 +110,7 @@ function GetJuliaNestingStruct(lnum, ...)
       let i = JuliaMatch(a:lnum, line, '\<catch\>', s)
       if i >= 0 && i == fb
         let s = i+1
-        if len(blocks_stack) > 0 && blocks_stack[-1] == 'try'
+        if len(blocks_stack) > 0 && blocks_stack[-1] =~# '\<\%(try\|finally\)\>'
           let blocks_stack[-1] = 'catch'
         else
           call add(blocks_stack, 'catch')
@@ -121,7 +121,7 @@ function GetJuliaNestingStruct(lnum, ...)
       let i = JuliaMatch(a:lnum, line, '\<finally\>', s)
       if i >= 0 && i == fb
         let s = i+1
-        if len(blocks_stack) > 0 && (blocks_stack[-1] == 'try' || blocks_stack[-1] == 'catch')
+        if len(blocks_stack) > 0 && blocks_stack[-1] =~# '\<\%(try\|catch\|else\)\>'
           let blocks_stack[-1] = 'finally'
         else
           call add(blocks_stack, 'finally')

@@ -72,7 +72,7 @@ if exists("loaded_matchit")
     elseif attr == 'juliaBlKeyword'
       return b:julia_begin_keywordsm . ':' . b:julia_end_keywords
     elseif attr == 'juliaException'
-      return b:julia_begin_keywordsm . ':\<\%(catch\|finally\)\>:' . b:julia_end_keywords
+      return b:julia_begin_keywordsm . ':\<\%(catch\|else\|finally\)\>:' . b:julia_end_keywords
     endif
     return '\<\>:\<\>'
   endfunction

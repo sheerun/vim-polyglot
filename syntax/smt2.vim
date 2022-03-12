@@ -129,14 +129,12 @@ syntax keyword smt2Builtin
       \ rotate_left
       \ rotate_right
       \ sat
-      \ sat
       \ select
       \ sign_extend
       \ store
       \ to_int
       \ to_real
       \ true
-      \ unsat
       \ unsat
       \ xor
       \ zero_extend

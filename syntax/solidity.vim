@@ -247,7 +247,7 @@ syn keyword   solMethod           delete new var return import
 syn region    solMethodParens     start='(' end=')' contains=solString,solConstant,solNumber,solFuncCall,solTypeCast,solMethod,solComma,solOperator contained transparent
 syn keyword   solMethod           nextgroup=solMethodParens skipwhite skipempty
       \ blockhash require revert assert keccak256 sha256
-      \ ripemd160 ecrecover addmod mullmod selfdestruct
+      \ ripemd160 ecrecover addmod mulmod selfdestruct
 
 hi def link   solMethod           Special
 

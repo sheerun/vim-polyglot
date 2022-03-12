@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'tmux', 'syntax/tmux.vim')
 endif
 
 " Language: tmux(1) configuration file
-" Version: 3.3-rc (git-85ef7359)
+" Version: 3.3-rc (git-ee3f1d25)
 " URL: https://github.com/ericpruitt/tmux.vim/
 " Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
 " License: 2-Clause BSD (http://opensource.org/licenses/BSD-2-Clause)
@@ -88,13 +88,13 @@ syn keyword tmuxOptions
 \ pane-border-indicators pane-border-lines pane-border-status
 \ pane-border-style pane-colours popup-border-lines popup-border-style
 \ popup-style prefix prefix2 prompt-history-limit remain-on-exit
-\ renumber-windows repeat-time set-clipboard set-titles set-titles-string
-\ silence-action status status-bg status-fg status-format status-interval
-\ status-justify status-keys status-left status-left-length
-\ status-left-style status-position status-right status-right-length
-\ status-right-style status-style synchronize-panes terminal-features
-\ terminal-overrides update-environment user-keys visual-activity
-\ visual-bell visual-silence window-active-style window-size
+\ remain-on-exit-format renumber-windows repeat-time set-clipboard
+\ set-titles set-titles-string silence-action status status-bg status-fg
+\ status-format status-interval status-justify status-keys status-left
+\ status-left-length status-left-style status-position status-right
+\ status-right-length status-right-style status-style synchronize-panes
+\ terminal-features terminal-overrides update-environment user-keys
+\ visual-activity visual-bell visual-silence window-active-style window-size
 \ window-status-activity-style window-status-bell-style
 \ window-status-current-format window-status-current-style
 \ window-status-format window-status-last-style window-status-separator

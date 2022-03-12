@@ -192,7 +192,7 @@ syn keyword swayConfigDrawingMarksKeyword show_marks contained
 syn match swayConfigDrawingMarks /^\s*show_marks\s\+\(yes\|no\)\s\?$/ contains=swayConfigFocusWrappingType,swayConfigDrawingMarksKeyword
 
 " Group mode/bar
-syn keyword swayConfigBlockKeyword mode bar colors i3bar_command status_command position exec mode hidden_state modifier id position output background statusline tray_output tray_padding separator separator_symbol workspace_buttons strip_workspace_numbers binding_mode_indicator focused_workspace active_workspace inactive_workspace urgent_workspace binding_mode contained
+syn keyword swayConfigBlockKeyword set input mode bar colors i3bar_command status_command position exec mode hidden_state modifier id position output background statusline tray_output tray_padding separator separator_symbol workspace_buttons strip_workspace_numbers binding_mode_indicator focused_workspace active_workspace inactive_workspace urgent_workspace binding_mode contained
 syn region swayConfigBlock start=+.*s\?{$+ end=+^}$+ contains=swayConfigBlockKeyword,swayConfigString,swayConfigBind,swayConfigComment,swayConfigFont,swayConfigFocusWrappingType,swayConfigColor,swayConfigVariable transparent keepend extend
 
 " Line continuation
@@ -201,6 +201,10 @@ syn region swayConfigLineCont start=/^.*\\$/ end=/^.*$/ contains=swayConfigBlock
 " Includes with relative paths to config files
 syn keyword swayConfigInclude include contained
 syn match swayConfigFile /^include\s\(\~\?\/.*$\|\.\{0,2}\/.*$\)/ contains=swayConfigInclude
+
+" xwayland 
+syn keyword swayConfigXwaylandKeyword xwayland contained
+syn match swayConfigXwaylandModifier /^\s*xwayland\s\+\(enable\|disable\|force\)\s\?$/ contains=swayConfigXwaylandKeyword
 
 " Define the highlighting.
 let b:current_syntax = "swayconfig"
@@ -281,5 +285,6 @@ hi! def link swayConfigFloatingModifier                Identifier
 hi! def link swayConfigFloatingMouseAction             Type
 hi! def link swayConfigFocusKeyword                    Type
 hi! def link swayConfigFocusType                       Identifier
-
+hi! def link swayConfigXwaylandKeyword                 Identifier
+hi! def link swayConfigXwaylandModifier                Type
 
