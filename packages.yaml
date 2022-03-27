@@ -689,6 +689,9 @@ filetypes:
 - name: gosum
   filenames:
   - go.sum
+- name: gowork
+  filenames:
+  - go.work
 - name: gohtmltmpl
   extensions:
   - tmpl
