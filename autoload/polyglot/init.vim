@@ -3510,7 +3510,7 @@ au BufNewFile,BufRead .reminders*		call s:StarSetf('remind')
 au BufNewFile,BufRead sgml.catalog*		call s:StarSetf('catalog')
 
 " Shell scripts ending in a star
-au BufNewFile,BufRead .bashrc*,.bash[_-]profile*,.bash[_-]logout*,.bash[_-]aliases*,bash-fc[-.]*,,PKGBUILD* call polyglot#ft#SetFileTypeSH("bash")
+au BufNewFile,BufRead .bashrc*,.bash[_-]profile*,.bash[_-]logout*,.bash[_-]aliases*,bash-fc[-.]*,PKGBUILD* call polyglot#ft#SetFileTypeSH("bash")
 au BufNewFile,BufRead .kshrc* call polyglot#ft#SetFileTypeSH("ksh")
 au BufNewFile,BufRead .profile* call polyglot#ft#SetFileTypeSH(getline(1))
 
