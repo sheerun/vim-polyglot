@@ -646,6 +646,7 @@ call TestFiletype('nftables')
 call TestFiletype('openscad')
 call TestFiletype('mermaid')
 call TestFiletype('org')
+call TestFiletype('bicep')
 
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE
 
