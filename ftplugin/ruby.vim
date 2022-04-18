@@ -56,7 +56,7 @@ endif
 " TODO:
 "setlocal define=^\\s*def
 
-setlocal comments=:#
+setlocal comments=b:#
 setlocal commentstring=#\ %s
 
 if !exists('g:ruby_version_paths')

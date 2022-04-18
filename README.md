@@ -111,7 +111,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [idris](https://github.com/idris-hackers/idris-vim) (Idris syntax highlighting for idr and lidr files)
 - [ion](https://github.com/vmchale/ion-vim) (Syntax highlighting for ion files)
 - [javascript-sql](https://github.com/statico/vim-javascript-sql)
-- [javascript](https://github.com/pangloss/vim-javascript) (JavaScript syntax highlighting for js, bones, cjs, es, es6 and 18 more files)
+- [javascript](https://github.com/pangloss/vim-javascript) (JavaScript syntax highlighting for js, bones, cjs, es, es6 and 20 more files)
 - [jenkins](https://github.com/martinda/Jenkinsfile-vim-syntax) (Syntax highlighting for jenkinsfile and Jenkinsfile files)
 - [jq](https://github.com/vito-c/jq.vim) (JSONiq syntax highlighting for jq files)
 - [json5](https://github.com/GutenYe/json5.vim) (JSON5 syntax highlighting for json5 files)

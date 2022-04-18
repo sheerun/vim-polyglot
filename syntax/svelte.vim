@@ -271,6 +271,15 @@ silent! syntax clear htmlHead
 syntax match javaScriptNumber '\v<-?\d+L?>|0[xX][0-9a-fA-F]+>' 
       \ containedin=@javascriptSvelteScript display
 
+" TypeScript
+" Fix template string `...` breaking syntax highlighting
+syntax region  typescriptTemplate
+  \ start=/`/  skip=/\\\\\|\\`\|\n/  end=/`\|$/
+  \ contains=typescriptTemplateSubstitution,typescriptSpecial,@Spell
+  \ containedin=typescriptObjectLiteral
+  \ nextgroup=@typescriptSymbols
+  \ skipwhite skipempty
+
 " html5 data-*
 syntax match htmlArg '\v<data(-[.a-z0-9]+)+>' containedin=@HTMLSyntax
 "}}}

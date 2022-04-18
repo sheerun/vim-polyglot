@@ -169,6 +169,10 @@ let did_load_filetypes = 1
 
 " DO NOT EDIT CODE BELOW, IT IS GENERATED WITH MAKEFILE
 
+if !has_key(g:polyglot_is_disabled, 'bicep')
+  au BufNewFile,BufRead *.bicep setf bicep
+endif
+
 if !has_key(g:polyglot_is_disabled, 'org')
   au BufNewFile,BufRead *.org setf org
 endif
@@ -1328,10 +1332,6 @@ if !has_key(g:polyglot_is_disabled, 'hex')
   au BufNewFile,BufRead *.h32,*.hex setf hex
 endif
 
-if !has_key(g:polyglot_is_disabled, 'hercules')
-  au BufNewFile,BufRead *.errsum,*.ev,*.sum,*.vc setf hercules
-endif
-
 if !has_key(g:polyglot_is_disabled, 'hastepreproc')
   au BufNewFile,BufRead *.htpp setf hastepreproc
 endif
@@ -1783,7 +1783,7 @@ if !has_key(g:polyglot_is_disabled, 'odin')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'dosini')
-  au BufNewFile,BufRead *.dof,*.ini,*.lektorproject,*.prefs,*.pro,*.properties,*/etc/pacman.conf,*/etc/yum.conf,{.,}editorconfig,{.,}flake8,{.,}npmrc,buildozer.spec setf dosini
+  au BufNewFile,BufRead *.dof,*.ini,*.lektorproject,*.prefs,*.pro,*.properties,*.url,*/etc/pacman.conf,*/etc/yum.conf,{.,}editorconfig,{.,}flake8,{.,}npmrc,buildozer.spec setf dosini
   au BufNewFile,BufRead php.ini-* call s:StarSetf('dosini')
   au BufNewFile,BufRead */etc/yum.repos.d/* call s:StarSetf('dosini')
 endif
@@ -2157,7 +2157,7 @@ if !has_key(g:polyglot_is_disabled, 'mako')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'm4')
-  au BufNewFile,BufRead *.at,*.m4 setf m4
+  au BufNewFile,BufRead *.at,*.m4,*.mc setf m4
 endif
 
 if !has_key(g:polyglot_is_disabled, 'lua')
@@ -2320,14 +2320,20 @@ endif
 
 if !has_key(g:polyglot_is_disabled, 'javascript')
   au! BufNewFile,BufRead,BufWritePost *.frag call polyglot#detect#Frag()
-  au BufNewFile,BufRead *._js,*.bones,*.cjs,*.es,*.es6,*.gs,*.jake,*.javascript,*.js,*.jsb,*.jscad,*.jsfl,*.jsm,*.jss,*.jsx,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile setf javascript
+  au BufNewFile,BufRead *._js,*.bones,*.cjs,*.es,*.es6,*.gs,*.jake,*.javascript,*.js,*.jsb,*.jscad,*.jsfl,*.jslib,*.jsm,*.jspre,*.jss,*.jsx,*.mjs,*.njs,*.pac,*.sjs,*.ssjs,*.xsjs,*.xsjslib,Jakefile setf javascript
   au BufNewFile,BufRead *.flow setf flow
 endif
 
 if !has_key(g:polyglot_is_disabled, 'go')
   au BufNewFile,BufRead *.go setf go
   au BufNewFile,BufRead go.mod setf gomod
+  au BufNewFile,BufRead go.sum setf gosum
+  au BufNewFile,BufRead go.work setf gowork
   au BufNewFile,BufRead *.tmpl setf gohtmltmpl
+endif
+
+if !has_key(g:polyglot_is_disabled, 'hercules')
+  au BufNewFile,BufRead *.errsum,*.ev,*.sum,*.vc setf hercules
 endif
 
 if !has_key(g:polyglot_is_disabled, 'gnuplot')

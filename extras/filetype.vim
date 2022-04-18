@@ -2506,20 +2506,17 @@ endif
 " Function called for testing all functions defined here.  These are
 " script-local, thus need to be executed here.
 " Returns a string with error messages (hopefully empty).
-" Check if function exists first. See https://github.com/vim/vim/issues/9890
-if !exists("*TestFiletypeFuncs")
-  func! TestFiletypeFuncs(testlist)
-    let output = ''
-    for f in a:testlist
-      try
-        exe f
-      catch
-        let output = output . "\n" . f . ": " . v:exception
-      endtry
-    endfor
-    return output
-  endfunc
-endif
+func! TestFiletypeFuncs(testlist)
+  let output = ''
+  for f in a:testlist
+    try
+      exe f
+    catch
+      let output = output . "\n" . f . ": " . v:exception
+    endtry
+  endfor
+  return output
+endfunc
 
 " Restore 'cpoptions'
 let &cpo = s:cpo_save
