@@ -84,7 +84,7 @@ if s:Enabled('g:python_highlight_class_vars')
     syn keyword pythonClassVar    self cls mcs
 endif
 syn keyword pythonRepeat        for while
-syn keyword pythonConditional   if elif else
+syn keyword pythonConditional   if elif else match case
 syn keyword pythonException     try except finally
 " The standard pyrex.vim unconditionally removes the pythonInclude group, so
 " we provide a dummy group here to avoid crashing pyrex.vim.
