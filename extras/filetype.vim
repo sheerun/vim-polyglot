@@ -2506,7 +2506,7 @@ endif
 " Function called for testing all functions defined here.  These are
 " script-local, thus need to be executed here.
 " Returns a string with error messages (hopefully empty).
-func! TestFiletypeFuncs(testlist)
+func! TestPolyglotFiletypeFuncs(testlist)
   let output = ''
   for f in a:testlist
     try
