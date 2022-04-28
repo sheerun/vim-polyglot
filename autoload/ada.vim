@@ -38,6 +38,12 @@ endif
 let s:keepcpo= &cpo
 set cpo&vim
 
+unlockvar g:ada#WordRegex
+unlockvar g:ada#DotWordRegex
+unlockvar g:ada#Comment
+unlockvar g:ada#Keywords
+unlockvar g:ada#Ctags_Kinds
+
 " Section: Constants {{{1
 "
 let g:ada#DotWordRegex	   = '\a\w*\(\_s*\.\_s*\a\w*\)*'
@@ -202,7 +208,7 @@ let g:ada#Ctags_Kinds = {
 " Extract current Ada word across multiple lines
 " AdaWord ([line, column])\
 "
-function ada#Word (...)
+function! ada#Word (...)
    if a:0 > 1
       let l:Line_Nr    = a:1
       let l:Column_Nr  = a:2 - 1
@@ -290,7 +296,7 @@ endfunction ada#Word
 "
 "  List tags in quickfix window
 "
-function ada#List_Tag (...)
+function! ada#List_Tag (...)
    if a:0 > 1
       let l:Tag_Word = ada#Word (a:1, a:2)
    elseif a:0 > 0
@@ -327,7 +333,7 @@ endfunction ada#List_Tag
 "
 " Word tag - include '.' and if Ada make uppercase
 "
-function ada#Jump_Tag (Word, Mode)
+function! ada#Jump_Tag (Word, Mode)
    if a:Word == ''
       " Get current word
       let l:Word = ada#Word()
@@ -356,7 +362,7 @@ endfunction ada#Jump_Tag
 "
 " Backspace at end of line after auto-inserted commentstring '-- ' wipes it
 "
-function ada#Insert_Backspace ()
+function! ada#Insert_Backspace ()
    let l:Line = getline ('.')
    if col ('.') > strlen (l:Line) &&
     \ match (l:Line, '-- $') != -1 &&
@@ -411,21 +417,21 @@ endfunction ada#User_Complete
 " Section: ada#Completion (cmd) {{{2
 "
 " Word completion (^N/^R/^X^]) - force '.' inclusion
-function ada#Completion (cmd)
+function! ada#Completion (cmd)
    set iskeyword+=46
    return a:cmd . "\<C-R>=ada#Completion_End ()\<CR>"
 endfunction ada#Completion
 
 " Section: ada#Completion_End () {{{2
 "
-function ada#Completion_End ()
+function! ada#Completion_End ()
    set iskeyword-=46
    return ''
 endfunction ada#Completion_End
 
 " Section: ada#Create_Tags {{{1
 "
-function ada#Create_Tags (option)
+function! ada#Create_Tags (option)
    if a:option == 'file'
       let l:Filename = fnamemodify (bufname ('%'), ':p')
    elseif a:option == 'dir'
@@ -441,7 +447,7 @@ endfunction ada#Create_Tags
 
 " Section: ada#Switch_Session {{{1
 "
-function ada#Switch_Session (New_Session)
+function! ada#Switch_Session (New_Session)
    " 
    " you should not save to much date into the seession since they will
    " be sourced
@@ -539,7 +545,7 @@ endif
 "
 " Section: ada#Switch_Syntax_Options {{{2
 "
-function ada#Switch_Syntax_Option (option)
+function! ada#Switch_Syntax_Option (option)
    syntax off
    if exists ('g:ada_' . a:option)
       unlet g:ada_{a:option}
@@ -553,7 +559,7 @@ endfunction ada#Switch_Syntax_Option
 
 " Section: ada#Map_Menu {{{2
 "
-function ada#Map_Menu (Text, Keys, Command)
+function! ada#Map_Menu (Text, Keys, Command)
    if a:Keys[0] == ':'
       execute
 	\ "50amenu " .
@@ -603,7 +609,7 @@ endfunction
 
 " Section: ada#Map_Popup {{{2
 "
-function ada#Map_Popup (Text, Keys, Command)
+function! ada#Map_Popup (Text, Keys, Command)
    if exists("g:mapleader")
       let l:leader = g:mapleader
    else
