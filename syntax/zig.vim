@@ -195,6 +195,7 @@ let s:zig_syntax_keywords = {
     \ ,                  "@Vector"
     \ ,                  "@sin"
     \ ,                  "@cos"
+    \ ,                  "@tan"
     \ ,                  "@exp"
     \ ,                  "@exp2"
     \ ,                  "@log"

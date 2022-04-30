@@ -43,6 +43,8 @@ syn match nixStringSpecial /''['$]/ contained
 syn match nixStringSpecial /\$\$/ contained
 syn match nixStringSpecial /''\\[nrt]/ contained
 
+syn match nixSimpleStringSpecial /\$\$/ contained
+
 syn match nixInvalidSimpleStringEscape /\\[^nrt"\\$]/ contained
 syn match nixInvalidStringEscape /''\\[^nrt]/ contained
 
@@ -63,7 +65,7 @@ syn match nixAttribute "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%([^a-zA-Z0-9_'.-]\|$\)" con
 syn region nixAttributeAssignment start="=" end="\ze;" contained contains=@nixExpr
 syn region nixAttributeDefinition start=/\ze[a-zA-Z_"$]/ end=";" contained contains=nixComment,nixAttribute,nixInterpolation,nixSimpleString,nixAttributeDot,nixAttributeAssignment
 
-syn region nixInheritAttributeScope start="(" end=")" contained contains=nixComment,nixAttributeDot
+syn region nixInheritAttributeScope start="(" end="\ze)" contained contains=@nixExpr
 syn region nixAttributeDefinition matchgroup=nixInherit start="\<inherit\>" end=";" contained contains=nixComment,nixInheritAttributeScope,nixAttribute
 
 syn region nixAttributeSet start="{" end="}" contains=nixComment,nixAttributeDefinition
@@ -133,7 +135,7 @@ syn match nixInterpolationParam "[a-zA-Z_][a-zA-Z0-9_'-]*\%(\.[a-zA-Z_][a-zA-Z0-
 " Non-namespaced Nix builtins as of version 2.0:
 syn keyword nixSimpleBuiltin
       \ abort baseNameOf derivation derivationStrict dirOf fetchGit
-      \ fetchMercurial fetchTarball import isNull map placeholder removeAttrs
+      \ fetchMercurial fetchTarball import isNull map mapAttrs placeholder removeAttrs
       \ scopedImport throw toString
 
 
@@ -146,13 +148,13 @@ syn keyword nixNamespacedBuiltin contained
       \ findFile foldl' fromJSON functionArgs genList \ genericClosure getAttr
       \ getEnv hasAttr hasContext hashString head import intersectAttrs isAttrs
       \ isBool isFloat isFunction isInt isList isNull isString langVersion
-      \ length lessThan listToAttrs map match mul nixPath nixVersion
+      \ length lessThan listToAttrs map mapAttrs match mul nixPath nixVersion
       \ parseDrvName partition path pathExists placeholder readDir readFile
       \ removeAttrs replaceStrings scopedImport seq sort split splitVersion
       \ storeDir storePath stringLength sub substring tail throw toFile toJSON
       \ toPath toString toXML trace tryEval typeOf unsafeDiscardOutputDependency
       \ unsafeDiscardStringContext unsafeGetAttrPos valueSize fromTOML bitAnd
-      \ bitOr bitXor
+      \ bitOr bitXor floor ceil
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
