@@ -587,6 +587,10 @@ if !has_key(g:polyglot_is_disabled, 'snobol4')
   au BufNewFile,BufRead *.sno,*.spt setf snobol4
 endif
 
+if !has_key(g:polyglot_is_disabled, 'smithy')
+  au BufNewFile,BufRead *.smithy setf smithy
+endif
+
 if !has_key(g:polyglot_is_disabled, 'smith')
   au BufNewFile,BufRead *.smith,*.smt setf smith
 endif
