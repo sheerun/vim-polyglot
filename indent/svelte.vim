@@ -55,12 +55,12 @@ let s:debug = svelte#GetConfig('debug', 0)
 " Save shiftwidth
 let s:sw = &sw
 
-" Use lib/indent/ files for compatibility
+" Use specific indent files for compatibility
 unlet! b:did_indent
-runtime lib/indent/xml.vim
+runtime indent/svelte-xml.vim
 
 unlet! b:did_indent
-runtime lib/indent/css.vim
+runtime indent/svelte-css.vim
 
 " Use normal indent files
 unlet! b:did_indent

@@ -148,9 +148,9 @@ syn cluster rubyStringSpecial	 contains=rubyInterpolation,rubyStringEscape
 syn cluster rubyStringNotTop	 contains=@rubyStringSpecial,@rubyNestedBrackets,@rubySingleCharEscape
 
 " Regular Expression Metacharacters {{{1
-syn region rubyRegexpComment	  matchgroup=rubyRegexpSpecial	 start="(?#"								    skip="\\\\\|\\)"  end=")"  contained
-syn region rubyRegexpParens	  matchgroup=rubyRegexpSpecial	 start="(\(?:\|?<\=[=!]\|?>\|?<[a-z_]\w*>\|?[imx]*-[imx]*:\=\|\%(?#\)\@!\)" skip="\\\\\|\\)"  end=")"  contained transparent contains=@rubyRegexpSpecial
-syn region rubyRegexpBrackets	  matchgroup=rubyRegexpCharClass start="\[\^\="								    skip="\\\\\|\\\]" end="\]" contained transparent contains=rubyRegexpBrackets,rubyStringEscape,rubyRegexpEscape,rubyRegexpCharClass,rubyRegexpIntersection oneline
+syn region rubyRegexpComment	  matchgroup=rubyRegexpSpecial	 start="(?#"								     skip="\\\\\|\\)"  end=")"	contained
+syn region rubyRegexpParens	  matchgroup=rubyRegexpSpecial	 start="(\%(?:\|?<\=[=!]\|?>\|?<[a-z_]\w*>\|?[imx]*-[imx]*:\=\|\%(?#\)\@!\)" skip="\\\\\|\\)"  end=")"	contained transparent contains=@rubyRegexpSpecial
+syn region rubyRegexpBrackets	  matchgroup=rubyRegexpCharClass start="\[\^\="								     skip="\\\\\|\\\]" end="\]" contained transparent contains=rubyRegexpBrackets,rubyStringEscape,rubyRegexpEscape,rubyRegexpCharClass,rubyRegexpIntersection oneline
 syn match  rubyRegexpCharClass	  "\\[DdHhRSsWw]"	 contained display
 syn match  rubyRegexpCharClass	  "\[:\^\=\%(alnum\|alpha\|ascii\|blank\|cntrl\|digit\|graph\|lower\|print\|punct\|space\|upper\|word\|xdigit\):\]" contained
 syn match  rubyRegexpCharClass	  "\\[pP]{^\=.\{-}}"	 contained display
@@ -349,7 +349,7 @@ syn cluster rubyDeclaration contains=rubyAliasDeclaration,rubyAliasDeclaration2,
 syn match rubyControl	     "\%#=1\<\%(break\|in\|next\|redo\|retry\|return\)\>"
 syn match rubyKeyword	     "\%#=1\<\%(super\|yield\)\>"
 syn match rubyBoolean	     "\%#=1\<\%(true\|false\)\>[?!]\@!"
-syn match rubyPseudoVariable "\%#=1\<\(self\|nil\)\>[?!]\@!"
+syn match rubyPseudoVariable "\%#=1\<\%(self\|nil\)\>[?!]\@!"
 syn match rubyPseudoVariable "\%#=1\<__\%(ENCODING\|dir\|FILE\|LINE\|callee\|method\)__\>"
 syn match rubyBeginEnd	     "\%#=1\<\%(BEGIN\|END\)\>"
 
@@ -421,7 +421,7 @@ if !exists("ruby_no_special_methods")
   syn match rubyAccess	  "\%#=1\<\%(public\|private\)_class_method\>"
   syn match rubyAccess	  "\%#=1\<\%(public\|private\)_constant\>"
   syn match rubyAccess	  "\%#=1\<module_function\>"
-  syn match rubyAttribute "\%#=1\%(\%(^\|;\)\s*\)\@<=attr\>\(\s*[.=]\)\@!" " attr is a common variable name
+  syn match rubyAttribute "\%#=1\%(\%(^\|;\)\s*\)\@<=attr\>\%(\s*[.=]\)\@!" " attr is a common variable name
   syn match rubyAttribute "\%#=1\<attr_\%(accessor\|reader\|writer\)\>"
   syn match rubyControl   "\%#=1\<\%(abort\|at_exit\|exit\|fork\|loop\|trap\)\>"
   syn match rubyEval	  "\%#=1\<eval\>"

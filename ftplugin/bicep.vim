@@ -15,7 +15,7 @@ set cpoptions&vim
 
 " Set the commentstring
 setlocal commentstring=//%s
-let b:undo_ftplugin = ' commentstring<'
+let b:undo_ftplugin = 'setlocal commentstring<'
 
 let &cpoptions = s:cpo_save
 unlet s:cpo_save
