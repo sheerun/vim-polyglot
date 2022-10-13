@@ -28,7 +28,11 @@ set cpo&vim
 
 syn case ignore
 " Add dash to allowed keyword characters.
-syn iskeyword @,48-57,_,192-255,-
+if has('patch-7.4.1142')
+  syn iskeyword @,48-57,_,192-255,-
+else
+  setlocal iskeyword=@,48-57,_,192-255,-
+endif
 
 " HTML4 tags
 syn keyword cssTagName abbr address area a b base
