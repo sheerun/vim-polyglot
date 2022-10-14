@@ -6,7 +6,7 @@ endif
 " Language:	git rebase --interactive
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
 " Filenames:	git-rebase-todo
-" Last Change:	2019 Dec 06
+" Last Change:	2022 Jan 05
 
 if exists("b:current_syntax")
   finish

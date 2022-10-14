@@ -62,12 +62,6 @@ let s:op_chars = '\U25\U26\U2A\U2B\U2D\U2F\U3C-\U3E\U5C\U5E\U7C\U7E\UAC\UB1\UD7\
 " The list contains the following characters: '…⁝⅋←↑→↓↔↚↛↜↝↞↠↢↣↤↦↩↪↫↬↮↶↷↺↻↼↽⇀⇁⇄⇆⇇⇉⇋⇌⇍⇎⇏⇐⇒⇔⇚⇛⇜⇝⇠⇢⇴⇵⇶⇷⇸⇹⇺⇻⇼⇽⇾⇿∈∉∊∋∌∍∓∔∗∘∙√∛∜∝∤∥∦∧∨∩∪∷∸∺∻∽∾≀≁≂≃≄≅≆≇≈≉≊≋≌≍≎≏≐≑≒≓≔≕≖≗≘≙≚≛≜≝≞≟≠≡≢≣≤≥≦≧≨≩≪≫≬≭≮≯≰≱≲≳≴≵≶≷≸≹≺≻≼≽≾≿⊀⊁⊂⊃⊄⊅⊆⊇⊈⊉⊊⊋⊍⊎⊏⊐⊑⊒⊓⊔⊕⊖⊗⊘⊙⊚⊛⊜⊞⊟⊠⊡⊢⊣⊩⊬⊮⊰⊱⊲⊳⊴⊵⊶⊷⊻⊼⊽⋄⋅⋆⋇⋉⋊⋋⋌⋍⋎⋏⋐⋑⋒⋓⋕⋖⋗⋘⋙⋚⋛⋜⋝⋞⋟⋠⋡⋢⋣⋤⋥⋦⋧⋨⋩⋪⋫⋬⋭⋮⋯⋰⋱⋲⋳⋴⋵⋶⋷⋸⋹⋺⋻⋼⋽⋾⋿⌿▷⟂⟈⟉⟑⟒⟕⟖⟗⟰⟱⟵⟶⟷⟹⟺⟻⟼⟽⟾⟿⤀⤁⤂⤃⤄⤅⤆⤇⤈⤉⤊⤋⤌⤍⤎⤏⤐⤑⤒⤓⤔⤕⤖⤗⤘⤝⤞⤟⤠⥄⥅⥆⥇⥈⥉⥊⥋⥌⥍⥎⥏⥐⥑⥒⥓⥔⥕⥖⥗⥘⥙⥚⥛⥜⥝⥞⥟⥠⥡⥢⥣⥤⥥⥦⥧⥨⥩⥪⥫⥬⥭⥮⥯⥰⦷⦸⦼⦾⦿⧀⧁⧡⧣⧤⧥⧴⧶⧷⧺⧻⨇⨈⨝⨟⨢⨣⨤⨥⨦⨧⨨⨩⨪⨫⨬⨭⨮⨰⨱⨲⨳⨴⨵⨶⨷⨸⨹⨺⨻⨼⨽⩀⩁⩂⩃⩄⩅⩊⩋⩌⩍⩎⩏⩐⩑⩒⩓⩔⩕⩖⩗⩘⩚⩛⩜⩝⩞⩟⩠⩡⩢⩣⩦⩧⩪⩫⩬⩭⩮⩯⩰⩱⩲⩳⩴⩵⩶⩷⩸⩹⩺⩻⩼⩽⩾⩿⪀⪁⪂⪃⪄⪅⪆⪇⪈⪉⪊⪋⪌⪍⪎⪏⪐⪑⪒⪓⪔⪕⪖⪗⪘⪙⪚⪛⪜⪝⪞⪟⪠⪡⪢⪣⪤⪥⪦⪧⪨⪩⪪⪫⪬⪭⪮⪯⪰⪱⪲⪳⪴⪵⪶⪷⪸⪹⪺⪻⪼⪽⪾⪿⫀⫁⫂⫃⫄⫅⫆⫇⫈⫉⫊⫋⫌⫍⫎⫏⫐⫑⫒⫓⫔⫕⫖⫗⫘⫙⫛⫷⫸⫹⫺⬰⬱⬲⬳⬴⬵⬶⬷⬸⬹⬺⬻⬼⬽⬾⬿⭀⭁⭂⭃⭄⭇⭈⭉⭊⭋⭌￩￪￫￬'
 let s:op_chars_wc = '\U2026\U205D\U214B\U2190-\U2194\U219A-\U219E\U21A0\U21A2-\U21A4\U21A6\U21A9-\U21AC\U21AE\U21B6\U21B7\U21BA-\U21BD\U21C0\U21C1\U21C4\U21C6\U21C7\U21C9\U21CB-\U21D0\U21D2\U21D4\U21DA-\U21DD\U21E0\U21E2\U21F4-\U21FF\U2208-\U220D\U2213\U2214\U2217-\U221D\U2224-\U222A\U2237\U2238\U223A\U223B\U223D\U223E\U2240-\U228B\U228D-\U229C\U229E-\U22A3\U22A9\U22AC\U22AE\U22B0-\U22B7\U22BB-\U22BD\U22C4-\U22C7\U22C9-\U22D3\U22D5-\U22FF\U233F\U25B7\U27C2\U27C8\U27C9\U27D1\U27D2\U27D5-\U27D7\U27F0\U27F1\U27F5-\U27F7\U27F9-\U27FF\U2900-\U2918\U291D-\U2920\U2944-\U2970\U29B7\U29B8\U29BC\U29BE-\U29C1\U29E1\U29E3-\U29E5\U29F4\U29F6\U29F7\U29FA\U29FB\U2A07\U2A08\U2A1D\U2A1F\U2A22-\U2A2E\U2A30-\U2A3D\U2A40-\U2A45\U2A4A-\U2A58\U2A5A-\U2A63\U2A66\U2A67\U2A6A-\U2AD9\U2ADB\U2AF7-\U2AFA\U2B30-\U2B44\U2B47-\U2B4C\UFFE9-\UFFEC'
 
-" Full operators regex
-let s:operators = '\%(' . '\.\%([-+*/^÷%|&⊻]\|//\|\\\|>>\|>>>\?\)\?='
-      \         . '\|'  . '[:<>]=\|||\|&&\||>\|<|\|[<>:]:\|<<\|>>>\?\|//\|[-=]>\|\.\.\.\?'
-      \         . '\|'  . '\.\?[!' . s:op_chars . s:op_chars_wc . ']'
-      \         . '\)'
-
 
 " Characters that can be used to start an identifier. Above \UBF we don't
 " bother checking. (If a UTF8 operator is used, it will take precedence anyway.)
@@ -80,6 +74,12 @@ let s:id_charsW = '\%([0-9A-Za-z_!\UA2-\UA6\UA9\UAA\UAE-\UB0\UB2-\UB5\UB8-\UBA\U
 " A valid julia identifier, more or less
 let s:idregex = '\%(' . s:id_charsH . s:id_charsW . '*\)'
 
+" Full operators regex
+let s:operators = '\%(' . '\.\%([-+*/^÷%|&⊻]\|//\|\\\|>>\|>>>\?\)\?='
+      \         . '\|'  . '[!:<>]=\|||\|&&\||>\|<|\|[<>:]:\|<<\|>>>\?\|//\|[-=]>\|\.\.\.\?'
+      \         . '\|'  . '\.!' . '\|'.s:id_charsW.'\@'.s:d(1).'<!!'
+      \         . '\|'  . '\.\?[' . s:op_chars . s:op_chars_wc . ']'
+      \         . '\)'
 
 
 syn case match
@@ -90,10 +90,10 @@ syntax cluster juliaExprsNodot		contains=@juliaParItems,@juliaStringItems,@julia
 
 syntax cluster juliaParItems		contains=juliaParBlock,juliaSqBraIdxBlock,juliaSqBraBlock,juliaCurBraBlock,juliaQuotedParBlock,juliaQuotedQMarkPar
 syntax cluster juliaKeywordItems	contains=juliaKeyword,juliaWhereKeyword,juliaImportLine,juliaInfixKeyword,juliaRepKeyword
-syntax cluster juliaBlocksItems		contains=juliaConditionalBlock,juliaWhileBlock,juliaForBlock,juliaBeginBlock,juliaFunctionBlock,juliaMacroBlock,juliaQuoteBlock,juliaTypeBlock,juliaImmutableBlock,juliaExceptionBlock,juliaLetBlock,juliaDoBlock,juliaModuleBlock,juliaStructBlock,juliaMutableStructBlock,juliaAbstractBlock,juliaPrimitiveBlock
-syntax cluster juliaTypesItems		contains=juliaBaseTypeBasic,juliaBaseTypeNum,juliaBaseTypeC,juliaBaseTypeError,juliaBaseTypeIter,juliaBaseTypeString,juliaBaseTypeArray,juliaBaseTypeDict,juliaBaseTypeSet,juliaBaseTypeIO,juliaBaseTypeProcess,juliaBaseTypeRange,juliaBaseTypeRegex,juliaBaseTypeFact,juliaBaseTypeFact,juliaBaseTypeSort,juliaBaseTypeRound,juliaBaseTypeSpecial,juliaBaseTypeRandom,juliaBaseTypeDisplay,juliaBaseTypeTime,juliaBaseTypeOther
+syntax cluster juliaBlocksItems		contains=juliaConditionalBlock,juliaWhileBlock,juliaForBlock,juliaBeginBlock,juliaFunctionBlock,juliaMacroBlock,juliaQuoteBlock,juliaExceptionBlock,juliaLetBlock,juliaDoBlock,juliaModuleBlock,juliaStructBlock,juliaMutableStructBlock,juliaAbstractBlock,juliaPrimitiveBlock
+syntax cluster juliaTypesItems		contains=juliaBaseTypeBasic,juliaBaseTypeNum,juliaBaseTypeC,juliaBaseTypeError,juliaBaseTypeIter,juliaBaseTypeString,juliaBaseTypeArray,juliaBaseTypeDict,juliaBaseTypeSet,juliaBaseTypeIO,juliaBaseTypeProcess,juliaBaseTypeRange,juliaBaseTypeRegex,juliaBaseTypeFact,juliaBaseTypeSort,juliaBaseTypeRound,juliaBaseTypeSpecial,juliaBaseTypeRandom,juliaBaseTypeDisplay,juliaBaseTypeTime,juliaBaseTypeOther
 
-syntax cluster juliaConstItems  	contains=juliaConstNum,juliaConstBool,juliaConstEnv,juliaConstMMap,juliaConstC,juliaConstGeneric,juliaConstIO,juliaPossibleEuler
+syntax cluster juliaConstItems  	contains=juliaConstNum,juliaConstBool,juliaConstEnv,juliaConstC,juliaConstGeneric,juliaConstIO,juliaPossibleEuler
 
 syntax cluster juliaMacroItems		contains=juliaPossibleMacro,juliaDollarVar,juliaDollarPar,juliaDollarSqBra
 syntax cluster juliaSymbolItems		contains=juliaPossibleSymbol

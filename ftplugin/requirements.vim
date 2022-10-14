@@ -1,4 +1,4 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'requirements', 'syntax/requirements.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'requirements', 'ftplugin/requirements.vim')
   finish
 endif
 
@@ -27,33 +27,20 @@ endif
 " LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
-
-if exists("b:current_syntax") && b:current_syntax == "requirements"
-    finish
+if exists("b:did_ftplugin")
+  finish
 endif
+let b:did_ftplugin = 1
 
-syn case match
+let s:save_cpoptions = &cpoptions
+set cpoptions&vim
 
-syn match requirementsVersion "\v\d+[a-zA-Z0-9\.\-\*]*"
-syn region requirementsComment start="[ \t]*#" end="$"
-syn match requirementsCommandOption "\v^\[?--?[a-zA-Z\-]*\]?"
-syn match requirementsVersionSpecifiers "\v(\=\=\=?|\<\=?|\>\=?|\~\=|\!\=)"
-syn match requirementsPackageName "\v^([a-zA-Z0-9][a-zA-Z0-9\-_\.]*[a-zA-Z0-9])"
-syn match requirementsExtras "\v\[\S+\]"
-syn match requirementsVersionControls "\v(git\+?|hg\+|svn\+|bzr\+).*://.\S+"
-syn match requirementsURLs "\v(\@\s)?(https?|ftp|gopher)://?[^\s/$.?#].\S*"
-syn match requirementsEnvironmentMarkers "\v;\s[^#]+"
+let b:undo_ftplugin = "setl iskeyword< commentstring<"
+" pip options contain "-"
+setlocal iskeyword+=-
+setlocal commentstring=#\ %s
+compiler pip_compile
 
-hi def link requirementsVersion Number
-hi def link requirementsComment Comment
-hi def link requirementsCommandOption Special
-hi def link requirementsVersionSpecifiers Boolean
-hi def link requirementsPackageName Identifier
-hi def link requirementsExtras Type
-hi def link requirementsVersionControls Underlined
-hi def link requirementsURLs Underlined
-hi def link requirementsEnvironmentMarkers Macro
-
-let b:current_syntax = "requirements"
-
+let &cpoptions = s:save_cpoptions
+unlet s:save_cpoptions
 " vim: et sw=4 ts=4 sts=4:

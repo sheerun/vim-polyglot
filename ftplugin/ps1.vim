@@ -17,7 +17,7 @@ let b:did_ftplugin = 1
 
 setlocal tw=0
 setlocal commentstring=#%s
-setlocal formatoptions=tcqro
+setlocal formatoptions+=tcqroj
 " Enable autocompletion of hyphenated PowerShell commands,
 " e.g. Get-Content or Get-ADUser
 setlocal iskeyword+=-

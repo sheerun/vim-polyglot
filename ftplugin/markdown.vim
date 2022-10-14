@@ -860,7 +860,11 @@ endfunction
 
 
 function! s:MarkdownRefreshSyntax(force)
-    if &filetype =~# 'markdown' && line('$') > 1
+    " Use != to compare &syntax's value to use the same logic run on
+    " $VIMRUNTIME/syntax/synload.vim.
+    "
+    " vint: next-line -ProhibitEqualTildeOperator
+    if &filetype =~# 'markdown' && line('$') > 1 && &syntax != 'OFF'
         call s:MarkdownHighlightSources(a:force)
     endif
 endfunction

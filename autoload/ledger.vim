@@ -25,7 +25,7 @@ function! ledger#transaction_state_toggle(lnum, ...) abort
 endf
 
 function! ledger#transaction_state_set(lnum, char) abort
-  " modifies or sets the state of the transaction at the cursor,
+  " modifies or sets the state of the transaction at the given line no.,
   " removing the state altogether if a:char is empty
   let trans = s:transaction.from_lnum(a:lnum)
   if empty(trans) || has_key(trans, 'expr')
@@ -130,7 +130,7 @@ function! ledger#transaction_post_state_set(lnum, char) abort
     return
   endif
 
-  let line = getline('.')
+  let line = getline(a:lnum)
   if a:char =~# '^\s*$'
     let newline = substitute(line, '\V' . state . '\m[ \t]', '', '')
   elseif state ==# ' '
@@ -457,10 +457,20 @@ endf
 
 " Return character position of decimal separator (multibyte safe)
 function! s:decimalpos(expr) abort
-  let pos = match(a:expr, '\V' . g:ledger_decimal_sep)
-  if pos > 0
-    let pos = strchars(a:expr[:pos]) - 1
-  endif
+  " Remove trailing comments
+  let l:expr = substitute(a:expr, '\v +;.*$', '', '')
+  " Find first or last possible decimal separator candidate
+  if g:ledger_align_last
+    let pos = matchend(l:expr, '\v.*[' . g:ledger_decimal_sep . ']')
+    if pos > 0
+      let pos = strchars(a:expr[:pos]) + 1
+    endif
+  else
+    let pos = match(l:expr, '\v[' . g:ledger_decimal_sep . ']')
+    if pos > 0
+      let pos = strchars(a:expr[:pos]) - 1
+    endif
+  end
   return pos
 endf
 
@@ -543,6 +553,10 @@ function! ledger#align_amount_at_cursor() abort
     exe 'normal! pa' . g:ledger_commodity_sep . g:ledger_default_commodity
   endif
 endf
+
+function! ledger#align_formatexpr(lnum, count) abort
+  execute a:lnum . ',' . (a:lnum + a:count - 1) . 'call ledger#align_commodity()'
+endfunction
 
 " Report generation {{{1
 
@@ -732,8 +746,6 @@ function! ledger#register(file, args) abort
 endf
 
 " Reconcile the given account.
-" This function accepts a file path as a third optional argument.
-" The default is to use the value of g:ledger_main.
 "
 " Parameters:
 " file  The file to be processed

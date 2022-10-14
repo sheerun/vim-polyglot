@@ -32,7 +32,7 @@ syn keyword openscadPrimitiveSolid cube sphere cylinder polyhedron surface
 syn keyword openscadPrimitive2D square circle polygon import_dxf text
 syn keyword openscadPrimitiveImport import child children
 
-syn match openscadSpecialVariable "\$[a-zA-Z]\+\>" display
+syn match openscadSpecialVariable "\$[a-zA-Z0-9_]\+\>" display
 syn match openscadModifier "^\s*[\*\!\#\%]" display
 
 syn match openscadNumbers "\<\d\|\.\d" contains=openscadNumber display transparent

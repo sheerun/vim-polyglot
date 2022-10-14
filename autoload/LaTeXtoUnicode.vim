@@ -348,7 +348,7 @@ endfunction
 " be reinstated if needed.
 function! s:L2U_SetFallbackMapping(s, k)
   let mmdict = maparg(a:s, 'i', 0, 1)
-  if empty(mmdict)
+  if empty(mmdict) || !has_key(mmdict, "rhs")
     exe 'inoremap <buffer> ' . a:k . ' ' . a:s
     return mmdict
   endif

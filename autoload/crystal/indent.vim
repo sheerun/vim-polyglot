@@ -96,7 +96,7 @@ lockvar g:crystal#indent#block_regex
 " Regex that defines the beginning of a hanging expression.
 let g:crystal#indent#hanging_assignment_regex =
       \ '\%('.g:crystal#indent#operator_regex.'\s*\)\@<=' .
-      \ '\.\@1<!\<\%(if\||unless\|case\|begin\)\>'
+      \ '\.\@1<!\<\%(if\||unless\|case\|begin\|select\)\>'
 lockvar g:crystal#indent#hanging_assignment_regex
 
 " Regex that defines the start-match for the 'end' keyword.
@@ -107,7 +107,7 @@ let g:crystal#indent#end_start_regex =
       \ '\%(\<\%(private\|protected\)\s\+\)\=' .
       \ '\%(\<\%(abstract\s\+\)\=\%(class\|struct\)\>\|\<\%(def\|module\|macro\|lib\|enum\|annotation\)\>\)' .
       \ '\|' .
-      \ '\<\%(if\|unless\|while\|until\|case\|begin\|union\)\>' .
+      \ '\<\%(if\|unless\|while\|until\|case\|begin\|union\|select\)\>' .
       \ '\)' .
       \ '\|' .
       \ g:crystal#indent#hanging_assignment_regex .

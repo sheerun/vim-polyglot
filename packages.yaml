@@ -606,15 +606,6 @@ filetypes:
 - name: fsharp
   linguist: F#
 ---
-name: gdscript
-remote: calviken/vim-gdscript3
-dirs:
-- syntax
-- indent
-filetypes:
-- name: gdscript3
-  linguist: GDScript
----
 name: git
 remote: tpope/vim-git
 filetypes:

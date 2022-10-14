@@ -37,6 +37,8 @@ setlocal cinkeys=0{,0},0),0],!^F,o,O
 
 setlocal indentexpr=GetZigIndent(v:lnum)
 
+let b:undo_indent = "setlocal cindent< cinkeys< cinoptions< indentexpr<"
+
 function! GetZigIndent(lnum)
     let curretLineNum = a:lnum
     let currentLine = getline(a:lnum)

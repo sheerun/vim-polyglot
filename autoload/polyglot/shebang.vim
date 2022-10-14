@@ -462,6 +462,7 @@ endfunc
 let s:interpreters = {
   \ 'osascript': 'applescript',
   \ 'tcc': 'c',
+  \ 'bb': 'clojure',
   \ 'coffee': 'coffee',
   \ 'crystal': 'crystal',
   \ 'dart': 'dart',

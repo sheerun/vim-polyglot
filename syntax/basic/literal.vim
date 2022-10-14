@@ -22,9 +22,20 @@ syntax region  typescriptString
 
 syntax match   typescriptSpecial            contained "\v\\%(x\x\x|u%(\x{4}|\{\x{1,6}})|c\u|.)"
 
-" From vim runtime
-" <https://github.com/vim/vim/blob/master/runtime/syntax/javascript.vim#L48>
-syntax region  typescriptRegexpString          start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gimsuy]\{0,5\}\s*$+ end=+/[gimsuy]\{0,5\}\s*[;.,)\]}:]+me=e-1 nextgroup=typescriptDotNotation oneline
+" From pangloss/vim-javascript
+" <https://github.com/pangloss/vim-javascript/blob/d6e137563c47fb59f26ed25d044c0c7532304f18/syntax/javascript.vim#L64-L72>
+syntax region  typescriptRegexpCharClass    contained start=+\[+ skip=+\\.+ end=+\]+ contains=typescriptSpecial extend
+syntax match   typescriptRegexpBoundary     contained "\v\c[$^]|\\b"
+syntax match   typescriptRegexpBackRef      contained "\v\\[1-9]\d*"
+syntax match   typescriptRegexpQuantifier   contained "\v[^\\]%([?*+]|\{\d+%(,\d*)?})\??"lc=1
+syntax match   typescriptRegexpOr           contained "|"
+syntax match   typescriptRegexpMod          contained "\v\(\?[:=!>]"lc=1
+syntax region  typescriptRegexpGroup        contained start="[^\\]("lc=1 skip="\\.\|\[\(\\.\|[^]]\+\)\]" end=")" contains=typescriptRegexpCharClass,@typescriptRegexpSpecial keepend
+syntax region  typescriptRegexpString
+  \ start=+\%(\%(\<return\|\<typeof\|\_[^)\]'"[:blank:][:alnum:]_$]\)\s*\)\@<=/\ze[^*/]+ skip=+\\.\|\[[^]]\{1,}\]+ end=+/[gimyus]\{,6}+
+  \ contains=typescriptRegexpCharClass,typescriptRegexpGroup,@typescriptRegexpSpecial
+  \ oneline keepend extend
+syntax cluster typescriptRegexpSpecial    contains=typescriptSpecial,typescriptRegexpBoundary,typescriptRegexpBackRef,typescriptRegexpQuantifier,typescriptRegexpOr,typescriptRegexpMod
 
 syntax region  typescriptTemplate
   \ start=/`/  skip=/\\\\\|\\`\|\n/  end=/`\|$/

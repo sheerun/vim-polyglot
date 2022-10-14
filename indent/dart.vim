@@ -8,7 +8,12 @@ endif
 let b:did_indent = 1
 
 setlocal cindent
-setlocal cinoptions+=j1,J1,(2s,u2s,U1,m1,+2s
+setlocal cinoptions+=j1,J1,U1,m1,+2s
+if get(g:, 'dart_trailing_comma_indent', v:false)
+  setlocal cinoptions+=(2s,u2s
+else
+  setlocal cinoptions+=(s,us
+endif
 
 setlocal indentexpr=DartIndent()
 

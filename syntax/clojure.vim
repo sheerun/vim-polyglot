@@ -26,7 +26,7 @@ endif
 
 " -*- KEYWORDS -*-
 " Generated from https://github.com/clojure-vim/clojure.vim/blob/%%RELEASE_TAG%%/clj/src/vim_clojure_static/generate.clj
-" Clojure version 1.11.0
+" Clojure version 1.11.1
 let s:clojure_syntax_keywords = {
 	\ 'clojureBoolean': ["false","true"],
 	\ 'clojureCond': ["case","case*","clojure.core/case","clojure.core/cond","clojure.core/cond->","clojure.core/cond->>","clojure.core/condp","clojure.core/if-let","clojure.core/if-not","clojure.core/if-some","clojure.core/when","clojure.core/when-first","clojure.core/when-let","clojure.core/when-not","clojure.core/when-some","cond","cond->","cond->>","condp","if","if-let","if-not","if-some","when","when-first","when-let","when-not","when-some"],
@@ -100,7 +100,7 @@ syntax region clojureRegexpQuote  start=/\\Q/       skip=/\\\\\|\\"/ end=/\\E/  
 
 " -*- CHARACTER PROPERTY CLASSES -*-
 " Generated from https://github.com/clojure-vim/clojure.vim/blob/%%RELEASE_TAG%%/clj/src/vim_clojure_static/generate.clj
-" Java version 17.0.2
+" Java version 18.0.1
 syntax match clojureRegexpPosixCharClass "\v\\[pP]\{%(Cntrl|A%(l%(pha|num)|SCII)|Space|Graph|Upper|P%(rint|unct)|Blank|XDigit|Digit|Lower)\}" contained display
 syntax match clojureRegexpJavaCharClass "\v\\[pP]\{java%(Whitespace|JavaIdentifier%(Part|Start)|SpaceChar|Mirrored|TitleCase|I%(SOControl|de%(ographic|ntifierIgnorable))|D%(efined|igit)|U%(pperCase|nicodeIdentifier%(Part|Start))|L%(etter%(OrDigit)?|owerCase)|Alphabetic)\}" contained display
 syntax match clojureRegexpUnicodeCharClass "\v\\[pP]\{\cIs%(l%(owercase|etter)|hex%(digit|_digit)|w%(hite%(_space|space)|ord)|noncharacter%(_code_point|codepoint)|p%(rint|unctuation)|ideographic|graph|a%(l%(num|phabetic)|ssigned)|uppercase|join%(control|_control)|titlecase|blank|digit|control)\}" contained display

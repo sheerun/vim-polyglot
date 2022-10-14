@@ -5,7 +5,7 @@ endif
 "Import
 syntax keyword typescriptImport                from as
 syntax keyword typescriptImport                import
-  \ nextgroup=typescriptImportType
+  \ nextgroup=typescriptImportType,typescriptTypeBlock,typescriptDefaultImportName
   \ skipwhite
 syntax keyword typescriptImportType            type
   \ contained
@@ -17,10 +17,9 @@ syntax match typescriptExportType              /\<type\s*{\@=/
 syntax keyword typescriptModule                namespace module
 
 
-syntax keyword typescriptCastKeyword           as
+syntax keyword typescriptCastKeyword           as satisfies
   \ nextgroup=@typescriptType
   \ skipwhite
-
 
 syntax keyword typescriptVariable              let var
   \ nextgroup=@typescriptVariableDeclarations
@@ -90,6 +89,17 @@ syntax cluster typescriptAmbients contains=
   \ typescriptModule
 
 syntax keyword typescriptIdentifier            arguments  nextgroup=@afterIdentifier
+syntax match typescriptDefaultImportName /\v\h\k*( |,)/
+  \ contained
+  \ nextgroup=typescriptTypeBlock
+  \ skipwhite skipempty
+
+syntax region  typescriptTypeBlock
+  \ matchgroup=typescriptBraces
+  \ start=/{/ end=/}/
+  \ contained
+  \ contains=typescriptIdentifierName,typescriptImportType
+  \ fold
 
 "Program Keywords
 exec 'syntax keyword typescriptNull null '.(exists('g:typescript_conceal_null') ? 'conceal cchar='.g:typescript_conceal_null : '').' nextgroup=@typescriptSymbols skipwhite skipempty'

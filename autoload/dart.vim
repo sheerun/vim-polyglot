@@ -92,9 +92,9 @@ endfunction
 
 " Finds the path to `uri`.
 "
-" If the file is a package: uri, looks for a .packages file to resolve the path.
-" If the path cannot be resolved, or is not a package: uri, returns the
-" original.
+" If the file is a package: uri, looks for a package_config.json or .packages
+" file to resolve the path. If the path cannot be resolved, or is not a
+" package: uri, returns the original.
 function! dart#resolveUri(uri) abort
   if a:uri !~# 'package:'
     return a:uri
@@ -102,7 +102,7 @@ function! dart#resolveUri(uri) abort
   let package_name = substitute(a:uri, 'package:\(\w\+\)\/.*', '\1', '')
   let [found, package_map] = s:PackageMap()
   if !found
-    call s:error('cannot find .packages file')
+    call s:error('cannot find .packages or package_config.json file')
     return a:uri
   endif
   if !has_key(package_map, package_name)
@@ -116,37 +116,63 @@ function! dart#resolveUri(uri) abort
       \ '')
 endfunction
 
-" A map from package name to lib directory parse from a '.packages' file.
+" A map from package name to lib directory parse from a 'package_config.json'
+" or '.packages' file.
 "
 " Returns [found, package_map]
 function! s:PackageMap() abort
-  let [found, dot_packages] = s:DotPackagesFile()
-  if !found
-    return [v:false, {}]
-  endif
-  let dot_packages_dir = fnamemodify(dot_packages, ':p:h')
-  let lines = readfile(dot_packages)
-  let map = {}
-  for line in lines
-    if line =~# '\s*#'
-      continue
+  let [found, package_config] = s:FindFile('.dart_tool/package_config.json')
+  if found
+    let dart_tool_dir = fnamemodify(package_config, ':p:h')
+    let content = join(readfile(package_config), "\n")
+    let packages_dict = json_decode(content)
+    if packages_dict['configVersion'] != '2'
+      s:error('Unsupported version of package_config.json')
+      return [v:false, {}]
     endif
-    let package = substitute(line, ':.*$', '', '')
-    let lib_dir = substitute(line, '^[^:]*:', '', '')
-    if lib_dir =~# 'file:/'
-      let lib_dir = substitute(lib_dir, 'file://', '', '')
-      if lib_dir =~# '/[A-Z]:/'
-        let lib_dir = lib_dir[1:]
+    let map = {}
+    for package in packages_dict['packages']
+      let name = package['name']
+      let uri = package['rootUri']
+      let package_uri = package['packageUri']
+      if uri =~# 'file:/'
+        let uri = substitute(uri, 'file://', '', '')
+        let lib_dir = resolve(uri.'/'.package_uri)
+      else
+        let lib_dir = resolve(dart_tool_dir.'/'.uri.'/'.package_uri)
       endif
-    else
-      let lib_dir = resolve(dot_packages_dir.'/'.lib_dir)
-    endif
-    if lib_dir =~# '/$'
-      let lib_dir = lib_dir[:len(lib_dir) - 2]
-    endif
-    let map[package] = lib_dir
-  endfor
-  return [v:true, map]
+      let map[name] = lib_dir
+    endfor
+    return [v:true, map]
+  endif
+
+  let [found, dot_packages] = s:FindFile('.packages')
+  if found
+    let dot_packages_dir = fnamemodify(dot_packages, ':p:h')
+    let lines = readfile(dot_packages)
+    let map = {}
+    for line in lines
+      if line =~# '\s*#'
+        continue
+      endif
+      let package = substitute(line, ':.*$', '', '')
+      let lib_dir = substitute(line, '^[^:]*:', '', '')
+      if lib_dir =~# 'file:/'
+        let lib_dir = substitute(lib_dir, 'file://', '', '')
+        if lib_dir =~# '/[A-Z]:/'
+          let lib_dir = lib_dir[1:]
+        endif
+      else
+        let lib_dir = resolve(dot_packages_dir.'/'.lib_dir)
+      endif
+      if lib_dir =~# '/$'
+        let lib_dir = lib_dir[:len(lib_dir) - 2]
+      endif
+      let map[package] = lib_dir
+    endfor
+    return [v:true, map]
+  endif
+  return [v:false, {}]
 endfunction
 
 " Toggle whether dartfmt is run on save or not.
@@ -158,17 +184,17 @@ function! dart#ToggleFormatOnSave() abort
   let g:dart_format_on_save = 1
 endfunction
 
-" Finds a file name '.packages' in the cwd, or in any directory above the open
+" Finds a file named [a:path] in the cwd, or in any directory above the open
 " file.
 "
-" Returns [found, file].
-function! s:DotPackagesFile() abort
-  if filereadable('.packages')
-    return [v:true, '.packages']
+" Returns [found, file]
+function! s:FindFile(path) abort
+  if filereadable(a:path)
+    return [v:true, a:path]
   endif
   let dir_path = expand('%:p:h')
   while v:true
-    let file_path = dir_path.'/.packages'
+    let file_path = dir_path.'/'.a:path
     if filereadable(file_path)
       return [v:true, file_path]
     endif

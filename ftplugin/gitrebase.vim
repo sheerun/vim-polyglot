@@ -5,7 +5,7 @@ endif
 " Vim filetype plugin
 " Language:	git rebase --interactive
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
-" Last Change:	2019 Dec 05
+" Last Change:	2022 Jan 05
 
 " Only do this when not done yet for this buffer
 if (exists("b:did_ftplugin"))

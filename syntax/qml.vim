@@ -31,7 +31,7 @@ endif
 
 syn case ignore
 
-syn cluster qmlExpr              contains=qmlStringD,qmlStringS,qmlStringT,SqmlCharacter,qmlNumber,qmlObjectLiteralType,qmlBoolean,qmlType,qmlJsType,qmlNull,qmlGlobal,qmlFunction,qmlArrowFunction
+syn cluster qmlExpr              contains=qmlStringD,qmlStringS,qmlStringT,SqmlCharacter,qmlNumber,qmlObjectLiteralType,qmlBoolean,qmlType,qmlJsType,qmlNull,qmlGlobal,qmlFunction,qmlArrowFunction,qmlNullishCoalescing
 syn keyword qmlCommentTodo       TODO FIXME XXX TBD contained
 syn match   qmlLineComment       "\/\/.*" contains=@Spell,qmlCommentTodo
 syn match   qmlCommentSkip       "^[ \t]*\*\($\|[ \t]\+\)"
@@ -49,6 +49,7 @@ syn region  qmlRegexpString      start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gi
 syn match   qmlObjectLiteralType "[A-Za-z][_A-Za-z0-9]*\s*\({\)\@="
 syn region  qmlTernaryColon   start="?" end=":" contains=@qmlExpr,qmlBraces,qmlParens
 syn match   qmlBindingProperty   "\<[A-Za-z][_A-Za-z.0-9]*\s*:"
+syn match  qmlNullishCoalescing    "??"
 
 syn keyword qmlConditional       if else switch
 syn keyword qmlRepeat            while for do in
@@ -1065,7 +1066,7 @@ syntax keyword qmlObjectLiteralType XYSeries
 
 syntax keyword qmlObjectLiteralType YAnimator
 
-syntax keyword qmlObjectLiteralType ZoomBlur 
+syntax keyword qmlObjectLiteralType ZoomBlur
 
 " }}}
 
@@ -1126,6 +1127,7 @@ if version >= 508 || !exists("did_qml_syn_inits")
   HiLink qmlNull              Keyword
   HiLink qmlBoolean           Boolean
   HiLink qmlRegexpString      String
+  HiLink qmlNullishCoalescing Operator
 
   HiLink qmlIdentifier        Identifier
   HiLink qmlLabel             Label

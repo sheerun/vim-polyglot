@@ -251,7 +251,7 @@ function! fsharp#loadConfig()
         let g:fsharp#automatic_reload_workspace = 1
     endif
     if !exists('g:fsharp#show_signature_on_cursor_move')
-        let g:fsharp#show_signature_on_cursor_move = 1
+        let g:fsharp#show_signature_on_cursor_move = 0
     endif
     if !exists('g:fsharp#fsi_command')
         let g:fsharp#fsi_command = "dotnet fsi"

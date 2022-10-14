@@ -55,6 +55,10 @@ if exists("*searchpairpos")
 		let g:clojure_align_subforms = 0
 	endif
 
+	if !exists('g:clojure_cljfmt_compat')
+		let g:clojure_cljfmt_compat = 0
+	endif
+
 	function! s:syn_id_name()
 		return synIDattr(synID(line("."), col("."), 0), "name")
 	endfunction
@@ -326,7 +330,14 @@ if exists("*searchpairpos")
 				return [paren[0], paren[1] + (g:clojure_align_subforms ? 0 : &shiftwidth - 1)]
 			elseif w[1] == '_'
 				return paren
+			elseif w[1] == "'" && g:clojure_cljfmt_compat
+				return paren
 			endif
+		endif
+
+		" Paren indent for keywords, symbols and derefs
+		if g:clojure_cljfmt_compat && w[0] =~# "[:@']"
+			return paren
 		endif
 
 		" Test words without namespace qualifiers and leading reader macro

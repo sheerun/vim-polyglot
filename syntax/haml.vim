@@ -6,7 +6,7 @@ endif
 " Language:	Haml
 " Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
 " Filenames:	*.haml
-" Last Change:	2018 Aug 21
+" Last Change:	2019 Dec 05
 
 if exists("b:current_syntax")
   finish

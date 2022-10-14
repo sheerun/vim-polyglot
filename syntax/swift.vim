@@ -192,6 +192,7 @@ syntax match swiftMultiwordKeywords "indirect enum"
 syntax region swiftEscapedReservedWord start="`" end="`" oneline
 
 syntax keyword swiftAttributes
+      \ @_disfavoredOverload
       \ @_exported
       \ @_implementationOnly
       \ @_silgen_name

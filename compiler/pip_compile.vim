@@ -1,9 +1,9 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'requirements', 'after/ftplugin/requirements.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'requirements', 'compiler/pip_compile.vim')
   finish
 endif
 
 " the Requirements File Format syntax support for Vim
-" Version: 1.6.0
+" Version: 1.7.1
 " Author:  raimon <raimon49@hotmail.com>
 " License: MIT LICENSE
 " The MIT License (MIT)
@@ -27,16 +27,23 @@ endif
 " LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
-if executable('pip-compile')
-    let s:filename = expand("%:p")
-    if fnamemodify(s:filename, ":t") ==# 'requirements.in'
-        " this is the default filename for pip-compile
-        setlocal makeprg=pip-compile
-    elseif fnamemodify(s:filename, ":e") ==# 'in'
-        \ && Requirements_matched_filename(s:filename)
-        setlocal makeprg=pip-compile\ %
-    endif
-endif
 
-setlocal commentstring=#\ %s
+if exists('b:current_compiler')
+    finish
+endif
+let b:current_compiler = 'pip_compile'
+
+let s:save_cpoptions = &cpoptions
+set cpoptions&vim
+
+if exists(':CompilerSet') != 2
+    command -nargs=* CompilerSet setlocal <args>
+endif
+CompilerSet makeprg=pip-compile\ %:S
+CompilerSet errorformat=%ECould\ not\ find\ a\ version\ that\ matches\ %o\ (from\ -r\ %f\ (line\ %l)),
+            \%C%m,
+            \%Z,
+            \%-G%.%#
+let &cpoptions = s:save_cpoptions
+unlet s:save_cpoptions
 " vim: et sw=4 ts=4 sts=4:

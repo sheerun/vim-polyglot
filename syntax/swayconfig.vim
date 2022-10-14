@@ -6,7 +6,7 @@ endif
 " Language: sway config file
 " Original Author: Mohamed Boughaba <mohamed dot bgb at gmail dot com>
 " Maintainer: James Eapen <jamespeapen at gmail dot com>
-" Version: 1.0
+" Version: 0.11.6
 " Last Change: 2020-10-07 
 
 " References:
@@ -60,30 +60,41 @@ syn match swayConfigInitialize /^\s*set\s\+.*$/ contains=swayConfigVariable,sway
 " Gaps
 syn keyword swayConfigGapStyleKeyword inner outer horizontal vertical top right bottom left current all set plus minus toggle up down contained
 syn match swayConfigGapStyle /^\s*\(gaps\)\s\+\(inner\|outer\|horizontal\|vertical\|left\|top\|right\|bottom\)\(\s\+\(current\|all\)\)\?\(\s\+\(set\|plus\|minus\|toggle\)\)\?\(\s\+\(-\?\d\+\|\$.*\)\)$/ contains=swayConfigGapStyleKeyword,swayConfigNumber,swayConfigVariable
-syn keyword swayConfigSmartGapKeyword on inverse_outer contained
-syn match swayConfigSmartGap /^\s*smart_gaps\s\+\(on\|inverse_outer\)\s\?$/ contains=swayConfigSmartGapKeyword
-syn keyword swayConfigSmartBorderKeyword on no_gaps contained
-syn match swayConfigSmartBorder /^\s*smart_borders\s\+\(on\|no_gaps\)\s\?$/ contains=swayConfigSmartBorderKeyword
+syn keyword swayConfigSmartGapKeyword on inverse_outer off contained
+syn match swayConfigSmartGap /^\s*smart_gaps\s\+\(on\|inverse_outer\|off\)\s\?$/ contains=swayConfigSmartGapKeyword
+syn keyword swayConfigSmartBorderKeyword on no_gaps off contained
+syn match swayConfigSmartBorder /^\s*smart_borders\s\+\(on\|no_gaps\|off\)\s\?$/ contains=swayConfigSmartBorderKeyword
 
 " Keyboard bindings
 syn keyword swayConfigAction toggle fullscreen restart key import kill shrink grow contained
 syn keyword swayConfigAction focus move grow height width split layout resize restore reload mute unmute exit mode workspace container to output contained
 syn match swayConfigModifier /\w\++\w\+\(\(+\w\+\)\+\)\?/ contained contains=swayConfigVariableModifier
-syn match swayConfigNumber /\s\d\+/ contained
+syn match swayConfigNumber /\s[+-]\?\(\d\+\.\)\?\d\+/ contained
 syn match swayConfigUnit /\sp\(pt\|x\)/ contained
 syn match swayConfigUnitOr /\sor/ contained
-syn keyword swayConfigBindKeyword bindsym bindcode exec gaps border contained
+syn keyword swayConfigBindKeyword bindsym bindcode bindswitch bindgesture exec gaps border contained
 syn match swayConfigBindArgument /--\w\+\(\(-\w\+\)\+\)\?\s/ contained
-syn match swayConfigBind /^\s*\(bindsym\|bindcode\)\s\+.*$/ contains=swayConfigVariable,swayConfigBindKeyword,swayConfigVariableAndModifier,swayConfigNumber,swayConfigUnit,swayConfigUnitOr,swayConfigBindArgument,swayConfigModifier,swayConfigAction,swayConfigString,swayConfigGapStyleKeyword,swayConfigBorderStyleKeyword
+syn match swayConfigBind /^\s*\(bindsym\|bindcode\|bindswitch\)\s\+.*$/ contains=swayConfigVariable,swayConfigBindKeyword,swayConfigVariableAndModifier,swayConfigNumber,swayConfigUnit,swayConfigUnitOr,swayConfigBindArgument,swayConfigModifier,swayConfigAction,swayConfigString,swayConfigGapStyleKeyword,swayConfigBorderStyleKeyword
+
+" bindgestures
+syn keyword swayConfigBindGestureCommand swipe pinch hold contained
+syn keyword swayConfigBindGestureDirection up down left right next prev contained
+syn keyword swayConfigBindGesturePinchDirection inward outward clockwise counterclockwise contained
+syn match swayConfigBindGestureHold /^\s*\(bindgesture\)\s\+hold\(:[1-5]\)\?\s\+.*$/ contains=swayConfigBindKeyword,swayConfigBindGestureCommand,swayConfigBindGestureDirection,swayConfigWorkspaceKeyword,swayConfigAction
+syn match swayConfigBindGestureSwipe /^\s*\(bindgesture\)\s\+swipe\(:[3-5]\)\?:\(up\|down\|left\|right\)\s\+.*$/ contains=swayConfigBindKeyword,swayConfigBindGestureCommand,swayConfigBindGestureDirection,swayConfigWorkspaceKeyword,swayConfigAction
+syn match swayConfigBindGesturePinch /^\s*\(bindgesture\)\s\+pinch\(:[2-5]\)\?:\(up\|down\|left\|right\|inward\|outward\|clockwise\|counterclockwise\)\(+\(up\|down\|left\|right\|inward\|outward\|clockwise\|counterclockwise\)\)\?.*$/ contains=swayConfigBindKeyword,swayConfigBindGestureCommand,swayConfigBindGestureDirection,swayConfigBindGesturePinchDirection,swayConfigWorkspaceKeyword,swayConfigAction
 
 " Floating
+syn keyword swayConfigFloatingKeyword floating contained
+syn match swayConfigFloating /^\s*floating\s\+\(enable\|disable\|toggle\)\s*$/ contains=swayConfigFloatingKeyword
+
 syn keyword swayConfigFloatingModifier floating_modifier contained
-syn match swayConfigFloatingMouseAction /^\s\?.*floating_modifier\s.*\(normal\|inverted\)$/ contains=swayConfigFloatingModifier,swayConfigVariable
+syn match swayConfigFloatingMouseAction /^\s\?.*floating_modifier\s\S\+\s\?\(normal\|inverted\|none\)\?$/ contains=swayConfigFloatingModifier,swayConfigVariable
 
 syn keyword swayConfigSizeSpecial x contained
 syn match swayConfigNegativeSize /-/ contained
 syn match swayConfigSize /-\?\d\+\s\?x\s\?-\?\d\+/ contained contains=swayConfigSizeSpecial,swayConfigNumber,swayConfigNegativeSize
-syn match swayConfigFloating /^\s*floating_\(maximum\|minimum\)_size\s\+-\?\d\+\s\?x\s\?-\?\d\+/ contains=swayConfigSize
+syn match swayConfigFloatingSize /^\s*floating_\(maximum\|minimum\)_size\s\+-\?\d\+\s\?x\s\?-\?\d\+/ contains=swayConfigSize
 
 " Orientation
 syn keyword swayConfigOrientationKeyword vertical horizontal auto contained
@@ -125,6 +136,10 @@ syn keyword swayConfigExecKeyword exec exec_always contained
 syn match swayConfigNoStartupId /--no-startup-id/ contained " We are not using swayConfigBindArgument as only no-startup-id is supported here
 syn match swayConfigExec /^\s*exec\(_always\)\?\s\+.*$/ contains=swayConfigExecKeyword,swayConfigNoStartupId,swayConfigString
 
+" Input config
+syn keyword swayConfigInputKeyword input contained
+syn match swayConfigInput /^\s*input\s\+.*$/ contains=swayConfigInputKeyword
+
 " Automatically putting workspaces on specific screens
 syn keyword swayConfigWorkspaceKeyword workspace contained
 syn keyword swayConfigOutputKeyword output contained
@@ -139,8 +154,9 @@ syn keyword swayConfigFocusType output contained
 syn match swayConfigFocus /^\s*focus\soutput\s.*$/ contains=swayConfigFocusKeyword,swayConfigFocusType
 
 " Changing colors
-syn keyword swayConfigClientColorKeyword client focused focused_inactive unfocused urgent placeholder background contained
-syn match swayConfigClientColor /^\s*client.\w\+\s\+.*$/ contains=swayConfigClientColorKeyword,swayConfigColor,swayConfigVariable
+syn keyword swayConfigClientKeyword client contained
+syn keyword swayConfigClientColorKeyword focused focused_inactive focused_tab_title unfocused urgent placeholder contained
+syn match swayConfigClientColor /^\s*client.\w\+\s\+.*$/ contains=swayConfigClientKeyword,swayConfigClientColorKeyword,swayConfigColor,swayConfigVariable
 
 syn keyword swayConfigTitleAlignKeyword left center right contained
 syn match swayConfigTitleAlign /^\s*title_align\s\+.*$/ contains=swayConfigTitleAlignKeyword
@@ -156,8 +172,8 @@ syn match swayConfigMouseWarping /^\s*mouse_warping\s\+\(output\|none\)\s\?$/ co
 
 " Focus follows mouse
 syn keyword swayConfigFocusFollowsMouseKeyword focus_follows_mouse contained
-syn keyword swayConfigFocusFollowsMouseType yes no contained
-syn match swayConfigFocusFollowsMouse /^\s*focus_follows_mouse\s\+\(yes\|no\)\s\?$/ contains=swayConfigFocusFollowsMouseKeyword,swayConfigFocusFollowsMouseType
+syn keyword swayConfigFocusFollowsMouseType yes no always contained
+syn match swayConfigFocusFollowsMouse /^\s*focus_follows_mouse\s\+\(yes\|no\|always\)\s\?$/ contains=swayConfigFocusFollowsMouseKeyword,swayConfigFocusFollowsMouseType
 
 " Popups during fullscreen mode
 syn keyword swayConfigPopupOnFullscreenKeyword popup_during_fullscreen contained
@@ -192,15 +208,15 @@ syn keyword swayConfigDrawingMarksKeyword show_marks contained
 syn match swayConfigDrawingMarks /^\s*show_marks\s\+\(yes\|no\)\s\?$/ contains=swayConfigFocusWrappingType,swayConfigDrawingMarksKeyword
 
 " Group mode/bar
-syn keyword swayConfigBlockKeyword set input mode bar colors i3bar_command status_command position exec mode hidden_state modifier id position output background statusline tray_output tray_padding separator separator_symbol workspace_buttons strip_workspace_numbers binding_mode_indicator focused_workspace active_workspace inactive_workspace urgent_workspace binding_mode contained
-syn region swayConfigBlock start=+.*s\?{$+ end=+^}$+ contains=swayConfigBlockKeyword,swayConfigString,swayConfigBind,swayConfigComment,swayConfigFont,swayConfigFocusWrappingType,swayConfigColor,swayConfigVariable transparent keepend extend
+syn keyword swayConfigBlockKeyword set bar colors i3bar_command status_command position hidden_state modifier id position background statusline tray_output tray_padding separator separator_symbol workspace_buttons strip_workspace_numbers binding_mode_indicator focused_workspace active_workspace inactive_workspace urgent_workspace binding_mode contained
+syn region swayConfigBlock start=+.*s\?{$+ end=+^}$+ contains=swayConfigBlockKeyword,swayConfigString,swayConfigAction,swayConfigBind,swayConfigComment,swayConfigFont,swayConfigFocusWrappingType,swayConfigColor,swayConfigVariable,swayConfigInputKeyword,swayConfigOutputKeyword transparent keepend extend
 
 " Line continuation
-syn region swayConfigLineCont start=/^.*\\$/ end=/^.*$/ contains=swayConfigBlockKeyword,swayConfigString,swayConfigBind,swayConfigComment,swayConfigFont,swayConfigFocusWrappingType,swayConfigColor,swayConfigVariable transparent keepend extend
+syn region swayConfigLineCont start=/^.*\\$/ end=/^[^\\]*$/ contains=swayConfigBlockKeyword,swayConfigString,swayConfigAction,swayConfigBind,swayConfigComment,swayConfigFont,swayConfigFocusWrappingType,swayConfigColor,swayConfigVariable,swayConfigExecKeyword transparent keepend extend
 
 " Includes with relative paths to config files
 syn keyword swayConfigInclude include contained
-syn match swayConfigFile /^include\s\(\~\?\/.*$\|\.\{0,2}\/.*$\)/ contains=swayConfigInclude
+syn match swayConfigFile /^\s\?include\s\+.*$/ contains=swayConfigInclude
 
 " xwayland 
 syn keyword swayConfigXwaylandKeyword xwayland contained
@@ -227,9 +243,14 @@ hi! def link swayConfigEdgeKeyword                     Type
 hi! def link swayConfigAction                          Type
 hi! def link swayConfigCommand                         Type
 hi! def link swayConfigOutputKeyword                   Type
+hi! def link swayConfigInputKeyword                    Type
 hi! def link swayConfigWindowCommandSpecial            Type
 hi! def link swayConfigFocusWrappingType               Type
 hi! def link swayConfigUnitOr                          Type
+hi! def link swayConfigClientColorKeyword              Type
+hi! def link swayConfigFloating                        Type
+hi! def link swayConfigBindGestureDirection            Constant
+hi! def link swayConfigBindGesturePinchDirection       Constant
 hi! def link swayConfigFontSize                        Constant
 hi! def link swayConfigColor                           Constant
 hi! def link swayConfigNumber                          Constant
@@ -247,8 +268,10 @@ hi! def link swayConfigAssignSpecial                   Special
 hi! def link swayConfigFontNamespace                   PreProc
 hi! def link swayConfigBindArgument                    PreProc
 hi! def link swayConfigNoStartupId                     PreProc
+hi! def link swayConfigBindGesture                     PreProc
 hi! def link swayConfigFontKeyword                     Identifier
 hi! def link swayConfigBindKeyword                     Identifier
+hi! def link swayConfigBindGestureCommand              Identifier
 hi! def link swayConfigOrientation                     Identifier
 hi! def link swayConfigGapStyle                        Identifier
 hi! def link swayConfigTitleAlign                      Identifier
@@ -257,7 +280,7 @@ hi! def link swayConfigSmartBorder                     Identifier
 hi! def link swayConfigLayout                          Identifier
 hi! def link swayConfigBorderStyle                     Identifier
 hi! def link swayConfigEdge                            Identifier
-hi! def link swayConfigFloating                        Identifier
+hi! def link swayConfigFloatingSize                    Identifier
 hi! def link swayConfigCommandKeyword                  Identifier
 hi! def link swayConfigNoFocusKeyword                  Identifier
 hi! def link swayConfigInitializeKeyword               Identifier
@@ -265,7 +288,7 @@ hi! def link swayConfigAssignKeyword                   Identifier
 hi! def link swayConfigResourceKeyword                 Identifier
 hi! def link swayConfigExecKeyword                     Identifier
 hi! def link swayConfigWorkspaceKeyword                Identifier
-hi! def link swayConfigClientColorKeyword              Identifier
+hi! def link swayConfigClientKeyword                   Identifier
 hi! def link swayConfigInterprocessKeyword             Identifier
 hi! def link swayConfigMouseWarpingKeyword             Identifier
 hi! def link swayConfigFocusFollowsMouseKeyword        Identifier
@@ -281,6 +304,7 @@ hi! def link swayConfigVariable                        Statement
 hi! def link swayConfigArbitraryCommand                Type
 hi! def link swayConfigInclude                         Identifier
 hi! def link swayConfigFile                            Constant
+hi! def link swayConfigFloatingKeyword                 Identifier
 hi! def link swayConfigFloatingModifier                Identifier
 hi! def link swayConfigFloatingMouseAction             Type
 hi! def link swayConfigFocusKeyword                    Type

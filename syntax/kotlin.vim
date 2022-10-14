@@ -60,10 +60,11 @@ syn keyword ktConstant null
 
 syn keyword ktModifier reified external inline noinline crossinline
 
-syn match ktModifier "\v<(data|value)>\ze\@=.*<class>"
+syn match ktModifier "\v<data>\ze\@=.*<(class|object)>"
+syn match ktModifier "\v<value>\ze\@=.*<class>"
 syn match ktModifier "\v<(tailrec|operator|infix)>\ze\@=.*<fun>"
-syn match ktModifier "\v<(const)>\ze\@=.*<val>"
-syn match ktModifier "\v<(lateinit)>\ze\@=.*<var>"
+syn match ktModifier "\v<const>\ze\@=.*<val>"
+syn match ktModifier "\v<lateinit>\ze\@=.*<var>"
 syn match ktModifier "\v<(internal|private|protected|public)>\ze\@=.*<(class|object|interface|typealias|fun|val|var|constructor|get|set)>"
 
 syn match ktOperator "\v\?:|::|\<\=? | \>\=?|[!=]\=\=?|<as>\??|[-*+/%]\=?|[!&|]"
