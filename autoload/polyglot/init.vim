@@ -3301,7 +3301,7 @@ au BufRead,BufNewFile *.hw,*.module,*.pkg
 	\ endif
 
 " Visual Basic (also uses *.bas) or FORM
-au BufNewFile,BufRead *.frm			call polyglot#ft#FTVB("form")
+au BufNewFile,BufRead *.frm			call polyglot#ft#FTfrm()
 
 " WEB (*.web is also used for Winbatch: Guess, based on expecting "%" comment
 " lines in a WEB file).
