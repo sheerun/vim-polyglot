@@ -69,7 +69,7 @@ syn match dockercomposeUrl /\(http\|https\|ssh\|hg\|git\)\:\/\/[a-zA-Z0-9\/\-\.]
 syn keyword dockercomposeTodo contained TODO FIXME XXX
 
 " Comments
-syn region dockercomposeComment start="#" end="\n" contains=dockercomposeTodo
+syn region dockercomposeComment start="#" end="\n" contains=dockercomposeTodo, @Spell
 
 " Highlighting
 hi link dockercomposeKeywords  Keyword
