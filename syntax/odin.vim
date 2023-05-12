@@ -71,7 +71,8 @@ syntax region odinRawString start=+`+ end=+`+
 syntax region odinChar start=+'+ skip=+\\\\\|\\'+ end=+'+
 syntax region odinString start=+"+ skip=+\\\\\|\\'+ end=+"+
 
-syntax match odinFunction "\v<\w*>(\s*::\s*proc)@="
+syntax match odinFunctionDecl "\v<\w*>(\s*::\s*proc)@="
+syntax match odinFunctionCall "\v\w+\s*(\()@="
 
 syntax match odinTagNote "@\<\w\+\>" display
 
@@ -159,7 +160,9 @@ highlight link odinUnion Structure
 highlight link odinBitField Structure
 highlight link odinBitSet Structure
 
-highlight link odinFunction Function
+" :FunctionHighlighting
+highlight link odinFunctionDecl Function
+highlight link odinFunctionCall Function
 
 highlight link odinMacro Macro
 highlight link odinIf Conditional

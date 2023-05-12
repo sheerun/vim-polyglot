@@ -165,7 +165,7 @@ def load_data()
 
         extra_ignored_extensions = filetype.fetch("ignored_extensions", []) - filetype["extensions"]
         if extra_ignored_extensions.size > 0
-          raise StandardError.new("[#{filetype["name"]}]: Unnecessary ignored extensions: #{extra_ignored_extensions.join(", ")}") 
+          raise StandardError.new("[#{filetype["name"]}]: Unnecessary ignored extensions: #{extra_ignored_extensions.join(", ")}")
         end
 
         filetype["extensions"] -= filetype.fetch("ignored_extensions", [])
@@ -174,7 +174,7 @@ def load_data()
           (linguist["filenames"] || []) |
           filetype.fetch("extra_filenames", [])
         ) - filetype.fetch("ignored_filenames", [])).uniq
-        
+
         filetype["interpreters"] = ((
           (linguist["interpreters"] || []) |
           filetype.fetch("extra_interpreters", [])
@@ -310,7 +310,7 @@ def copy_file(name, src, dest)
         contents.gsub!(/!@#%#/, "") rescue contents = contents.force_encoding('iso-8859-1').encode('utf-8')
         # ..= is feature of new vims...
         contents.gsub!(' ..= ', ' .= ')
-        # https://github.com/vim/vim/pull/7091 
+        # https://github.com/vim/vim/pull/7091
         contents.gsub!(/set(local)? fileencoding=utf-8/, '')
         contents.gsub!(/ fileencoding=utf-8/, '')
         contents.gsub!('À-ÿ', '\u00ac-\uffff')
@@ -468,7 +468,7 @@ def rule_to_code(rule)
   if (rule.keys - ["extensions"]).size > 0
     raise "Unknown rule: #{JSON.generate(rule)}"
   end
-  
+
   return ""
 end
 
@@ -481,7 +481,7 @@ def extract(packages)
   )
 
   FileUtils.rm_rf(all_dirs)
-  Dir.mkdir('extras') unless File.exists?('extras')
+  Dir.mkdir('extras') unless File.exist?('extras')
 
   for dir in Dir.glob("*", base: "autoload")
     if dir != "polyglot"
@@ -879,7 +879,7 @@ def show_warnings(all_filetypes, expected_filetypes)
 
 
   all_handled = process_list(all_filetypes, all_expected) do |f|
-    [f["filenames"], f["ignored_filenames"], f["ignored_warnings"], f["extra_filenames"]].compact.flatten + 
+    [f["filenames"], f["ignored_filenames"], f["ignored_warnings"], f["extra_filenames"]].compact.flatten +
       [f["extensions"], f["ignored_extensions"], f["extra_extensions"]].compact.flatten.map { |e| "*." + e }
   end
 
@@ -896,7 +896,7 @@ def show_warnings(all_filetypes, expected_filetypes)
 end
 
 def generate_fallback
-  filetype_content = File.read('tmp/vim/vim-v8.2.4274/runtime/filetype.vim') 
+  filetype_content = File.read('tmp/vim/vim-v8.2.4274/runtime/filetype.vim')
   filetype_content.gsub!('runtime! ftdetect/*.vim', '')
   filetype_content.gsub!(/^au BufNewFile,BufRead \*\n.+?runtime!.+?endif/m) {}
   filetype_content.gsub!(/^au StdinReadPost \* .+?runtime!.+?endif/m) {}
@@ -906,7 +906,7 @@ def generate_fallback
   File.write('extras/filetype.vim', filetype_content)
   File.write('extras/menu.vim', File.read('tmp/vim/vim-v8.2.4274/runtime/menu.vim'))
 
-  autoload_content = File.read('tmp/vim/vim-v8.2.4274/runtime/autoload/dist/ft.vim') 
+  autoload_content = File.read('tmp/vim/vim-v8.2.4274/runtime/autoload/dist/ft.vim')
   autoload_content.gsub!('dist#ft#', 'polyglot#ft#')
   File.write('autoload/polyglot/ft.vim', autoload_content)
 end
@@ -917,7 +917,7 @@ if __FILE__ == $0
     FileUtils.rm_rf("tmp")
   end
 
-  Dir.mkdir('tmp') unless File.exists?('tmp')
+  Dir.mkdir('tmp') unless File.exist?('tmp')
 
   packages, heuristics = load_data()
   packages.each do |package|

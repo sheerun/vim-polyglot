@@ -6,8 +6,8 @@ endif
 " Language: sway config file
 " Original Author: Mohamed Boughaba <mohamed dot bgb at gmail dot com>
 " Maintainer: James Eapen <jamespeapen at gmail dot com>
-" Version: 0.11.6
-" Last Change: 2020-10-07 
+" Version: 0.12.4
+" Last Change: 2023-01-28
 
 " References:
 " http://i3wm.org/docs/userguide.html#configuring
@@ -56,6 +56,9 @@ syn match swayConfigVariableAndModifier /+\w\+/ contained contains=swayConfigVar
 syn match swayConfigVariable /\$\w\+\(\(-\w\+\)\+\)\?\(\s\|+\)\?/ contains=swayConfigVariableModifier,swayConfigVariableAndModifier
 syn keyword swayConfigInitializeKeyword set contained
 syn match swayConfigInitialize /^\s*set\s\+.*$/ contains=swayConfigVariable,swayConfigInitializeKeyword,swayConfigColor,swayConfigString
+
+" yes no
+syn keyword swayConfigYesNoType yes no contained
 
 " Gaps
 syn keyword swayConfigGapStyleKeyword inner outer horizontal vertical top right bottom left current all set plus minus toggle up down contained
@@ -140,6 +143,10 @@ syn match swayConfigExec /^\s*exec\(_always\)\?\s\+.*$/ contains=swayConfigExecK
 syn keyword swayConfigInputKeyword input contained
 syn match swayConfigInput /^\s*input\s\+.*$/ contains=swayConfigInputKeyword
 
+" Seat config
+syn keyword swayConfigSeatKeyword seat contained
+syn match swayConfigSeat /^\s*seat\s\+.*$/ contains=swayConfigSeatKeyword
+
 " Automatically putting workspaces on specific screens
 syn keyword swayConfigWorkspaceKeyword workspace contained
 syn keyword swayConfigOutputKeyword output contained
@@ -167,8 +174,8 @@ syn match swayConfigInterprocess /^\s*ipc-socket\s\+.*$/ contains=swayConfigInte
 
 " Mouse warping
 syn keyword swayConfigMouseWarpingKeyword mouse_warping contained
-syn keyword swayConfigMouseWarpingType output none contained
-syn match swayConfigMouseWarping /^\s*mouse_warping\s\+\(output\|none\)\s\?$/ contains=swayConfigMouseWarpingKeyword,swayConfigMouseWarpingType
+syn keyword swayConfigMouseWarpingType output none container contained
+syn match swayConfigMouseWarping /^\s*mouse_warping\s\+\(output\|container\|none\)\s\?$/ contains=swayConfigMouseWarpingKeyword,swayConfigMouseWarpingType
 
 " Focus follows mouse
 syn keyword swayConfigFocusFollowsMouseKeyword focus_follows_mouse contained
@@ -181,22 +188,22 @@ syn keyword swayConfigPopuponFullscreenType smart ignore leave_fullscreen contai
 syn match swayConfigPopupOnFullscreen /^\s*popup_during_fullscreen\s\+\w\+\s\?$/ contains=swayConfigPopupOnFullscreenKeyword,swayConfigPopupOnFullscreenType
 
 " Focus wrapping
-syn keyword swayConfigFocusWrappingKeyword force_focus_wrapping focus_wrapping contained
-syn keyword swayConfigFocusWrappingType yes no contained
-syn match swayConfigFocusWrapping /^\s*\(force_\)\?focus_wrapping\s\+\(yes\|no\)\s\?$/ contains=swayConfigFocusWrappingType,swayConfigFocusWrappingKeyword
+syn keyword swayConfigFocusWrappingKeyword focus_wrapping contained
+syn keyword swayConfigFocusWrappingType yes no force workspace contained
+syn match swayConfigFocusWrapping /^\s*focus_wrapping\s\+\(yes\|no\|force\|workspace\)\s\?$/ contains=swayConfigFocusWrappingType,swayConfigFocusWrappingKeyword
 
 " Forcing Xinerama
 syn keyword swayConfigForceXineramaKeyword force_xinerama contained
-syn match swayConfigForceXinerama /^\s*force_xinerama\s\+\(yes\|no\)\s\?$/ contains=swayConfigFocusWrappingType,swayConfigForceXineramaKeyword
+syn match swayConfigForceXinerama /^\s*force_xinerama\s\+\(yes\|no\)\s\?$/ contains=swayConfigYesNoType,swayConfigForceXineramaKeyword
 
 " Automatic back-and-forth when switching to the current workspace
 syn keyword swayConfigAutomaticSwitchKeyword workspace_auto_back_and_forth contained
-syn match swayConfigAutomaticSwitch /^\s*workspace_auto_back_and_forth\s\+\(yes\|no\)\s\?$/ contains=swayConfigFocusWrappingType,swayConfigAutomaticSwitchKeyword
+syn match swayConfigAutomaticSwitch /^\s*workspace_auto_back_and_forth\s\+\(yes\|no\)\s\?$/ contains=swayConfigYesNoType,swayConfigAutomaticSwitchKeyword
 
 " Delay urgency hint
 syn keyword swayConfigTimeUnit ms contained
 syn keyword swayConfigDelayUrgencyKeyword force_display_urgency_hint contained
-syn match swayConfigDelayUrgency /^\s*force_display_urgency_hint\s\+\d\+\s\+ms\s\?$/ contains=swayConfigFocusWrappingType,swayConfigDelayUrgencyKeyword,swayConfigNumber,swayConfigTimeUnit
+syn match swayConfigDelayUrgency /^\s*force_display_urgency_hint\s\+\d\+\s\+ms\s\?$/ contains=swayConfigDelayUrgencyKeyword,swayConfigNumber,swayConfigTimeUnit
 
 " Focus on window activation
 syn keyword swayConfigFocusOnActivationKeyword focus_on_window_activation contained
@@ -205,11 +212,11 @@ syn match swayConfigFocusOnActivation /^\s*focus_on_window_activation\s\+\(smart
 
 " Automatic back-and-forth when switching to the current workspace
 syn keyword swayConfigDrawingMarksKeyword show_marks contained
-syn match swayConfigDrawingMarks /^\s*show_marks\s\+\(yes\|no\)\s\?$/ contains=swayConfigFocusWrappingType,swayConfigDrawingMarksKeyword
+syn match swayConfigDrawingMarks /^\s*show_marks\s\+\(yes\|no\)\s\?$/ contains=swayConfigYesNoType,swayConfigDrawingMarksKeyword
 
 " Group mode/bar
 syn keyword swayConfigBlockKeyword set bar colors i3bar_command status_command position hidden_state modifier id position background statusline tray_output tray_padding separator separator_symbol workspace_buttons strip_workspace_numbers binding_mode_indicator focused_workspace active_workspace inactive_workspace urgent_workspace binding_mode contained
-syn region swayConfigBlock start=+.*s\?{$+ end=+^}$+ contains=swayConfigBlockKeyword,swayConfigString,swayConfigAction,swayConfigBind,swayConfigComment,swayConfigFont,swayConfigFocusWrappingType,swayConfigColor,swayConfigVariable,swayConfigInputKeyword,swayConfigOutputKeyword transparent keepend extend
+syn region swayConfigBlock start=+.*s\?{$+ end=+^}$+ contains=swayConfigBlockKeyword,swayConfigString,swayConfigAction,swayConfigBind,swayConfigComment,swayConfigFont,swayConfigFocusWrappingType,swayConfigColor,swayConfigVariable,swayConfigInputKeyword,swayConfigSeatKeyword,swayConfigOutputKeyword transparent keepend extend
 
 " Line continuation
 syn region swayConfigLineCont start=/^.*\\$/ end=/^[^\\]*$/ contains=swayConfigBlockKeyword,swayConfigString,swayConfigAction,swayConfigBind,swayConfigComment,swayConfigFont,swayConfigFocusWrappingType,swayConfigColor,swayConfigVariable,swayConfigExecKeyword transparent keepend extend
@@ -244,8 +251,10 @@ hi! def link swayConfigAction                          Type
 hi! def link swayConfigCommand                         Type
 hi! def link swayConfigOutputKeyword                   Type
 hi! def link swayConfigInputKeyword                    Type
+hi! def link swayConfigSeatKeyword                     Type
 hi! def link swayConfigWindowCommandSpecial            Type
 hi! def link swayConfigFocusWrappingType               Type
+hi! def link swayConfigYesNoType                       Type
 hi! def link swayConfigUnitOr                          Type
 hi! def link swayConfigClientColorKeyword              Type
 hi! def link swayConfigFloating                        Type

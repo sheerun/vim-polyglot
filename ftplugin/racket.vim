@@ -71,6 +71,11 @@ endif
 "setl commentstring=;;%s
 setl commentstring=#\|\ %s\ \|#
 
+if (has("gui_win32") || has("gui_gtk")) && !exists("b:browsefilter")
+  let b:browsefilter = "Racket Source Files (*.rkt *.rktl)\t*.rkt;*.rktl\n" .
+        \              "All Files (*.*)\t*.*\n"
+endif
+
 " Undo our settings when the filetype changes away from Racket
 " (this should be amended if settings/mappings are added above!)
 let b:undo_ftplugin =
@@ -78,3 +83,4 @@ let b:undo_ftplugin =
       \. "| setl makeprg< commentstring<"
       \. "| nunmap <buffer> K"
       \. "| vunmap <buffer> K"
+      \. "| unlet! b:browsefilter"

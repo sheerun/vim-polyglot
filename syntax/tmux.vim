@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'tmux', 'syntax/tmux.vim')
 endif
 
 " Language: tmux(1) configuration file
-" Version: 3.3a (git-7b8ececd)
+" Version: 3.3a (git-9ef854f5)
 " URL: https://github.com/ericpruitt/tmux.vim/
 " Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
 " License: 2-Clause BSD (http://opensource.org/licenses/BSD-2-Clause)
@@ -116,7 +116,7 @@ syn keyword tmuxOptions
 \ exit-empty exit-unattached extended-keys fill-character focus-events
 \ history-file history-limit key-table lock-after-time lock-command
 \ main-pane-height main-pane-width message-command-style message-limit
-\ message-style mode-keys mode-style monitor-activity monitor-bell
+\ message-line message-style mode-keys mode-style monitor-activity monitor-bell
 \ monitor-silence mouse other-pane-height other-pane-width
 \ pane-active-border-style pane-base-index pane-border-format
 \ pane-border-indicators pane-border-lines pane-border-status pane-border-style

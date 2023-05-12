@@ -9,3 +9,4 @@ endif
 " Last Change:	2021 May 19
 
 setlocal iskeyword+=-
+setlocal commentstring=#\ %s

@@ -107,6 +107,7 @@ syntax keyword swiftAvailabilityArg renamed unavailable introduced deprecated ob
 " Keywords {{{
 syntax keyword swiftKeywords
       \ actor
+      \ any
       \ associatedtype
       \ associativity
       \ async
@@ -143,6 +144,7 @@ syntax keyword swiftKeywords
       \ isolated
       \ lazy
       \ let
+      \ macro
       \ mutating
       \ nil
       \ nonisolated
@@ -192,10 +194,17 @@ syntax match swiftMultiwordKeywords "indirect enum"
 syntax region swiftEscapedReservedWord start="`" end="`" oneline
 
 syntax keyword swiftAttributes
+      \ @_alignment
+      \ @_alwaysEmitConformanceMetadata
+      \ @_alwaysEmitIntoClient
+      \ @_backDeploy
+      \ @_cdecl
       \ @_disfavoredOverload
+      \ @_dynamicReplacement
       \ @_exported
       \ @_implementationOnly
       \ @_silgen_name
+      \ @_spi
       \ @AppStorage
       \ @assignment
       \ @autoclosure
@@ -217,6 +226,7 @@ syntax keyword swiftAttributes
       \ @IBInspectable
       \ @IBOutlet
       \ @inlinable
+      \ @inline
       \ @main
       \ @MainActor
       \ @Namespace
@@ -233,6 +243,7 @@ syntax keyword swiftAttributes
       \ @propertyWrapper
       \ @Published
       \ @resultBuilder
+      \ @retroactive
       \ @ScaledMetric
       \ @SceneStorage
       \ @Sendable
@@ -241,6 +252,7 @@ syntax keyword swiftAttributes
       \ @testable
       \ @UIApplicationDelegateAdaptor
       \ @UIApplicationMain
+      \ @unchecked
       \ @usableFromInline
 
 syntax keyword swiftConditionStatement
@@ -285,6 +297,7 @@ syntax keyword swiftPreprocessor
       \ #selector
       \ #warning
       \ #error
+      \ #externalMacro
 
 
 " Comment patterns
