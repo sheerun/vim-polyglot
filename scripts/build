@@ -815,7 +815,7 @@ end
 
 def detect_filetypes_str(contents)
   contents = contents.gsub(/^\s*au(tocmd)?!?\s*$/, '')
-  results = contents.scan(/^\s*(?:au!|au|au[^g][^ ]*) +(?:\S+)\s+(\S+)[\s\\]+([^\n]+)/)
+  results = contents.scan(/^\s*(?:au!|au|au[^g][^ ]*) +(?:\S+)\s+(\S+)[\s\\]+([^\n|]+)/)
   results = results.map do |a, b|
     [
       a,
