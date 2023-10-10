@@ -403,7 +403,7 @@ let s:filename_checks = {
     \ 'sather': ['file.sa'],
     \ 'sbt': ['file.sbt'],
     \ 'scala': ['file.scala'],
-    \ 'scheme': ['file.scm', 'file.ss', 'file.rkt'],
+    \ 'scheme': ['file.scm', 'file.ss'],
     \ 'scilab': ['file.sci', 'file.sce'],
     \ 'screen': ['.screenrc', 'screenrc'],
     \ 'scss': ['file.scss'],
