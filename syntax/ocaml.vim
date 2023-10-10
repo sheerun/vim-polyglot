@@ -81,7 +81,7 @@ syn match    ocamlKwErr  "\<\(mutable\|nonrec\|of\|private\)\>"
 syn cluster  ocamlAllErrs contains=@ocamlAENoParen,ocamlParenErr
 syn cluster  ocamlAENoParen contains=ocamlBraceErr,ocamlBrackErr,ocamlCountErr,ocamlDoErr,ocamlDoneErr,ocamlEndErr,ocamlThenErr,ocamlKwErr
 
-syn cluster  ocamlContained contains=ocamlTodo,ocamlPreDef,ocamlModParam,ocamlModParam1,ocamlMPRestr,ocamlMPRestr1,ocamlMPRestr2,ocamlMPRestr3,ocamlModRHS,ocamlFuncWith,ocamlFuncStruct,ocamlModTypeRestr,ocamlModTRWith,ocamlWith,ocamlWithRest,ocamlModType,ocamlFullMod,ocamlVal
+syn cluster  ocamlContained contains=ocamlTodo,ocamlPreDef,ocamlModParam,ocamlModParam1,ocamlModTypePre,ocamlModRHS,ocamlFuncWith,ocamlModTypeRestr,ocamlModTRWith,ocamlWith,ocamlWithRest,ocamlFullMod,ocamlVal
 
 
 " Enclosing delimiters
@@ -125,10 +125,6 @@ syn region ocamlPpx matchgroup=ocamlPpxEncl start="\[@\{1,3\}" contains=TOP end=
 
 "" Modules
 
-" "sig"
-syn region   ocamlSig matchgroup=ocamlSigEncl start="\<sig\>" matchgroup=ocamlSigEncl end="\<end\>" contains=ALLBUT,@ocamlContained,ocamlEndErr,ocamlModule
-syn region   ocamlModSpec matchgroup=ocamlKeyword start="\<module\>" matchgroup=ocamlModule end="\<\u\(\w\|'\)*\>" contained contains=@ocamlAllErrs,ocamlComment skipwhite skipempty nextgroup=ocamlModTRWith,ocamlMPRestr
-
 " "open"
 syn match   ocamlKeyword "\<open\>" skipwhite skipempty nextgroup=ocamlFullMod
 
@@ -136,35 +132,39 @@ syn match   ocamlKeyword "\<open\>" skipwhite skipempty nextgroup=ocamlFullMod
 syn match    ocamlKeyword "\<include\>" skipwhite skipempty nextgroup=ocamlModParam,ocamlFullMod
 
 " "module" - somewhat complicated stuff ;-)
+" 2022-10: please document it?
 syn region   ocamlModule matchgroup=ocamlKeyword start="\<module\>" matchgroup=ocamlModule end="\<\u\(\w\|'\)*\>" contains=@ocamlAllErrs,ocamlComment skipwhite skipempty nextgroup=ocamlPreDef
-syn region   ocamlPreDef start="."me=e-1 matchgroup=ocamlKeyword end="\l\|=\|)"me=e-1 contained contains=@ocamlAllErrs,ocamlComment,ocamlModParam,ocamlGenMod,ocamlModTypeRestr,ocamlModTRWith nextgroup=ocamlModPreRHS
+syn region   ocamlPreDef start="."me=e-1 end="[a-z:=)]\@=" contained contains=@ocamlAllErrs,ocamlComment,ocamlModParam,ocamlGenMod,ocamlModTypeRestr nextgroup=ocamlModTypePre,ocamlModPreRHS
 syn region   ocamlModParam start="(\*\@!" end=")" contained contains=ocamlGenMod,ocamlModParam,ocamlModParam1,ocamlSig,ocamlVal
 syn match    ocamlModParam1 "\<\u\(\w\|'\)*\>" contained skipwhite skipempty
 syn match    ocamlGenMod "()" contained skipwhite skipempty
 
-syn region   ocamlMPRestr start=":" end="."me=e-1 contained contains=@ocamlComment skipwhite skipempty nextgroup=ocamlMPRestr1,ocamlMPRestr2,ocamlMPRestr3
-syn region   ocamlMPRestr1 matchgroup=ocamlSigEncl start="\ssig\s\=" matchgroup=ocamlSigEncl end="\<end\>" contained contains=ALLBUT,@ocamlContained,ocamlEndErr,ocamlModule
-syn region   ocamlMPRestr2 start="\sfunctor\(\s\|(\)\="me=e-1 matchgroup=ocamlKeyword end="->" contained contains=@ocamlAllErrs,ocamlComment,ocamlModParam,ocamlGenMod skipwhite skipempty nextgroup=ocamlFuncWith,ocamlMPRestr2
-syn match    ocamlMPRestr3 "\w\(\w\|'\)*\( *\. *\w\(\w\|'\)*\)*" contained
+syn match    ocamlModTypePre ":" contained skipwhite skipempty nextgroup=ocamlModTRWith,ocamlSig,ocamlFunctor,ocamlModTypeRestr,ocamlModTypeOf
+syn match    ocamlModTypeRestr "\<\w\(\w\|'\)*\( *\. *\w\(\w\|'\)*\)*\>" contained
+
 syn match    ocamlModPreRHS "=" contained skipwhite skipempty nextgroup=ocamlModParam,ocamlFullMod
 syn keyword  ocamlKeyword val
-syn region   ocamlVal matchgroup=ocamlKeyword start="\<val\>" matchgroup=ocamlLCIdentifier end="\<\l\(\w\|'\)*\>" contains=@ocamlAllErrs,ocamlComment,ocamlFullMod skipwhite skipempty nextgroup=ocamlMPRestr
+syn region   ocamlVal matchgroup=ocamlKeyword start="\<val\>" matchgroup=ocamlLCIdentifier end="\<\l\(\w\|'\)*\>" contains=@ocamlAllErrs,ocamlComment,ocamlFullMod skipwhite skipempty nextgroup=ocamlModTypePre
 syn region   ocamlModRHS start="." end=". *\w\|([^*]"me=e-2 contained contains=ocamlComment skipwhite skipempty nextgroup=ocamlModParam,ocamlFullMod
 syn match    ocamlFullMod "\<\u\(\w\|'\)*\( *\. *\u\(\w\|'\)*\)*" contained skipwhite skipempty nextgroup=ocamlFuncWith
 
-syn region   ocamlFuncWith start="([*)]\@!" end=")" contained contains=ocamlComment,ocamlWith,ocamlFuncStruct skipwhite skipempty nextgroup=ocamlFuncWith
-syn region   ocamlFuncStruct matchgroup=ocamlStructEncl start="[^a-zA-Z]struct\>"hs=s+1 matchgroup=ocamlStructEncl end="\<end\>" contains=ALLBUT,@ocamlContained,ocamlEndErr
+syn region   ocamlFuncWith start="([*)]\@!" end=")" contained contains=ocamlComment,ocamlWith,ocamlStruct skipwhite skipempty nextgroup=ocamlFuncWith
 
-syn match    ocamlModTypeRestr "\<\w\(\w\|'\)*\( *\. *\w\(\w\|'\)*\)*\>" contained
-syn region   ocamlModTRWith start=":\s*("hs=s+1 end=")" contained contains=@ocamlAENoParen,ocamlWith
+syn region   ocamlModTRWith start="(\*\@!" end=")" contained contains=@ocamlAENoParen,ocamlWith
 syn match    ocamlWith "\<\(\u\(\w\|'\)* *\. *\)*\w\(\w\|'\)*\>" contained skipwhite skipempty nextgroup=ocamlWithRest
 syn region   ocamlWithRest start="[^)]" end=")"me=e-1 contained contains=ALLBUT,@ocamlContained
 
 " "struct"
 syn region   ocamlStruct matchgroup=ocamlStructEncl start="\<\(module\s\+\)\=struct\>" matchgroup=ocamlStructEncl end="\<end\>" contains=ALLBUT,@ocamlContained,ocamlEndErr
 
+" "sig"
+syn region   ocamlSig matchgroup=ocamlSigEncl start="\<sig\>" matchgroup=ocamlSigEncl end="\<end\>" contains=ALLBUT,@ocamlContained,ocamlEndErr
+
+" "functor"
+syn region   ocamlFunctor start="\<functor\>" matchgroup=ocamlKeyword end="->" contains=@ocamlAllErrs,ocamlComment,ocamlModParam,ocamlGenMod skipwhite skipempty nextgroup=ocamlStruct,ocamlSig,ocamlFuncWith,ocamlFunctor
+
 " "module type"
-syn region   ocamlKeyword start="\<module\s\+type\(\s\+of\)\=\>" matchgroup=ocamlModule end="\<\w\(\w\|'\)*\>" contains=ocamlComment skipwhite skipempty nextgroup=ocamlMTDef
+syn region   ocamlModTypeOf start="\<module\s\+type\(\s\+of\)\=\>" matchgroup=ocamlModule end="\<\w\(\w\|'\)*\>" contains=ocamlComment skipwhite skipempty nextgroup=ocamlMTDef
 syn match    ocamlMTDef "=\s*\w\(\w\|'\)*\>"hs=s+1,me=s+1 skipwhite skipempty nextgroup=ocamlFullMod
 
 " Quoted strings
@@ -588,8 +588,6 @@ hi def link ocamlObject	   Include
 hi def link ocamlModule	   Include
 hi def link ocamlModParam1    Include
 hi def link ocamlGenMod       Include
-hi def link ocamlModType	   Include
-hi def link ocamlMPRestr3	   Include
 hi def link ocamlFullMod	   Include
 hi def link ocamlFuncWith	   Include
 hi def link ocamlModParam     Include
@@ -605,8 +603,10 @@ hi def link ocamlConstructor  Constant
 hi def link ocamlEmptyConstructor  ocamlConstructor
 
 hi def link ocamlVal          Keyword
+hi def link ocamlModTypePre   Keyword
 hi def link ocamlModPreRHS    Keyword
-hi def link ocamlMPRestr2	   Keyword
+hi def link ocamlFunctor	   Keyword
+hi def link ocamlModTypeOf  Keyword
 hi def link ocamlKeyword	   Keyword
 hi def link ocamlMethod	   Include
 hi def link ocamlArrow	   Keyword

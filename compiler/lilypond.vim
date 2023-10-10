@@ -7,7 +7,7 @@ endif
 " Maintainer:   Heikki Junes <hjunes@cc.hut.fi>
 " License:      This file is part of LilyPond, the GNU music typesetter.
 "
-"               Copyright (C) 2004, 2007 Heikki Junes <hjunes@cc.hut.fi>
+"               Copyright (C) 2004--2022 Heikki Junes <hjunes@cc.hut.fi>
 "
 "               LilyPond is free software: you can redistribute it and/or modify
 "               it under the terms of the GNU General Public License as published by

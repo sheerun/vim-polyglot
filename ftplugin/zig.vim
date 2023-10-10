@@ -28,7 +28,7 @@ setlocal formatoptions-=t formatoptions+=croql
 setlocal suffixesadd=.zig,.zir
 
 if has('comments')
-    setlocal comments=:///,://!,://,:\\\\
+    setlocal comments=:///,://!,://
     setlocal commentstring=//\ %s
 endif
 
