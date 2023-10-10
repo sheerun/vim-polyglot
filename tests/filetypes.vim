@@ -9,7 +9,7 @@ func! TestFiletype(filetype)
     exec ":bw!"
   catch
     echo 'Failed to load ' . a:filetype  . ' filetype...'
-    throw v:exception
+    echo v:exception
     cq!
   endtry
 endfunc
