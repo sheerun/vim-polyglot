@@ -496,7 +496,7 @@ def extract(packages)
   output = []
   packages.map do |package|
     copied_something = false
-    if !package["remote"]
+    if package["native"] or !package["remote"]
       next
     end
     repo, branch, path, dir = parse_remote(package["remote"])
