@@ -15,6 +15,7 @@ def run_vimscript(src)
     set shortmess+=F
     set noswapfile
     set nocp
+    set nofic
     set nomore
     func! Log(msg)
       if $DEV != '1'

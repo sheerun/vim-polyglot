@@ -941,8 +941,6 @@ filetypes:
 ---
 name: ledger
 remote: ledger/vim-ledger
-ignored_dirs:
-- ftplugin
 filetypes:
 - name: ledger
   extensions:
@@ -1029,9 +1027,6 @@ ignored_dirs:
 filetypes:
 - name: markdown
   linguist: Markdown
-  ignored_extensions:
-  # Handled by mdx extension
-  - mdx
   ignored_warnings:
   - '*.{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx}'
 ---
@@ -1178,6 +1173,7 @@ filetypes:
   - mason
   - mhtml
   - comp
+  - html
 - name: tt2
   extensions:
   - tt2
@@ -1237,7 +1233,7 @@ filetypes:
   - pu
 ---
 name: pony
-remote: jakwings/vim-pony
+remote: wsdjeg/vim-pony
 filetypes:
 - name: pony
   linguist: Pony
@@ -5498,7 +5494,7 @@ filetypes:
     description: Sway Configuration
 ---
 name: just
-remote: NoahTheDuke/vim-just
+remote: NoahTheDuke/vim-just@main
 filetypes:
 - name: just
   patterns:
@@ -5514,6 +5510,8 @@ filetypes:
   patterns:
   - pattern: '*/nftables.conf'
     description: nftables configuration
+  interpreters:
+  - nft
 ---
 name: openscad
 remote: sirtaj/vim-openscad

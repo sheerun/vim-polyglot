@@ -125,21 +125,13 @@ if !exists("g:did_ocaml_switch")
   nnoremap <Plug>OCamlSwitchEdit :<C-u>call OCaml_switch(0)<CR>
   nnoremap <Plug>OCamlSwitchNewWin :<C-u>call OCaml_switch(1)<CR>
   fun OCaml_switch(newwin)
+    let open_command = a:newwin == 1 ? "new" : "arge"
     if (match(bufname(""), "\\.mli$") >= 0)
       let fname = s:Fnameescape(substitute(bufname(""), "\\.mli$", ".ml", ""))
-      if (a:newwin == 1)
-        exec "new " . fname
-      else
-        exec "arge " . fname
-      endif
     elseif (match(bufname(""), "\\.ml$") >= 0)
       let fname = s:Fnameescape(bufname("")) . "i"
-      if (a:newwin == 1)
-        exec "new " . fname
-      else
-        exec "arge " . fname
-      endif
     endif
+    exec open_command " " . fname
   endfun
 endif
 
@@ -652,6 +644,11 @@ endfunction
 " Maps
   nnoremap <silent> <Plug>OCamlPrintType :<C-U>call Ocaml_print_type("normal")<CR>
   xnoremap <silent> <Plug>OCamlPrintType :<C-U>call Ocaml_print_type("visual")<CR>`<
+
+" Make sure the environment is consistent
+if !exists('g:opam_current_compiler') && exists('g:opam_init_env') && g:opam_init_env != 0
+  call opam#eval_env()
+endif
 
 let &cpoptions=s:cposet
 unlet s:cposet
