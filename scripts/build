@@ -481,7 +481,7 @@ def extract(packages)
   )
 
   FileUtils.rm_rf(all_dirs)
-  Dir.mkdir('extras') unless File.exists?('extras')
+  Dir.mkdir('extras') unless File.exist?('extras')
 
   for dir in Dir.glob("*", base: "autoload")
     if dir != "polyglot"
@@ -917,7 +917,7 @@ if __FILE__ == $0
     FileUtils.rm_rf("tmp")
   end
 
-  Dir.mkdir('tmp') unless File.exists?('tmp')
+  Dir.mkdir('tmp') unless File.exist?('tmp')
 
   packages, heuristics = load_data()
   packages.each do |package|
