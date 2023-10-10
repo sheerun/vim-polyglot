@@ -607,6 +607,22 @@ def generate_ftdetect(packages, heuristics)
   filetype_names = Set.new(all_filetypes.map { |f| f["name"] })
 
   native_filetypes = detect_filetypes("#{VIM_PATH}/runtime/filetype.vim")
+  missing_native_filetypes = native_filetypes.reject { |f| filetype_names.include? f["name"] }
+
+  unless missing_native_filetypes.empty?
+    if ENV["DEV"]
+      $stderr.write "Native Vim filetypes missing from packages.yaml: #{missing_native_filetypes.map {|f| f["name"]}.join ', ' }\n"
+    end
+
+    output << "\" Filename and path matchers for natively-supported filetypes not in packages.yaml\n"
+    for filetype in missing_native_filetypes
+      next if filetype["filenames"].empty?
+      output << "au BufNewFile,BufRead #{filetype["filenames"].join(",")} setf #{filetype["name"]}\n"
+    end
+    output << "\n"
+  end
+
+
   expected_filetypes = detect_filetypes('tmp/**/ftdetect/*.vim') + native_filetypes
 
   expected_filetypes = expected_filetypes.select { |e| filetype_names.include?(e["name"]) }
@@ -687,6 +703,14 @@ def generate_ftdetect(packages, heuristics)
       output << "\nendif\n\n"
     end
 
+  end
+
+  unless missing_native_filetypes.empty?
+    output << "\" Extension matchers for natively-supported filetypes not in packages.yaml\n"
+    for filetype in missing_native_filetypes
+      next if filetype["extensions"].empty?
+      output << "au BufNewFile,BufRead #{filetype["extensions"].map {|e| "*.#{e}"}.join ","} setf #{filetype["name"]}\n"
+    end
   end
 
   show_warnings(all_filetypes, expected_filetypes)
