@@ -11,6 +11,10 @@ require 'pathname'
 
 BASE_DIR = Pathname.new(File.expand_path('../..', __FILE__))
 
+# Vim version to use (will pull native filetype support from its included runtime directory).
+VIM_VERSION = 'v8.2.4274'
+VIM_PATH = "tmp/vim/vim-#{VIM_VERSION}"
+
 Dir.chdir(File.dirname(__dir__))
 
 BASE_URL = 'https://raw.githubusercontent.com/github/linguist/master'
@@ -602,7 +606,7 @@ def generate_ftdetect(packages, heuristics)
   all_filetypes = packages.flat_map { |f| f["filetypes"] || [] }
   filetype_names = Set.new(all_filetypes.map { |f| f["name"] })
 
-  native_filetypes = detect_filetypes('tmp/vim/vim/runtime/filetype.vim')
+  native_filetypes = detect_filetypes("#{VIM_PATH}/runtime/filetype.vim")
   expected_filetypes = detect_filetypes('tmp/**/ftdetect/*.vim') + native_filetypes
 
   expected_filetypes = expected_filetypes.select { |e| filetype_names.include?(e["name"]) }
@@ -896,7 +900,7 @@ def show_warnings(all_filetypes, expected_filetypes)
 end
 
 def generate_fallback
-  filetype_content = File.read('tmp/vim/vim-v8.2.4274/runtime/filetype.vim') 
+  filetype_content = File.read("#{VIM_PATH}/runtime/filetype.vim") 
   filetype_content.gsub!('runtime! ftdetect/*.vim', '')
   filetype_content.gsub!(/^au BufNewFile,BufRead \*\n.+?runtime!.+?endif/m) {}
   filetype_content.gsub!(/^au StdinReadPost \* .+?runtime!.+?endif/m) {}
@@ -904,9 +908,9 @@ def generate_fallback
   filetype_content.gsub!("dist#ft#", "polyglot#ft#")
   filetype_content.gsub!("TestFiletypeFuncs", "TestPolyglotFiletypeFuncs")
   File.write('extras/filetype.vim', filetype_content)
-  File.write('extras/menu.vim', File.read('tmp/vim/vim-v8.2.4274/runtime/menu.vim'))
+  File.write('extras/menu.vim', File.read("#{VIM_PATH}/runtime/menu.vim"))
 
-  autoload_content = File.read('tmp/vim/vim-v8.2.4274/runtime/autoload/dist/ft.vim') 
+  autoload_content = File.read("#{VIM_PATH}/runtime/autoload/dist/ft.vim") 
   autoload_content.gsub!('dist#ft#', 'polyglot#ft#')
   File.write('autoload/polyglot/ft.vim', autoload_content)
 end
@@ -922,7 +926,7 @@ if __FILE__ == $0
   packages, heuristics = load_data()
   packages.each do |package|
     if package["native"] == true
-      package["remote"] = "vim/vim@v8.2.4274:runtime"
+      package["remote"] = "vim/vim@#{VIM_VERSION}:runtime"
     end
   end
   download(packages)
