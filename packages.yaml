@@ -941,8 +941,6 @@ filetypes:
 ---
 name: ledger
 remote: ledger/vim-ledger
-ignored_dirs:
-- ftplugin
 filetypes:
 - name: ledger
   extensions:
@@ -1175,6 +1173,7 @@ filetypes:
   - mason
   - mhtml
   - comp
+  - html
 - name: tt2
   extensions:
   - tt2
@@ -5511,6 +5510,8 @@ filetypes:
   patterns:
   - pattern: '*/nftables.conf'
     description: nftables configuration
+  interpreters:
+  - nft
 ---
 name: openscad
 remote: sirtaj/vim-openscad
