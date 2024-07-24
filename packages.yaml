@@ -1250,6 +1250,12 @@ filetypes:
   extensions:
   - ps1xml
 ---
+name: prisma
+remote: prisma/vim-prisma
+filetypes:
+- name: prisma
+  linguist: Prisma
+---
 name: protobuf
 remote: uarun/vim-protobuf
 filetypes:
