@@ -4,13 +4,10 @@ endif
 
 syntax keyword typescriptEncodingGlobal containedin=typescriptIdentifierName TextEncoder
 syntax keyword typescriptEncodingGlobal containedin=typescriptIdentifierName TextDecoder
-if exists("did_typescript_hilink") | HiLink typescriptEncodingGlobal Structure
-endif
+hi def link typescriptEncodingGlobal Structure
 syntax keyword typescriptEncodingProp contained encoding fatal ignoreBOM
 syntax cluster props add=typescriptEncodingProp
-if exists("did_typescript_hilink") | HiLink typescriptEncodingProp Keyword
-endif
+hi def link typescriptEncodingProp Keyword
 syntax keyword typescriptEncodingMethod contained encode decode nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptEncodingMethod
-if exists("did_typescript_hilink") | HiLink typescriptEncodingMethod Keyword
-endif
+hi def link typescriptEncodingMethod Keyword

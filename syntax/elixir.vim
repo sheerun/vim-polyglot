@@ -92,15 +92,15 @@ syn match elixirString             "\(\w\)\@<!?\%(\\\(x\d{1,2}\|\h{1,2}\h\@!\>\|
 syn region elixirBlock              matchgroup=elixirBlockDefinition start="\<do\>:\@!" end="\<end\>" contains=ALLBUT,@elixirNotTop fold
 syn region elixirAnonymousFunction  matchgroup=elixirBlockDefinition start="\<fn\>"     end="\<end\>" contains=ALLBUT,@elixirNotTop fold
 
-syn region elixirArguments start="(" end=")" contained contains=elixirOperator,elixirAtom,elixirPseudoVariable,elixirAlias,elixirBoolean,elixirVariable,elixirUnusedVariable,elixirNumber,elixirDocString,elixirAtomInterpolated,elixirRegex,elixirString,elixirStringDelimiter,elixirRegexDelimiter,elixirInterpolationDelimiter,elixirSigil,elixirAnonymousFunction,elixirComment,elixirCharList,elixirCharListDelimiter
+syn region elixirArguments start="(" end=")" contained contains=elixirOperator,elixirAtom,elixirMap,elixirStruct,elixirTuple,elixirPseudoVariable,elixirAlias,elixirBoolean,elixirVariable,elixirUnusedVariable,elixirNumber,elixirDocString,elixirAtomInterpolated,elixirRegex,elixirString,elixirStringDelimiter,elixirRegexDelimiter,elixirInterpolationDelimiter,elixirSigil,elixirAnonymousFunction,elixirComment,elixirCharList,elixirCharListDelimiter
 
 syn match elixirDelimEscape "\\[(<{\[)>}\]/\"'|]" transparent display contained contains=NONE
 
-syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u\z(/\|\"\|'\||\)" end="\z1" skip="\\\\\|\\\z1" contains=elixirDelimEscape fold
-syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u{"                end="}"   skip="\\\\\|\\}"   contains=elixirDelimEscape fold
-syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u<"                end=">"   skip="\\\\\|\\>"   contains=elixirDelimEscape fold
-syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u\["               end="\]"  skip="\\\\\|\\\]"  contains=elixirDelimEscape fold
-syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u("                end=")"   skip="\\\\\|\\)"   contains=elixirDelimEscape fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u\+\z(/\|\"\|'\||\)" end="\z1" skip="\\\\\|\\\z1" contains=elixirDelimEscape fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u\+{"                end="}"   skip="\\\\\|\\}"   contains=elixirDelimEscape fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u\+<"                end=">"   skip="\\\\\|\\>"   contains=elixirDelimEscape fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u\+\["               end="\]"  skip="\\\\\|\\\]"  contains=elixirDelimEscape fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\u\+("                end=")"   skip="\\\\\|\\)"   contains=elixirDelimEscape fold
 
 syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\l\z(/\|\"\|'\||\)" end="\z1" skip="\\\\\|\\\z1"                                                              fold
 syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\l{"                end="}"   skip="\\\\\|\\}"   contains=@elixirStringContained,elixirRegexEscapePunctuation fold
@@ -110,18 +110,46 @@ syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\l("            
 syn region elixirSigil matchgroup=elixirSigilDelimiter start="\~\l\/"               end="\/"  skip="\\\\\|\\\/"  contains=@elixirStringContained,elixirRegexEscapePunctuation fold
 
 " Sigils surrounded with heredoc
-syn region elixirSigil matchgroup=elixirSigilDelimiter start=+\~\a\z("""\)+ end=+^\s*\z1+ skip=+\\"+ fold
-syn region elixirSigil matchgroup=elixirSigilDelimiter start=+\~\a\z('''\)+ end=+^\s*\z1+ skip=+\\'+ fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start=+\~\u\+\z("""\)+ end=+^\s*\z1+ skip=+\\"+ fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start=+\~\u\z('''\)+ end=+^\s*\z1+ skip=+\\'+ fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start=+\~\l\z("""\)+ end=+^\s*\z1+ skip=+\\"+ fold
+syn region elixirSigil matchgroup=elixirSigilDelimiter start=+\~\l\z('''\)+ end=+^\s*\z1+ skip=+\\'+ fold
 
-
-" LiveView Sigils surrounded with ~L"""
+" LiveView-specific sigils for embedded templates
 syntax include @HTML syntax/html.vim
 unlet b:current_syntax
-syntax region elixirLiveViewSigil matchgroup=elixirSigilDelimiter keepend start=+\~L\z("""\)+ end=+^\s*\z1+ skip=+\\"+ contains=@HTML fold
-syntax region elixirSurfaceSigil matchgroup=elixirSigilDelimiter keepend start=+\~H\z("""\)+ end=+^\s*\z1+ skip=+\\"+ contains=@HTML fold
+syntax region elixirHeexSigil matchgroup=elixirSigilDelimiter keepend start=+\~H\z("""\)+ end=+^\s*\z1+ skip=+\\"+ contains=@HTML fold
 syntax region elixirSurfaceSigil matchgroup=elixirSigilDelimiter keepend start=+\~F\z("""\)+ end=+^\s*\z1+ skip=+\\"+ contains=@HTML fold
+syntax region elixirLiveViewSigil matchgroup=elixirSigilDelimiter keepend start=+\~L\z("""\)+ end=+^\s*\z1+ skip=+\\"+ contains=@HTML fold
 syntax region elixirPhoenixESigil matchgroup=elixirSigilDelimiter keepend start=+\~E\z("""\)+ end=+^\s*\z1+ skip=+\\"+ contains=@HTML fold
 syntax region elixirPhoenixeSigil matchgroup=elixirSigilDelimiter keepend start=+\~e\z("""\)+ end=+^\s*\z1+ skip=+\\"+ contains=@HTML fold
+
+syn cluster elixirTemplateSigils contains=elixirLiveViewSigil,elixirHeexSigil,elixirSurfaceSigil,elixirPhoenixESigil,elixirPhoenixeSigil
+
+syn region heexComponent matchgroup=eelixirDelimiter start="<\.[a-z_]\+"  end="%\@<!>" contains=ALLBUT,@elixirNotTop keepend
+syn region eelixirExpression matchgroup=eelixirDelimiter start="<%"  end="%\@<!%>" contains=ALLBUT,@elixirNotTop containedin=@elixirTemplateSigils keepend
+syn region eelixirExpression matchgroup=eelixirDelimiter start="<%=" end="%\@<!%>" contains=ALLBUT,@elixirNotTop containedin=@elixirTemplateSigils keepend
+syn region eelixirQuote matchgroup=eelixirDelimiter start="<%%" end="%\@<!%>" contains=ALLBUT,@elixirNotTop containedin=@elixirTemplateSigils keepend
+syn region heexComment matchgroup=eelixirDelimiter start="<%!--" end="%\@<!--%>" contains=elixirTodo,eelixirComment,@Spell containedin=@elixirTemplateSigils keepend
+syn region heexExpression matchgroup=heexDelimiter start="=\zs{" end="}" contains=ALLBUT,@elixirNotTop containedin=htmlValue keepend
+syn region heexExpression matchgroup=heexDelimiter start="=\zs{" end="}" skip="#{[^}]*}" contains=ALLBUT,@elixirNotTop containedin=htmlValue keepend
+" missing `keepend` on next line is intentional
+syn region heexExpression matchgroup=heexDelimiter start="=\zs{" end="}" skip="%{[^}]*}" contains=ALLBUT,@elixirNotTop containedin=htmlValue
+
+syn match phxArg "\<phx[-.0-9_a-z]*-[-.0-9_a-z]*\>" containedin=htmlTag
+syn match heexArg "\<[0-9_a-z]*\>\ze=" containedin=htmlTag
+syn match heexSpecialAttribute ":\%(if\|for\|let\)\ze=" containedin=htmlTag
+syn match heexComponentName "<\zs\.[A-Z_a-z][A-Z_a-z0-9]\+" containedin=htmlTag
+syn match heexEndComponent "<\zs\/\.[A-Z_a-z][A-Z_a-z0-9]\+" containedin=htmlEndTag
+
+hi def link eelixirDelimiter PreProc
+hi def link heexDelimiter PreProc
+hi def link heexComment Comment
+hi def link phxArg htmlArg
+hi def link heexArg htmlArg
+hi def link heexSpecialAttribute htmlArg
+hi def link heexComponentName htmlTagName
+hi def link heexEndComponent htmlTagName
 
 " Documentation
 if exists('g:elixir_use_markdown_for_docs') && g:elixir_use_markdown_for_docs

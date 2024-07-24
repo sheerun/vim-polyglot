@@ -69,9 +69,11 @@ syntax keyword odinDefer defer
 
 syntax region odinRawString start=+`+ end=+`+
 syntax region odinChar start=+'+ skip=+\\\\\|\\'+ end=+'+
-syntax region odinString start=+"+ skip=+\\\\\|\\'+ end=+"+
+syntax region odinString start=+"+ skip=+\\\\\|\\'+ end=+"+ contains=odinEscape
+syntax match odinEscape display contained /\\\([nrt\\'"]\|x\x\{2}\)/
 
-syntax match odinFunction "\v<\w*>(\s*::\s*proc)@="
+syntax match odinFunctionDecl "\v<\w*>(\s*::\s*proc)@="
+syntax match odinFunctionCall "\v\w+\s*(\()@="
 
 syntax match odinTagNote "@\<\w\+\>" display
 
@@ -133,8 +135,8 @@ highlight link odinExport Keyword
 highlight link odinForeign Keyword
 highlight link odinNoinit Keyword
 highlight link odinDo Keyword
+highlight link odinDefer Keyword
 
-highlight link odinDefer Operator
 highlight link odinDynamic Operator
 highlight link odinMap Operator
 highlight link odinRange Operator
@@ -159,7 +161,9 @@ highlight link odinUnion Structure
 highlight link odinBitField Structure
 highlight link odinBitSet Structure
 
-highlight link odinFunction Function
+" :FunctionHighlighting
+highlight link odinFunctionDecl Function
+highlight link odinFunctionCall Function
 
 highlight link odinMacro Macro
 highlight link odinIf Conditional

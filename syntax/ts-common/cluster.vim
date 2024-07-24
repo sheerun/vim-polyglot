@@ -1,10 +1,10 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/basic/cluster.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/ts-common/cluster.vim')
   finish
 endif
 
 "Block VariableStatement EmptyStatement ExpressionStatement IfStatement IterationStatement ContinueStatement BreakStatement ReturnStatement WithStatement LabelledStatement SwitchStatement ThrowStatement TryStatement DebuggerStatement
 syntax cluster typescriptStatement
-  \ contains=typescriptBlock,typescriptVariable,
+  \ contains=typescriptBlock,typescriptVariable,typescriptUsing,
   \ @typescriptTopExpression,typescriptAssign,
   \ typescriptConditional,typescriptRepeat,typescriptBranch,
   \ typescriptLabel,typescriptStatementKeyword,

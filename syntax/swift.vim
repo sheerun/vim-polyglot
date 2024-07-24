@@ -107,23 +107,29 @@ syntax keyword swiftAvailabilityArg renamed unavailable introduced deprecated ob
 " Keywords {{{
 syntax keyword swiftKeywords
       \ actor
+      \ any
       \ associatedtype
       \ associativity
       \ async
       \ atexit
       \ await
+      \ borrowing
       \ break
       \ case
       \ catch
       \ class
+      \ consume
+      \ consuming
       \ continue
       \ convenience
       \ default
       \ defer
       \ deinit
       \ didSet
+      \ discard
       \ do
       \ dynamic
+      \ each
       \ else
       \ extension
       \ fallthrough
@@ -143,6 +149,7 @@ syntax keyword swiftKeywords
       \ isolated
       \ lazy
       \ let
+      \ macro
       \ mutating
       \ nil
       \ nonisolated
@@ -151,6 +158,7 @@ syntax keyword swiftKeywords
       \ operator
       \ optional
       \ override
+      \ package
       \ postfix
       \ precedence
       \ precedencegroup
@@ -192,12 +200,20 @@ syntax match swiftMultiwordKeywords "indirect enum"
 syntax region swiftEscapedReservedWord start="`" end="`" oneline
 
 syntax keyword swiftAttributes
+      \ @_alignment
+      \ @_alwaysEmitConformanceMetadata
+      \ @_alwaysEmitIntoClient
+      \ @_backDeploy
+      \ @_cdecl
       \ @_disfavoredOverload
+      \ @_dynamicReplacement
       \ @_exported
       \ @_implementationOnly
       \ @_silgen_name
+      \ @_spi
       \ @AppStorage
       \ @assignment
+      \ @attached
       \ @autoclosure
       \ @available
       \ @Binding
@@ -210,6 +226,7 @@ syntax keyword swiftAttributes
       \ @FetchRequest
       \ @FocusedBinding
       \ @FocusedValue
+      \ @freestanding
       \ @frozen
       \ @GestureState
       \ @IBAction
@@ -217,6 +234,7 @@ syntax keyword swiftAttributes
       \ @IBInspectable
       \ @IBOutlet
       \ @inlinable
+      \ @inline
       \ @main
       \ @MainActor
       \ @Namespace
@@ -228,11 +246,13 @@ syntax keyword swiftAttributes
       \ @NSCopying
       \ @NSManaged
       \ @objc
+      \ @objcMembers
       \ @ObservedObject
       \ @preconcurrency
       \ @propertyWrapper
       \ @Published
       \ @resultBuilder
+      \ @retroactive
       \ @ScaledMetric
       \ @SceneStorage
       \ @Sendable
@@ -241,7 +261,9 @@ syntax keyword swiftAttributes
       \ @testable
       \ @UIApplicationDelegateAdaptor
       \ @UIApplicationMain
+      \ @unchecked
       \ @usableFromInline
+      \ @ViewBuilder
 
 syntax keyword swiftConditionStatement
       \ #available
@@ -285,6 +307,7 @@ syntax keyword swiftPreprocessor
       \ #selector
       \ #warning
       \ #error
+      \ #externalMacro
 
 
 " Comment patterns

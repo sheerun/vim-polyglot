@@ -10,12 +10,10 @@ syntax keyword typescriptObjectStaticMethod contained getOwnPropertyDescriptor g
 syntax keyword typescriptObjectStaticMethod contained getOwnPropertySymbols getPrototypeOf nextgroup=typescriptFuncCallArg
 syntax keyword typescriptObjectStaticMethod contained is isExtensible isFrozen isSealed nextgroup=typescriptFuncCallArg
 syntax keyword typescriptObjectStaticMethod contained keys preventExtensions values nextgroup=typescriptFuncCallArg
-if exists("did_typescript_hilink") | HiLink typescriptObjectStaticMethod Keyword
-endif
+hi def link typescriptObjectStaticMethod Keyword
 syntax keyword typescriptObjectMethod contained getOwnPropertyDescriptors hasOwnProperty nextgroup=typescriptFuncCallArg
 syntax keyword typescriptObjectMethod contained isPrototypeOf propertyIsEnumerable nextgroup=typescriptFuncCallArg
 syntax keyword typescriptObjectMethod contained toLocaleString toString valueOf seal nextgroup=typescriptFuncCallArg
 syntax keyword typescriptObjectMethod contained setPrototypeOf nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptObjectMethod
-if exists("did_typescript_hilink") | HiLink typescriptObjectMethod Keyword
-endif
+hi def link typescriptObjectMethod Keyword

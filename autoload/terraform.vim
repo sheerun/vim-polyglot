@@ -9,6 +9,11 @@ set cpoptions&vim
 let $TF_CLI_ARGS_fmt=''
 
 function! terraform#fmt() abort
+  silent execute 'w !'.g:terraform_binary_path.' fmt -check -'
+  if v:shell_error == 0
+    return
+  endif
+
   " Save the view.
   let curw = winsaveview()
 

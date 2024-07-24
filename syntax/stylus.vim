@@ -68,6 +68,9 @@ syn match cssValueAngle "[-+]\=\d\+\(\.\d*\)\=\(deg\|grad\|rad\|turn\)" containe
 syn match cssValueTime "+\=\d\+\(\.\d*\)\=\(ms\|s\)" contained
 syn match cssValueFrequency "+\=\d\+\(\.\d*\)\=\(Hz\|kHz\)" contained
 
+" CSS Generic Property Names
+syn match cssProp /justify-content/ contained
+syn match cssProp /align-items/ contained
 
 " Properties http://www.w3.org/community/webed/wiki/CSS/Properties
 " background http://www.w3.org/TR/css3-background/
@@ -137,7 +140,7 @@ syn keyword cssColorVal slategray slategrey snow springgreen steelblue tan conta
 syn keyword cssColorVal teal thistle tomato turquoise violet wheat contained
 syn keyword cssColorVal whitesmoke yellow yellowgreen contained
 syn match cssColorVal "\<white\>" contained
-syn keyword cssColorProp color opaticy contained
+syn keyword cssColorProp color opacity contained
 syn match cssColorProp /color-profile/ contained
 
 " Box
@@ -274,6 +277,7 @@ if version >= 508 || !exists("did_css_syn_inits")
   HiLink cssComment Comment
   HiLink cssTagName Statement
   HiLink cssSelector Function
+  HiLink cssProp StorageClass
   HiLink cssBackgroundProp StorageClass
   HiLink cssTableProp StorageClass
   HiLink cssBorderProp StorageClass
@@ -326,7 +330,7 @@ syn case ignore
 
 syn cluster stylusCssSelectors contains=cssTagName,cssSelector,cssPseudo
 syn cluster stylusCssValues contains=cssValueLength,cssValueInteger,cssValueNumber,cssValueAngle,cssValueTime,cssValueFrequency,cssColorVal,cssCommonVal,cssFontVal,cssListVal,cssTextVal,cssVisualVal,cssBorderVal,cssBackgroundVal,cssFuncVal,cssAdvancedVal
-syn cluster stylusCssProperties contains=cssBackgroundProp,cssTableProp,cssBorderProp,cssFontProp,cssColorProp,cssBoxProp,cssTextProp,cssListProp,cssVisualProp,cssAdvancedProp,cssCommonProp,cssSpecialProp
+syn cluster stylusCssProperties contains=cssProp,cssBackgroundProp,cssTableProp,cssBorderProp,cssFontProp,cssColorProp,cssBoxProp,cssTextProp,cssListProp,cssVisualProp,cssAdvancedProp,cssCommonProp,cssSpecialProp
 
 syn match stylusVariable "$\?[[:alnum:]_-]\+"
 syn match stylusVariableAssignment "\%([[:alnum:]_-]\+\s*\)\@<==" nextgroup=stylusCssAttribute,stylusVariable skipwhite

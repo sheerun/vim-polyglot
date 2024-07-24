@@ -162,9 +162,9 @@ exec 'syntax match   juliaStructR	contained transparent "\%(\<\%(\%(mutable\s\+\
 syntax match   juliaKeyword		display "\<\%(return\|local\|global\|const\)\>"
 syntax match   juliaInfixKeyword	display "\%(=\s*\)\@<!\<\%(in\|isa\)\>\S\@!\%(\s*=\)\@!"
 
-" The import/export/using keywords introduce a sort of special parsing
+" The import/export/using/public keywords introduce a sort of special parsing
 " environment with its own rules
-exec 'syntax region  juliaImportLine		matchgroup=juliaKeyword excludenl start="\<\%(import\|using\|export\)\>" skip="\%(\%(\<\%(import\|using\|export\)\>\)\|^\)\@'.s:d(6).'<=$" end="$" end="\%([])}]\)\@=" contains=@juliaExpressions,juliaAsKeyword,@juliaContinuationItems,juliaMacroName'
+exec 'syntax region  juliaImportLine		matchgroup=juliaKeyword excludenl start="\<\%(import\|using\|export\|public\)\>" skip="\%(\%(\<\%(import\|using\|export\|public\)\>\)\|^\)\@'.s:d(6).'<=$" end="$" end="\%([])}]\)\@=" contains=@juliaExpressions,juliaAsKeyword,@juliaContinuationItems,juliaMacroName'
 syntax match   juliaAsKeyword		display contained "\<as\>"
 
 syntax match   juliaRepKeyword		display "\<\%(break\|continue\)\>"
@@ -390,13 +390,13 @@ syntax keyword juliaTodo		contained TODO FIXME XXX
 " detect an end-of-line with only whitespace or comments before it
 let s:eol = '\s*\%(\%(\%(#=\%(=#\@!\|[^=]\|\n\)\{-}=#\)\s*\)\+\)\?\%(#=\@!.*\)\?\n'
 
-" a trailing comma, or colon, or an empty line in an import/using/export
+" a trailing comma, or colon, or an empty line in an import/using/export/public
 " multi-line command. Used to recognize the as keyword, and for indentation
 " (this needs to take precedence over normal commas and colons, and comments)
 syntax cluster juliaContinuationItems	contains=juliaContinuationComma,juliaContinuationColon,juliaContinuationNone
 exec 'syntax region  juliaContinuationComma	matchgroup=juliaComma contained start=",\ze'.s:eol.'" end="\n\+\ze." contains=@juliaCommentItems'
 exec 'syntax region  juliaContinuationColon	matchgroup=juliaColon contained start=":\ze'.s:eol.'" end="\n\+\ze." contains=@juliaCommentItems'
-exec 'syntax region  juliaContinuationNone	matchgroup=NONE contained start="\%(\<\%(import\|using\|export\)\>\|^\)\@'.s:d(6).'<=\ze'.s:eol.'" end="\n\+\ze." contains=@juliaCommentItems,juliaAsKeyword'
+exec 'syntax region  juliaContinuationNone	matchgroup=NONE contained start="\%(\<\%(import\|using\|export\|public\)\>\|^\)\@'.s:d(6).'<=\ze'.s:eol.'" end="\n\+\ze." contains=@juliaCommentItems,juliaAsKeyword'
 exec 'syntax match   juliaMacroName		contained "@' . s:idregex . '\%(\.' . s:idregex . '\)*"'
 
 " the following are disabled by default, but
