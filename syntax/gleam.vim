@@ -67,10 +67,6 @@ highlight link gleamOperator Operator
 syntax match gleamOperator "\.\.\|<>\||"
 highlight link gleamOperator Operator
 
-" Values
-syntax keyword gleamValues True False Nil
-highlight def link gleamValues Boolean
-
 " Type
 syntax match gleamType "\<[A-Z][a-zA-Z0-9]*\>"
 highlight link gleamType Identifier
