@@ -1029,9 +1029,6 @@ ignored_dirs:
 filetypes:
 - name: markdown
   linguist: Markdown
-  ignored_extensions:
-  # Handled by mdx extension
-  - mdx
   ignored_warnings:
   - '*.{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx}'
 ---
@@ -1237,7 +1234,7 @@ filetypes:
   - pu
 ---
 name: pony
-remote: jakwings/vim-pony
+remote: dleonard0/pony-vim-syntax
 filetypes:
 - name: pony
   linguist: Pony
@@ -1252,6 +1249,12 @@ filetypes:
 - name: ps1xml
   extensions:
   - ps1xml
+---
+name: prisma
+remote: prisma/vim-prisma
+filetypes:
+- name: prisma
+  linguist: Prisma
 ---
 name: protobuf
 remote: uarun/vim-protobuf
@@ -5475,7 +5478,7 @@ filetypes:
     description: 'JSON with comments (https://komkom.github.io/)'
 ---
 name: gleam
-remote: gleam-lang/gleam.vim
+remote: gleam-lang/gleam.vim@main
 filetypes:
   - name: gleam
     extensions:
@@ -5498,7 +5501,7 @@ filetypes:
     description: Sway Configuration
 ---
 name: just
-remote: NoahTheDuke/vim-just
+remote: NoahTheDuke/vim-just@main
 filetypes:
 - name: just
   patterns:

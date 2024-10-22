@@ -5,7 +5,7 @@ endif
 " Vim syntax file
 " Language: Ansible YAML/Jinja templates
 " Maintainer: Dave Honneffer <pearofducks@gmail.com>
-" Last Change: 2018.02.08
+" Last Change: 2023.10.29
 
 if !exists("main_syntax")
   let main_syntax = 'yaml'
@@ -101,6 +101,13 @@ if exists("g:ansible_extra_keywords_highlight")
   else
     highlight link ansible_extra_special_keywords Structure
   endif
+endif
+
+execute 'syn keyword ansible_fqcn_keywords ansible builtin ansible.builtin. containedin='.s:yamlKey.' contained'
+if exists("g:ansible_fqcn_highlight")
+  execute 'highlight link ansible_fqcn_keywords '.g:ansible_fqcn_highlight
+else
+  highlight default link ansible_fqcn_keywords Statement
 endif
 
 execute 'syn keyword ansible_normal_keywords

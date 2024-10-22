@@ -2,11 +2,12 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'jq', 'syntax/jq.vim')
   finish
 endif
 
-" Vim syntax file
+" Vim compiler file
 " Language:	jq
-" Maintainer:	Vito C <vito.blog@gmail.com>
-" Last Change:	2015 Nov 28
-
+" Maintainer:	Vito <vito.blog@gmail.com>
+" Last Change:	2024 Apr 17
+" Upstream: https://github.com/vito-c/jq.vim
+"
 " Quit when a (custom) syntax file was already loaded
 if exists('b:current_syntax')
   finish
@@ -73,6 +74,9 @@ syntax keyword jqFunction fma
 " jq SQL-style Operators
 syntax keyword jqFunction INDEX JOIN IN
 
+" Macro
+syntax match jqMacro "@\%(text\|json\|html\|uri\|[ct]sv\|sh\|base64d\?\)\>"
+
 " Comments
 syntax match jqComment "#.*" contains=jqTodo
 
@@ -87,7 +91,7 @@ syn match jqNameDefinition /`[^`]\+`/ contained nextgroup=jqPostNameDefinition
 " Strings
 syn region jqError start=+'+ end=+'\|$\|[;)]\@=+
 syn region jqString matchgroup=jqQuote
-            \ start=+"+ skip=+\\"+ end=+"+
+            \ start=+"+ skip=+\\[\\"]+ end=+"+
             \ contains=@Spell,jqInterpolation
 syn region jqInterpolation matchgroup=jqInterpolationDelimiter
             \ start=+\%([^\\]\%(\\\\\)*\\\)\@<!\\(+ end=+)+
@@ -108,27 +112,23 @@ syn match jqNumber /\<0[dDfFlL]\?\>/ " Just a bare 0
 syn match jqNumber /\<[1-9]\d*[dDfFlL]\?\>/  " A multi-digit number - octal numbers with leading 0's are deprecated in Scala
 
 if !exists('jq_quote_highlight')
-    highlight link jqQuote        String
+    highlight def link jqQuote        String
 else
-    highlight link jqQuote        Type
+    highlight def link jqQuote        Type
 endif
 
-hi link jqCondtions              Boolean
-hi link jqVariables              Identifier
-hi link jqNameDefinition         Function
-hi link jqTodo                   Todo
-hi link jqComment                Comment
-hi link jqKeywords               Keyword
-hi link jqType                   Type
-hi link jqOperator               Operator
-hi link jqFunction               Function
-hi link jqError                  Error
-hi link jqString                 String
-hi link jqInterpolationDelimiter Delimiter
-"hi link jqStatement              Statement
-hi link jqConditional            Conditional
-"hi link jqRepeat                 Repeat
-"hi link jqException              Exception
-"hi link jqInclude                Include
-"hi link jqDecorator              Define
-hi link jqNumber                 Number
+hi def link jqCondtions              Boolean
+hi def link jqVariables              Identifier
+hi def link jqNameDefinition         Function
+hi def link jqTodo                   Todo
+hi def link jqComment                Comment
+hi def link jqKeywords               Keyword
+hi def link jqType                   Type
+hi def link jqOperator               Operator
+hi def link jqFunction               Function
+hi def link jqMacro                  Macro
+hi def link jqError                  Error
+hi def link jqString                 String
+hi def link jqInterpolationDelimiter Delimiter
+hi def link jqConditional            Conditional
+hi def link jqNumber                 Number

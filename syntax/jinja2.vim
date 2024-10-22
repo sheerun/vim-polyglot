@@ -31,7 +31,7 @@ syn keyword jinjaSpecial containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested con
 
 " Filters
 syn match jinjaOperator "|" containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained skipwhite nextgroup=jinjaFilter
-syn match jinjaFilter contained /[a-zA-Z_][a-zA-Z0-9_]*/
+syn match jinjaFilter contained /[a-zA-Z_.][a-zA-Z0-9_.]*/
 syn match jinjaFunction contained /[a-zA-Z_][a-zA-Z0-9_]*/
 syn match jinjaBlockName contained /[a-zA-Z_][a-zA-Z0-9_]*/
 

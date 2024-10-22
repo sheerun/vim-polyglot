@@ -71,5 +71,4 @@ syntax keyword typescriptDOMStyle contained transitionTimingFunction unicodeBidi
 syntax keyword typescriptDOMStyle contained userSelect userZoom verticalAlign visibility
 syntax keyword typescriptDOMStyle contained whiteSpace width willChange wordBreak
 syntax keyword typescriptDOMStyle contained wordSpacing wordWrap writingMode zIndex
-if exists("did_typescript_hilink") | HiLink typescriptDOMStyle Keyword
-endif
+hi def link typescriptDOMStyle Keyword

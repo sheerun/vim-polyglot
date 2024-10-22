@@ -31,7 +31,7 @@ if get(g:, 'hcl_fold_sections', 0)
 endif
 
 " Set the commentstring
-setlocal commentstring=#%s
+setlocal commentstring=#\ %s
 let b:undo_ftplugin .= ' commentstring<'
 
 if get(g:, 'hcl_align', 0) && exists(':Tabularize')

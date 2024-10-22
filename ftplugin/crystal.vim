@@ -62,7 +62,7 @@ if exists('g:loaded_matchit') && !exists('b:match_words')
   let b:match_ignorecase = 0
 
   let b:match_words =
-        \ '\<\%(if\|unless\|case\|while\|until\|for\|do\|class\|module\|struct\|lib\|macro\|ifdef\|def\|begin\|enum\|annotation\)\>=\@!' .
+        \ '\<\%(if\|unless\|case\|while\|until\|for\|do\|class\|module\|struct\|lib\|macro\|ifdef\|\%(abstract\s\+\)\@<!def\|begin\|enum\|annotation\)\>=\@!' .
         \ ':' .
         \ '\<\%(else\|elsif\|ensure\|when\|in\|rescue\|break\|next\)\>' .
         \ ':' .

@@ -31,7 +31,7 @@ function GetLedgerIndent(...)
 
   if line =~# '^\s\+\S'
     " Lines that already are indented (→postings, sub-directives) keep their indentation.
-    return &shiftwidth
+    return shiftwidth()
   elseif line =~# '^\s*$'
     " Current line is empty, try to guess its type based on the previous line.
     if prev =~# '^\([[:digit:]~=]\|\s\+\S\)'
@@ -40,7 +40,7 @@ function GetLedgerIndent(...)
       " indented you will have to indent the first line following a
       " pre-declaration manually. This makes it easier to type long lists of
       " 'account' pre-declarations without sub-directives, for example.
-      return &shiftwidth
+      return shiftwidth()
     else
       return 0
     endif

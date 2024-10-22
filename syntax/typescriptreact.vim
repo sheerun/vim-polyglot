@@ -111,7 +111,8 @@ syntax match tsxEqual +=+ display contained
 
 " <tag id="sample">
 "         s~~~~~~e
-syntax region tsxString contained start=+["']+ end=+["']+ contains=tsxEntity,@Spell display
+syntax region tsxString contained start=+"+ skip=+\\"+ end=+"+ contains=tsxEntity,@Spell display
+syntax region tsxString contained start=+'+ skip=+\\'+ end=+'+ contains=tsxEntity,@Spell display
 
 " <tag key={this.props.key}>
 "          s~~~~~~~~~~~~~~e

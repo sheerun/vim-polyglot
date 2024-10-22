@@ -81,9 +81,6 @@ endfunction
 " syntax. It defines group htmlJavaScript and htmlCss.
 call s:LoadSyntax('@HTMLSyntax', 'html')
 
-" Load svelte-html syntax
-syntax include syntax/svelte-html.vim
-
 " Avoid overload
 if !hlexists('cssTagName')
   call s:LoadSyntax('@htmlCss', 'css')
@@ -131,6 +128,14 @@ endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
+" Load Svelte specific html syntax {{{
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax include syntax/svelte-html.vim
+"}}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
 " Syntax highlight {{{
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -143,8 +148,9 @@ syntax region htmlSvelteTemplate fold
 " Start tag across multiple lines or Empty tag across multiple lines
 syntax region htmlSvelteTemplate fold
       \ start=+<[-:a-zA-Z0-9]\+[^>]*$+ 
-      \ end=+^\(<\/[-:a-zA-Z0-9]\+>\)\|^\([^<]*\/>\)+ 
+      \ end=+^\(<\/[-:a-zA-Z0-9]\+>\|\(\S[^<]*\)\?\/>\)+
       \ keepend contains=@HTMLSyntax
+
 " Tag in one line
 syntax match htmlSvelteTemplate fold
       \ +<[-:a-zA-Z0-9]\+[^>]*>.*</[-:a-zA-Z0-9]\+>+ 
@@ -284,5 +290,6 @@ syntax region  typescriptTemplate
 syntax match htmlArg '\v<data(-[.a-z0-9]+)+>' containedin=@HTMLSyntax
 "}}}
 
+syntax sync fromstart
 let b:current_syntax = 'svelte'
 " vim: fdm=marker

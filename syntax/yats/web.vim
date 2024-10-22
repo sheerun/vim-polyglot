@@ -249,5 +249,4 @@ syntax keyword typescriptBOM containedin=typescriptIdentifierName Window Worker 
 syntax keyword typescriptBOM containedin=typescriptIdentifierName WorkerLocation WorkerNavigator
 syntax keyword typescriptBOM containedin=typescriptIdentifierName XDomainRequest XMLDocument
 syntax keyword typescriptBOM containedin=typescriptIdentifierName XMLHttpRequestEventTarget
-if exists("did_typescript_hilink") | HiLink typescriptBOM Structure
-endif
+hi def link typescriptBOM Structure

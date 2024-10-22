@@ -31,8 +31,15 @@ syn match   bicepResourceName   /\h\w*/ nextgroup=bicepResourceString skipwhite 
 syn region  bicepResourceString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=bicepStringInterp nextgroup=bicepExisting skipwhite
 syn keyword bicepExisting       existing contained
 
+syn keyword bicepStatement    module nextgroup=bicepModuleName skipwhite
+syn match   bicepModuleName   /\h\w*/ nextgroup=bicepModuleString skipwhite contained
+syn region  bicepModuleString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=bicepStringInterp skipwhite
+
 syn match bicepDecoratorName /@\s*\h\%(\w\|\.\)*/ contains=bicepDecorator
 syn match bicepDecorator     /@/ contained
+
+syn match bicepPreProc    /#[-_a-zA-Z0-9]\+/ nextgroup=bicepPreProcArg skipwhite
+syn match bicepPreProcArg /\w\+/ skipwhite contained nextgroup=bicepPreProcArg
 
 syn region  bicepComment start="/\*" end="\*/" contains=bicepTodo,@Spell
 syn region  bicepComment start="//" end="$" contains=bicepTodo,@Spell
@@ -56,9 +63,13 @@ syn match bicepBraces /[{}\[\]]/
 hi def link bicepDataType          Type
 hi def link bicepStatement         Statement
 hi def link bicepResourceString    String
+hi def link bicepModuleString      String
 hi def link bicepExisting          Label
 
 hi def link bicepDecorator         Define
+
+hi def link bicepPreProc           PreProc
+hi def link bicepPreProcArg        Comment
 
 hi def link bicepComment           Comment
 hi def link bicepTodo              Todo

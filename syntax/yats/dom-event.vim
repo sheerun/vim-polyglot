@@ -5,8 +5,7 @@ endif
 syntax keyword typescriptDOMEventTargetMethod contained addEventListener removeEventListener nextgroup=typescriptEventFuncCallArg
 syntax keyword typescriptDOMEventTargetMethod contained dispatchEvent waitUntil nextgroup=typescriptEventFuncCallArg
 syntax cluster props add=typescriptDOMEventTargetMethod
-if exists("did_typescript_hilink") | HiLink typescriptDOMEventTargetMethod Keyword
-endif
+hi def link typescriptDOMEventTargetMethod Keyword
 syntax keyword typescriptDOMEventCons containedin=typescriptIdentifierName AnimationEvent
 syntax keyword typescriptDOMEventCons containedin=typescriptIdentifierName AudioProcessingEvent
 syntax keyword typescriptDOMEventCons containedin=typescriptIdentifierName BeforeInputEvent
@@ -52,16 +51,13 @@ syntax keyword typescriptDOMEventCons containedin=typescriptIdentifierName Trans
 syntax keyword typescriptDOMEventCons containedin=typescriptIdentifierName UIEvent
 syntax keyword typescriptDOMEventCons containedin=typescriptIdentifierName UserProximityEvent
 syntax keyword typescriptDOMEventCons containedin=typescriptIdentifierName WheelEvent
-if exists("did_typescript_hilink") | HiLink typescriptDOMEventCons Structure
-endif
+hi def link typescriptDOMEventCons Structure
 syntax keyword typescriptDOMEventProp contained bubbles cancelable currentTarget defaultPrevented
 syntax keyword typescriptDOMEventProp contained eventPhase target timeStamp type isTrusted
 syntax keyword typescriptDOMEventProp contained isReload
 syntax cluster props add=typescriptDOMEventProp
-if exists("did_typescript_hilink") | HiLink typescriptDOMEventProp Keyword
-endif
+hi def link typescriptDOMEventProp Keyword
 syntax keyword typescriptDOMEventMethod contained initEvent preventDefault stopImmediatePropagation nextgroup=typescriptEventFuncCallArg
 syntax keyword typescriptDOMEventMethod contained stopPropagation respondWith default nextgroup=typescriptEventFuncCallArg
 syntax cluster props add=typescriptDOMEventMethod
-if exists("did_typescript_hilink") | HiLink typescriptDOMEventMethod Keyword
-endif
+hi def link typescriptDOMEventMethod Keyword

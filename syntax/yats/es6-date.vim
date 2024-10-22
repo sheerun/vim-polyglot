@@ -5,8 +5,7 @@ endif
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName Date nextgroup=typescriptGlobalDateDot,typescriptFuncCallArg
 syntax match   typescriptGlobalDateDot /\./ contained nextgroup=typescriptDateStaticMethod,typescriptProp
 syntax keyword typescriptDateStaticMethod contained UTC now parse nextgroup=typescriptFuncCallArg
-if exists("did_typescript_hilink") | HiLink typescriptDateStaticMethod Keyword
-endif
+hi def link typescriptDateStaticMethod Keyword
 syntax keyword typescriptDateMethod contained getDate getDay getFullYear getHours nextgroup=typescriptFuncCallArg
 syntax keyword typescriptDateMethod contained getMilliseconds getMinutes getMonth nextgroup=typescriptFuncCallArg
 syntax keyword typescriptDateMethod contained getSeconds getTime getTimezoneOffset nextgroup=typescriptFuncCallArg
@@ -22,5 +21,4 @@ syntax keyword typescriptDateMethod contained toLocaleFormat toLocaleString toLo
 syntax keyword typescriptDateMethod contained toSource toString toTimeString toUTCString nextgroup=typescriptFuncCallArg
 syntax keyword typescriptDateMethod contained valueOf nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptDateMethod
-if exists("did_typescript_hilink") | HiLink typescriptDateMethod Keyword
-endif
+hi def link typescriptDateMethod Keyword

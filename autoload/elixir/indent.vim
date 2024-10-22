@@ -72,7 +72,7 @@ endfunction
 
 function! s:in_embedded_view()
   let groups = map(synstack(line('.'), col('.')), "synIDattr(v:val, 'name')")
-  for group in ['elixirPhoenixESigil', 'elixirLiveViewSigil', 'elixirSurfaceSigil']
+  for group in ['elixirPhoenixESigil', 'elixirLiveViewSigil', 'elixirSurfaceSigil', 'elixirHeexSigil']
     if index(groups, group) >= 0
       return 1
     endif
@@ -383,7 +383,7 @@ endfunction
 " function, etc... so we need to first figure out what the innermost structure
 " is then forward execution to the proper handler
 function! elixir#indent#handle_inside_block(context)
-  let start_pattern = '\C\%(\<with\>\|\<if\>\|\<case\>\|\<cond\>\|\<try\>\|\<receive\>\|\<fn\>\|{\|\[\|(\)'
+  let start_pattern = '\C\%(\<with\>\|\<if\>\|\<case\>\|\<cond\>\|\<try\>\|\<receive\>\|\<fn\>\|\<quote\>\|{\|\[\|(\)'
   let end_pattern = '\C\%(\<end\>\|\]\|}\|)\)'
   " hack - handle do: better
   let block_info = searchpairpos(start_pattern, '', end_pattern, 'bnW', "line('.') == " . line('.') . " || elixir#indent#searchpair_back_skip() || getline(line('.')) =~ 'do:'", max([0, a:context.lnum - g:elixir_indent_max_lookbehind]))
@@ -398,6 +398,7 @@ function! elixir#indent#handle_inside_block(context)
     let never_match = ''
     let config = {
           \'f': {'aligned_clauses': s:keyword('end'), 'pattern_match_clauses': never_match},
+          \'q': {'aligned_clauses': s:keyword('end'), 'pattern_match_clauses': never_match},
           \'c': {'aligned_clauses': s:keyword('end'), 'pattern_match_clauses': never_match},
           \'t': {'aligned_clauses': s:keyword('end\|catch\|rescue\|after\|else'), 'pattern_match_clauses': s:keyword('catch\|rescue\|else')},
           \'r': {'aligned_clauses': s:keyword('end\|after'), 'pattern_match_clauses': s:keyword('after')},

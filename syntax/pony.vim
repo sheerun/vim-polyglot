@@ -3,229 +3,182 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'pony', 'syntax/pony.vim')
 endif
 
 " Vim syntax file
-" Language:     Pony
-" Maintainer:   Jak Wings
+" Language:             Pony
+" Maintainer:           You
+" Last Change:          2015 May 6
+" Original Author:      David Leonard
 
-if exists('b:current_syntax')
+if exists("b:current_syntax")
   finish
 endif
 
-let s:cpo_save = &cpo
-set cpo&vim
+" For syntastic as the 'pony' filetype is not officially registered.
+if exists('g:syntastic_extra_filetypes')
+    call add(g:syntastic_extra_filetypes, 'pony')
+else
+    let g:syntastic_extra_filetypes = ['pony']
+endif
 
+" TODO add markdown to triple-comments
 
 syn case match
 
-syn sync match ponySync grouphere NONE /\v^\s*%(actor|class|struct|primitive|trait|interface|new|be|fun|let|var|embed|use)>/
+" Sync at the beginning of classes, functions
+syn sync match ponySync grouphere NONE "^\s*\%(class\|fun\|be\|new\)\s\+[a-zA-Z_]"
 
-syn match   ponyErrSymbol       /['^!$&\`]/
-hi def link ponyErrSymbol       Error
+" Constants
+syn region  ponyString          start=+"+ skip=+\\"+ end=+"+ contains=ponyEscape
+syn region  ponyTripleString    start=+"""+ end=+"""+ contains=ponyEscape,@markdownBlock
+syn match   ponyEscape          contained "\\x\x\{2}"
+syn match   ponyEscape          contained "\\u\x\{4}"
+syn match   ponyEscape          contained "\\U\x\{6}"
+syn match   ponyEscape          contained "\\[\\abefnrtv\"'0]"
 
-syn match   ponyErrNumGroup     /__\+/ contained
-hi def link ponyErrNumGroup     Error
+hi def link ponyString          String
+hi def link ponyTripleString    String
+hi def link ponyEscape          Character
 
-syn match   ponyPeriodComma     /,/ nextgroup=ponyEllipsis,ponyErrOperator skipwhite
-syn match   ponyPeriodComma     /\./ nextgroup=ponyTupleIndex,ponyErrOperator skipwhite
-syn match   ponyPeriodComma     /;/ nextgroup=ponyErrOperator skipwhite
-hi def link ponyPeriodComma     Operator
-
-syn match   ponyBracket         /[{[()\]}]/
-
-syn match   ponyErrNormal       /\v_>|<%([^_a-z]|_[^a-z])|__+/ contained
-hi def link ponyErrNormal       Error
-syn match   ponyNormal          /\v_?[_a-z]\w*'*/ contains=ponyErrNormal nextgroup=ponyGeneric skipwhite
-
-syn match   ponyInteger         /\v%(\d+_*)+/ contains=ponyErrNumGroup
-syn match   ponyErrIntDec       /\v(0[xX])@<=[_.g-zG-Z]/
-syn match   ponyErrIntHex       /[.g-zG-Z]/ contained
-syn match   ponyInteger         /\v0[xX]%(\x+_*)+/ contains=ponyErrNumGroup nextgroup=ponyErrIntHex
-syn match   ponyErrIntDec       /\v(0[bB])@<=[_2-9a-zA-Z]/
-syn match   ponyErrIntBin       /[2-9.a-zA-Z]/ contained
-syn match   ponyInteger         /\v0[bB]%([01]+_*)+/ contains=ponyErrNumGroup nextgroup=ponyErrIntBin
-hi def link ponyErrIntDec       Error
-hi def link ponyErrIntHex       Error
-hi def link ponyErrIntBin       Error
-hi def link ponyInteger         Number
-
-syn match   ponyFloat           /\v%(\d+_*)+[eE][-+]?%(\d+_*)+/ contains=ponyErrNumGroup
-syn match   ponyFloat           /\v%(\d+_*)+\.%(\d+_*)+%([eE][-+]?%(\d+_*)+)?/ contains=ponyErrNumGroup
-hi def link ponyFloat           Float
-
-syn match   ponyErrUserVariable /\v_>|<%([^_a-z]|_[^a-z])|__+/ contained
-hi def link ponyErrUserVariable Error
-syn match   ponyUserVariable    /\v[_a-zA-Z]\w*'*/ contained contains=ponyErrUserVariable
-hi def link ponyUserVariable    Identifier
-syn match   ponyErrUserPackage  /\<[^a-z]/ contained
-hi def link ponyErrUserPackage  Error
-syn match   ponyUserPackage     /\v[_a-zA-Z]\w*/ contained contains=ponyErrUserPackage
-hi def link ponyUserPackage     Identifier
-syn match   ponyErrUserType     /\v_>|\a@<=_|<%([^_A-Z]|_[^A-Z])/ contained
-hi def link ponyErrUserType     Error
-syn match   ponyUserType2       /\v[_a-zA-Z]\w*/ contained contains=ponyErrUserType nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT,ponyGeneric,ponyArgument skipwhite
-syn match   ponyUserType        /\v_?[A-Z]\w*/ contains=ponyErrUserType nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT,ponyGeneric,ponyArgument skipwhite
-syn match   ponyErrUserMethod   /\v_>|<%([^_a-z]|_[^a-z])|__+/ contained
-hi def link ponyErrUserMethod   Error
-syn match   ponyUserMethod      /\v[_a-zA-Z]\w*/ contained contains=ponyErrUserMethod nextgroup=ponyGeneric,ponyArgument,ponyBracketT2 skipwhite
-hi def link ponyUserMethod      Function
-syn match   ponyForeignFunction /\v[_a-zA-Z]\w*/ contained nextgroup=ponyGeneric skipwhite
-hi def link ponyForeignFunction Macro
-syn match   ponyErrTupleIndex   /\v_0+>/ contained
-hi def link ponyErrTupleIndex   Error
-syn match   ponyTupleIndex      /\v_\d+\w@!/ contained contains=ponyErrTupleIndex
-hi def link ponyTupleIndex      Normal
-
+syn match   ponyInt             "\d\+"
+syn match   ponyIntError        "0[bx]"
+syn match   ponyInt             "0x\x\+"
+syn match   ponyInt             "0b[01]\+"
+syn match   ponyCharError       "'"
+syn match   ponyChar            "'[^\\']'"
+syn match   ponyChar            "'\\[\\abefnrtv\"'0]'" contains=ponyEscape
+syn match   ponyChar            "'\\x\x\{2}'" contains=ponyEscape
+syn match   ponyChar            "'\\u\x\{4}'" contains=ponyEscape
+syn match   ponyChar            "'\\U\x\{6}'" contains=ponyEscape
 syn keyword ponyBoolean         true false
+syn match   ponyReal            "\d\+\%(\.\d\+\)\=[Ee][+-]\=\d\+"
+syn match   ponyReal            "\d\+\.\d\+\%([Ee][+-]\=\d\+\)\="
+
+hi def link ponyInt             Number
+hi def link ponyChar            Number
 hi def link ponyBoolean         Boolean
+hi def link ponyReal            Float
+hi def link ponyCharError       Error
+hi def link ponyIntError        Error
 
-syn region  ponyBracketT1       matchgroup=ponyBracket start=/(/ end=/)/ contained contains=@ponyComments,@ponyKeyword,@ponyType,@ponyBracketT,@ponyTypeOperator,ponySymbol,ponyPeriodComma nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT,ponyArgument skipwhite
-syn region  ponyBracketT2       matchgroup=ponyBracket start=/\[/ end=/\]/ contained contains=@ponyComments,@ponyKeyword,@ponyType,@ponyBracketT,@ponyTypeOperator,ponySymbol,ponyPeriodComma nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT,ponyArgument skipwhite
-syn region  ponyBracketT3       matchgroup=ponyBracket start=/{/ end=/}/ contained contains=@ponyComments,@ponyKeyword,@ponyType,@ponyBracketT,@ponyTypeOperator,ponySymbol,ponyPeriodComma nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT,ponyArgument skipwhite
-syn cluster ponyBracketT        contains=ponyBracketT\d
+" Identifiers
 
-syn region  ponyGeneric         matchgroup=ponyBracketT2 start=/\[/ end=/\]/ contained contains=@ponyComments,@ponyKeyword,@ponyType,@ponyBracketT,@ponyTypeOperator,ponySymbol,ponyPeriodComma nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT,ponyArgument skipwhite
+syn match   ponyId              "\<\a[a-zA-Z0-9_']*" nextgroup=ponyCap,ponyCapMod
+syn match   ponyPrivateId       "\<_[a-zA-Z0-9_']\+"
+syn cluster PonyIdentifier	contains=ponyId,ponyPrivateId
+"hi def link ponyId              Identifier
+"hi def link ponyPrivateId       Identifier
 
-syn region  ponyArgument        matchgroup=ponyBracket start=/(/ end=/)/ contained contains=TOP nextgroup=ponyArgument skipwhite
+syn keyword ponyBuiltinClass    Array ArrayKeys ArrayValues ArrayPairs
+syn keyword ponyBuiltinClass    Env Pointer String StringValues
+hi def link ponyBuiltinClass    Structure
 
-syn match   ponyTypeSuffix      /[!^]/ contained nextgroup=ponyArgument,ponyKwOperatorT skipwhite
-hi def link ponyTypeSuffix      StorageClass
-
-syn match   ponyTypeOperator1   /[&|]/ contained nextgroup=@ponyBracketT,@ponyKeyword,@ponyType skipwhite skipempty
-hi def link ponyTypeOperator1   Operator
-
-syn match   ponyTypeOperator2   /->\|<:/ contained nextgroup=@ponyBracketT,@ponyKeyword,@ponyType skipwhite skipempty
-hi def link ponyTypeOperator2   Operator
-
-syn cluster ponyTypeOperator    contains=ponyTypeOperator\d
-
-syn match   ponyErrOperator     /[-.]>\|<:\|\%(==\|!=\|<<\|>>\|<=\|>=\|[+*/%<>]\)\~\?\|[~.,]/ contained nextgroup=ponyErrOperator skipwhite
-hi def link ponyErrOperator     Error
-
-syn match   ponyObjectOperator  /\%(==\|!=\|<<\|>>\|<=\|>=\|[+\-*/%<>]\)\~\?\|\~\|\.>/ nextgroup=ponyErrOperator skipwhite
-hi def link ponyObjectOperator  Operator
-
-syn keyword ponyKwOperatorT     is contained nextgroup=@ponyBracketT,@ponyKeyword,@ponyType skipwhite skipempty
-hi def link ponyKwOperatorT     Operator
-
-syn keyword ponyKwOperator      as nextgroup=@ponyBracketT,@ponyKeyword,@ponyType skipwhite skipempty
-syn keyword ponyKwOperator      and or xor not is isnt consume addressof digestof
-hi def link ponyKwOperator      Operator
-
-syn match   ponySymbol          /=>\|[?#]/
-syn match   ponySymbol          /@/ nextgroup=ponyForeignFunction skipwhite skipempty
-syn match   ponySymbol          /:/ nextgroup=@ponyKeyword,@ponyType,@ponyBracketT skipwhite skipempty
-hi def link ponySymbol          Special
-
-syn match   ponyEllipsis        /\.\{3}/ contained containedin=ponyArgument
-hi def link ponyEllipsis        Special
-
-syn region  ponyLambda          matchgroup=ponyBracketLambda start=/{/ end=/}/ contains=ponyArgument,@ponyComments,@ponyKeyword,@ponyType,@ponyTypeOperator,ponySymbol,ponyPeriodComma,ponyLambdaBody nextgroup=ponyArgument skipwhite
-syn match   ponyLambdaBody      /=>\_.*}/me=e-1 contained contains=TOP
-hi def link ponyBracketLambda   Special
-
-" $scripts/gen_id.sh $packages/builtin
-syn keyword ponyBuiltinType     AmbientAuth Any Array ArrayKeys ArrayPairs
-                          \     ArrayValues AsioEvent AsioEventID
-                          \     AsioEventNotify Bool ByteSeq ByteSeqIter
-                          \     Comparable Compare DisposableActor
-                          \     DoNotOptimise Env Equal Equatable F32 F64
-                          \     Float FloatingPoint Greater HasEq I128 I16 I32
-                          \     I64 I8 ILong ISize Int Integer Iterator Less
-                          \     MaybePointer None Number OutStream Platform
-                          \     Pointer ReadElement ReadSeq Real Seq Signed
-                          \     SourceLoc StdStream Stdin StdinNotify String
-                          \     StringBytes StringRunes Stringable U128 U16
-                          \     U32 U64 U8 ULong USize Unsigned
-                          \     nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT,ponyGeneric,ponyArgument skipwhite
+syn keyword ponyBuiltinType     Number Signed Unsigned Float
+syn keyword ponyBuiltinType     I8 I16 I32 I64 I128 U8 U16 U32 U64 U128 F32 F64
+syn keyword ponyBuiltinType     EventID Align IntFormat NumberPrefix FloatFormat
 hi def link ponyBuiltinType     Type
 
-syn keyword ponyKwControl       end if else do then elseif match while for in
-                        \       repeat until ifdef try with recover return
-                        \       break continue error compile_intrinsic
-                        \       compile_error iftype elseiftype
-hi def link ponyKwControl       Keyword
+syn keyword ponyBuiltinIface    Arithmetic Logical Bits Comparable Ordered
+syn keyword ponyBuiltinIface    EventNotify Iterator ReadSeq StdinNotify Seq
+syn keyword ponyBuiltinIface    Stringable Bytes BytesList Stream Any
+hi def link ponyBuiltinIface    Type
 
-syn keyword ponyCaseGuard       if contained containedin=ponyMatchCase
-hi def link ponyCaseGuard       Keyword
+syn region  ponyMethodDecl      matchgroup=ponyMethodKeyword start=+\<\%(fun\|be\|new\)\>+ end=+[[({]\@=+ contains=ponyCap,ponyMethod,@PonyComment
+syn keyword ponyMethodKeyword   contained fun be new
+syn match   ponyMethod          contained "\<\a[a-zA-Z0-9_']*"
+syn match   ponyMethod          contained "\<_[a-zA-Z0-9_']\+"
+hi def link ponyMethod          Function
+hi def link ponyMethodKeyword   Keyword
 
-syn region  ponyMatchCase       matchgroup=ponyKwBranchHead start=/|/ matchgroup=ponySymbol end=/=>/ contains=TOP
-hi def link ponyKwBranchHead    Keyword
+syn region  ponyVarDecl         matchgroup=ponyVarKeyword start=+\<\%(var\|let\|embed\)\>+ end=+[:=]\@=+ contains=ponyVar,@PonyComment
+syn keyword ponyVarKeyword      contained var let embed
+syn match   ponyVar             contained "\<\a[a-zA-Z0-9_']*"
+syn match   ponyVar             contained "\<_[a-zA-Z0-9_']\+"
+hi def link ponyVar             Identifier
+hi def link ponyVarKeyword      Keyword
 
-syn keyword ponyKwAtom          this nextgroup=ponyTypeOperator2 skipwhite skipempty
-syn keyword ponyKwAtom          object __loc
-syn keyword ponyKwAtom          lambda nextgroup=ponyArgument skipwhite
-hi def link ponyKwAtom          Keyword
+" Operators and delimiters
 
-syn keyword ponyKwField         let var embed nextgroup=@ponyKeyword,ponyUserVariable skipwhite skipempty
-hi def link ponyKwField         Keyword
+syn match   ponyCapModError     +[\^\!]+
+hi def link ponyCapModError     Error
 
-syn keyword ponyKwUse           use nextgroup=ponyString,@ponyKeyword,ponyUserPackage skipwhite skipempty
-hi def link ponyKwUse           Include
+syn match   ponyQuestion        +?+
+hi def link ponyQuestion        StorageClass
 
-syn keyword ponyKwWhere         where
-hi def link ponyKwWhere         Keyword
+syn match   ponyAt              +@+
+hi def link ponyAt              Delimiter
 
-syn keyword ponyKwTypedef       type nextgroup=@ponyKeyword,@ponyType2 skipwhite skipempty
-hi def link ponyKwTypedef       Typedef
+syn match   ponyAtOpError       +@[^ 	\-[("a-zA-Z_]+
+syn match   ponyAtIdError       +@\s\+[^"a-zA-Z_]+
+hi def link ponyAtIdError       Error
+hi def link ponyAtOpError       Error
 
-syn match   ponyKwCapability    /\v#%(read|send|share|alias|any)>/ nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT skipwhite
-syn keyword ponyKwCapability    ref val tag iso box trn nextgroup=ponyTypeSuffix,ponyTypeOperator2,ponyKwOperatorT,ponyArgument skipwhite
-hi def link ponyKwCapability    StorageClass
+syn keyword ponyOp1             and or xor is isnt not consume
+syn match   ponyOp2             +\([=!]=\|[<>]=\|<<\|>>\|@-\|[-+<>*/%&|]\)+
+hi def link ponyOp1             Operator
+hi def link ponyOp2             Operator
 
-syn keyword ponyKwClass         actor class struct primitive trait interface nextgroup=@ponyKeyword,@ponyType2 skipwhite skipempty
-hi def link ponyKwClass         Structure
+" Keywords
 
-syn keyword ponyKwFnCapability  ref val tag iso box trn contained nextgroup=@ponyKeyword,ponyUserMethod skipwhite skipempty
-hi def link ponyKwFnCapability  StorageClass
-syn keyword ponyKwFunction      new be fun nextgroup=ponyKwFnCapability,@ponyKeyword,ponyUserMethod skipwhite skipempty
-hi def link ponyKwFunction      Keyword
+syn keyword ponyUse             use
+hi def link ponyUse             Include
 
-syn cluster ponyKeyword         contains=ponyKw.*,ponyBoolean,ponyBuiltinType remove=ponyKwOperatorT,ponyKwFnCapability,ponyKwBranchHead
-syn cluster ponyType            contains=ponyBuiltinType,ponyUserType,ponyNormal
-syn cluster ponyType2           contains=ponyBuiltinType,ponyUserType2
-syn cluster ponyComments        contains=ponyNestedComment,ponyComment
+syn keyword ponyStatement       return break continue
+syn keyword ponyKeyword         error
+syn keyword ponyConditional	if then else elseif match
+syn keyword ponyKeyword         do end
+syn keyword ponyKeyword         in
+syn keyword ponyRepeat          while repeat until for
+syn keyword ponyKeyword         with 
+syn keyword ponyTry		try recover
+syn keyword ponyKeyword         this box
+syn keyword ponyKeyword         as where
+hi def link ponyStatement       Statement
+hi def link ponyConditional     Conditional
+hi def link ponyRepeat          Repeat
+hi def link ponyKeyword         Keyword
+hi def link ponyTry             Exception
 
-syn match   ponyErrEscape       /\\\_.\?\_s*/ contained
-hi def link ponyErrEscape       Error
-syn match   ponyEscapeSQuote    /\\'/ contained
-hi def link ponyEscapeSQuote    SpecialChar
-syn match   ponyEscapeDQuote    /\\"/ contained
-hi def link ponyEscapeDQuote    SpecialChar
-syn match   ponyEscape          /\\[abefnrtv\\0]/ contained
-syn match   ponyEscape          /\v\\x\x{2}/ contained
-syn match   ponyEscape          /\v\\u\x{4}/ contained
-syn match   ponyEscape          /\v\\U\x{6}/ contained
-hi def link ponyEscape          SpecialChar
+syn keyword ponyTypedef         type
+syn keyword ponyStructure       interface trait primitive class actor
+hi def link ponyTypedef         Typedef
+hi def link ponyStructure       Structure
 
-syn region  ponyCharacter       matchgroup=ponyCharacterX start=/\w\@<!'/ skip=/\\./ end=/'/ contains=ponyEscapeSQuote,ponyEscape,ponyErrEscape
-hi def link ponyCharacter       Character
+syn keyword ponyCap             iso trn ref val box tag nextgroup=ponyCapMod
+syn match   ponyCapMod          contained +[\^\!]+
+hi def link ponyCap             StorageClass
+hi def link ponyCapMod          StorageClass
 
-syn region  ponyString          matchgroup=ponyStringX start=/"/ skip=/\\./ end=/"/ contains=ponyEscapeDQuote,ponyEscape,ponyErrEscape
-hi def link ponyString          String
-syn region  ponyDocumentString  matchgroup=ponyDocumentStringX start=/"\ze""/ end=/"""*\zs"/
-hi def link ponyDocumentString  String
+syn keyword ponySpecial         compiler_intrinsic
+hi def link ponySpecial         Special
 
-syn keyword ponyCommentShit     XXX contained
-hi def link ponyCommentShit     Underlined
-syn keyword ponyCommentDamn     FIXME contained
-hi def link ponyCommentDamn     Error
-syn keyword ponyCommentTodo     TODO contained
-hi def link ponyCommentTodo     Todo
-syn cluster ponyCommentNote     contains=ponyCommentTodo,ponyCommentDamn,ponyCommentShit
+syn keyword ponyAny             _
+hi def link ponyAny             Special
 
-syn match   ponyComment         @//.*$@ contains=@ponyCommentNote,ponyCommentX
-hi def link ponyComment         Comment
-syn region  ponyNestedComment   matchgroup=ponyNestedCommentX start=@/\ze\*@ end=@\/\@<!\*\zs/@ contains=ponyNestedComment,@ponyCommentNote keepend extend fold
+" Parentheses
+
+syn match   ponyParenError      +[()]+
+syn region  ponyParen           transparent start=+(+ end=+)+ contains=TOP,ponyParenError
+syn match   ponyArrayError      +[\[\]]+
+syn region  ponyArray           transparent start=+\[+ end=+]+ contains=TOP,ponyArrayError
+syn match   ponyConstError      +[{}]+
+syn region  ponyConst           transparent start=+{+ end=+}+ contains=TOP,ponyConstError
+
+hi def link ponyParenError      Error
+hi def link ponyArrayError      Error
+hi def link ponyConstError      Error
+
+" Methods
+
+syn match   ponyIntroducer      +=>+
+hi def link ponyIntroducer      Delimiter
+
+" Comments
+syn region ponyLineComment      start=+//+ end=+$+ contains=ponyTodo keepend
+syn region ponyNestedComment    start=+/\*+ end=+\*/+ contains=ponyTodo,ponyNestedComment
+syn cluster ponyComment		contains=ponyLineComment,ponyNestedComment
+syn keyword ponyTodo            contained TODO FIXME XXX
+
+hi def link ponyLineComment     Comment
 hi def link ponyNestedComment   Comment
+hi def link ponyTodo            Todo
 
-" for indent check
-syn match   ponyCommentX        @/\ze/.*$@ contained transparent
-hi def link ponyNestedCommentX  Comment
-hi def link ponyCharacterX      Character
-hi def link ponyStringX         String
-hi def link ponyDocumentStringX String
-
-
-let &cpo = s:cpo_save
-unlet s:cpo_save
-
-let b:current_syntax = 'pony'
+let b:current_syntax = "pony"

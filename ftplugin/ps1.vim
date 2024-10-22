@@ -21,6 +21,9 @@ setlocal formatoptions+=tcqroj
 " Enable autocompletion of hyphenated PowerShell commands,
 " e.g. Get-Content or Get-ADUser
 setlocal iskeyword+=-
+" Make string literal related text objects work properly when string
+" contains escaped quote characters
+setlocal quoteescape=`
 
 " Change the browse dialog on Win32 to show mainly PowerShell-related files
 if has("gui_win32")
@@ -45,16 +48,16 @@ if exists('s:pwsh_cmd')
   if !has('gui_running') && executable('less') &&
         \ !(exists('$ConEmuBuild') && &term =~? '^xterm')
     " For exclusion of ConEmu, see https://github.com/Maximus5/ConEmu/issues/2048
-    command! -buffer -nargs=1 GetHelp silent exe '!' . s:pwsh_cmd . ' -NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -Command Get-Help -Full "<args>" | ' . (has('unix') ? 'LESS= less' : 'less') | redraw!
+    command! -buffer -nargs=1 Ps1KeywordPrg silent exe '!' . s:pwsh_cmd . ' -NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -Command Get-Help -Full "<args>" | ' . (has('unix') ? 'LESS= less' : 'less') | redraw!
   elseif has('terminal')
-    command! -buffer -nargs=1 GetHelp silent exe 'term ' . s:pwsh_cmd . ' -NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -Command Get-Help -Full "<args>"' . (executable('less') ? ' | less' : '')
+    command! -buffer -nargs=1 Ps1KeywordPrg silent exe 'term ' . s:pwsh_cmd . ' -NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -Command Get-Help -Full "<args>"' . (executable('less') ? ' | less' : '')
   else
-    command! -buffer -nargs=1 GetHelp echo system(s:pwsh_cmd . ' -NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -Command Get-Help -Full <args>')
+    command! -buffer -nargs=1 Ps1KeywordPrg echo system(s:pwsh_cmd . ' -NoLogo -NoProfile -NonInteractive -ExecutionPolicy RemoteSigned -Command Get-Help -Full <args>')
   endif
+  setlocal keywordprg=:Ps1KeywordPrg
 endif
-setlocal keywordprg=:GetHelp
 
 " Undo the stuff we changed
-let b:undo_ftplugin = "setlocal tw< cms< fo< iskeyword< keywordprg<" .
+let b:undo_ftplugin = "setlocal tw< cms< fo< iskeyword< keywordprg< quoteescape<" .
+                        \ " | sil! delc -buffer Ps1KeywordPrg" .
 			\ " | unlet! b:browsefilter"
-

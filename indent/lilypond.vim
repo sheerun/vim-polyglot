@@ -35,6 +35,8 @@ let b:did_indent = 1
 setlocal indentexpr=GetLilyPondIndent()
 setlocal indentkeys=o,O,},>>,!^F
 
+let b:undo_indent = "setlocal indentexpr< indentkeys<"
+
 " Only define the function once.
 if exists("*GetLilyPondIndent")
   finish

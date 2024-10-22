@@ -87,6 +87,7 @@ syn match htmlTagName contained "[.0-9_a-z]\@<=-[-.0-9_a-z]*\>"
 " Core Attributes
 syn keyword htmlArg contained accesskey class contenteditable contextmenu dir 
 syn keyword htmlArg contained draggable hidden id is lang spellcheck style tabindex title translate
+syn keyword htmlArg contained inert
 " Event-handler Attributes
 syn keyword htmlArg contained onabort onblur oncanplay oncanplaythrough onchange
 syn keyword htmlArg contained onclick oncontextmenu ondblclick ondrag ondragend ondragenter ondragleave ondragover 
@@ -118,6 +119,8 @@ syn keyword htmlArg contained select
 syn keyword htmlArg contained seamless srcdoc sandbox allowfullscreen allowusermedia allowpaymentrequest allowpresentation
 " <picture>
 syn keyword htmlArg contained srcset sizes
+" <dialog>
+syn keyword htmlArg contained open
 " <a>
 syn keyword htmlArg contained download media
 " <script>, <style>

@@ -9,5 +9,4 @@ syntax keyword typescriptNodeGlobal containedin=typescriptIdentifierName setTime
 syntax keyword typescriptNodeGlobal containedin=typescriptIdentifierName clearTimeout
 syntax keyword typescriptNodeGlobal containedin=typescriptIdentifierName setInterval
 syntax keyword typescriptNodeGlobal containedin=typescriptIdentifierName clearInterval
-if exists("did_typescript_hilink") | HiLink typescriptNodeGlobal Structure
-endif
+hi def link typescriptNodeGlobal Structure

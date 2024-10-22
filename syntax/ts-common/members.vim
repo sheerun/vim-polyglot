@@ -1,4 +1,4 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/basic/members.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/ts-common/members.vim')
   finish
 endif
 
@@ -20,6 +20,7 @@ syntax cluster typescriptPropertyMemberDeclaration contains=
   \ typescriptClassStatic,
   \ typescriptAccessibilityModifier,
   \ typescriptReadonlyModifier,
+  \ typescriptAutoAccessor,
   \ typescriptMethodAccessor,
   \ @typescriptMembers
   " \ typescriptMemberVariableDeclaration
@@ -37,6 +38,8 @@ syntax keyword typescriptClassStatic static
 syntax keyword typescriptAccessibilityModifier public private protected contained
 
 syntax keyword typescriptReadonlyModifier readonly override contained
+
+syntax keyword typescriptAutoAccessor accessor contained
 
 syntax region  typescriptStringMember   contained
   \ start=/\z(["']\)/  skip=/\\\\\|\\\z1\|\\\n/  end=/\z1/

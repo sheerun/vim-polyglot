@@ -7,8 +7,7 @@ endif
 " Maintainer:   Heikki Junes <hjunes@cc.hut.fi>
 " License:      This file is part of LilyPond, the GNU music typesetter.
 "
-"               Copyright (C) 1998, 2002, 2004, 2010, 2016
-"                             Han-Wen Nienhuys <hanwen@xs4all.nl>
+"               Copyright (C) 1998--2022 Han-Wen Nienhuys <hanwen@xs4all.nl>
 "
 "               LilyPond is free software: you can redistribute it and/or modify
 "               it under the terms of the GNU General Public License as published by
@@ -35,6 +34,9 @@ endif
 
 " Don't load another plugin for this buffer
 let b:did_ftplugin = 1
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 setlocal autoindent
 setlocal shiftwidth=2
@@ -77,3 +79,17 @@ setlocal dictionary-=$VIM/syntax/lilypond-words dictionary+=$VIM/syntax/lilypond
 setlocal complete-=k complete+=k
 "
 setlocal showmatch
+
+let b:undo_ftplugin = "setlocal autoindent< cpoptions< complete< dictionary< showmatch< shiftwidth< wildcharm< wildmenu<" .
+      \               " | silent! execute 'unmap <buffer> <F4>'" .
+      \               " | silent! execute 'unmap <buffer> <F5>'" .
+      \               " | silent! execute 'unmap <buffer> <F6>'" .
+      \               " | silent! execute 'unmap <buffer> <F7>'" .
+      \               " | silent! execute 'unmap <buffer> <F8>'" .
+      \               " | silent! execute 'unmap <buffer> <F9>'" .
+      \               " | silent! execute 'unmap <buffer> <F10>'" .
+      \               " | silent! execute 'unmap <buffer> <F12>'" .
+      \               " | silent! execute 'unmap <buffer> <S-F12>'"
+
+let &cpo = s:cpo_save
+unlet s:cpo_save

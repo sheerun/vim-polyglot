@@ -48,7 +48,7 @@ syn match ps1Repeat /\<foreach\>/ nextgroup=ps1Block skipwhite
 syn match ps1Keyword /\<while\>/ nextgroup=ps1Block skipwhite
 syn match ps1Keyword /\<where\>/ nextgroup=ps1Block skipwhite
 
-syn keyword ps1Exception begin process end exit inlinescript parallel sequence
+syn keyword ps1Exception begin process end clean exit inlinescript parallel sequence
 syn keyword ps1Keyword try catch finally throw
 syn keyword ps1Keyword return filter in trap param data dynamicparam 
 syn keyword ps1Constant $true $false $null
@@ -116,12 +116,12 @@ syn match ps1Operator /\(^\|\s\)\@<=\. \@=/
 
 " Regular Strings
 " These aren't precisely correct and could use some work
-syn region ps1String start=/"/ skip=/`"/ end=/"/ contains=@ps1StringSpecial,@Spell
-syn region ps1String start=/'/ skip=/''/ end=/'/
+syn region ps1String start=/["\u201c-\u201e]/ skip=/`["\u201c-\u201e]/ end=/["\u201c-\u201e]/ contains=@ps1StringSpecial,@Spell
+syn region ps1String start=/['\u2018-\u201b]/ end=/['\u2018-\u201b]/
 
 " Here-Strings
-syn region ps1String start=/@"$/ end=/^"@/ contains=@ps1StringSpecial,@Spell
-syn region ps1String start=/@'$/ end=/^'@/
+syn region ps1String start=/@["\u201c-\u201e]$/ end=/^["\u201c-\u201e]@/ contains=@ps1StringSpecial,@Spell
+syn region ps1String start=/@['\u2018-\u201b]$/ end=/^['\u2018-\u201b]@/
 
 " Interpolation
 syn match ps1Escape /`./
@@ -144,7 +144,7 @@ syn match ps1BuiltIn "$\%(match\(es\)\?\|myinvocation\|host\|lastexitcode\)\>"
 syn match ps1BuiltIn "$\%(ofs\|shellid\|stacktrace\)\>"
 
 " Named Switch
-syn match ps1Label /\s-\w\+/
+syn match ps1Label /\s-\h\w*/
 
 " Folding blocks
 if !exists('g:ps1_nofold_blocks')
