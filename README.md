@@ -2,9 +2,7 @@ This is my top-starred repository on Github, so I've decided to put this ad here
 
 If you work for big corp and seek consulting, please visit following repository: https://github.com/sheerun/consultation
 
-![vim-polyglot](https://i.imgur.com/9RxQK6k.png)
-
-[![build](https://github.com/sheerun/vim-polyglot/workflows/Vim%20Polyglot%20CI/badge.svg)](https://github.com/sheerun/vim-polyglot/actions) [![Maintenance](https://img.shields.io/badge/maintained%20since-2013-yes)]()
+![vim-polyglot](https://i.imgur.com/9RxQK6k.png
 
 A collection of language packs for Vim.
 
