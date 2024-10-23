@@ -9,6 +9,16 @@ if exists('b:did_ftplugin') || v:version < 700 || &compatible
   finish
 endif
 
+if !has('patch-7.4.1142')
+  " Include hyphens as keyword characters so that:
+  " 1. a keyword appearing as part of a longer name doesn't get partially
+  "    highlighted.
+  " 2. Goto local declaration works correctly (see `:h gd`)
+  " 3. Tag navigation works correctly (see `:h i_CTRL-X_CTRL-]`)
+  setlocal iskeyword+=-
+  let b:undo_ftplugin .= ' iskeyword<'
+endif
+
 " Have only kept the terraform versions of these options for backwards
 " compatibility.
 if get(g:, 'terraform_fold_sections', 0)
