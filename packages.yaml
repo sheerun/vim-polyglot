@@ -5551,3 +5551,10 @@ filetypes:
   patterns:
   - pattern: '*.bicep'
     description: Microsoft Bicep
+---
+name: bitbake
+remote: kergoth/vim-bitbake
+filetypes:
+  - name: bitbake
+    extensions:
+    - bb
