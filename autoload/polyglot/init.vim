@@ -190,7 +190,7 @@ if !has_key(g:polyglot_is_disabled, 'nftables')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'just')
-  au BufNewFile,BufRead *.just,justfile setf just
+  au BufNewFile,BufRead *.just,\cjustfile setf just
 endif
 
 if !has_key(g:polyglot_is_disabled, 'sway')
