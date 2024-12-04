@@ -238,7 +238,7 @@ function! fsharp#loadConfig()
     endif
 
     if !exists('g:fsharp#fsautocomplete_command')
-        let g:fsharp#fsautocomplete_command = ['fsautocomplete', '--background-service-enabled']
+        let g:fsharp#fsautocomplete_command = ['fsautocomplete']
     endif
     if !exists('g:fsharp#use_recommended_server_config')
         let g:fsharp#use_recommended_server_config = 1
@@ -584,7 +584,7 @@ function! fsharp#openFsi(returnFocus)
             if a:returnFocus | call s:win_gotoid_safe(current_win) | endif
             return s:fsi_buffer
         else
-            echom "[FSAC] Your (neo)vim does not support terminal".
+            echom "[FSAC] Your (neo)vim does not support terminal."
             return 0
         endif
     endif

@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'requirements', 'ftplugin/requ
 endif
 
 " the Requirements File Format syntax support for Vim
-" Version: 1.7.1
+" Version: 1.8.0
 " Author:  raimon <raimon49@hotmail.com>
 " License: MIT LICENSE
 " The MIT License (MIT)

@@ -23,7 +23,11 @@ if !exists('g:ledger_main')
   let g:ledger_main = '%'
 endif
 
-if !g:ledger_is_hledger
+if !exists ('b:is_hledger')
+  let b:is_hledger = g:ledger_is_hledger
+endif
+
+if !b:is_hledger
 	" Capture Ledger errors (%-C ignores all lines between "While parsing..." and "Error:..."):
 	CompilerSet errorformat=%EWhile\ parsing\ file\ \"%f\"\\,\ line\ %l:,%ZError:\ %m,%-C%.%#
 	" Capture Ledger warnings:

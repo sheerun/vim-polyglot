@@ -2,7 +2,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'graphql', 'indent/graphql.vim
   finish
 endif
 
-" Copyright (c) 2016-2021 Jon Parise <jon@indelible.org>
+" Copyright (c) Jon Parise <jon@indelible.org>
 "
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to
@@ -64,11 +64,11 @@ function GetGraphQLIndent()
     return 0
   endif
 
-  " If the previous line isn't GraphQL, don't change this line's indentation.
-  " Assume we've been manually indented as part of a template string.
+  " If the previous line isn't GraphQL, assume we're part of a template
+  " string and indent this new line within it.
   let l:stack = map(synstack(l:prevlnum, 1), "synIDattr(v:val, 'name')")
   if get(l:stack, -1) !~# '^graphql'
-    return -1
+    return indent(l:prevlnum) + shiftwidth()
   endif
 
   let l:line = getline(v:lnum)

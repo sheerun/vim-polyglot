@@ -56,7 +56,7 @@ enddef
 
 def PrettyPrint(scanner: dict<any>, token: dict<any>)
     const coord = scanner->Pos2Coord(token.pos)
-    echo printf("%4d:%-3d (%5d) %8s %s", coord.line, coord.col, token.pos, token.kind->smt2#scanner#TokenKind2Str(), token.lexeme)
+    echo printf("%5d %4d:%-3d  %8s %s", token.pos, coord.line, coord.col, token.kind->smt2#scanner#TokenKind2Str(), token.lexeme)
 enddef
 
 # ------------------------------------------------------------------------------
@@ -72,12 +72,14 @@ enddef
 # TODO: Enforce restriction to ASCII? We should if we use the lookup table below
 # TODO: Do not take a string but a character stream (or just buffer and pos)?
 
-def smt2#scanner#Scanner(source: string, line_offset = 1): dict<any>
+def smt2#scanner#Scanner(source: string, start_line = 1, start_col = 1): dict<any>
     var scanner = {
-        chars: source->trim(" \t\n\r", 2)->split('\zs'),
-        line_offset: line_offset, # start line of source string in buffer
-        pos: 0,                   # pos in source string -- not column in line
-        at_new_paragraph: false}
+        chars: source->trim(" \n\r\t", 2)->split('\zs'),
+        line_offset: start_line, # start line of source string in buffer
+        pos: start_col - 1,      # pos in source string -- not column in line
+        at_new_paragraph: false,
+    }
+    scanner.calcCoord = (pos: number): dict<number> => Pos2Coord(scanner, pos)
 
     if scanner.chars->empty()
         scanner.at_eof = true

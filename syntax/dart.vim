@@ -23,7 +23,7 @@ syntax sync fromstart
 syntax case match
 
 " keyword definitions
-syntax keyword dartConditional    if else switch
+syntax keyword dartConditional    if else switch when
 syntax keyword dartRepeat         do while for
 syntax keyword dartBoolean        true false
 syntax keyword dartConstant       null
