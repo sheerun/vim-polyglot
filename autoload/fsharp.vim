@@ -167,7 +167,10 @@ let s:config_keys_camel =
     \     {'key': 'ExcludeProjectDirectories', 'default': []},
     \     {'key': 'keywordsAutocomplete', 'default': 1},
     \     {'key': 'ExternalAutocomplete', 'default': 0},
+    \     {'key': 'FullNameExternalAutocomplete', 'default': 0},
     \     {'key': 'Linter', 'default': 1},
+    \     {'key': 'LinterConfig'},
+    \     {'key': 'IndentationSize', 'default': 4},
     \     {'key': 'UnionCaseStubGeneration', 'default': 1},
     \     {'key': 'UnionCaseStubGenerationBody'},
     \     {'key': 'RecordStubGeneration', 'default': 1},
@@ -175,18 +178,39 @@ let s:config_keys_camel =
     \     {'key': 'InterfaceStubGeneration', 'default': 1},
     \     {'key': 'InterfaceStubGenerationObjectIdentifier', 'default': 'this'},
     \     {'key': 'InterfaceStubGenerationMethodBody'},
+    \     {'key': 'AddPrivateAccessModifier', 'default': 0},
     \     {'key': 'UnusedOpensAnalyzer', 'default': 1},
+    \     {'key': 'UnusedOpensAnalyzerExclusions', 'default': []},
     \     {'key': 'UnusedDeclarationsAnalyzer', 'default': 1},
+    \     {'key': 'UnusedDeclarationsAnalyzerExclusions', 'default': []},
     \     {'key': 'SimplifyNameAnalyzer', 'default': 0},
+    \     {'key': 'SimplifyNameAnalyzerExclusions', 'default': []},
+    \     {'key': 'UnnecessaryParenthesesAnalyzer', 'default': 0},
     \     {'key': 'ResolveNamespaces', 'default': 1},
     \     {'key': 'EnableReferenceCodeLens', 'default': 1},
     \     {'key': 'EnableAnalyzers', 'default': 0},
     \     {'key': 'AnalyzersPath'},
+    \     {'key': 'ExcludeAnalyzers'},
+    \     {'key': 'IncludeAnalyzers'},
     \     {'key': 'DisableInMemoryProjectReferences', 'default': 0},
     \     {'key': 'LineLens', 'default': {'enabled': 'never', 'prefix': ''}},
     \     {'key': 'UseSdkScripts', 'default': 1},
     \     {'key': 'dotNetRoot'},
-    \     {'key': 'fsiExtraParameters', 'default': []},
+    \     {'key': 'fsiExtraParameters'},
+    \     {'key': 'fsiExtraInteractiveParameters', 'default': ['--readline-']},
+    \     {'key': 'fsiExtraSharedParameters', 'default': []},
+    \     {'key': 'fsiCompilerToolLocations', 'default': []},
+    \     {'key': 'TooltipMode', 'default': 'full'},
+    \     {'key': 'GenerateBinlog', 'default': 0},
+    \     {'key': 'AbstractClassStubGeneration', 'default': 1},
+    \     {'key': 'AbstractClassStubGenerationObjectIdentifier', 'default': 'this'},
+    \     {'key': 'AbstractClassStubGenerationMethodBody', 'default': 'failwith "Not Implemented"'},
+    "\    {'key': 'CodeLenses', TODO},
+    "\    {'key': 'PipelineHints', TODO}
+    "\    {'key': 'InlayHints', TODO}
+    "\    {'key': 'Fsac', TODO}
+    "\    {'key': 'Notifications', TODO}
+    "\    {'key': 'Debug', TODO}
     \ ]
 let s:config_keys = []
 
@@ -238,7 +262,7 @@ function! fsharp#loadConfig()
     endif
 
     if !exists('g:fsharp#fsautocomplete_command')
-        let g:fsharp#fsautocomplete_command = ['fsautocomplete', '--background-service-enabled']
+        let g:fsharp#fsautocomplete_command = ['fsautocomplete']
     endif
     if !exists('g:fsharp#use_recommended_server_config')
         let g:fsharp#use_recommended_server_config = 1
@@ -411,6 +435,10 @@ endfunction
 
 let s:workspace = []
 
+function! fsharp#getLoadedProjects()
+    return copy(s:workspace)
+endfunction
+
 function! fsharp#handle_notifyWorkspace(payload) abort
     let content = json_decode(a:payload.content)
     if content.Kind == 'projectLoading'
@@ -532,7 +560,16 @@ endfunction
 
 function! s:get_fsi_command()
     let cmd = g:fsharp#fsi_command
-    for prm in g:fsharp#fsi_extra_parameters
+    if exists("g:fsharp#fsi_extra_parameters")
+        echom "[Ionide-vim]: `g:fsharp#fsi_extra_parameters` is being deprecated. Migrate to `g:fsharp#fsi_extra_interactive_parameters` and `g:fsharp_extra_shared_parameters`."
+        for prm in g:fsharp#fsi_extra_parameters
+            let cmd = cmd . " " . prm
+        endfor
+    endif
+    for prm in g:fsharp#fsi_extra_interactive_parameters
+        let cmd = cmd . " " . prm
+    endfor
+    for prm in g:fsharp#fsi_extra_shared_parameters
         let cmd = cmd . " " . prm
     endfor
     return cmd
@@ -584,7 +621,7 @@ function! fsharp#openFsi(returnFocus)
             if a:returnFocus | call s:win_gotoid_safe(current_win) | endif
             return s:fsi_buffer
         else
-            echom "[FSAC] Your (neo)vim does not support terminal".
+            echom "[FSAC] Your (neo)vim does not support terminal."
             return 0
         endif
     endif

@@ -16,11 +16,7 @@ if exists('b:current_syntax')
 endif
 
 if !exists ('b:is_hledger')
-  if exists('g:ledger_is_hledger')
-    let b:is_hledger = 1
-  else
-    let b:is_hledger = 0
-  endif
+  let b:is_hledger = g:ledger_is_hledger
 endif
 
 " Force old regex engine (:help two-engines)
@@ -47,20 +43,20 @@ syntax clear
 "   ACCOUNT AMOUNT [; NOTE]  <-- posting
 
 exe 'syn region ledgerTransaction start=/^[[:digit:]~=]/ '.
-  \ 'skip=/^\s'. s:skip . '/ end=/^/ fold keepend transparent '.
-  \ 'contains=ledgerTransactionDate,ledgerTransactionMetadata,ledgerPosting,ledgerTransactionExpression'
+      \ 'skip=/^\s'. s:skip . '/ end=/^/ fold keepend transparent '.
+      \ 'contains=ledgerTransactionDate,ledgerTransactionMetadata,ledgerPosting,ledgerTransactionExpression'
 syn match ledgerTransactionDate /^\d\S\+/ contained
 syn match ledgerTransactionExpression /^[=~]\s\+\zs.*/ contained
 syn match ledgerPosting /^\s\+[^[:blank:];].*/
-    \ contained transparent contains=ledgerAccount,ledgerAmount,ledgerValueExpression,ledgerPostingMetadata
+      \ contained transparent contains=ledgerAccount,ledgerAmount,ledgerValueExpression,ledgerPostingMetadata
 " every space in an account name shall be surrounded by two non-spaces
 " every account name ends with a tab, two spaces or the end of the line
 exe 'syn match ledgerAccount '.
-  \ '/'.s:oe.'^\s\+\zs\%(\S'.s:lb1.' \S\|\S\)\+\ze\%(  \|\t\|\s*$\)/ contained'
+      \ '/'.s:oe.'^\s\+\zs\%(\S'.s:lb1.' \S\|\S\)\+\ze\%(  \|\t\|\s*$\)/ contained'
 exe 'syn match ledgerAmount '.
-  \ '/'.s:oe.'\S'.s:lb1.'\%(  \|\t\)\s*\zs\%([^();[:space:]]\|\s\+[^();[:space:]]\)\+/ contains='.s:ledgerAmount_contains.' contained'
+      \ '/'.s:oe.'\S'.s:lb1.'\%(  \|\t\)\s*\zs\%([^();[:space:]]\|\s\+[^();[:space:]]\)\+/ contains='.s:ledgerAmount_contains.' contained'
 exe 'syn match ledgerValueExpression '.
-  \ '/'.s:oe.'\S'.s:lb1.'\%(  \|\t\)\s*\zs(\%([^;[:space:]]\|\s\+[^;[:space:]]\)\+)/ contains='.s:ledgerAmount_contains.' contained'
+      \ '/'.s:oe.'\S'.s:lb1.'\%(  \|\t\)\s*\zs(\%([^;[:space:]]\|\s\+[^;[:space:]]\)\+)/ contains='.s:ledgerAmount_contains.' contained'
 
 syn region ledgerPreDeclaration start=/^\(account\|payee\|commodity\|tag\)/ skip=/^\s/ end=/^/
     \ keepend transparent
@@ -76,35 +72,51 @@ syn match ledgerOneCharDirective /^\%(P\|A\|Y\|N\|D\|C\)\s/
 syn region ledgerBlockComment start=/^comment/ end=/^end comment/
 syn region ledgerBlockTest start=/^test/ end=/^end test/
 exe 'syn match ledgerComment /^['.s:line_comment_chars.'].*$/'
-" comments at eol must be preceded by at least 2 spaces / 1 tab
+
+" Tags (metadata) are handled a bit differntly in ledger-cli vs. hledger even
+" though they both nested in commens the same way.
 if b:is_hledger
-	syn region ledgerTransactionMetadata start=/;/ end=/^/
-				\ keepend contained contains=ledgerTags,ledgerValueTag,ledgerTypedTag
+  syn region ledgerTransactionMetadata start=/;/ end=/^/
+        \ keepend contained contains=ledgerTags
+  syn region ledgerPostingMetadata start=/;/ end=/^/
+        \ keepend contained contains=ledgerTags
 else
-	syn region ledgerTransactionMetadata start=/\%(\s\s\|\t\|^\s\+\);/ end=/^/
-				\ keepend contained contains=ledgerTags,ledgerValueTag,ledgerTypedTag
+  syn region ledgerTransactionMetadata start=/\%(\s\s\|\t\|^\s\+\);/ end=/^/
+        \ keepend contained contains=ledgerTags,ledgerValueTag,ledgerTypedTag
+  syn region ledgerPostingMetadata start=/;/ end=/^/
+        \ keepend contained contains=ledgerTags,ledgerValueTag,ledgerTypedTag
 endif
-syn region ledgerPostingMetadata start=/;/ end=/^/
-    \ keepend contained contains=ledgerTags,ledgerValueTag,ledgerTypedTag
-exe 'syn match ledgerTags '.
-    \ '/'.s:oe.'\%(\%(;\s*\|^tag\s\+\)\)\@<='.
-    \ ':[^:[:space:]][^:]*\%(::\?[^:[:space:]][^:]*\)*:\s*$/ '.
-    \ 'contained contains=ledgerTag'
-syn match ledgerTag /:\zs[^:]\+\ze:/ contained
-exe 'syn match ledgerValueTag '.
-  \ '/'.s:oe.'\%(\%(;\|^tag\)[^:]\+\)\@<=[^:]\+:\ze.\+$/ contained'
-exe 'syn match ledgerTypedTag '.
-  \ '/'.s:oe.'\%(\%(;\|^tag\)[^:]\+\)\@<=[^:]\+::\ze.\+$/ contained'
+
+" https://hledger.org/tags-tutorial.html
+" https://www.ledger-cli.org/3.0/doc/ledger3.html#Metadata
+if b:is_hledger
+  syn match ledgerTags /\v[[:alnum:]_-]+:[^,;]*/
+      \ contained contains=ledgerTag
+  syn match ledgerTag /\v[[:alnum:]_-]+/ contained nextgroup=ledgerTagDef
+  syn match ledgerTagDef ":" contained nextgroup=ledgerTagValue,ledgerTagSep
+  syn match ledgerTagValue /\v[^,;]+/ contained nextgroup=ledgerTagSep
+  syn match ledgerTagSep /,/ contained
+else
+  exe 'syn match ledgerTags '.
+      \ '/'.s:oe.'\%(\%(;\s*\|^tag\s\+\)\)\@<='.
+      \ ':[^:[:space:]][^:]*\%(::\?[^:[:space:]][^:]*\)*:\s*$/ '.
+      \ 'contained contains=ledgerTag'
+  syn match ledgerTag /:\zs[^:]\+\ze:/ contained
+  exe 'syn match ledgerValueTag '.
+    \ '/'.s:oe.'\%(\%(;\|^tag\)[^:]\+\)\@<=[^:]\+:\ze.\+$/ contained'
+  exe 'syn match ledgerTypedTag '.
+    \ '/'.s:oe.'\%(\%(;\|^tag\)[^:]\+\)\@<=[^:]\+::\ze.\+$/ contained'
+endif
 
 syn region ledgerApply
     \ matchgroup=ledgerStartApply start=/^apply\>/
     \ matchgroup=ledgerEndApply end=/^end\s\+apply\>/
     \ contains=ledgerApplyHead,ledgerApply,ledgerTransaction,ledgerComment
 exe 'syn match ledgerApplyHead '.
-  \ '/'.s:oe.'\%(^apply\s\+\)\@<=\S.*$/ contained'
+      \ '/'.s:oe.'\%(^apply\s\+\)\@<=\S.*$/ contained'
 
 syntax keyword ledgerTodo FIXME TODO
-  \ contained containedin=ledgerComment,ledgerTransaction,ledgerTransactionMetadata,ledgerPostingMetadata
+      \ contained containedin=ledgerComment,ledgerTransaction,ledgerTransactionMetadata,ledgerPostingMetadata
 
 highlight default link ledgerComment Comment
 highlight default link ledgerBlockComment Comment
@@ -116,6 +128,9 @@ highlight default link ledgerPostingMetadata Tag
 highlight default link ledgerTypedTag Keyword
 highlight default link ledgerValueTag Type
 highlight default link ledgerTag Type
+highlight default link ledgerTagValue Label
+highlight default link ledgerTagDef Delimiter
+highlight default link ledgerTagSep Delimiter
 highlight default link ledgerStartApply Tag
 highlight default link ledgerEndApply Tag
 highlight default link ledgerApplyHead Type
@@ -128,9 +143,9 @@ highlight default link ledgerPreDeclarationDirective Type
 highlight default link ledgerDirective Type
 highlight default link ledgerOneCharDirective Type
 highlight default link ledgerTodo Todo
- 
+
 " syncinc is easy: search for the first transaction.
 syn sync clear
 syn sync match ledgerSync grouphere ledgerTransaction "^[[:digit:]~=]"
- 
+
 let b:current_syntax = b:is_hledger ? 'hledger' : 'ledger'

@@ -5,8 +5,7 @@ endif
 syntax keyword typescriptGlobal containedin=typescriptIdentifierName String nextgroup=typescriptGlobalStringDot,typescriptFuncCallArg
 syntax match   typescriptGlobalStringDot /\./ contained nextgroup=typescriptStringStaticMethod,typescriptProp
 syntax keyword typescriptStringStaticMethod contained fromCharCode fromCodePoint raw nextgroup=typescriptFuncCallArg
-if exists("did_typescript_hilink") | HiLink typescriptStringStaticMethod Keyword
-endif
+hi def link typescriptStringStaticMethod Keyword
 syntax keyword typescriptStringMethod contained anchor charAt charCodeAt codePointAt nextgroup=typescriptFuncCallArg
 syntax keyword typescriptStringMethod contained concat endsWith includes indexOf lastIndexOf nextgroup=typescriptFuncCallArg
 syntax keyword typescriptStringMethod contained link localeCompare match matchAll normalize nextgroup=typescriptFuncCallArg
@@ -16,5 +15,4 @@ syntax keyword typescriptStringMethod contained toLocaleLowerCase toLocaleUpperC
 syntax keyword typescriptStringMethod contained toLowerCase toString toUpperCase trim nextgroup=typescriptFuncCallArg
 syntax keyword typescriptStringMethod contained trimEnd trimStart valueOf nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptStringMethod
-if exists("did_typescript_hilink") | HiLink typescriptStringMethod Keyword
-endif
+hi def link typescriptStringMethod Keyword

@@ -4,8 +4,9 @@ endif
 
 " Vim syntax file
 " Language:	Vim help file
-" Maintainer:	Bram Moolenaar (Bram@vim.org)
-" Last Change:	2022 Sep 26
+" Maintainer:	The Vim Project <https://github.com/vim/vim>
+" Last Change:	2023 Aug 10
+" Former Maintainer:	Bram Moolenaar <Bram@vim.org>
 
 " Quit when a (custom) syntax file was already loaded
 if exists("b:current_syntax")
@@ -15,13 +16,14 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-syn match helpHeadline		"^[-A-Z .][-A-Z0-9 .()_]*\ze\(\s\+\*\|$\)"
+syn match helpHeadline		"^[A-Z.][-A-Z0-9 .,()_']*?\=\ze\(\s\+\*\|$\)"
 syn match helpSectionDelim	"^===.*===$"
 syn match helpSectionDelim	"^---.*--$"
+" Neovim: support language annotation in codeblocks
 if has("conceal")
-  syn region helpExample	matchgroup=helpIgnore start=" >$" start="^>$" end="^[^ \t]"me=e-1 end="^<" concealends
+  syn region helpExample	matchgroup=helpIgnore start=" >[a-z0-9]*$" start="^>[a-z0-9]*$" end="^[^ \t]"me=e-1 end="^<" concealends
 else
-  syn region helpExample	matchgroup=helpIgnore start=" >$" start="^>$" end="^[^ \t]"me=e-1 end="^<"
+  syn region helpExample	matchgroup=helpIgnore start=" >[a-z0-9]*$" start="^>[a-z0-9]*$" end="^[^ \t]"me=e-1 end="^<"
 endif
 syn match helpHyperTextJump	"\\\@<!|[#-)!+-~]\+|" contains=helpBar
 syn match helpHyperTextEntry	"\*[#-)!+-~]\+\*\s"he=e-1 contains=helpStar
@@ -138,6 +140,10 @@ syn match helpTodo		"\t[* ]Todo\t\+[a-z].*"
 
 syn match helpURL `\v<(((https?|ftp|gopher)://|(mailto|file|news):)[^' 	<>"]+|(www|web|w3)[a-z0-9_-]*\.[a-z0-9._-]+\.[^' 	<>"]+)[a-zA-Z0-9/]`
 
+syn match helpDiffAdded		"\t[* ]Added\t\+[a-z].*"
+syn match helpDiffChanged	"\t[* ]Changed\t\+[a-z].*"
+syn match helpDiffRemoved	"\t[* ]Removed\t\+[a-z].*"
+
 " Additionally load a language-specific syntax file "help_ab.vim".
 let s:i = match(expand("%"), '\.\a\ax$')
 if s:i > 0
@@ -211,6 +217,9 @@ hi def link helpUnderlined	Underlined
 hi def link helpError		Error
 hi def link helpTodo		Todo
 hi def link helpURL		String
+hi def link helpDiffAdded	Added
+hi def link helpDiffChanged	Changed
+hi def link helpDiffRemoved	Removed
 
 let b:current_syntax = "help"
 

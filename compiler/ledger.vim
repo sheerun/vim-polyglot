@@ -23,7 +23,11 @@ if !exists('g:ledger_main')
   let g:ledger_main = '%'
 endif
 
-if !g:ledger_is_hledger
+if !exists ('b:is_hledger')
+  let b:is_hledger = g:ledger_is_hledger
+endif
+
+if !b:is_hledger
 	" Capture Ledger errors (%-C ignores all lines between "While parsing..." and "Error:..."):
 	CompilerSet errorformat=%EWhile\ parsing\ file\ \"%f\"\\,\ line\ %l:,%ZError:\ %m,%-C%.%#
 	" Capture Ledger warnings:
@@ -32,5 +36,8 @@ if !g:ledger_is_hledger
 	CompilerSet errorformat+=%-G%.%#
 	exe 'CompilerSet makeprg='.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . substitute(shellescape(expand(g:ledger_main)), ' ', '\\ ', 'g') . '\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ source\ ' . shellescape(expand(g:ledger_main))
 else
-	exe 'CompilerSet makeprg=('.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . substitute(shellescape(expand(g:ledger_main)), ' ', '\\ ', 'g') . '\ print\ '.substitute(g:ledger_extra_options, ' ', '\\ ', 'g').'\ >\ /dev/null)'
+	exe 'CompilerSet makeprg='.substitute(g:ledger_bin, ' ', '\\ ', 'g').'\ -f\ ' . substitute(shellescape(expand(g:ledger_main)), ' ', '\\ ', 'g') . '\ check\ '. substitute(g:ledger_extra_options, ' ', '\\ ', 'g')
+	CompilerSet errorformat=hledger:\ %trror:\ %f:%l:%c:
+	CompilerSet errorformat+=hledger:\ %trror:\ %f:%l:
+	CompilerSet errorformat+=hledger:\ %trror:\ %f:%l-%.%#:
 endif

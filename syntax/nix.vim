@@ -54,6 +54,7 @@ syn region nixString matchgroup=nixStringDelimiter start=+''+ skip=+''['$\\]+ en
 syn match nixFunctionCall "[a-zA-Z_][a-zA-Z0-9_'-]*"
 
 syn match nixPath "[a-zA-Z0-9._+-]*\%(/[a-zA-Z0-9._+-]\+\)\+"
+syn region nixInterpolatedPath start="\%(\~\|[a-zA-Z0-9._+-]*\)/[a-zA-Z0-9._+/-]*\ze${" skip="[a-zA-Z0-9._+/-]*\ze${" end="}\@<=[a-zA-Z0-9._+/-]*\%([^a-zA-Z0-9._+/-]\|$\)\@=" contains=nixInterpolation
 syn match nixHomePath "\~\%(/[a-zA-Z0-9._+-]\+\)\+"
 syn match nixSearchPath "[a-zA-Z0-9._+-]\+\%(\/[a-zA-Z0-9._+-]\+\)*" contained
 syn match nixPathDelimiter "[<>]" contained
@@ -65,7 +66,8 @@ syn match nixAttribute "[a-zA-Z_][a-zA-Z0-9_'-]*\ze\%([^a-zA-Z0-9_'.-]\|$\)" con
 syn region nixAttributeAssignment start="=" end="\ze;" contained contains=@nixExpr
 syn region nixAttributeDefinition start=/\ze[a-zA-Z_"$]/ end=";" contained contains=nixComment,nixAttribute,nixInterpolation,nixSimpleString,nixAttributeDot,nixAttributeAssignment
 
-syn region nixInheritAttributeScope start="(" end="\ze)" contained contains=@nixExpr
+syn region nixInheritAttributeSubExpr start="("ms=e+1 end="\ze)" contained contains=nixAttributeDot,@nixExpr
+syn region nixInheritAttributeScope start="\ze(" end=")" contained contains=nixInheritAttributeSubExpr
 syn region nixAttributeDefinition matchgroup=nixInherit start="\<inherit\>" end=";" contained contains=nixComment,nixInheritAttributeScope,nixAttribute
 
 syn region nixAttributeSet start="{" end="}" contains=nixComment,nixAttributeDefinition
@@ -126,7 +128,7 @@ syn region nixWithExpr matchgroup=nixWithExprKeyword start="\<with\>" matchgroup
 
 syn region nixAssertExpr matchgroup=nixAssertKeyword start="\<assert\>" matchgroup=NONE end=";" contains=@nixExpr
 
-syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixRecKeyword,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixArgOperator,nixSimpleFunctionArgument,nixPath,nixHomePath,nixSearchPathRef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr,nixInterpolation
+syn cluster nixExpr contains=nixBoolean,nixNull,nixOperator,nixParen,nixInteger,nixRecKeyword,nixConditional,nixBuiltin,nixSimpleBuiltin,nixComment,nixFunctionCall,nixFunctionArgument,nixArgOperator,nixSimpleFunctionArgument,nixInterpolatedPath,nixPath,nixHomePath,nixSearchPathRef,nixURI,nixAttributeSet,nixList,nixSimpleString,nixString,nixLetExpr,nixIfExpr,nixWithExpr,nixAssertExpr,nixInterpolation
 
 " These definitions override @nixExpr and have to come afterwards:
 
@@ -139,22 +141,112 @@ syn keyword nixSimpleBuiltin
       \ scopedImport throw toString
 
 
+" Generated automatically: use `./builtins.sh` from the repo's root to update.
 " Namespaced and non-namespaced Nix builtins as of version 2.0:
 syn keyword nixNamespacedBuiltin contained
-      \ abort add addErrorContext all any attrNames attrValues baseNameOf
-      \ catAttrs compareVersions concatLists concatStringsSep currentSystem
-      \ currentTime deepSeq derivation derivationStrict dirOf div elem elemAt
-      \ fetchGit fetchMercurial fetchTarball fetchurl filter \ filterSource
-      \ findFile foldl' fromJSON functionArgs genList \ genericClosure getAttr
-      \ getEnv hasAttr hasContext hashString head import intersectAttrs isAttrs
-      \ isBool isFloat isFunction isInt isList isNull isString langVersion
-      \ length lessThan listToAttrs map mapAttrs match mul nixPath nixVersion
-      \ parseDrvName partition path pathExists placeholder readDir readFile
-      \ removeAttrs replaceStrings scopedImport seq sort split splitVersion
-      \ storeDir storePath stringLength sub substring tail throw toFile toJSON
-      \ toPath toString toXML trace tryEval typeOf unsafeDiscardOutputDependency
-      \ unsafeDiscardStringContext unsafeGetAttrPos valueSize fromTOML bitAnd
-      \ bitOr bitXor floor ceil
+  \ abort
+  \ add
+  \ all
+  \ any
+  \ attrNames
+  \ attrValues
+  \ baseNameOf
+  \ bitAnd
+  \ bitOr
+  \ bitXor
+  \ break
+  \ catAttrs
+  \ ceil
+  \ compareVersions
+  \ concatLists
+  \ concatMap
+  \ concatStringsSep
+  \ deepSeq
+  \ dirOf
+  \ div
+  \ elem
+  \ elemAt
+  \ fetchClosure
+  \ fetchGit
+  \ fetchTarball
+  \ fetchurl
+  \ filter
+  \ filterSource
+  \ findFile
+  \ flakeRefToString
+  \ floor
+  \ foldl'
+  \ fromJSON
+  \ fromTOML
+  \ functionArgs
+  \ genList
+  \ genericClosure
+  \ getAttr
+  \ getContext
+  \ getEnv
+  \ getFlake
+  \ groupBy
+  \ hasAttr
+  \ hasContext
+  \ hashFile
+  \ hashString
+  \ head
+  \ import
+  \ intersectAttrs
+  \ isAttrs
+  \ isBool
+  \ isFloat
+  \ isFunction
+  \ isInt
+  \ isList
+  \ isNull
+  \ isPath
+  \ isString
+  \ length
+  \ lessThan
+  \ listToAttrs
+  \ map
+  \ mapAttrs
+  \ match
+  \ mul
+  \ outputOf
+  \ parseDrvName
+  \ parseFlakeRef
+  \ partition
+  \ path
+  \ pathExists
+  \ placeholder
+  \ readDir
+  \ readFile
+  \ readFileType
+  \ removeAttrs
+  \ replaceStrings
+  \ seq
+  \ sort
+  \ split
+  \ splitVersion
+  \ storePath
+  \ stringLength
+  \ sub
+  \ substring
+  \ tail
+  \ throw
+  \ toFile
+  \ toJSON
+  \ toPath
+  \ toString
+  \ toXML
+  \ trace
+  \ traceVerbose
+  \ tryEval
+  \ typeOf
+  \ zipAttrsWith
+  \ currentSystem
+  \ currentTime
+  \ langVersion
+  \ nixPath
+  \ nixVersion
+  \ storeDir
 
 syn match nixBuiltin "builtins\.[a-zA-Z']\+"he=s+9 contains=nixComment,nixNamespacedBuiltin
 
@@ -182,6 +274,7 @@ hi def link nixNamespacedBuiltin         Special
 hi def link nixNull                      Constant
 hi def link nixOperator                  Operator
 hi def link nixPath                      Include
+hi def link nixInterpolatedPath          nixPath
 hi def link nixPathDelimiter             Delimiter
 hi def link nixRecKeyword                Keyword
 hi def link nixSearchPath                Include

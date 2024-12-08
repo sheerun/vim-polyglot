@@ -23,7 +23,7 @@ syntax sync fromstart
 syntax case match
 
 " keyword definitions
-syntax keyword dartConditional    if else switch
+syntax keyword dartConditional    if else switch when
 syntax keyword dartRepeat         do while for
 syntax keyword dartBoolean        true false
 syntax keyword dartConstant       null
@@ -32,7 +32,8 @@ syntax keyword dartOperator       new is as in
 syntax match   dartOperator       "+=\=\|-=\=\|*=\=\|/=\=\|%=\=\|\~/=\=\|<<=\=\|>>=\=\|[<>]=\=\|===\=\|\!==\=\|&=\=\|\^=\=\||=\=\|||\|&&\|\[\]=\=\|=>\|!\|\~\|?\|:"
 syntax keyword dartCoreType       void var dynamic
 syntax keyword dartStatement      return
-syntax keyword dartStorageClass   static abstract final const factory late
+syntax keyword dartStorageClass   static abstract final const factory late base
+    \ interface sealed macro
 syntax keyword dartExceptions     throw rethrow try on catch finally
 syntax keyword dartAssert         assert
 syntax keyword dartClassDecl      extends with implements

@@ -3,6 +3,11 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'ledger', 'autoload/ledger.vim
 endif
 
 scriptencoding utf-8
+
+if !exists ('b:is_hledger')
+  let b:is_hledger = g:ledger_is_hledger
+endif
+
 " vim:ts=2:sw=2:sts=2:foldmethod=marker
 function! ledger#transaction_state_toggle(lnum, ...) abort
   if a:0 == 1
@@ -509,7 +514,10 @@ function! ledger#align_commodity() abort
     endif
     if pos < 0
       " Find the position after the first digits
-      let pos = matchend(rhs, '\m\d[^[:space:]]*')
+      let pos = matchend(rhs, '\m\d[^[:space:]]*') - 1
+      if pos >= 0
+        let pos = strchars(rhs[:pos])
+      endif
     endif
     " Go to the column that allows us to align the decimal separator at g:ledger_align_at:
     if pos >= 0
@@ -643,7 +651,7 @@ endf
 " Build a ledger command to process the given file.
 function! s:ledger_cmd(file, args) abort
   let l:options = g:ledger_extra_options
-  if len(g:ledger_date_format) > 0 && !g:ledger_is_hledger
+  if len(g:ledger_date_format) > 0 && !b:is_hledger
     let l:options = join([l:options, '--date-format', g:ledger_date_format,
       \ '--input-date-format', g:ledger_date_format])
   endif
@@ -670,7 +678,7 @@ endf
 " Use current line as input to ledger entry and replace with output. If there
 " are errors, they are echoed instead.
 function! ledger#entry() abort
-  let l:output = systemlist(s:ledger_cmd(g:ledger_main, join(['entry', getline('.')])))
+  let l:output = split(system(s:ledger_cmd(g:ledger_main, join(['entry', getline('.')]))), '\n')
   " Filter out warnings
   let l:output = filter(l:output, "v:val !~? '^Warning: '")
   " Errors may occur
@@ -694,7 +702,7 @@ endfunc
 " Returns:
 " Ledger's output as a String.
 function! ledger#report(file, args) abort
-  let l:output = systemlist(s:ledger_cmd(a:file, a:args))
+  let l:output = split(system(s:ledger_cmd(a:file, a:args)), '\n')
   if v:shell_error  " If there are errors, show them in a quickfix/location list.
     call s:quickfix_populate(l:output)
     call s:quickfix_toggle('Errors', 'Unable to parse errors')
@@ -741,7 +749,7 @@ function! ledger#register(file, args) abort
         \ "--prepend-format='%(filename):%(beg_line) '",
         \ a:args
         \ ]))
-  call s:quickfix_populate(systemlist(l:cmd))
+  call s:quickfix_populate(split(system(l:cmd), '\n'))
   call s:quickfix_toggle('Register report')
 endf
 
@@ -760,7 +768,7 @@ function! ledger#reconcile(file, account, target_amount) abort
         \ shellescape(a:account)
         \ ]))
   let l:file = expand(a:file) " Needed for #show_balance() later
-  call s:quickfix_populate(systemlist(l:cmd))
+  call s:quickfix_populate(split(system(l:cmd), '\n'))
   if s:quickfix_toggle('Reconcile ' . a:account, 'Nothing to reconcile')
     let g:ledger_target_amount = a:target_amount
     " Show updated account balance upon saving, as long as the quickfix window is open
@@ -804,7 +812,7 @@ function! ledger#show_balance(file, ...) abort
         \ "--format='%(scrub(get_at(display_total, 0)))|%(scrub(get_at(display_total, 1)))|%(quantity(scrub(get_at(display_total, 1))))'",
         \ (empty(g:ledger_default_commodity) ? '' : '-X ' . shellescape(g:ledger_default_commodity))
         \ ]))
-  let l:output = systemlist(l:cmd)
+  let l:output = split(system(l:cmd), '\n')
   " Errors may occur, for example,  when the account has multiple commodities
   " and g:ledger_default_commodity is empty.
   if v:shell_error
