@@ -51,14 +51,17 @@ hi def link     goFloats            Type
 hi def link     goComplexes         Type
 
 " Predefined functions and values
-syn keyword     goBuiltins                 append cap close complex copy delete imag len
-syn keyword     goBuiltins                 make new panic print println real recover
+syn keyword     goBuiltins                 append cap clear close complex copy delete imag len
+syn keyword     goBuiltins                 make min max new panic print println real recover
 syn keyword     goBoolean                  true false
 syn keyword     goPredefinedIdentifiers    nil iota
 
 hi def link     goBuiltins                 Identifier
+hi def link     goPredefinedIdentifiers    Constant
+" Boolean links to Constant by default by vim: goBoolean and goPredefinedIdentifiers
+" will be highlighted the same, but having the separate allows users to have
+" separate highlighting for them if they desire.
 hi def link     goBoolean                  Boolean
-hi def link     goPredefinedIdentifiers    goBoolean
 
 " Comments; their contents
 syn keyword     goTodo              contained TODO FIXME XXX BUG
@@ -148,21 +151,31 @@ endif
 " import
 if go#config#FoldEnable('import')
   syn region    goImport            start='import (' end=')' transparent fold contains=goImport,goImportString,goComment
+  syn match     goImport            /^import ()/ transparent fold contains=goImport
 else
   syn region    goImport            start='import (' end=')' transparent contains=goImport,goImportString,goComment
+  syn match     goImport            /^import ()/ transparent contains=goImport
 endif
 
 " var, const
 if go#config#FoldEnable('varconst')
   syn region    goVar               start='var ('   end='^\s*)$' transparent fold
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+                                  \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+  syn match     goVar               /var ()/ transparent fold
+                                  \ contains=goVar
   syn region    goConst             start='const (' end='^\s*)$' transparent fold
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+                                  \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+  syn match     goConst             /const ()/ transparent fold
+                                  \ contains=goConst
 else
   syn region    goVar               start='var ('   end='^\s*)$' transparent
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+                                  \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+  syn match     goVar               /var ()/ transparent
+                                  \ contains=goVar
   syn region    goConst             start='const (' end='^\s*)$' transparent
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+                                  \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+  syn match     goConst             /const ()/ transparent
+                                  \ contains=goConst
 endif
 
 " Single-line var, const, and import.

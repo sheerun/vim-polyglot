@@ -116,12 +116,12 @@ syn match ps1Operator /\(^\|\s\)\@<=\. \@=/
 
 " Regular Strings
 " These aren't precisely correct and could use some work
-syn region ps1String start=/"/ skip=/`"/ end=/"/ contains=@ps1StringSpecial,@Spell
-syn region ps1String start=/'/ skip=/''/ end=/'/
+syn region ps1String start=/["\u201c-\u201e]/ skip=/`["\u201c-\u201e]/ end=/["\u201c-\u201e]/ contains=@ps1StringSpecial,@Spell
+syn region ps1String start=/['\u2018-\u201b]/ end=/['\u2018-\u201b]/
 
 " Here-Strings
-syn region ps1String start=/@"$/ end=/^"@/ contains=@ps1StringSpecial,@Spell
-syn region ps1String start=/@'$/ end=/^'@/
+syn region ps1String start=/@["\u201c-\u201e]$/ end=/^["\u201c-\u201e]@/ contains=@ps1StringSpecial,@Spell
+syn region ps1String start=/@['\u2018-\u201b]$/ end=/^['\u2018-\u201b]@/
 
 " Interpolation
 syn match ps1Escape /`./

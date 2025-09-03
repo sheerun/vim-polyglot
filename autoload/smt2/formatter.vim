@@ -3,14 +3,17 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'smt2', 'autoload/smt2/formatt
 endif
 
 " Formatting requires a rather recent Vim version
-if !((v:version > 802) || (v:version == 802 && has("patch2725")))
+if (v:version < 802) || (v:version == 802 && !has("patch2725"))
     const s:errmsg_oldvim = "Vim >= 8.2.2725 required for auto-formatting"
 
     "Dummies
     function! smt2#formatter#FormatCurrentParagraph()
         echoerr s:errmsg_oldvim
     endfunction
-    function! smt2#formatter#FormatAllParagraphs()
+    function! smt2#formatter#FormatOutermostSExpr()
+        echoerr s:errmsg_oldvim
+    endfunction
+    function! smt2#formatter#FormatFile()
         echoerr s:errmsg_oldvim
     endfunction
 
@@ -88,55 +91,75 @@ def Format(ast: dict<any>, indent = 0): string
             call formatted->add(child->Format())
         endfor
         return formatted->join("\n")
+    elseif ast.kind ==# 'File'
+        var formatted = []
+        for child in ast.value
+            call formatted->add(child->Format())
+        endfor
+        return formatted->join("\n\n")
     endif
     throw 'Cannot format AST node: ' .. string(ast)
     return '' # Unreachable
 enddef
 
 # ------------------------------------------------------------------------------
-# Public functions
+# Auxiliary
 # ------------------------------------------------------------------------------
-def smt2#formatter#FormatCurrentParagraph()
+
+def FormatInCurrentBuffer(ast: dict<any>)
     const cursor = getpos('.')
-    const ast = smt2#parser#ParseCurrentParagraph()
 
-    # Identify on which end of the buffer we are (to fix newlines later)
-    silent! normal! {
-    const is_first_paragraph = line('.') == 1
-    silent! normal! }
-    const is_last_paragraph = line('.') == line('$')
+    # Format lines and potential surrounding text on them
+    const formatted_lines = split(Format(ast), '\n')
+    const ast_coords = ast.CalcCoords()
+    const ws_mask = " \n\r\t"
+    const first_line_part_to_keep = getline(ast_coords[0].line)
+        ->strcharpart(0, ast_coords[0].col - 2)
+        ->trim(ws_mask, 2)
+    const last_line_part_to_keep = getline(ast_coords[1].line)
+        ->strcharpart(ast_coords[1].col - 1)
+        ->trim(ws_mask, 1)
 
-    # Replace paragraph by formatted lines
-    const lines = split(Format(ast), '\n')
-    silent! normal! {d}
-    if is_last_paragraph && !is_first_paragraph
-        call append('.', [''] + lines)
-    else
-        call append('.', lines + [''])
+    # If section of AST has trailing whitespace until the file end, remove it
+    cursor(ast_coords[1].line, ast_coords[1].col)
+    if search('\m\C\S', 'W') == 0
+        deletebufline('%', ast_coords[1].line + 1, line('$'))
     endif
 
-    # Remove potentially introduced first empty line
-    if is_first_paragraph | silent! :1delete | endif
+    # Replace section of AST by formatted lines (w/o killing surrounding text)
+    deletebufline('%', ast_coords[0].line, ast_coords[1].line)
+    if !empty(last_line_part_to_keep)
+        last_line_part_to_keep->append(ast_coords[0].line - 1)
+    endif
+    formatted_lines->append(ast_coords[0].line - 1)
+    if !empty(first_line_part_to_keep)
+        first_line_part_to_keep->append(ast_coords[0].line - 1)
+    endif
+
+    # If section of AST has leading whitespace until the file start, remove it
+    cursor(ast_coords[0].line, ast_coords[0].col)
+    if search('\m\C\S', 'bW') == 0
+        deletebufline('%', 1, ast_coords[0].line - 1)
+    endif
 
     # Restore cursor position
     call setpos('.', cursor)
 enddef
 
-def smt2#formatter#FormatAllParagraphs()
-    const cursor = getpos('.')
-    const asts = smt2#parser#ParseAllParagraphs()
+# ------------------------------------------------------------------------------
+# Public functions
+# ------------------------------------------------------------------------------
+def smt2#formatter#FormatCurrentParagraph()
+    const ast = smt2#parser#ParseCurrentParagraph()
+    FormatInCurrentBuffer(ast)
+enddef
 
-    # Clear buffer & insert formatted paragraphs
-    silent! :1,$delete
-    for ast in asts
-        const lines = split(Format(ast), '\n') + ['']
-        call append('$', lines)
-    endfor
+def smt2#formatter#FormatOutermostSExpr()
+    const ast = smt2#parser#ParseOutermostSExpr()
+    FormatInCurrentBuffer(ast)
+enddef
 
-    # Remove first & trailing empty lines
-    silent! :1delete
-    silent! :$delete
-
-    # Restore cursor position
-    call setpos('.', cursor)
+def smt2#formatter#FormatFile()
+    const ast = smt2#parser#ParseFile()
+    FormatInCurrentBuffer(ast)
 enddef

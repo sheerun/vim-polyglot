@@ -84,7 +84,7 @@ endif
 " Operators
 if exists('g:crystal_operators')
   syn match  crystalOperator "[~!^&|*/%+-]\|<=>\|<=\|\%(<\|\<\%(class\|struct\)\s\+\u\w*\s*\)\@<!<[^<]\@=\|===\|==\|=\~\|>>\|>=\|=\@1<!>\|\*\*\|\.\.\.\|\.\.\|::"
-  syn match  crystalOperator "->\|-=\|/=\|\*\*=\|\*=\|&&=\|&=\|&&\|||=\||=\|||\|%=\|+=\|!\~\|!=\|//"
+  syn match  crystalOperator "->\|-=\|/=\|\*\*=\|\*=\|&&=\|&=\|&&\|||=\||=\|||\|%=\|+=\|\^=\|<<=\|>>=\|&+=\|&-=\|&\*=\|!\~\|!=\|//"
   syn region crystalBracketOperator matchgroup=crystalOperator start="\%(\w[?!]\=\|[]})]\)\@2<=\[" end="]" contains=TOP
 endif
 

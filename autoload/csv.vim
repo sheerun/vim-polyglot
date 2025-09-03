@@ -224,11 +224,11 @@ endfu
 
 fu! csv#RemoveAutoHighlight() "{{{3
     exe "aug CSV_HI".bufnr('')
-        exe "au! CursorMoved <buffer=".bufnr('').">"
+        exe "au! "
     aug end
     exe "aug! CSV_HI".bufnr('')
     " Remove any existing highlighting
-    HiColumn!
+    call csv#HiCol('', 1)
 endfu
 
 fu! csv#DoAutoCommands() "{{{3
@@ -246,9 +246,8 @@ fu! csv#DoAutoCommands() "{{{3
     endif
     " undo autocommand:
     let b:undo_ftplugin .= '| exe "sil! au! CSV_HI'.bufnr('').' CursorMoved <buffer> "'
-    let b:undo_ftplugin .= '| exe "sil! aug! CSV_HI'.bufnr('').'"'
+    let b:undo_ftplugin .= '| call csv#RemoveAutoHighlight()'
     let b:undo_ftplugin = 'exe "sil! HiColumn!" |' . b:undo_ftplugin
-
     if has("gui_running") && !exists("#CSV_Menu#FileType")
         augroup CSV_Menu
             au!
@@ -443,10 +442,14 @@ fu! csv#HiCol(colnr, bang) "{{{3
         if exists("s:matchid")
             " ignore errors, that come from already deleted matches
             sil! call matchdelete(s:matchid)
+            if a:bang
+              unlet! s:matchid
+              return
+            endif
         endif
         " Additionally, filter all matches, that could have been used earlier
         let matchlist=getmatches()
-        call filter(matchlist, 'v:val["group"] !~ s:hiGroup')
+        call filter(matchlist, 'v:val["group"] !~? s:hiGroup')
         call setmatches(matchlist)
         if a:bang
             return
@@ -455,6 +458,10 @@ fu! csv#HiCol(colnr, bang) "{{{3
     elseif !a:bang
         exe ":2match " . s:hiGroup . ' /' . pat . '/'
     endif
+    " Remove Highlighting once switching away from the buffer
+    exe "aug CSV_HI".bufnr('')
+        exe "au BufWinLeave <buffer=".bufnr('')."> call csv#RemoveAutoHighlight()"
+    aug end
 endfu
 fu! csv#GetDelimiter(first, last, ...) "{{{3
     " This depends on the locale. Hopefully it works
@@ -482,12 +489,16 @@ fu! csv#GetDelimiter(first, last, ...) "{{{3
         " :silent :s does not work with lazyredraw
         let _lz  = &lz
         set nolz
+	" substitute without output when cmdheight=0
+        let _cmdheight = &cmdheight
+        set cmdheight=1
         for i in values(Delim)
             redir => temp[i]
             " use very non-magic
             exe ":silent! :". first. ",". last. 's/\V' . i . "/&/nge"
             redir END
         endfor
+	let &cmdheight = _cmdheight
         let &lz = _lz
         let Delim = map(temp, 'matchstr(substitute(v:val, "\n", "", ""), "^\\s*\\d\\+")')
         let Delim = filter(temp, 'v:val=~''\d''')
@@ -779,7 +790,11 @@ fu! csv#CalculateColumnWidth(row, silent) "{{{3
     " does not work with fixed width columns
     " row for the row for which to calculate the width
     let b:col_width=[]
+    let vts_save=""
     if has( 'vartabs' ) && b:delimiter == "\t"
+        if &l:vts
+            let vts_save=&vts
+        endif
         setlocal vts=
     endif
     try
@@ -800,6 +815,9 @@ fu! csv#CalculateColumnWidth(row, silent) "{{{3
     " delete buffer content in variable b:csv_list,
     " this was only necessary for calculating the max width
     unlet! b:csv_list s:columnize_count s:decimal_column
+    if vts_save
+        let &l:vts=vts_save
+    endif
 endfu
 fu! csv#Columnize(field) "{{{3
     " Internal function, not called from external,
