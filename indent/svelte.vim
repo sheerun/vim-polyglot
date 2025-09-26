@@ -119,7 +119,14 @@ function! GetSvelteIndent()
   let cursyns = s:SynsSOL(v:lnum)
   let cursyn = get(cursyns, 0, '')
 
-  if s:SynHTML(cursyn) && !s:IsMultipleLineSvelteExpression(curline, cursyns)
+  if s:IsMultipleLineTemplateString(curline, cursyns)
+    call s:Log('current line is multiline template string expression')
+    if !s:IsMultipleLineTemplateString(prevline, prevsyns)
+      let ind = indent(v:lnum - 1) + &sw
+    else
+      let ind = indent(v:lnum - 1)
+    endif
+  elseif s:SynHTML(cursyn) && !s:IsMultipleLineSvelteExpression(curline, cursyns)
     call s:Log('syntax: html')
     let ind = XmlIndentGet(v:lnum, 0)
     if prevline =~? s:empty_tag
@@ -240,6 +247,20 @@ function! s:IsMultipleLineSvelteExpression(curline, syns)
 
   for syn in a:syns
     if syn ==? 'svelteExpression'
+      return 1
+    endif
+  endfor
+
+  return 0
+endfunction
+
+function! s:IsMultipleLineTemplateString(curline, syns)
+  if a:curline =~ '^\s*{.*}\s*$'
+    return 0
+  endif
+
+  for syn in a:syns
+    if syn ==? 'javaScriptTemplateString'
       return 1
     endif
   endfor

@@ -23,3 +23,4 @@ if get(g:, 'nix_recommended_style', 1)
     \ softtabstop=2
     \ expandtab 
 endif
+let b:match_words = '\<if\>:\<then\>:\<else\>,\<let\>:\<in\>'

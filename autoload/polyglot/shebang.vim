@@ -499,6 +499,9 @@ let s:interpreters = {
   \ 'python': 'python',
   \ 'python2': 'python',
   \ 'python3': 'python',
+  \ 'py': 'python',
+  \ 'pypy': 'python',
+  \ 'pypy3': 'python',
   \ 'qmake': 'qmake',
   \ 'Rscript': 'r',
   \ 'racket': 'racket',
@@ -510,6 +513,7 @@ let s:interpreters = {
   \ 'rake': 'ruby',
   \ 'jruby': 'ruby',
   \ 'rbx': 'ruby',
+  \ 'rust-script': 'rust',
   \ 'scala': 'scala',
   \ 'ash': 'sh',
   \ 'bash': 'sh',
@@ -531,6 +535,7 @@ let s:interpreters = {
   \ 'z3': 'smt2',
   \ 'deno': 'typescript',
   \ 'ts-node': 'typescript',
+  \ 'tsx': 'typescript',
   \ 'zsh': 'zsh',
   \ }
 " DO NOT EDIT CODE ABOVE, IT IS GENERATED WITH MAKEFILE

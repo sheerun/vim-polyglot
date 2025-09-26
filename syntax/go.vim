@@ -51,14 +51,17 @@ hi def link     goFloats            Type
 hi def link     goComplexes         Type
 
 " Predefined functions and values
-syn keyword     goBuiltins                 append cap close complex copy delete imag len
-syn keyword     goBuiltins                 make new panic print println real recover
+syn keyword     goBuiltins                 append cap clear close complex copy delete imag len
+syn keyword     goBuiltins                 make max min new panic print println real recover
 syn keyword     goBoolean                  true false
 syn keyword     goPredefinedIdentifiers    nil iota
 
 hi def link     goBuiltins                 Identifier
+hi def link     goPredefinedIdentifiers    Constant
+" Boolean links to Constant by default by vim: goBoolean and goPredefinedIdentifiers
+" will be highlighted the same, but having the separate allows users to have
+" separate highlighting for them if they desire.
 hi def link     goBoolean                  Boolean
-hi def link     goPredefinedIdentifiers    goBoolean
 
 " Comments; their contents
 syn keyword     goTodo              contained TODO FIXME XXX BUG
@@ -108,7 +111,7 @@ else
   syn region      goRawString         start=+`+ end=+`+
 endif
 
-syn match       goImportString      /^\%(\s\+\|import \)\(\h\w* \)\?\zs"[^"]\+"$/ contained containedin=goImport
+syn match       goImportString      /^\%(\s\+\|import \)\(\h\w* \)\?\zs"[^"]\+"/ contained containedin=goImport
 
 if go#config#HighlightFormatStrings()
   " [n] notation is valid for specifying explicit argument indexes
@@ -148,21 +151,31 @@ endif
 " import
 if go#config#FoldEnable('import')
   syn region    goImport            start='import (' end=')' transparent fold contains=goImport,goImportString,goComment
+  syn match     goImport            /^import ()/ transparent fold contains=goImport
 else
   syn region    goImport            start='import (' end=')' transparent contains=goImport,goImportString,goComment
+  syn match     goImport            /^import ()/ transparent contains=goImport
 endif
 
 " var, const
 if go#config#FoldEnable('varconst')
   syn region    goVar               start='var ('   end='^\s*)$' transparent fold
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+                                  \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+  syn match     goVar               /var ()/ transparent fold
+                                  \ contains=goVar
   syn region    goConst             start='const (' end='^\s*)$' transparent fold
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+                                  \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+  syn match     goConst             /const ()/ transparent fold
+                                  \ contains=goConst
 else
   syn region    goVar               start='var ('   end='^\s*)$' transparent
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+                                  \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+  syn match     goVar               /var ()/ transparent
+                                  \ contains=goVar
   syn region    goConst             start='const (' end='^\s*)$' transparent
-                        \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+                                  \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+  syn match     goConst             /const ()/ transparent
+                                  \ contains=goConst
 endif
 
 " Single-line var, const, and import.
@@ -439,12 +452,12 @@ if go#config#HighlightBuildConstraints() || go#config#FoldEnable('package_commen
   " matched as comments to avoid looking like working build constraints.
   " The he, me, and re options let the "package" itself be highlighted by
   " the usual rules.
-  exe 'syn region  goPackageComment    start=/\v(\/\/.*\n)+\s*package/'
-        \ . ' end=/\v\n\s*package/he=e-7,me=e-7,re=e-7'
+  exe 'syn region  goPackageComment    start=/\v(\/\/.*\n)+\s*package\s/'
+        \ . ' end=/\v\n\s*package\s/he=e-8,me=e-8,re=e-8'
         \ . ' contains=@goCommentGroup,@Spell'
         \ . (go#config#FoldEnable('package_comment') ? ' fold' : '')
-  exe 'syn region  goPackageComment    start=/\v^\s*\/\*.*\n(.*\n)*\s*\*\/\npackage/'
-        \ . ' end=/\v\*\/\n\s*package/he=e-7,me=e-7,re=e-7'
+  exe 'syn region  goPackageComment    start=/\v^\s*\/\*.*\n(.*\n)*\s*\*\/\npackage\s/'
+        \ . ' end=/\v\*\/\n\s*package\s/he=e-8,me=e-8,re=e-8'
         \ . ' contains=@goCommentGroup,@Spell'
         \ . (go#config#FoldEnable('package_comment') ? ' fold' : '')
   hi def link goPackageComment    Comment

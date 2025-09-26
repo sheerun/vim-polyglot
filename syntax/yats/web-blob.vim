@@ -11,31 +11,24 @@ syntax keyword typescriptGlobal containedin=typescriptIdentifierName URLUtils
 syntax keyword typescriptFileMethod contained readAsArrayBuffer readAsBinaryString nextgroup=typescriptFuncCallArg
 syntax keyword typescriptFileMethod contained readAsDataURL readAsText nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptFileMethod
-if exists("did_typescript_hilink") | HiLink typescriptFileMethod Keyword
-endif
+hi def link typescriptFileMethod Keyword
 syntax keyword typescriptFileReaderProp contained error readyState result
 syntax cluster props add=typescriptFileReaderProp
-if exists("did_typescript_hilink") | HiLink typescriptFileReaderProp Keyword
-endif
+hi def link typescriptFileReaderProp Keyword
 syntax keyword typescriptFileReaderMethod contained abort readAsArrayBuffer readAsBinaryString nextgroup=typescriptFuncCallArg
 syntax keyword typescriptFileReaderMethod contained readAsDataURL readAsText nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptFileReaderMethod
-if exists("did_typescript_hilink") | HiLink typescriptFileReaderMethod Keyword
-endif
+hi def link typescriptFileReaderMethod Keyword
 syntax keyword typescriptFileListMethod contained item nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptFileListMethod
-if exists("did_typescript_hilink") | HiLink typescriptFileListMethod Keyword
-endif
+hi def link typescriptFileListMethod Keyword
 syntax keyword typescriptBlobMethod contained append getBlob getFile nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptBlobMethod
-if exists("did_typescript_hilink") | HiLink typescriptBlobMethod Keyword
-endif
+hi def link typescriptBlobMethod Keyword
 syntax keyword typescriptURLUtilsProp contained hash host hostname href origin password
 syntax keyword typescriptURLUtilsProp contained pathname port protocol search searchParams
 syntax keyword typescriptURLUtilsProp contained username
 syntax cluster props add=typescriptURLUtilsProp
-if exists("did_typescript_hilink") | HiLink typescriptURLUtilsProp Keyword
-endif
+hi def link typescriptURLUtilsProp Keyword
 syntax keyword typescriptURLStaticMethod contained createObjectURL revokeObjectURL nextgroup=typescriptFuncCallArg
-if exists("did_typescript_hilink") | HiLink typescriptURLStaticMethod Keyword
-endif
+hi def link typescriptURLStaticMethod Keyword

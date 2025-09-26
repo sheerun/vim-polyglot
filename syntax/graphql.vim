@@ -2,7 +2,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'graphql', 'syntax/graphql.vim
   finish
 endif
 
-" Copyright (c) 2016-2021 Jon Parise <jon@indelible.org>
+" Copyright (c) Jon Parise <jon@indelible.org>
 "
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to
@@ -45,6 +45,7 @@ syn match   graphqlNumber   "-\=\<\%(0\|[1-9]\d*\)\%(\.\d\+\)\=\%([eE][-+]\=\d\+
 syn region  graphqlString   start=+"+  skip=+\\\\\|\\"+  end=+"\|$+
 syn region  graphqlString   start=+"""+ skip=+\\"""+ end=+"""+
 
+syn keyword graphqlKeyword repeatable nextgroup=graphqlKeyword skipwhite
 syn keyword graphqlKeyword on nextgroup=graphqlType,graphqlDirectiveLocation skipwhite
 
 syn keyword graphqlStructure enum scalar type union nextgroup=graphqlType skipwhite
@@ -60,11 +61,11 @@ syn match graphqlVariable   "\<\$\h\w*\>"  display
 syn match graphqlName       "\<\h\w*\>"    display
 syn match graphqlType       "\<_*\u\w*\>"  display
 
-" https://graphql.github.io/graphql-spec/June2018/#ExecutableDirectiveLocation
+" https://spec.graphql.org/October2021/#ExecutableDirectiveLocation
 syn keyword graphqlDirectiveLocation QUERY MUTATION SUBSCRIPTION FIELD
 syn keyword graphqlDirectiveLocation FRAGMENT_DEFINITION FRAGMENT_SPREAD
-syn keyword graphqlDirectiveLocation INLINE_FRAGMENT
-" https://graphql.github.io/graphql-spec/June2018/#TypeSystemDirectiveLocation
+syn keyword graphqlDirectiveLocation INLINE_FRAGMENT VARIABLE_DEFINITION
+" https://spec.graphql.org/October2021/#TypeSystemDirectiveLocation
 syn keyword graphqlDirectiveLocation SCHEMA SCALAR OBJECT FIELD_DEFINITION
 syn keyword graphqlDirectiveLocation ARGUMENT_DEFINITION INTERFACE UNION
 syn keyword graphqlDirectiveLocation ENUM ENUM_VALUE INPUT_OBJECT

@@ -15,8 +15,7 @@ syntax keyword typescriptDOMDocProp contained nodePrincipal ononline pointerLock
 syntax keyword typescriptDOMDocProp contained popupNode preferredStyleSheetSet selectedStyleSheetSet
 syntax keyword typescriptDOMDocProp contained styleSheetSets textContent tooltipNode
 syntax cluster props add=typescriptDOMDocProp
-if exists("did_typescript_hilink") | HiLink typescriptDOMDocProp Keyword
-endif
+hi def link typescriptDOMDocProp Keyword
 syntax keyword typescriptDOMDocMethod contained caretPositionFromPoint close createNodeIterator nextgroup=typescriptFuncCallArg
 syntax keyword typescriptDOMDocMethod contained createRange createTreeWalker elementFromPoint nextgroup=typescriptFuncCallArg
 syntax keyword typescriptDOMDocMethod contained getElementsByName adoptNode createAttribute nextgroup=typescriptFuncCallArg
@@ -32,5 +31,4 @@ syntax keyword typescriptDOMDocMethod contained hasFocus importNode loadOverlay 
 syntax keyword typescriptDOMDocMethod contained queryCommandSupported querySelector nextgroup=typescriptFuncCallArg
 syntax keyword typescriptDOMDocMethod contained querySelectorAll write writeln nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptDOMDocMethod
-if exists("did_typescript_hilink") | HiLink typescriptDOMDocMethod Keyword
-endif
+hi def link typescriptDOMDocMethod Keyword

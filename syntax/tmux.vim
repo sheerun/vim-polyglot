@@ -3,7 +3,7 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'tmux', 'syntax/tmux.vim')
 endif
 
 " Language: tmux(1) configuration file
-" Version: 3.3a (git-7b8ececd)
+" Version: 3.4 (git-171004df)
 " URL: https://github.com/ericpruitt/tmux.vim/
 " Maintainer: Eric Pruitt <eric.pruitt@gmail.com>
 " License: 2-Clause BSD (http://opensource.org/licenses/BSD-2-Clause)
@@ -32,7 +32,7 @@ syn match tmuxKey               /\(C-\|M-\|\^\)\+\S\+/ display
 syn match tmuxNumber            /\<\d\+\>/             display
 syn match tmuxFlags             /\s-\a\+/              display
 syn match tmuxVariableExpansion /\$\({[A-Za-z_]\w*}\|[A-Za-z_]\w*\)/ display
-syn match tmuxControl           /\(^\|\s\)%\(if\|elif\|else\|endif\)\($\|\s\)/ display
+syn match tmuxControl           /\(^\|\s\)%\(if\|elif\|else\|endif\|hidden\)\($\|\s\)/ display
 syn match tmuxEscape            /\\\(u\x\{4\}\|U\x\{8\}\|\o\{3\}\|[\\ernt$]\)/ display
 
 " Missing closing bracket.
@@ -103,11 +103,11 @@ syn keyword tmuxOptions
 \ after-set-environment after-set-hook after-set-option after-show-environment
 \ after-show-messages after-show-options after-split-window after-unbind-key
 \ aggressive-resize alert-activity alert-bell alert-silence allow-passthrough
-\ allow-rename alternate-screen assume-paste-time automatic-rename
-\ automatic-rename-format backspace base-index bell-action buffer-limit
-\ client-active client-attached client-detached client-focus-in
+\ allow-rename allow-set-title alternate-screen assume-paste-time
+\ automatic-rename automatic-rename-format backspace base-index bell-action
+\ buffer-limit client-active client-attached client-detached client-focus-in
 \ client-focus-out client-resized client-session-changed clock-mode-color
-\ clock-mode-colour clock-mode-style command-alias copy-command
+\ clock-mode-colour clock-mode-style command-alias command-error copy-command
 \ copy-mode-current-match-style copy-mode-mark-style copy-mode-match-style
 \ cursor-color cursor-colour cursor-style default-command default-shell
 \ default-size default-terminal destroy-unattached detach-on-destroy
@@ -115,8 +115,9 @@ syn keyword tmuxOptions
 \ display-panes-colour display-panes-time display-time editor escape-time
 \ exit-empty exit-unattached extended-keys fill-character focus-events
 \ history-file history-limit key-table lock-after-time lock-command
-\ main-pane-height main-pane-width message-command-style message-limit
-\ message-style mode-keys mode-style monitor-activity monitor-bell
+\ main-pane-height main-pane-width menu-border-lines menu-border-style
+\ menu-selected-style menu-style message-command-style message-limit
+\ message-line message-style mode-keys mode-style monitor-activity monitor-bell
 \ monitor-silence mouse other-pane-height other-pane-width
 \ pane-active-border-style pane-base-index pane-border-format
 \ pane-border-indicators pane-border-lines pane-border-status pane-border-style
@@ -167,9 +168,9 @@ syn keyword tmuxCommands
 syn keyword tmuxEnums
 \ absolute-centre all always any arrows bar blinking-bar blinking-block
 \ blinking-underline block both bottom centre color colour current default
-\ double emacs external failed heavy largest latest left manual no-detached
-\ none number off on other padded right rounded simple single smallest top
-\ underline vi
+\ double emacs external failed heavy keep-group keep-last largest latest left
+\ manual next no-detached none number off on other padded previous right
+\ rounded simple single smallest top underline vi
 
 let &cpo = s:original_cpo
 unlet! s:original_cpo s:bg s:i

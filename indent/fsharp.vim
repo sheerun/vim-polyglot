@@ -189,6 +189,13 @@ function! GetFsharpIndent()
 
     endif
 
+
+        " Don't change indent after lines begins with '//':
+    if lline =~ '^\s*//'
+        let i = indent(v:lnum)
+        return i == 0 ? ind : i
+    endif
+
     " Add a 'shiftwidth' after lines ending with:
     if lline =~ '\(:\|=\|->\|<-\|(\|\[\|{\|{<\|\[|\|\[<\|\<\(begin\|do\|else\|fun\|function\|functor\|if\|initializer\|object\|private\|sig\|struct\|then\|try\)\|\<object\s*(.*)\)\s*$'
         let ind = ind + &sw

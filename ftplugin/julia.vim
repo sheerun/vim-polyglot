@@ -26,15 +26,15 @@ setlocal fo-=t fo+=croql
 let b:julia_vim_loaded = 1
 
 let b:undo_ftplugin = "setlocal include< suffixesadd< comments< commentstring<"
-      \ . " expandtab< shiftwidth<"
-      \ . " define< fo< indentexpr< indentkeys< cinoptions< completefunc<"
+      \ . " define< fo< cinoptions< completefunc<"
       \ . " | unlet! b:commentary_format"
       \ . " | unlet! b:smartcomment_force_linemode"
       \ . " | unlet! b:julia_vim_loaded"
-      
+
 if !exists("g:julia_set_indentation") || g:julia_set_indentation != 0
     " As suggested by Style Guide.
     setlocal expandtab shiftwidth=4
+    let b:undo_ftplugin .= " | setlocal expandtab< shiftwidth<"
 endif
 
 " MatchIt plugin support
@@ -109,7 +109,7 @@ let b:smartcomment_force_linemode = 1      " for carlobaldassi/vim-smartcomment
 
 if has("gui_win32")
   let b:browsefilter = "Julia Source Files (*.jl)\t*.jl\n"
-  let b:undo_ftplugin = b:undo_ftplugin . " | unlet! b:browsefilter"
+  let b:undo_ftplugin .= " | unlet! b:browsefilter"
 endif
 
 " Lookup documents

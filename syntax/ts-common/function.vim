@@ -1,4 +1,4 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/basic/function.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/ts-common/function.vim')
   finish
 endif
 
@@ -7,7 +7,7 @@ syntax keyword typescriptAsyncFuncKeyword      async
   \ skipwhite
 
 syntax keyword typescriptAsyncFuncKeyword      await
-  \ nextgroup=@typescriptValue
+  \ nextgroup=@typescriptValue,typescriptUsing
   \ skipwhite
 
 exec 'syntax keyword typescriptFuncKeyword '.(exists('g:typescript_conceal_function') ? 'conceal cchar='.g:typescript_conceal_function : '').' function nextgroup=typescriptAsyncFunc,typescriptFuncName,@typescriptCallSignature skipwhite skipempty'
@@ -46,7 +46,7 @@ syntax match   typescriptArrowFuncArg          contained /\K\k*/
 syntax region typescriptReturnAnnotation contained start=/:/ end=/{/me=e-1 contains=@typescriptType nextgroup=typescriptBlock
 
 
-syntax region typescriptFuncImpl contained start=/function\>/ end=/{/me=e-1
+syntax region typescriptFuncImpl contained start=/function\>/ end=/{\|;\|\n/me=e-1
   \ contains=typescriptFuncKeyword
   \ nextgroup=typescriptBlock
 

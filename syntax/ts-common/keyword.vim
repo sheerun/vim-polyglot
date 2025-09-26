@@ -1,4 +1,4 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/basic/keyword.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/ts-common/keyword.vim')
   finish
 endif
 
@@ -27,6 +27,10 @@ syntax keyword typescriptVariable              let var
 
 syntax keyword typescriptVariable const
   \ nextgroup=typescriptEnum,@typescriptVariableDeclarations
+  \ skipwhite skipempty
+
+syntax keyword typescriptUsing              using
+  \ nextgroup=@typescriptVariableDeclarations
   \ skipwhite skipempty
 
 syntax region typescriptEnum matchgroup=typescriptEnumKeyword start=/enum / end=/\ze{/
@@ -60,7 +64,8 @@ syntax keyword typescriptStatementKeyword      with
 syntax keyword typescriptStatementKeyword      yield skipwhite nextgroup=@typescriptValue containedin=typescriptBlock
 
 syntax keyword typescriptTry                   try
-syntax keyword typescriptExceptions            catch throw finally
+syntax keyword typescriptExceptions            throw finally
+syntax keyword typescriptExceptions            catch nextgroup=typescriptCall skipwhite skipempty oneline
 syntax keyword typescriptDebugger              debugger
 
 syntax keyword typescriptAsyncFor              await nextgroup=typescriptLoopParen skipwhite skipempty contained

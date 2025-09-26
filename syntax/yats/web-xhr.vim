@@ -3,16 +3,13 @@ if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/yats/web
 endif
 
 syntax keyword typescriptXHRGlobal containedin=typescriptIdentifierName XMLHttpRequest
-if exists("did_typescript_hilink") | HiLink typescriptXHRGlobal Structure
-endif
+hi def link typescriptXHRGlobal Structure
 syntax keyword typescriptXHRProp contained onreadystatechange readyState response
 syntax keyword typescriptXHRProp contained responseText responseType responseXML status
 syntax keyword typescriptXHRProp contained statusText timeout ontimeout upload withCredentials
 syntax cluster props add=typescriptXHRProp
-if exists("did_typescript_hilink") | HiLink typescriptXHRProp Keyword
-endif
+hi def link typescriptXHRProp Keyword
 syntax keyword typescriptXHRMethod contained abort getAllResponseHeaders getResponseHeader nextgroup=typescriptFuncCallArg
 syntax keyword typescriptXHRMethod contained open overrideMimeType send setRequestHeader nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptXHRMethod
-if exists("did_typescript_hilink") | HiLink typescriptXHRMethod Keyword
-endif
+hi def link typescriptXHRMethod Keyword

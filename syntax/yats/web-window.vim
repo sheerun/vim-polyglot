@@ -44,8 +44,7 @@ syntax keyword typescriptBOMWindowProp containedin=typescriptIdentifierName tool
 syntax keyword typescriptBOMWindowProp containedin=typescriptIdentifierName top visualViewport
 syntax keyword typescriptBOMWindowProp containedin=typescriptIdentifierName window
 syntax cluster props add=typescriptBOMWindowProp
-if exists("did_typescript_hilink") | HiLink typescriptBOMWindowProp Structure
-endif
+hi def link typescriptBOMWindowProp Structure
 syntax keyword typescriptBOMWindowMethod containedin=typescriptIdentifierName alert nextgroup=typescriptFuncCallArg
 syntax keyword typescriptBOMWindowMethod containedin=typescriptIdentifierName atob nextgroup=typescriptFuncCallArg
 syntax keyword typescriptBOMWindowMethod containedin=typescriptIdentifierName blur nextgroup=typescriptFuncCallArg
@@ -91,8 +90,7 @@ syntax keyword typescriptBOMWindowMethod containedin=typescriptIdentifierName si
 syntax keyword typescriptBOMWindowMethod containedin=typescriptIdentifierName stop nextgroup=typescriptFuncCallArg
 syntax keyword typescriptBOMWindowMethod containedin=typescriptIdentifierName updateCommands nextgroup=typescriptFuncCallArg
 syntax cluster props add=typescriptBOMWindowMethod
-if exists("did_typescript_hilink") | HiLink typescriptBOMWindowMethod Structure
-endif
+hi def link typescriptBOMWindowMethod Structure
 syntax keyword typescriptBOMWindowEvent contained onabort onbeforeunload onblur onchange
 syntax keyword typescriptBOMWindowEvent contained onclick onclose oncontextmenu ondevicelight
 syntax keyword typescriptBOMWindowEvent contained ondevicemotion ondeviceorientation
@@ -104,10 +102,8 @@ syntax keyword typescriptBOMWindowEvent contained onmozbeforepaint onpaint onpop
 syntax keyword typescriptBOMWindowEvent contained onreset onresize onscroll onselect
 syntax keyword typescriptBOMWindowEvent contained onsubmit onunload onuserproximity
 syntax keyword typescriptBOMWindowEvent contained onpageshow onpagehide
-if exists("did_typescript_hilink") | HiLink typescriptBOMWindowEvent Keyword
-endif
+hi def link typescriptBOMWindowEvent Keyword
 syntax keyword typescriptBOMWindowCons containedin=typescriptIdentifierName DOMParser
 syntax keyword typescriptBOMWindowCons containedin=typescriptIdentifierName QueryInterface
 syntax keyword typescriptBOMWindowCons containedin=typescriptIdentifierName XMLSerializer
-if exists("did_typescript_hilink") | HiLink typescriptBOMWindowCons Structure
-endif
+hi def link typescriptBOMWindowCons Structure

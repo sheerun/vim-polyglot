@@ -1,4 +1,4 @@
-if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/basic/doc.vim')
+if polyglot#init#is_disabled(expand('<sfile>:p'), 'typescript', 'syntax/ts-common/doc.vim')
   finish
 endif
 

@@ -33,6 +33,7 @@ endif
 
 if get(g:, 'plantuml_set_makeprg', 1)
   let &l:makeprg=g:plantuml_executable_script . ' %'
+  let &l:errorformat='Error\ line %l in file: %f,%Z%m'
 endif
 
 setlocal comments=s1:/',mb:',ex:'/,:' commentstring=/'%s'/ formatoptions-=t formatoptions+=croql

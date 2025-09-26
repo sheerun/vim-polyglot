@@ -12,7 +12,7 @@ let b:current_syntax = "gleam"
 
 " Keywords
 syntax keyword gleamKeyword
-  \ module import pub external
+  \ module import pub panic use
   \ type let as if else todo const
   \ case assert tuple try opaque
 highlight link gleamKeyword Keyword
@@ -25,7 +25,7 @@ syntax match gleamFunctionDef "[a-z_-][0-9a-z_-]*" contained skipwhite skipnl
 highlight link gleamFunctionDef Function
 
 " Int
-syntax match gleamInt '\<[0-9][0-9_]*\>'
+syntax match gleamInt '\<\(0x[a-fA-F0-9_]\+\|[0-9][0-9_]*\)\>'
 highlight link gleamInt Number
 
 " Float

@@ -21,15 +21,20 @@ let b:current_syntax = 'plantuml'
 syntax sync minlines=100
 
 syntax match plantumlPreProc /\%(^@start\|^@end\)\%(board\|bpm\|creole\|cute\|def\|ditaa\|dot\|flow\|gantt\|git\|jcckit\|json\|latex\|math\|mindmap\|nwdiag\|project\|salt\|tree\|uml\|wbs\|wire\|yaml\)/
-syntax match plantumlPreProc /!\%(assert\|define\|definelong\|dump_memory\|else\|enddefinelong\|endfunction\|endif\|endprocedure\|endsub\|exit\|function\|if\|ifdef\|ifndef\|import\|include\|local\|log\|pragma\|procedure\|return\|startsub\|theme\|undef\|unquoted\)\s*.*/ contains=plantumlDir
+syntax match plantumlPreProc /function\|procedure\|endprocedure\|endfunction\|unquoted/
+syntax match plantumlPreProc /!\%(assert\|define\|definelong\|dump_memory\|else\|enddefinelong\|endif\|endsub\|exit\|if\|ifdef\|ifndef\|import\|include\|local\|log\|pragma\|return\|startsub\|theme\|undef\)\s*.*/ contains=plantumlDir
 syntax region plantumlDir start=/\s\+/ms=s+1 end=/$/ contained
+
+" Procedure and function definitions
+syntax region plantumlParameters contained matchgroup=Function keepend start="(" end=")\s*$" contains=TOP
+syntax match plantumlFunction "\%(!\%(unquoted\s\+\)\?\%(procedure\|function\)\s*\)\@<=\$\?\w\+\s*(.*)" contains=plantumlParameters
 
 " type
 " From 'java - jar plantuml.jar - language' results {{{
 syntax keyword plantumlTypeKeyword abstract actor agent annotation archimate artifact boundary card cloud
 syntax keyword plantumlTypeKeyword collections component control database diamond entity enum file folder frame
 syntax keyword plantumlTypeKeyword hexagon label node object package participant person queue rectangle stack state
-syntax keyword plantumlTypeKeyword storage usecase
+syntax keyword plantumlTypeKeyword storage usecase together
 " class and interface are defined as plantumlClassKeyword
 syntax keyword plantumlClassKeyword class interface
 "}}}
@@ -44,7 +49,7 @@ syntax keyword plantumlKeyword bottom box break caption center circle color crea
 syntax keyword plantumlKeyword description destroy detach dotted down else elseif empty end endif endwhile
 syntax keyword plantumlKeyword false footbox footer fork group header hide hnote if is italic kill left legend
 syntax keyword plantumlKeyword link loop mainframe map members namespace newpage normal note of on opt order
-syntax keyword plantumlKeyword over package page par partition plain ref repeat return right rnote rotate show
+syntax keyword plantumlKeyword over page par partition plain ref repeat return right rnote rotate show
 syntax keyword plantumlKeyword skin skinparam split sprite start stereotype stop style then title top true up
 syntax keyword plantumlKeyword while
 
@@ -59,7 +64,8 @@ syntax keyword plantumlKeyword printscale ganttscale projectscale daily weekly m
 syntax keyword plantumlKeyword day days week weeks today then complete displays same row pauses
 
 syntax keyword plantumlCommentTODO XXX TODO FIXME NOTE contained
-syntax match plantumlColor /#[0-9A-Fa-f]\{6\}\>/
+" PlantUML colors are 6 hexa digit long plus optionaly 2 more to code transparency
+syntax match plantumlColor /#\x\{6\}\%(\x\{2\}\)\?\>/
 syntax case ignore
 syntax keyword plantumlColor APPLICATION AliceBlue AntiqueWhite Aqua Aquamarine Azure BUSINESS Beige Bisque
 syntax keyword plantumlColor Black BlanchedAlmond Blue BlueViolet Brown BurlyWood CadetBlue Chartreuse
@@ -133,7 +139,7 @@ syntax match plantumlTag /<\/\?[bi]>/
 syntax region plantumlTag start=/<\/\?\%(back\|color\|del\|font\|img\|s\|size\|strike\|u\|w\)/ end=/>/
 
 " Labels with a colon
-syntax match plantumlColonLine /\S\@<=\s*\zs : .\+$/ contains=plantumlSpecialString
+syntax match plantumlColonLine /\S\@<=\s*:\s*\zs.\+$/ contains=plantumlSpecialString
 
 " Stereotypes
 syntax match plantumlStereotype /<<[^-.]\+>>/ contains=plantumlSpecialString
@@ -393,6 +399,14 @@ syntax keyword plantumlSkinparamKeyword usecaseActorStereotypeFontStyle usecaseA
 syntax keyword plantumlSkinparamKeyword usecaseArrowFontName usecaseArrowFontSize usecaseArrowFontStyle
 syntax case match
 
+" Other style keywords not found in plantumlSkinparamKeyword
+" Some are not implemented (yet)
+" see https://plantuml.com/fr/style-evolution
+" TODO: put those keywords in a new "<style>" region
+syntax case ignore
+syntax keyword plantumlSkinparamKeyword Margin HorizontalAlignment DiagonalCorner ExportedName Image ImagePosition MinimumWidth WordWrap MaximumWidth
+syntax case match
+
 " Builtin Function
 " https://plantuml.com/ja/preprocessing
 syntax match plantumlBuiltinFunction /%\%(chr\|darken\|date\|dec2hex\|dirpath\|feature\|false\|file_exists\|filename\|function_exists\|get_variable_value\|getenv\|hex2dec\|hsl_color\|intval\|is_dark\|is_light\|lighten\|loadJSON\|lower\|newline\|not\|lighten\|reverse_color\|reverse_hsluv_color\|set_variable_value\|size\|string\|strlen\|strpos\|substr\|true\|upper\|variable_exists\|version\)/
@@ -436,6 +450,7 @@ highlight default link plantumlNoteMultiLine String
 highlight default link plantumlUsecaseActor String
 highlight default link plantumlStereotype Type
 highlight default link plantumlBuiltinFunction Function
+highlight default link plantumlFunction Function
 highlight default link plantumlGanttTask Type
 
 let &cpoptions=s:cpo_orig

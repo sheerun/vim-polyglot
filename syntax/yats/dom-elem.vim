@@ -9,8 +9,7 @@ syntax keyword typescriptDOMElemAttrs contained oncopy oncut onpaste onwheel scr
 syntax keyword typescriptDOMElemAttrs contained scrollLeft scrollTop scrollWidth tagName
 syntax keyword typescriptDOMElemAttrs contained classList className name outerHTML
 syntax keyword typescriptDOMElemAttrs contained style
-if exists("did_typescript_hilink") | HiLink typescriptDOMElemAttrs Keyword
-endif
+hi def link typescriptDOMElemAttrs Keyword
 syntax keyword typescriptDOMElemFuncs contained getAttributeNS getAttributeNode getAttributeNodeNS
 syntax keyword typescriptDOMElemFuncs contained getBoundingClientRect getClientRects
 syntax keyword typescriptDOMElemFuncs contained getElementsByClassName getElementsByTagName
@@ -23,5 +22,4 @@ syntax keyword typescriptDOMElemFuncs contained requestPointerLock scrollIntoVie
 syntax keyword typescriptDOMElemFuncs contained setAttribute setAttributeNS setAttributeNode
 syntax keyword typescriptDOMElemFuncs contained setAttributeNodeNS setCapture supports
 syntax keyword typescriptDOMElemFuncs contained getAttribute
-if exists("did_typescript_hilink") | HiLink typescriptDOMElemFuncs Keyword
-endif
+hi def link typescriptDOMElemFuncs Keyword
