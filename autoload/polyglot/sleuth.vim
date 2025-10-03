@@ -269,7 +269,7 @@ let s:globs = {
   \ 'jsp': '*.jsp',
   \ 'jst': '*.ejs,*.ect,*.ejs.t,*.jst',
   \ 'julia': '*.jl',
-  \ 'just': '*.just,justfile',
+  \ 'just': '*.just,\cjustfile',
   \ 'kconfig': 'Kconfig,Kconfig.debug,Kconfig.*',
   \ 'kivy': '*.kv',
   \ 'kix': '*.kix',
