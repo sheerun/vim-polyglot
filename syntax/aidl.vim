@@ -10,18 +10,17 @@ endif
 
 " Quit when a syntax file was already loaded.
 if exists("b:current_syntax")
-   finish
+  finish
 endif
 
-source <sfile>:p:h/java.vim
+if filereadable($VIMRUNTIME . "/syntax/java.vim")
+  source $VIMRUNTIME/syntax/java.vim
+endif
 
-syn keyword aidlParamDir in out inout
-syn keyword aidlKeyword const oneway parcelable
+syn keyword aidlStorageClass in out inout const oneway
+syn keyword aidlInterfaceDecl parcelable union
 
-" Needed for the 'in', 'out', 'inout' keywords to be highlighted.
-syn cluster javaTop add=aidlParamDir
-
-hi def link aidlParamDir StorageClass
-hi def link aidlKeyword Keyword
+hi def link aidlStorageClass javaStorageClass
+hi def link aidlInterfaceDecl javaClassDecl
 
 let b:current_syntax = "aidl"
