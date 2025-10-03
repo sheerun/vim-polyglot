@@ -3576,23 +3576,23 @@ if exists("did_load_filetypes") && exists("g:polyglot_disabled")
   runtime! extras/filetype.vim
 endif
 
-let s:runtime = resolve($VIMRUNTIME)
-let s:base = resolve(expand('<sfile>:p:h:h:h'))
+func! s:resolve(file) abort
+  return substitute(resolve(a:file), '\\', '/', 'g')
+endfunc
+
+let s:runtime = s:resolve($VIMRUNTIME)
+let s:base = s:resolve(expand('<sfile>:p:h:h:h'))
 
 func! s:process_rtp(rtp)
   " Remove vim-polyglot from paths and make everything absolute
-  let rtp = []
-  for path in a:rtp[1:-2]
-    let abspath = resolve(path)
-    if stridx(abspath, s:base) != 0
-      call add(rtp, abspath)
-    endif
-  endfor
+  let rtp = filter(map(copy(a:rtp[1:-2]), '[s:resolve(v:val), v:val]'),
+        \ 'stridx(v:val[0], s:base) != 0')
+  " User's directory is always first
   let result = [a:rtp[0]]
   " Then all other stuff (until vimruntime)
   let i = 0
-  for path in rtp[0:len(rtp)-1]
-    if path == s:runtime
+  for [abspath, path] in rtp[0:len(rtp)-1]
+    if abspath == s:runtime
       break
     endif
     call add(result, path)
@@ -3602,8 +3602,8 @@ func! s:process_rtp(rtp)
   call add(result, s:base)
   " Then all other files, until after-files
   while i < len(rtp)
-    let path = rtp[i]
-    if match(path, '[/\\]after$') > -1
+    let [abspath, path] = rtp[i]
+    if match(abspath, '/after$') > -1
       break
     endif
     call add(result, path)
@@ -3613,7 +3613,7 @@ func! s:process_rtp(rtp)
   call add(result, s:base . '/after')
   " Then all other after paths
   while i < len(rtp)
-    let path = rtp[i]
+    let [_, path] = rtp[i]
     call add(result, path)
     let i = i + 1
   endwhile
