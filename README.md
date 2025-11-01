@@ -204,7 +204,7 @@ On top of all language packs from [vim repository](https://github.com/vim/vim/tr
 - [xsl](https://github.com/vim-scripts/XSLT-syntax) (XSLT syntax highlighting for xslt and xsl files)
 - [yard](https://github.com/noprompt/vim-yardoc)
 - [zephir](https://github.com/xwsoul/vim-zephir) (Zephir syntax highlighting for zep files)
-- [zig](https://github.com/ziglang/zig.vim) (Zig syntax highlighting for zir, zig and zir files)
+- [zig](https://github.com/ziglang/zig.vim) (Zig syntax highlighting for zir, zig and zon files)
 - [zinit](https://github.com/zdharma-continuum/zinit-vim-syntax/tree/main)
 <!--/Language Packs-->
 
