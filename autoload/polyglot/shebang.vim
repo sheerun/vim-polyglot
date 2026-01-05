@@ -197,6 +197,10 @@ func! polyglot#shebang#VimDetect()
     elseif name =~# 'wml'
       set ft=wml | return
 
+      " Since JEP-330, java supports sh-bang
+    elseif name =~# 'java'
+      set ft=java | return
+
       " Scheme scripts
     elseif name =~# 'scheme'
       set ft=scheme | return
