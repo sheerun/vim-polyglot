@@ -555,6 +555,10 @@ if !has_key(g:polyglot_is_disabled, 'sqr')
   au BufNewFile,BufRead *.sqi,*.sqr setf sqr
 endif
 
+if !has_key(g:polyglot_is_disabled, 'sqlite')
+  au BufNewFile,BufRead *.sqlite setf sqlite
+endif
+
 if !has_key(g:polyglot_is_disabled, 'sqlj')
   au BufNewFile,BufRead *.sqlj setf sqlj
 endif

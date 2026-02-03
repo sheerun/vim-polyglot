@@ -4690,6 +4690,15 @@ filetypes:
   - pattern: squid.conf
     description: Squid
 ---
+name: sqlite
+native: true
+glob: "**/sqlite.vim"
+filetypes:
+- name: sqlite
+  patterns:
+  - pattern: "*.sqlite"
+    description: SQLite
+---
 name: sqlj
 native: true
 glob: "**/sqlj.vim"

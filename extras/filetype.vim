@@ -1820,6 +1820,9 @@ au BufNewFile,BufRead *.tyb,*.typ,*.tyc,*.pkb,*.pks	setf sql
 " SQL
 au BufNewFile,BufRead *.sql			call polyglot#ft#SQL()
 
+" SQLite
+au BufNewFile,BufRead *.sqlite			setf sqlite
+
 " SQLJ
 au BufNewFile,BufRead *.sqlj			setf sqlj
 
