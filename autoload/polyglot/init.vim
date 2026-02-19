@@ -1827,7 +1827,7 @@ if !has_key(g:polyglot_is_disabled, 'smarty')
 endif
 
 if !has_key(g:polyglot_is_disabled, 'ansible')
-  au BufNewFile,BufRead handlers.*.y{a,}ml,local.y{a,}ml,main.y{a,}ml,playbook.y{a,}ml,requirements.y{a,}ml,roles.*.y{a,}ml,site.y{a,}ml,tasks.*.y{a,}ml setf yaml.ansible
+  au BufNewFile,BufRead */handlers/*.y{a,}ml,local.y{a,}ml,main.y{a,}ml,playbook.y{a,}ml,requirements.y{a,}ml,*/roles/*.y{a,}ml,site.y{a,}ml,*/tasks/*.y{a,}ml setf yaml.ansible
   au BufNewFile,BufRead host_vars/* call s:StarSetf('yaml.ansible')
   au BufNewFile,BufRead group_vars/* call s:StarSetf('yaml.ansible')
 endif
