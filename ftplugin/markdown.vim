@@ -726,7 +726,12 @@ endif
 
 function! s:VersionAwareNetrwBrowseX(url)
     if has('patch-7.4.567')
-        call netrw#BrowseX(a:url, 0)
+        let l:netrw_version = str2nr(g:loaded_netrwPlugin[1:-1])
+        if l:netrw_version >=# 182
+            call netrw#BrowseX(a:url)
+        else
+            call netrw#BrowseX(a:url, 0)
+        endif
     else
         call netrw#NetrwBrowseX(a:url, 0)
     endif
